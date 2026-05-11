@@ -11,6 +11,7 @@ import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.AgentInstanceResource;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.ai.hub.util.AccountEntryUtil;
+import com.liferay.portal.kernel.encryptor.Encryptor;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -86,7 +87,9 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 				ServiceContextFactory.getInstance(contextHttpServletRequest)
 			).put(
 				"accessToken",
-				contextHttpServletRequest.getHeader("Authorization")
+				_encryptor.encrypt(
+					contextCompany.getKeyObj(),
+					contextHttpServletRequest.getHeader("Authorization"))
 			).put(
 				"agentDefinitionExternalReferenceCode",
 				agentDefinition.getExternalReferenceCode()
@@ -99,8 +102,10 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 				"sseEventSinkKey", agentInstance.getSseEventSinkKey()
 			).put(
 				"userToken",
-				contextHttpServletRequest.getHeader(
-					"Liferay-AI-Hub-Cell-On-Behalf-Of")
+				_encryptor.encrypt(
+					contextCompany.getKeyObj(),
+					contextHttpServletRequest.getHeader(
+						"Liferay-AI-Hub-Cell-On-Behalf-Of"))
 			).build();
 
 		MapUtil.isNotEmptyForEach(
@@ -137,6 +142,9 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private Encryptor _encryptor;
 
 	@Context
 	private Sse _sse;

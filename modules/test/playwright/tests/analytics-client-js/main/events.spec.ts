@@ -6,20 +6,20 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {Analytics, Event} from './utils/analytics';
 
 const test = mergeTests(
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPS-178052': {enabled: true},
-	}),
+	dataApiHelpersTest,
 	isolatedSiteTest,
+	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
@@ -29,6 +29,13 @@ test(
 		tag: '@LPD-56895',
 	},
 	async ({apiHelpers, page, site}) => {
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channelName: 'My Property - ' + getRandomString(),
+			page,
+			siteName: site.name,
+		});
+
 		const layout1 = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
 				getFragmentDefinition({
@@ -51,36 +58,57 @@ test(
 			title: 'MyPage 2',
 		});
 
+		const pageViewedTitles: string[] = [];
+
+		page.on('request', (request) => {
+			if (request.method() !== 'POST') {
+				return;
+			}
+
+			const postData = request.postData();
+
+			if (!postData || !postData.includes('"eventId":"pageViewed"')) {
+				return;
+			}
+
+			try {
+				const eventBucket = JSON.parse(postData);
+
+				const title = eventBucket.context?.title;
+
+				if (typeof title === 'string') {
+					pageViewedTitles.push(title);
+				}
+			}
+			catch {
+
+				// Ignore non-JSON bodies; only analytics POSTs are valid here.
+
+			}
+		});
+
 		await test.step('Go to My Page 1', async () => {
 			await page.goto(
 				`/web${site.friendlyUrlPath}${layout1.friendlyUrlPath}`
 			);
-		});
 
-		await test.step('Check the pageViewed event on My Page 1', async () => {
-			const analytics = new Analytics(page);
-
-			const pageViewedEvent = (await analytics.getEvents(
-				'pageViewed'
-			)) as Event;
-
-			expect(pageViewedEvent).toBeTruthy();
+			await expect
+				.poll(() =>
+					pageViewedTitles.some((t) => t.includes('MyPage 1'))
+				)
+				.toBe(true);
 		});
 
 		await test.step('Go to My Page 2', async () => {
 			await page.goto(
 				`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
 			);
-		});
 
-		await test.step('Check the pageViewed event on My Page 2', async () => {
-			const analytics = new Analytics(page);
-
-			const pageViewedEvent = (await analytics.getEvents(
-				'pageViewed'
-			)) as Event;
-
-			expect(pageViewedEvent).toBeTruthy();
+			await expect
+				.poll(() =>
+					pageViewedTitles.some((t) => t.includes('MyPage 2'))
+				)
+				.toBe(true);
 		});
 	}
 );

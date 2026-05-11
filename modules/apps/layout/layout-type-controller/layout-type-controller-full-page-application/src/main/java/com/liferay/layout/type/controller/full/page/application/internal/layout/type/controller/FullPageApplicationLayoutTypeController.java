@@ -9,6 +9,9 @@ import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerWebKeys;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -57,6 +60,25 @@ public class FullPageApplicationLayoutTypeController
 		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
 		return super.includeEditContent(
+			httpServletRequest, httpServletResponse, layout);
+	}
+
+	@Override
+	public boolean includeLayoutContent(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout)
+		throws Exception {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Layout ", layout.getPlid(),
+					" is a deprecated full page application page ",
+					"(type=full_page_application). Use a content page ",
+					"instead."));
+		}
+
+		return super.includeLayoutContent(
 			httpServletRequest, httpServletResponse, layout);
 	}
 
@@ -148,6 +170,9 @@ public class FullPageApplicationLayoutTypeController
 
 	private static final String _VIEW_PAGE =
 		"/layout/view/full_page_application.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FullPageApplicationLayoutTypeController.class);
 
 	@Reference
 	private PortletLocalService _portletLocalService;

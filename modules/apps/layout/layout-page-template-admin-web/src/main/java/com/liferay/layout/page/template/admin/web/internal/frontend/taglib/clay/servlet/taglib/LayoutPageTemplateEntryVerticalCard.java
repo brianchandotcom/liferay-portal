@@ -147,13 +147,6 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public List<LabelItem> getLabels() {
-		if (Objects.equals(
-				_layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
-
-			return super.getLabels();
-		}
-
 		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			_layoutPageTemplateEntry.getPlid());
 

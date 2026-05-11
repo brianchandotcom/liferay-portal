@@ -57,6 +57,9 @@ public class CommerceOrderAttachmentTableFDSViewTest {
 		_testGetFDSTableSchemaField(
 			"dateTime", "modified-date", "dateModified", true);
 		_testGetFDSTableSchemaField(null, "priority", "priority", true);
+		_testGetFDSTableSchemaField(
+			"commerceOrderAttachmentRestrictedDataRenderer", "restricted",
+			"restricted", false);
 		_testGetFDSTableSchemaField(null, "title", "title", true);
 	}
 

@@ -327,62 +327,123 @@ export default function FieldBase({
 		columns: [{fields: [field], size: 12}],
 	}));
 
-	const checkRepetitions = useMemo(() => {
-		if (repeatable && name) {
-			const currentFieldFieldsets = name.match(FIELDSET_REGEX);
-			const currentFieldsetRepeatIndexes = name.match(
+	const repeatableInfo = useMemo(() => {
+		if (!repeatable || !name) {
+			return {count: 0, index: -1};
+		}
+
+		const currentFieldFieldsets = name.match(FIELDSET_REGEX);
+		const currentFieldsetRepeatIndexes = name.match(
+			FIELDSET_REPEAT_INDEX_REGEX
+		);
+
+		if (currentFieldsetRepeatIndexes) {
+			currentFieldsetRepeatIndexes.pop();
+		}
+
+		const visitor = new PagesVisitor(pages);
+
+		const repeatableFields = [];
+
+		visitor.visitFields((field) => {
+			const fieldName = field.name ?? field.fieldName;
+
+			const fieldFieldsets = fieldName.match(FIELDSET_REGEX);
+			const fieldsetRepeatIndexes = fieldName.match(
 				FIELDSET_REPEAT_INDEX_REGEX
 			);
 
-			if (currentFieldsetRepeatIndexes) {
-				currentFieldsetRepeatIndexes.pop();
+			if (fieldsetRepeatIndexes) {
+				fieldsetRepeatIndexes.pop();
 			}
 
-			const visitor = new PagesVisitor(pages);
-
-			const repeatableFields = [];
-
-			visitor.visitFields((field) => {
-				const fieldName = field.name ?? field.fieldName;
-
-				const fieldFieldsets = fieldName.match(FIELDSET_REGEX);
-				const fieldsetRepeatIndexes = fieldName.match(
-					FIELDSET_REPEAT_INDEX_REGEX
+			const isSameFieldset =
+				currentFieldFieldsets &&
+				fieldFieldsets &&
+				currentFieldsetRepeatIndexes &&
+				fieldsetRepeatIndexes &&
+				currentFieldFieldsets.every(
+					(fieldFieldset, index) =>
+						fieldFieldset === fieldFieldsets[index]
+				) &&
+				currentFieldsetRepeatIndexes.every(
+					(fieldFieldset, index) =>
+						fieldFieldset === fieldsetRepeatIndexes[index]
 				);
 
-				if (fieldsetRepeatIndexes) {
-					fieldsetRepeatIndexes.pop();
-				}
+			if (fieldReference === field.fieldReference && isSameFieldset) {
+				repeatableFields.push(field);
+			}
 
-				const isSameFieldset =
-					currentFieldFieldsets &&
-					fieldFieldsets &&
-					currentFieldsetRepeatIndexes &&
-					fieldsetRepeatIndexes &&
-					currentFieldFieldsets.every(
-						(fieldFieldset, index) =>
-							fieldFieldset === fieldFieldsets[index]
-					) &&
-					currentFieldsetRepeatIndexes.every(
-						(fieldFieldset, index) =>
-							fieldFieldset === fieldsetRepeatIndexes[index]
-					);
+			if (
+				!currentFieldFieldsets &&
+				fieldReference === field.fieldReference
+			) {
+				repeatableFields.push(field);
+			}
+		});
 
-				if (fieldReference === field.fieldReference && isSameFieldset) {
-					repeatableFields.push(field);
-				}
+		const index = repeatableFields.findIndex(
+			(field) => (field.name ?? field.fieldName) === name
+		);
 
-				if (
-					!currentFieldFieldsets &&
-					fieldReference === field.fieldReference
-				) {
-					repeatableFields.push(field);
-				}
-			});
-
-			return repeatableFields.length;
-		}
+		return {count: repeatableFields.length, index};
 	}, [fieldReference, name, pages, repeatable]);
+
+	const showRepeatableDeleteButton = repeatable && repeatableInfo.index > 0;
+	const showRepeatableAddButton =
+		repeatable && repeatableInfo.index === repeatableInfo.count - 1;
+
+	const repeatableDeleteButton = showRepeatableDeleteButton ? (
+		<ClayButton
+			aria-label={sub(
+				Liferay.Language.get('remove-duplicate-field'),
+				label ? label : type
+			)}
+			borderless
+			className={classNames('ddm-form-field-repeatable-delete-button', {
+				'ddm-form-field-repeatable-button-disabled':
+					disabledRepeatableButton,
+			})}
+			disabled={readOnly || disabledRepeatableButton}
+			displayType="secondary"
+			monospaced
+			onClick={() => {
+				setTimeout(
+					() => {
+						dispatch({
+							payload: name,
+							type: CORE_EVENT_TYPES.FIELD.REMOVED,
+						});
+
+						Liferay.fire('journal:storeState', {
+							fieldName: Liferay.Language.get(
+								'remove-repeatable-field'
+							),
+						});
+					},
+					type === 'fieldset' || type === 'text' ? 1000 : 0
+				);
+			}}
+			title={Liferay.Language.get('remove')}
+			type="button"
+		>
+			<ClayIcon symbol="trash" />
+		</ClayButton>
+	) : null;
+
+	const renderChildren = (childrenContent) =>
+		repeatable ? (
+			<div className="align-items-center c-gap-3 d-flex">
+				<div className="flex-fill">{childrenContent}</div>
+
+				{repeatableDeleteButton ?? (
+					<div className="ddm-form-field-repeatable-delete-button-placeholder" />
+				)}
+			</div>
+		) : (
+			childrenContent
+		);
 
 	const translationFilterChange = useCallback(
 		(event) => {
@@ -534,92 +595,6 @@ export default function FieldBase({
 				'role': 'group',
 			})}
 		>
-			{repeatable && (
-				<div className="lfr-ddm-form-field-repeatable-toolbar">
-					{checkRepetitions > 1 && (
-						<ClayButton
-							aria-label={sub(
-								Liferay.Language.get('remove-duplicate-field'),
-								label ? label : type
-							)}
-							className={classNames(
-								'ddm-form-field-repeatable-delete-button p-0',
-								{
-									'ddm-form-field-repeatable-button-disabled':
-										disabledRepeatableButton,
-								}
-							)}
-							disabled={readOnly || disabledRepeatableButton}
-							onClick={() => {
-								setTimeout(
-									() => {
-										dispatch({
-											payload: name,
-											type: CORE_EVENT_TYPES.FIELD
-												.REMOVED,
-										});
-
-										Liferay.fire('journal:storeState', {
-											fieldName: Liferay.Language.get(
-												'remove-repeatable-field'
-											),
-										});
-									},
-									type === 'fieldset' || type === 'text'
-										? 1000
-										: 0
-								);
-							}}
-							small
-							title={Liferay.Language.get('remove')}
-							type="button"
-						>
-							<ClayIcon symbol="hr" />
-						</ClayButton>
-					)}
-
-					<ClayButton
-						aria-label={sub(
-							Liferay.Language.get('add-duplicate-field'),
-							label ? label : type
-						)}
-						className={classNames(
-							'ddm-form-field-repeatable-add-button p-0',
-							{
-								'ddm-form-field-repeatable-button-disabled':
-									disabledRepeatableButton,
-								'hide': overMaximumRepetitionsLimit,
-							}
-						)}
-						disabled={readOnly || disabledRepeatableButton}
-						onClick={() =>
-							setTimeout(
-								() => {
-									dispatch({
-										payload: name,
-										type: CORE_EVENT_TYPES.FIELD.REPEATED,
-									});
-
-									Liferay.fire('journal:storeState', {
-										fieldName: Liferay.Language.get(
-											'add-repeatable-field'
-										),
-									});
-								},
-								type === 'fieldset' || type === 'text'
-									? 1000
-									: 0
-							)
-						}
-						small
-						title={Liferay.Language.get('duplicate')}
-						type="button"
-					>
-						<ClayIcon symbol="plus" />
-					</ClayButton>
-				</div>
-			)}
-
 			{renderLabel && (
 				<>
 					{showGroup ? (
@@ -649,7 +624,7 @@ export default function FieldBase({
 								/>
 							)}
 
-							{children}
+							{renderChildren(children)}
 						</div>
 					) : (
 						<>
@@ -691,7 +666,7 @@ export default function FieldBase({
 								/>
 							)}
 
-							{children}
+							{renderChildren(children)}
 
 							{!showLabel && popoverOrTooltip && (
 								<FieldInformation
@@ -704,7 +679,7 @@ export default function FieldBase({
 				</>
 			)}
 
-			{!renderLabel && children}
+			{!renderLabel && renderChildren(children)}
 
 			{hiddenTranslations}
 
@@ -722,6 +697,51 @@ export default function FieldBase({
 				id={`${id ?? name}_fieldFeedback`}
 				warningMessage={warningMessage}
 			/>
+
+			{showRepeatableAddButton && (
+				<ClayButton
+					aria-label={sub(
+						Liferay.Language.get('add-duplicate-field'),
+						label ? label : type
+					)}
+					borderless
+					className={classNames(
+						'ddm-form-field-repeatable-add-button',
+						{
+							'ddm-form-field-repeatable-button-disabled':
+								disabledRepeatableButton,
+							'hide': overMaximumRepetitionsLimit,
+						}
+					)}
+					disabled={readOnly || disabledRepeatableButton}
+					displayType="secondary"
+					onClick={() =>
+						setTimeout(
+							() => {
+								dispatch({
+									payload: name,
+									type: CORE_EVENT_TYPES.FIELD.REPEATED,
+								});
+
+								Liferay.fire('journal:storeState', {
+									fieldName: Liferay.Language.get(
+										'add-repeatable-field'
+									),
+								});
+							},
+							type === 'fieldset' || type === 'text' ? 1000 : 0
+						)
+					}
+					title={Liferay.Language.get('duplicate')}
+					type="button"
+				>
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="plus" />
+					</span>
+
+					{Liferay.Language.get('add-option')}
+				</ClayButton>
+			)}
 
 			{hasFieldDetails && (
 				<span

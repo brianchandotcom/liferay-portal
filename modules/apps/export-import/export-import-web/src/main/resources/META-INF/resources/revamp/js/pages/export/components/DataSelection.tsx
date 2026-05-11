@@ -7,8 +7,11 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-import DateFilter, {DateFilterValues} from '../../../components/date_filter';
-import {FormikFieldContentSelector} from '../../../components/forms/formik';
+import {DateFilterValues} from '../../../components/date_filter';
+import {
+	FormikFieldContentSelector,
+	FormikFieldDateFilter,
+} from '../../../components/forms/formik';
 import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
 
 const LABEL_ID = 'dataSelection-label';
@@ -39,8 +42,9 @@ export default function DataSelection({
 			</header>
 
 			<ClayLayout.Sheet>
-				<DateFilter
+				<FormikFieldDateFilter
 					itemsCount={itemsCount}
+					name="dateFilter"
 					onApplyFilter={onApplyFilter}
 				/>
 			</ClayLayout.Sheet>

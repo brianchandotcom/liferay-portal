@@ -1108,8 +1108,10 @@ public class TableReferenceInfoFactoryTest {
 			implements TableReferenceDefinition<T> {
 
 		@Override
+		@SuppressWarnings({"rawtypes", "unchecked"})
 		public BasePersistence<?> getBasePersistence() {
-			return new BasePersistenceImpl<>();
+			return new BasePersistenceImpl() {
+			};
 		}
 
 		@Override

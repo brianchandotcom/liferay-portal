@@ -276,12 +276,12 @@ public class UpgradeQueryMonitorTest {
 			Connection connection, DB db, LogCapture logCapture)
 		throws Exception {
 
-		String exceptionMessage = RandomTestUtil.randomString();
+		String message = RandomTestUtil.randomString();
 
 		Mockito.when(
 			db.getLockedQueryInfos(connection)
 		).thenThrow(
-			new SQLException(exceptionMessage)
+			new SQLException(message)
 		);
 
 		Assert.assertThrows(
@@ -296,8 +296,7 @@ public class UpgradeQueryMonitorTest {
 		LogEntry logEntry = logEntries.get(4);
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				"Upgrade query monitoring is disabled: ", exceptionMessage),
+			"Upgrade query monitoring is disabled: " + message,
 			logEntry.getMessage());
 	}
 

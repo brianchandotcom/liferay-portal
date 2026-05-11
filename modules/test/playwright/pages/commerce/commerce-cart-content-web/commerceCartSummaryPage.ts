@@ -44,9 +44,11 @@ export class CommerceCartSummaryPage {
 		this.processQuoteButton = page.getByRole('button', {
 			name: 'Process Quote',
 		});
-		this.requestAQuoteButton = page.getByRole('button', {
-			name: 'Request a Quote',
-		});
+		this.requestAQuoteButton = page
+			.getByRole('button', {
+				name: 'Request a Quote',
+			})
+			.and(page.locator('.btn-md'));
 		this.requestAQuoteModal = page.locator('.modal-content');
 		this.requestAQuoteModalSubmit = this.requestAQuoteModal.getByRole(
 			'button',

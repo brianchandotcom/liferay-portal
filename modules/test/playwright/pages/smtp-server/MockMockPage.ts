@@ -11,18 +11,23 @@ export interface MockMockEmailMatcher {
 	body?: string;
 	from?: string;
 	subject: string;
+	timeout?: number;
 	to?: string;
 }
 
 export class MockMockPage {
+	readonly deleteAllLink: Locator;
+	readonly noEmailsInQueueMessage: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.deleteAllLink = page.getByRole('link', {name: 'Delete all'});
+		this.noEmailsInQueueMessage = page.getByText('No emails in queue');
 		this.page = page;
 	}
 
 	async assertEmail(expected: MockMockEmailMatcher) {
-		await this.waitForSubject(expected.subject);
+		await this.waitForSubject(expected.subject, expected.timeout);
 
 		await this.page
 			.getByRole('link', {name: expected.subject})
@@ -50,6 +55,56 @@ export class MockMockPage {
 		}
 	}
 
+	async deleteAll() {
+		await this.goto();
+
+		await expect(
+			this.deleteAllLink.or(this.noEmailsInQueueMessage)
+		).toBeVisible();
+
+		if (await this.deleteAllLink.isVisible()) {
+			await this.deleteAllLink.click();
+
+			await expect(this.noEmailsInQueueMessage).toBeVisible();
+		}
+	}
+
+	emailBodyText(text: string): Locator {
+		return this.page.getByText(text).first();
+	}
+
+	emailSubjectLink(subject: string): Locator {
+		return this.page.getByRole('link', {name: subject});
+	}
+
+	async getEmailBodyLinkHref(hrefContains: string): Promise<string> {
+		const link = this.page.locator(`a[href*="${hrefContains}"]`).first();
+
+		if (await link.isVisible()) {
+			return (await link.getAttribute('href')) || '';
+		}
+
+		const bodyText = await this.page
+			.locator(
+				'[name="bodyPlainText"] .well, [name="bodyHTML_Unformatted"] .well'
+			)
+			.first()
+			.innerText();
+
+		const escapedHrefContains = hrefContains.replace(
+			/[.*+?^${}()|[\]\\]/g,
+			'\\$&'
+		);
+
+		const urlMatch = bodyText.match(
+			new RegExp(
+				`https?://[^\\s<>"]*${escapedHrefContains}[^\\s<>"]*[^\\s<>".)]`
+			)
+		);
+
+		return urlMatch ? urlMatch[0] : '';
+	}
+
 	async goto() {
 		const url = new URL(liferayConfig.environment.baseUrl);
 
@@ -65,7 +120,7 @@ export class MockMockPage {
 			.locator('xpath=..');
 	}
 
-	private async waitForSubject(subject: string) {
+	private async waitForSubject(subject: string, timeout = 10000) {
 		await expect
 			.poll(
 				async () => {
@@ -78,7 +133,7 @@ export class MockMockPage {
 				},
 				{
 					message: `Timed out waiting for email with subject "${subject}" in MockMock inbox.`,
-					timeout: 10000,
+					timeout,
 				}
 			)
 			.toBeTruthy();

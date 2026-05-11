@@ -5,13 +5,22 @@
 
 import {test} from '@playwright/test';
 
-import {MockMockPage} from '../pages/notification-web/MockMockPage';
+import {MockMockPage} from '../pages/smtp-server/MockMockPage';
 
 const smtpPagesTest = test.extend<{
 	mockMockPage: MockMockPage;
 }>({
 	mockMockPage: async ({page}, use) => {
-		await use(new MockMockPage(page));
+		const inboxPage = await page.context().newPage();
+		const mockMockPage = new MockMockPage(inboxPage);
+
+		await mockMockPage.goto();
+
+		await page.bringToFront();
+
+		await use(mockMockPage);
+
+		await inboxPage.close();
 	},
 });
 

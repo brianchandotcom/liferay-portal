@@ -888,3 +888,115 @@ Separate must-be-first or must-be-last items from the sorted block:
 -long seconds = (long)Math.ceil(milliseconds / 1000.0);
 +long seconds = milliseconds / 1000;
 ```
+
+### Rule 46: Burrito — Declarations Before Configuration, Outer Before Inner
+
+**Why:** Grouping all declarations together and all configuration together — with the outermost/output object first — makes the purpose of a block visible upfront and eliminates "spaghetti" code where create-and-configure steps are interleaved as you descend the dependency chain.
+
+**Examples:**
+
+**Output/accumulator declared first.** When a block builds a collection and returns or passes it on, declare the output variable at the top — before the input and source variables — even though it is populated later in the loop. As Brian Chan put it: "the clue is that you are returning X, so we want to wrap the vars around this."
+
+```diff
++List<OutputType> results = new ArrayList<>();
++
+ InputType input = fetchInput(arg);
+
+ List<SourceType> sources = service.getSources(input.getId());
+
+-List<OutputType> results = new ArrayList<>();
+-
+ for (SourceType source : sources) {
+ 	results.add(transform(source));
+ }
+
+ return results;
+```
+
+The same applies to `Map`, `Set`, and `JSONObject` accumulators — whatever is being built and returned goes to the top.
+
+**Outer objects declared first, then configured inner-to-outer.** When setting up a containment hierarchy (A wraps B wraps C), declare all objects upfront in outer-to-inner order, then configure them from innermost to outermost. Do not interleave declaration and configuration as you traverse the chain.
+
+```diff
++ContainerA containerA = new ContainerA();
++ContainerB containerB = new ContainerB();
++
+ ContainerC containerC = new ContainerC();
+
+ containerC.setContent(content);
+
+-ContainerB containerB = new ContainerB();
+-
+ containerB.setContainerC(containerC);
+
+-ContainerA containerA = new ContainerA();
+-
+ containerA.setContainerB(containerB);
+```
+
+In Mockito-based tests the same rule applies: declare all mocks first in outer-to-inner order (the mock that wraps or receives others comes first), then write the `Mockito.when()` stubs from innermost to outermost.
+
+```diff
++OuterMock outerMock = Mockito.mock(OuterMock.class);
++
+ InnerMock innerMock = Mockito.mock(InnerMock.class);
+
+ Mockito.when(
+ 	innerMock.getValue()
+ ).thenReturn(
+ 	value
+ );
+
+-OuterMock outerMock = Mockito.mock(OuterMock.class);
+-
+ Mockito.when(
+ 	outerMock.getInner()
+ ).thenReturn(
+ 	innerMock
+ );
+```
+
+This is the complement of Rule 14: intermediate input variables move down (next to first use), while output and wrapping variables move up (declared before the code that feeds them).
+
+### Rule 47: Parameter-Aligned Variable Naming
+
+**Why:** When a local variable carries a value directly into a method call, naming it after the method's parameter makes the call site self-documenting and eliminates the translation overhead for the reader who must otherwise reconcile a synonym with the method signature.
+
+**Examples:**
+
+When a local will be passed as a specific named parameter, adopt the parameter's name rather than an alternative description of the same value.
+
+```diff
+-boolean httpsEnabled = _isHttpsEnabled();
++boolean secure = _isSecure();
+
+ String baseURL = _portal.getPortalURL(
+ 	company.getVirtualHostname(),
+-	_portal.getPortalServerPort(httpsEnabled), httpsEnabled);
++	_portal.getPortalServerPort(secure), secure);
+```
+
+The same applies when renaming a method or its parameter to match the vocabulary of the API it delegates to.
+
+```diff
+ private Map<Locale, String> _getLocalizedMap(
+-	String value, Map<String, String> i18nMap) {
++	String defaultValue, Map<String, String> i18nMap) {
+
+ 	Map<Locale, String> localizedMap = LocalizedMapUtil.getLocalizedMap(
+-		contextAcceptLanguage.getPreferredLocale(), value, i18nMap);
++		contextAcceptLanguage.getPreferredLocale(), defaultValue, i18nMap);
+```
+
+**`Page<T>` variables use the plural form of the method that returned them.** If the method is `getItemsPage(...)`, name the variable `itemsPage`, not `itemPage`.
+
+```diff
+-Page<OrderItem> orderItemPage =
++Page<OrderItem> orderItemsPage =
+ 	service.getOrderIdOrderItemsPage(orderId, pagination);
+
+-for (OrderItem orderItem : orderItemPage.getItems()) {
++for (OrderItem orderItem : orderItemsPage.getItems()) {
+```
+
+When you rename a local, propagate the new name to every call site, every parameter that passes it on, and every private helper that receives it.

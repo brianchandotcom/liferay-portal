@@ -9,7 +9,7 @@ import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
+import {MockMockPage} from '../../../pages/smtp-server/MockMockPage';
 import {UserLoginPage} from '../../../pages/users-admin-web/UserLoginPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -27,26 +27,18 @@ const test = mergeTests(
 	loginTest()
 );
 
-let emailNotificationPage: EmailNotificationPage;
+let mockMockPage: MockMockPage;
 
 test.beforeEach(async ({page}) => {
-	const mockMockPage = await page.context().newPage();
+	const mockMockTab = await page.context().newPage();
 
-	emailNotificationPage = new EmailNotificationPage(mockMockPage);
+	mockMockPage = new MockMockPage(mockMockTab);
 
-	await emailNotificationPage.goto();
-
-	if (await emailNotificationPage.deleteAllLink.isVisible()) {
-		await emailNotificationPage.deleteAllLink.click();
-
-		await expect(
-			emailNotificationPage.noEmailsInQueueMessage
-		).toBeVisible();
-	}
+	await mockMockPage.deleteAll();
 });
 
 test.afterEach(async () => {
-	await emailNotificationPage.page.close();
+	await mockMockPage.page.close();
 });
 
 test(
@@ -118,24 +110,22 @@ test(
 		});
 
 		await test.step('Verify the invitation email landed and exposes a correct registration link', async () => {
-			await emailNotificationPage.page.reload();
+			await mockMockPage.page.reload();
 
 			await expect(
-				emailNotificationPage.emailSubjectLink(
-					'You have been invited to'
-				)
+				mockMockPage.emailSubjectLink('You have been invited to')
 			).toBeVisible({timeout: 10000});
 
-			await emailNotificationPage
+			await mockMockPage
 				.emailSubjectLink('You have been invited to')
 				.click();
 
 			await expect(
-				emailNotificationPage.emailBodyText(account.name)
+				mockMockPage.emailBodyText(account.name)
 			).toBeVisible();
 
 			const registrationLink =
-				await emailNotificationPage.getEmailBodyLinkHref('ticketKey');
+				await mockMockPage.getEmailBodyLinkHref('ticketKey');
 
 			expect(registrationLink).toContain('create-account');
 			expect(registrationLink).toContain('ticketKey=');
@@ -190,22 +180,18 @@ test(
 
 		const registrationLink =
 			await test.step('Read the registration link from the invitation email', async () => {
-				await emailNotificationPage.page.reload();
+				await mockMockPage.page.reload();
 
 				await expect(
-					emailNotificationPage.emailSubjectLink(
-						'You have been invited to'
-					)
+					mockMockPage.emailSubjectLink('You have been invited to')
 				).toBeVisible({timeout: 10000});
 
-				await emailNotificationPage
+				await mockMockPage
 					.emailSubjectLink('You have been invited to')
 					.click();
 
 				const link =
-					await emailNotificationPage.getEmailBodyLinkHref(
-						'ticketKey'
-					);
+					await mockMockPage.getEmailBodyLinkHref('ticketKey');
 
 				expect(link).toContain('ticketKey=');
 

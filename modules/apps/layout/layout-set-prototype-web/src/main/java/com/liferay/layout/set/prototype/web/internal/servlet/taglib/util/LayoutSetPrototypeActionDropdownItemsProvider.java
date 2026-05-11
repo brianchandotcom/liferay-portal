@@ -71,6 +71,7 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 							dropdownItem -> {
 								dropdownItem.setHref(
 									siteAdministrationURL.toString());
+								dropdownItem.setIcon("cog");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
 										_httpServletRequest, "manage"));
@@ -123,6 +124,7 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 					"layoutSetPrototypeId",
 					_layoutSetPrototype.getLayoutSetPrototypeId()
 				).buildString());
+			dropdownItem.setIcon("logout");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "activate"));
 		};
@@ -147,6 +149,7 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 					"layoutSetPrototypeId",
 					_layoutSetPrototype.getLayoutSetPrototypeId()
 				).buildString());
+			dropdownItem.setIcon("pause");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "deactivate"));
 		};

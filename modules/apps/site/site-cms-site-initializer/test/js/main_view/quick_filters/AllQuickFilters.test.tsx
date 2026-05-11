@@ -32,6 +32,9 @@ const liferayEventHandlers: Record<string, Function[]> = {};
 	Language: {
 		get: jest.fn((key: string) => key),
 	},
+	ThemeDisplay: {
+		getTimeZone: jest.fn(() => 'UTC'),
+	},
 	detach: jest.fn((event: string, handler: Function) => {
 		liferayEventHandlers[event] = (
 			liferayEventHandlers[event] ?? []

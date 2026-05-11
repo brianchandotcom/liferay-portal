@@ -11,38 +11,23 @@
 	},
 	"items": [
 		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountNote_accountEntryId",
 			"active": true,
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_ACCNT_NOTE",
+			"externalReferenceCode": "C_ACCOUNT_NOTE",
+			"friendlyURLSeparator": "cpan",
 			"label": {
 				"en_US": "Account Note"
 			},
 			"name": "AccountNote",
 			"objectFields": [
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_ACCNT_NOTE_SUMMARY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Summary"
-					},
-					"name": "summary",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "C_ACCNT_NOTE_CONTENT",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_CONTENT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -58,85 +43,9 @@
 					"type": "Clob"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "C_ACCNT_NOTE_FORMAT",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Format"
-					},
-					"listTypeDefinitionExternalReferenceCode": "C_ACCOUNT_NOTE_FORMAT",
-					"name": "format",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "C_ACCNT_NOTE_TYPE",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Type"
-					},
-					"listTypeDefinitionExternalReferenceCode": "C_ACCOUNT_NOTE_TYPE",
-					"name": "type",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "C_ACCNT_NOTE_PRIORITY",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Priority"
-					},
-					"listTypeDefinitionExternalReferenceCode": "C_ACCOUNT_NOTE_PRIORITY",
-					"name": "priority",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"externalReferenceCode": "C_ACCNT_NOTE_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Status"
-					},
-					"listTypeDefinitionExternalReferenceCode": "C_ACCOUNT_NOTE_STATUS",
-					"name": "noteStatus",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "C_ACCNT_NOTE_CREATED_BY_USER_ID",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_CREATED_BY_USER_ID",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -154,7 +63,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_ACCNT_NOTE_CREATED_BY_USER_NAME",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_CREATED_BY_USER_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -170,34 +79,17 @@
 					"type": "String"
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "C_ACCNT_NOTE_MODIFIED_BY_USER_ID",
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_CUSTOM_STATUS",
 					"indexed": true,
-					"indexedAsKeyword": false,
+					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Modified By User ID"
+						"en_US": "Status"
 					},
-					"name": "modifiedByUserId",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Long"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_ACCNT_NOTE_MODIFIED_BY_USER_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Modified By User Name"
-					},
-					"name": "modifiedByUserName",
+					"listTypeDefinitionExternalReferenceCode": "LT_ACCOUNT_NOTE_STATUS",
+					"name": "customStatus",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -208,7 +100,25 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_ACCNT_NOTE_KORONEIKI_ACCOUNT_KEY",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_FORMAT",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Format"
+					},
+					"name": "format",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_KORONEIKI_ACCOUNT_KEY",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
@@ -226,7 +136,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_ACCNT_NOTE_KORONEIKI_PROJECT_NAME",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_KORONEIKI_PROJECT_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -234,6 +144,80 @@
 						"en_US": "Koroneiki Project Name"
 					},
 					"name": "koroneikiProjectName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_MODIFIED_BY_USER_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Modified By User ID"
+					},
+					"name": "modifiedByUserId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_MODIFIED_BY_USER_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Modified By User Name"
+					},
+					"name": "modifiedByUserName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_PRIORITY",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Priority"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LT_ACCOUNT_NOTE_PRIORITY",
+					"name": "priority",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"externalReferenceCode": "C_ACCOUNT_NOTE_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Type"
+					},
+					"listTypeDefinitionExternalReferenceCode": "LT_ACCOUNT_NOTE_TYPE",
+					"name": "type",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -260,7 +244,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "summary"
+			"titleObjectFieldName": "content"
 		},
 		{
 			"active": true,
@@ -275,26 +259,58 @@
 			"name": "Contract",
 			"objectFields": [
 				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "C_CONTRACT_START_DATE",
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "C_CONTRACT_CONTRACT_BILLING_CADENCE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Start Date"
+						"en_US": "Contract Billing Cadence"
 					},
-					"name": "startDate",
+					"name": "contractBillingCadence",
 					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
 					],
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "Date"
+					"type": "Integer"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "C_CONTRACT_CONTRACT_TERM",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Contract Term"
+					},
+					"name": "contractTerm",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_CONTRACT_CUSTOM_STATUS",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Status"
+					},
+					"name": "customStatus",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
 				},
 				{
 					"DBType": "Date",
@@ -317,42 +333,6 @@
 					"state": false,
 					"system": false,
 					"type": "Date"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "C_CONTRACT_CONTRACT_TERM",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Contract Term"
-					},
-					"name": "contractTerm",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Integer"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "C_CONTRACT_CONTRACT_BILLING_CADENCE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Contract Billing Cadence"
-					},
-					"name": "contractBillingCadence",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Integer"
 				},
 				{
 					"DBType": "Integer",
@@ -383,24 +363,6 @@
 						"en_US": "Owner Email Address"
 					},
 					"name": "ownerEmailAddress",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_CONTRACT_STATUS",
-					"indexed": true,
-					"indexedAsKeyword": true,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Status"
-					},
-					"name": "contractStatus",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -443,6 +405,28 @@
 					"state": false,
 					"system": false,
 					"type": "Double"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "DateTime",
+					"externalReferenceCode": "C_CONTRACT_START_DATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Start Date"
+					},
+					"name": "startDate",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Date"
 				}
 			],
 			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",

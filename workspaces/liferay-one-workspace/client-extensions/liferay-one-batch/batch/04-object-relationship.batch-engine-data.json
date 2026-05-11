@@ -12,6 +12,17 @@
 	},
 	"items": [
 		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_ACCOUNT_NOTE",
+			"label": {
+				"en_US": "Account Entry to Account Note"
+			},
+			"name": "accountEntryToAccountNote",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_ACCOUNT_NOTE",
+			"type": "oneToMany"
+		},
+		{
 			"deletionType": "disassociate",
 			"externalReferenceCode": "R_COMMERCE_ORDER_ITEM_TO_ENTITLEMENT",
 			"label": {
@@ -53,17 +64,6 @@
 			"name": "commerceProductToLicenseKey",
 			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT",
 			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
-			"type": "oneToMany"
-		},
-		{
-			"deletionType": "cascade",
-			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_ACCOUNT_NOTE",
-			"label": {
-				"en_US": "Account Entry to Account Note"
-			},
-			"name": "accountEntryToAccountNote",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectDefinitionExternalReferenceCode2": "C_ACCNT_NOTE",
 			"type": "oneToMany"
 		},
 		{

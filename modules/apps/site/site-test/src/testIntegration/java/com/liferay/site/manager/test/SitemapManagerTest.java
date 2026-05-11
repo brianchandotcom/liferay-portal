@@ -1298,6 +1298,7 @@ public class SitemapManagerTest {
 		_themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
 			_company, group, layout);
 
+		_themeDisplay.setPortalDomain(serverName);
 		_themeDisplay.setPortalURL("http://" + serverName + ":8080");
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -1307,7 +1308,6 @@ public class SitemapManagerTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
 
-		_themeDisplay.setPortalDomain(serverName);
 		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		_themeDisplay.setServerName(serverName);

@@ -89,7 +89,7 @@ test('View all blogs in the property in assets', async ({apiHelpers, page}) => {
 	});
 
 	await test.step('Go to Analytics Cloud asset page', async () => {
-		navigateToACPageViaURL({
+		await navigateToACPageViaURL({
 			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,

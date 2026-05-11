@@ -60,7 +60,8 @@ public class CommerceOrderAttachmentTableFDSViewTest {
 		_testGetFDSTableSchemaField(
 			"commerceOrderAttachmentRestrictedDataRenderer", "restricted",
 			"restricted", false);
-		_testGetFDSTableSchemaField(null, "title", "title", true);
+		_testGetFDSTableSchemaField(
+			"commerceOrderAttachmentTitleDataRenderer", "title", "title", true);
 	}
 
 	private void _testGetFDSTableSchemaField(

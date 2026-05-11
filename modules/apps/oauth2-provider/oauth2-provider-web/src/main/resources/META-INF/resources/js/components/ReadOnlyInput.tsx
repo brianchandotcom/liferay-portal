@@ -18,8 +18,8 @@ interface IReadOnlyInputProps extends React.HTMLAttributes<HTMLElement> {
 	initialValue: string;
 	isSecret?: boolean;
 	label: string;
-	title: string;
-	tooltip: string;
+	title?: string;
+	tooltip?: string;
 	type?: string;
 }
 
@@ -32,8 +32,8 @@ const ReadOnlyInput: React.FC<IReadOnlyInputProps> = (props) => {
 		initialValue,
 		isSecret = false,
 		label,
-		title,
-		tooltip,
+		title = '',
+		tooltip = '',
 		type = 'text',
 	} = props;
 

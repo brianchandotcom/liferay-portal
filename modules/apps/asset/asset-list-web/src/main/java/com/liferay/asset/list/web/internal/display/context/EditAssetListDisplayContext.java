@@ -836,9 +836,29 @@ public class EditAssetListDisplayContext {
 			return _referencedModelsGroupIds;
 		}
 
+		long[] groupIds = getSelectedGroupIds();
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-17564")) {
+
+			for (Group group : getSelectedGroups()) {
+				int depotEntryType = GetterUtil.getInteger(
+					group.getTypeSettingsProperty("depotEntryType"));
+
+				if (depotEntryType == DepotConstants.TYPE_SPACE) {
+					Group cmsGroup = GroupLocalServiceUtil.getGroup(
+						_themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+					groupIds = ArrayUtil.append(
+						groupIds, cmsGroup.getGroupId());
+
+					break;
+				}
+			}
+		}
+
 		_referencedModelsGroupIds =
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				getSelectedGroupIds(), true);
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds, true);
 
 		return _referencedModelsGroupIds;
 	}
@@ -917,44 +937,24 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Group> getSelectedGroups() throws PortalException {
+		if (_selectedGroups != null) {
+			return _selectedGroups;
+		}
+
 		long[] groupIds = GetterUtil.getLongValues(
 			StringUtil.split(
 				PropertiesParamUtil.getString(
 					_unicodeProperties, _httpServletRequest, "groupIds")));
 
 		if (ArrayUtil.isEmpty(groupIds)) {
-			return Collections.singletonList(_themeDisplay.getScopeGroup());
+			_selectedGroups = Collections.singletonList(
+				_themeDisplay.getScopeGroup());
+		}
+		else {
+			_selectedGroups = GroupLocalServiceUtil.getGroups(groupIds);
 		}
 
-		List<Group> groups = GroupLocalServiceUtil.getGroups(groupIds);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-17564")) {
-
-			return groups;
-		}
-
-		List<Group> selectedGroups = ListUtil.filter(
-			groups,
-			group -> {
-				int depotEntryType = GetterUtil.getInteger(
-					group.getTypeSettingsProperty("depotEntryType"));
-
-				return depotEntryType != DepotConstants.TYPE_SPACE;
-			});
-
-		if (selectedGroups.size() == groups.size()) {
-			return selectedGroups;
-		}
-
-		Group cmsGroup = GroupLocalServiceUtil.getGroup(
-			_themeDisplay.getCompanyId(), GroupConstants.CMS);
-
-		if (!selectedGroups.contains(cmsGroup)) {
-			selectedGroups.add(cmsGroup);
-		}
-
-		return selectedGroups;
+		return _selectedGroups;
 	}
 
 	public long[] getSelectedSegmentsEntryIds() {
@@ -1538,6 +1538,7 @@ public class EditAssetListDisplayContext {
 	private SearchContainer<AssetListEntryAssetEntryRel> _searchContainer;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private Long _segmentsEntryId;
+	private List<Group> _selectedGroups;
 	private long[] _selectedSegmentsEntryIds;
 	private String _selectSegmentsEntryURL;
 	private Boolean _subtypeFieldsFilterEnabled;

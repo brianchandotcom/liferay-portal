@@ -1401,7 +1401,7 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 
 			const objectRelationshipFormPage = new ObjectRelationshipFormPage(
 				page,
-				'.modal-content'
+				'role=dialog'
 			);
 
 			await objectRelationshipFormPage.labelInput.fill(
@@ -1413,7 +1413,7 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			);
 
 			await page
-				.locator('.modal-content')
+				.getByRole('dialog')
 				.getByRole('button', {name: 'Cancel'})
 				.click();
 
@@ -2651,40 +2651,16 @@ test.describe('Manage object relationships with system objects', () => {
 
 				await page.getByText('Relationship Tab', {exact: true}).click();
 
-				const actionsButtons = page.getByRole('button', {
-					name: 'Actions',
-				});
+				const rowActions = page.getByRole('button', {name: 'Actions'});
 
-				const trashLinks = page.locator(
-					'tbody tr [aria-label="Delete"]'
-				);
+				const initialCount = await rowActions.count();
 
-				const rowCount = await page.getByRole('row').count();
+				for (let i = 0; i < initialCount; i++) {
+					await rowActions.first().click();
+					await page.getByRole('menuitem', {name: 'Delete'}).click();
+					await page.getByRole('button', {name: 'Delete'}).click();
 
-				for (let i = 0; i < rowCount; i++) {
-					if (await actionsButtons.count()) {
-						await actionsButtons.first().click();
-						await page
-							.getByRole('menuitem', {name: 'Delete'})
-							.click();
-						await page
-							.getByRole('button', {name: 'Delete'})
-							.click();
-					}
-					else if (await trashLinks.count()) {
-						await trashLinks.first().click();
-					}
-					else {
-						break;
-					}
-
-					await expect
-						.poll(
-							async () =>
-								(await actionsButtons.count()) +
-								(await trashLinks.count())
-						)
-						.toBe(rowCount - i - 1);
+					await expect(rowActions).toHaveCount(initialCount - i - 1);
 				}
 			};
 
@@ -2833,38 +2809,7 @@ test.describe('Manage object relationships with system objects', () => {
 			const selectExistingRelationshipEntry = async (
 				userAccount: TUserAccount
 			) => {
-				const addRelationshipButton = page
-					.getByLabel('Add Relationship')
-					.first();
-				const selectExistingOneButton = page
-					.getByLabel('Select Existing One')
-					.first();
-
-				try {
-					await expect(addRelationshipButton).toBeVisible({
-						timeout: 3000,
-					});
-					await addRelationshipButton.click();
-				}
-				catch {
-					try {
-						await expect(selectExistingOneButton).toBeVisible({
-							timeout: 3000,
-						});
-						await selectExistingOneButton.click();
-					}
-					catch {
-						await page
-							.getByRole('button', {name: 'New'})
-							.first()
-							.click();
-						await page
-							.getByRole('menuitem', {
-								name: 'Select Existing One',
-							})
-							.click();
-					}
-				}
+				await page.getByLabel('Select Existing One').first().click();
 
 				const relationshipEntry = page
 					.frameLocator('iframe[title="Select"]')
@@ -3037,25 +2982,10 @@ test.describe('Manage object relationship entries', () => {
 			const selectExistingRelationshipEntry = async (
 				entryLabel: string
 			) => {
-				const selectExistingOneButton = page
-					.getByRole('button', {name: 'Select Existing One'})
-					.first();
-
-				try {
-					await expect(selectExistingOneButton).toBeVisible({
-						timeout: 3000,
-					});
-					await selectExistingOneButton.click();
-				}
-				catch {
-					await page
-						.getByRole('button', {name: 'New'})
-						.first()
-						.click();
-					await page
-						.getByRole('menuitem', {name: 'Select Existing One'})
-						.click();
-				}
+				await page.getByRole('button', {name: 'New'}).first().click();
+				await page
+					.getByRole('menuitem', {name: 'Select Existing One'})
+					.click();
 
 				const relationshipEntry = page
 					.frameLocator('iframe[title="Select"]')
@@ -3378,22 +3308,7 @@ test.describe('Manage object relationship entries', () => {
 
 			await openEntryRelationshipTab('Entry Test');
 
-			const selectExistingOneButton = page
-				.getByRole('button', {name: 'Select Existing One'})
-				.first();
-
-			try {
-				await expect(selectExistingOneButton).toBeVisible({
-					timeout: 3000,
-				});
-				await selectExistingOneButton.click();
-			}
-			catch {
-				await page.getByRole('button', {name: 'New'}).first().click();
-				await page
-					.getByRole('menuitem', {name: 'Select Existing One'})
-					.click();
-			}
+			await page.getByLabel('Select Existing One').first().click();
 
 			const selectFrame = page.frameLocator('iframe[title="Select"]');
 
@@ -3579,22 +3494,7 @@ test.describe('Manage object relationship entries', () => {
 
 			await openEntryRelationshipTab('Entry Test A');
 
-			const selectExistingOneButton = page
-				.getByRole('button', {name: 'Select Existing One'})
-				.first();
-
-			try {
-				await expect(selectExistingOneButton).toBeVisible({
-					timeout: 3000,
-				});
-				await selectExistingOneButton.click();
-			}
-			catch {
-				await page.getByRole('button', {name: 'New'}).first().click();
-				await page
-					.getByRole('menuitem', {name: 'Select Existing One'})
-					.click();
-			}
+			await page.getByLabel('Select Existing One').first().click();
 
 			const relationshipEntry = page
 				.frameLocator('iframe[title="Select"]')

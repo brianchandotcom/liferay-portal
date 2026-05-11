@@ -89,6 +89,7 @@ public class CommerceShipmentServiceTest {
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(group.getCompanyId());
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
 

@@ -67,13 +67,13 @@ public class StatusDisplayContext {
 			}
 		}
 
-		String exceptionParam = ParamUtil.getString(
+		String exceptionString = ParamUtil.getString(
 			_httpServletRequest, "exception");
 
-		if (Validator.isNotNull(exceptionParam) &&
+		if (Validator.isNotNull(exceptionString) &&
 			_isNoSuchExceptionName(
-				exceptionParam.substring(
-					exceptionParam.lastIndexOf(StringPool.PERIOD) + 1))) {
+				exceptionString.substring(
+					exceptionString.lastIndexOf(StringPool.PERIOD) + 1))) {
 
 			return true;
 		}

@@ -145,7 +145,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 
 					Assert.assertTrue(TestPortalCacheListener.await());
 
-					_assertAllCachesEmpty("Node 1");
+					_assertAllCachesEmpty();
 
 					Assert.assertArrayEquals(
 						"Node 1 listener events mismatch", events,
@@ -166,7 +166,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 				() -> {
 					Assert.assertTrue(TestPortalCacheListener.await());
 
-					_assertAllCachesEmpty("Node 2");
+					_assertAllCachesEmpty();
 
 					Assert.assertArrayEquals(
 						"Node 2 listener events mismatch", events,
@@ -349,7 +349,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 
 	}
 
-	private void _assertAllCachesEmpty(String nodeName) {
+	private void _assertAllCachesEmpty() {
 		for (PortalCache<Serializable, Serializable> portalCache :
 				_getAllRelatedPortalCaches(false)) {
 

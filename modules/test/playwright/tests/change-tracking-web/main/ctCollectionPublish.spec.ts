@@ -212,13 +212,18 @@ test('Publish Parallel Publications', async ({
 
 	await waitForAlert(page, `Success:${title2} was created successfully.`);
 
-	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection.body.id
-	);
+	await Promise.all([
+		apiHelpers.headlessChangeTracking.publishCTCollection(
+			ctCollection.body.id
+		),
+		apiHelpers.headlessChangeTracking.publishCTCollection(
+			ctCollection2.body.id
+		),
+	]);
 
-	await apiHelpers.headlessChangeTracking.publishCTCollection(
-		ctCollection2.body.id
-	);
+	await changeTrackingPage.assertStatus('Published', ctCollection.body.name);
+
+	await changeTrackingPage.assertStatus('Published', ctCollection2.body.name);
 
 	await journalPage.goto(site.friendlyUrlPath);
 

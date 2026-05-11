@@ -694,6 +694,8 @@ definition {
 		var accountGroupPageListUp = "brazilian,European,Gold,North American";
 		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
 		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
+		var userGroupPageListDown = "LXC UserGroup,DXP UserGroup,ac UserGroup";
+		var userGroupPageListUp = "ac UserGroup,DXP UserGroup,LXC UserGroup";
 
 		task ("Create 4 account groups") {
 			for (var accountGroupName : list ${accountGroupPageListUp}) {
@@ -704,6 +706,14 @@ definition {
 		task ("Create 5 organizations") {
 			for (var organizationName : list ${orgNamePageListUp}) {
 				JSONOrganization.addOrganization(organizationName = ${organizationName});
+			}
+		}
+
+		task ("Create some user groups") {
+			for (var userGroupName : list ${userGroupPageListUp}) {
+				JSONUserGroup.addUserGroup(
+					userGroupDescription = "UserGroup Description",
+					userGroupName = ${userGroupName});
 			}
 		}
 
@@ -798,6 +808,38 @@ definition {
 				itemValueList = ${orgNamePageListDown});
 		}
 
+		task ("Click on Select Contacts > User Groups") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "User Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Sort the list by the User Groups column (Ascending)") {
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "User Groups");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = ${userGroupPageListUp});
+		}
+
+		task ("Sort the list by the User Groups column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3",
+				itemValueList = ${userGroupPageListDown});
+		}
+
 		task ("Complete the wizard configuration") {
 			ACDXPSettings.completeWizardConfiguration();
 		}
@@ -836,120 +878,6 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = "1,2,3,4,5",
 				itemValueList = ${orgNamePageListDown});
-		}
-	}
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12763 | Test Summary: Check that it is possible to sort by user groups name in the groups list"
-	@priority = 3
-	test CheckCanSortByUserGroupsName {
-		var userGroupPageListUp = "ac UserGroup,DXP UserGroup,LXC UserGroup";
-		var userGroupPageListDown = "LXC UserGroup,DXP UserGroup,ac UserGroup";
-
-		task ("Connect Commerce and AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Portal";
-			var siteName = "Minium";
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Enable commerce and sync the commerce channel and the related site") {
-			ACDXPSettings.syncChannel(
-				channelName = ${channelName},
-				propertyName = ${assignedPropertyName});
-
-			ACDXPSettings.syncSites(
-				propertyName = ${assignedPropertyName},
-				siteName = ${siteName});
-		}
-
-		task ("Go to the next page to configure people data") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Create some user groups") {
-			for (var userGroupName : list ${userGroupPageListUp}) {
-				JSONUserGroup.addUserGroup(
-					userGroupDescription = "UserGroup Description",
-					userGroupName = ${userGroupName});
-			}
-		}
-
-		task ("Click on Select Contacts > Click on sync contacts by groups") {
-			Click(
-				key_panel = "Select Contacts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "User Groups",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-		}
-
-		task ("Sort the list by the User Groups column (Ascending)") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "User Groups");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3",
-				itemValueList = ${userGroupPageListUp});
-		}
-
-		task ("Sort the list by the User Groups column (Descending)") {
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3",
-				itemValueList = ${userGroupPageListDown});
-		}
-
-		task ("Complete the wizard configuration") {
-			ACDXPSettings.completeWizardConfiguration();
-		}
-
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
-		}
-
-		task ("Click on Select Contacts > Click on sync contacts by groups") {
-			Click(
-				key_panel = "Select Contacts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "User Groups",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-		}
-
-		task ("Sort the list by the User Groups column (Ascending)") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "User Groups");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3",
-				itemValueList = ${userGroupPageListUp});
-		}
-
-		task ("Sort the list by the User Groups column (Descending)") {
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3",
-				itemValueList = ${userGroupPageListDown});
 		}
 	}
 

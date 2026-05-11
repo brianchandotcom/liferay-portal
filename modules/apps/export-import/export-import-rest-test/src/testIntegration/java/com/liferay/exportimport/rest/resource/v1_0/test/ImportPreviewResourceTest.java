@@ -93,11 +93,13 @@ public class ImportPreviewResourceTest
 		_siteObjectDefinition = _publishObjectDefinitionWithEntries(
 			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
 
-		_user = UserTestUtil.addUser(testCompany);
+		String password = RandomTestUtil.randomString();
+
+		_user = UserTestUtil.addUser(testCompany, password);
 
 		_importPreviewResource = ImportPreviewResource.builder(
 		).authentication(
-			_user.getEmailAddress(), RandomTestUtil.randomString()
+			_user.getEmailAddress(), password
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(

@@ -13,7 +13,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "L_AI_HUB_GENERATION_STATUSES",
+			"externalReferenceCode": "L_CSG_GENERATION_STATUSES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "REFINING",
@@ -46,7 +46,7 @@
 					"system": true
 				}
 			],
-			"name": "AI Hub Generation Statuses",
+			"name": "CSG Generation Statuses",
 			"system": true
 		}
 	]

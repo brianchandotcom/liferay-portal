@@ -57,7 +57,7 @@ import org.junit.runner.RunWith;
  */
 @FeatureFlag("LPD-85514")
 @RunWith(Arquillian.class)
-public class CommitAIHubGenerationObjectActionExecutorTest {
+public class CommitCSGGenerationObjectActionExecutorTest {
 
 	@ClassRule
 	@Rule
@@ -69,11 +69,11 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 		_generationObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_GENERATION", TestPropsValues.getCompanyId());
+					"L_CSG_GENERATION", TestPropsValues.getCompanyId());
 		_generationItemObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_GENERATION_ITEM", TestPropsValues.getCompanyId());
+					"L_CSG_GENERATION_ITEM", TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
 
@@ -227,7 +227,7 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 			).put(
 				"loadOrder", loadOrder
 			).put(
-				"r_items_l_aiHubGenerationId",
+				"r_items_l_csgGenerationId",
 				generationObjectEntry.getObjectEntryId()
 			).build(),
 			_serviceContext);

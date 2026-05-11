@@ -141,10 +141,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubContentRetriever", "/ai-hub/content-retrievers"
 		).put(
-			"AIHubGeneration", "/ai-hub/generations"
-		).put(
-			"AIHubGenerationItem", "/ai-hub/generation-items"
-		).put(
 			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
@@ -184,6 +180,10 @@ public class ObjectDefinitionUtil {
 			"CommerceReturn", "/commerce/returns"
 		).put(
 			"CommerceReturnItem", "/commerce/return-items"
+		).put(
+			"CSGGeneration", "/content-site-generator/generations"
+		).put(
+			"CSGGenerationItem", "/content-site-generator/generation-items"
 		).put(
 			"DataSet", "/data-set-admin/data-sets"
 		).put(

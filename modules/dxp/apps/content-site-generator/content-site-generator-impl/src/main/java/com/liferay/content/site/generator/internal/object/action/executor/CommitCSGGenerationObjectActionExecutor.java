@@ -65,17 +65,17 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	property = "object.action.executor.key=" + CommitAIHubGenerationObjectActionExecutor.KEY,
+	property = "object.action.executor.key=" + CommitCSGGenerationObjectActionExecutor.KEY,
 	service = ObjectActionExecutor.class
 )
-public class CommitAIHubGenerationObjectActionExecutor
+public class CommitCSGGenerationObjectActionExecutor
 	extends BaseObjectActionExecutor implements ObjectDefinitionScoped {
 
-	public static final String KEY = "commit-ai-hub-generation";
+	public static final String KEY = "commit-csg-generation";
 
 	@Override
 	public List<String> getAllowedObjectDefinitionNames() {
-		return List.of("AIHubGeneration");
+		return List.of("CSGGeneration");
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class CommitAIHubGenerationObjectActionExecutor
 		long objectEntryId = payloadJSONObject.getLong("classPK");
 
 		ExecutorService executorService =
-			_portalExecutorManager.getPortalExecutor("AIHubGenerationCommit");
+			_portalExecutorManager.getPortalExecutor("CSGGenerationCommit");
 
 		executorService.submit(
 			() -> _doExecute(companyId, objectEntryId, userId));
@@ -155,7 +155,7 @@ public class CommitAIHubGenerationObjectActionExecutor
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.
 					getObjectDefinitionByExternalReferenceCode(
-						"L_AI_HUB_GENERATION_ITEM", companyId);
+						"L_CSG_GENERATION_ITEM", companyId);
 
 			List<Map<String, Serializable>> valuesList =
 				_objectEntryLocalService.getValuesList(
@@ -163,7 +163,7 @@ public class CommitAIHubGenerationObjectActionExecutor
 					objectDefinition.getObjectDefinitionId(),
 					_filterFactory.create(
 						StringBundler.concat(
-							"r_items_l_aiHubGenerationId eq '", objectEntryId,
+							"r_items_l_csgGenerationId eq '", objectEntryId,
 							"'"),
 						objectDefinition),
 					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -347,7 +347,7 @@ public class CommitAIHubGenerationObjectActionExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommitAIHubGenerationObjectActionExecutor.class);
+		CommitCSGGenerationObjectActionExecutor.class);
 
 	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;

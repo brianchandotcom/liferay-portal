@@ -16,6 +16,7 @@ export class SpaceSummaryPage {
 
 	readonly addContentButton: Locator;
 	readonly addFileButton: Locator;
+	readonly addMembersButton: Locator;
 	readonly closeButton: Locator;
 	readonly galleryPreview: Locator;
 	readonly userGroupsTab: Locator;
@@ -31,6 +32,11 @@ export class SpaceSummaryPage {
 		this.addContentButton = page.getByRole('button', {name: `Add Content`});
 
 		this.addFileButton = page.getByRole('button', {name: `Add Files`});
+
+		this.addMembersButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Members',
+		});
 
 		this.closeButton = this.page
 			.locator('.modal-header')

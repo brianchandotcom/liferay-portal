@@ -89,7 +89,10 @@ public class CollaboratorUtil {
 			}
 
 			Ticket ticket = _addOrUpdateTicket(
-				className, classPK, collaborator, collaboratorId, companyId,
+				className, classPK, collaborator, companyId,
+				_fetchTicket(
+					companyId, className, classPK, collaborator, collaboratorId,
+					ticketLocalService),
 				ticketLocalService);
 
 			return toCollaborator(
@@ -145,8 +148,10 @@ public class CollaboratorUtil {
 
 				if (existingUser == null) {
 					Ticket ticket = _addOrUpdateTicket(
-						className, classPK, collaborator,
-						GetterUtil.getLong(collaborator.getId()), companyId,
+						className, classPK, collaborator, companyId,
+						_fetchTicket(
+							companyId, className, classPK, collaborator,
+							GetterUtil.getLong(collaborator.getId()), ticketLocalService),
 						ticketLocalService);
 
 					sharingEntry = _addOrUpdateSharingEntry(
@@ -389,19 +394,8 @@ public class CollaboratorUtil {
 
 	private static Ticket _addOrUpdateTicket(
 			String className, long classPK, Collaborator collaborator,
-			long collaboratorId, long companyId,
-			TicketLocalService ticketLocalService)
-		throws Exception {
-
-		Ticket ticket = ticketLocalService.fetchTicket(collaboratorId);
-
-		if ((ticket != null) &&
-			(!StringUtil.equals(className, ticket.getClassName()) ||
-			 (classPK != ticket.getClassPK()) ||
-			 (ticket.getType() != TicketConstants.TYPE_INVITE_COLLABORATOR))) {
-
-			throw new NoSuchModelException();
-		}
+			long companyId, Ticket ticket,
+			TicketLocalService ticketLocalService) {
 
 		String emailAddress = _normalizeEmailAddress(
 			collaborator.getEmailAddress());
@@ -455,6 +449,39 @@ public class CollaboratorUtil {
 		}
 
 		ticketLocalService.deleteTicket(ticket.getTicketId());
+	}
+
+	private static Ticket _fetchTicket(
+		long companyId, String className, long classPK,
+		Collaborator collaborator, long collaboratorId,
+		TicketLocalService ticketLocalService) {
+
+		Ticket ticket = ticketLocalService.fetchTicket(collaboratorId);
+
+		if (ticket != null) {
+			return ticket;
+		}
+
+		return _fetchTicketByEmailAddress(
+			companyId, className, classPK, collaborator.getEmailAddress(),
+			ticketLocalService);
+	}
+
+	private static Ticket _fetchTicketByEmailAddress(
+		long companyId, String className, long classPK, String emailAddress,
+		TicketLocalService ticketLocalService) {
+
+		List<Ticket> tickets = ticketLocalService.getTickets(
+			companyId, className, classPK,
+			TicketConstants.TYPE_INVITE_COLLABORATOR);
+
+		for (Ticket ticket : tickets) {
+			if (StringUtil.equals(emailAddress, ticket.getExtraInfo())) {
+				return ticket;
+			}
+		}
+
+		return null;
 	}
 
 	private static String _normalizeEmailAddress(String emailAddress) {

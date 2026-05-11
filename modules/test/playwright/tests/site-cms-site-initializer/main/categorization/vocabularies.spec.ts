@@ -463,6 +463,55 @@ test(
 );
 
 test(
+	'Open categories from the Categories column link',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, categoriesPage, vocabulariesPage}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const vocabularyName = getRandomString();
+
+		const vocabularyId = await apiHelpers.headlessAdminTaxonomy
+			.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: vocabularyName,
+				siteId,
+				visibilityType: 'PUBLIC',
+			})
+			.then((response) => response.id);
+
+		const categoryName1 = getRandomString();
+		const categoryName2 = getRandomString();
+
+		for (const name of [categoryName1, categoryName2]) {
+			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+				{
+					name,
+					vocabularyId,
+				}
+			);
+		}
+
+		await vocabulariesPage.goto();
+
+		await vocabulariesPage.clickCategoriesLink(vocabularyName);
+
+		await categoriesPage.assertBreadcrumbItemText(1, vocabularyName);
+
+		await expect(categoriesPage.getItem(categoryName1)).toBeVisible();
+		await expect(categoriesPage.getItem(categoryName2)).toBeVisible();
+	}
+);
+
+test(
 	'Search vocabularies by name',
 	{tag: '@LPD-89497'},
 	async ({apiHelpers, vocabulariesPage}) => {

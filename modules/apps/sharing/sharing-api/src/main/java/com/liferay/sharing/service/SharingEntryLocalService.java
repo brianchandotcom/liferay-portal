@@ -559,6 +559,9 @@ public interface SharingEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getToTicketSharingEntries(long toTicketId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SharingEntry> getToUserGroupSharingEntries(long toUserGroupId);
 
 	/**
@@ -734,4 +737,4 @@ public interface SharingEntryLocalService
 	public SharingEntry updateSharingEntry(SharingEntry sharingEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1779270659
+// LIFERAY-SERVICE-BUILDER-HASH:280135344

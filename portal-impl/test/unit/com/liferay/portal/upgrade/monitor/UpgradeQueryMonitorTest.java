@@ -87,17 +87,17 @@ public class UpgradeQueryMonitorTest {
 			String query4 = RandomTestUtil.randomString();
 
 			String expectedMessage1 = StringBundler.concat(
-				"Query \"", query1, "\" (id ", id1,
-				"), which has been running for 30 seconds, is locked.");
+				"Locked query \"", query1, "\" (id ", id1,
+				") running for 30 seconds");
 			String expectedMessage2 = StringBundler.concat(
-				"Query \"", query2, "\" (id ", id2,
-				"), which has been running for 300 seconds, is locked.");
+				"Locked query \"", query2, "\" (id ", id2,
+				") running for 300 seconds");
 			String expectedMessage3 = StringBundler.concat(
-				"Query \"", query3, "\" (id ", id3,
-				"), which has been running for 600 seconds, is locked.");
+				"Locked query \"", query3, "\" (id ", id3,
+				") running for 600 seconds");
 			String expectedMessage4 = StringBundler.concat(
-				"Query \"", query4, "\" (id ", id4,
-				"), which has been running for 900 seconds, is locked.");
+				"Locked query \"", query4, "\" (id ", id4,
+				") running for 900 seconds");
 
 			DataSource originalDataSource = InfrastructureUtil.getDataSource();
 
@@ -222,15 +222,19 @@ public class UpgradeQueryMonitorTest {
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
 				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
+					logEntries.toString(), 2, logEntries.size());
 
 				LogEntry logEntry1 = logEntries.get(0);
 
 				Assert.assertEquals(
-					StringBundler.concat(
-						"Upgrade query monitoring was disabled. Unable to ",
-						"detect locked queries: ", exceptionMessage),
+					"Upgrade query monitoring is disabled",
 					logEntry1.getMessage());
+
+				LogEntry logEntry2 = logEntries.get(1);
+
+				Assert.assertEquals(
+					"Unable to detect locked queries: " + exceptionMessage,
+					logEntry2.getMessage());
 			}
 			finally {
 				InfrastructureUtil.setDataSource(originalDataSource);

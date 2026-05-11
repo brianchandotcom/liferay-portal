@@ -119,7 +119,7 @@ export function NewExport({
 			initialValues={{
 				contentSelection: undefined,
 				dateFilter: {filterType: FilterType.All} as DateFilterValues,
-				filename: '',
+				fileName: '',
 			}}
 			onSubmit={async (values) => {
 				const flatValues = flattenContentSelection({
@@ -131,15 +131,15 @@ export function NewExport({
 				console.log({
 					...dateFilterToQuery(values.dateFilter),
 					contentSelection: values.contentSelection,
-					filename: values.filename,
+					fileName: values.fileName,
 					flatValues,
 				});
 			}}
 			validate={(values: FormikValues) => {
 				const errors: {[key: string]: string} = {};
 
-				if (!values?.filename) {
-					errors.filename = Liferay.Language.get(
+				if (!values?.fileName) {
+					errors.fileName = Liferay.Language.get(
 						'this-field-is-required'
 					);
 				}

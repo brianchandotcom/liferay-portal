@@ -15,11 +15,14 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -285,20 +288,26 @@ public class CollaboratorUtil {
 	public static void deleteCollaboratorByEmailAddress(
 			String className, long classNameId, long classPK, long companyId,
 			String emailAddress, SharingEntryService sharingEntryService,
-			TicketLocalService ticketLocalService,
+			TicketLocalService ticketLocalService, User user,
 			UserLocalService userLocalService)
 		throws Exception {
 
 		_validateEmailAddress(emailAddress);
 
-		User user = userLocalService.fetchUserByEmailAddress(
+		User toUser = userLocalService.fetchUserByEmailAddress(
 			companyId, emailAddress);
 
-		if (user != null) {
+		if (toUser != null) {
 			SharingEntry sharingEntry = sharingEntryService.fetchSharingEntry(
-				0, 0, user.getUserId(), classNameId, classPK);
+				0, 0, toUser.getUserId(), classNameId, classPK);
 
 			if (sharingEntry != null) {
+				if ((sharingEntry.getUserId() != user.getUserId()) &&
+					!_hasViewPermission(toUser)) {
+
+					throw new NoSuchModelException();
+				}
+
 				sharingEntryService.deleteSharingEntry(sharingEntry);
 			}
 		}
@@ -612,6 +621,12 @@ public class CollaboratorUtil {
 		}
 
 		return null;
+	}
+
+	private static boolean _hasViewPermission(User user) throws Exception {
+		return UserPermissionUtil.contains(
+			GuestOrUserUtil.getPermissionChecker(), user.getUserId(),
+			ActionKeys.VIEW);
 	}
 
 	private static String _normalizeEmailAddress(String emailAddress) {

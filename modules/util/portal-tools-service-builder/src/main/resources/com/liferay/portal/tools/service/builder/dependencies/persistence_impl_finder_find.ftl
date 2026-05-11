@@ -199,10 +199,6 @@ that may or may not be enforced with a unique index at the database level. Case
 
 	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
 		<#if entityFinder.collectionPersistenceFinderEnabled>
-			<#if entity.isChangeTrackingEnabled()>
-				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-			</#if>
-
 			return _collectionPersistenceFinderBy${entityFinder.name}.find(
 				${finderCacheInstance},
 				new Object[] {
@@ -219,10 +215,6 @@ that may or may not be enforced with a unique index at the database level. Case
 					</#list>
 				},
 				start, end, orderByComparator, useFinderCache);
-
-			<#if entity.isChangeTrackingEnabled()>
-				}
-			</#if>
 		<#else>
 			<#if entity.isChangeTrackingEnabled()>
 				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
@@ -1740,10 +1732,6 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#if>
 
 		<#if entityFinder.collectionPersistenceFinderEnabled>
-			<#if entity.isChangeTrackingEnabled()>
-				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-			</#if>
-
 			return _collectionPersistenceFinderBy${entityFinder.name}.find(
 				${finderCacheInstance},
 				new Object[] {
@@ -1764,10 +1752,6 @@ that may or may not be enforced with a unique index at the database level. Case
 					</#list>
 				},
 				start, end, orderByComparator, useFinderCache);
-
-			<#if entity.isChangeTrackingEnabled()>
-				}
-			</#if>
 		<#else>
 			<#if entity.isChangeTrackingEnabled()>
 				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
@@ -2455,10 +2439,6 @@ that may or may not be enforced with a unique index at the database level. Case
 
 	boolean useFinderCache) {
 		<#if entityFinder.uniquePersistenceFinderEnabled>
-			<#if entity.isChangeTrackingEnabled()>
-				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-			</#if>
-
 			return _uniquePersistenceFinderBy${entityFinder.name}.fetch(
 				${finderCacheInstance},
 				new Object[] {
@@ -2471,10 +2451,6 @@ that may or may not be enforced with a unique index at the database level. Case
 					</#list>
 				},
 				useFinderCache);
-
-			<#if entity.isChangeTrackingEnabled()>
-				}
-			</#if>
 		<#else>
 			<#if entity.isChangeTrackingEnabled()>
 				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {

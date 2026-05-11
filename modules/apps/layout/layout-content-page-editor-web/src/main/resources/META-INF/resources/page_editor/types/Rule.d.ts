@@ -38,7 +38,7 @@ export interface Condition {
 	field?: 'user' | 'role' | 'segment' | string;
 	id: string;
 	options?: {
-		type: 'equal' | 'not-equal';
+		type: 'equal' | 'greater-than' | 'less-than' | 'not-equal';
 		value?: string;
 	};
 	type: 'field' | 'form' | 'user' | undefined;

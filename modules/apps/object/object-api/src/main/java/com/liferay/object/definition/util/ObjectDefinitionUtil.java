@@ -141,6 +141,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubContentRetriever", "/ai-hub/content-retrievers"
 		).put(
+			"AIHubCrawlJob", "/ai-hub/crawl-jobs"
+		).put(
 			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"

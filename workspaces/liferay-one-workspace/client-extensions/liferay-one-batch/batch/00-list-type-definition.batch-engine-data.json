@@ -11,25 +11,25 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "C_ACCOUNT_REGION",
+			"externalReferenceCode": "LT_ACCOUNT_REGION",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "C_ACCOUNT_REGION_AMERICAS",
+					"externalReferenceCode": "LT_ACCOUNT_REGION_AMERICAS",
 					"key": "americas",
 					"name": "Americas"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_REGION_EMEA",
+					"externalReferenceCode": "LT_ACCOUNT_REGION_EMEA",
 					"key": "eMEA",
 					"name": "EMEA"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_REGION_APAC",
+					"externalReferenceCode": "LT_ACCOUNT_REGION_APAC",
 					"key": "aPAC",
 					"name": "APAC"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_REGION_LATAM",
+					"externalReferenceCode": "LT_ACCOUNT_REGION_LATAM",
 					"key": "lATAM",
 					"name": "LATAM"
 				}
@@ -37,35 +37,35 @@
 			"name": "Account Region"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_TIER",
+			"externalReferenceCode": "LT_ACCOUNT_TIER",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "C_ACCOUNT_TIER_PLATINUM",
+					"externalReferenceCode": "LT_ACCOUNT_TIER_PLATINUM",
 					"key": "platinum",
 					"name": "Platinum"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_TIER_GOLD",
+					"externalReferenceCode": "LT_ACCOUNT_TIER_GOLD",
 					"key": "gold",
 					"name": "Gold"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_TIER_SILVER",
+					"externalReferenceCode": "LT_ACCOUNT_TIER_SILVER",
 					"key": "silver",
 					"name": "Silver"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_TIER_BRONZE",
+					"externalReferenceCode": "LT_ACCOUNT_TIER_BRONZE",
 					"key": "bronze",
 					"name": "Bronze"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_TIER_TRIAL",
+					"externalReferenceCode": "LT_ACCOUNT_TIER_TRIAL",
 					"key": "trial",
 					"name": "Trial"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_TIER_COMMUNITY",
+					"externalReferenceCode": "LT_ACCOUNT_TIER_COMMUNITY",
 					"key": "community",
 					"name": "Community"
 				}
@@ -73,25 +73,25 @@
 			"name": "Account Tier"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_STATUS",
+			"externalReferenceCode": "LT_ACCOUNT_STATUS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "C_ACCOUNT_STATUS_ACTIVE",
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_ACTIVE",
 					"key": "active",
 					"name": "Active"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_STATUS_SUSPENDED",
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_SUSPENDED",
 					"key": "suspended",
 					"name": "Suspended"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_STATUS_CANCELLED",
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_CANCELLED",
 					"key": "cancelled",
 					"name": "Cancelled"
 				},
 				{
-					"externalReferenceCode": "C_ACCOUNT_STATUS_EXPIRED",
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_EXPIRED",
 					"key": "expired",
 					"name": "Expired"
 				}
@@ -99,51 +99,75 @@
 			"name": "Account Status"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_FLAG_CODE",
+			"externalReferenceCode": "LT_ACCOUNT_FLAG_CODE",
 			"listTypeEntries": [
 			],
 			"name": "Account Flag Code"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_FLAG_VALUE",
+			"externalReferenceCode": "LT_ACCOUNT_FLAG_VALUE",
 			"listTypeEntries": [
 			],
 			"name": "Account Flag Value"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_NOTE_FORMAT",
+			"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE",
 			"listTypeEntries": [
-			],
-			"name": "Account Note Format"
-		},
-		{
-			"externalReferenceCode": "C_ACCOUNT_NOTE_TYPE",
-			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE_GENERAL",
+					"key": "general",
+					"name": "General"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE_SALES",
+					"key": "sales",
+					"name": "Sales"
+				}
 			],
 			"name": "Account Note Type"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_NOTE_PRIORITY",
+			"externalReferenceCode": "LT_ACCOUNT_NOTE_PRIORITY",
 			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_PRIORITY_NORMAL",
+					"key": "normal",
+					"name": "Normal"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_PRIORITY_PINNED",
+					"key": "pinned",
+					"name": "Pinned"
+				}
 			],
 			"name": "Account Note Priority"
 		},
 		{
-			"externalReferenceCode": "C_ACCOUNT_NOTE_STATUS",
+			"externalReferenceCode": "LT_ACCOUNT_NOTE_STATUS",
 			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_STATUS_APPROVED",
+					"key": "approved",
+					"name": "Approved"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_STATUS_ARCHIVED",
+					"key": "archived",
+					"name": "Archived"
+				}
 			],
 			"name": "Account Note Status"
 		},
 		{
-			"externalReferenceCode": "C_ENTITLEMENT_RULE_TYPE",
+			"externalReferenceCode": "LT_ENTITLEMENT_RULE_TYPE",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_RULE_TYPE_FILTER",
+					"externalReferenceCode": "LT_ENTITLEMENT_DEFINITION_RULE_TYPE_FILTER",
 					"key": "filter",
 					"name": "Filter"
 				},
 				{
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_RULE_TYPE_SCRIPTED",
+					"externalReferenceCode": "LT_ENTITLEMENT_DEFINITION_RULE_TYPE_SCRIPTED",
 					"key": "scripted",
 					"name": "Scripted"
 				}
@@ -151,15 +175,15 @@
 			"name": "Entitlement Rule Type"
 		},
 		{
-			"externalReferenceCode": "C_ENTITLEMENT_STATUS",
+			"externalReferenceCode": "LT_ENTITLEMENT_STATUS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_STATUS_ACTIVE",
+					"externalReferenceCode": "LT_ENTITLEMENT_DEFINITION_STATUS_ACTIVE",
 					"key": "active",
 					"name": "Active"
 				},
 				{
-					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_STATUS_INACTIVE",
+					"externalReferenceCode": "LT_ENTITLEMENT_DEFINITION_STATUS_INACTIVE",
 					"key": "inactive",
 					"name": "Inactive"
 				}
@@ -167,55 +191,55 @@
 			"name": "Entitlement Status"
 		},
 		{
-			"externalReferenceCode": "C_PRODUCT_FAMILY",
+			"externalReferenceCode": "LT_PRODUCT_FAMILY",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_DXP",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_DXP",
 					"key": "dXP",
 					"name": "DXP"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_PORTAL",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_PORTAL",
 					"key": "portal",
 					"name": "Portal"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_ANALYTICS",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_ANALYTICS",
 					"key": "analytics",
 					"name": "Analytics"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_COMMERCE",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_COMMERCE",
 					"key": "commerce",
 					"name": "Commerce"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_AI_HUB",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_AI_HUB",
 					"key": "aIHub",
 					"name": "AIHub"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_CMP",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_CMP",
 					"key": "cMP",
 					"name": "CMP"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_PARTNER",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_PARTNER",
 					"key": "partner",
 					"name": "Partner"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_SUPPORT",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_SUPPORT",
 					"key": "support",
 					"name": "Support"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_TRAINING",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_TRAINING",
 					"key": "training",
 					"name": "Training"
 				},
 				{
-					"externalReferenceCode": "C_PRODUCT_FAMILY_OTHER",
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_OTHER",
 					"key": "other",
 					"name": "Other"
 				}

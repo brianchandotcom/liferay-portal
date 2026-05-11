@@ -107,7 +107,7 @@ definition {
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12663 | Test Summary: Can search for groups in the select contacts modal"
 	@priority = 4
-	test CanSearchGroupsInContactsModal {
+	test CanSearchAcrossEntityTypesInPropertyWizard {
 		var foundUserGroup = "LXC";
 		var notFoundUserGroup = "AC,DXP";
 

@@ -7,6 +7,7 @@ package com.liferay.headless.object.util.v1_0;
 
 import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -34,6 +35,7 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.GroupUtil;
+import com.liferay.sharing.exception.DuplicateSharingEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -113,6 +115,10 @@ public class CollaboratorUtil {
 			companyId, emailAddress);
 
 		if (existingUser != null) {
+			_validateSharingEntry(
+				classNameId, classPK, emailAddress, sharingEntryService, user,
+				existingUser.getUserId());
+
 			SharingEntry sharingEntry = _addOrUpdateSharingEntry(
 				classNameId, classPK, collaborator, existingUser.getUserId(),
 				groupId, httpServletRequest, sharingEntryService, "User",
@@ -186,12 +192,14 @@ public class CollaboratorUtil {
 				_validateEmailAddress(collaborator.getEmailAddress());
 				_validateEmailActionIds(collaborator.getActionIds());
 
-				String emailAddress = collaborator.getEmailAddress();
-
 				User existingUser = userLocalService.fetchUserByEmailAddress(
-					companyId, emailAddress);
+					companyId, collaborator.getEmailAddress());
 
 				if (existingUser != null) {
+					_validateSharingEntry(
+						classNameId, classPK, collaborator.getEmailAddress(),
+						sharingEntryService, user, existingUser.getUserId());
+
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
 						existingUser.getUserId(), groupId, httpServletRequest,
@@ -642,6 +650,25 @@ public class CollaboratorUtil {
 		if (!Validator.isEmailAddress(emailAddress)) {
 			throw new IllegalArgumentException(
 				"Invalid email address: " + emailAddress);
+		}
+	}
+
+	private static void _validateSharingEntry(
+			long classNameId, long classPK, String emailAddress,
+			SharingEntryService sharingEntryService, User user, long userId)
+		throws Exception {
+
+		SharingEntry sharingEntry = sharingEntryService.fetchSharingEntry(
+			0, 0, userId, classNameId, classPK);
+
+		if ((sharingEntry != null) &&
+			(sharingEntry.getUserId() != user.getUserId())) {
+
+			throw new DuplicateSharingEntryException(
+				StringBundler.concat(
+					"A sharing entry already exists for ", emailAddress,
+					" with classNameId ", classNameId, " and classPK ",
+					classPK));
 		}
 	}
 

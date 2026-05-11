@@ -6,6 +6,8 @@
 import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
+import CommerceOrderAttachmentRestrictedDataRenderer from './CommerceOrderAttachmentRestrictedDataRenderer';
+
 const openDeleteConfirmationModal = ({itemName, loadData, url}) => {
 	openModal({
 		bodyHTML: Liferay.Language.get(
@@ -74,6 +76,10 @@ const openDeleteConfirmationModal = ({itemName, loadData, url}) => {
 
 const AttachmentsFDSPropsTransformer = (props) => ({
 	...props,
+	customDataRenderers: {
+		commerceOrderAttachmentRestrictedDataRenderer:
+			CommerceOrderAttachmentRestrictedDataRenderer,
+	},
 	itemsActions: props.itemsActions?.map((action) => {
 		if (action?.data?.id === 'delete') {
 			return {

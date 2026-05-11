@@ -1,0 +1,13 @@
+apiDir: ../mcp-server-rest-api/src/main/java
+apiPackagePath: com.liferay.mcp.server.rest
+application:
+    baseURI: /mcp-server
+    className: MCPServerApplication
+    name: Liferay.MCP.Server
+author: Alejandro Tardín
+clientDir: ../mcp-server-rest-client/src/main/java
+compatibilityVersion: 15
+generateBatch: false
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../mcp-server-rest-test/src/testIntegration/java

@@ -1,0 +1,203 @@
+components:
+    schemas:
+        Tool:
+            description:
+                A tool exposed by a tool-set, including its input schema.
+            properties:
+                description:
+                    description:
+                        Human-readable description of what this tool does.
+                    type: string
+                inputSchema:
+                    additionalProperties: true
+                    description:
+                        JSON Schema describing the arguments accepted by the tool. Build an input map matching this
+                        schema and POST it to `invoke` under the same URL to execute the tool.
+                    type: object
+                name:
+                    description:
+                        Stable identifier of the tool within its tool-set.
+                    type: string
+            required:
+                -   name
+            type: object
+        ToolSet:
+            description:
+                A named collection of tools.
+            properties:
+                description:
+                    description:
+                        Curated, one-sentence description of what this tool-set can do, suitable for routing a natural-language request.
+                    type: string
+                name:
+                    description:
+                        Stable identifier of the tool-set. Pass this verbatim as `toolSetName` in subsequent calls.
+                    type: string
+            required:
+                -   name
+            type: object
+        ToolSummary:
+            description:
+                A summary of a tool exposed by a tool-set.
+            properties:
+                description:
+                    description:
+                        Human-readable description of what this tool does.
+                    type: string
+                name:
+                    description:
+                        Stable identifier of the tool within its tool-set. Pass this verbatim as `toolName` in
+                        subsequent calls.
+                    type: string
+            required:
+                -   name
+            type: object
+info:
+    description:
+        "Single entry point for an AI to discover, understand, and invoke any tool exposed by Liferay. When the user
+        asks for something you do not already know how to do in Liferay, start with `getToolSets` to find a tool-set
+        matching their intent, then `getToolSummaries` to find the right tool in it, then `getTool` to fetch the tool's
+        input schema, then `invokeTool` with an input map matching that schema to execute it. A Java client JAR is
+        available for use with the group ID 'com.liferay', artifact ID 'com.liferay.mcp.server.rest.client', and version
+        '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: MCP
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/tool-sets":
+        get:
+            description:
+                Use this whenever you do not know which tool-set can fulfill the user's request — it is the first thing
+                to try. Returns every tool-set exposed by Liferay, each with a curated description. Pick the tool-set
+                whose description matches the user's intent and pass its `name` to `getToolSummaries` to see what tools
+                it offers.
+            operationId: getToolSets
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ToolSet"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ToolSet"
+                                type: array
+                    description:
+                        The available tool-sets.
+            tags: ["ToolSet"]
+    "/tool-sets/{toolSetName}/tool-summaries":
+        get:
+            description:
+                Use this once you have identified a tool-set (via `getToolSets`) and need to find which of its tools
+                matches the user's request. Returns every tool in the tool-set, each with a `name` and a description.
+                Pick the tool whose description matches the user's intent and pass its `name` to `getTool` to see its
+                input schema.
+            operationId: getToolSummaries
+            parameters:
+                -   in: path
+                    description:
+                        The tool-set name returned by `getToolSets`.
+                    name: toolSetName
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ToolSummary"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ToolSummary"
+                                type: array
+                    description:
+                        The tools exposed by the tool-set.
+            tags: ["ToolSummary"]
+    "/tool-sets/{toolSetName}/tools/{toolName}":
+        get:
+            description:
+                Use this once you have identified a tool (via `getToolSummaries`) and need its input schema before
+                invoking it. Returns the tool's `inputSchema`. Build an input map matching `inputSchema` and POST it to
+                `invoke` under the same URL to execute the tool.
+            operationId: getTool
+            parameters:
+                -   in: path
+                    description:
+                        The tool-set name returned by `getToolSets`.
+                    name: toolSetName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    description:
+                        The tool name returned by `getToolSummaries`.
+                    name: toolName
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Tool"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Tool"
+                    description:
+                        The tool with its input schema.
+            tags: ["Tool"]
+    "/tool-sets/{toolSetName}/tools/{toolName}/invoke":
+        post:
+            description:
+                Invokes a tool. ALWAYS call `getTool` first to fetch the tool's `inputSchema`, then build the request
+                `body` to match it exactly. Skipping `getTool` leads to malformed input and avoidable failures. Returns
+                the tool's response body unchanged.
+            operationId: invokeTool
+            parameters:
+                -   in: path
+                    description:
+                        The tool-set name returned by `getToolSets`.
+                    name: toolSetName
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    description:
+                        The tool name returned by `getToolSummaries`.
+                    name: toolName
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            description:
+                                Input map matching the tool's `inputSchema`.
+                            type: object
+                    application/xml:
+                        schema:
+                            description:
+                                Input map matching the tool's `inputSchema`.
+                            type: object
+                required: false
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+                    description:
+                        The tool's response body.
+            tags: ["Tool"]

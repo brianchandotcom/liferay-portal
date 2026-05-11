@@ -31,19 +31,19 @@ public class CacheReplicatorEntryLocalServiceImpl
 	}
 
 	@Override
-	public CacheReplicatorEntry fetchCacheReplicatorEntryByName(String name) {
+	public CacheReplicatorEntry fetchCacheReplicatorEntry(String name) {
 		return cacheReplicatorEntryPersistence.fetchByName(name);
 	}
 
 	@Override
-	public List<CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+	public List<CacheReplicatorEntry> getCacheReplicatorEntries(
 		long companyId) {
 
 		return cacheReplicatorEntryPersistence.findByCompanyId(companyId);
 	}
 
 	@Override
-	public List<CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+	public List<CacheReplicatorEntry> getCacheReplicatorEntries(
 		long companyId, int start, int end) {
 
 		return cacheReplicatorEntryPersistence.findByCompanyId(
@@ -56,5 +56,3 @@ public class CacheReplicatorEntryLocalServiceImpl
 	}
 
 }
-
-// LIFERAY-SERVICE-BUILDER-HASH:1653481128

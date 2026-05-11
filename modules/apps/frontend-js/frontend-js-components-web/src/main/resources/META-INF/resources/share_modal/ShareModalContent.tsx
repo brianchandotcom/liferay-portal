@@ -46,6 +46,8 @@ const _identityTransformSourceItems = (
 
 const _passthroughFilterCollaborators = (_collaborator: Collaborator) => true;
 
+const noop = () => {};
+
 const _defaultTransformSubmitPayload = ({
 	actionIds,
 	dateExpired,
@@ -347,6 +349,7 @@ export default function ShareModalContent({
 	filterCollaborators = _passthroughFilterCollaborators,
 	initialCollaborators = [],
 	itemId,
+	onAutocompleteChange = noop,
 	permissionOptions,
 	renderAutocompleteItem = _defaultRenderAutocompleteItem,
 	renderCollaboratorBadge = _defaultRenderCollaboratorBadge,
@@ -368,6 +371,7 @@ export default function ShareModalContent({
 	filterCollaborators?: (collaborator: Collaborator) => boolean;
 	initialCollaborators: Collaborator[];
 	itemId: number;
+	onAutocompleteChange?: (item: AutocompleteItem | undefined) => void;
 	permissionOptions: PermissionOption[];
 	renderAutocompleteItem?: (props: {
 		type: CollaboratorType;
@@ -581,6 +585,20 @@ export default function ShareModalContent({
 								items={[]}
 								loadingState={autocompleteNetworkStatus}
 								onChange={setAutocompleteValue}
+								onItemsChange={(items) => {
+									const lastItem = items[items.length - 1] as
+										| AutocompleteItem
+										| undefined;
+
+									if (lastItem?.type && lastItem.user) {
+										handleAddUser(
+											lastItem.user,
+											lastItem.type
+										);
+									}
+
+									onAutocompleteChange(lastItem);
+								}}
 								placeholder={Liferay.Language.get(
 									'enter-name-email-or-groups'
 								)}

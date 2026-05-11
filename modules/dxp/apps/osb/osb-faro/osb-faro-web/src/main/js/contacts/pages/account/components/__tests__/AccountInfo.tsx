@@ -63,11 +63,13 @@ describe('AccountInfo', () => {
 		it('should render the website value as an external link', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			const link = screen.getByRole('link', {name: 'https://acme.com'});
+			const link = screen.getByRole('link', {
+				name: /https:\/\/acme\.com/
+			});
 
 			expect(link).toHaveAttribute('href', 'https://acme.com');
 			expect(link).toHaveAttribute('target', '_blank');
-			expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+			expect(link).toHaveAttribute('rel', 'noreferrer noopener');
 		});
 
 		it('should render the View All button', () => {

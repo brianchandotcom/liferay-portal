@@ -508,7 +508,9 @@ test(
 	'Hide a Space-restricted vocabulary from content in another Space',
 	{tag: '@LPD-89497'},
 	async ({apiHelpers, contentsPage, page}) => {
-		const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
 
 		const spaceName = `Space ${getRandomString()}`;
 
@@ -528,7 +530,7 @@ test(
 			categoryName,
 			contentsPage,
 			page,
-			siteId: site.id,
+			siteId,
 		});
 
 		await contentsPage.openSidePanel('Categorization');
@@ -547,7 +549,9 @@ test(
 	'Hide an asset-type-restricted vocabulary from content of another asset type',
 	{tag: '@LPD-89497'},
 	async ({apiHelpers, contentsPage, page}) => {
-		const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
 
 		const categoryName = getRandomString();
 
@@ -558,7 +562,7 @@ test(
 			categoryName,
 			contentsPage,
 			page,
-			siteId: site.id,
+			siteId,
 		});
 
 		await contentsPage.openSidePanel('Categorization');

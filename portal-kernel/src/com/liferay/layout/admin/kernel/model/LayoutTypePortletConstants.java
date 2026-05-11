@@ -11,7 +11,9 @@ import java.util.Set;
 
 /**
  * @author Michael Bowerman
+ * @deprecated As of Cavanaugh (7.4.x), replaced by Content Pages
  */
+@Deprecated
 public class LayoutTypePortletConstants
 	extends com.liferay.portal.kernel.model.LayoutTypePortletConstants {
 

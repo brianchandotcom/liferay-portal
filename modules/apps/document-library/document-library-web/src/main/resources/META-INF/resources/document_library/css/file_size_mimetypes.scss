@@ -1,33 +1,28 @@
 @import 'atlas-variables';
 
-.dm-field-repeatable-delete-button,
-.dm-field-repeatable-add-button {
-	border-radius: 10px;
-	height: 18px;
-	padding: 2px;
-	position: absolute;
-	top: 0;
-	width: 18px;
-
-	.lexicon-icon {
-		height: 10px;
-		margin-bottom: 7px;
-		margin-top: 0;
-		width: 10px;
-	}
-}
-
-.dm-field-repeatable-delete-button {
-	right: 38px;
-}
-
-.dm-field-repeatable-add-button {
-	right: 16px;
-}
-
-.size-limit-row {
+.file-size-mimetypes-item {
+	align-items: end;
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: 1fr 44px;
 	margin-top: 2rem;
+
 	.form-feedback-group {
 		position: absolute;
 	}
+}
+
+.file-size-mimetypes-item-content {
+	min-width: 0;
+}
+
+.file-size-mimetypes-remove {
+	margin-bottom: 0;
+	min-height: 44px;
+	min-width: 44px;
+}
+
+.file-size-mimetypes-add {
+	margin-top: 1rem;
+	min-height: 44px;
 }

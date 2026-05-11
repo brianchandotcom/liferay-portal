@@ -463,6 +463,42 @@ test(
 );
 
 test(
+	'Search vocabularies by name',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, vocabulariesPage}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const name1 = getRandomString();
+		const name2 = getRandomString();
+
+		for (const name of [name1, name2]) {
+			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name,
+				siteId,
+				visibilityType: 'PUBLIC',
+			});
+		}
+
+		await vocabulariesPage.goto();
+
+		await vocabulariesPage.search(name1);
+
+		await expect(vocabulariesPage.getItem(name1)).toBeVisible();
+		await expect(vocabulariesPage.getItem(name2)).toBeHidden();
+	}
+);
+
+test(
 	'Validate that a UI error appears when attempting to create a vocabulary with a duplicate name or external reference code',
 	{tag: ['@LPD-57497', '@LPD-88752']},
 	async ({editVocabularyPage, page}) => {

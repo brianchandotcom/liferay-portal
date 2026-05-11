@@ -667,13 +667,7 @@ public class AgentPortalK8sConfigMapModifierTest {
 	private static BundleContext _bundleContext;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static DataSource _dataSource;
 
 	private static NamespacedKubernetesClient _kubernetesMockClient;
 	private static KubernetesMockServer _kubernetesMockServer;
@@ -681,5 +675,11 @@ public class AgentPortalK8sConfigMapModifierTest {
 	private static ServiceTracker
 		<PortalK8sConfigMapModifier, PortalK8sConfigMapModifier>
 			_serviceTracker;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DataSource _dataSource;
 
 }

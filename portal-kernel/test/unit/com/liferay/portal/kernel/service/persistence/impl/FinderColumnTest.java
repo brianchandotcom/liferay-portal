@@ -24,8 +24,8 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, "=", true, true,
 			entity -> 5L);
 
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 6L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
 	}
 
 	@Test
@@ -34,10 +34,10 @@ public class FinderColumnTest {
 			"t.", "name", FinderColumn.Type.STRING, "=", false, true,
 			entity -> "Alice");
 
-		Assert.assertTrue(
-			finderColumn.matches(_TEST_MODEL, "alice"));
 		Assert.assertFalse(
 			finderColumn.matches(_TEST_MODEL, "bob"));
+		Assert.assertTrue(
+			finderColumn.matches(_TEST_MODEL, "alice"));
 	}
 
 	@Test
@@ -48,12 +48,9 @@ public class FinderColumnTest {
 			"t.", "createDate", FinderColumn.Type.DATE, ">", true, true,
 			entity -> entityDate);
 
-		Assert.assertTrue(
-			finderColumn.matches(_TEST_MODEL, new Date(1_000_000L)));
-		Assert.assertFalse(
-			finderColumn.matches(_TEST_MODEL, new Date(2_000_000L)));
-		Assert.assertFalse(
-			finderColumn.matches(_TEST_MODEL, new Date(3_000_000L)));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, new Date(2_000_000L)));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, new Date(3_000_000L)));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, new Date(1_000_000L)));
 	}
 
 	@Test
@@ -62,9 +59,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, ">", true, true,
 			entity -> 10L);
 
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 10L));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 20L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
 	}
 
 	@Test
@@ -73,9 +70,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, ">=", true, true,
 			entity -> 10L);
 
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 20L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
 	}
 
 	@Test
@@ -94,9 +91,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, "<", true, true,
 			entity -> 5L);
 
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
-		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 5L));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 5L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
 	}
 
 	@Test
@@ -105,9 +102,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, "<=", true, true,
 			entity -> 5L);
 
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3L));
 		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
 		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3L));
 	}
 
 	@Test
@@ -116,8 +113,8 @@ public class FinderColumnTest {
 			"t.", "status", FinderColumn.Type.INTEGER, "<>", true, true,
 			entity -> 3);
 
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5));
 	}
 
 	@Test

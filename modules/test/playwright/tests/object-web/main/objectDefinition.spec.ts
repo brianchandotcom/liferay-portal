@@ -1619,6 +1619,41 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		await expect(editObjectDetailsPage.publishButton).toBeEnabled();
 	});
 
+	test(
+		'can set Title Field for a system object',
+		{tag: '@LPS-145393'},
+		async ({apiHelpers: _apiHelpers, editObjectDetailsPage, page}) => {
+			await editObjectDetailsPage.goto('User');
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			if (
+				!(
+					await editObjectDetailsPage.entryTitleField
+						.first()
+						.textContent()
+				)?.includes('Screen Name')
+			) {
+				await editObjectDetailsPage.entryTitleField.click();
+
+				await page
+					.getByRole('option', {exact: true, name: 'Screen Name'})
+					.click();
+
+				await editObjectDetailsPage.saveObjectDefinition();
+				await page.waitForLoadState('networkidle');
+			}
+
+			await editObjectDetailsPage.goto('User');
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await expect(editObjectDetailsPage.entryTitleField).toContainText(
+				'Screen Name'
+			);
+		}
+	);
+
 	test('cannot save an object definition without a translation after changing the default language', async ({
 		apiHelpers,
 		editObjectDetailsPage,

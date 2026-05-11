@@ -16786,7 +16786,8 @@ public class ObjectEntryResourceTest {
 			}
 		).put(
 			"size",
-			LanguageUtil.formatStorageSize(dlFileEntry.getSize(), LocaleUtil.US)
+			LanguageUtil.formatStorageSize(
+				dlFileEntry.getSize(), LocaleUtil.getDefault())
 		);
 
 		String fileSource = ObjectFieldSettingUtil.getValue(

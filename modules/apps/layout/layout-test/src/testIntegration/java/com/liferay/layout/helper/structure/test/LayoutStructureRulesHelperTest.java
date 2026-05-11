@@ -6,6 +6,12 @@
 package com.liferay.layout.helper.structure.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
@@ -36,7 +42,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -191,6 +201,72 @@ public class LayoutStructureRulesHelperTest {
 			).put(
 				"show", ListUtil.fromCollection(displayedItemIds)
 			).build());
+	}
+
+	@Test
+	public void testWithDateInfoFieldType() throws Exception {
+		InfoField<DateInfoFieldType> infoField = InfoField.builder(
+			"Test"
+		).infoFieldType(
+			DateInfoFieldType.INSTANCE
+		).name(
+			"publishDate"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "publishDate")
+		).build();
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).infoFieldValue(
+			new InfoFieldValue<>(
+				infoField,
+				Date.from(
+					LocalDateTime.of(
+						2026, 5, 11, 0, 0
+					).atZone(
+						ZoneId.systemDefault()
+					).toInstant()))
+		).build();
+
+		String fieldName = infoField.getUniqueId();
+
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "equal", "2026-05-11");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "not-equal", "2026-05-10");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "greater-than", "2026-05-10");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "less-than", "2026-05-12");
+	}
+
+	@Test
+	public void testWithDateTimeInfoFieldType() throws Exception {
+		InfoField<DateTimeInfoFieldType> infoField = InfoField.builder(
+			"Test"
+		).infoFieldType(
+			DateTimeInfoFieldType.INSTANCE
+		).name(
+			"publishDateTime"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "publishDateTime")
+		).build();
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).infoFieldValue(
+			new InfoFieldValue<>(
+				infoField, LocalDateTime.of(2026, 5, 11, 12, 30, 45))
+		).build();
+
+		String fieldName = infoField.getUniqueId();
+
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "equal", "2026-05-11 12:30");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "not-equal", "2026-05-11 12:31");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "greater-than", "2026-05-11 12:29");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "less-than", "2026-05-11 12:31");
 	}
 
 	@Test
@@ -410,6 +486,49 @@ public class LayoutStructureRulesHelperTest {
 		}
 
 		_assertMapEquals(map, actualMap);
+	}
+
+	private void _testWithFieldCondition(
+			InfoItemFieldValues infoItemFieldValues, String fieldName,
+			String operator, String fieldValue)
+		throws Exception {
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			StringUtil.replace(
+				_read("layout_data_rules_field.json"), "${", "}",
+				HashMapBuilder.put(
+					"FIELD_NAME", fieldName
+				).put(
+					"FIELD_VALUE", fieldValue
+				).put(
+					"OPERATOR", operator
+				).build()));
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult =
+				_layoutStructureRulesHelper.processLayoutStructureRules(
+					_group.getGroupId(), infoItemFieldValues, layoutStructure,
+					LocaleUtil.getDefault(), permissionChecker,
+					new long[] {SegmentsEntryConstants.ID_DEFAULT});
+
+		Set<String> displayedItemIds =
+			layoutStructureRulesResult.getDisplayedItemIds();
+
+		Assert.assertEquals(
+			displayedItemIds.toString(), 1, displayedItemIds.size());
+		Assert.assertTrue(
+			displayedItemIds.toString(),
+			displayedItemIds.contains("container2"));
+
+		Set<String> hiddenItemIds =
+			layoutStructureRulesResult.getHiddenItemIds();
+
+		Assert.assertEquals(hiddenItemIds.toString(), 1, hiddenItemIds.size());
+		Assert.assertTrue(
+			hiddenItemIds.toString(), hiddenItemIds.contains("fragment1"));
 	}
 
 	@DeleteAfterTestRun

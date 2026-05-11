@@ -6,15 +6,18 @@
 package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.NavigationCard;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -37,6 +40,17 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		_deprecated =
+			_type.equals(LayoutConstants.TYPE_FULL_PAGE_APPLICATION) ||
+			_type.equals(LayoutConstants.TYPE_PANEL) ||
+			(_type.equals(LayoutConstants.TYPE_PORTLET) &&
+			 FeatureFlagManagerUtil.isEnabled(
+				 themeDisplay.getCompanyId(), "LPD-76864"));
 	}
 
 	@Override
@@ -63,6 +77,10 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 	@Override
 	public String getTitle() {
 		return LanguageUtil.get(_httpServletRequest, "layout.types." + _type);
+	}
+
+	public boolean isDeprecated() {
+		return _deprecated;
 	}
 
 	@Override
@@ -107,6 +125,7 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 		return addLayoutURL.toString();
 	}
 
+	private final boolean _deprecated;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
 	private final String _type;

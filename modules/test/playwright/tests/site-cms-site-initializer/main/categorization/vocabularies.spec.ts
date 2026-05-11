@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {createCategories} from '../../../../helpers/CreateCategories';
 import {checkAccessibility} from '../../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
@@ -15,6 +16,7 @@ import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {categorizationPagesTest} from '../fixtures/categorizationPagesTest';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
+import {ContentsPage} from '../pages/ContentsPage';
 
 const test = mergeTests(
 	categorizationPagesTest,
@@ -25,6 +27,51 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
+
+const createScopedVocabularyAndContent = async ({
+	apiHelpers,
+	assetLibraries,
+	assetTypes,
+	contentsPage,
+	page,
+	siteId,
+}: {
+	apiHelpers: ApiHelpers;
+	assetLibraries: AssetLibrary[];
+	assetTypes: AssetType[];
+	contentsPage: ContentsPage;
+	page: Page;
+	siteId: string;
+}) => {
+	const categoryName = getRandomString();
+	const vocabularyName = getRandomString();
+
+	await createCategories({
+		apiHelpers,
+		assetLibraries,
+		assetTypes,
+		categoryNames: [{name: categoryName}],
+		siteId,
+		vocabularyName,
+	});
+
+	await contentsPage.goto();
+
+	await contentsPage.createContent('Basic Web Content');
+
+	const title = getRandomString();
+
+	await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+	await contentsPage.publishButton.click();
+
+	const content = page.locator('.table-list-title a', {hasText: title});
+
+	await content.waitFor();
+	await content.click();
+
+	return {categoryName};
+};
 
 test(
 	'Assert can delete vocabulary from dropdown actions',
@@ -478,32 +525,14 @@ test(
 				type: 'Space',
 			});
 
-		const categoryName = getRandomString();
-		const vocabularyName = getRandomString();
-
-		await createCategories({
+		const {categoryName} = await createScopedVocabularyAndContent({
 			apiHelpers,
 			assetLibraries: [{id: spaceId, name: spaceName}],
 			assetTypes: [{required: false, type: 'AllAssetTypes'}],
-			categoryNames: [{name: categoryName}],
+			contentsPage,
+			page,
 			siteId: site.id,
-			vocabularyName,
 		});
-
-		await contentsPage.goto();
-
-		await contentsPage.createContent('Basic Web Content');
-
-		const title = getRandomString();
-
-		await page.getByPlaceholder('New Basic Web Content').fill(title);
-
-		await contentsPage.publishButton.click();
-
-		const content = page.locator('.table-list-title a', {hasText: title});
-
-		await content.waitFor();
-		await content.click();
 
 		await contentsPage.openSidePanel('Categorization');
 

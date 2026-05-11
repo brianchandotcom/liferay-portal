@@ -89,7 +89,11 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 		return sb.toString();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws Exception {
+		if (!_hasAssignMembersPermission()) {
+			return new CreationMenu();
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "addMembers");

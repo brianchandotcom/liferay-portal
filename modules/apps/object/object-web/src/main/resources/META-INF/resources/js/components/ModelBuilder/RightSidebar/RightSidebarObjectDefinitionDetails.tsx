@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
+import {LearnResourcesContext} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
 
+import {checkHasStandaloneEntries} from '../../../utils/checkHasStandaloneEntries';
 import {Error, handleErrors} from '../../../utils/errors';
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
 import {ConfigurationContainer} from '../../ObjectDetails/ConfigurationContainer';
@@ -29,6 +32,16 @@ import {SubscriptionsContainer} from '../../ObjectDetails/SubscriptionsContainer
 interface RightSidebarObjectDefinitionDetailsProps {
 	companies: Scope[];
 	sites: Scope[];
+}
+
+function isDescendantObjectDefinition(
+	objectDefinition: Partial<ObjectDefinition>
+): boolean {
+	return (
+		!!objectDefinition.rootObjectDefinitionExternalReferenceCode &&
+		objectDefinition.externalReferenceCode !==
+			objectDefinition.rootObjectDefinitionExternalReferenceCode
+	);
 }
 
 function setAccountRelationshipFieldMandatory(
@@ -72,6 +85,7 @@ export function RightSidebarObjectDefinitionDetails({
 	] = useObjectFolderContext();
 
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
+	const [hasStandaloneEntries, setHasStandaloneEntries] = useState(false);
 
 	const store = useStore();
 
@@ -113,6 +127,13 @@ export function RightSidebarObjectDefinitionDetails({
 					newNonRelationshipObjectFieldsInfo
 				);
 				setValues(selectedObjectDefinition);
+
+				setHasStandaloneEntries(
+					await checkHasStandaloneEntries(
+						isDescendantObjectDefinition(selectedObjectDefinition),
+						selectedObjectDefinition
+					)
+				);
 			}
 		};
 
@@ -120,6 +141,34 @@ export function RightSidebarObjectDefinitionDetails({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedObjectDefinitionNode?.id]);
+
+	// Refresh the standalone entries check when the tab regains focus, so
+	// entries created in another tab are reflected without a manual reload.
+	// The initial fetch is owned by the load useEffect above, so skip the
+	// first run here to avoid a duplicate request on mount.
+
+	const isBrowserTabVisible = useBrowserTabVisibility();
+	const isInitialVisibilityRunRef = useRef(true);
+	const valuesRef = useRef(values);
+
+	valuesRef.current = values;
+
+	useEffect(() => {
+		if (isInitialVisibilityRunRef.current) {
+			isInitialVisibilityRunRef.current = false;
+
+			return;
+		}
+
+		if (!isBrowserTabVisible || !valuesRef.current.id) {
+			return;
+		}
+
+		checkHasStandaloneEntries(
+			isDescendantObjectDefinition(valuesRef.current),
+			valuesRef.current
+		).then(setHasStandaloneEntries);
+	}, [isBrowserTabVisible]);
 
 	const onSubmit = async (
 		editedObjectDefinition?: Partial<ObjectDefinition>
@@ -192,10 +241,7 @@ export function RightSidebarObjectDefinitionDetails({
 		}
 	};
 
-	const isRootDescendantNode =
-		!!values.rootObjectDefinitionExternalReferenceCode &&
-		values.externalReferenceCode !==
-			values.rootObjectDefinitionExternalReferenceCode;
+	const isRootDescendantNode = isDescendantObjectDefinition(values);
 
 	const objectDefinitionNodeDetailsTitle = sub(
 		Liferay.Language.get('x-details'),
@@ -220,7 +266,7 @@ export function RightSidebarObjectDefinitionDetails({
 		!(!values.modifiable && values.system);
 
 	return (
-		<>
+		<LearnResourcesContext.Provider value={learnResourceContext}>
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details">
 				<div
 					className="lfr-objects__model-builder-right-sidebar-object-definition-node-details-title text-truncate"
@@ -229,12 +275,9 @@ export function RightSidebarObjectDefinitionDetails({
 					<span>{objectDefinitionNodeDetailsTitle}</span>
 				</div>
 			</div>
+
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
-				{isRootDescendantNode && (
-					<InheritanceObjectDefinitionAlert
-						learnResources={learnResourceContext}
-					/>
-				)}
+				{isRootDescendantNode && <InheritanceObjectDefinitionAlert />}
 
 				<ObjectDataContainer
 					dbTableName={
@@ -255,6 +298,7 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
+
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<EntryDisplayContainer
 					className="lfr-objects__model-builder-right-sidebar-object-definition-entry-display-container"
@@ -288,6 +332,7 @@ export function RightSidebarObjectDefinitionDetails({
 					values={values as ObjectDefinition}
 				/>
 			</div>
+
 			{values?.modifiable && (
 				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 					<AccountRestrictionContainer
@@ -306,8 +351,10 @@ export function RightSidebarObjectDefinitionDetails({
 					/>
 				</div>
 			)}
+
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<ConfigurationContainer
+					hasStandaloneEntries={hasStandaloneEntries}
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
@@ -319,14 +366,17 @@ export function RightSidebarObjectDefinitionDetails({
 						selectedObjectDefinitionNode?.data
 							?.linkedObjectDefinition ?? false
 					}
+					isRootDescendantNode={isRootDescendantNode}
 					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>
 			</div>
+
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<TranslationsContainer />
 			</div>
+
 			{showSeoSection && (
 				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 					<SeoContainer
@@ -362,6 +412,6 @@ export function RightSidebarObjectDefinitionDetails({
 					/>
 				</div>
 			)}
-		</>
+		</LearnResourcesContext.Provider>
 	);
 }

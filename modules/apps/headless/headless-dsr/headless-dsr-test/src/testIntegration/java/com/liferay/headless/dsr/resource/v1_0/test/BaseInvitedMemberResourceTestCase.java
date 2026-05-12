@@ -373,8 +373,8 @@ public abstract class BaseInvitedMemberResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("inviterId", additionalAssertFieldName)) {
-				if (invitedMember.getInviterId() == null) {
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
+				if (invitedMember.getOwnerId() == null) {
 					valid = false;
 				}
 
@@ -530,10 +530,10 @@ public abstract class BaseInvitedMemberResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("inviterId", additionalAssertFieldName)) {
+			if (Objects.equals("ownerId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						invitedMember1.getInviterId(),
-						invitedMember2.getInviterId())) {
+						invitedMember1.getOwnerId(),
+						invitedMember2.getOwnerId())) {
 
 					return false;
 				}
@@ -710,7 +710,7 @@ public abstract class BaseInvitedMemberResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("inviterId")) {
+		if (entityFieldName.equals("ownerId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -812,7 +812,7 @@ public abstract class BaseInvitedMemberResourceTestCase {
 					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
 						"@liferay.com";
 				id = RandomTestUtil.randomLong();
-				inviterId = RandomTestUtil.randomLong();
+				ownerId = RandomTestUtil.randomLong();
 				roleKey = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -1038,4 +1038,4 @@ public abstract class BaseInvitedMemberResourceTestCase {
 		_invitedMemberResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:718608199
+// LIFERAY-REST-BUILDER-HASH:1495209949

@@ -62,6 +62,41 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 </clay:sheet-section>
 
 <clay:sheet-section
+	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "xmlSitemapGroupingModeTitle" %>'
+	cssClass="c-mb-0"
+	role="group"
+>
+	<clay:content-row
+		containerElement="h3"
+		cssClass="c-mb-3 sheet-subtitle"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<span class="heading-text text-secondary" id="<portlet:namespace />xmlSitemapGroupingModeTitle"><liferay-ui:message key="xml-sitemap-grouping-mode" /></span>
+		</clay:content-col>
+	</clay:content-row>
+
+	<clay:content-row
+		cssClass="c-mt-2"
+	>
+		<clay:content-col
+			expand="<%= true %>"
+		>
+			<clay:select
+				aria-label='<%= LanguageUtil.get(request, "xml-sitemap-grouping-mode") %>'
+				data-qa-id="xmlSitemapGroupingModeSelector"
+				disabled="<%= !sitemapCompanyConfigurationDisplayContext.xmlSitemapIndexEnabled() %>"
+				id='<%= liferayPortletResponse.getNamespace() + "xmlSitemapGroupingMode" %>'
+				label='<%= LanguageUtil.get(request, "xml-sitemap-grouping-mode") %>'
+				name="xmlSitemapGroupingMode"
+				options="<%= sitemapCompanyConfigurationDisplayContext.getSitemapGroupingModeSelectOptions() %>"
+			/>
+		</clay:content-col>
+	</clay:content-row>
+</clay:sheet-section>
+
+<clay:sheet-section
 	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "sitesIncludedTitle" %>'
 	cssClass="c-mb-0"
 	role="group"

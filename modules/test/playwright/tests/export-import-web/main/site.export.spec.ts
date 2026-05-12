@@ -66,7 +66,7 @@ test(
 
 		const exportFilePath = await exportImportPage.export({taskName: ''});
 
-		expect(exportFilePath).toMatch('Export.lar');
+		expect(exportFilePath).toMatch(/\/Export\.lar$/);
 	}
 );
 

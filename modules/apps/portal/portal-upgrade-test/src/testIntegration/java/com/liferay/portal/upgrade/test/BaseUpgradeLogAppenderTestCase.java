@@ -545,6 +545,45 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	@Test
+	public void testLastKnownProgressesWithTotalInDiagnosticsReport()
+		throws Exception {
+
+		Map<String, Long> lastKnownProgresses =
+			ReflectionTestUtil.getFieldValue(
+				UpgradeLogProgressTracker.class, "_lastKnownProgresses");
+		Map<String, Long> lastKnownTotalCounts =
+			ReflectionTestUtil.getFieldValue(
+				UpgradeLogProgressTracker.class, "_lastKnownTotalCounts");
+
+		lastKnownProgresses.clear();
+		lastKnownTotalCounts.clear();
+
+		_appender.start();
+
+		try {
+			long currentRow = 50000L;
+			long totalRows = 200000L;
+
+			String upgradeProcessClassName =
+				"com.liferay.test.SampleUpgradeProcess";
+
+			lastKnownProgresses.put(upgradeProcessClassName, currentRow);
+			lastKnownTotalCounts.put(upgradeProcessClassName, totalRows);
+
+			_appender.stop();
+
+			_assertReportDiagnostics(
+				StringBundler.concat(
+					upgradeProcessClassName, " processed approximately ",
+					currentRow, " of ", totalRows, " rows"));
+		}
+		finally {
+			lastKnownProgresses.clear();
+			lastKnownTotalCounts.clear();
+		}
+	}
+
+	@Test
 	public void testLogEvents() throws Exception {
 		_appender.start();
 

@@ -623,6 +623,20 @@ public class CommerceTestUtil {
 		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 	}
 
+	public static void deleteCommerceShipmentsByGroupId(long groupId)
+		throws PortalException {
+
+		List<CommerceShipment> commerceShipments =
+			CommerceShipmentLocalServiceUtil.getCommerceShipments(
+				new long[] {groupId}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		for (CommerceShipment commerceShipment : commerceShipments) {
+			CommerceShipmentLocalServiceUtil.deleteCommerceShipment(
+				commerceShipment, false);
+		}
+	}
+
 	public static void deleteCommerceShipmentsByOrderId(long commerceOrderId)
 		throws PortalException {
 

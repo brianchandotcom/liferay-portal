@@ -72,12 +72,14 @@ public class AIHubSiteInitializerTest {
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
+		_assertListTypeDefinitionExists("L_AI_HUB_CRAWL_JOB_STATUSES");
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES");
 
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
 		_assertObjectDefinitionExists("L_AI_HUB_CONTENT_RETRIEVER");
+		_assertObjectDefinitionExists("L_AI_HUB_CRAWL_JOB");
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 
@@ -85,6 +87,8 @@ public class AIHubSiteInitializerTest {
 			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS");
 		_assertObjectRelationshipExists(
 			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS");
+		_assertObjectRelationshipExists(
+			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS");
 		_assertObjectRelationshipExists(
 			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS");
 		_assertObjectRelationshipExists(

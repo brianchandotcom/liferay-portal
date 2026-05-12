@@ -102,8 +102,6 @@ test(
 		page,
 		productDetailsPage,
 	}) => {
-		test.setTimeout(180000);
-
 		await test.step('Update Indian Rupee format pattern', async () => {
 			await commerceAdminCurrenciesPage.goto();
 

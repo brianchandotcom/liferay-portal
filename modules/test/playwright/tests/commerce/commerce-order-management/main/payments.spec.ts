@@ -150,8 +150,6 @@ test(
 		commerceMiniCartPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		await commerceAdminChannelsPage.goto();
 
 		await (
@@ -207,8 +205,6 @@ test(
 		commerceMiniCartPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		await commerceAdminChannelsPage.goto();
 
 		await (

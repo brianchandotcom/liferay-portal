@@ -189,8 +189,6 @@ test(
 		offlinePaymentMethodsSystemSettingPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const paymentMethodKey = `Test Offline Payment Method ${getRandomString()}`;
 
 		createdPaymentMethodKeys.push(paymentMethodKey);
@@ -255,8 +253,6 @@ test(
 		offlinePaymentMethodsSystemSettingPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		const paymentMethodKey1 = `Test Offline Payment Method 1 ${getRandomString()}`;
 		const paymentMethodKey2 = `Test Offline Payment Method 2 ${getRandomString()}`;
 
@@ -370,8 +366,6 @@ test(
 		offlinePaymentMethodsSystemSettingPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const paymentMethodKey = `Test Offline Payment Method ${getRandomString()}`;
 
 		createdPaymentMethodKeys.push(paymentMethodKey);

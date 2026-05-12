@@ -54,8 +54,6 @@ definition {
 
 		Upgrade.restoreOriginalBundleAndUpgrade();
 
-		TestUtils.hardRefresh();
-
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		Portlet.gotoPortletOptions(

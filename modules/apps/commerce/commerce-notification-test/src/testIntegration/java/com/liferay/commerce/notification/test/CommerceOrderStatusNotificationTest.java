@@ -115,6 +115,11 @@ public class CommerceOrderStatusNotificationTest {
 				deleteCommerceNotificationTemplate(
 					commerceNotificationTemplate);
 		}
+
+		if (_commerceOrder != null) {
+			CommerceTestUtil.deleteCommerceShipmentsByOrderId(
+				_commerceOrder.getCommerceOrderId());
+		}
 	}
 
 	@Test

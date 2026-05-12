@@ -8,9 +8,9 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
 import {createDataSource} from '../../osb-faro-web/main/utils/data-source';
 import {acceptsCookiesBanner} from '../../osb-faro-web/main/utils/portal';
 import {
@@ -47,6 +47,7 @@ export const test = mergeTests(
 		'LPD-20640': {enabled: true},
 	}),
 	isolatedChannelTest,
+	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -55,13 +56,9 @@ test.describe('Test All Recommendation Job', () => {
 	jobs.forEach(({jobId, jobTitle}) => {
 		test(`Enable / Disable "${jobTitle}" job in the recommendations screen`, async ({
 			analyticsChannel: channel,
-			apiHelpers,
 			page,
+			site,
 		}) => {
-			const site = await apiHelpers.headlessAdminSite.postSite({
-				name: getRandomString(),
-			});
-
 			const {token} = await createDataSource(page);
 
 			await goToAnalyticsCloudInstanceSettings(page);

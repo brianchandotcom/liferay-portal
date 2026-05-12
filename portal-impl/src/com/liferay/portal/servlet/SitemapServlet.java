@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -33,6 +34,19 @@ public class SitemapServlet extends HttpServlet {
 		try {
 			String redirect = Portal.PATH_MAIN + "/portal/sitemap";
 
+			String assetTypeKey = _getAssetTypeKey(
+				httpServletRequest.getRequestURI());
+
+			if (Validator.isNotNull(assetTypeKey)) {
+				String queryString = httpServletRequest.getQueryString();
+
+				redirect = redirect + "?assetTypeKey=" + assetTypeKey;
+
+				if (Validator.isNotNull(queryString)) {
+					redirect = redirect + "&" + queryString;
+				}
+			}
+
 			ServletContext servletContext = getServletContext();
 
 			RequestDispatcher requestDispatcher =
@@ -47,6 +61,16 @@ public class SitemapServlet extends HttpServlet {
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception,
 				httpServletRequest, httpServletResponse);
 		}
+	}
+
+	private String _getAssetTypeKey(String requestURI) {
+		String fileName = requestURI.substring(requestURI.lastIndexOf('/') + 1);
+
+		if (fileName.startsWith("sitemap-") && fileName.endsWith(".xml")) {
+			return fileName.substring(8, fileName.length() - 4);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SitemapServlet.class);

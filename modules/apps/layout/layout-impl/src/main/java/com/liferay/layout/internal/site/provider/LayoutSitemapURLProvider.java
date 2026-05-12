@@ -6,11 +6,13 @@
 package com.liferay.layout.internal.site.provider;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -27,6 +29,8 @@ import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -45,6 +49,58 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return Layout.class.getName();
+	}
+
+	@Override
+	public Date getLastModifiedDate(long companyId, long groupId)
+		throws PortalException {
+
+		List<String> sitemapableLayoutTypes = new ArrayList<>();
+
+		Map<String, LayoutTypeController> layoutTypeControllers =
+			LayoutTypeControllerTracker.getLayoutTypeControllers();
+
+		for (Map.Entry<String, LayoutTypeController> entry :
+				layoutTypeControllers.entrySet()) {
+
+			LayoutTypeController layoutTypeController = entry.getValue();
+
+			if (layoutTypeController.isSitemapable()) {
+				sitemapableLayoutTypes.add(entry.getKey());
+			}
+		}
+
+		if (sitemapableLayoutTypes.isEmpty()) {
+			return null;
+		}
+
+		List<Date> modifiedDates = _layoutLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				LayoutTable.INSTANCE.modifiedDate
+			).from(
+				LayoutTable.INSTANCE
+			).where(
+				LayoutTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					LayoutTable.INSTANCE.privateLayout.eq(false)
+				).and(
+					LayoutTable.INSTANCE.type.in(
+						sitemapableLayoutTypes.toArray(new String[0]))
+				).and(
+					LayoutTable.INSTANCE.modifiedDate.isNotNull()
+				)
+			).orderBy(
+				LayoutTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (modifiedDates.isEmpty()) {
+			return null;
+		}
+
+		return modifiedDates.get(0);
 	}
 
 	@Override

@@ -10,12 +10,14 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +34,7 @@ import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -48,6 +51,41 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return CPDefinition.class.getName();
+	}
+
+	@Override
+	public Date getLastModifiedDate(long companyId, long groupId)
+		throws PortalException {
+
+		long commerceChannelGroupId =
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				groupId);
+
+		List<Date> modifiedDates = _cpDefinitionLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				CPDefinitionTable.INSTANCE.modifiedDate
+			).from(
+				CPDefinitionTable.INSTANCE
+			).where(
+				CPDefinitionTable.INSTANCE.groupId.eq(
+					commerceChannelGroupId
+				).and(
+					CPDefinitionTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					CPDefinitionTable.INSTANCE.modifiedDate.isNotNull()
+				)
+			).orderBy(
+				CPDefinitionTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (modifiedDates.isEmpty()) {
+			return null;
+		}
+
+		return modifiedDates.get(0);
 	}
 
 	@Override

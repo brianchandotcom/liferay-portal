@@ -219,13 +219,13 @@ public class SitemapManagerImpl implements SitemapManager {
 	}
 
 	@Override
-	public String getAssetTypeFromSlug(String slug) {
-		return _classNamesBySlugMap.get(slug);
+	public String getAssetTypeClassName(String assetTypeKey) {
+		return _assetTypeClassNames.get(assetTypeKey);
 	}
 
 	@Override
-	public Map<String, String> getAssetTypeSlugs() {
-		return _slugsByClassNameMap;
+	public Map<String, String> getAssetTypeKeys() {
+		return _assetTypeKeys;
 	}
 
 	@Override
@@ -322,6 +322,20 @@ public class SitemapManagerImpl implements SitemapManager {
 		return document;
 	}
 
+	private Date _getAssetTypeGroupLastModifiedDate(
+			String className, long companyId, long groupId)
+		throws PortalException {
+
+		SitemapURLProvider sitemapURLProvider = _serviceTrackerMap.getService(
+			className);
+
+		if (sitemapURLProvider == null) {
+			return null;
+		}
+
+		return sitemapURLProvider.getLastModifiedDate(companyId, groupId);
+	}
+
 	private String _getAssetTypeSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay,
 			String assetType)
@@ -363,22 +377,18 @@ public class SitemapManagerImpl implements SitemapManager {
 		long companyId = CompanyThreadLocal.getCompanyId();
 
 		if (companyId == 0) {
-			companyId = _companyIds.computeIfAbsent(
-				groupId,
-				key -> {
-					try {
-						Group group = _groupLocalService.getGroup(key);
+			try {
+				Group group = _groupLocalService.getGroup(groupId);
 
-						return group.getCompanyId();
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
+				companyId = group.getCompanyId();
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
 
-						return 0L;
-					}
-				});
+				companyId = 0;
+			}
 		}
 
 		for (Locale availableLocale :
@@ -420,10 +430,57 @@ public class SitemapManagerImpl implements SitemapManager {
 
 		_initEntriesAndSize(rootElement);
 
-		for (LayoutSet layoutSet :
-				_getLayoutSets(groupId, null, privateLayout, themeDisplay)) {
+		if (StringUtil.equals(
+				_sitemapConfigurationManager.xmlSitemapGroupingMode(
+					themeDisplay.getCompanyId()),
+				SitemapConstants.GROUPING_MODE_ASSET_TYPE)) {
 
-			_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+			String portalURL = themeDisplay.getPortalURL();
+
+			for (Map.Entry<String, String> entry : _assetTypeKeys.entrySet()) {
+				String className = entry.getKey();
+
+				SitemapURLProvider sitemapURLProvider =
+					_serviceTrackerMap.getService(className);
+
+				if ((sitemapURLProvider == null) ||
+					!sitemapURLProvider.isInclude(
+						themeDisplay.getCompanyId(), groupId)) {
+
+					continue;
+				}
+
+				Element sitemapElement = rootElement.addElement("sitemap");
+
+				Element locationElement = sitemapElement.addElement("loc");
+
+				locationElement.addText(
+					StringBundler.concat(
+						portalURL, _portal.getPathContext(), "/sitemap-",
+						entry.getValue(), ".xml?groupId=", groupId,
+						"&privateLayout=", privateLayout));
+
+				Date lastModifiedDate = _getAssetTypeGroupLastModifiedDate(
+					className, themeDisplay.getCompanyId(), groupId);
+
+				if (lastModifiedDate != null) {
+					Element lastModifiedElement = sitemapElement.addElement(
+						"lastmod");
+
+					DateFormat w3cDateFormat = DateUtil.getISO8601Format();
+
+					lastModifiedElement.addText(
+						w3cDateFormat.format(lastModifiedDate));
+				}
+			}
+		}
+		else {
+			for (LayoutSet layoutSet :
+					_getLayoutSets(
+						groupId, null, privateLayout, themeDisplay)) {
+
+				_visitLayoutSet(rootElement, layoutSet, themeDisplay);
+			}
 		}
 
 		_removeEntriesAndSize(rootElement);
@@ -729,27 +786,23 @@ public class SitemapManagerImpl implements SitemapManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitemapManagerImpl.class.getName());
 
-	private static final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
-	private static final Map<String, String> _classNamesBySlugMap;
-	private static final Map<String, String> _slugsByClassNameMap = Map.of(
+	private static final Map<String, String> _assetTypeClassNames;
+	private static final Map<String, String> _assetTypeKeys = Map.of(
 		AssetCategory.class.getName(), "categories",
 		JournalArticle.class.getName(), "web-content", Layout.class.getName(),
 		"pages", ObjectEntry.class.getName(), "object-entries");
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
 	static {
-		Map<String, String> map = new ConcurrentHashMap<>();
+		Map<String, String> assetTypeClassNames = new ConcurrentHashMap<>();
 
-		for (Map.Entry<String, String> entry :
-				_slugsByClassNameMap.entrySet()) {
-
-			map.put(entry.getValue(), entry.getKey());
+		for (Map.Entry<String, String> entry : _assetTypeKeys.entrySet()) {
+			assetTypeClassNames.put(entry.getValue(), entry.getKey());
 		}
 
-		_classNamesBySlugMap = Collections.unmodifiableMap(map);
+		_assetTypeClassNames = Collections.unmodifiableMap(assetTypeClassNames);
 	}
-
-	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
 
 	@Reference
 	private GroupLocalService _groupLocalService;

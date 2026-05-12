@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchManyColumnsEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.ManyColumnsEntry;
@@ -260,14 +258,8 @@ public class ManyColumnsEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		ManyColumnsEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_MANYCOLUMNSENTRY =
 		"SELECT manyColumnsEntry FROM ManyColumnsEntry manyColumnsEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ManyColumnsEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -275,4 +267,4 @@ public class ManyColumnsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:761797544
+// LIFERAY-SERVICE-BUILDER-HASH:-635161350

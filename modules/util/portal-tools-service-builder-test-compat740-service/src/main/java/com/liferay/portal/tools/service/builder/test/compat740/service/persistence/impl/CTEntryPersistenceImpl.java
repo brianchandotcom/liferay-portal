@@ -5,7 +5,6 @@
 
 package com.liferay.portal.tools.service.builder.test.compat740.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -156,14 +155,9 @@ public class CTEntryPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				dummyFinderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			dummyFinderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -224,13 +218,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				dummyFinderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			dummyFinderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathFetchByC_N;
@@ -289,14 +278,8 @@ public class CTEntryPersistenceImpl
 	public CTEntry fetchByC_N(
 		long companyId, String name, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTEntry.class)) {
-
-			return _uniquePersistenceFinderByC_N.fetch(
-				dummyFinderCache, new Object[] {companyId, name},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_N.fetch(
+			dummyFinderCache, new Object[] {companyId, name}, useFinderCache);
 	}
 
 	/**
@@ -668,4 +651,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-337533934
+// LIFERAY-SERVICE-BUILDER-HASH:-1769451214

@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchLocalizedEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.LocalizedEntry;
@@ -266,14 +264,8 @@ public class LocalizedEntryPersistenceImpl
 	protected LocalizedEntryLocalizationPersistence
 		localizedEntryLocalizationPersistence;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		LocalizedEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_LOCALIZEDENTRY =
 		"SELECT localizedEntry FROM LocalizedEntry localizedEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LocalizedEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -281,4 +273,4 @@ public class LocalizedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-27818227
+// LIFERAY-SERVICE-BUILDER-HASH:881307527

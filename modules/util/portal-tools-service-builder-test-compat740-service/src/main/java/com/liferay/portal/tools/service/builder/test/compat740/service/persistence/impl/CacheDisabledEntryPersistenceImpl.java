@@ -379,9 +379,6 @@ public class CacheDisabledEntryPersistenceImpl
 		super.setSessionFactory(sessionFactory);
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		CacheDisabledEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_CACHEDISABLEDENTRY =
 		"SELECT cacheDisabledEntry FROM CacheDisabledEntry cacheDisabledEntry";
 
@@ -400,4 +397,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1553993079
+// LIFERAY-SERVICE-BUILDER-HASH:-1237667989

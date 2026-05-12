@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
@@ -605,14 +603,8 @@ public class MappingEntryPersistenceImpl
 	protected TableMapper<MappingEntry, BasicEntry>
 		mappingEntryToBasicEntryTableMapper;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		MappingEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_MAPPINGENTRY =
 		"SELECT mappingEntry FROM MappingEntry mappingEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MappingEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -620,4 +612,4 @@ public class MappingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1579890694
+// LIFERAY-SERVICE-BUILDER-HASH:-1283483240

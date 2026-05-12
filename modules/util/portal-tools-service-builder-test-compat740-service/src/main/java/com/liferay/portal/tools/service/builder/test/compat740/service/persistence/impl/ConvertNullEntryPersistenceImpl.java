@@ -375,9 +375,6 @@ public class ConvertNullEntryPersistenceImpl
 		super.setSessionFactory(sessionFactory);
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		ConvertNullEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_CONVERTNULLENTRY =
 		"SELECT convertNullEntry FROM ConvertNullEntry convertNullEntry";
 
@@ -396,4 +393,4 @@ public class ConvertNullEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2087127565
+// LIFERAY-SERVICE-BUILDER-HASH:2081640743

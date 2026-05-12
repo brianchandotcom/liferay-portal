@@ -127,6 +127,8 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 						return null;
 					}
 				).put(
+					"folderId", folderId
+				).put(
 					"itemSelectedEventName", itemSelectedEventName
 				).put(
 					"maxFileSize", maxFileSize

@@ -6,6 +6,7 @@ import InterestDisplay from './InterestDisplay';
 import OrganizationDisplay from './OrganizationDisplay';
 import React from 'react';
 import SessionDisplay from './SessionDisplay';
+import VocabularyDisplay from './VocabularyDisplay';
 import {IDisplayComponentProps} from '../types';
 
 const DisplayComponent: React.FC<IDisplayComponentProps> = ({
@@ -23,6 +24,8 @@ const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 				return SessionDisplay;
 			case 'interest':
 				return InterestDisplay;
+			case 'vocabulary':
+				return VocabularyDisplay;
 			case 'web':
 				return BehaviorDisplay;
 			case 'organization':

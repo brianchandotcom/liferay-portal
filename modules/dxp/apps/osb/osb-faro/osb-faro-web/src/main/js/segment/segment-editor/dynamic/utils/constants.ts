@@ -42,7 +42,8 @@ export enum CustomFunctionOperators {
 	EventsFilterByCount = 'events-filter-by-count',
 	InterestsFilter = 'interests-filter',
 	OrganizationsFilter = 'organizations-filter',
-	SessionsFilter = 'sessions-filter'
+	SessionsFilter = 'sessions-filter',
+	VocabulariesFilter = 'vocabularies-filter'
 }
 
 export enum DisplayOnlyOperators {
@@ -63,7 +64,8 @@ export enum NotOperators {
 	NotContains = 'not-contains',
 	NotEventsFilterByCount = 'not-events-filter-by-count',
 	NotOrganizationsFilter = 'not-organizations-filter',
-	NotSessionsFilter = 'not-sessions-filter'
+	NotSessionsFilter = 'not-sessions-filter',
+	NotVocabulariesFilter = 'not-vocabularies-filter'
 }
 
 export const GROUP = 'GROUP';
@@ -72,6 +74,7 @@ export enum RelationalOperators {
 	EQ = 'eq',
 	GE = 'ge',
 	GT = 'gt',
+	In = 'in',
 	LE = 'le',
 	LT = 'lt',
 	NE = 'ne'
@@ -104,7 +107,8 @@ export enum PropertyTypes {
 	SessionGeolocation = 'session-geolocation',
 	SessionNumber = 'session-number',
 	SessionText = 'session-text',
-	Text = 'text'
+	Text = 'text',
+	Vocabulary = 'vocabulary'
 }
 
 /**
@@ -120,7 +124,8 @@ export const CUSTOM_FUNCTION_OPERATOR_KEY_MAP = {
 	['events.filterByCount']: CustomFunctionOperators.EventsFilterByCount,
 	['interests.filter']: CustomFunctionOperators.InterestsFilter,
 	['organizations.filter']: CustomFunctionOperators.OrganizationsFilter,
-	['sessions.filter']: CustomFunctionOperators.SessionsFilter
+	['sessions.filter']: CustomFunctionOperators.SessionsFilter,
+	['vocabulary.filter']: CustomFunctionOperators.VocabulariesFilter
 };
 
 export const SUPPORTED_CONJUNCTION_OPTIONS = [
@@ -140,241 +145,253 @@ export const SUPPORTED_OPERATORS_MAP = {
 	[PropertyTypes.AccountDate]: [
 		{
 			key: CustomFunctionOperators.AccountsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.AccountsFilter
 		}
 	],
 	[PropertyTypes.AccountNumber]: [
 		{
 			key: CustomFunctionOperators.AccountsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.AccountsFilter
 		}
 	],
 	[PropertyTypes.AccountText]: [
 		{
 			key: CustomFunctionOperators.AccountsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.AccountsFilter
 		}
 	],
 	[PropertyTypes.Behavior]: [
 		{
 			key: CustomFunctionOperators.ActivitiesFilterByCount,
-			label: Liferay.Language.get('has-fragment'),
+			label: Liferay.Language.get('has').toLowerCase(),
 			name: CustomFunctionOperators.ActivitiesFilterByCount
 		},
 		{
 			key: NotOperators.NotActivitiesFilterByCount,
-			label: Liferay.Language.get('has-not-fragment'),
+			label: Liferay.Language.get('has-not').toLowerCase(),
 			name: NotOperators.NotActivitiesFilterByCount
 		}
 	],
 	[PropertyTypes.Boolean]: [
 		{
 			key: RelationalOperators.EQ,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: RelationalOperators.EQ
+		}
+	],
+	[PropertyTypes.Vocabulary]: [
+		{
+			key: CustomFunctionOperators.VocabulariesFilter,
+			label: Liferay.Language.get('has').toLowerCase(),
+			name: CustomFunctionOperators.VocabulariesFilter
+		},
+		{
+			key: NotOperators.NotVocabulariesFilter,
+			label: Liferay.Language.get('has-not').toLowerCase(),
+			name: NotOperators.NotVocabulariesFilter
 		}
 	],
 	[PropertyTypes.Date]: [
 		{
 			key: RelationalOperators.LT,
-			label: Liferay.Language.get('is-before-fragment'),
+			label: Liferay.Language.get('is-before').toLowerCase(),
 			name: RelationalOperators.LT
 		},
 		{
 			key: RelationalOperators.EQ,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: RelationalOperators.EQ
 		},
 		{
 			key: RelationalOperators.GT,
-			label: Liferay.Language.get('is-after-fragment'),
+			label: Liferay.Language.get('is-after').toLowerCase(),
 			name: RelationalOperators.GT
 		}
 	],
 	[PropertyTypes.DateTime]: [
 		{
 			key: RelationalOperators.LT,
-			label: Liferay.Language.get('is-before-fragment'),
+			label: Liferay.Language.get('is-before').toLowerCase(),
 			name: RelationalOperators.LT
 		},
 		{
 			key: RelationalOperators.EQ,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: RelationalOperators.EQ
 		},
 		{
 			key: RelationalOperators.GT,
-			label: Liferay.Language.get('is-after-fragment'),
+			label: Liferay.Language.get('is-after').toLowerCase(),
 			name: RelationalOperators.GT
 		}
 	],
 	[PropertyTypes.Duration]: [
 		{
 			key: RelationalOperators.GT,
-			label: Liferay.Language.get('greater-than-fragment'),
+			label: Liferay.Language.get('greater-than').toLowerCase(),
 			name: RelationalOperators.GT
 		},
 		{
 			key: RelationalOperators.LT,
-			label: Liferay.Language.get('less-than-fragment'),
+			label: Liferay.Language.get('less-than').toLowerCase(),
 			name: RelationalOperators.LT
 		}
 	],
 	[PropertyTypes.Event]: [
 		{
 			key: CustomFunctionOperators.EventsFilterByCount,
-			label: Liferay.Language.get('has-fragment'),
+			label: Liferay.Language.get('has').toLowerCase(),
 			name: CustomFunctionOperators.EventsFilterByCount
 		},
 		{
 			key: NotOperators.NotEventsFilterByCount,
-			label: Liferay.Language.get('has-not-fragment'),
+			label: Liferay.Language.get('has-not').toLowerCase(),
 			name: NotOperators.NotEventsFilterByCount
 		}
 	],
 	[PropertyTypes.Interest]: [
 		{
 			key: CustomFunctionOperators.InterestsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.InterestsFilter
 		}
 	],
 	[PropertyTypes.Number]: [
 		{
 			key: RelationalOperators.EQ,
-			label: Liferay.Language.get('is-equal-to-fragment'),
+			label: Liferay.Language.get('is-equal-to').toLowerCase(),
 			name: RelationalOperators.EQ
 		},
 		{
 			key: RelationalOperators.GT,
-			label: Liferay.Language.get('greater-than-fragment'),
+			label: Liferay.Language.get('greater-than').toLowerCase(),
 			name: RelationalOperators.GT
 		},
 		{
 			key: RelationalOperators.LT,
-			label: Liferay.Language.get('less-than-fragment'),
+			label: Liferay.Language.get('less-than').toLowerCase(),
 			name: RelationalOperators.LT
 		},
 		{
 			key: RelationalOperators.NE,
-			label: Liferay.Language.get('is-not-equal-to-fragment'),
+			label: Liferay.Language.get('is-not-equal-to').toLowerCase(),
 			name: RelationalOperators.NE
 		},
 		{
 			key: isKnown,
-			label: Liferay.Language.get('is-known-fragment'),
+			label: Liferay.Language.get('is-known').toLowerCase(),
 			name: DisplayOnlyOperators.IsKnown
 		},
 		{
 			key: isUnknown,
-			label: Liferay.Language.get('is-unknown-fragment'),
+			label: Liferay.Language.get('is-unknown').toLowerCase(),
 			name: DisplayOnlyOperators.IsUnknown
 		}
 	],
 	[PropertyTypes.OrganizationBoolean]: [
 		{
 			key: CustomFunctionOperators.OrganizationsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.OrganizationsFilter
 		}
 	],
 	[PropertyTypes.OrganizationDate]: [
 		{
 			key: CustomFunctionOperators.OrganizationsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.OrganizationsFilter
 		}
 	],
 	[PropertyTypes.OrganizationDateTime]: [
 		{
 			key: CustomFunctionOperators.OrganizationsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.OrganizationsFilter
 		}
 	],
 	[PropertyTypes.OrganizationNumber]: [
 		{
 			key: CustomFunctionOperators.OrganizationsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.OrganizationsFilter
 		}
 	],
 	[PropertyTypes.OrganizationSelectText]: [
 		{
 			key: CustomFunctionOperators.OrganizationsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.OrganizationsFilter
 		},
 		{
 			key: NotOperators.NotOrganizationsFilter,
-			label: Liferay.Language.get('is-not-fragment'),
+			label: Liferay.Language.get('is-not').toLowerCase(),
 			name: NotOperators.NotOrganizationsFilter
 		}
 	],
 	[PropertyTypes.OrganizationText]: [
 		{
 			key: CustomFunctionOperators.OrganizationsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.OrganizationsFilter
 		}
 	],
 	[PropertyTypes.SelectText]: [
 		{
 			key: RelationalOperators.EQ,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: RelationalOperators.EQ
 		},
 		{
 			key: RelationalOperators.NE,
-			label: Liferay.Language.get('is-not-fragment'),
+			label: Liferay.Language.get('is-not').toLowerCase(),
 			name: RelationalOperators.NE
 		}
 	],
 	[PropertyTypes.SessionDateTime]: [
 		{
 			key: CustomFunctionOperators.SessionsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.SessionsFilter
 		}
 	],
 	[PropertyTypes.SessionGeolocation]: [
 		{
 			key: CustomFunctionOperators.SessionsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.SessionsFilter
 		}
 	],
 	[PropertyTypes.SessionNumber]: [
 		{
 			key: CustomFunctionOperators.SessionsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.SessionsFilter
 		}
 	],
 	[PropertyTypes.SessionText]: [
 		{
 			key: CustomFunctionOperators.SessionsFilter,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: CustomFunctionOperators.SessionsFilter
 		}
 	],
 	[PropertyTypes.Text]: [
 		{
 			key: RelationalOperators.EQ,
-			label: Liferay.Language.get('is-fragment'),
+			label: Liferay.Language.get('is').toLowerCase(),
 			name: RelationalOperators.EQ
 		},
 		{
 			key: RelationalOperators.NE,
-			label: Liferay.Language.get('is-not-fragment'),
+			label: Liferay.Language.get('is-not').toLowerCase(),
 			name: RelationalOperators.NE
 		},
 		{
 			key: FunctionalOperators.Contains,
-			label: Liferay.Language.get('contains-fragment'),
+			label: Liferay.Language.get('contains').toLowerCase(),
 			name: FunctionalOperators.Contains
 		},
 		{
@@ -384,12 +401,12 @@ export const SUPPORTED_OPERATORS_MAP = {
 		},
 		{
 			key: isKnown,
-			label: Liferay.Language.get('is-known-fragment'),
+			label: Liferay.Language.get('is-known').toLowerCase(),
 			name: DisplayOnlyOperators.IsKnown
 		},
 		{
 			key: isUnknown,
-			label: Liferay.Language.get('is-unknown-fragment'),
+			label: Liferay.Language.get('is-unknown').toLowerCase(),
 			name: DisplayOnlyOperators.IsUnknown
 		}
 	]
@@ -404,6 +421,10 @@ export const SUPPORTED_PROPERTY_TYPES_MAP = {
 		NotOperators.NotActivitiesFilterByCount
 	],
 	[PropertyTypes.Boolean]: [RelationalOperators.EQ],
+	[PropertyTypes.Vocabulary]: [
+		CustomFunctionOperators.VocabulariesFilter,
+		NotOperators.NotVocabulariesFilter
+	],
 	[PropertyTypes.Date]: [
 		RelationalOperators.EQ,
 		RelationalOperators.GE,
@@ -480,11 +501,11 @@ export const BOOLEAN_OPTIONS = [
 
 export const INTEREST_BOOLEAN_OPTIONS = [
 	{
-		label: Liferay.Language.get('is-fragment'),
+		label: Liferay.Language.get('is').toLowerCase(),
 		value: 'true'
 	},
 	{
-		label: Liferay.Language.get('is-not-fragment'),
+		label: Liferay.Language.get('is-not').toLowerCase(),
 		value: 'false'
 	}
 ];
@@ -492,64 +513,127 @@ export const INTEREST_BOOLEAN_OPTIONS = [
 export const OCCURENCE_OPTIONS = [
 	{
 		key: RelationalOperators.GE,
-		label: Liferay.Language.get('at-least-fragment'),
+		label: Liferay.Language.get('at-least').toLowerCase(),
 		value: RelationalOperators.GE
 	},
 	{
 		key: RelationalOperators.LE,
-		label: Liferay.Language.get('at-most-fragment'),
+		label: Liferay.Language.get('at-most').toLowerCase(),
 		value: RelationalOperators.LE
 	}
 ];
 
 export const GEOLOCATION_OPTIONS = [
 	{
-		label: Liferay.Language.get('was-fragment'),
+		label: Liferay.Language.get('was').toLowerCase(),
 		value: RelationalOperators.EQ
 	},
 	{
-		label: Liferay.Language.get('was-not-fragment'),
+		label: Liferay.Language.get('was-not').toLowerCase(),
 		value: RelationalOperators.NE
 	},
 	{
-		label: Liferay.Language.get('contained-fragment'),
+		label: Liferay.Language.get('contained').toLowerCase(),
 		value: FunctionalOperators.Contains
 	},
 	{
-		label: Liferay.Language.get('did-not-contain-fragment'),
+		label: Liferay.Language.get('did-not-contain').toLowerCase(),
 		value: NotOperators.NotContains
 	}
 ];
 
 export const TIME_CONJUNCTION_OPTIONS = [
 	{
-		label: Liferay.Language.get('since-fragment'),
+		label: Liferay.Language.get('since').toLowerCase(),
 		value: SINCE
 	},
 	{
-		label: Liferay.Language.get('after-fragment'),
+		label: Liferay.Language.get('after').toLowerCase(),
 		value: RelationalOperators.GT
 	},
 	{
-		label: Liferay.Language.get('before-fragment'),
+		label: Liferay.Language.get('before').toLowerCase(),
 		value: RelationalOperators.LT
 	},
 	{
-		label: Liferay.Language.get('between-fragment'),
+		label: Liferay.Language.get('between').toLowerCase(),
 		value: FunctionalOperators.Between
 	},
 	{
-		label: Liferay.Language.get('ever-fragment'),
+		label: Liferay.Language.get('ever').toLowerCase(),
 		value: EVER
 	},
 	{
-		label: Liferay.Language.get('on-fragment'),
+		label: Liferay.Language.get('on').toLowerCase(),
 		value: RelationalOperators.EQ
 	}
 ];
 
 export const ACTIVITY_KEY = 'activityKey';
 export const EVENT_KEY = 'eventId';
+
+export const ASSET_TYPE_APPLICATION_ID_MAP: Record<string, string> = {
+	'basic-document': 'Document',
+	'basic-web-content': 'WebContent',
+	blogs: 'Blog',
+	'documents-and-media': 'Document',
+	forms: 'Form',
+	'web-content': 'WebContent'
+};
+
+export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
+	comment: {
+		blogs: 'commentPosted'
+	},
+	download: {
+		'basic-document': 'documentDownloaded',
+		'documents-and-media': 'documentDownloaded'
+	},
+	impression: {
+		'basic-web-content': 'webContentImpressionMade',
+		'web-content': 'webContentImpressionMade'
+	},
+	submit: {
+		forms: 'formSubmitted'
+	},
+	view: {
+		'basic-document': 'documentPreviewed',
+		'basic-web-content': 'webContentViewed',
+		blogs: 'blogViewed',
+		'documents-and-media': 'documentPreviewed',
+		forms: 'formViewed',
+		'web-content': 'webContentViewed'
+	}
+};
+
+export const ASSET_TYPE_COMPATIBLE_EVENTS_MAP: Record<string, string[]> = {
+	any: ['all', 'view', 'download', 'impression', 'submit', 'comment'],
+	'basic-document': ['all', 'view', 'download'],
+	'basic-web-content': ['all', 'view', 'impression'],
+	blogs: ['all', 'view', 'comment'],
+	'documents-and-media': ['all', 'view', 'download'],
+	forms: ['all', 'view', 'submit'],
+	'knowledge-base': ['all'],
+	'web-content': ['all', 'view', 'impression']
+};
+
+export const APPLICATION_ID_ASSET_TYPE_MAP: Record<string, string> = {
+	Blog: 'blogs',
+	Document: 'documents-and-media',
+	Form: 'forms',
+	WebContent: 'web-content'
+};
+
+export const EVENT_ID_EVENT_TYPE_MAP: Record<string, string> = {
+	blogViewed: 'view',
+	commentPosted: 'comment',
+	documentDownloaded: 'download',
+	documentPreviewed: 'view',
+	formSubmitted: 'submit',
+	formViewed: 'view',
+	webContentImpressionMade: 'impression',
+	webContentViewed: 'view'
+};
 
 export const TIME_WINDOW_OPTIONS = [
 	{

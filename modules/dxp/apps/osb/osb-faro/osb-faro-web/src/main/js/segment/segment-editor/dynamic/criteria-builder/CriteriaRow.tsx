@@ -23,6 +23,7 @@ import React from 'react';
 import RowActions from 'shared/components/RowActions';
 import SessionInput from '../inputs/SessionInput';
 import StringInput from '../inputs/StringInput';
+import VocabularyInput from '../inputs/VocabularyInput';
 import {
 	AddProperty,
 	withReferencedObjectsConsumer
@@ -240,6 +241,26 @@ class CriteriaRow extends React.Component<
 		};
 	}
 
+	componentDidUpdate(prevProps: ICriteriaRowProps) {
+		const {criterion, referencedProperties} = this.props;
+
+		if (prevProps.referencedProperties !== referencedProperties) {
+			const selectedProperty = findPropertyByCriterion(
+				criterion,
+				referencedProperties
+			);
+
+			if (selectedProperty) {
+				this.setState({
+					selectedProperty,
+					supportedOperators: getSupportedOperatorsFromType(
+						String(selectedProperty.type)
+					)
+				});
+			}
+		}
+	}
+
 	getSelectedOperator() {
 		const {
 			props: {
@@ -406,6 +427,7 @@ class CriteriaRow extends React.Component<
 		const inputComponentsMap = {
 			[PropertyTypes.Behavior]: BehaviorInput,
 			[PropertyTypes.Boolean]: BooleanInput,
+			[PropertyTypes.Vocabulary]: VocabularyInput,
 			[PropertyTypes.AccountDate]: AccountInput,
 			[PropertyTypes.AccountNumber]: AccountInput,
 			[PropertyTypes.AccountText]: AccountInput,

@@ -3,13 +3,15 @@ import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import React from 'react';
 
-export interface IChipProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface IChipProps {
+	children?: React.ReactNode;
 	className?: string;
+	iconSymbol?: string;
 	onCloseClick: () => void;
 }
 
 const Chip = React.forwardRef<HTMLDivElement, IChipProps>(
-	({children, className, onCloseClick}, ref) => (
+	({children, className, iconSymbol = 'times-circle', onCloseClick}, ref) => (
 		<div
 			className={getCN(
 				'chip-root d-flex align-items-center justify-content-between',
@@ -23,9 +25,9 @@ const Chip = React.forwardRef<HTMLDivElement, IChipProps>(
 				aria-label={Liferay.Language.get('close')}
 				className='button-root remove-button'
 				displayType='unstyled'
-				onClick={() => onCloseClick()}
+				onClick={onCloseClick}
 			>
-				<ClayIcon className='icon-root' symbol='times-circle' />
+				<ClayIcon className='icon-root' symbol={iconSymbol} />
 			</ClayButton>
 		</div>
 	)

@@ -724,7 +724,7 @@ test.skip(
 		await test.step('Do a search with random user and assert there are no results found', async () => {
 			await searchByTerm({page, searchTerm: 'lorem'});
 
-			expect(
+			await expect(
 				page.getByText(
 					'There are no results found.Please try a different search term.'
 				)

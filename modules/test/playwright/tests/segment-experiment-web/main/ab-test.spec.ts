@@ -46,8 +46,8 @@ test(
 
 		await openABTesSidebar(page);
 
-		expect(
-			await page.getByText('Sync to Liferay Analytics Cloud')
+		await expect(
+			page.getByText('Sync to Liferay Analytics Cloud')
 		).toBeVisible();
 
 		const tagA = await page.locator(
@@ -140,8 +140,8 @@ test(
 				.getByText('Terminate')
 				.click();
 
-			expect(
-				await page
+			await expect(
+				page
 					.locator('.alert-warning')
 					.getByText(
 						'The test has not gathered sufficient data to confidently determine a winner. However, variants can still be published.'
@@ -172,9 +172,9 @@ test(
 
 			await page.waitForTimeout(3000);
 
-			expect(await page.getByText('Test Was Terminated')).toBeVisible();
-			expect(
-				await page.getByText('There is no clear winner.')
+			await expect(page.getByText('Test Was Terminated')).toBeVisible();
+			await expect(
+				page.getByText('There is no clear winner.')
 			).toBeVisible();
 		}
 		finally {

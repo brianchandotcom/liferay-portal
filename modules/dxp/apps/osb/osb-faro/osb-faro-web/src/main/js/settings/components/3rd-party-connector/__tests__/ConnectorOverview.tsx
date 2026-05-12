@@ -852,16 +852,76 @@ describe('ConnectorOverview', () => {
 			).toBeTruthy();
 		});
 
-		it('DISCONNECTED with data: previously-synced alert does not render a close button', () => {
+		it('DISCONNECTED with data: previously-synced alert can be dismissed and the dismissal is persisted in localStorage', () => {
 			mockEntityCount(7);
 
-			const {container} = renderOverview({
+			const {container, queryByText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
 					state: DataSourceStates.Disconnected
 				})
 			});
 
-			expect(container.querySelector('.alert .close')).toBeNull();
+			const closeButton = container.querySelector(
+				'.alert .close'
+			) as HTMLButtonElement;
+
+			expect(closeButton).toBeTruthy();
+
+			fireEvent.click(closeButton);
+
+			expect(
+				queryByText(
+					'Previously synced data remains available. Reconnect or check your data source connection to resume data syncing.'
+				)
+			).toBeNull();
+
+			expect(
+				window.localStorage.getItem(
+					'connector-overview:previously-synced-alert-dismissed:ds-1'
+				)
+			).toBe('true');
+		});
+
+		it('DISCONNECTED with data: previously-synced alert is hidden on re-render when localStorage flag is set', () => {
+			window.localStorage.setItem(
+				'connector-overview:previously-synced-alert-dismissed:ds-1',
+				'true'
+			);
+
+			mockEntityCount(7);
+
+			const {queryByText} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
+					state: DataSourceStates.Disconnected
+				})
+			});
+
+			expect(
+				queryByText(
+					'Previously synced data remains available. Reconnect or check your data source connection to resume data syncing.'
+				)
+			).toBeNull();
+		});
+
+		it('dismissing the syncing alert does not hide the previously-synced alert, and vice versa', () => {
+			window.localStorage.setItem(
+				'connector-overview:syncing-alert-dismissed:ds-1',
+				'true'
+			);
+
+			mockEntityCount(7);
+
+			const {getByText} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
+					state: DataSourceStates.Disconnected
+				})
+			});
+
+			expect(
+				getByText(
+					'Previously synced data remains available. Reconnect or check your data source connection to resume data syncing.'
+				)
+			).toBeTruthy();
 		});
 
 		it('INACTIVE without data: no alert', () => {

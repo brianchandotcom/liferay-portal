@@ -16,6 +16,10 @@ import {Card} from 'shared/components/revamping/Card';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
+import {
+	ConnectorAvailableDataAlertKind,
+	getConnectorAvailableDataAlert
+} from './getConnectorAvailableDataAlert';
 import {ConnectorConfig, ConnectorStatus} from './types';
 import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
@@ -23,7 +27,6 @@ import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {fetch} from 'shared/api/data-source';
 import {generateConnectorToken, updateConnector} from 'shared/api/connector';
-import {getConnectorAvailableDataAlert} from './getConnectorAvailableDataAlert';
 import {getConnectorConnectionStatusAlert} from './getConnectorConnectionStatusAlert';
 import {getConnectorStatus} from './getConnectorStatus';
 import {getConnectorStatusDisplay} from './getConnectorStatusDisplay';
@@ -335,26 +338,49 @@ interface IConnectorEntityListProps {
 	groupId: string;
 }
 
-const getSyncingAlertStorageKey = (dataSourceId: string) =>
-	`connector-overview:syncing-alert-dismissed:${dataSourceId}`;
+const getAvailableDataAlertStorageKey = (
+	kind: ConnectorAvailableDataAlertKind,
+	dataSourceId: string
+) => `connector-overview:${kind}-alert-dismissed:${dataSourceId}`;
 
 const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 	config,
 	dataSource,
 	groupId
 }) => {
-	const syncingAlertStorageKey = getSyncingAlertStorageKey(
-		dataSource.id ?? ''
-	);
+	const dataSourceId = dataSource.id ?? '';
 
 	const [syncingAlertDismissed, setSyncingAlertDismissed] = useState(
-		() => window.localStorage.getItem(syncingAlertStorageKey) === 'true'
+		() =>
+			window.localStorage.getItem(
+				getAvailableDataAlertStorageKey('syncing', dataSourceId)
+			) === 'true'
 	);
 
-	const handleDismissSyncingAlert = () => {
-		window.localStorage.setItem(syncingAlertStorageKey, 'true');
+	const [previouslySyncedAlertDismissed, setPreviouslySyncedAlertDismissed] =
+		useState(
+			() =>
+				window.localStorage.getItem(
+					getAvailableDataAlertStorageKey(
+						'previously-synced',
+						dataSourceId
+					)
+				) === 'true'
+		);
 
-		setSyncingAlertDismissed(true);
+	const handleDismissAvailableDataAlert = (
+		kind: ConnectorAvailableDataAlertKind
+	) => {
+		window.localStorage.setItem(
+			getAvailableDataAlertStorageKey(kind, dataSourceId),
+			'true'
+		);
+
+		if (kind === 'syncing') {
+			setSyncingAlertDismissed(true);
+		} else {
+			setPreviouslySyncedAlertDismissed(true);
+		}
 	};
 
 	const countResponse = useRequest({
@@ -431,15 +457,15 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 				/>
 
 				{availableDataAlert &&
-					!(
-						availableDataAlert.dismissible && syncingAlertDismissed
-					) && (
+					!(availableDataAlert.kind === 'syncing'
+						? syncingAlertDismissed
+						: previouslySyncedAlertDismissed) && (
 						<ClayAlert
 							displayType={availableDataAlert.displayType}
-							onClose={
-								availableDataAlert.dismissible
-									? handleDismissSyncingAlert
-									: undefined
+							onClose={() =>
+								handleDismissAvailableDataAlert(
+									availableDataAlert.kind
+								)
 							}
 						>
 							{availableDataAlert.message}

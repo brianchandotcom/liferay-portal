@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
@@ -28,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -62,6 +64,13 @@ public class ClusterLinkTest implements Serializable {
 		_tomcatNode1 = builder1.build();
 
 		_tomcatNode1.start(true);
+
+		TomcatCluster.Builder builder2 =
+			tomcatClusterTestRule.buildTomcatNode();
+
+		_tomcatNode2 = builder2.build();
+
+		_tomcatNode2.start(true);
 	}
 
 	@Test
@@ -72,6 +81,63 @@ public class ClusterLinkTest implements Serializable {
 		_assertChannelProperties(
 			true, "UDP", ClusterLinkTest::_getControlChannelTransportName,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml");
+	}
+
+	@Test
+	public void testCustomizeChannelNames() throws Exception {
+		TomcatNode.ClusterExecutable<ArrayList<ClusterNode>>
+			getClusterNodesClusterExecutable = () -> new ArrayList<>(
+				ClusterExecutorUtil.getClusterNodes());
+
+		ClusterNode clusterNode1 = _tomcatNode1.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		ClusterNode clusterNode2 = _tomcatNode2.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		List<ClusterNode> clusterNodes = _tomcatNode1.syncExecute(
+			getClusterNodesClusterExecutable);
+
+		Assert.assertTrue(clusterNodes.contains(clusterNode2));
+
+		clusterNodes = _tomcatNode2.syncExecute(
+			getClusterNodesClusterExecutable);
+
+		Assert.assertTrue(clusterNodes.contains(clusterNode1));
+
+		try (Closeable closeable = _applyPortalExtPropertiesLines(
+				true, _tomcatNode2,
+				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL +
+					"=different-control-channel",
+				PropsKeys.CLUSTER_LINK_CHANNEL_NAME_TRANSPORT +
+					".0=different-transport-channel")) {
+
+			ClusterNode isolatedClusterNode2 = _tomcatNode2.syncExecute(
+				ClusterExecutorUtil::getLocalClusterNode);
+
+			clusterNodes = _tomcatNode1.syncExecute(
+				getClusterNodesClusterExecutable);
+
+			Assert.assertFalse(clusterNodes.contains(isolatedClusterNode2));
+
+			clusterNodes = _tomcatNode2.syncExecute(
+				getClusterNodesClusterExecutable);
+
+			Assert.assertFalse(clusterNodes.contains(clusterNode1));
+		}
+
+		ClusterNode reconnectedClusterNode2 = _tomcatNode2.syncExecute(
+			ClusterExecutorUtil::getLocalClusterNode);
+
+		clusterNodes = _tomcatNode1.syncExecute(
+			getClusterNodesClusterExecutable);
+
+		Assert.assertTrue(clusterNodes.contains(reconnectedClusterNode2));
+
+		clusterNodes = _tomcatNode2.syncExecute(
+			getClusterNodesClusterExecutable);
+
+		Assert.assertTrue(clusterNodes.contains(clusterNode1));
 	}
 
 	@Test
@@ -195,5 +261,6 @@ public class ClusterLinkTest implements Serializable {
 	}
 
 	private static transient TomcatNode _tomcatNode1;
+	private static transient TomcatNode _tomcatNode2;
 
 }

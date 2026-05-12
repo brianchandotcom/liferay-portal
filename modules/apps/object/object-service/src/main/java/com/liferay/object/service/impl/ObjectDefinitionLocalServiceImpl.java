@@ -3630,19 +3630,38 @@ public class ObjectDefinitionLocalServiceImpl
 				String allowStandaloneObjectEntry =
 					objectDefinitionSettingsValue.getValue();
 
-				if (Objects.equals(allowStandaloneObjectEntry, "false") ||
-					Objects.equals(allowStandaloneObjectEntry, "true")) {
+				if (!Objects.equals(allowStandaloneObjectEntry, "false") &&
+					!Objects.equals(allowStandaloneObjectEntry, "true")) {
+
+					_handleException(
+						new ObjectDefinitionSettingValueException.InvalidValue(
+							objectDefinition.getShortName(),
+							ObjectDefinitionSettingConstants.
+								NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+							allowStandaloneObjectEntry),
+						"objectDefinitionSettings", null);
 
 					continue;
 				}
 
-				_handleException(
-					new ObjectDefinitionSettingValueException.InvalidValue(
-						objectDefinition.getShortName(),
-						ObjectDefinitionSettingConstants.
-							NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
-						allowStandaloneObjectEntry),
-					"objectDefinitionSettings", null);
+				if (Objects.equals(allowStandaloneObjectEntry, "false") &&
+					objectDefinition.isApproved() &&
+					objectDefinition.isAllowStandaloneObjectEntry()) {
+
+					long count = _objectEntryLocalService.getObjectEntriesCount(
+						0, null, objectDefinition,
+						ObjectEntryTable.INSTANCE.rootObjectEntryId.eq(0L));
+
+					if (count > 0) {
+						_handleException(
+							new ObjectDefinitionSettingValueException.
+								StandaloneObjectEntriesAlreadyExist(
+									objectDefinition.getShortName()),
+							"objectDefinitionSettings", null);
+					}
+				}
+
+				continue;
 			}
 
 			if (StringUtil.equals(

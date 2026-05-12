@@ -7,10 +7,21 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Pedro Tavares
  */
 public class ObjectDefinitionSettingValueException extends PortalException {
+
+	public List<Object> getArguments() {
+		return _arguments;
+	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
 
 	public static class InvalidValue
 		extends ObjectDefinitionSettingValueException {
@@ -29,8 +40,38 @@ public class ObjectDefinitionSettingValueException extends PortalException {
 
 	}
 
+	public static class StandaloneObjectEntriesAlreadyExist
+		extends ObjectDefinitionSettingValueException {
+
+		public StandaloneObjectEntriesAlreadyExist(
+			String objectDefinitionName) {
+
+			super(
+				String.format(
+					"Standalone object entries already exist for object " +
+						"definition \"%s\"",
+					objectDefinitionName),
+				Arrays.asList(objectDefinitionName),
+				"standalone-object-entries-already-exist-for-object-" +
+					"definition-x");
+		}
+
+	}
+
 	private ObjectDefinitionSettingValueException(String msg) {
 		super(msg);
 	}
+
+	private ObjectDefinitionSettingValueException(
+		String msg, List<Object> arguments, String messageKey) {
+
+		super(msg);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
+	}
+
+	private List<Object> _arguments;
+	private String _messageKey;
 
 }

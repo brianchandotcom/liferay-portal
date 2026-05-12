@@ -8,8 +8,6 @@ import {createRoot, Root} from 'react-dom/client';
 
 import App from './App';
 
-import './styles/index.css';
-
 const DEFAULT_FDS_NAME =
 	'com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-classic';
 

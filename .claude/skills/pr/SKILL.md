@@ -83,22 +83,38 @@ The body follows this format:
 ```markdown
 https://liferay.atlassian.net/browse/TICKET-ID
 
-## What is being fixed
+## What Is Being <Verb>
 
-Explain the problem or bug that motivated the change — what was going
-wrong or what was missing.
+Explain the motivation in plain prose: what problem, gap, or goal
+the change addresses. Skip implementation details — those belong in
+the next section.
 
-## How it is being fixed
+## How It Is Being <Verb>
 
-Explain the approach taken across all commits. Describe the key changes
-and the reasoning behind the approach. Write in plain prose rather than
-bullet points.
+Explain the approach taken across all commits. Describe the key
+changes and the reasoning behind the approach. Write in plain prose
+rather than bullet points.
 
-## Why are there no tests?
+## Why Are There No Tests?
 
-This optional section is only included when the commits do not add any
-tests. It should contain the rationale provided by the user.
+This optional section is only included when the commits do not add
+any tests. It should contain the rationale provided by the user.
 ```
+
+Pick the verb that matches the actual intent of the PR. Use the same
+verb in both headings.
+
+| Intent | Verb |
+| --- | --- |
+| Adding a capability, feature, or UI element | Added |
+| Adjusting behavior or appearance without a bug or new capability | Changed |
+| Fixing a bug or regression | Fixed |
+| Improving performance, accessibility, or robustness | Improved |
+| Refactoring, renaming, or reorganizing without behavior change | Refactored |
+| Adding test coverage only | Tested |
+
+When more than one verb could apply, choose the one that names the
+primary outcome a reviewer would expect from the diff.
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 

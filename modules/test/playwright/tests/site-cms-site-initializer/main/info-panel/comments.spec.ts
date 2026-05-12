@@ -240,10 +240,12 @@ test(
 			await performLogout(page);
 			await performLoginViaApi({page, screenName: 'test'});
 
-			await apiHelpers.objectEntry.deleteObjectEntry(
-				applicationName,
-				String(objectEntry1.id)
-			);
+			if (objectEntry1) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(objectEntry1.id)
+				);
+			}
 		}
 	}
 );

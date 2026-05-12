@@ -412,14 +412,19 @@ test(
 			});
 		}
 		finally {
-			await apiHelpers.objectEntry.deleteObjectEntry(
-				contentApplicationName,
-				String(objectEntryContent.id)
-			);
-			await apiHelpers.objectEntry.deleteObjectEntry(
-				fileApplicationName,
-				String(objectEntryFile.id)
-			);
+			if (objectEntryContent) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					contentApplicationName,
+					String(objectEntryContent.id)
+				);
+			}
+
+			if (objectEntryFile) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					fileApplicationName,
+					String(objectEntryFile.id)
+				);
+			}
 		}
 	}
 );

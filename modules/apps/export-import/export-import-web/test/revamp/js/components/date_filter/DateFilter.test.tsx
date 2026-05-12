@@ -21,7 +21,7 @@ function ControlledDateFilter({
 	onApplyFilter: (filterValues: DateFilterValues) => void;
 }) {
 	const [appliedValue, setAppliedValue] = useState<DateFilterValues>({
-		filterType: FilterType.All,
+		range: FilterType.All,
 	});
 
 	return (
@@ -92,8 +92,8 @@ describe('DateFilter', () => {
 		await user.click(screen.getByText('show-results'));
 
 		expect(onApplyFilter).toHaveBeenCalledWith({
-			filterType: FilterType.Last,
-			modifiedLast: ModifiedLastType.H24,
+			last: ModifiedLastType.H24,
+			range: FilterType.Last,
 		});
 
 		expect(screen.getByText('show-results')).toBeDisabled();
@@ -113,7 +113,7 @@ describe('DateFilter', () => {
 		await user.click(screen.getByText('clear-filters'));
 
 		expect(onApplyFilter).toHaveBeenLastCalledWith({
-			filterType: FilterType.All,
+			range: FilterType.All,
 		});
 
 		expect(screen.getByLabelText('filter-content-by')).toHaveValue(

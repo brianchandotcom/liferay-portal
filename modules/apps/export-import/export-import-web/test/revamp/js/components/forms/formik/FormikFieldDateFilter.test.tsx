@@ -17,7 +17,7 @@ import {
 import {FormikFieldDateFilter} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/components/forms/formik/FormikFieldDateFilter';
 
 const renderFormikFieldDateFilter = ({
-	initialValue = {filterType: FilterType.All} as DateFilterValues,
+	initialValue = {range: FilterType.All} as DateFilterValues,
 	onApplyFilter = jest.fn(),
 	onSubmit = jest.fn(),
 }: {
@@ -43,8 +43,8 @@ describe('FormikFieldDateFilter', () => {
 	it('forwards the applied value to DateFilter so the alert is shown', async () => {
 		renderFormikFieldDateFilter({
 			initialValue: {
-				filterType: FilterType.Last,
-				modifiedLast: ModifiedLastType.H24,
+				last: ModifiedLastType.H24,
+				range: FilterType.Last,
 			},
 		});
 
@@ -65,8 +65,8 @@ describe('FormikFieldDateFilter', () => {
 		await user.click(screen.getByText('show-results'));
 
 		expect(onApplyFilter).toHaveBeenCalledWith({
-			filterType: FilterType.Last,
-			modifiedLast: ModifiedLastType.H48,
+			last: ModifiedLastType.H48,
+			range: FilterType.Last,
 		});
 
 		expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -75,15 +75,15 @@ describe('FormikFieldDateFilter', () => {
 	it('resets the Formik field to FilterType.All when clear is clicked', async () => {
 		const {onApplyFilter, user} = renderFormikFieldDateFilter({
 			initialValue: {
-				filterType: FilterType.Last,
-				modifiedLast: ModifiedLastType.H12,
+				last: ModifiedLastType.H12,
+				range: FilterType.Last,
 			},
 		});
 
 		await user.click(screen.getByText('clear-filters'));
 
 		expect(onApplyFilter).toHaveBeenLastCalledWith({
-			filterType: FilterType.All,
+			range: FilterType.All,
 		});
 
 		expect(screen.queryByRole('alert')).not.toBeInTheDocument();

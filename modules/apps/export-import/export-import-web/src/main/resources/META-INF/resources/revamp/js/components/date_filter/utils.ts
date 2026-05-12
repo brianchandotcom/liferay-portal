@@ -53,47 +53,45 @@ export const MODIFIED_LAST_OPTIONS = [
 	},
 ];
 
-export function mapEditingToFilterValues(
-	editing: EditingState
-): DateFilterValues {
+export function editingToDateFilter(editing: EditingState): DateFilterValues {
 	const {filterType, fromDate, modifiedLast, toDate} = editing;
 
 	if (filterType === FilterType.Range) {
-		return {filterType, fromDate, toDate};
+		return {endDate: toDate, range: FilterType.Range, startDate: fromDate};
 	}
 
 	if (filterType === FilterType.Last) {
-		return {filterType, modifiedLast};
+		return {last: modifiedLast, range: FilterType.Last};
 	}
 
-	return {filterType: FilterType.All};
+	return {range: FilterType.All};
 }
 
 export function getAppliedFilterSummary(applied: DateFilterValues): string {
-	if (applied.filterType === FilterType.Last) {
+	if (applied.range === FilterType.Last) {
 		const option = MODIFIED_LAST_OPTIONS.find(
-			(opt) => opt.value === applied.modifiedLast
+			(opt) => opt.value === applied.last
 		);
 
 		return `${Liferay.Language.get('modified-last')}: ${option?.label ?? ''}`;
 	}
 
-	if (applied.filterType === FilterType.Range) {
-		const {fromDate, toDate} = applied;
+	if (applied.range === FilterType.Range) {
+		const {endDate, startDate} = applied;
 
-		if (fromDate && toDate) {
+		if (startDate && endDate) {
 			return sub(Liferay.Language.get('date-range-x-to-x'), [
-				fromDate,
-				toDate,
+				startDate,
+				endDate,
 			]);
 		}
 
-		if (fromDate) {
-			return sub(Liferay.Language.get('date-range-after-x'), fromDate);
+		if (startDate) {
+			return sub(Liferay.Language.get('date-range-after-x'), startDate);
 		}
 
-		if (toDate) {
-			return sub(Liferay.Language.get('date-range-before-x'), toDate);
+		if (endDate) {
+			return sub(Liferay.Language.get('date-range-before-x'), endDate);
 		}
 	}
 
@@ -104,24 +102,24 @@ export function getIsDirty(
 	editing: EditingState,
 	applied: DateFilterValues
 ): boolean {
-	if (editing.filterType !== applied.filterType) {
+	if (editing.filterType !== applied.range) {
 		return true;
 	}
 
 	if (
-		applied.filterType === FilterType.Last &&
+		applied.range === FilterType.Last &&
 		editing.filterType === FilterType.Last
 	) {
-		return editing.modifiedLast !== applied.modifiedLast;
+		return editing.modifiedLast !== applied.last;
 	}
 
 	if (
-		applied.filterType === FilterType.Range &&
+		applied.range === FilterType.Range &&
 		editing.filterType === FilterType.Range
 	) {
 		return (
-			editing.fromDate !== applied.fromDate ||
-			editing.toDate !== applied.toDate
+			editing.fromDate !== applied.startDate ||
+			editing.toDate !== applied.endDate
 		);
 	}
 

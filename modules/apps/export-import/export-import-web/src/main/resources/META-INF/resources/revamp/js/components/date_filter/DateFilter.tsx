@@ -21,10 +21,10 @@ import {
 } from './types';
 import {
 	FILTER_OPTIONS,
+	editingToDateFilter,
 	getAppliedFilterSummary,
 	getIsDirty,
 	getValidation,
-	mapEditingToFilterValues,
 } from './utils';
 
 const INITIAL_EDITING: EditingState = {
@@ -40,7 +40,7 @@ const INITIAL_TOUCHED: TouchedFields = {
 };
 
 export default function DateFilter({
-	appliedValue = {filterType: FilterType.All} as DateFilterValues,
+	appliedValue = {range: FilterType.All} as DateFilterValues,
 	itemsCount = 0,
 	onApplyFilter,
 }: {
@@ -76,14 +76,14 @@ export default function DateFilter({
 		setTouchedFields({fromDate: true, toDate: true});
 
 		if (validation.isValid) {
-			onApplyFilter?.(mapEditingToFilterValues(editing));
+			onApplyFilter?.(editingToDateFilter(editing));
 		}
 	};
 
 	const handleClearFilters = () => {
 		setEditing(INITIAL_EDITING);
 		setTouchedFields(INITIAL_TOUCHED);
-		onApplyFilter?.({filterType: FilterType.All});
+		onApplyFilter?.({range: FilterType.All});
 	};
 
 	return (
@@ -127,7 +127,7 @@ export default function DateFilter({
 				>
 					{!(
 						editing.filterType === FilterType.All &&
-						appliedValue.filterType === FilterType.All
+						appliedValue.range === FilterType.All
 					) && (
 						<ClayButton
 							disabled={isDirty ? !validation.isValid : true}
@@ -141,7 +141,7 @@ export default function DateFilter({
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			{appliedValue.filterType !== FilterType.All && (
+			{appliedValue.range !== FilterType.All && (
 				<ClayLayout.ContentRow padded>
 					<ClayLayout.ContentCol expand>
 						<ClayAlert

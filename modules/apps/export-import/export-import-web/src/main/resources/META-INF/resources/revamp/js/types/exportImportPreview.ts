@@ -7,6 +7,7 @@ import {PortletDataHandlerSection} from './portletDataHandler';
 
 export interface ExportPreview {
 	additionCount: number;
+	deletionCount: number;
 	portletDataHandlerSections: PortletDataHandlerSection[];
 }
 

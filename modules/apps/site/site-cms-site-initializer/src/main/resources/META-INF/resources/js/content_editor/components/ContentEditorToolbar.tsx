@@ -15,6 +15,7 @@ import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
+import {flushSync} from 'react-dom';
 
 import Toolbar from '../../common/components/Toolbar';
 import {toMomentDate} from './ScheduleField';
@@ -49,6 +50,7 @@ export default function ContentEditorToolbar({
 }) {
 	const [displayDate, setDisplayDate] = useState<string>('');
 	const [formId, setFormId] = useState<string | undefined>();
+	const [redirect, setRedirect] = useState<string>(backURL);
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [showPreview, setShowPreview] = useState<boolean>(false);
 	const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
@@ -106,17 +108,23 @@ export default function ContentEditorToolbar({
 		[getForm, headerTitle]
 	);
 
-	const handleSaveSuccessMessage = useCallback(() => {
-		setSuccessMessage(Liferay.Language.get('x-was-saved-successfully'));
+	const handleSaveAsDraftClick = useCallback(() => {
+		flushSync(() => setRedirect(window.location.href));
+
+		setSuccessMessage(
+			Liferay.Language.get('the-draft-was-saved-successfully')
+		);
 	}, [setSuccessMessage]);
 
-	const handlePublishSuccessMessage = useCallback(() => {
+	const handlePublishClick = useCallback(() => {
+		flushSync(() => setRedirect(backURL));
+
 		setSuccessMessage(
 			hasWorkflow
 				? Liferay.Language.get('x-was-submitted-for-workflow')
 				: Liferay.Language.get('x-was-published-successfully')
 		);
-	}, [hasWorkflow, setSuccessMessage]);
+	}, [backURL, hasWorkflow, setSuccessMessage]);
 
 	useEffect(() => {
 		const form = getForm();
@@ -130,7 +138,7 @@ export default function ContentEditorToolbar({
 					event.key === 'Enter' &&
 					isCtrlOrMeta(event)
 				) {
-					handlePublishSuccessMessage();
+					handlePublishClick();
 
 					form.submit();
 				}
@@ -141,7 +149,7 @@ export default function ContentEditorToolbar({
 			return () =>
 				window.removeEventListener('keydown', handlePublishShortcut);
 		}
-	}, [getForm, handlePublishSuccessMessage]);
+	}, [getForm, handlePublishClick]);
 
 	useEffect(() => {
 		const closePreview = () => {
@@ -249,7 +257,7 @@ export default function ContentEditorToolbar({
 					displayType="secondary"
 					form={formId}
 					name="status"
-					onClick={handleSaveSuccessMessage}
+					onClick={handleSaveAsDraftClick}
 					size="sm"
 					type="submit"
 					value={STATUS_DRAFT_CODE}
@@ -275,7 +283,7 @@ export default function ContentEditorToolbar({
 						data-title-set-as-html
 						form={formId}
 						onClick={(event) => {
-							handlePublishSuccessMessage();
+							handlePublishClick();
 
 							Liferay.fire(EVENT_VALIDATE_FORM, {event});
 						}}
@@ -323,7 +331,7 @@ export default function ContentEditorToolbar({
 					form={formId}
 					name="redirect"
 					type="hidden"
-					value={backURL}
+					value={redirect}
 				/>
 
 				{displayDate && (

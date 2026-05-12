@@ -5,7 +5,6 @@
 
 export const ONBOARDING_STEP_TYPES = {
 	analyticsCloud: 6,
-	cloudNative: 8,
 	dxpCloud: 4,
 	invites: 1,
 	liferayExperienceCloud: 2,

@@ -7,7 +7,6 @@ import React, {useEffect, useState} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import InviteTeamMembersForm from '~/features/project/containers/InviteTeamMembersForm';
 import SetupAnalyticsCloudForm from '~/features/project/containers/SetupAnalyticsCloudForm';
-import SetupCloudNativeForm from '~/features/project/containers/SetupCloudNativeForm';
 import SetupDXPCloudForm from '~/features/project/containers/SetupDXPCloudForm';
 import useUserAccountsByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
@@ -73,15 +72,6 @@ const OnboardingPages: React.FC = () => {
 			subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud
 	);
 
-	const subscriptionCloudNative = subscriptionGroups?.find(
-		(subscriptionGroup: IAccountSubscriptionGroup) =>
-			subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
-			subscriptionGroup.activationProductName
-				?.split(',')
-				.map((name) => name.trim())
-				.includes(PRODUCT_TYPES.cloudNative)
-	);
-
 	const subscriptionLiferayExperienceCloud = subscriptionGroups?.find(
 		(subscriptionGroup: IAccountSubscriptionGroup) =>
 			subscriptionGroup.name === PRODUCT_TYPES.liferayCloud &&
@@ -116,14 +106,6 @@ const OnboardingPages: React.FC = () => {
 				});
 			}
 
-			if (subscriptionCloudNative) {
-				return dispatch({
-					payload:
-						ONBOARDING_STEP_TYPES.cloudNative as unknown as ActionPayload,
-					type: actionTypes.CHANGE_STEP as keyof typeof actionTypes,
-				});
-			}
-
 			if (
 				subscriptionAnalyticsCloud &&
 				!analyticsCloudActivationSubmittedStatus
@@ -139,31 +121,8 @@ const OnboardingPages: React.FC = () => {
 		pageHandle();
 	};
 
-	const cloudNativePageHandle = () => {
-		if (
-			subscriptionAnalyticsCloud &&
-			!analyticsCloudActivationSubmittedStatus
-		) {
-			dispatch({
-				payload:
-					ONBOARDING_STEP_TYPES.analyticsCloud as unknown as ActionPayload,
-				type: actionTypes.CHANGE_STEP as keyof typeof actionTypes,
-			});
-		}
-		else {
-			pageHandle();
-		}
-	};
-
 	const dxpCloudPageHandle = () => {
-		if (subscriptionCloudNative) {
-			dispatch({
-				payload:
-					ONBOARDING_STEP_TYPES.cloudNative as unknown as ActionPayload,
-				type: actionTypes.CHANGE_STEP as keyof typeof actionTypes,
-			});
-		}
-		else if (
+		if (
 			subscriptionAnalyticsCloud &&
 			!analyticsCloudActivationSubmittedStatus
 		) {
@@ -247,19 +206,6 @@ const OnboardingPages: React.FC = () => {
 				<SuccessCloud
 					handlePage={dxpCloudPageHandle}
 					productType={PRODUCT_TYPES.dxpCloud}
-				/>
-			),
-		},
-		[ONBOARDING_STEP_TYPES.cloudNative]: {
-			Component: (
-				<SetupCloudNativeForm
-					client={client}
-					handlePage={cloudNativePageHandle}
-					leftButton={i18n.translate('skip-for-now')}
-					project={project}
-					subscriptionGroupId={
-						subscriptionCloudNative?.accountSubscriptionGroupId
-					}
 				/>
 			),
 		},

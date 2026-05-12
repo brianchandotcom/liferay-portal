@@ -55,7 +55,10 @@ export default function StructureFieldSettings({
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<AdvancedTab field={field} isReferenced={isReferenced} />
+						<AdvancedTab
+							field={field}
+							isReferenced={isReferenced}
+						/>
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -191,6 +194,8 @@ function AdvancedTab({
 }) {
 	const dispatch = useStateDispatch();
 
+	const {AdvancedTabComponent} = getFieldComponents(field.type);
+
 	const languageLabels = useMemo(
 		() =>
 			Object.entries(Liferay.Language.available).map(([key, value]) => {
@@ -307,6 +312,8 @@ function AdvancedTab({
 					) : null}
 				</>
 			) : null}
+
+			<AdvancedTabComponent disabled={isReferenced} field={field} />
 		</>
 	);
 }

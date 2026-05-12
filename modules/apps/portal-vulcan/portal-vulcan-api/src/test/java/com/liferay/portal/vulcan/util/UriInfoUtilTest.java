@@ -5,6 +5,7 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -21,6 +22,7 @@ import java.net.URI;
 
 import org.apache.cxf.jaxrs.impl.UriBuilderImpl;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -53,6 +55,13 @@ public class UriInfoUtilTest {
 		);
 
 		_setProtocol(null);
+	}
+
+	@After
+	public void tearDown() {
+		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, null);
+		PropsUtil.set(PropsKeys.WEB_SERVER_HTTP_PORT, null);
+		PropsUtil.set(PropsKeys.WEB_SERVER_HTTPS_PORT, null);
 	}
 
 	@Test
@@ -122,6 +131,123 @@ public class UriInfoUtilTest {
 			pathContext + path);
 	}
 
+	@Test
+	public void testGetBaseUriBuilderWebServerHostHttpCustomPort()
+		throws Exception {
+
+		int httpPort = RandomTestUtil.randomInt(
+			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
+
+		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTP);
+		PropsUtil.set(PropsKeys.WEB_SERVER_HTTP_PORT, String.valueOf(httpPort));
+
+		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+
+		Assert.assertEquals(
+			new URI(
+				StringBundler.concat(
+					Http.HTTP_WITH_SLASH, _WEB_SERVER_HOST, StringPool.COLON,
+					httpPort, _PATH)),
+			_uriBuilder.build());
+	}
+
+	@Test
+	public void testGetBaseUriBuilderWebServerHostHttpDefaultPort()
+		throws Exception {
+
+		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTP);
+		PropsUtil.set(
+			PropsKeys.WEB_SERVER_HTTP_PORT, String.valueOf(Http.HTTP_PORT));
+
+		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+
+		Assert.assertEquals(
+			new URI(Http.HTTP_WITH_SLASH + _WEB_SERVER_HOST + _PATH),
+			_uriBuilder.build());
+	}
+
+	@Test
+	public void testGetBaseUriBuilderWebServerHostHttpsCustomPort()
+		throws Exception {
+
+		int httpsPort = RandomTestUtil.randomInt(
+			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
+
+		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
+		PropsUtil.set(
+			PropsKeys.WEB_SERVER_HTTPS_PORT, String.valueOf(httpsPort));
+
+		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+
+		Assert.assertEquals(
+			new URI(
+				StringBundler.concat(
+					Http.HTTPS_WITH_SLASH, _WEB_SERVER_HOST, StringPool.COLON,
+					httpsPort, _PATH)),
+			_uriBuilder.build());
+	}
+
+	@Test
+	public void testGetBaseUriBuilderWebServerHostHttpsDefaultPort()
+		throws Exception {
+
+		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
+		PropsUtil.set(
+			PropsKeys.WEB_SERVER_HTTPS_PORT, String.valueOf(Http.HTTPS_PORT));
+
+		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+
+		Assert.assertEquals(
+			new URI(Http.HTTPS_WITH_SLASH + _WEB_SERVER_HOST + _PATH),
+			_uriBuilder.build());
+	}
+
+	@Test
+	public void testGetBaseUriBuilderWebServerHostNullPreservesUriInfoHost()
+		throws Exception {
+
+		int spoofedPort = RandomTestUtil.randomInt(
+			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
+
+		_uriBuilder.host(_SPOOFED_HOST);
+		_uriBuilder.port(spoofedPort);
+
+		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+
+		Assert.assertEquals(
+			new URI(
+				StringBundler.concat(
+					_SPOOFED_HOST, StringPool.COLON, spoofedPort, _PATH)),
+			_uriBuilder.build());
+	}
+
+	@Test
+	public void testGetBaseUriBuilderWebServerHostOverridesSpoofedHost()
+		throws Exception {
+
+		int spoofedPort = RandomTestUtil.randomInt(
+			_PORT_MIN_INCLUSIVE, _PORT_MAX_INCLUSIVE);
+
+		PropsUtil.set(PropsKeys.WEB_SERVER_HOST, _WEB_SERVER_HOST);
+		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, Http.HTTPS);
+		PropsUtil.set(
+			PropsKeys.WEB_SERVER_HTTPS_PORT, String.valueOf(Http.HTTPS_PORT));
+
+		_uriBuilder.host(_SPOOFED_HOST);
+		_uriBuilder.port(spoofedPort);
+		_uriBuilder.scheme(Http.HTTP);
+
+		Assert.assertSame(_uriBuilder, UriInfoUtil.getBaseUriBuilder(_uriInfo));
+
+		Assert.assertEquals(
+			new URI(Http.HTTPS_WITH_SLASH + _WEB_SERVER_HOST + _PATH),
+			_uriBuilder.build());
+	}
+
 	private void _assertUriBuilder(
 			int buildTimes, String path, int replacePathTimes, int schemeTimes,
 			UriBuilder uriBuilder, UriInfo uriInfo, String uriString)
@@ -172,11 +298,21 @@ public class UriInfoUtilTest {
 		PropsUtil.set(PropsKeys.WEB_SERVER_PROTOCOL, protocol);
 	}
 
+	private static final String _PATH = "/test-path";
+
+	private static final int _PORT_MAX_INCLUSIVE = 65535;
+
+	private static final int _PORT_MIN_INCLUSIVE = 1025;
+
+	private static final String _SPOOFED_HOST = "internal-host";
+
+	private static final String _WEB_SERVER_HOST = "example.com";
+
 	private final Portal _portal = Mockito.mock(Portal.class);
 	private final UriBuilder _uriBuilder = Mockito.spy(
 		new UriBuilderImpl(
 		).path(
-			"/test-path"
+			_PATH
 		));
 	private final UriInfo _uriInfo = Mockito.mock(UriInfo.class);
 

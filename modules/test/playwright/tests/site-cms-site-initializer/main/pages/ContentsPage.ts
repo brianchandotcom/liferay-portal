@@ -281,14 +281,14 @@ export class ContentsPage {
 	}
 
 	async saveContentAsDraft() {
-		await clickAndExpectToBeVisible({
-			target: this.newButton,
-			timeout: 5000,
-			trigger: this.page.getByRole('button', {
+		await this.page
+			.getByRole('button', {
 				exact: true,
 				name: 'Save as Draft',
-			}),
-		});
+			})
+			.click();
+
+		await waitForAlert(this.page, 'The draft was saved successfully');
 	}
 
 	async shareContent(title: string) {

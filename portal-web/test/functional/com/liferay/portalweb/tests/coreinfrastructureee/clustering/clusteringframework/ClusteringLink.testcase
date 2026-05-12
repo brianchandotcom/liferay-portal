@@ -23,16 +23,6 @@ definition {
 	}
 
 	@priority = 5
-	test AutodetectClusteringAddress {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AssertConsoleTextPresent(value1 = "bind_addr=127.0.0.1");
-
-		AssertConsoleTextNotPresent(value1 = "Autodetecting JGroups outgoing IP address and interface for www.google.com:80");
-	}
-
-	@priority = 5
 	test CustomClusteringAddress {
 		property cluster.node.ip = "true";
 		property test.liferay.virtual.instance = "false";

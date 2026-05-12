@@ -54,6 +54,8 @@ class ItemSelector extends Plugin {
 
 		const config: Config<LiferayEditorConfig> = editor.config;
 
+		const maintainState = Boolean(config.get('itemSelectorMaintainState'));
+
 		const filebrowserImageBrowseUrl = config.get(
 			'filebrowserImageBrowseUrl'
 		);
@@ -79,7 +81,9 @@ class ItemSelector extends Plugin {
 							folderId?: number | string;
 							value: string;
 						}) => {
-							rememberFolder(folderId);
+							if (maintainState) {
+								rememberFolder(folderId);
+							}
 
 							let url;
 
@@ -105,10 +109,12 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: withFolderId(
-							filebrowserImageBrowseUrl,
-							lastFolderId
-						),
+						url: maintainState
+							? withFolderId(
+									filebrowserImageBrowseUrl,
+									lastFolderId
+								)
+							: filebrowserImageBrowseUrl,
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
 				});
@@ -142,7 +148,9 @@ class ItemSelector extends Plugin {
 							folderId?: number | string;
 							value: any;
 						}) => {
-							rememberFolder(folderId);
+							if (maintainState) {
+								rememberFolder(folderId);
+							}
 
 							let url: string;
 
@@ -168,10 +176,12 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: withFolderId(
-							filebrowserVideoBrowseUrl,
-							lastFolderId
-						),
+						url: maintainState
+							? withFolderId(
+									filebrowserVideoBrowseUrl,
+									lastFolderId
+								)
+							: filebrowserVideoBrowseUrl,
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
 				});

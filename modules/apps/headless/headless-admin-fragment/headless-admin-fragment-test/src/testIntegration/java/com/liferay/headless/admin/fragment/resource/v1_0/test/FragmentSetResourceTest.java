@@ -147,6 +147,15 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				testGroup.getExternalReferenceCode(), duplicateKeyFragmentSet),
 			duplicateKeyFragmentSet.getKey());
 
+		FragmentSet invalidNameFragmentSet = randomFragmentSet();
+
+		invalidNameFragmentSet.setName("bad.name");
+
+		_assertProblemException(
+			"BAD_REQUEST", "name-is-invalid",
+			() -> fragmentSetResource.postSiteFragmentSet(
+				testGroup.getExternalReferenceCode(), invalidNameFragmentSet));
+
 		_testPostSiteFragmentSetBatch();
 	}
 

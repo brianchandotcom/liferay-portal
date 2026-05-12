@@ -41,7 +41,7 @@ export default async function shareSnapshotAction({
 			itemId
 		);
 
-		const initialCollaborators: Collaborator[] = items.reverse().map(
+		const initialCollaborators: Collaborator[] = [...items].reverse().map(
 			({actionIds, dateExpired, id, name, portrait, share, type}) =>
 				({
 					actionIds: actionIds.sort().join(','),

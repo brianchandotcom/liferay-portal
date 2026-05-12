@@ -153,7 +153,7 @@ export default function CMSShareModalContent({
 		user,
 	}: GenericCollaborator): CollaboratorPayload => {
 		const payload: CollaboratorPayload = {
-			actionIds: actionIds.split(','),
+			actionIds: actionIds ? actionIds.split(',') : [],
 			share,
 			type,
 		};

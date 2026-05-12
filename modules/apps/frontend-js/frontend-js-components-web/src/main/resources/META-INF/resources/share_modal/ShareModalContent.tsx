@@ -55,7 +55,7 @@ const _defaultTransformSubmitPayload = ({
 	type,
 	user,
 }: Collaborator) => ({
-	actionIds: actionIds.split(','),
+	actionIds: actionIds ? actionIds.split(',') : [],
 	...(!!dateExpired && {
 		dateExpired: formatDateToISO(dateExpired),
 	}),
@@ -174,7 +174,7 @@ function CollaboratorListItem({
 	error?: string;
 	onChangeUser: (
 		user: ShareModalUserAccount | ShareModalUserGroup,
-		property: object
+		property: Partial<Collaborator>
 	) => void;
 	onRemoveUser: (user: ShareModalUserAccount | ShareModalUserGroup) => void;
 	permissionOptions: PermissionOption[];
@@ -194,7 +194,7 @@ function CollaboratorListItem({
 	type: CollaboratorType;
 	user: ShareModalUserAccount | ShareModalUserGroup;
 }) {
-	const handleChangeUserProperties = (propertyObj: object) => {
+	const handleChangeUserProperties = (propertyObj: Partial<Collaborator>) => {
 		onChangeUser(user, propertyObj);
 	};
 
@@ -466,7 +466,7 @@ export default function ShareModalContent({
 
 	const handleChangeUser = (
 		user: ShareModalUserAccount | ShareModalUserGroup,
-		property: object
+		property: Partial<Collaborator>
 	) => {
 		setCollaborators((collaborator) =>
 			collaborator.map((item) => {

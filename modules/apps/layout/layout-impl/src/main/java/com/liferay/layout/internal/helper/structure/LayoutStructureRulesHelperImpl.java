@@ -66,7 +66,7 @@ public class LayoutStructureRulesHelperImpl
 
 		Map<String, Object> infoItemFieldValuesMap = _parseInfoItemFieldValues(
 			infoItemFieldValues, locale);
-		Map<String, String> infoItemFieldTypesMap = _parseInfoItemFieldTypes(
+		Map<String, String> infoItemFieldTypesMap = _getInfoItemFieldTypes(
 			infoItemFieldValues);
 		Map<String, List<String>> itemIdsMap = new HashMap<>();
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -296,6 +296,28 @@ public class LayoutStructureRulesHelperImpl
 		throw new IllegalArgumentException("Unknown action type: " + type);
 	}
 
+	private Map<String, String> _getInfoItemFieldTypes(
+		InfoItemFieldValues infoItemFieldValues) {
+
+		Map<String, String> map = new HashMap<>();
+
+		if (infoItemFieldValues == null) {
+			return map;
+		}
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField<?> infoField = infoFieldValue.getInfoField();
+
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+			map.put(infoField.getUniqueId(), infoFieldType.getName());
+		}
+
+		return map;
+	}
+
 	private List<String> _getItemIds(LayoutStructureRule layoutStructureRule) {
 		List<String> itemIds = new ArrayList<>();
 
@@ -413,28 +435,6 @@ public class LayoutStructureRulesHelperImpl
 		}
 
 		return false;
-	}
-
-	private Map<String, String> _parseInfoItemFieldTypes(
-		InfoItemFieldValues infoItemFieldValues) {
-
-		Map<String, String> map = new HashMap<>();
-
-		if (infoItemFieldValues == null) {
-			return map;
-		}
-
-		for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
-
-			InfoField<?> infoField = infoFieldValue.getInfoField();
-
-			InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-			map.put(infoField.getUniqueId(), infoFieldType.getName());
-		}
-
-		return map;
 	}
 
 	private Map<String, Object> _parseInfoItemFieldValues(

@@ -49,6 +49,11 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 						apiURL={`/o/faro/contacts/${groupId}/account/${id}/individuals`}
 						configInURLBehavior='off'
 						customDataRenderers={{
+							department: ({
+								itemData
+							}: {
+								itemData: {properties?: {department?: string}};
+							}) => itemData.properties?.department ?? '',
 							individualNameRenderer: ({
 								itemData,
 								value
@@ -63,6 +68,11 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 									route: Routes.CONTACTS_INDIVIDUAL,
 									value
 								}),
+							jobTitle: ({
+								itemData
+							}: {
+								itemData: {properties?: {jobTitle?: string}};
+							}) => itemData.properties?.jobTitle ?? '',
 							lastActiveRenderer: ({value}: {value: string}) =>
 								columns.dateRenderer({itemData: {}, value})
 						}}
@@ -81,7 +91,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											_key: 'individualName',
 											contentRenderer:
 												'individualNameRenderer',
-											fieldName: 'individualName',
+											fieldName: 'name',
 											label: Liferay.Language.get(
 												'individual-name'
 											),
@@ -89,6 +99,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 										},
 										{
 											_key: 'department',
+											contentRenderer: 'department',
 											fieldName: 'department',
 											label: Liferay.Language.get(
 												'department'
@@ -97,6 +108,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 										},
 										{
 											_key: 'jobTitle',
+											contentRenderer: 'jobTitle',
 											fieldName: 'jobTitle',
 											label: Liferay.Language.get(
 												'job-title'
@@ -107,7 +119,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											_key: 'lastActive',
 											contentRenderer:
 												'lastActiveRenderer',
-											fieldName: 'lastActive',
+											fieldName: 'lastActivityDate',
 											label: Liferay.Language.get(
 												'last-active'
 											),

@@ -156,7 +156,6 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			_renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
 			_mockDDMFormDeserializer(fieldName, ddmFormField));
-
 		ReflectionTestUtil.setFieldValue(
 			_renderStructureFieldMVCResourceCommand, "_portal", _portal);
 

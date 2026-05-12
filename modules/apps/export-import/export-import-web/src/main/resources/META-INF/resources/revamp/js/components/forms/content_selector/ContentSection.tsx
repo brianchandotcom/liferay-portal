@@ -18,8 +18,8 @@ import {
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
-import CountIndicators from './CountIndicators';
 import PortletDataControl from './PortletDataControl';
+import SectionTags from './SectionTags';
 
 export type SectionSelection = Record<string, HandlerSelection>;
 
@@ -79,7 +79,7 @@ export default function ContentSection({
 					<div className="align-items-center d-flex font-weight-bold h3 mb-0">
 						{section.label}
 
-						<CountIndicators
+						<SectionTags
 							additionCount={section.additionCount}
 							deletionCount={section.deletionCount}
 							showDeletions={showDeletions}

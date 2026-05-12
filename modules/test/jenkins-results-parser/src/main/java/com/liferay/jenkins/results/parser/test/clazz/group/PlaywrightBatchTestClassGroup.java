@@ -688,8 +688,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			}
 			catch (AntException antException) {
 				System.out.println(
-					"Skipping Playwright class group enumeration because " +
-						"the \"setup-yarn\" target failed");
+					"Skipping Playwright class group enumeration because the " +
+						"\"setup-yarn\" target failed");
 
 				antException.printStackTrace();
 

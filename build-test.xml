@@ -2485,6 +2485,8 @@ war.path=${app.server.portal.dir}/</echo>
 		<attribute name="task" />
 
 		<sequential>
+			<mkdir dir="${project.dir}/.gradle" />
+
 			<propertyfile file="${project.dir}/.gradle/gradle.properties">
 				<entry key="sdk.dir" value="${sdk.dir}" />
 			</propertyfile>

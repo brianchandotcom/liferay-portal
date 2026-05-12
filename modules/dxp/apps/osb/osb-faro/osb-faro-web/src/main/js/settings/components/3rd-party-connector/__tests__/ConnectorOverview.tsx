@@ -670,7 +670,7 @@ describe('ConnectorOverview', () => {
 	});
 
 	describe('Synced Data card — Connection Status alert', () => {
-		it('ACTIVE with zero accounts: success / "successfully connected" message', () => {
+		it('ACTIVE with zero accounts: warning / "successfully connected" message', () => {
 			mockEntityCount(0);
 
 			const {getByText} = renderOverview({

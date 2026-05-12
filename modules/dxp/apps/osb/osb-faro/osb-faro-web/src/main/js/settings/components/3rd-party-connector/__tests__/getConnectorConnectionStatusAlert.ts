@@ -9,11 +9,11 @@ describe('getConnectorConnectionStatusAlert', () => {
 			status: DataSourceStatuses.Active
 		});
 
-		it('with zero accounts: success / "successfully connected" message', () => {
+		it('with zero accounts: warning / "successfully connected" message', () => {
 			expect(
 				getConnectorConnectionStatusAlert(activeDataSource, 0)
 			).toEqual({
-				displayType: 'success',
+				displayType: 'warning',
 				message:
 					'You have successfully connected to your data source. Complete your data source configuration to start syncing data.'
 			});

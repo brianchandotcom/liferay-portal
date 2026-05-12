@@ -212,7 +212,14 @@ export class CustomDataSetsPage {
 
 		const deleteModal = this.page.getByRole('dialog');
 
-		await deleteModal.getByRole('button', {name: 'Delete'}).click();
+		await Promise.all([
+			deleteModal.getByRole('button', {name: 'Delete'}).click(),
+			this.page.waitForResponse(
+				(response) =>
+					response.status() === 200 &&
+					response.url().includes('delete_custom_data_set')
+			),
+		]);
 	}
 
 	async sortBy(columnName: string) {

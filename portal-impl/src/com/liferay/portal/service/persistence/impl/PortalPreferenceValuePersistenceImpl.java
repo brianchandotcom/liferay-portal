@@ -328,10 +328,6 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(portalPreferencesIds)});
 	}
 
-	private static final String
-		_FINDER_COLUMN_PORTALPREFERENCESID_PORTALPREFERENCESID_2 =
-			"portalPreferenceValue.portalPreferencesId = ?";
-
 	private FinderPath _finderPathWithPaginationFindByP_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_N;
 	private FinderPath _finderPathCountByP_N;
@@ -1422,4 +1418,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-624382322
+// LIFERAY-SERVICE-BUILDER-HASH:1771898488

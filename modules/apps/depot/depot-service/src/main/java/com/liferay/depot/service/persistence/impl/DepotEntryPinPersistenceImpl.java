@@ -13,7 +13,6 @@ import com.liferay.depot.model.impl.DepotEntryPinModelImpl;
 import com.liferay.depot.service.persistence.DepotEntryPinPersistence;
 import com.liferay.depot.service.persistence.DepotEntryPinUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -160,14 +159,9 @@ public class DepotEntryPinPersistenceImpl
 		OrderByComparator<DepotEntryPin> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -229,13 +223,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -295,13 +284,8 @@ public class DepotEntryPinPersistenceImpl
 	public DepotEntryPin fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -416,14 +400,9 @@ public class DepotEntryPinPersistenceImpl
 		OrderByComparator<DepotEntryPin> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -491,13 +470,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
@@ -575,14 +549,9 @@ public class DepotEntryPinPersistenceImpl
 		OrderByComparator<DepotEntryPin> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByUserId.find(
-				finderCache, new Object[] {userId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUserId.find(
+			finderCache, new Object[] {userId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -644,13 +613,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByUserId.count(
-				finderCache, new Object[] {userId});
-		}
+		return _collectionPersistenceFinderByUserId.count(
+			finderCache, new Object[] {userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
@@ -732,14 +696,9 @@ public class DepotEntryPinPersistenceImpl
 		OrderByComparator<DepotEntryPin> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByDepotEntryId.find(
-				finderCache, new Object[] {depotEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDepotEntryId.find(
+			finderCache, new Object[] {depotEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -802,13 +761,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public int countByDepotEntryId(long depotEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _collectionPersistenceFinderByDepotEntryId.count(
-				finderCache, new Object[] {depotEntryId});
-		}
+		return _collectionPersistenceFinderByDepotEntryId.count(
+			finderCache, new Object[] {depotEntryId});
 	}
 
 	private FinderPath _finderPathFetchByU_D;
@@ -869,14 +823,8 @@ public class DepotEntryPinPersistenceImpl
 	public DepotEntryPin fetchByU_D(
 		long userId, long depotEntryId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryPin.class)) {
-
-			return _uniquePersistenceFinderByU_D.fetch(
-				finderCache, new Object[] {userId, depotEntryId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByU_D.fetch(
+			finderCache, new Object[] {userId, depotEntryId}, useFinderCache);
 	}
 
 	/**
@@ -1395,4 +1343,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-107707461
+// LIFERAY-SERVICE-BUILDER-HASH:-300192091

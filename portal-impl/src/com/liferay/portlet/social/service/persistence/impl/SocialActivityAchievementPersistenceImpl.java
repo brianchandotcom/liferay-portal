@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.social.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -152,14 +151,9 @@ public class SocialActivityAchievementPersistenceImpl
 		OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -224,13 +218,8 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
@@ -317,15 +306,9 @@ public class SocialActivityAchievementPersistenceImpl
 		OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_U.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, userId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_U.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -394,14 +377,8 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_U.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, userId});
-		}
+		return _collectionPersistenceFinderByG_U.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_N;
@@ -488,14 +465,9 @@ public class SocialActivityAchievementPersistenceImpl
 		OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_N.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -564,13 +536,8 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public int countByG_N(long groupId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_N.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
-		}
+		return _collectionPersistenceFinderByG_N.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_F;
@@ -658,15 +625,10 @@ public class SocialActivityAchievementPersistenceImpl
 		OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_F.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, firstInGroup}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_F.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, firstInGroup}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -737,14 +699,9 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public int countByG_F(long groupId, boolean firstInGroup) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_F.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, firstInGroup});
-		}
+		return _collectionPersistenceFinderByG_F.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, firstInGroup});
 	}
 
 	private FinderPath _finderPathFetchByG_U_N;
@@ -812,14 +769,9 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement fetchByG_U_N(
 		long groupId, long userId, String name, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _uniquePersistenceFinderByG_U_N.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, userId, name}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_U_N.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, name}, useFinderCache);
 	}
 
 	/**
@@ -946,15 +898,10 @@ public class SocialActivityAchievementPersistenceImpl
 		OrderByComparator<SocialActivityAchievement> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_U_F.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, userId, firstInGroup}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_U_F.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, firstInGroup}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1030,14 +977,9 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public int countByG_U_F(long groupId, long userId, boolean firstInGroup) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SocialActivityAchievement.class)) {
-
-			return _collectionPersistenceFinderByG_U_F.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, userId, firstInGroup});
-		}
+		return _collectionPersistenceFinderByG_U_F.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, firstInGroup});
 	}
 
 	public SocialActivityAchievementPersistenceImpl() {
@@ -1532,4 +1474,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:813889996
+// LIFERAY-SERVICE-BUILDER-HASH:1521870836

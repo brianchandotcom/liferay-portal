@@ -13,27 +13,23 @@ import com.liferay.bookmarks.model.impl.BookmarksFolderModelImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
 import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -167,14 +163,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -236,13 +227,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -302,13 +288,8 @@ public class BookmarksFolderPersistenceImpl
 	public BookmarksFolder fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -423,14 +404,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -498,19 +474,14 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
-	private CollectionPersistenceFinder<BookmarksFolder>
+	private FilterCollectionPersistenceFinder<BookmarksFolder>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -585,14 +556,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -684,98 +650,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId(groupId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, BookmarksFolderImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, BookmarksFolderImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			return (List<BookmarksFolder>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterFind(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			groupId);
 	}
 
 	/**
@@ -797,13 +674,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -814,57 +686,9 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByGroupId(groupId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<BookmarksFolder> bookmarksFolders = findByGroupId(groupId);
-
-			bookmarksFolders = InlineSQLHelperUtil.filter(
-				bookmarksFolders, groupId);
-
-			return bookmarksFolders.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE);
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterCount(
+			finderCache, new Object[] {groupId}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"bookmarksFolder.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
@@ -944,14 +768,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1014,19 +833,14 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
 	private FinderPath _finderPathCountByG_P;
-	private CollectionPersistenceFinder<BookmarksFolder>
+	private FilterCollectionPersistenceFinder<BookmarksFolder>
 		_collectionPersistenceFinderByG_P;
 
 	/**
@@ -1107,14 +921,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByG_P.find(
-				finderCache, new Object[] {groupId, parentFolderId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_P.find(
+			finderCache, new Object[] {groupId, parentFolderId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1218,103 +1027,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P(
-				groupId, parentFolderId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_P(
-					groupId, parentFolderId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, BookmarksFolderImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, BookmarksFolderImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(parentFolderId);
-
-			return (List<BookmarksFolder>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_P.filterFind(
+			finderCache, new Object[] {groupId, parentFolderId}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -1338,13 +1053,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_P(long groupId, long parentFolderId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByG_P.count(
-				finderCache, new Object[] {groupId, parentFolderId});
-		}
+		return _collectionPersistenceFinderByG_P.count(
+			finderCache, new Object[] {groupId, parentFolderId});
 	}
 
 	/**
@@ -1356,65 +1066,9 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_P(long groupId, long parentFolderId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P(groupId, parentFolderId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<BookmarksFolder> bookmarksFolders = findByG_P(
-				groupId, parentFolderId);
-
-			bookmarksFolders = InlineSQLHelperUtil.filter(
-				bookmarksFolders, groupId);
-
-			return bookmarksFolders.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_PARENTFOLDERID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(parentFolderId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_P.filterCount(
+			finderCache, new Object[] {groupId, parentFolderId}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_P_GROUPID_2 =
-		"bookmarksFolder.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_P_PARENTFOLDERID_2 =
-		"bookmarksFolder.parentFolderId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_NotS;
 	private FinderPath _finderPathWithPaginationCountByC_NotS;
@@ -1498,14 +1152,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByC_NotS.find(
-				finderCache, new Object[] {companyId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_NotS.find(
+			finderCache, new Object[] {companyId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1573,19 +1222,14 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByC_NotS(long companyId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByC_NotS.count(
-				finderCache, new Object[] {companyId, status});
-		}
+		return _collectionPersistenceFinderByC_NotS.count(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
 	private FinderPath _finderPathCountByG_P_S;
-	private CollectionPersistenceFinder<BookmarksFolder>
+	private FilterCollectionPersistenceFinder<BookmarksFolder>
 		_collectionPersistenceFinderByG_P_S;
 
 	/**
@@ -1673,14 +1317,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByG_P_S.find(
-				finderCache, new Object[] {groupId, parentFolderId, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_P_S.find(
+			finderCache, new Object[] {groupId, parentFolderId, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1790,107 +1429,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, long parentFolderId, int status, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_S(
-				groupId, parentFolderId, status, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_P_S(
-					groupId, parentFolderId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_S_PARENTFOLDERID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_S_STATUS_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, BookmarksFolderImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, BookmarksFolderImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(parentFolderId);
-
-			queryPos.add(status);
-
-			return (List<BookmarksFolder>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_P_S.filterFind(
+			finderCache, new Object[] {groupId, parentFolderId, status}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1916,13 +1457,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_P_S(long groupId, long parentFolderId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByG_P_S.count(
-				finderCache, new Object[] {groupId, parentFolderId, status});
-		}
+		return _collectionPersistenceFinderByG_P_S.count(
+			finderCache, new Object[] {groupId, parentFolderId, status});
 	}
 
 	/**
@@ -1937,76 +1473,14 @@ public class BookmarksFolderPersistenceImpl
 	public int filterCountByG_P_S(
 		long groupId, long parentFolderId, int status) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_S(groupId, parentFolderId, status);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<BookmarksFolder> bookmarksFolders = findByG_P_S(
-				groupId, parentFolderId, status);
-
-			bookmarksFolders = InlineSQLHelperUtil.filter(
-				bookmarksFolders, groupId);
-
-			return bookmarksFolders.size();
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_S_PARENTFOLDERID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_S_STATUS_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(parentFolderId);
-
-			queryPos.add(status);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_P_S.filterCount(
+			finderCache, new Object[] {groupId, parentFolderId, status},
+			groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_P_S_GROUPID_2 =
-		"bookmarksFolder.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_P_S_PARENTFOLDERID_2 =
-		"bookmarksFolder.parentFolderId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_P_S_STATUS_2 =
-		"bookmarksFolder.status = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_NotS;
 	private FinderPath _finderPathWithPaginationCountByG_P_NotS;
-	private CollectionPersistenceFinder<BookmarksFolder>
+	private FilterCollectionPersistenceFinder<BookmarksFolder>
 		_collectionPersistenceFinderByG_P_NotS;
 
 	/**
@@ -2095,14 +1569,9 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByG_P_NotS.find(
-				finderCache, new Object[] {groupId, parentFolderId, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_P_NotS.find(
+			finderCache, new Object[] {groupId, parentFolderId, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2212,107 +1681,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, long parentFolderId, int status, int start, int end,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_P_NotS(
-				groupId, parentFolderId, status, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_P_NotS(
-					groupId, parentFolderId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_P_NOTS_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_NOTS_PARENTFOLDERID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_NOTS_STATUS_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(BookmarksFolderModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, BookmarksFolderImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, BookmarksFolderImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(parentFolderId);
-
-			queryPos.add(status);
-
-			return (List<BookmarksFolder>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_P_NotS.filterFind(
+			finderCache, new Object[] {groupId, parentFolderId, status}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2340,13 +1711,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public int countByG_P_NotS(long groupId, long parentFolderId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByG_P_NotS.count(
-				finderCache, new Object[] {groupId, parentFolderId, status});
-		}
+		return _collectionPersistenceFinderByG_P_NotS.count(
+			finderCache, new Object[] {groupId, parentFolderId, status});
 	}
 
 	/**
@@ -2361,72 +1727,10 @@ public class BookmarksFolderPersistenceImpl
 	public int filterCountByG_P_NotS(
 		long groupId, long parentFolderId, int status) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_P_NotS(groupId, parentFolderId, status);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<BookmarksFolder> bookmarksFolders = findByG_P_NotS(
-				groupId, parentFolderId, status);
-
-			bookmarksFolders = InlineSQLHelperUtil.filter(
-				bookmarksFolders, groupId);
-
-			return bookmarksFolders.size();
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_P_NOTS_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_NOTS_PARENTFOLDERID_2);
-
-		sb.append(_FINDER_COLUMN_G_P_NOTS_STATUS_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), BookmarksFolder.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(parentFolderId);
-
-			queryPos.add(status);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_P_NotS.filterCount(
+			finderCache, new Object[] {groupId, parentFolderId, status},
+			groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_P_NOTS_GROUPID_2 =
-		"bookmarksFolder.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_P_NOTS_PARENTFOLDERID_2 =
-		"bookmarksFolder.parentFolderId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_P_NOTS_STATUS_2 =
-		"bookmarksFolder.status != ?";
 
 	private FinderPath _finderPathWithPaginationFindByGtF_C_P_NotS;
 	private FinderPath _finderPathWithPaginationCountByGtF_C_P_NotS;
@@ -2526,15 +1830,10 @@ public class BookmarksFolderPersistenceImpl
 		OrderByComparator<BookmarksFolder> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByGtF_C_P_NotS.find(
-				finderCache,
-				new Object[] {folderId, companyId, parentFolderId, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGtF_C_P_NotS.find(
+			finderCache,
+			new Object[] {folderId, companyId, parentFolderId, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2618,14 +1917,9 @@ public class BookmarksFolderPersistenceImpl
 	public int countByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					BookmarksFolder.class)) {
-
-			return _collectionPersistenceFinderByGtF_C_P_NotS.count(
-				finderCache,
-				new Object[] {folderId, companyId, parentFolderId, status});
-		}
+		return _collectionPersistenceFinderByGtF_C_P_NotS.count(
+			finderCache,
+			new Object[] {folderId, companyId, parentFolderId, status});
 	}
 
 	public BookmarksFolderPersistenceImpl() {
@@ -3028,13 +2322,23 @@ public class BookmarksFolderPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByGroupId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByGroupId,
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_BOOKMARKSFOLDER_WHERE,
 				_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
 				BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					BookmarksFolderImpl.class, BookmarksFolder.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
+					BookmarksFolderModelImpl.ORDER_BY_SQL,
+					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksFolder::getGroupId));
@@ -3088,17 +2392,31 @@ public class BookmarksFolderPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentFolderId"}, false);
 
-		_collectionPersistenceFinderByG_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P,
-			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
-			_SQL_SELECT_BOOKMARKSFOLDER_WHERE, _SQL_COUNT_BOOKMARKSFOLDER_WHERE,
-			BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
-				true, true, BookmarksFolder::getGroupId),
-			new FinderColumn<>(
-				"bookmarksFolder.", "parentFolderId", FinderColumn.Type.LONG,
-				"=", true, true, BookmarksFolder::getParentFolderId));
+		_collectionPersistenceFinderByG_P =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_P,
+				_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+				_SQL_SELECT_BOOKMARKSFOLDER_WHERE,
+				_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
+				BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					BookmarksFolderImpl.class, BookmarksFolder.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
+					BookmarksFolderModelImpl.ORDER_BY_SQL,
+					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, BookmarksFolder::getGroupId),
+				new FinderColumn<>(
+					"bookmarksFolder.", "parentFolderId",
+					FinderColumn.Type.LONG, "=", true, true,
+					BookmarksFolder::getParentFolderId));
 
 		_finderPathWithPaginationFindByC_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
@@ -3154,20 +2472,34 @@ public class BookmarksFolderPersistenceImpl
 			},
 			new String[] {"groupId", "parentFolderId", "status"}, false);
 
-		_collectionPersistenceFinderByG_P_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P_S,
-			_finderPathWithoutPaginationFindByG_P_S, _finderPathCountByG_P_S,
-			_SQL_SELECT_BOOKMARKSFOLDER_WHERE, _SQL_COUNT_BOOKMARKSFOLDER_WHERE,
-			BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
-				true, true, BookmarksFolder::getGroupId),
-			new FinderColumn<>(
-				"bookmarksFolder.", "parentFolderId", FinderColumn.Type.LONG,
-				"=", true, true, BookmarksFolder::getParentFolderId),
-			new FinderColumn<>(
-				"bookmarksFolder.", "status", FinderColumn.Type.INTEGER, "=",
-				true, true, BookmarksFolder::getStatus));
+		_collectionPersistenceFinderByG_P_S =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_P_S,
+				_finderPathWithoutPaginationFindByG_P_S,
+				_finderPathCountByG_P_S, _SQL_SELECT_BOOKMARKSFOLDER_WHERE,
+				_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
+				BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					BookmarksFolderImpl.class, BookmarksFolder.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
+					BookmarksFolderModelImpl.ORDER_BY_SQL,
+					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, BookmarksFolder::getGroupId),
+				new FinderColumn<>(
+					"bookmarksFolder.", "parentFolderId",
+					FinderColumn.Type.LONG, "=", true, true,
+					BookmarksFolder::getParentFolderId),
+				new FinderColumn<>(
+					"bookmarksFolder.", "status", FinderColumn.Type.INTEGER,
+					"=", true, true, BookmarksFolder::getStatus));
 
 		_finderPathWithPaginationFindByG_P_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_NotS",
@@ -3187,13 +2519,23 @@ public class BookmarksFolderPersistenceImpl
 			new String[] {"groupId", "parentFolderId", "status"}, false);
 
 		_collectionPersistenceFinderByG_P_NotS =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByG_P_NotS, null,
 				_finderPathWithPaginationCountByG_P_NotS,
 				_SQL_SELECT_BOOKMARKSFOLDER_WHERE,
 				_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
 				BookmarksFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					BookmarksFolderImpl.class, BookmarksFolder.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_WHERE,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_BOOKMARKSFOLDER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_BOOKMARKSFOLDER_WHERE,
+					BookmarksFolderModelImpl.ORDER_BY_SQL,
+					BookmarksFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"bookmarksFolder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksFolder::getGroupId),
@@ -3325,8 +2667,6 @@ public class BookmarksFolderPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "BookmarksFolder";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "BookmarksFolder.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BookmarksFolder exists with the key {";
 
@@ -3342,4 +2682,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1970197079
+// LIFERAY-SERVICE-BUILDER-HASH:-1317807687

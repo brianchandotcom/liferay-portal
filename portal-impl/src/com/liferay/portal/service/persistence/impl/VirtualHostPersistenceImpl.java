@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -153,14 +152,9 @@ public class VirtualHostPersistenceImpl
 		OrderByComparator<VirtualHost> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -223,13 +217,8 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathFetchByHostname;
@@ -286,14 +275,9 @@ public class VirtualHostPersistenceImpl
 	public VirtualHost fetchByHostname(
 		String hostname, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _uniquePersistenceFinderByHostname.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {hostname},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByHostname.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {hostname},
+			useFinderCache);
 	}
 
 	/**
@@ -406,15 +390,10 @@ public class VirtualHostPersistenceImpl
 		OrderByComparator<VirtualHost> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByC_L.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, layoutSetId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_L.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -485,14 +464,9 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public int countByC_L(long companyId, long layoutSetId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByC_L.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, layoutSetId});
-		}
+		return _collectionPersistenceFinderByC_L.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByNotL_H;
@@ -577,15 +551,10 @@ public class VirtualHostPersistenceImpl
 		OrderByComparator<VirtualHost> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByNotL_H.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {layoutSetId, new String[] {hostname}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByNotL_H.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetId, new String[] {hostname}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -727,15 +696,10 @@ public class VirtualHostPersistenceImpl
 		OrderByComparator<VirtualHost> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByNotL_H.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {layoutSetId, ArrayUtil.sortedUnique(hostnames)},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByNotL_H.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetId, ArrayUtil.sortedUnique(hostnames)},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -760,14 +724,9 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public int countByNotL_H(long layoutSetId, String hostname) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByNotL_H.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {layoutSetId, new String[] {hostname}});
-		}
+		return _collectionPersistenceFinderByNotL_H.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetId, new String[] {hostname}});
 	}
 
 	/**
@@ -779,24 +738,10 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public int countByNotL_H(long layoutSetId, String[] hostnames) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			return _collectionPersistenceFinderByNotL_H.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {layoutSetId, ArrayUtil.sortedUnique(hostnames)});
-		}
+		return _collectionPersistenceFinderByNotL_H.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetId, ArrayUtil.sortedUnique(hostnames)});
 	}
-
-	private static final String _FINDER_COLUMN_NOTL_H_LAYOUTSETID_2 =
-		"virtualHost.layoutSetId != ? AND ";
-
-	private static final String _FINDER_COLUMN_NOTL_H_HOSTNAME_2 =
-		"virtualHost.hostname = ?";
-
-	private static final String _FINDER_COLUMN_NOTL_H_HOSTNAME_3 =
-		"(virtualHost.hostname IS NULL OR virtualHost.hostname = '')";
 
 	public VirtualHostPersistenceImpl() {
 		setModelClass(VirtualHost.class);
@@ -1167,4 +1112,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:547387314
+// LIFERAY-SERVICE-BUILDER-HASH:611993920

@@ -354,9 +354,6 @@ public class CompanyInfoPersistenceImpl
 		EntityCacheUtil.removeCache(CompanyInfoImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		CompanyInfoModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_COMPANYINFO =
 		"SELECT companyInfo FROM CompanyInfo companyInfo";
 
@@ -378,4 +375,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1509715950
+// LIFERAY-SERVICE-BUILDER-HASH:191148593

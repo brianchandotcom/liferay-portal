@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -956,15 +954,6 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_G_T_GROUPID_2 =
-		"backgroundTask.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_T_TASKEXECUTORCLASSNAME_2 =
-		"backgroundTask.taskExecutorClassName = ?";
-
-	private static final String _FINDER_COLUMN_G_T_TASKEXECUTORCLASSNAME_3 =
-		"(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '')";
-
 	private FinderPath _finderPathWithPaginationFindByG_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_S;
 	private FinderPath _finderPathCountByG_S;
@@ -1405,23 +1394,6 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_T_S_TASKEXECUTORCLASSNAME_2 =
-		"backgroundTask.taskExecutorClassName = ? AND ";
-
-	private static final String _FINDER_COLUMN_T_S_TASKEXECUTORCLASSNAME_3 =
-		"(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '') AND ";
-
-	private static final String _FINDER_COLUMN_T_S_TASKEXECUTORCLASSNAME_5 =
-		"(" + removeConjunction(_FINDER_COLUMN_T_S_TASKEXECUTORCLASSNAME_2) +
-			")";
-
-	private static final String _FINDER_COLUMN_T_S_TASKEXECUTORCLASSNAME_6 =
-		"(" + removeConjunction(_FINDER_COLUMN_T_S_TASKEXECUTORCLASSNAME_3) +
-			")";
-
-	private static final String _FINDER_COLUMN_T_S_STATUS_2 =
-		"backgroundTask.status = ?";
-
 	private FinderPath _finderPathWithPaginationFindByG_N_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_T;
 	private FinderPath _finderPathCountByG_N_T;
@@ -1743,21 +1715,6 @@ public class BackgroundTaskPersistenceImpl
 				ArrayUtil.sortedUnique(taskExecutorClassNames)
 			});
 	}
-
-	private static final String _FINDER_COLUMN_G_N_T_GROUPID_2 =
-		"backgroundTask.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_NAME_2 =
-		"backgroundTask.name = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_NAME_3 =
-		"(backgroundTask.name IS NULL OR backgroundTask.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_TASKEXECUTORCLASSNAME_2 =
-		"backgroundTask.taskExecutorClassName = ?";
-
-	private static final String _FINDER_COLUMN_G_N_T_TASKEXECUTORCLASSNAME_3 =
-		"(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_T_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_T_C;
@@ -2086,26 +2043,6 @@ public class BackgroundTaskPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_G_T_C_GROUPID_2 =
-		"backgroundTask.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_2 =
-		"backgroundTask.taskExecutorClassName = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_3 =
-		"(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_5 =
-		"(" + removeConjunction(_FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_2) +
-			")";
-
-	private static final String _FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_6 =
-		"(" + removeConjunction(_FINDER_COLUMN_G_T_C_TASKEXECUTORCLASSNAME_3) +
-			")";
-
-	private static final String _FINDER_COLUMN_G_T_C_COMPLETED_2 =
-		"backgroundTask.completed = ?";
-
 	private FinderPath _finderPathWithPaginationFindByG_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_T_S;
 	private FinderPath _finderPathCountByG_T_S;
@@ -2424,26 +2361,6 @@ public class BackgroundTaskPersistenceImpl
 				groupId, ArrayUtil.sortedUnique(taskExecutorClassNames), status
 			});
 	}
-
-	private static final String _FINDER_COLUMN_G_T_S_GROUPID_2 =
-		"backgroundTask.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_T_S_TASKEXECUTORCLASSNAME_2 =
-		"backgroundTask.taskExecutorClassName = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_T_S_TASKEXECUTORCLASSNAME_3 =
-		"(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_T_S_TASKEXECUTORCLASSNAME_5 =
-		"(" + removeConjunction(_FINDER_COLUMN_G_T_S_TASKEXECUTORCLASSNAME_2) +
-			")";
-
-	private static final String _FINDER_COLUMN_G_T_S_TASKEXECUTORCLASSNAME_6 =
-		"(" + removeConjunction(_FINDER_COLUMN_G_T_S_TASKEXECUTORCLASSNAME_3) +
-			")";
-
-	private static final String _FINDER_COLUMN_G_T_S_STATUS_2 =
-		"backgroundTask.status = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_N_T_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_T_C;
@@ -2792,24 +2709,6 @@ public class BackgroundTaskPersistenceImpl
 				completed
 			});
 	}
-
-	private static final String _FINDER_COLUMN_G_N_T_C_GROUPID_2 =
-		"backgroundTask.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_C_NAME_2 =
-		"backgroundTask.name = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_C_NAME_3 =
-		"(backgroundTask.name IS NULL OR backgroundTask.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_C_TASKEXECUTORCLASSNAME_2 =
-		"backgroundTask.taskExecutorClassName = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_C_TASKEXECUTORCLASSNAME_3 =
-		"(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_N_T_C_COMPLETED_2 =
-		"backgroundTask.completed = ?";
 
 	public BackgroundTaskPersistenceImpl() {
 		setModelClass(BackgroundTask.class);
@@ -3469,13 +3368,10 @@ public class BackgroundTaskPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BackgroundTask exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BackgroundTaskPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2020220536
+// LIFERAY-SERVICE-BUILDER-HASH:-1627441797

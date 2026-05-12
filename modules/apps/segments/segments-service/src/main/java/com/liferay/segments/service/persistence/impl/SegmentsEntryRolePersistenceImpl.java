@@ -5,7 +5,6 @@
 
 package com.liferay.segments.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class SegmentsEntryRolePersistenceImpl
 		OrderByComparator<SegmentsEntryRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRole.class)) {
-
-			return _collectionPersistenceFinderBySegmentsEntryId.find(
-				finderCache, new Object[] {segmentsEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderBySegmentsEntryId.find(
+			finderCache, new Object[] {segmentsEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -234,13 +228,8 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Override
 	public int countBySegmentsEntryId(long segmentsEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRole.class)) {
-
-			return _collectionPersistenceFinderBySegmentsEntryId.count(
-				finderCache, new Object[] {segmentsEntryId});
-		}
+		return _collectionPersistenceFinderBySegmentsEntryId.count(
+			finderCache, new Object[] {segmentsEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByRoleId;
@@ -320,14 +309,9 @@ public class SegmentsEntryRolePersistenceImpl
 		OrderByComparator<SegmentsEntryRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRole.class)) {
-
-			return _collectionPersistenceFinderByRoleId.find(
-				finderCache, new Object[] {roleId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRoleId.find(
+			finderCache, new Object[] {roleId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -389,13 +373,8 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Override
 	public int countByRoleId(long roleId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRole.class)) {
-
-			return _collectionPersistenceFinderByRoleId.count(
-				finderCache, new Object[] {roleId});
-		}
+		return _collectionPersistenceFinderByRoleId.count(
+			finderCache, new Object[] {roleId});
 	}
 
 	private FinderPath _finderPathFetchByS_R;
@@ -457,14 +436,9 @@ public class SegmentsEntryRolePersistenceImpl
 	public SegmentsEntryRole fetchByS_R(
 		long segmentsEntryId, long roleId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRole.class)) {
-
-			return _uniquePersistenceFinderByS_R.fetch(
-				finderCache, new Object[] {segmentsEntryId, roleId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByS_R.fetch(
+			finderCache, new Object[] {segmentsEntryId, roleId},
+			useFinderCache);
 	}
 
 	/**
@@ -922,4 +896,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-88217556
+// LIFERAY-SERVICE-BUILDER-HASH:357734583

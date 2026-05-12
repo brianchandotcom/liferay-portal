@@ -5,7 +5,6 @@
 
 package com.liferay.segments.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -167,14 +166,9 @@ public class SegmentsExperimentRelPersistenceImpl
 		OrderByComparator<SegmentsExperimentRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsExperimentRel.class)) {
-
-			return _collectionPersistenceFinderBySegmentsExperimentId.find(
-				finderCache, new Object[] {segmentsExperimentId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderBySegmentsExperimentId.find(
+			finderCache, new Object[] {segmentsExperimentId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -242,13 +236,8 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Override
 	public int countBySegmentsExperimentId(long segmentsExperimentId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsExperimentRel.class)) {
-
-			return _collectionPersistenceFinderBySegmentsExperimentId.count(
-				finderCache, new Object[] {segmentsExperimentId});
-		}
+		return _collectionPersistenceFinderBySegmentsExperimentId.count(
+			finderCache, new Object[] {segmentsExperimentId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindBySegmentsExperienceId;
@@ -333,14 +322,9 @@ public class SegmentsExperimentRelPersistenceImpl
 		OrderByComparator<SegmentsExperimentRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsExperimentRel.class)) {
-
-			return _collectionPersistenceFinderBySegmentsExperienceId.find(
-				finderCache, new Object[] {segmentsExperienceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderBySegmentsExperienceId.find(
+			finderCache, new Object[] {segmentsExperienceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -408,13 +392,8 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Override
 	public int countBySegmentsExperienceId(long segmentsExperienceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsExperimentRel.class)) {
-
-			return _collectionPersistenceFinderBySegmentsExperienceId.count(
-				finderCache, new Object[] {segmentsExperienceId});
-		}
+		return _collectionPersistenceFinderBySegmentsExperienceId.count(
+			finderCache, new Object[] {segmentsExperienceId});
 	}
 
 	private FinderPath _finderPathFetchByS_S;
@@ -480,15 +459,10 @@ public class SegmentsExperimentRelPersistenceImpl
 		long segmentsExperimentId, long segmentsExperienceId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsExperimentRel.class)) {
-
-			return _uniquePersistenceFinderByS_S.fetch(
-				finderCache,
-				new Object[] {segmentsExperimentId, segmentsExperienceId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByS_S.fetch(
+			finderCache,
+			new Object[] {segmentsExperimentId, segmentsExperienceId},
+			useFinderCache);
 	}
 
 	/**
@@ -967,4 +941,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1978590543
+// LIFERAY-SERVICE-BUILDER-HASH:1956650830

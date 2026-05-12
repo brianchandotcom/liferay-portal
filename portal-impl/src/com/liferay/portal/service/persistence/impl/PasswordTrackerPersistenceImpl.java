@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPasswordTrackerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordTracker;
 import com.liferay.portal.kernel.model.PasswordTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -468,9 +466,6 @@ public class PasswordTrackerPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PasswordTracker exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PasswordTrackerPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"password"});
 
@@ -480,4 +475,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1083442987
+// LIFERAY-SERVICE-BUILDER-HASH:851356046

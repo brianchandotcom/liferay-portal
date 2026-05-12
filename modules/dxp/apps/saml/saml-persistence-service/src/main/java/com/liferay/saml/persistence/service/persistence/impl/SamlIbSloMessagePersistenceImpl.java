@@ -414,9 +414,6 @@ public class SamlIbSloMessagePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		SamlIbSloMessageModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_SAMLIBSLOMESSAGE =
 		"SELECT samlIbSloMessage FROM SamlIbSloMessage samlIbSloMessage";
 
@@ -435,4 +432,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-708244561
+// LIFERAY-SERVICE-BUILDER-HASH:-578035614

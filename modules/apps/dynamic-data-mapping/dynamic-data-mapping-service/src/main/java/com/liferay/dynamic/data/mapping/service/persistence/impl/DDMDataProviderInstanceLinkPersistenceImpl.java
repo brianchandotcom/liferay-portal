@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkMo
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -164,14 +163,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMDataProviderInstanceLink.class)) {
-
-			return _collectionPersistenceFinderByDataProviderInstanceId.find(
-				finderCache, new Object[] {dataProviderInstanceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDataProviderInstanceId.find(
+			finderCache, new Object[] {dataProviderInstanceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -239,13 +233,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Override
 	public int countByDataProviderInstanceId(long dataProviderInstanceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMDataProviderInstanceLink.class)) {
-
-			return _collectionPersistenceFinderByDataProviderInstanceId.count(
-				finderCache, new Object[] {dataProviderInstanceId});
-		}
+		return _collectionPersistenceFinderByDataProviderInstanceId.count(
+			finderCache, new Object[] {dataProviderInstanceId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByStructureId;
@@ -329,14 +318,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMDataProviderInstanceLink.class)) {
-
-			return _collectionPersistenceFinderByStructureId.find(
-				finderCache, new Object[] {structureId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByStructureId.find(
+			finderCache, new Object[] {structureId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -400,13 +384,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Override
 	public int countByStructureId(long structureId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMDataProviderInstanceLink.class)) {
-
-			return _collectionPersistenceFinderByStructureId.count(
-				finderCache, new Object[] {structureId});
-		}
+		return _collectionPersistenceFinderByStructureId.count(
+			finderCache, new Object[] {structureId});
 	}
 
 	private FinderPath _finderPathFetchByD_S;
@@ -471,14 +450,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	public DDMDataProviderInstanceLink fetchByD_S(
 		long dataProviderInstanceId, long structureId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMDataProviderInstanceLink.class)) {
-
-			return _uniquePersistenceFinderByD_S.fetch(
-				finderCache, new Object[] {dataProviderInstanceId, structureId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByD_S.fetch(
+			finderCache, new Object[] {dataProviderInstanceId, structureId},
+			useFinderCache);
 	}
 
 	/**
@@ -931,4 +905,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1096955585
+// LIFERAY-SERVICE-BUILDER-HASH:2109580059

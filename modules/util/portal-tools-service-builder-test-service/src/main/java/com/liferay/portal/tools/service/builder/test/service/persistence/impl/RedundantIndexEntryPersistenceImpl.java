@@ -362,9 +362,6 @@ public class RedundantIndexEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		RedundantIndexEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_REDUNDANTINDEXENTRY =
 		"SELECT redundantIndexEntry FROM RedundantIndexEntry redundantIndexEntry";
 
@@ -383,4 +380,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-200962899
+// LIFERAY-SERVICE-BUILDER-HASH:81215626

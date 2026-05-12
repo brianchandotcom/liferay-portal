@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.revert.schema.version.exception.NoSuchEntryException;
@@ -258,14 +256,8 @@ public class RSVEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		RSVEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_RSVENTRY =
 		"SELECT rsvEntry FROM RSVEntry rsvEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RSVEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -273,4 +265,4 @@ public class RSVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1833990147
+// LIFERAY-SERVICE-BUILDER-HASH:1293012547

@@ -564,9 +564,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		DLOpenerFileEntryReferenceModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_DLOPENERFILEENTRYREFERENCE =
 		"SELECT dlOpenerFileEntryReference FROM DLOpenerFileEntryReference dlOpenerFileEntryReference";
 
@@ -588,4 +585,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-988957140
+// LIFERAY-SERVICE-BUILDER-HASH:-1343515290

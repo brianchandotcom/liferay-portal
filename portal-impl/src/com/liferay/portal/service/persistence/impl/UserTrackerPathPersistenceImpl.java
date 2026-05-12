@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerPathException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.model.UserTrackerPathTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -458,9 +456,6 @@ public class UserTrackerPathPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserTrackerPath exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserTrackerPathPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"path"});
 
@@ -470,4 +465,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:470382330
+// LIFERAY-SERVICE-BUILDER-HASH:-385870074

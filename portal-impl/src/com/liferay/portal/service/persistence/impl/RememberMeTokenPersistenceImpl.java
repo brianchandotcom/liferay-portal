@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRememberMeTokenException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.RememberMeToken;
 import com.liferay.portal.kernel.model.RememberMeTokenTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -630,13 +628,10 @@ public class RememberMeTokenPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RememberMeToken exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		RememberMeTokenPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:26946873
+// LIFERAY-SERVICE-BUILDER-HASH:-965181493

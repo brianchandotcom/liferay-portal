@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.impl.CPDefinitionLocalizationModelImpl
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -170,14 +169,9 @@ public class CPDefinitionLocalizationPersistenceImpl
 		OrderByComparator<CPDefinitionLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionLocalization.class)) {
-
-			return _collectionPersistenceFinderByCPDefinitionId.find(
-				finderCache, new Object[] {CPDefinitionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPDefinitionId.find(
+			finderCache, new Object[] {CPDefinitionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -241,13 +235,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByCPDefinitionId(long CPDefinitionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionLocalization.class)) {
-
-			return _collectionPersistenceFinderByCPDefinitionId.count(
-				finderCache, new Object[] {CPDefinitionId});
-		}
+		return _collectionPersistenceFinderByCPDefinitionId.count(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	private FinderPath _finderPathFetchByCPDefinitionId_LanguageId;
@@ -314,14 +303,9 @@ public class CPDefinitionLocalizationPersistenceImpl
 	public CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
 		long CPDefinitionId, String languageId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionLocalization.class)) {
-
-			return _uniquePersistenceFinderByCPDefinitionId_LanguageId.fetch(
-				finderCache, new Object[] {CPDefinitionId, languageId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByCPDefinitionId_LanguageId.fetch(
+			finderCache, new Object[] {CPDefinitionId, languageId},
+			useFinderCache);
 	}
 
 	/**
@@ -811,4 +795,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-468896139
+// LIFERAY-SERVICE-BUILDER-HASH:-943724969

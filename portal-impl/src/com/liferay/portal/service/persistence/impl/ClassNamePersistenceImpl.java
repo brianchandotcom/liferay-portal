@@ -328,9 +328,6 @@ public class ClassNamePersistenceImpl
 		EntityCacheUtil.removeCache(ClassNameImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		ClassNameModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_CLASSNAME =
 		"SELECT className FROM ClassName className";
 
@@ -349,4 +346,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1562164466
+// LIFERAY-SERVICE-BUILDER-HASH:-1421164223

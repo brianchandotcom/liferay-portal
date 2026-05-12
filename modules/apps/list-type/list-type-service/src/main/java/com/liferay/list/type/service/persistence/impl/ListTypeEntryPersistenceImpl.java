@@ -645,10 +645,6 @@ public class ListTypeEntryPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(listTypeEntryIds)});
 	}
 
-	private static final String
-		_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_2 =
-			"listTypeEntry.listTypeEntryId = ?";
-
 	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathCountByListTypeDefinitionId;
@@ -907,10 +903,6 @@ public class ListTypeEntryPersistenceImpl
 			finderCache,
 			new Object[] {ArrayUtil.sortedUnique(listTypeDefinitionIds)});
 	}
-
-	private static final String
-		_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2 =
-			"listTypeEntry.listTypeDefinitionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_U;
@@ -1808,4 +1800,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:581685958
+// LIFERAY-SERVICE-BUILDER-HASH:1643442473

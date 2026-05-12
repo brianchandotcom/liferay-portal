@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -156,14 +155,9 @@ public class RegionPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -225,13 +219,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
@@ -316,15 +305,9 @@ public class RegionPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -392,14 +375,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCountryId;
@@ -477,14 +454,9 @@ public class RegionPersistenceImpl
 		long countryId, int start, int end,
 		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByCountryId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {countryId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCountryId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -546,13 +518,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByCountryId(long countryId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByCountryId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {countryId});
-		}
+		return _collectionPersistenceFinderByCountryId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByActive;
@@ -629,14 +596,9 @@ public class RegionPersistenceImpl
 		boolean active, int start, int end,
 		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByActive.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {active}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByActive.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {active}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -698,13 +660,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByActive(boolean active) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByActive.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {active});
-		}
+		return _collectionPersistenceFinderByActive.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
@@ -789,15 +746,9 @@ public class RegionPersistenceImpl
 		long countryId, boolean active, int start, int end,
 		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByC_A.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {countryId, active}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId, active},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -865,14 +816,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public int countByC_A(long countryId, boolean active) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _collectionPersistenceFinderByC_A.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {countryId, active});
-		}
+		return _collectionPersistenceFinderByC_A.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId, active});
 	}
 
 	private FinderPath _finderPathFetchByC_R;
@@ -932,14 +877,9 @@ public class RegionPersistenceImpl
 	public Region fetchByC_R(
 		long countryId, String regionCode, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Region.class)) {
-
-			return _uniquePersistenceFinderByC_R.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {countryId, regionCode}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_R.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {countryId, regionCode}, useFinderCache);
 	}
 
 	/**
@@ -1465,4 +1405,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:611998443
+// LIFERAY-SERVICE-BUILDER-HASH:940314912

@@ -5,14 +5,11 @@
 
 package com.liferay.redirect.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -23,11 +20,11 @@ import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -54,7 +51,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -486,7 +482,7 @@ public class RedirectEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
-	private CollectionPersistenceFinder<RedirectEntry>
+	private FilterCollectionPersistenceFinder<RedirectEntry>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -653,97 +649,9 @@ public class RedirectEntryPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<RedirectEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId(groupId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_REDIRECTENTRY_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), RedirectEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, RedirectEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, RedirectEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			return (List<RedirectEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterFind(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			groupId);
 	}
 
 	/**
@@ -777,62 +685,14 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByGroupId(groupId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<RedirectEntry> redirectEntries = findByGroupId(groupId);
-
-			redirectEntries = InlineSQLHelperUtil.filter(
-				redirectEntries, groupId);
-
-			return redirectEntries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_REDIRECTENTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), RedirectEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterCount(
+			finderCache, new Object[] {groupId}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"redirectEntry.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_D;
 	private FinderPath _finderPathCountByG_D;
-	private CollectionPersistenceFinder<RedirectEntry>
+	private FilterCollectionPersistenceFinder<RedirectEntry>
 		_collectionPersistenceFinderByG_D;
 
 	/**
@@ -1019,115 +879,9 @@ public class RedirectEntryPersistenceImpl
 		long groupId, String destinationURL, int start, int end,
 		OrderByComparator<RedirectEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_D(
-				groupId, destinationURL, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_D(
-					groupId, destinationURL, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		destinationURL = Objects.toString(destinationURL, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_REDIRECTENTRY_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_D_GROUPID_2);
-
-		boolean bindDestinationURL = false;
-
-		if (destinationURL.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_D_DESTINATIONURL_3);
-		}
-		else {
-			bindDestinationURL = true;
-
-			sb.append(_FINDER_COLUMN_G_D_DESTINATIONURL_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(RedirectEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), RedirectEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, RedirectEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, RedirectEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			if (bindDestinationURL) {
-				queryPos.add(destinationURL);
-			}
-
-			return (List<RedirectEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_D.filterFind(
+			finderCache, new Object[] {groupId, destinationURL}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -1164,81 +918,9 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_D(long groupId, String destinationURL) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_D(groupId, destinationURL);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<RedirectEntry> redirectEntries = findByG_D(
-				groupId, destinationURL);
-
-			redirectEntries = InlineSQLHelperUtil.filter(
-				redirectEntries, groupId);
-
-			return redirectEntries.size();
-		}
-
-		destinationURL = Objects.toString(destinationURL, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_REDIRECTENTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_D_GROUPID_2);
-
-		boolean bindDestinationURL = false;
-
-		if (destinationURL.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_D_DESTINATIONURL_3);
-		}
-		else {
-			bindDestinationURL = true;
-
-			sb.append(_FINDER_COLUMN_G_D_DESTINATIONURL_2);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), RedirectEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			if (bindDestinationURL) {
-				queryPos.add(destinationURL);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_D.filterCount(
+			finderCache, new Object[] {groupId, destinationURL}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_D_GROUPID_2 =
-		"redirectEntry.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_D_DESTINATIONURL_2 =
-		"redirectEntry.destinationURL = ?";
-
-	private static final String _FINDER_COLUMN_G_D_DESTINATIONURL_3 =
-		"(redirectEntry.destinationURL IS NULL OR redirectEntry.destinationURL = '')";
 
 	private FinderPath _finderPathFetchByG_S;
 	private UniquePersistenceFinder<RedirectEntry>
@@ -1680,12 +1362,22 @@ public class RedirectEntryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByGroupId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByGroupId,
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_REDIRECTENTRY_WHERE,
 				_SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					RedirectEntryImpl.class, RedirectEntry.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_REDIRECTENTRY_WHERE,
+					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_REDIRECTENTRY_WHERE,
+					RedirectEntryModelImpl.ORDER_BY_SQL,
+					RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getGroupId));
@@ -1709,17 +1401,29 @@ public class RedirectEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "destinationURL"}, 0, 2, false, null);
 
-		_collectionPersistenceFinderByG_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_D,
-			_finderPathWithoutPaginationFindByG_D, _finderPathCountByG_D,
-			_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
-			RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				true, RedirectEntry::getGroupId),
-			new FinderColumn<>(
-				"redirectEntry.", "destinationURL", FinderColumn.Type.STRING,
-				"=", true, true, RedirectEntry::getDestinationURL));
+		_collectionPersistenceFinderByG_D =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_D,
+				_finderPathWithoutPaginationFindByG_D, _finderPathCountByG_D,
+				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
+				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					RedirectEntryImpl.class, RedirectEntry.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_REDIRECTENTRY_WHERE,
+					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_REDIRECTENTRY_WHERE,
+					RedirectEntryModelImpl.ORDER_BY_SQL,
+					RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, RedirectEntry::getGroupId),
+				new FinderColumn<>(
+					"redirectEntry.", "destinationURL",
+					FinderColumn.Type.STRING, "=", true, true,
+					RedirectEntry::getDestinationURL));
 
 		_finderPathFetchByG_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
@@ -1812,8 +1516,6 @@ public class RedirectEntryPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "RedirectEntry";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "RedirectEntry.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RedirectEntry exists with the key {";
 
@@ -1829,4 +1531,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-260066875
+// LIFERAY-SERVICE-BUILDER-HASH:51784872

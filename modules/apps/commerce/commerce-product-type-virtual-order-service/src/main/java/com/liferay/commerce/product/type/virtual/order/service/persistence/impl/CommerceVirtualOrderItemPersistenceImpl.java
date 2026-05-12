@@ -977,4 +977,4 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-578538371
+// LIFERAY-SERVICE-BUILDER-HASH:-503560831

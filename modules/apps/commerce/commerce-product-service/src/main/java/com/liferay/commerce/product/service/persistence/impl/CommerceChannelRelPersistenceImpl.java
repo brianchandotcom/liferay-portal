@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -165,14 +164,9 @@ public class CommerceChannelRelPersistenceImpl
 		OrderByComparator<CommerceChannelRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelRel.class)) {
-
-			return _collectionPersistenceFinderByCommerceChannelId.find(
-				finderCache, new Object[] {commerceChannelId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCommerceChannelId.find(
+			finderCache, new Object[] {commerceChannelId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -238,13 +232,8 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceChannelId(long commerceChannelId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelRel.class)) {
-
-			return _collectionPersistenceFinderByCommerceChannelId.count(
-				finderCache, new Object[] {commerceChannelId});
-		}
+		return _collectionPersistenceFinderByCommerceChannelId.count(
+			finderCache, new Object[] {commerceChannelId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -330,14 +319,9 @@ public class CommerceChannelRelPersistenceImpl
 		OrderByComparator<CommerceChannelRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelRel.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -406,13 +390,8 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelRel.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathFetchByC_C_C;
@@ -481,15 +460,9 @@ public class CommerceChannelRelPersistenceImpl
 		long classNameId, long classPK, long commerceChannelId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommerceChannelRel.class)) {
-
-			return _uniquePersistenceFinderByC_C_C.fetch(
-				finderCache,
-				new Object[] {classNameId, classPK, commerceChannelId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_C_C.fetch(
+			finderCache, new Object[] {classNameId, classPK, commerceChannelId},
+			useFinderCache);
 	}
 
 	/**
@@ -967,4 +940,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2009198362
+// LIFERAY-SERVICE-BUILDER-HASH:-1401891970

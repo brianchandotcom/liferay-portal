@@ -428,9 +428,6 @@ public class PatcherTicketHintPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		PatcherTicketHintModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_PATCHERTICKETHINT =
 		"SELECT patcherTicketHint FROM PatcherTicketHint patcherTicketHint";
 
@@ -449,4 +446,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1482150809
+// LIFERAY-SERVICE-BUILDER-HASH:769640387

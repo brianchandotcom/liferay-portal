@@ -397,9 +397,6 @@ public class FaroProjectUsagePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		FaroProjectUsageModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_FAROPROJECTUSAGE =
 		"SELECT faroProjectUsage FROM FaroProjectUsage faroProjectUsage";
 
@@ -418,4 +415,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1445542586
+// LIFERAY-SERVICE-BUILDER-HASH:24067300

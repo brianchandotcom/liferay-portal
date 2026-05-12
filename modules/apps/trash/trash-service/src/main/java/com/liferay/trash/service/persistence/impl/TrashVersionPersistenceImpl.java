@@ -5,7 +5,6 @@
 
 package com.liferay.trash.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -157,14 +156,9 @@ public class TrashVersionPersistenceImpl
 		OrderByComparator<TrashVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashVersion.class)) {
-
-			return _collectionPersistenceFinderByEntryId.find(
-				finderCache, new Object[] {entryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByEntryId.find(
+			finderCache, new Object[] {entryId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -226,13 +220,8 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public int countByEntryId(long entryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashVersion.class)) {
-
-			return _collectionPersistenceFinderByEntryId.count(
-				finderCache, new Object[] {entryId});
-		}
+		return _collectionPersistenceFinderByEntryId.count(
+			finderCache, new Object[] {entryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByE_CN;
@@ -318,14 +307,9 @@ public class TrashVersionPersistenceImpl
 		OrderByComparator<TrashVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashVersion.class)) {
-
-			return _collectionPersistenceFinderByE_CN.find(
-				finderCache, new Object[] {entryId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByE_CN.find(
+			finderCache, new Object[] {entryId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -394,13 +378,8 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public int countByE_CN(long entryId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashVersion.class)) {
-
-			return _collectionPersistenceFinderByE_CN.count(
-				finderCache, new Object[] {entryId, classNameId});
-		}
+		return _collectionPersistenceFinderByE_CN.count(
+			finderCache, new Object[] {entryId, classNameId});
 	}
 
 	private FinderPath _finderPathFetchByCN_CPK;
@@ -461,14 +440,8 @@ public class TrashVersionPersistenceImpl
 	public TrashVersion fetchByCN_CPK(
 		long classNameId, long classPK, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashVersion.class)) {
-
-			return _uniquePersistenceFinderByCN_CPK.fetch(
-				finderCache, new Object[] {classNameId, classPK},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByCN_CPK.fetch(
+			finderCache, new Object[] {classNameId, classPK}, useFinderCache);
 	}
 
 	/**
@@ -886,4 +859,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1503978589
+// LIFERAY-SERVICE-BUILDER-HASH:-698349370

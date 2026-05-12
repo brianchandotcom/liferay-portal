@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -152,14 +151,9 @@ public class RegionLocalizationPersistenceImpl
 		OrderByComparator<RegionLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RegionLocalization.class)) {
-
-			return _collectionPersistenceFinderByRegionId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {regionId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRegionId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {regionId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -224,13 +218,8 @@ public class RegionLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByRegionId(long regionId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RegionLocalization.class)) {
-
-			return _collectionPersistenceFinderByRegionId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {regionId});
-		}
+		return _collectionPersistenceFinderByRegionId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {regionId});
 	}
 
 	private FinderPath _finderPathFetchByRegionId_LanguageId;
@@ -296,14 +285,9 @@ public class RegionLocalizationPersistenceImpl
 	public RegionLocalization fetchByRegionId_LanguageId(
 		long regionId, String languageId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RegionLocalization.class)) {
-
-			return _uniquePersistenceFinderByRegionId_LanguageId.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {regionId, languageId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByRegionId_LanguageId.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {regionId, languageId}, useFinderCache);
 	}
 
 	/**
@@ -669,4 +653,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-122789108
+// LIFERAY-SERVICE-BUILDER-HASH:-1646866774

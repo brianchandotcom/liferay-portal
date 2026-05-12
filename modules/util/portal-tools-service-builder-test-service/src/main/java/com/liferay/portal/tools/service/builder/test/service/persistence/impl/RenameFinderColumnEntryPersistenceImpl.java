@@ -363,9 +363,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		RenameFinderColumnEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_RENAMEFINDERCOLUMNENTRY =
 		"SELECT renameFinderColumnEntry FROM RenameFinderColumnEntry renameFinderColumnEntry";
 
@@ -384,4 +381,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-848806726
+// LIFERAY-SERVICE-BUILDER-HASH:57606314

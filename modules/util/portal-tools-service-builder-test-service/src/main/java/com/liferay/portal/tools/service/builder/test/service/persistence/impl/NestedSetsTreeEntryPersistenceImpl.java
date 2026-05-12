@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.kernel.service.persistence.impl.PersistenceNestedSetsTreeManager;
@@ -625,14 +623,8 @@ public class NestedSetsTreeEntryPersistenceImpl
 			"leftNestedSetsTreeEntryId", "rightNestedSetsTreeEntryId");
 	protected boolean rebuildTreeEnabled = true;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		NestedSetsTreeEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_NESTEDSETSTREEENTRY =
 		"SELECT nestedSetsTreeEntry FROM NestedSetsTreeEntry nestedSetsTreeEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NestedSetsTreeEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -640,4 +632,4 @@ public class NestedSetsTreeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1603793997
+// LIFERAY-SERVICE-BUILDER-HASH:-1556299563

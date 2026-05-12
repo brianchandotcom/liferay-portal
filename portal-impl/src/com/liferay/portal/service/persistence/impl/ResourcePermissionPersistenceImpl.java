@@ -157,14 +157,9 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByName.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {name}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByName.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -228,13 +223,8 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByName.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {name});
-		}
+		return _collectionPersistenceFinderByName.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByScope;
@@ -312,15 +302,9 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByScope.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new int[] {scope}}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByScope.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {new int[] {scope}},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -446,15 +430,10 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByScope.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(scopes)}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByScope.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(scopes)}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -476,14 +455,8 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByScope(int scope) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByScope.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new int[] {scope}});
-		}
+		return _collectionPersistenceFinderByScope.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {new int[] {scope}});
 	}
 
 	/**
@@ -494,18 +467,10 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByScope(int[] scopes) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByScope.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(scopes)});
-		}
+		return _collectionPersistenceFinderByScope.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(scopes)});
 	}
-
-	private static final String _FINDER_COLUMN_SCOPE_SCOPE_2 =
-		"resourcePermission.scope = ?";
 
 	private FinderPath _finderPathWithPaginationFindByRoleId;
 	private FinderPath _finderPathWithoutPaginationFindByRoleId;
@@ -584,14 +549,9 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByRoleId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {roleId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRoleId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -655,13 +615,8 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByRoleId(long roleId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByRoleId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {roleId});
-		}
+		return _collectionPersistenceFinderByRoleId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_LikeP;
@@ -748,15 +703,9 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_LikeP.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, primKey}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_LikeP.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, primKey},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -826,14 +775,9 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByC_LikeP(long companyId, String primKey) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_LikeP.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, primKey});
-		}
+		return _collectionPersistenceFinderByC_LikeP.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, primKey});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_N_S;
@@ -925,15 +869,10 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, scope}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_N_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1008,14 +947,9 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByC_N_S(long companyId, String name, int scope) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, scope});
-		}
+		return _collectionPersistenceFinderByC_N_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_S_P;
@@ -1108,15 +1042,10 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_S_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, scope, primKey}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_S_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, scope, primKey}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1191,14 +1120,9 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public int countByC_S_P(long companyId, int scope, String primKey) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_S_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, scope, primKey});
-		}
+		return _collectionPersistenceFinderByC_S_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, scope, primKey});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_N_S_P;
@@ -1297,15 +1221,10 @@ public class ResourcePermissionPersistenceImpl
 		int end, OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, scope, new String[] {primKey}},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_N_S_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, new String[] {primKey}},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1469,17 +1388,12 @@ public class ResourcePermissionPersistenceImpl
 		int end, OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					companyId, name, scope, ArrayUtil.sortedUnique(primKeys)
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_N_S_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, name, scope, ArrayUtil.sortedUnique(primKeys)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1512,14 +1426,9 @@ public class ResourcePermissionPersistenceImpl
 	public int countByC_N_S_P(
 		long companyId, String name, int scope, String primKey) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, scope, new String[] {primKey}});
-		}
+		return _collectionPersistenceFinderByC_N_S_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, new String[] {primKey}});
 	}
 
 	/**
@@ -1535,35 +1444,12 @@ public class ResourcePermissionPersistenceImpl
 	public int countByC_N_S_P(
 		long companyId, String name, int scope, String[] primKeys) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					companyId, name, scope, ArrayUtil.sortedUnique(primKeys)
-				});
-		}
+		return _collectionPersistenceFinderByC_N_S_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, name, scope, ArrayUtil.sortedUnique(primKeys)
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_N_S_P_COMPANYID_2 =
-		"resourcePermission.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_S_P_NAME_2 =
-		"resourcePermission.name = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_S_P_NAME_3 =
-		"(resourcePermission.name IS NULL OR resourcePermission.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_C_N_S_P_SCOPE_2 =
-		"resourcePermission.scope = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_S_P_PRIMKEY_2 =
-		"resourcePermission.primKey = ?";
-
-	private static final String _FINDER_COLUMN_C_N_S_P_PRIMKEY_3 =
-		"(resourcePermission.primKey IS NULL OR resourcePermission.primKey = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_N_S_R;
 	private FinderPath _finderPathWithoutPaginationFindByC_N_S_R;
@@ -1661,15 +1547,10 @@ public class ResourcePermissionPersistenceImpl
 		OrderByComparator<ResourcePermission> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S_R.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, scope, roleId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_N_S_R.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, roleId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1752,14 +1633,9 @@ public class ResourcePermissionPersistenceImpl
 	public int countByC_N_S_R(
 		long companyId, String name, int scope, long roleId) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			return _collectionPersistenceFinderByC_N_S_R.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, scope, roleId});
-		}
+		return _collectionPersistenceFinderByC_N_S_R.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, roleId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_N_S_P_R;
@@ -4184,4 +4060,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-616850516
+// LIFERAY-SERVICE-BUILDER-HASH:712855904

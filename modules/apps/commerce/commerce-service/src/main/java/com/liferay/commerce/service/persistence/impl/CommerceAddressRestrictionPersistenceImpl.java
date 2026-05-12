@@ -866,4 +866,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:17285738
+// LIFERAY-SERVICE-BUILDER-HASH:1712813446

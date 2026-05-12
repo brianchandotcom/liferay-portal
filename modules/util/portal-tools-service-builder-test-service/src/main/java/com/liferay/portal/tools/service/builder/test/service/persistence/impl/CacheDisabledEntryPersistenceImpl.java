@@ -340,9 +340,6 @@ public class CacheDisabledEntryPersistenceImpl
 		dummyEntityCache.removeCache(CacheDisabledEntryImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		CacheDisabledEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_CACHEDISABLEDENTRY =
 		"SELECT cacheDisabledEntry FROM CacheDisabledEntry cacheDisabledEntry";
 
@@ -361,4 +358,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-762053193
+// LIFERAY-SERVICE-BUILDER-HASH:-2036202099

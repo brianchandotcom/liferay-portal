@@ -14,7 +14,6 @@ import com.liferay.client.extension.model.impl.ClientExtensionEntryRelModelImpl;
 import com.liferay.client.extension.service.persistence.ClientExtensionEntryRelPersistence;
 import com.liferay.client.extension.service.persistence.ClientExtensionEntryRelUtil;
 import com.liferay.client.extension.service.persistence.impl.constants.ClientExtensionPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -175,14 +174,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -246,13 +240,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -313,13 +302,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	public ClientExtensionEntryRel fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -437,14 +421,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -512,13 +491,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByType;
@@ -598,14 +572,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByType.find(
-				finderCache, new Object[] {type}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByType.find(
+			finderCache, new Object[] {type}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -669,13 +638,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByType(String type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByType.count(
-				finderCache, new Object[] {type});
-		}
+		return _collectionPersistenceFinderByType.count(
+			finderCache, new Object[] {type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_CETERC;
@@ -766,14 +730,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByC_CETERC.find(
-				finderCache, new Object[] {companyId, cetExternalReferenceCode},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_CETERC.find(
+			finderCache, new Object[] {companyId, cetExternalReferenceCode},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -847,14 +806,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	public int countByC_CETERC(
 		long companyId, String cetExternalReferenceCode) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByC_CETERC.count(
-				finderCache,
-				new Object[] {companyId, cetExternalReferenceCode});
-		}
+		return _collectionPersistenceFinderByC_CETERC.count(
+			finderCache, new Object[] {companyId, cetExternalReferenceCode});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -942,14 +895,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1018,13 +966,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_T;
@@ -1117,14 +1060,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByC_C_T.find(
-				finderCache, new Object[] {classNameId, classPK, type}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_T.find(
+			finderCache, new Object[] {classNameId, classPK, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1198,13 +1136,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_T(long classNameId, long classPK, String type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _collectionPersistenceFinderByC_C_T.count(
-				finderCache, new Object[] {classNameId, classPK, type});
-		}
+		return _collectionPersistenceFinderByC_C_T.count(
+			finderCache, new Object[] {classNameId, classPK, type});
 	}
 
 	private FinderPath _finderPathFetchByERC_G;
@@ -1269,14 +1202,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 	public ClientExtensionEntryRel fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					ClientExtensionEntryRel.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				finderCache, new Object[] {externalReferenceCode, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -2020,4 +1948,4 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:822857433
+// LIFERAY-SERVICE-BUILDER-HASH:1874149713

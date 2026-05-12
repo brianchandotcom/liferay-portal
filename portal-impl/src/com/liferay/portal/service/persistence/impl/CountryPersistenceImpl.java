@@ -5,8 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -14,9 +12,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence;
@@ -33,7 +28,7 @@ import com.liferay.portal.kernel.service.persistence.CountryUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -56,7 +51,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -90,7 +84,7 @@ public class CountryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -161,14 +155,9 @@ public class CountryPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -258,105 +247,9 @@ public class CountryPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByUuid(uuid, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByUuid(
-					uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid.filterFind(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -378,13 +271,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -395,77 +283,14 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByUuid(uuid);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByUuid(uuid);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid.filterCount(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL =
-		"country.uuid_ = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL =
-		"(country.uuid_ IS NULL OR country.uuid_ = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -544,15 +369,9 @@ public class CountryPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -652,109 +471,9 @@ public class CountryPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			queryPos.add(companyId);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid_C.filterFind(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -778,14 +497,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -797,84 +510,15 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByUuid_C(uuid, companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByUuid_C(uuid, companyId);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid_C.filterCount(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL =
-		"country.uuid_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL =
-		"(country.uuid_ IS NULL OR country.uuid_ = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"country.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -946,14 +590,9 @@ public class CountryPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1045,92 +684,9 @@ public class CountryPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId(companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1152,13 +708,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -1169,61 +720,15 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByCompanyId(companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByCompanyId(companyId);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"country.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByActive;
 	private FinderPath _finderPathWithoutPaginationFindByActive;
 	private FinderPath _finderPathCountByActive;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByActive;
 
 	/**
@@ -1294,14 +799,9 @@ public class CountryPersistenceImpl
 		boolean active, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByActive.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {active}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByActive.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {active}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1393,92 +893,9 @@ public class CountryPersistenceImpl
 		boolean active, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByActive(active, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByActive.filterFind(
+			FinderCacheUtil.getFinderCache(), new Object[] {active}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1500,13 +917,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByActive(boolean active) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByActive.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {active});
-		}
+		return _collectionPersistenceFinderByActive.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
 	/**
@@ -1517,56 +929,9 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByActive(boolean active) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByActive(active);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByActive(active);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByActive.filterCount(
+			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
-
-	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL =
-		"country.active_ = ?";
 
 	private FinderPath _finderPathFetchByC_A2;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_A2;
@@ -1624,14 +989,9 @@ public class CountryPersistenceImpl
 	public Country fetchByC_A2(
 		long companyId, String a2, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _uniquePersistenceFinderByC_A2.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId, a2},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_A2.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a2},
+			useFinderCache);
 	}
 
 	/**
@@ -1719,14 +1079,9 @@ public class CountryPersistenceImpl
 	public Country fetchByC_A3(
 		long companyId, String a3, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _uniquePersistenceFinderByC_A3.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId, a3},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_A3.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a3},
+			useFinderCache);
 	}
 
 	/**
@@ -1761,7 +1116,7 @@ public class CountryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_Active;
 	private FinderPath _finderPathWithoutPaginationFindByC_Active;
 	private FinderPath _finderPathCountByC_Active;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_Active;
 
 	/**
@@ -1840,15 +1195,9 @@ public class CountryPersistenceImpl
 		long companyId, boolean active, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_Active.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, active}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_Active.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1948,97 +1297,9 @@ public class CountryPersistenceImpl
 		long companyId, boolean active, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_Active(
-				companyId, active, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_Active(
-					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_ACTIVE_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_ACTIVE_ACTIVE_2_SQL);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(active);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_Active.filterFind(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			start, end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -2062,14 +1323,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int countByC_Active(long companyId, boolean active) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_Active.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, active});
-		}
+		return _collectionPersistenceFinderByC_Active.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active});
 	}
 
 	/**
@@ -2081,63 +1336,10 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByC_Active(long companyId, boolean active) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_Active(companyId, active);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByC_Active(companyId, active);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_ACTIVE_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_ACTIVE_ACTIVE_2_SQL);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(active);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_Active.filterCount(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_C_ACTIVE_COMPANYID_2 =
-		"country.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_ACTIVE_ACTIVE_2_SQL =
-		"country.active_ = ?";
 
 	private FinderPath _finderPathFetchByC_Name;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_Name;
@@ -2195,14 +1397,9 @@ public class CountryPersistenceImpl
 	public Country fetchByC_Name(
 		long companyId, String name, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _uniquePersistenceFinderByC_Name.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_Name.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name},
+			useFinderCache);
 	}
 
 	/**
@@ -2290,14 +1487,9 @@ public class CountryPersistenceImpl
 	public Country fetchByC_Number(
 		long companyId, String number, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _uniquePersistenceFinderByC_Number.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, number}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_Number.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, number},
+			useFinderCache);
 	}
 
 	/**
@@ -2332,7 +1524,7 @@ public class CountryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_A_B;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_B;
 	private FinderPath _finderPathCountByC_A_B;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_B;
 
 	/**
@@ -2421,15 +1613,10 @@ public class CountryPersistenceImpl
 		int end, OrderByComparator<Country> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_B.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, active, billingAllowed}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A_B.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2541,102 +1728,10 @@ public class CountryPersistenceImpl
 		long companyId, boolean active, boolean billingAllowed, int start,
 		int end, OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_A_B(
-				companyId, active, billingAllowed, start, end,
-				orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A_B(
-					companyId, active, billingAllowed, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_B_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_B_BILLINGALLOWED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(active);
-
-			queryPos.add(billingAllowed);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_B.filterFind(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -2667,14 +1762,9 @@ public class CountryPersistenceImpl
 	public int countByC_A_B(
 		long companyId, boolean active, boolean billingAllowed) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_B.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, active, billingAllowed});
-		}
+		return _collectionPersistenceFinderByC_A_B.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed});
 	}
 
 	/**
@@ -2689,76 +1779,15 @@ public class CountryPersistenceImpl
 	public int filterCountByC_A_B(
 		long companyId, boolean active, boolean billingAllowed) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_A_B(companyId, active, billingAllowed);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByC_A_B(
-				companyId, active, billingAllowed);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_B_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_B_BILLINGALLOWED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(active);
-
-			queryPos.add(billingAllowed);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_B.filterCount(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_C_A_B_COMPANYID_2 =
-		"country.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_ACTIVE_2_SQL =
-		"country.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_BILLINGALLOWED_2 =
-		"country.billingAllowed = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_A_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_S;
 	private FinderPath _finderPathCountByC_A_S;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_S;
 
 	/**
@@ -2848,15 +1877,10 @@ public class CountryPersistenceImpl
 		int end, OrderByComparator<Country> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, active, shippingAllowed}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2968,102 +1992,10 @@ public class CountryPersistenceImpl
 		long companyId, boolean active, boolean shippingAllowed, int start,
 		int end, OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_A_S(
-				companyId, active, shippingAllowed, start, end,
-				orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A_S(
-					companyId, active, shippingAllowed, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_S_SHIPPINGALLOWED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(active);
-
-			queryPos.add(shippingAllowed);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_S.filterFind(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -3094,14 +2026,9 @@ public class CountryPersistenceImpl
 	public int countByC_A_S(
 		long companyId, boolean active, boolean shippingAllowed) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, active, shippingAllowed});
-		}
+		return _collectionPersistenceFinderByC_A_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed});
 	}
 
 	/**
@@ -3116,76 +2043,15 @@ public class CountryPersistenceImpl
 	public int filterCountByC_A_S(
 		long companyId, boolean active, boolean shippingAllowed) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_A_S(companyId, active, shippingAllowed);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByC_A_S(
-				companyId, active, shippingAllowed);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_S_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_S_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_S_SHIPPINGALLOWED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(active);
-
-			queryPos.add(shippingAllowed);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_S.filterCount(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_C_A_S_COMPANYID_2 =
-		"country.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_S_ACTIVE_2_SQL =
-		"country.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_S_SHIPPINGALLOWED_2 =
-		"country.shippingAllowed = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_A_B_G;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_B_G;
 	private FinderPath _finderPathCountByC_A_B_G;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_B_G;
 
 	/**
@@ -3282,17 +2148,12 @@ public class CountryPersistenceImpl
 		boolean groupFilterEnabled, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_B_G.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					countryId, active, billingAllowed, groupFilterEnabled
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A_B_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3419,106 +2280,12 @@ public class CountryPersistenceImpl
 		boolean groupFilterEnabled, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByC_A_B_G(
-				countryId, active, billingAllowed, groupFilterEnabled, start,
-				end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A_B_G(
-					countryId, active, billingAllowed, groupFilterEnabled,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(7);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_COUNTRYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_BILLINGALLOWED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_GROUPFILTERENABLED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(countryId);
-
-			queryPos.add(active);
-
-			queryPos.add(billingAllowed);
-
-			queryPos.add(groupFilterEnabled);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_B_G.filterFind(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			},
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -3555,16 +2322,11 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_B_G.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					countryId, active, billingAllowed, groupFilterEnabled
-				});
-		}
+		return _collectionPersistenceFinderByC_A_B_G.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			});
 	}
 
 	/**
@@ -3581,84 +2343,17 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByC_A_B_G(
-				countryId, active, billingAllowed, groupFilterEnabled);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByC_A_B_G(
-				countryId, active, billingAllowed, groupFilterEnabled);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_COUNTRYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_BILLINGALLOWED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_GROUPFILTERENABLED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(countryId);
-
-			queryPos.add(active);
-
-			queryPos.add(billingAllowed);
-
-			queryPos.add(groupFilterEnabled);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_B_G.filterCount(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_A_B_G_COUNTRYID_2 =
-		"country.countryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_ACTIVE_2_SQL =
-		"country.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_BILLINGALLOWED_2 =
-		"country.billingAllowed = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_GROUPFILTERENABLED_2 =
-		"country.groupFilterEnabled = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_A_G_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_G_S;
 	private FinderPath _finderPathCountByC_A_G_S;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_G_S;
 
 	/**
@@ -3755,17 +2450,12 @@ public class CountryPersistenceImpl
 		boolean shippingAllowed, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_G_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					countryId, active, groupFilterEnabled, shippingAllowed
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A_G_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3891,106 +2581,12 @@ public class CountryPersistenceImpl
 		boolean shippingAllowed, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByC_A_G_S(
-				countryId, active, groupFilterEnabled, shippingAllowed, start,
-				end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A_G_S(
-					countryId, active, groupFilterEnabled, shippingAllowed,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(7);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_COUNTRYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_GROUPFILTERENABLED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_SHIPPINGALLOWED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(countryId);
-
-			queryPos.add(active);
-
-			queryPos.add(groupFilterEnabled);
-
-			queryPos.add(shippingAllowed);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_G_S.filterFind(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			},
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -4027,16 +2623,11 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean groupFilterEnabled,
 		boolean shippingAllowed) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_G_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					countryId, active, groupFilterEnabled, shippingAllowed
-				});
-		}
+		return _collectionPersistenceFinderByC_A_G_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			});
 	}
 
 	/**
@@ -4053,84 +2644,17 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean groupFilterEnabled,
 		boolean shippingAllowed) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByC_A_G_S(
-				countryId, active, groupFilterEnabled, shippingAllowed);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByC_A_G_S(
-				countryId, active, groupFilterEnabled, shippingAllowed);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_COUNTRYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_GROUPFILTERENABLED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_G_S_SHIPPINGALLOWED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(countryId);
-
-			queryPos.add(active);
-
-			queryPos.add(groupFilterEnabled);
-
-			queryPos.add(shippingAllowed);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A_G_S.filterCount(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_A_G_S_COUNTRYID_2 =
-		"country.countryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_G_S_ACTIVE_2_SQL =
-		"country.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_G_S_GROUPFILTERENABLED_2 =
-		"country.groupFilterEnabled = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_G_S_SHIPPINGALLOWED_2 =
-		"country.shippingAllowed = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_A_B_G_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_A_B_G_S;
 	private FinderPath _finderPathCountByC_A_B_G_S;
-	private CollectionPersistenceFinder<Country>
+	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_B_G_S;
 
 	/**
@@ -4232,18 +2756,13 @@ public class CountryPersistenceImpl
 		boolean groupFilterEnabled, boolean shippingAllowed, int start, int end,
 		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_B_G_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					countryId, active, billingAllowed, groupFilterEnabled,
-					shippingAllowed
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A_B_G_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled,
+				shippingAllowed
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4378,111 +2897,13 @@ public class CountryPersistenceImpl
 		boolean groupFilterEnabled, boolean shippingAllowed, int start, int end,
 		OrderByComparator<Country> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByC_A_B_G_S(
+		return _collectionPersistenceFinderByC_A_B_G_S.filterFind(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
 				countryId, active, billingAllowed, groupFilterEnabled,
-				shippingAllowed, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A_B_G_S(
-					countryId, active, billingAllowed, groupFilterEnabled,
-					shippingAllowed, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				7 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(8);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_COUNTRYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_BILLINGALLOWED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_GROUPFILTERENABLED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_SHIPPINGALLOWED_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CountryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, CountryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, CountryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(countryId);
-
-			queryPos.add(active);
-
-			queryPos.add(billingAllowed);
-
-			queryPos.add(groupFilterEnabled);
-
-			queryPos.add(shippingAllowed);
-
-			return (List<Country>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+				shippingAllowed
+			},
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -4522,17 +2943,12 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled, boolean shippingAllowed) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Country.class)) {
-
-			return _collectionPersistenceFinderByC_A_B_G_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					countryId, active, billingAllowed, groupFilterEnabled,
-					shippingAllowed
-				});
-		}
+		return _collectionPersistenceFinderByC_A_B_G_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled,
+				shippingAllowed
+			});
 	}
 
 	/**
@@ -4550,88 +2966,13 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled, boolean shippingAllowed) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByC_A_B_G_S(
+		return _collectionPersistenceFinderByC_A_B_G_S.filterCount(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
 				countryId, active, billingAllowed, groupFilterEnabled,
-				shippingAllowed);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Country> countries = findByC_A_B_G_S(
-				countryId, active, billingAllowed, groupFilterEnabled,
-				shippingAllowed);
-
-			countries = InlineSQLHelperUtil.filter(countries);
-
-			return countries.size();
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_FILTER_SQL_COUNT_COUNTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_COUNTRYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_BILLINGALLOWED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_GROUPFILTERENABLED_2);
-
-		sb.append(_FINDER_COLUMN_C_A_B_G_S_SHIPPINGALLOWED_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), Country.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(countryId);
-
-			queryPos.add(active);
-
-			queryPos.add(billingAllowed);
-
-			queryPos.add(groupFilterEnabled);
-
-			queryPos.add(shippingAllowed);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+				shippingAllowed
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_A_B_G_S_COUNTRYID_2 =
-		"country.countryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_S_ACTIVE_2_SQL =
-		"country.active_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_S_BILLINGALLOWED_2 =
-		"country.billingAllowed = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_S_GROUPFILTERENABLED_2 =
-		"country.groupFilterEnabled = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_B_G_S_SHIPPINGALLOWED_2 =
-		"country.shippingAllowed = ?";
 
 	public CountryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -4962,14 +3303,24 @@ public class CountryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
 			false, null);
 
-		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
-			_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"country.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				Country::getUuid));
+		_collectionPersistenceFinderByUuid =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid,
+				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
+				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
+					true, Country::getUuid));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -4991,12 +3342,21 @@ public class CountryPersistenceImpl
 			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByUuid_C,
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Country::getUuid),
@@ -5023,12 +3383,21 @@ public class CountryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByCompanyId,
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
@@ -5052,12 +3421,21 @@ public class CountryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByActive =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByActive,
 				_finderPathWithoutPaginationFindByActive,
 				_finderPathCountByActive, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
@@ -5112,12 +3490,21 @@ public class CountryPersistenceImpl
 			new String[] {"companyId", "active_"}, false);
 
 		_collectionPersistenceFinderByC_Active =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByC_Active,
 				_finderPathWithoutPaginationFindByC_Active,
 				_finderPathCountByC_Active, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId),
@@ -5180,20 +3567,31 @@ public class CountryPersistenceImpl
 			},
 			new String[] {"companyId", "active_", "billingAllowed"}, false);
 
-		_collectionPersistenceFinderByC_A_B = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A_B,
-			_finderPathWithoutPaginationFindByC_A_B, _finderPathCountByC_A_B,
-			_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				true, Country::getCompanyId),
-			new FinderColumn<>(
-				"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-				true, Country::isActive),
-			new FinderColumn<>(
-				"country.", "billingAllowed", FinderColumn.Type.BOOLEAN, "=",
-				true, true, Country::isBillingAllowed));
+		_collectionPersistenceFinderByC_A_B =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_A_B,
+				_finderPathWithoutPaginationFindByC_A_B,
+				_finderPathCountByC_A_B, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, Country::getCompanyId),
+				new FinderColumn<>(
+					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
+					true, Country::isActive),
+				new FinderColumn<>(
+					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isBillingAllowed));
 
 		_finderPathWithPaginationFindByC_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S",
@@ -5220,20 +3618,31 @@ public class CountryPersistenceImpl
 			},
 			new String[] {"companyId", "active_", "shippingAllowed"}, false);
 
-		_collectionPersistenceFinderByC_A_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A_S,
-			_finderPathWithoutPaginationFindByC_A_S, _finderPathCountByC_A_S,
-			_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				true, Country::getCompanyId),
-			new FinderColumn<>(
-				"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-				true, Country::isActive),
-			new FinderColumn<>(
-				"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN, "=",
-				true, true, Country::isShippingAllowed));
+		_collectionPersistenceFinderByC_A_S =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_A_S,
+				_finderPathWithoutPaginationFindByC_A_S,
+				_finderPathCountByC_A_S, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, Country::getCompanyId),
+				new FinderColumn<>(
+					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
+					true, Country::isActive),
+				new FinderColumn<>(
+					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
+					"=", true, true, Country::isShippingAllowed));
 
 		_finderPathWithPaginationFindByC_A_B_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B_G",
@@ -5271,12 +3680,21 @@ public class CountryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByC_A_B_G =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByC_A_B_G,
 				_finderPathWithoutPaginationFindByC_A_B_G,
 				_finderPathCountByC_A_B_G, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -5326,12 +3744,21 @@ public class CountryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByC_A_G_S =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByC_A_G_S,
 				_finderPathWithoutPaginationFindByC_A_G_S,
 				_finderPathCountByC_A_G_S, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -5386,12 +3813,21 @@ public class CountryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByC_A_B_G_S =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByC_A_B_G_S,
 				_finderPathWithoutPaginationFindByC_A_B_G_S,
 				_finderPathCountByC_A_B_G_S, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
+					CountryModelImpl.ORDER_BY_SQL,
+					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCountryId),
@@ -5453,8 +3889,6 @@ public class CountryPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "Country";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "Country.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Country exists with the key {";
 
@@ -5470,4 +3904,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1867970728
+// LIFERAY-SERVICE-BUILDER-HASH:-1661732717

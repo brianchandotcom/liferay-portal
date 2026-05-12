@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -160,14 +159,9 @@ public class DDMTemplateLinkPersistenceImpl
 		OrderByComparator<DDMTemplateLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplateLink.class)) {
-
-			return _collectionPersistenceFinderByTemplateId.find(
-				finderCache, new Object[] {templateId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByTemplateId.find(
+			finderCache, new Object[] {templateId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -230,13 +224,8 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Override
 	public int countByTemplateId(long templateId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplateLink.class)) {
-
-			return _collectionPersistenceFinderByTemplateId.count(
-				finderCache, new Object[] {templateId});
-		}
+		return _collectionPersistenceFinderByTemplateId.count(
+			finderCache, new Object[] {templateId});
 	}
 
 	private FinderPath _finderPathFetchByC_C;
@@ -297,14 +286,8 @@ public class DDMTemplateLinkPersistenceImpl
 	public DDMTemplateLink fetchByC_C(
 		long classNameId, long classPK, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplateLink.class)) {
-
-			return _uniquePersistenceFinderByC_C.fetch(
-				finderCache, new Object[] {classNameId, classPK},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_C.fetch(
+			finderCache, new Object[] {classNameId, classPK}, useFinderCache);
 	}
 
 	/**
@@ -694,4 +677,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-974076697
+// LIFERAY-SERVICE-BUILDER-HASH:1316288451

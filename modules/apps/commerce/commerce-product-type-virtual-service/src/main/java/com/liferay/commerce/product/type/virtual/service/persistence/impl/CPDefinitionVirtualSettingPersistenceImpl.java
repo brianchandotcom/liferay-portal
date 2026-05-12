@@ -990,4 +990,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1317041355
+// LIFERAY-SERVICE-BUILDER-HASH:-291330397

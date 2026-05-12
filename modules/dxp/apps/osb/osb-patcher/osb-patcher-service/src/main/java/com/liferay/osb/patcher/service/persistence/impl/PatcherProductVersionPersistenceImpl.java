@@ -13,24 +13,20 @@ import com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl;
 import com.liferay.osb.patcher.service.persistence.PatcherProductVersionPersistence;
 import com.liferay.osb.patcher.service.persistence.PatcherProductVersionUtil;
 import com.liferay.osb.patcher.service.persistence.impl.constants.OSBPatcherPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -84,7 +80,7 @@ public class PatcherProductVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByFixDeliveryMethod;
 	private FinderPath _finderPathWithoutPaginationFindByFixDeliveryMethod;
 	private FinderPath _finderPathCountByFixDeliveryMethod;
-	private CollectionPersistenceFinder<PatcherProductVersion>
+	private FilterCollectionPersistenceFinder<PatcherProductVersion>
 		_collectionPersistenceFinderByFixDeliveryMethod;
 
 	/**
@@ -264,99 +260,9 @@ public class PatcherProductVersionPersistenceImpl
 		int fixDeliveryMethod, int start, int end,
 		OrderByComparator<PatcherProductVersion> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByFixDeliveryMethod(
-				fixDeliveryMethod, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByFixDeliveryMethod(
-					fixDeliveryMethod, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_FIXDELIVERYMETHOD_FIXDELIVERYMETHOD_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					PatcherProductVersionModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(PatcherProductVersionModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), PatcherProductVersion.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, PatcherProductVersionImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, PatcherProductVersionImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(fixDeliveryMethod);
-
-			return (List<PatcherProductVersion>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByFixDeliveryMethod.filterFind(
+			finderCache, new Object[] {fixDeliveryMethod}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -390,59 +296,9 @@ public class PatcherProductVersionPersistenceImpl
 	 */
 	@Override
 	public int filterCountByFixDeliveryMethod(int fixDeliveryMethod) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByFixDeliveryMethod(fixDeliveryMethod);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<PatcherProductVersion> patcherProductVersions =
-				findByFixDeliveryMethod(fixDeliveryMethod);
-
-			patcherProductVersions = InlineSQLHelperUtil.filter(
-				patcherProductVersions);
-
-			return patcherProductVersions.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE);
-
-		sb.append(_FINDER_COLUMN_FIXDELIVERYMETHOD_FIXDELIVERYMETHOD_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), PatcherProductVersion.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(fixDeliveryMethod);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByFixDeliveryMethod.filterCount(
+			finderCache, new Object[] {fixDeliveryMethod});
 	}
-
-	private static final String
-		_FINDER_COLUMN_FIXDELIVERYMETHOD_FIXDELIVERYMETHOD_2 =
-			"patcherProductVersion.fixDeliveryMethod = ?";
 
 	private FinderPath _finderPathFetchByName;
 	private UniquePersistenceFinder<PatcherProductVersion>
@@ -759,7 +615,7 @@ public class PatcherProductVersionPersistenceImpl
 			new String[] {"fixDeliveryMethod"}, false);
 
 		_collectionPersistenceFinderByFixDeliveryMethod =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByFixDeliveryMethod,
 				_finderPathWithoutPaginationFindByFixDeliveryMethod,
 				_finderPathCountByFixDeliveryMethod,
@@ -767,6 +623,17 @@ public class PatcherProductVersionPersistenceImpl
 				_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
 				PatcherProductVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					PatcherProductVersionImpl.class,
+					PatcherProductVersion.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE,
+					_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
+					PatcherProductVersionModelImpl.ORDER_BY_SQL,
+					PatcherProductVersionModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherProductVersion.", "fixDeliveryMethod",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -860,9 +727,6 @@ public class PatcherProductVersionPersistenceImpl
 	private static final String _FILTER_ENTITY_TABLE =
 		"OSBPatcher_PProductVersion";
 
-	private static final String _ORDER_BY_ENTITY_TABLE =
-		"OSBPatcher_PProductVersion.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherProductVersion exists with the key {";
 
@@ -875,4 +739,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-114268541
+// LIFERAY-SERVICE-BUILDER-HASH:-565957148

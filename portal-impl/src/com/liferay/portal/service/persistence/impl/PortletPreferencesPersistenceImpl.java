@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -152,14 +151,9 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByOwnerId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {ownerId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByOwnerId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -223,13 +217,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByOwnerId(long ownerId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByOwnerId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {ownerId});
-		}
+		return _collectionPersistenceFinderByOwnerId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByPlid;
@@ -307,14 +296,9 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByPlid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {plid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByPlid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -377,13 +361,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByPlid(long plid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByPlid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {plid});
-		}
+		return _collectionPersistenceFinderByPlid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByPortletId;
@@ -464,14 +443,9 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByPortletId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {portletId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByPortletId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -536,13 +510,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByPortletId(String portletId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByPortletId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {portletId});
-		}
+		return _collectionPersistenceFinderByPortletId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_P;
@@ -628,15 +597,10 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerType, portletId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, portletId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -706,14 +670,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByO_P(int ownerType, String portletId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerType, portletId});
-		}
+		return _collectionPersistenceFinderByO_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByP_P;
@@ -798,15 +757,9 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByP_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {plid, portletId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByP_P.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid, portletId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -875,14 +828,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByP_P(long plid, String portletId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByP_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {plid, portletId});
-		}
+		return _collectionPersistenceFinderByP_P.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_O_P;
@@ -975,15 +922,10 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_O_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerId, ownerType, plid}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_O_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, plid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1058,14 +1000,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByO_O_P(long ownerId, int ownerType, long plid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_O_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerId, ownerType, plid});
-		}
+		return _collectionPersistenceFinderByO_O_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, plid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_O_PI;
@@ -1158,15 +1095,10 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_O_PI.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerId, ownerType, portletId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_O_PI.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1241,14 +1173,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByO_O_PI(long ownerId, int ownerType, String portletId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_O_PI.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerId, ownerType, portletId});
-		}
+		return _collectionPersistenceFinderByO_O_PI.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_P_P;
@@ -1341,15 +1268,10 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_P_P.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerType, plid, portletId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_P_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, plid, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1424,14 +1346,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public int countByO_P_P(int ownerType, long plid, String portletId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByO_P_P.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerType, plid, portletId});
-		}
+		return _collectionPersistenceFinderByO_P_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, plid, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_O_O_LikeP;
@@ -1532,15 +1449,10 @@ public class PortletPreferencesPersistenceImpl
 		OrderByComparator<PortletPreferences> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByC_O_O_LikeP.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, ownerId, ownerType, portletId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_O_O_LikeP.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, ownerId, ownerType, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1624,14 +1536,9 @@ public class PortletPreferencesPersistenceImpl
 	public int countByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _collectionPersistenceFinderByC_O_O_LikeP.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, ownerId, ownerType, portletId});
-		}
+		return _collectionPersistenceFinderByC_O_O_LikeP.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
 	private FinderPath _finderPathFetchByO_O_P_P;
@@ -1703,15 +1610,9 @@ public class PortletPreferencesPersistenceImpl
 		long ownerId, int ownerType, long plid, String portletId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			return _uniquePersistenceFinderByO_O_P_P.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ownerId, ownerType, plid, portletId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByO_O_P_P.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, plid, portletId}, useFinderCache);
 	}
 
 	/**
@@ -2386,4 +2287,4 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:107811599
+// LIFERAY-SERVICE-BUILDER-HASH:-1398476014

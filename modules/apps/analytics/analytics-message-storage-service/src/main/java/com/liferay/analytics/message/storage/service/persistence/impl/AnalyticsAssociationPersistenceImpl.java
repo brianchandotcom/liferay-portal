@@ -13,7 +13,6 @@ import com.liferay.analytics.message.storage.model.impl.AnalyticsAssociationMode
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationPersistence;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -162,14 +159,9 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -233,13 +225,8 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_LtM;
@@ -327,14 +314,9 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_LtM.find(
-				finderCache, new Object[] {companyId, modifiedDate}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_LtM.find(
+			finderCache, new Object[] {companyId, modifiedDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -404,13 +386,8 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public int countByC_LtM(long companyId, Date modifiedDate) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_LtM.count(
-				finderCache, new Object[] {companyId, modifiedDate});
-		}
+		return _collectionPersistenceFinderByC_LtM.count(
+			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_A;
@@ -500,14 +477,9 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_A.find(
-				finderCache, new Object[] {companyId, associationClassName},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A.find(
+			finderCache, new Object[] {companyId, associationClassName}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -577,13 +549,8 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public int countByC_A(long companyId, String associationClassName) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_A.count(
-				finderCache, new Object[] {companyId, associationClassName});
-		}
+		return _collectionPersistenceFinderByC_A.count(
+			finderCache, new Object[] {companyId, associationClassName});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_GtM_A;
@@ -680,15 +647,10 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_GtM_A.find(
-				finderCache,
-				new Object[] {companyId, modifiedDate, associationClassName},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_GtM_A.find(
+			finderCache,
+			new Object[] {companyId, modifiedDate, associationClassName}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -768,14 +730,9 @@ public class AnalyticsAssociationPersistenceImpl
 	public int countByC_GtM_A(
 		long companyId, Date modifiedDate, String associationClassName) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_GtM_A.count(
-				finderCache,
-				new Object[] {companyId, modifiedDate, associationClassName});
-		}
+		return _collectionPersistenceFinderByC_GtM_A.count(
+			finderCache,
+			new Object[] {companyId, modifiedDate, associationClassName});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_A_A;
@@ -874,17 +831,10 @@ public class AnalyticsAssociationPersistenceImpl
 		OrderByComparator<AnalyticsAssociation> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_A_A.find(
-				finderCache,
-				new Object[] {
-					companyId, associationClassName, associationClassPK
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A_A.find(
+			finderCache,
+			new Object[] {companyId, associationClassName, associationClassPK},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -968,16 +918,9 @@ public class AnalyticsAssociationPersistenceImpl
 	public int countByC_A_A(
 		long companyId, String associationClassName, long associationClassPK) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsAssociation.class)) {
-
-			return _collectionPersistenceFinderByC_A_A.count(
-				finderCache,
-				new Object[] {
-					companyId, associationClassName, associationClassPK
-				});
-		}
+		return _collectionPersistenceFinderByC_A_A.count(
+			finderCache,
+			new Object[] {companyId, associationClassName, associationClassPK});
 	}
 
 	public AnalyticsAssociationPersistenceImpl() {
@@ -1509,13 +1452,10 @@ public class AnalyticsAssociationPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnalyticsAssociation exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsAssociationPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:440924076
+// LIFERAY-SERVICE-BUILDER-HASH:-853902181

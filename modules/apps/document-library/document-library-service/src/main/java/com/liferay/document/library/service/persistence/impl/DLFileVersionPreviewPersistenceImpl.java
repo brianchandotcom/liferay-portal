@@ -13,7 +13,6 @@ import com.liferay.document.library.model.impl.DLFileVersionPreviewModelImpl;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewPersistence;
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewUtil;
 import com.liferay.document.library.service.persistence.impl.constants.DLPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -161,14 +160,9 @@ public class DLFileVersionPreviewPersistenceImpl
 		OrderByComparator<DLFileVersionPreview> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLFileVersionPreview.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.find(
-				finderCache, new Object[] {fileEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileEntryId.find(
+			finderCache, new Object[] {fileEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -232,13 +226,8 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryId(long fileEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLFileVersionPreview.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.count(
-				finderCache, new Object[] {fileEntryId});
-		}
+		return _collectionPersistenceFinderByFileEntryId.count(
+			finderCache, new Object[] {fileEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFileVersionId;
@@ -320,14 +309,9 @@ public class DLFileVersionPreviewPersistenceImpl
 		OrderByComparator<DLFileVersionPreview> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLFileVersionPreview.class)) {
-
-			return _collectionPersistenceFinderByFileVersionId.find(
-				finderCache, new Object[] {fileVersionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileVersionId.find(
+			finderCache, new Object[] {fileVersionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -391,13 +375,8 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Override
 	public int countByFileVersionId(long fileVersionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLFileVersionPreview.class)) {
-
-			return _collectionPersistenceFinderByFileVersionId.count(
-				finderCache, new Object[] {fileVersionId});
-		}
+		return _collectionPersistenceFinderByFileVersionId.count(
+			finderCache, new Object[] {fileVersionId});
 	}
 
 	private FinderPath _finderPathFetchByF_F;
@@ -461,14 +440,9 @@ public class DLFileVersionPreviewPersistenceImpl
 	public DLFileVersionPreview fetchByF_F(
 		long fileEntryId, long fileVersionId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLFileVersionPreview.class)) {
-
-			return _uniquePersistenceFinderByF_F.fetch(
-				finderCache, new Object[] {fileEntryId, fileVersionId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByF_F.fetch(
+			finderCache, new Object[] {fileEntryId, fileVersionId},
+			useFinderCache);
 	}
 
 	/**
@@ -568,15 +542,10 @@ public class DLFileVersionPreviewPersistenceImpl
 		long fileEntryId, long fileVersionId, int previewStatus,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DLFileVersionPreview.class)) {
-
-			return _uniquePersistenceFinderByF_F_P.fetch(
-				finderCache,
-				new Object[] {fileEntryId, fileVersionId, previewStatus},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByF_F_P.fetch(
+			finderCache,
+			new Object[] {fileEntryId, fileVersionId, previewStatus},
+			useFinderCache);
 	}
 
 	/**
@@ -1047,4 +1016,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1195161614
+// LIFERAY-SERVICE-BUILDER-HASH:1986691306

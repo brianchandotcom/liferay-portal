@@ -13,7 +13,6 @@ import com.liferay.change.tracking.store.model.impl.CTSContentModelImpl;
 import com.liferay.change.tracking.store.service.persistence.CTSContentPersistence;
 import com.liferay.change.tracking.store.service.persistence.CTSContentUtil;
 import com.liferay.change.tracking.store.service.persistence.impl.constants.CTSPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class CTSContentPersistenceImpl
 		OrderByComparator<CTSContent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByR_P.find(
-				finderCache, new Object[] {repositoryId, path}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByR_P.find(
+			finderCache, new Object[] {repositoryId, path}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -241,13 +235,8 @@ public class CTSContentPersistenceImpl
 	 */
 	@Override
 	public int countByR_P(long repositoryId, String path) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByR_P.count(
-				finderCache, new Object[] {repositoryId, path});
-		}
+		return _collectionPersistenceFinderByR_P.count(
+			finderCache, new Object[] {repositoryId, path});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_R_S;
@@ -343,14 +332,9 @@ public class CTSContentPersistenceImpl
 		OrderByComparator<CTSContent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByC_R_S.find(
-				finderCache, new Object[] {companyId, repositoryId, storeType},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_R_S.find(
+			finderCache, new Object[] {companyId, repositoryId, storeType},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -428,13 +412,8 @@ public class CTSContentPersistenceImpl
 	public int countByC_R_S(
 		long companyId, long repositoryId, String storeType) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByC_R_S.count(
-				finderCache, new Object[] {companyId, repositoryId, storeType});
-		}
+		return _collectionPersistenceFinderByC_R_S.count(
+			finderCache, new Object[] {companyId, repositoryId, storeType});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_R_P_S;
@@ -534,15 +513,10 @@ public class CTSContentPersistenceImpl
 		int start, int end, OrderByComparator<CTSContent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByC_R_P_S.find(
-				finderCache,
-				new Object[] {companyId, repositoryId, path, storeType}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_R_P_S.find(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -626,14 +600,9 @@ public class CTSContentPersistenceImpl
 	public int countByC_R_P_S(
 		long companyId, long repositoryId, String path, String storeType) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByC_R_P_S.count(
-				finderCache,
-				new Object[] {companyId, repositoryId, path, storeType});
-		}
+		return _collectionPersistenceFinderByC_R_P_S.count(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_R_LikeP_S;
@@ -732,15 +701,10 @@ public class CTSContentPersistenceImpl
 		int start, int end, OrderByComparator<CTSContent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByC_R_LikeP_S.find(
-				finderCache,
-				new Object[] {companyId, repositoryId, path, storeType}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_R_LikeP_S.find(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -824,14 +788,9 @@ public class CTSContentPersistenceImpl
 	public int countByC_R_LikeP_S(
 		long companyId, long repositoryId, String path, String storeType) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _collectionPersistenceFinderByC_R_LikeP_S.count(
-				finderCache,
-				new Object[] {companyId, repositoryId, path, storeType});
-		}
+		return _collectionPersistenceFinderByC_R_LikeP_S.count(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
 	private FinderPath _finderPathFetchByC_R_P_V_S;
@@ -911,17 +870,10 @@ public class CTSContentPersistenceImpl
 		long companyId, long repositoryId, String path, String version,
 		String storeType, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSContent.class)) {
-
-			return _uniquePersistenceFinderByC_R_P_V_S.fetch(
-				finderCache,
-				new Object[] {
-					companyId, repositoryId, path, version, storeType
-				},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_R_P_V_S.fetch(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, version, storeType},
+			useFinderCache);
 	}
 
 	/**
@@ -1495,4 +1447,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:819900185
+// LIFERAY-SERVICE-BUILDER-HASH:683189703

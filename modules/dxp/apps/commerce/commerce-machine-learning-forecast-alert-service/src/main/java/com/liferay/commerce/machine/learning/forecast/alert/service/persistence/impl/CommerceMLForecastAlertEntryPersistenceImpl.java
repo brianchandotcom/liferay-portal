@@ -812,15 +812,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_C_C_S_COMPANYID_2 =
-		"commerceMLForecastAlertEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_2 =
-		"commerceMLForecastAlertEntry.commerceAccountId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_S_STATUS_2 =
-		"commerceMLForecastAlertEntry.status = ?";
-
 	private FinderPath _finderPathWithPaginationFindByC_C_GtRc_S;
 	private FinderPath _finderPathWithPaginationCountByC_C_GtRc_S;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
@@ -1176,18 +1167,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_C_C_GTRC_S_COMPANYID_2 =
-		"commerceMLForecastAlertEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_2 =
-		"commerceMLForecastAlertEntry.commerceAccountId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_GTRC_S_RELATIVECHANGE_2 =
-		"commerceMLForecastAlertEntry.relativeChange > ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_GTRC_S_STATUS_2 =
-		"commerceMLForecastAlertEntry.status = ?";
-
 	private FinderPath _finderPathWithPaginationFindByC_C_LtRc_S;
 	private FinderPath _finderPathWithPaginationCountByC_C_LtRc_S;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
@@ -1542,18 +1521,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				relativeChange, status
 			});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_LTRC_S_COMPANYID_2 =
-		"commerceMLForecastAlertEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_2 =
-		"commerceMLForecastAlertEntry.commerceAccountId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_LTRC_S_RELATIVECHANGE_2 =
-		"commerceMLForecastAlertEntry.relativeChange < ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_LTRC_S_STATUS_2 =
-		"commerceMLForecastAlertEntry.status = ?";
 
 	public CommerceMLForecastAlertEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2113,4 +2080,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:429046001
+// LIFERAY-SERVICE-BUILDER-HASH:-1474488144

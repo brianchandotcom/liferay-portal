@@ -15,8 +15,6 @@ import com.liferay.external.data.source.test.service.persistence.TestEntityUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -232,14 +230,8 @@ public class TestEntityPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		TestEntityModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_TESTENTITY =
 		"SELECT testEntity FROM TestEntity testEntity";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TestEntityPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"id", "data"});
@@ -250,4 +242,4 @@ public class TestEntityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-21333044
+// LIFERAY-SERVICE-BUILDER-HASH:550208422

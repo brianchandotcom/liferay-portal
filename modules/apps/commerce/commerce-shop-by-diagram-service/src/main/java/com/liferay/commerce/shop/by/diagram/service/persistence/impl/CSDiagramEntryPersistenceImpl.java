@@ -14,7 +14,6 @@ import com.liferay.commerce.shop.by.diagram.model.impl.CSDiagramEntryModelImpl;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPersistence;
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -173,14 +172,9 @@ public class CSDiagramEntryPersistenceImpl
 		OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _collectionPersistenceFinderByCPDefinitionId.find(
-				finderCache, new Object[] {CPDefinitionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPDefinitionId.find(
+			finderCache, new Object[] {CPDefinitionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -244,13 +238,8 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPDefinitionId(long CPDefinitionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _collectionPersistenceFinderByCPDefinitionId.count(
-				finderCache, new Object[] {CPDefinitionId});
-		}
+		return _collectionPersistenceFinderByCPDefinitionId.count(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceId;
@@ -332,14 +321,9 @@ public class CSDiagramEntryPersistenceImpl
 		OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _collectionPersistenceFinderByCPInstanceId.find(
-				finderCache, new Object[] {CPInstanceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPInstanceId.find(
+			finderCache, new Object[] {CPInstanceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -403,13 +387,8 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPInstanceId(long CPInstanceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _collectionPersistenceFinderByCPInstanceId.count(
-				finderCache, new Object[] {CPInstanceId});
-		}
+		return _collectionPersistenceFinderByCPInstanceId.count(
+			finderCache, new Object[] {CPInstanceId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCProductId;
@@ -491,14 +470,9 @@ public class CSDiagramEntryPersistenceImpl
 		OrderByComparator<CSDiagramEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _collectionPersistenceFinderByCProductId.find(
-				finderCache, new Object[] {CProductId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCProductId.find(
+			finderCache, new Object[] {CProductId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -561,13 +535,8 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCProductId(long CProductId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _collectionPersistenceFinderByCProductId.count(
-				finderCache, new Object[] {CProductId});
-		}
+		return _collectionPersistenceFinderByCProductId.count(
+			finderCache, new Object[] {CProductId});
 	}
 
 	private FinderPath _finderPathFetchByCPDI_S;
@@ -628,14 +597,9 @@ public class CSDiagramEntryPersistenceImpl
 	public CSDiagramEntry fetchByCPDI_S(
 		long CPDefinitionId, String sequence, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _uniquePersistenceFinderByCPDI_S.fetch(
-				finderCache, new Object[] {CPDefinitionId, sequence},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByCPDI_S.fetch(
+			finderCache, new Object[] {CPDefinitionId, sequence},
+			useFinderCache);
 	}
 
 	/**
@@ -729,14 +693,9 @@ public class CSDiagramEntryPersistenceImpl
 	public CSDiagramEntry fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CSDiagramEntry.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				finderCache, new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -1313,4 +1272,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:488409899
+// LIFERAY-SERVICE-BUILDER-HASH:-1867928275

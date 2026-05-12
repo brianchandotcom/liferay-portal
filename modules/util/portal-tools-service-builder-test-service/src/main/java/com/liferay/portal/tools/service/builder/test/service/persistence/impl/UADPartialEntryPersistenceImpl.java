@@ -8,8 +8,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchUADPartialEntryException;
@@ -221,14 +219,8 @@ public class UADPartialEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		UADPartialEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_UADPARTIALENTRY =
 		"SELECT uadPartialEntry FROM UADPartialEntry uadPartialEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UADPartialEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -236,4 +228,4 @@ public class UADPartialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:454458278
+// LIFERAY-SERVICE-BUILDER-HASH:-488084250

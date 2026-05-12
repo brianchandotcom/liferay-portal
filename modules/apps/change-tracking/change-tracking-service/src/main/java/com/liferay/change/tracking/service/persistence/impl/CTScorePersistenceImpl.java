@@ -381,9 +381,6 @@ public class CTScorePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		CTScoreModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_CTSCORE =
 		"SELECT ctScore FROM CTScore ctScore";
 
@@ -402,4 +399,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:836212279
+// LIFERAY-SERVICE-BUILDER-HASH:-1513670258

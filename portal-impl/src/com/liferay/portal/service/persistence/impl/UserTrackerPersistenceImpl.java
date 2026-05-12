@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.model.UserTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -802,13 +800,10 @@ public class UserTrackerPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserTracker exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		UserTrackerPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2127204671
+// LIFERAY-SERVICE-BUILDER-HASH:-2124494040

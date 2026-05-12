@@ -13,7 +13,6 @@ import com.liferay.depot.model.impl.DepotAppCustomizationModelImpl;
 import com.liferay.depot.service.persistence.DepotAppCustomizationPersistence;
 import com.liferay.depot.service.persistence.DepotAppCustomizationUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -161,14 +160,9 @@ public class DepotAppCustomizationPersistenceImpl
 		OrderByComparator<DepotAppCustomization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotAppCustomization.class)) {
-
-			return _collectionPersistenceFinderByDepotEntryId.find(
-				finderCache, new Object[] {depotEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDepotEntryId.find(
+			finderCache, new Object[] {depotEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -232,13 +226,8 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Override
 	public int countByDepotEntryId(long depotEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotAppCustomization.class)) {
-
-			return _collectionPersistenceFinderByDepotEntryId.count(
-				finderCache, new Object[] {depotEntryId});
-		}
+		return _collectionPersistenceFinderByDepotEntryId.count(
+			finderCache, new Object[] {depotEntryId});
 	}
 
 	private FinderPath _finderPathFetchByD_E;
@@ -302,14 +291,8 @@ public class DepotAppCustomizationPersistenceImpl
 	public DepotAppCustomization fetchByD_E(
 		long depotEntryId, boolean enabled, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotAppCustomization.class)) {
-
-			return _uniquePersistenceFinderByD_E.fetch(
-				finderCache, new Object[] {depotEntryId, enabled},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByD_E.fetch(
+			finderCache, new Object[] {depotEntryId, enabled}, useFinderCache);
 	}
 
 	/**
@@ -403,14 +386,9 @@ public class DepotAppCustomizationPersistenceImpl
 	public DepotAppCustomization fetchByD_P(
 		long depotEntryId, String portletId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotAppCustomization.class)) {
-
-			return _uniquePersistenceFinderByD_P.fetch(
-				finderCache, new Object[] {depotEntryId, portletId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByD_P.fetch(
+			finderCache, new Object[] {depotEntryId, portletId},
+			useFinderCache);
 	}
 
 	/**
@@ -835,4 +813,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-692660112
+// LIFERAY-SERVICE-BUILDER-HASH:-1054755588

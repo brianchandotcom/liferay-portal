@@ -13,7 +13,6 @@ import com.liferay.analytics.message.storage.model.impl.AnalyticsDeleteMessageMo
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsDeleteMessagePersistence;
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsDeleteMessageUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -162,14 +159,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsDeleteMessage.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -233,13 +225,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsDeleteMessage.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_GtM;
@@ -327,14 +314,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsDeleteMessage.class)) {
-
-			return _collectionPersistenceFinderByC_GtM.find(
-				finderCache, new Object[] {companyId, modifiedDate}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_GtM.find(
+			finderCache, new Object[] {companyId, modifiedDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -404,13 +386,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public int countByC_GtM(long companyId, Date modifiedDate) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsDeleteMessage.class)) {
-
-			return _collectionPersistenceFinderByC_GtM.count(
-				finderCache, new Object[] {companyId, modifiedDate});
-		}
+		return _collectionPersistenceFinderByC_GtM.count(
+			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_LtM;
@@ -498,14 +475,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsDeleteMessage.class)) {
-
-			return _collectionPersistenceFinderByC_LtM.find(
-				finderCache, new Object[] {companyId, modifiedDate}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_LtM.find(
+			finderCache, new Object[] {companyId, modifiedDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -575,13 +547,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public int countByC_LtM(long companyId, Date modifiedDate) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AnalyticsDeleteMessage.class)) {
-
-			return _collectionPersistenceFinderByC_LtM.count(
-				finderCache, new Object[] {companyId, modifiedDate});
-		}
+		return _collectionPersistenceFinderByC_LtM.count(
+			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
 	public AnalyticsDeleteMessagePersistenceImpl() {
@@ -1017,13 +984,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnalyticsDeleteMessage exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsDeleteMessagePersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:384561106
+// LIFERAY-SERVICE-BUILDER-HASH:-1619194840

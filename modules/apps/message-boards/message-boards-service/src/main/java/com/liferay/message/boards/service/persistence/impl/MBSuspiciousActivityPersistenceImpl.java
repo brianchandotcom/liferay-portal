@@ -13,7 +13,6 @@ import com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl;
 import com.liferay.message.boards.service.persistence.MBSuspiciousActivityPersistence;
 import com.liferay.message.boards.service.persistence.MBSuspiciousActivityUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class MBSuspiciousActivityPersistenceImpl
 		OrderByComparator<MBSuspiciousActivity> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -237,13 +231,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -304,13 +293,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	public MBSuspiciousActivity fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -427,14 +411,9 @@ public class MBSuspiciousActivityPersistenceImpl
 		OrderByComparator<MBSuspiciousActivity> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -502,13 +481,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByMessageId;
@@ -589,14 +563,9 @@ public class MBSuspiciousActivityPersistenceImpl
 		OrderByComparator<MBSuspiciousActivity> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByMessageId.find(
-				finderCache, new Object[] {messageId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByMessageId.find(
+			finderCache, new Object[] {messageId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -660,13 +629,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public int countByMessageId(long messageId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByMessageId.count(
-				finderCache, new Object[] {messageId});
-		}
+		return _collectionPersistenceFinderByMessageId.count(
+			finderCache, new Object[] {messageId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByThreadId;
@@ -747,14 +711,9 @@ public class MBSuspiciousActivityPersistenceImpl
 		OrderByComparator<MBSuspiciousActivity> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByThreadId.find(
-				finderCache, new Object[] {threadId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByThreadId.find(
+			finderCache, new Object[] {threadId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -818,13 +777,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public int countByThreadId(long threadId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _collectionPersistenceFinderByThreadId.count(
-				finderCache, new Object[] {threadId});
-		}
+		return _collectionPersistenceFinderByThreadId.count(
+			finderCache, new Object[] {threadId});
 	}
 
 	private FinderPath _finderPathFetchByU_M;
@@ -885,13 +839,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	public MBSuspiciousActivity fetchByU_M(
 		long userId, long messageId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _uniquePersistenceFinderByU_M.fetch(
-				finderCache, new Object[] {userId, messageId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByU_M.fetch(
+			finderCache, new Object[] {userId, messageId}, useFinderCache);
 	}
 
 	/**
@@ -982,13 +931,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	public MBSuspiciousActivity fetchByU_T(
 		long userId, long threadId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					MBSuspiciousActivity.class)) {
-
-			return _uniquePersistenceFinderByU_T.fetch(
-				finderCache, new Object[] {userId, threadId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByU_T.fetch(
+			finderCache, new Object[] {userId, threadId}, useFinderCache);
 	}
 
 	/**
@@ -1576,4 +1520,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-51149363
+// LIFERAY-SERVICE-BUILDER-HASH:-1108070671

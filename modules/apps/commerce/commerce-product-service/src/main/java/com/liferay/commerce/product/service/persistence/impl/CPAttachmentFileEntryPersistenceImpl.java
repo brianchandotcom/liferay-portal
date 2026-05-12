@@ -14,7 +14,6 @@ import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -175,14 +174,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -246,13 +240,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -313,13 +302,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public CPAttachmentFileEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -437,14 +421,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -512,13 +491,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
@@ -600,14 +574,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.find(
-				finderCache, new Object[] {fileEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileEntryId.find(
+			finderCache, new Object[] {fileEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -671,13 +640,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryId(long fileEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.count(
-				finderCache, new Object[] {fileEntryId});
-		}
+		return _collectionPersistenceFinderByFileEntryId.count(
+			finderCache, new Object[] {fileEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -765,14 +729,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -841,13 +800,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByLtD_S;
@@ -934,14 +888,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByLtD_S.find(
-				finderCache, new Object[] {displayDate, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLtD_S.find(
+			finderCache, new Object[] {displayDate, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1009,13 +958,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLtD_S(Date displayDate, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByLtD_S.count(
-				finderCache, new Object[] {displayDate, status});
-		}
+		return _collectionPersistenceFinderByLtD_S.count(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_F;
@@ -1109,14 +1053,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByG_C_F.find(
-				finderCache, new Object[] {groupId, classNameId, fileEntryId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_F.find(
+			finderCache, new Object[] {groupId, classNameId, fileEntryId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1192,13 +1131,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_F(long groupId, long classNameId, long fileEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByG_C_F.count(
-				finderCache, new Object[] {groupId, classNameId, fileEntryId});
-		}
+		return _collectionPersistenceFinderByG_C_F.count(
+			finderCache, new Object[] {groupId, classNameId, fileEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_F;
@@ -1292,14 +1226,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_F.find(
-				finderCache, new Object[] {classNameId, classPK, fileEntryId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_F.find(
+			finderCache, new Object[] {classNameId, classPK, fileEntryId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1375,13 +1304,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_F(long classNameId, long classPK, long fileEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_F.count(
-				finderCache, new Object[] {classNameId, classPK, fileEntryId});
-		}
+		return _collectionPersistenceFinderByC_C_F.count(
+			finderCache, new Object[] {classNameId, classPK, fileEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C;
@@ -1474,14 +1398,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_C.find(
-				finderCache, new Object[] {classNameId, classPK, cdnURL}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_C.find(
+			finderCache, new Object[] {classNameId, classPK, cdnURL}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1555,13 +1474,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long classNameId, long classPK, String cdnURL) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_C.count(
-				finderCache, new Object[] {classNameId, classPK, cdnURL});
-		}
+		return _collectionPersistenceFinderByC_C_C.count(
+			finderCache, new Object[] {classNameId, classPK, cdnURL});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_LtD_S;
@@ -1660,15 +1574,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_LtD_S.find(
-				finderCache,
-				new Object[] {classNameId, classPK, displayDate, status}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_LtD_S.find(
+			finderCache,
+			new Object[] {classNameId, classPK, displayDate, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1752,14 +1661,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public int countByC_C_LtD_S(
 		long classNameId, long classPK, Date displayDate, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_LtD_S.count(
-				finderCache,
-				new Object[] {classNameId, classPK, displayDate, status});
-		}
+		return _collectionPersistenceFinderByC_C_LtD_S.count(
+			finderCache,
+			new Object[] {classNameId, classPK, displayDate, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_T_ST;
@@ -1859,14 +1763,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_T_ST.find(
-				finderCache, new Object[] {classNameId, classPK, type, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_T_ST.find(
+			finderCache, new Object[] {classNameId, classPK, type, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1948,13 +1847,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public int countByC_C_T_ST(
 		long classNameId, long classPK, int type, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_T_ST.count(
-				finderCache, new Object[] {classNameId, classPK, type, status});
-		}
+		return _collectionPersistenceFinderByC_C_T_ST.count(
+			finderCache, new Object[] {classNameId, classPK, type, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_T_NotST;
@@ -2053,14 +1947,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_T_NotST.find(
-				finderCache, new Object[] {classNameId, classPK, type, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_T_NotST.find(
+			finderCache, new Object[] {classNameId, classPK, type, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2142,13 +2031,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public int countByC_C_T_NotST(
 		long classNameId, long classPK, int type, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_T_NotST.count(
-				finderCache, new Object[] {classNameId, classPK, type, status});
-		}
+		return _collectionPersistenceFinderByC_C_T_NotST.count(
+			finderCache, new Object[] {classNameId, classPK, type, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_G_T_ST;
@@ -2256,17 +2140,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_G_T_ST.find(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, galleryEnabled, type, status
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_G_T_ST.find(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2361,16 +2238,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, boolean galleryEnabled, int type,
 		int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_G_T_ST.count(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, galleryEnabled, type, status
-				});
-		}
+		return _collectionPersistenceFinderByC_C_G_T_ST.count(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_G_T_NotST;
@@ -2477,17 +2347,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_G_T_NotST.find(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, galleryEnabled, type, status
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_G_T_NotST.find(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2583,16 +2446,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, boolean galleryEnabled, int type,
 		int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_G_T_NotST.count(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, galleryEnabled, type, status
-				});
-		}
+		return _collectionPersistenceFinderByC_C_G_T_NotST.count(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status});
 	}
 
 	private FinderPath _finderPathFetchByERC_C;
@@ -2657,14 +2513,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public CPAttachmentFileEntry fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPAttachmentFileEntry.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				finderCache, new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -3738,4 +3589,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1074352767
+// LIFERAY-SERVICE-BUILDER-HASH:-1149956079

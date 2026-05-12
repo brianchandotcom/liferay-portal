@@ -436,15 +436,6 @@ public class PushNotificationsDevicePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(userIds), platform});
 	}
 
-	private static final String _FINDER_COLUMN_U_P_USERID_2 =
-		"pushNotificationsDevice.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_P_PLATFORM_2 =
-		"pushNotificationsDevice.platform = ?";
-
-	private static final String _FINDER_COLUMN_U_P_PLATFORM_3 =
-		"(pushNotificationsDevice.platform IS NULL OR pushNotificationsDevice.platform = '')";
-
 	public PushNotificationsDevicePersistenceImpl() {
 		setModelClass(PushNotificationsDevice.class);
 
@@ -760,4 +751,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1163708118
+// LIFERAY-SERVICE-BUILDER-HASH:1302558301

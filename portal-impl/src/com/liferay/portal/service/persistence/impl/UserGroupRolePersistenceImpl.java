@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -148,14 +147,9 @@ public class UserGroupRolePersistenceImpl
 		OrderByComparator<UserGroupRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByUserId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {userId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUserId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -218,13 +212,8 @@ public class UserGroupRolePersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByUserId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {userId});
-		}
+		return _collectionPersistenceFinderByUserId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -303,14 +292,9 @@ public class UserGroupRolePersistenceImpl
 		OrderByComparator<UserGroupRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -373,13 +357,8 @@ public class UserGroupRolePersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByRoleId;
@@ -457,14 +436,9 @@ public class UserGroupRolePersistenceImpl
 		OrderByComparator<UserGroupRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByRoleId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {roleId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRoleId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -527,13 +501,8 @@ public class UserGroupRolePersistenceImpl
 	 */
 	@Override
 	public int countByRoleId(long roleId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByRoleId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {roleId});
-		}
+		return _collectionPersistenceFinderByRoleId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByU_G;
@@ -618,15 +587,9 @@ public class UserGroupRolePersistenceImpl
 		OrderByComparator<UserGroupRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByU_G.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {userId, groupId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByU_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, groupId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -695,14 +658,8 @@ public class UserGroupRolePersistenceImpl
 	 */
 	@Override
 	public int countByU_G(long userId, long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByU_G.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {userId, groupId});
-		}
+		return _collectionPersistenceFinderByU_G.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_R;
@@ -787,15 +744,9 @@ public class UserGroupRolePersistenceImpl
 		OrderByComparator<UserGroupRole> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByG_R.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, roleId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_R.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, roleId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -864,14 +815,8 @@ public class UserGroupRolePersistenceImpl
 	 */
 	@Override
 	public int countByG_R(long groupId, long roleId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _collectionPersistenceFinderByG_R.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, roleId});
-		}
+		return _collectionPersistenceFinderByG_R.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, roleId});
 	}
 
 	private FinderPath _finderPathFetchByU_G_R;
@@ -935,14 +880,9 @@ public class UserGroupRolePersistenceImpl
 	public UserGroupRole fetchByU_G_R(
 		long userId, long groupId, long roleId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					UserGroupRole.class)) {
-
-			return _uniquePersistenceFinderByU_G_R.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {userId, groupId, roleId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByU_G_R.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, groupId, roleId}, useFinderCache);
 	}
 
 	/**
@@ -1421,4 +1361,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1821700324
+// LIFERAY-SERVICE-BUILDER-HASH:-382899469

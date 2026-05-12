@@ -376,9 +376,6 @@ public class WebDAVPropsPersistenceImpl
 		EntityCacheUtil.removeCache(WebDAVPropsImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		WebDAVPropsModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_WEBDAVPROPS =
 		"SELECT webDAVProps FROM WebDAVProps webDAVProps";
 
@@ -397,4 +394,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1969173208
+// LIFERAY-SERVICE-BUILDER-HASH:-961733933

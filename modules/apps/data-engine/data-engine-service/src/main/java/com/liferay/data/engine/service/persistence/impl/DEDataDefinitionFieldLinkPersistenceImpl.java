@@ -173,14 +173,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -244,13 +239,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -311,13 +301,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	public DEDataDefinitionFieldLink fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -435,14 +420,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -510,13 +490,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
@@ -600,14 +575,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByDDMStructureId.find(
-				finderCache, new Object[] {ddmStructureId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDDMStructureId.find(
+			finderCache, new Object[] {ddmStructureId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -671,13 +641,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByDDMStructureId(long ddmStructureId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByDDMStructureId.count(
-				finderCache, new Object[] {ddmStructureId});
-		}
+		return _collectionPersistenceFinderByDDMStructureId.count(
+			finderCache, new Object[] {ddmStructureId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -765,14 +730,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -841,13 +801,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_DDMSI;
@@ -936,14 +891,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_DDMSI.find(
-				finderCache, new Object[] {classNameId, ddmStructureId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_DDMSI.find(
+			finderCache, new Object[] {classNameId, ddmStructureId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1014,13 +964,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_DDMSI(long classNameId, long ddmStructureId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_DDMSI.count(
-				finderCache, new Object[] {classNameId, ddmStructureId});
-		}
+		return _collectionPersistenceFinderByC_DDMSI.count(
+			finderCache, new Object[] {classNameId, ddmStructureId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByDDMSI_F;
@@ -1109,15 +1054,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByDDMSI_F.find(
-				finderCache,
-				new Object[] {ddmStructureId, new String[] {fieldName}}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDDMSI_F.find(
+			finderCache,
+			new Object[] {ddmStructureId, new String[] {fieldName}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1260,17 +1200,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByDDMSI_F.find(
-				finderCache,
-				new Object[] {
-					ddmStructureId, ArrayUtil.sortedUnique(fieldNames)
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDDMSI_F.find(
+			finderCache,
+			new Object[] {ddmStructureId, ArrayUtil.sortedUnique(fieldNames)},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1295,14 +1228,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByDDMSI_F(long ddmStructureId, String fieldName) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByDDMSI_F.count(
-				finderCache,
-				new Object[] {ddmStructureId, new String[] {fieldName}});
-		}
+		return _collectionPersistenceFinderByDDMSI_F.count(
+			finderCache,
+			new Object[] {ddmStructureId, new String[] {fieldName}});
 	}
 
 	/**
@@ -1314,26 +1242,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public int countByDDMSI_F(long ddmStructureId, String[] fieldNames) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByDDMSI_F.count(
-				finderCache,
-				new Object[] {
-					ddmStructureId, ArrayUtil.sortedUnique(fieldNames)
-				});
-		}
+		return _collectionPersistenceFinderByDDMSI_F.count(
+			finderCache,
+			new Object[] {ddmStructureId, ArrayUtil.sortedUnique(fieldNames)});
 	}
-
-	private static final String _FINDER_COLUMN_DDMSI_F_DDMSTRUCTUREID_2 =
-		"deDataDefinitionFieldLink.ddmStructureId = ? AND ";
-
-	private static final String _FINDER_COLUMN_DDMSI_F_FIELDNAME_2 =
-		"deDataDefinitionFieldLink.fieldName = ?";
-
-	private static final String _FINDER_COLUMN_DDMSI_F_FIELDNAME_3 =
-		"(deDataDefinitionFieldLink.fieldName IS NULL OR deDataDefinitionFieldLink.fieldName = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_DDMSI_F;
 	private FinderPath _finderPathWithoutPaginationFindByC_DDMSI_F;
@@ -1429,17 +1341,12 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		int end, OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_DDMSI_F.find(
-				finderCache,
-				new Object[] {
-					classNameId, ddmStructureId, new String[] {fieldName}
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_DDMSI_F.find(
+			finderCache,
+			new Object[] {
+				classNameId, ddmStructureId, new String[] {fieldName}
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1598,18 +1505,12 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		int end, OrderByComparator<DEDataDefinitionFieldLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_DDMSI_F.find(
-				finderCache,
-				new Object[] {
-					classNameId, ddmStructureId,
-					ArrayUtil.sortedUnique(fieldNames)
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_DDMSI_F.find(
+			finderCache,
+			new Object[] {
+				classNameId, ddmStructureId, ArrayUtil.sortedUnique(fieldNames)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1642,16 +1543,11 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	public int countByC_DDMSI_F(
 		long classNameId, long ddmStructureId, String fieldName) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_DDMSI_F.count(
-				finderCache,
-				new Object[] {
-					classNameId, ddmStructureId, new String[] {fieldName}
-				});
-		}
+		return _collectionPersistenceFinderByC_DDMSI_F.count(
+			finderCache,
+			new Object[] {
+				classNameId, ddmStructureId, new String[] {fieldName}
+			});
 	}
 
 	/**
@@ -1666,30 +1562,12 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	public int countByC_DDMSI_F(
 		long classNameId, long ddmStructureId, String[] fieldNames) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _collectionPersistenceFinderByC_DDMSI_F.count(
-				finderCache,
-				new Object[] {
-					classNameId, ddmStructureId,
-					ArrayUtil.sortedUnique(fieldNames)
-				});
-		}
+		return _collectionPersistenceFinderByC_DDMSI_F.count(
+			finderCache,
+			new Object[] {
+				classNameId, ddmStructureId, ArrayUtil.sortedUnique(fieldNames)
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_DDMSI_F_CLASSNAMEID_2 =
-		"deDataDefinitionFieldLink.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_DDMSI_F_DDMSTRUCTUREID_2 =
-		"deDataDefinitionFieldLink.ddmStructureId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_DDMSI_F_FIELDNAME_2 =
-		"deDataDefinitionFieldLink.fieldName = ?";
-
-	private static final String _FINDER_COLUMN_C_DDMSI_F_FIELDNAME_3 =
-		"(deDataDefinitionFieldLink.fieldName IS NULL OR deDataDefinitionFieldLink.fieldName = '')";
 
 	private FinderPath _finderPathFetchByC_C_DDMSI_F;
 	private FinderPath _finderPathWithPaginationCountByC_C_DDMSI_F;
@@ -1765,15 +1643,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		long classNameId, long classPK, long ddmStructureId, String fieldName,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataDefinitionFieldLink.class)) {
-
-			return _uniquePersistenceFinderByC_C_DDMSI_F.fetch(
-				finderCache,
-				new Object[] {classNameId, classPK, ddmStructureId, fieldName},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_C_DDMSI_F.fetch(
+			finderCache,
+			new Object[] {classNameId, classPK, ddmStructureId, fieldName},
+			useFinderCache);
 	}
 
 	/**
@@ -2650,4 +2523,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1297745685
+// LIFERAY-SERVICE-BUILDER-HASH:1720795421

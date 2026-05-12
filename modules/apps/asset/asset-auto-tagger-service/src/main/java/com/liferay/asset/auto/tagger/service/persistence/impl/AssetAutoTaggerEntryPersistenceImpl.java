@@ -13,7 +13,6 @@ import com.liferay.asset.auto.tagger.model.impl.AssetAutoTaggerEntryModelImpl;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPersistence;
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryUtil;
 import com.liferay.asset.auto.tagger.service.persistence.impl.constants.AssetAutoTaggerPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetAutoTaggerEntry.class)) {
-
-			return _collectionPersistenceFinderByAssetEntryId.find(
-				finderCache, new Object[] {assetEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByAssetEntryId.find(
+			finderCache, new Object[] {assetEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -234,13 +228,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countByAssetEntryId(long assetEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetAutoTaggerEntry.class)) {
-
-			return _collectionPersistenceFinderByAssetEntryId.count(
-				finderCache, new Object[] {assetEntryId});
-		}
+		return _collectionPersistenceFinderByAssetEntryId.count(
+			finderCache, new Object[] {assetEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByAssetTagId;
@@ -322,14 +311,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetAutoTaggerEntry.class)) {
-
-			return _collectionPersistenceFinderByAssetTagId.find(
-				finderCache, new Object[] {assetTagId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByAssetTagId.find(
+			finderCache, new Object[] {assetTagId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -393,13 +377,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public int countByAssetTagId(long assetTagId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetAutoTaggerEntry.class)) {
-
-			return _collectionPersistenceFinderByAssetTagId.count(
-				finderCache, new Object[] {assetTagId});
-		}
+		return _collectionPersistenceFinderByAssetTagId.count(
+			finderCache, new Object[] {assetTagId});
 	}
 
 	private FinderPath _finderPathFetchByA_A;
@@ -461,14 +440,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	public AssetAutoTaggerEntry fetchByA_A(
 		long assetEntryId, long assetTagId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetAutoTaggerEntry.class)) {
-
-			return _uniquePersistenceFinderByA_A.fetch(
-				finderCache, new Object[] {assetEntryId, assetTagId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByA_A.fetch(
+			finderCache, new Object[] {assetEntryId, assetTagId},
+			useFinderCache);
 	}
 
 	/**
@@ -932,4 +906,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1810471811
+// LIFERAY-SERVICE-BUILDER-HASH:-1288730283

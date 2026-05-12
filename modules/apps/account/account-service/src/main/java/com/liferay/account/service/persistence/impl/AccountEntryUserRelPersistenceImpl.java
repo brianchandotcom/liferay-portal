@@ -799,4 +799,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-983943481
+// LIFERAY-SERVICE-BUILDER-HASH:702089397

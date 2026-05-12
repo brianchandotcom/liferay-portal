@@ -343,9 +343,6 @@ public class NullConvertibleEntryPersistenceImpl
 		dummyEntityCache.removeCache(NullConvertibleEntryImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		NullConvertibleEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_NULLCONVERTIBLEENTRY =
 		"SELECT nullConvertibleEntry FROM NullConvertibleEntry nullConvertibleEntry";
 
@@ -364,4 +361,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-899142717
+// LIFERAY-SERVICE-BUILDER-HASH:-2093185667

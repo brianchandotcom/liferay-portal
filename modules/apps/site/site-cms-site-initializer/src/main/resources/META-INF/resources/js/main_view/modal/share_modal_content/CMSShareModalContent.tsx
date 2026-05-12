@@ -308,6 +308,7 @@ export default function CMSShareModalContent({
 
 	return (
 		<GenericShareModalContent
+			alwaysShowPermissionSelector
 			autocompleteURL={autocompleteURL}
 			canManageCollaborators={canManageCollaborators}
 			closeModal={closeModal}

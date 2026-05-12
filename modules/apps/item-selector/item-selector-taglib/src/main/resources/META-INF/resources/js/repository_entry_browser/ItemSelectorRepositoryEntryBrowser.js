@@ -13,6 +13,7 @@ import SingleFileUploader from '../item_selector_uploader/SingleFileUploader';
 export default function ItemSelectorRepositoryEntryBrowser({
 	closeCaption,
 	editImageURL,
+	folderId,
 	itemSelectedEventName,
 	portletNamespace,
 	rootNode,
@@ -28,11 +29,12 @@ export default function ItemSelectorRepositoryEntryBrowser({
 	const handleSelectedItem = useCallback(
 		({returntype, value}) => {
 			Liferay.Util.getOpener().Liferay.fire(itemSelectedEventName, {
+				folderId,
 				returnType: returntype,
 				value,
 			});
 		},
-		[itemSelectedEventName]
+		[folderId, itemSelectedEventName]
 	);
 
 	useEffect(() => {
@@ -100,6 +102,7 @@ export default function ItemSelectorRepositoryEntryBrowser({
 				<SingleFileUploader
 					closeCaption={closeCaption}
 					editImageURL={editImageURL}
+					folderId={folderId}
 					itemSelectedEventName={itemSelectedEventName}
 					{...uploaderProps}
 				/>
@@ -123,6 +126,7 @@ export default function ItemSelectorRepositoryEntryBrowser({
 }
 
 ItemSelectorRepositoryEntryBrowser.propTypes = {
+	folderId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	itemSelectedEventName: PropTypes.string.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	rootNode: PropTypes.string.isRequired,

@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openToast} from 'frontend-js-components-web';
+import {CollaboratorService, openToast} from 'frontend-js-components-web';
 
-import CollaboratorService from '../../../common/services/CollaboratorService';
 import {COLLABORATOR_TYPE} from '../../../common/utils/constants';
 import {openCMSModal} from '../../../common/utils/openCMSModal';
 import CMSShareModalContent, {

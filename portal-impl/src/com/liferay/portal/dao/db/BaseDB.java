@@ -549,40 +549,18 @@ public abstract class BaseDB implements DB {
 	public List<QueryInfo> getLockedQueryInfos(Connection connection)
 		throws SQLException {
 
-		String sql = getLockedQueryInfosSQL();
+		return _getQueryInfos(
+			connection, getLockedQueryInfosSQL(),
+			PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD);
+	}
 
-		if (sql == null) {
-			return Collections.emptyList();
-		}
+	@Override
+	public List<QueryInfo> getLongRunningQueryInfos(Connection connection)
+		throws SQLException {
 
-		List<QueryInfo> lockedQueryInfos = new ArrayList<>();
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql)) {
-
-			preparedStatement.setLong(
-				1, PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					String query = resultSet.getString("query");
-
-					if (query == null) {
-						continue;
-					}
-
-					long duration = resultSet.getLong("duration");
-					String id = resultSet.getString("id");
-					String schema = resultSet.getString("schema_");
-					String state = resultSet.getString("state");
-
-					lockedQueryInfos.add(
-						new QueryInfo(duration, id, query, schema, state));
-				}
-			}
-		}
-
-		return lockedQueryInfos;
+		return _getQueryInfos(
+			connection, getLongRunningQueryInfosSQL(),
+			PropsValues.UPGRADE_QUERY_MONITOR_LONG_RUNNING_THRESHOLD);
 	}
 
 	@Override
@@ -1552,6 +1530,10 @@ public abstract class BaseDB implements DB {
 		return null;
 	}
 
+	protected String getLongRunningQueryInfosSQL() {
+		return null;
+	}
+
 	protected String getRenameTableSQL(
 		String oldTableName, String newTableName) {
 
@@ -1787,6 +1769,43 @@ public abstract class BaseDB implements DB {
 		}
 
 		return primaryKeys;
+	}
+
+	private List<QueryInfo> _getQueryInfos(
+			Connection connection, String sql, long threshold)
+		throws SQLException {
+
+		if (sql == null) {
+			return Collections.emptyList();
+		}
+
+		List<QueryInfo> queryInfos = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
+
+			preparedStatement.setLong(1, threshold);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String query = resultSet.getString("query");
+
+					if (query == null) {
+						continue;
+					}
+
+					long duration = resultSet.getLong("duration");
+					String id = resultSet.getString("id");
+					String schema = resultSet.getString("schema_");
+					String state = resultSet.getString("state");
+
+					queryInfos.add(
+						new QueryInfo(duration, id, query, schema, state));
+				}
+			}
+		}
+
+		return queryInfos;
 	}
 
 	private boolean _isSkipIndexOperation(

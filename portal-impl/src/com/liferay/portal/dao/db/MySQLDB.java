@@ -241,6 +241,29 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
+	protected String getLongRunningQueryInfosSQL() {
+		return StringBundler.concat(
+			"select information_schema.processlist.time * 1000 as duration, ",
+			"information_schema.processlist.id as id, ",
+			"substring(information_schema.processlist.info, 1, 4000) as ",
+			"query, information_schema.processlist.db as schema_, ",
+			"coalesce(information_schema.innodb_trx.trx_state, ",
+			"information_schema.processlist.state) as state from ",
+			"information_schema.processlist left join ",
+			"information_schema.innodb_trx on ",
+			"information_schema.processlist.id = ",
+			"information_schema.innodb_trx.trx_mysql_thread_id where ",
+			"information_schema.processlist.command != 'Sleep' and ",
+			"information_schema.processlist.id != connection_id() and ",
+			"information_schema.processlist.info is not null and ",
+			"information_schema.processlist.time * 1000 >= ? and (",
+			"information_schema.innodb_trx.trx_state is null or ",
+			"information_schema.innodb_trx.trx_state != 'LOCK WAIT') and (",
+			"information_schema.processlist.state is null or ",
+			"lower(information_schema.processlist.state) not like '%lock%')");
+	}
+
+	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

@@ -450,6 +450,24 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	protected String getLongRunningQueryInfosSQL() {
+		return StringBundler.concat(
+			"select timestampdiff(2, char(current timestamp - ",
+			"activity.local_start_time)) * 1000 as duration, ",
+			"sysibmadm.applications.agent_id as id, cast(activity.stmt_text ",
+			"as varchar(4000)) as query, sysibmadm.applications.db_name as ",
+			"schema_, sysibmadm.applications.appl_status as state from ",
+			"sysibmadm.applications left join table(",
+			"sysproc.mon_get_activity(null, -2)) as activity on ",
+			"sysibmadm.applications.agent_id = activity.application_handle ",
+			"where timestampdiff(2, char(current timestamp - ",
+			"activity.local_start_time)) * 1000 >= ? and ",
+			"sysibmadm.applications.agent_id != mon_get_application_handle() ",
+			"and (sysibmadm.applications.appl_status is null or ",
+			"sysibmadm.applications.appl_status != 'LOCKWAIT')");
+	}
+
+	@Override
 	protected String getRenameTableSQL(
 		String oldTableName, String newTableName) {
 

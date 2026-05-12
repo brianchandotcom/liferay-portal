@@ -74,28 +74,28 @@ module "s3_bucket_liferay_overlay" {
 }
 resource "aws_cloudwatch_log_group" "opensearch_application" {
 	name="/aws/opensearch/${var.deployment_name}-os-d/application"
-	retention_in_days=90
+	retention_in_days=365
 	tags={
 		Name="${var.deployment_name}-opensearch-application"
 	}
 }
 resource "aws_cloudwatch_log_group" "opensearch_audit" {
 	name="/aws/opensearch/${var.deployment_name}-os-d/audit"
-	retention_in_days=90
+	retention_in_days=365
 	tags={
 		Name="${var.deployment_name}-opensearch-audit"
 	}
 }
 resource "aws_cloudwatch_log_group" "opensearch_index_slow" {
 	name="/aws/opensearch/${var.deployment_name}-os-d/index-slow"
-	retention_in_days=90
+	retention_in_days=365
 	tags={
 		Name="${var.deployment_name}-opensearch-index-slow"
 	}
 }
 resource "aws_cloudwatch_log_group" "opensearch_search_slow" {
 	name="/aws/opensearch/${var.deployment_name}-os-d/search-slow"
-	retention_in_days=90
+	retention_in_days=365
 	tags={
 		Name="${var.deployment_name}-opensearch-search-slow"
 	}

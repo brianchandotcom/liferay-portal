@@ -16,12 +16,10 @@ import {
 	connectToAnalyticsCloudWithNoSiteSynced,
 	syncAnalyticsCloud,
 } from '../../analytics-settings-web/main/utils/analytics-settings';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {faroConfig} from '../../osb-faro-web/main/faro.config';
 import {clickOnLink} from '../../osb-faro-web/main/utils/actions';
-import {
-	createSitePage,
-	navigateToSitePage,
-} from '../../osb-faro-web/main/utils/portal';
 import {openABTesSidebar} from './utils/ab-test';
 
 const test = mergeTests(
@@ -78,16 +76,19 @@ test(
 	async ({apiHelpers, page, site}) => {
 		const channelName = 'My Property - ' + getRandomString();
 
-		const pageTitle = 'My Page';
-
 		let channel;
 		let project;
 
 		try {
-			await createSitePage({
-				apiHelpers,
-				pageTitle,
-				siteName: site.name,
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-heading',
+					}),
+				]),
+				siteId: site.id,
+				title: 'My Page',
 			});
 
 			const result = await syncAnalyticsCloud({
@@ -100,11 +101,9 @@ test(
 			channel = result.channel;
 			project = result.project;
 
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await page.waitForSelector('.segments-experiment-icon');
 

@@ -2,6 +2,7 @@ resource "aws_db_instance" "this" {
 	allocated_storage=20
 	auto_minor_version_upgrade=true
 	backup_retention_period=7
+	copy_tags_to_snapshot=true
 	db_name="lportal"
 	db_subnet_group_name=var.db_subnet_group_name
 	deletion_protection=true

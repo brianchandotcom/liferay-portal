@@ -65,22 +65,22 @@ public class ClusterLinkTest implements Serializable {
 
 	@Test
 	public void testControlChannelProperties() throws Exception {
-		_testControlChannelProperties(
-			false, "TCP",
+		_assertChannelProperties(
+			false, "TCP", ClusterLinkTest::_getControlChannelTransportName,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
-		_testControlChannelProperties(
-			true, "UDP",
+		_assertChannelProperties(
+			true, "UDP", ClusterLinkTest::_getControlChannelTransportName,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
 			"cluster.link.channel.properties.transport.0=udp.xml");
 	}
 
 	@Test
 	public void testTransportChannelProperties() throws Exception {
-		_testTransportChannelProperties(
-			false, "TCP",
+		_assertChannelProperties(
+			false, "TCP", ClusterLinkTest::_getTransportChannelTransportName,
 			"cluster.link.channel.properties.transport.0=tcp.xml");
-		_testTransportChannelProperties(
-			true, "UDP",
+		_assertChannelProperties(
+			true, "UDP", ClusterLinkTest::_getTransportChannelTransportName,
 			"cluster.link.channel.properties.transport.0=udp.xml");
 	}
 
@@ -159,8 +159,9 @@ public class ClusterLinkTest implements Serializable {
 		};
 	}
 
-	private void _testControlChannelProperties(
+	private void _assertChannelProperties(
 			boolean keepStarted, String expectedTransportName,
+			TomcatNode.ClusterExecutable<String> clusterExecutable,
 			String... portalExtPropertiesLines)
 		throws Exception {
 
@@ -189,43 +190,7 @@ public class ClusterLinkTest implements Serializable {
 
 			Assert.assertEquals(
 				expectedTransportName,
-				_tomcatNode1.syncExecute(
-					ClusterLinkTest::_getControlChannelTransportName));
-		}
-	}
-
-	private void _testTransportChannelProperties(
-			boolean keepStarted, String expectedTransportName,
-			String... portalExtPropertiesLines)
-		throws Exception {
-
-		try (Closeable closeable = _applyPortalExtPropertiesLines(
-				keepStarted, _tomcatNode1, portalExtPropertiesLines)) {
-
-			// Assert portal-ext.properties lines are set correctly on node 1
-
-			for (String portalExtLine : portalExtPropertiesLines) {
-				List<String> parts = StringUtil.split(
-					portalExtLine, CharPool.EQUAL);
-
-				String key = parts.get(0);
-				String expectedValue = parts.get(1);
-
-				Assert.assertEquals(
-					expectedValue,
-					_tomcatNode1.syncExecute(() -> PropsUtil.get(key)));
-			}
-
-			// Assert node 1 can get its cluster node successfully
-
-			Assert.assertNotNull(
-				_tomcatNode1.syncExecute(
-					ClusterExecutorUtil::getLocalClusterNode));
-
-			Assert.assertEquals(
-				expectedTransportName,
-				_tomcatNode1.syncExecute(
-					ClusterLinkTest::_getTransportChannelTransportName));
+				_tomcatNode1.syncExecute(clusterExecutable));
 		}
 	}
 

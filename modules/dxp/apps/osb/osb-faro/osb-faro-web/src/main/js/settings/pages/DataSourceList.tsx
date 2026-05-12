@@ -45,13 +45,22 @@ const DATA_SOURCE_SUBSCRIPTION_RULES: {
 	[type: string]: {excluded?: string[]; included?: string[]};
 } = {
 	[DataSourceTypes.Demandbase]: {
-		included: [SubscriptionNames.LiferayDataPlatform]
+		included: [
+			SubscriptionNames.LiferayDataPlatform,
+			SubscriptionNames.LiferayDataPlatformEnterprise
+		]
 	},
 	[DataSourceTypes.Hubspot]: {
-		included: [SubscriptionNames.LiferayDataPlatform]
+		included: [
+			SubscriptionNames.LiferayDataPlatform,
+			SubscriptionNames.LiferayDataPlatformEnterprise
+		]
 	},
 	[DataSourceTypes.Salesforce]: {
-		included: [SubscriptionNames.LiferayDataPlatform]
+		included: [
+			SubscriptionNames.LiferayDataPlatform,
+			SubscriptionNames.LiferayDataPlatformEnterprise
+		]
 	}
 };
 

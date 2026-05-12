@@ -71,8 +71,7 @@ public class ClusterLinkTest implements Serializable {
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
 		_testChannelProperties(
 			true, "UDP", ClusterLinkTest::_getControlChannelTransportName,
-			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
-			"cluster.link.channel.properties.transport.0=udp.xml");
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml");
 	}
 
 	@Test

@@ -418,18 +418,20 @@ export default function SpaceConnectedSitesModal({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<p className="c-mb-4 text-secondary">
-					{Liferay.Language.get(
-						'connect-sites-and-site-templates-to-this-space'
-					)}
-				</p>
-
 				{hasConnectSitesPermission && (
-					<ConnectableSelector
-						connections={connections}
-						externalReferenceCode={externalReferenceCode}
-						onConnectionAdded={onConnectionAdded}
-					/>
+					<>
+						<p className="c-mb-4 text-secondary">
+							{Liferay.Language.get(
+								'connect-sites-and-site-templates-to-this-space'
+							)}
+						</p>
+
+						<ConnectableSelector
+							connections={connections}
+							externalReferenceCode={externalReferenceCode}
+							onConnectionAdded={onConnectionAdded}
+						/>
+					</>
 				)}
 
 				{!connections.length ? (

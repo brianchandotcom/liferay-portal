@@ -1116,3 +1116,41 @@ test(
 		);
 	}
 );
+
+test(
+	'Minium seeds the Italy warehouse with the expected address and coordinates',
+	{tag: ['@COMMERCE-10308', '@LPD-88485']},
+	async ({
+		commerceAdminWarehouseDetailsPage,
+		commerceAdminWarehousesPage,
+	}) => {
+		await commerceAdminWarehousesPage.goto();
+
+		await commerceAdminWarehousesPage.warehouseLink('Italy').click();
+
+		await expect(
+			commerceAdminWarehouseDetailsPage.geolocateButton
+		).toBeVisible();
+		await expect(
+			commerceAdminWarehouseDetailsPage.latitudeInput
+		).toHaveValue('42.214601');
+		await expect(
+			commerceAdminWarehouseDetailsPage.longitudeInput
+		).toHaveValue('12.796434');
+		await expect(
+			commerceAdminWarehouseDetailsPage.street1Input
+		).toHaveValue('Via delle Coste 24');
+		await expect(commerceAdminWarehouseDetailsPage.cityInput).toHaveValue(
+			'Borgorose'
+		);
+		await expect(
+			commerceAdminWarehouseDetailsPage.postalCodeInput
+		).toHaveValue('2021');
+		await expect(
+			commerceAdminWarehouseDetailsPage.countrySelect
+		).toHaveText(/Italy/);
+		await expect(commerceAdminWarehouseDetailsPage.regionSelect).toHaveText(
+			/Rieti/
+		);
+	}
+);

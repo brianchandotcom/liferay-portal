@@ -8,23 +8,44 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
+	readonly addPriceModifierButton: Locator;
+	readonly addPriceModifierModalFrame: FrameLocator;
+	readonly addPriceModifierName: Locator;
+	readonly addPriceModifierSaveButton: Locator;
+	readonly addPriceModifierTarget: Locator;
+	readonly addPriceModifierType: Locator;
 	readonly addTierPriceButton: Locator;
+	readonly catalogSelect: Locator;
 	readonly addTierPriceEntryFrame: FrameLocator;
 	readonly addTierPriceEntryPrice: Locator;
 	readonly addTierPriceEntryQuantity: Locator;
+	readonly addTierPriceEntryQuantityNotAllowedError: Locator;
 	readonly addTierPriceEntrySaveButton: Locator;
 	readonly editPriceTierFrame: FrameLocator;
 	readonly editPriceTierPrice: Locator;
 	readonly eligibilityEntryCell: (name: string) => Locator;
+	readonly eligibilityFindInput: (placeholder: string) => Locator;
+	readonly eligibilityRowSelectButton: (entryName: string) => Locator;
 	readonly eligibilityTab: Locator;
 	readonly entriesTab: Locator;
 	readonly findSkuInput: Locator;
 	readonly page: Page;
+	readonly priceModifierRowActions: (title: string) => Locator;
+	readonly priceModifierRowDeleteMenuItem: Locator;
+	readonly priceModifiersTab: Locator;
 	readonly scheduleLabel: Locator;
 	readonly selectButton: Locator;
+	readonly publishButton: Locator;
+	readonly specificAccountGroupsRadio: Locator;
 	readonly specificAccountsRadio: Locator;
 	readonly specificChannelsRadio: Locator;
+	readonly specificOrderTypesRadio: Locator;
+	readonly sidePanelFrame: FrameLocator;
+	readonly sidePanelPriceInput: Locator;
+	readonly sidePanelSaveButton: Locator;
 	readonly skuLink: (price: string) => Locator;
+	readonly skuRowActionsButton: (sku: string) => Locator;
+	readonly skuRowRemoveMenuItem: Locator;
 	readonly skusTableRowLink: (skuName: string) => Locator;
 
 	constructor(page: Page) {
@@ -33,16 +54,40 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 			'#_com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet_fm .fds table'
 		);
 
+		this.addPriceModifierButton = page
+			.getByTestId('managementToolbar')
+			.getByRole('button', {name: 'Add Price Modifier'});
+		this.addPriceModifierModalFrame = page
+			.locator('.modal-dialog')
+			.frameLocator('iframe');
+		this.addPriceModifierName =
+			this.addPriceModifierModalFrame.getByLabel('Name');
+		this.addPriceModifierTarget =
+			this.addPriceModifierModalFrame.getByLabel('Target');
+		this.addPriceModifierType =
+			this.addPriceModifierModalFrame.getByLabel('Modifier');
+		this.addPriceModifierSaveButton =
+			this.addPriceModifierModalFrame.getByRole('button', {
+				name: 'Submit',
+			});
 		this.addTierPriceButton = page
 			.frameLocator('iframe')
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
+		this.catalogSelect = page.locator(
+			'select[name$="commerceCatalogGroupId"]'
+		);
 		this.addTierPriceEntryFrame = page.frameLocator('iframe >> nth=1');
 		this.addTierPriceEntryPrice = this.addTierPriceEntryFrame.getByLabel(
 			'Tier Price Required'
 		);
 		this.addTierPriceEntryQuantity =
 			this.addTierPriceEntryFrame.getByLabel('Quantity Required');
+		this.addTierPriceEntryQuantityNotAllowedError =
+			this.addTierPriceEntryFrame.getByText(
+				'The specified quantity is not allowed.',
+				{exact: false}
+			);
 		this.addTierPriceEntrySaveButton =
 			this.addTierPriceEntryFrame.getByRole('button', {name: 'Submit'});
 		this.editPriceTierFrame = page
@@ -53,6 +98,13 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 		);
 		this.eligibilityEntryCell = (name: string) =>
 			page.getByRole('cell', {name}).first();
+		this.eligibilityFindInput = (placeholder: string) =>
+			page.getByPlaceholder(placeholder);
+		this.eligibilityRowSelectButton = (entryName: string) =>
+			page
+				.getByRole('row')
+				.filter({hasText: entryName})
+				.getByRole('button', {exact: true, name: 'Select'});
 		this.eligibilityTab = page.getByRole('link', {
 			exact: true,
 			name: 'Eligibility',
@@ -60,19 +112,53 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 		this.entriesTab = page.getByRole('link', {name: 'Entries'});
 		this.findSkuInput = page.getByPlaceholder('Find a SKU');
 		this.page = page;
+		this.priceModifierRowActions = (title: string) =>
+			page.getByRole('row').filter({hasText: title}).getByRole('button');
+		this.priceModifierRowDeleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
+		this.priceModifiersTab = page.getByRole('link', {
+			exact: true,
+			name: 'Price Modifiers',
+		});
 		this.scheduleLabel = page.getByText('Schedule');
+		this.publishButton = page.getByRole('button', {
+			exact: true,
+			name: 'Publish',
+		});
+		this.specificAccountGroupsRadio = page.getByRole('radio', {
+			name: 'Specific Account Groups',
+		});
 		this.specificAccountsRadio = page.getByRole('radio', {
 			name: 'Specific Accounts',
 		});
 		this.specificChannelsRadio = page.getByRole('radio', {
 			name: 'Specific Channels',
 		});
+		this.specificOrderTypesRadio = page.getByRole('radio', {
+			name: 'Specific Order Types',
+		});
 		this.selectButton = page.getByRole('button', {name: 'Select'});
+		this.sidePanelFrame = page
+			.locator('.fds-side-panel')
+			.frameLocator('iframe');
+		this.sidePanelPriceInput =
+			this.sidePanelFrame.getByLabel('Price List Price');
+		this.sidePanelSaveButton = this.sidePanelFrame.getByRole('button', {
+			name: 'Save',
+		});
 		this.skuLink = (price: string) =>
 			page
 				.frameLocator('iframe')
 				.first()
 				.getByRole('link', {name: price});
+		this.skuRowActionsButton = (sku: string) =>
+			page.getByRole('row').filter({hasText: sku}).getByRole('button');
+		this.skuRowRemoveMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Remove',
+		});
 		this.skusTableRowLink = (sku: string) =>
 			page.getByRole('link', {exact: true, name: sku});
 	}

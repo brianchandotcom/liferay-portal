@@ -291,6 +291,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async deleteProductGroup(productGroupId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-groups/${productGroupId}`
+		);
+	}
+
 	async deleteRelatedProduct(relatedProductId: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/relatedProducts/${relatedProductId}`
@@ -811,6 +817,28 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		}
 
 		return relatedProduct;
+	}
+
+	async postProductGroup(productGroup: {
+		products?: Array<{productId: number}>;
+		title: string;
+	}) {
+		const result = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-groups`,
+			{
+				data: {
+					products: productGroup.products ?? [],
+					title: {en_US: productGroup.title},
+				},
+				failOnStatusCode: true,
+			}
+		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({id: result.id, type: 'productGroup'});
+		}
+
+		return result;
 	}
 
 	async postSkuUnitOfMeasure(

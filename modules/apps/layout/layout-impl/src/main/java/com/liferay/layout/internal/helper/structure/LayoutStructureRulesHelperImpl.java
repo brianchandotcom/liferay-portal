@@ -64,10 +64,10 @@ public class LayoutStructureRulesHelperImpl
 		LayoutStructure layoutStructure, Locale locale,
 		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
 
-		Map<String, Object> infoItemFieldValuesMap = _parseInfoItemFieldValues(
-			infoItemFieldValues, locale);
-		Map<String, String> infoItemFieldTypesMap = _parseInfoItemFieldTypes(
+		Map<String, String> infoItemFieldTypesMap = _getInfoItemFieldTypesMap(
 			infoItemFieldValues);
+		Map<String, Object> infoItemFieldValuesMap = _getInfoItemFieldValuesMap(
+			infoItemFieldValues, locale);
 		Map<String, List<String>> itemIdsMap = new HashMap<>();
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 		Map<String, List<String>> layoutStructureRuleIdsMap = new HashMap<>();
@@ -296,6 +296,116 @@ public class LayoutStructureRulesHelperImpl
 		throw new IllegalArgumentException("Unknown action type: " + type);
 	}
 
+	private Map<String, String> _getInfoItemFieldTypesMap(
+		InfoItemFieldValues infoItemFieldValues) {
+
+		Map<String, String> map = new HashMap<>();
+
+		if (infoItemFieldValues == null) {
+			return map;
+		}
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField<?> infoField = infoFieldValue.getInfoField();
+
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+			map.put(infoField.getUniqueId(), infoFieldType.getName());
+		}
+
+		return map;
+	}
+
+	private Map<String, Object> _getInfoItemFieldValuesMap(
+		InfoItemFieldValues infoItemFieldValues, Locale locale) {
+
+		Map<String, Object> map = new HashMap<>();
+
+		if (infoItemFieldValues == null) {
+			return map;
+		}
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			Object value = infoFieldValue.getValue(locale);
+
+			if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
+				try {
+					DateFormat dateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat(
+							"yyyy-MM-dd", locale);
+
+					value = dateFormat.format(value);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to parse date from " + value, exception);
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() ==
+						DateTimeInfoFieldType.INSTANCE) {
+
+				try {
+					DateTimeFormatter dateTimeFormatter =
+						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+					value = dateTimeFormatter.format((TemporalAccessor)value);
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to parse date from " + value, exception);
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() ==
+						PicklistMultiselectInfoFieldType.INSTANCE) {
+
+				if (value instanceof List) {
+					List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+						(List<KeyLocalizedLabelPair>)value;
+
+					try {
+						value = JSONUtil.toJSONArray(
+							keyLocalizedLabelPairs,
+							KeyLocalizedLabelPair::getKey);
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(exception);
+						}
+					}
+				}
+			}
+			else if (infoField.getInfoFieldType() ==
+						PicklistSelectInfoFieldType.INSTANCE) {
+
+				if (value instanceof List) {
+					List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+						(List<KeyLocalizedLabelPair>)value;
+
+					if (ListUtil.isNotEmpty(keyLocalizedLabelPairs)) {
+						KeyLocalizedLabelPair keyLocalizedLabelPair =
+							keyLocalizedLabelPairs.get(0);
+
+						value = keyLocalizedLabelPair.getKey();
+					}
+				}
+			}
+
+			map.put(infoField.getUniqueId(), String.valueOf(value));
+		}
+
+		return map;
+	}
+
 	private List<String> _getItemIds(LayoutStructureRule layoutStructureRule) {
 		List<String> itemIds = new ArrayList<>();
 
@@ -413,116 +523,6 @@ public class LayoutStructureRulesHelperImpl
 		}
 
 		return false;
-	}
-
-	private Map<String, String> _parseInfoItemFieldTypes(
-		InfoItemFieldValues infoItemFieldValues) {
-
-		Map<String, String> map = new HashMap<>();
-
-		if (infoItemFieldValues == null) {
-			return map;
-		}
-
-		for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
-
-			InfoField<?> infoField = infoFieldValue.getInfoField();
-
-			InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-			map.put(infoField.getUniqueId(), infoFieldType.getName());
-		}
-
-		return map;
-	}
-
-	private Map<String, Object> _parseInfoItemFieldValues(
-		InfoItemFieldValues infoItemFieldValues, Locale locale) {
-
-		Map<String, Object> map = new HashMap<>();
-
-		if (infoItemFieldValues == null) {
-			return map;
-		}
-
-		for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
-
-			InfoField infoField = infoFieldValue.getInfoField();
-
-			Object value = infoFieldValue.getValue(locale);
-
-			if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
-				try {
-					DateFormat dateFormat =
-						DateFormatFactoryUtil.getSimpleDateFormat(
-							"yyyy-MM-dd", locale);
-
-					value = dateFormat.format(value);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to parse date from " + value, exception);
-					}
-				}
-			}
-			else if (infoField.getInfoFieldType() ==
-						DateTimeInfoFieldType.INSTANCE) {
-
-				try {
-					DateTimeFormatter dateTimeFormatter =
-						DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-					value = dateTimeFormatter.format((TemporalAccessor)value);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to parse date from " + value, exception);
-					}
-				}
-			}
-			else if (infoField.getInfoFieldType() ==
-						PicklistMultiselectInfoFieldType.INSTANCE) {
-
-				if (value instanceof List) {
-					List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
-						(List<KeyLocalizedLabelPair>)value;
-
-					try {
-						value = JSONUtil.toJSONArray(
-							keyLocalizedLabelPairs,
-							KeyLocalizedLabelPair::getKey);
-					}
-					catch (Exception exception) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(exception);
-						}
-					}
-				}
-			}
-			else if (infoField.getInfoFieldType() ==
-						PicklistSelectInfoFieldType.INSTANCE) {
-
-				if (value instanceof List) {
-					List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
-						(List<KeyLocalizedLabelPair>)value;
-
-					if (ListUtil.isNotEmpty(keyLocalizedLabelPairs)) {
-						KeyLocalizedLabelPair keyLocalizedLabelPair =
-							keyLocalizedLabelPairs.get(0);
-
-						value = keyLocalizedLabelPair.getKey();
-					}
-				}
-			}
-
-			map.put(infoField.getUniqueId(), String.valueOf(value));
-		}
-
-		return map;
 	}
 
 	private void _processActions(

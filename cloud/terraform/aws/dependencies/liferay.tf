@@ -227,7 +227,7 @@ resource "aws_kms_key" "os" {
 					]
 					Effect="Allow"
 					Principal={
-						Service="es.${var.region}.amazonaws.com"
+						Service="es.amazonaws.com"
 					}
 					Resource="*"
 					Sid="KMSAllowOpenSearch"

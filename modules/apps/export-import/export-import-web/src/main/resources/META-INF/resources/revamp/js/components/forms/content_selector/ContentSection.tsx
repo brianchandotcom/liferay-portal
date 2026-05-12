@@ -18,6 +18,7 @@ import {
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import CountIndicators from './CountIndicators';
 import PortletDataControl from './PortletDataControl';
 
 export type SectionSelection = Record<string, HandlerSelection>;
@@ -73,8 +74,13 @@ export default function ContentSection({
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<div className="font-weight-bold h3 mb-0">
+					<div className="align-items-center d-flex font-weight-bold h3 mb-0">
 						{section.label}
+
+						<CountIndicators
+							additionCount={section.additionCount}
+							deletionCount={section.deletionCount}
+						/>
 					</div>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>

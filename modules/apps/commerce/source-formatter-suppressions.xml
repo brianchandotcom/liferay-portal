@@ -26,7 +26,6 @@
 		<suppress checks="JSONPackageJSONCheck" files="commerce-frontend-taglib/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-product-content-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-product-options-web/package\.json" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommercePriceLists\.testcase" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-minium/commerce-theme-minium/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="XMLServiceEntityNameCheck" files="commerce-currency-service/service\.xml" />

@@ -12,7 +12,6 @@ import SettingsStep from '../../../../../../src/main/resources/META-INF/resource
 
 const defaultInitialValues = {
 	authorshipStrategy: 'useOriginalAuthor',
-	importPermissions: false,
 	updateDataStrategy: 'mirror',
 };
 
@@ -29,42 +28,13 @@ const renderSettingsStep = (
 	);
 
 describe('SettingsStep', () => {
-	it('renders the permissions, authorship, and update-data sections', () => {
+	it('renders the authorship and update-data sections', () => {
 		renderSettingsStep();
 
-		expect(screen.getByText('permissions')).toBeInTheDocument();
 		expect(
 			screen.getByText('authorship-of-the-content')
 		).toBeInTheDocument();
 		expect(screen.getByText('update-data')).toBeInTheDocument();
-	});
-
-	it('starts with the import-permissions checkbox unchecked and toggles on click', async () => {
-		const user = userEvent.setup();
-
-		renderSettingsStep();
-
-		const checkbox = screen.getByLabelText('import-permissions');
-
-		expect(checkbox).not.toBeChecked();
-
-		await user.click(checkbox);
-
-		expect(checkbox).toBeChecked();
-	});
-
-	it('toggles the import-permissions checkbox when its row is clicked', async () => {
-		const user = userEvent.setup();
-
-		renderSettingsStep();
-
-		const checkbox = screen.getByLabelText('import-permissions');
-
-		expect(checkbox).not.toBeChecked();
-
-		await user.click(screen.getByText('export-import-permissions-help'));
-
-		expect(checkbox).toBeChecked();
 	});
 
 	it('selects use-the-original-author authorship by default', () => {

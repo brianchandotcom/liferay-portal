@@ -40,6 +40,7 @@ import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.annotations.PATCH;
 import com.liferay.osb.faro.web.internal.annotations.Unauthenticated;
 import com.liferay.osb.faro.web.internal.antivirus.ClamAVScanner;
@@ -65,6 +66,7 @@ import com.liferay.osb.faro.web.internal.util.ContactsCSVHelper;
 import com.liferay.osb.faro.web.internal.util.FieldMappingUtil;
 import com.liferay.osb.faro.web.internal.util.OAuthUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -414,6 +416,21 @@ public class DataSourceController extends BaseFaroController {
 		faroProject.setDataSourceConnected(false);
 
 		faroProjectLocalService.updateFaroProject(faroProject);
+	}
+
+	public String generateDataSourceAccessToken(
+		long groupId, long faroProjectId) {
+
+		String json = JSONUtil.put(
+			"token", _tokenManager.getToken(null, faroProjectId)
+		).put(
+			"url",
+			StringBundler.concat(
+				FaroPropsValues.FARO_URL, "/o/faro/contacts/", groupId,
+				"/data_source/connect")
+		).toString();
+
+		return Base64.encode(json.getBytes(StandardCharsets.UTF_8));
 	}
 
 	@GET

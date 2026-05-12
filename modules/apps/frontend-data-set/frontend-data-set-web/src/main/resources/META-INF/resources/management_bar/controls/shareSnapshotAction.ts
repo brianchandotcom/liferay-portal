@@ -49,7 +49,7 @@ export default async function shareSnapshotAction({
 					share,
 					type,
 					user: {
-						id: id.toString(),
+						id: id?.toString() ?? '',
 						image: portrait,
 						name,
 					},

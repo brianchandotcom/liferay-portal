@@ -3,20 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import CollaboratorService from '../../../../../src/main/resources/META-INF/resources/js/common/services/CollaboratorService';
+import {CollaboratorService} from 'frontend-js-components-web';
+
 import {openCMSModal} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal';
 import CMSShareModalContent from '../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/CMSShareModalContent';
 import shareAction from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/shareAction';
-
-jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/common/services/CollaboratorService',
-	() => ({
-		__esModule: true,
-		default: {
-			getCollaborators: jest.fn(),
-		},
-	})
-);
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal',
@@ -31,6 +22,9 @@ jest.mock(
 );
 
 jest.mock('frontend-js-components-web', () => ({
+	CollaboratorService: {
+		getCollaborators: jest.fn(),
+	},
 	openToast: jest.fn(),
 }));
 

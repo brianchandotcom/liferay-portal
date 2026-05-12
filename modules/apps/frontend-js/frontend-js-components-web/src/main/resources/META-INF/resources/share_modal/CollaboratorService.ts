@@ -16,8 +16,9 @@ export interface CollaboratorItem {
 		name: string;
 	};
 	dateExpired?: string;
+	emailAddress?: string;
 	externalReferenceCode: string;
-	id: number;
+	id?: number;
 	name: string;
 	portrait?: string;
 	share: boolean;

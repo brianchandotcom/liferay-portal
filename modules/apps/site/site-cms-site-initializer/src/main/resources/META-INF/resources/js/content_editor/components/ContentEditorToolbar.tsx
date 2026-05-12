@@ -13,6 +13,7 @@ import ClayLink from '@clayui/link';
 import {AIAssistantChat} from '@liferay/ai-hub-cell-js-components-web';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {useSessionState} from 'frontend-js-components-web';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
@@ -21,6 +22,7 @@ import Toolbar from '../../common/components/Toolbar';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 import PreviewModal from './preview/PreviewModal';
+import {PREVIEW_VISIBLE_SESSION_KEY} from './preview/sessionKeys';
 import useLocalizationLanguageId from './useLocalizationLanguageId';
 
 export const EVENT_CLOSE_PREVIEW = 'contentEditor:closePreview';
@@ -52,7 +54,10 @@ export default function ContentEditorToolbar({
 	const [formId, setFormId] = useState<string | undefined>();
 	const [redirect, setRedirect] = useState<string>(backURL);
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const [showPreview, setShowPreview] = useState<boolean>(false);
+	const [showPreview, setShowPreview] = useSessionState<boolean>(
+		PREVIEW_VISIBLE_SESSION_KEY,
+		false
+	);
 	const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
 
 	const localizationLanguageId = useLocalizationLanguageId();
@@ -161,7 +166,7 @@ export default function ContentEditorToolbar({
 		Liferay.on(EVENT_CLOSE_PREVIEW, closePreview);
 
 		return () => Liferay.detach(EVENT_CLOSE_PREVIEW, closePreview);
-	}, []);
+	}, [setShowPreview]);
 
 	return (
 		<Toolbar

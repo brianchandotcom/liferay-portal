@@ -21,11 +21,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.query.QueriesUtil;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import java.time.LocalDate;
 
@@ -122,30 +117,9 @@ public class TaskStatisticsResourceImpl extends BaseTaskStatisticsResourceImpl {
 							" and state ne 'done'",
 						projectObjectEntry, taskObjectDefinition));
 				setTotalCount(
-					() -> {
-						long tasksTotalCount = _getCount(
-							StringPool.BLANK, projectObjectEntry,
-							taskObjectDefinition);
-
-						if (projectObjectEntry != null) {
-							return tasksTotalCount;
-						}
-
-						SearchResponse searchResponse = _searcher.search(
-							_searchRequestBuilderFactory.builder(
-							).companyId(
-								contextCompany.getCompanyId()
-							).emptySearchEnabled(
-								true
-							).entryClassNames(
-								KaleoTaskInstanceToken.class.getName()
-							).query(
-								QueriesUtil.wildcard(
-									"assetTagNames.lowercase", "L_CMP_TASK*")
-							).build());
-
-						return tasksTotalCount + searchResponse.getTotalHits();
-					});
+					() -> _getCount(
+						StringPool.BLANK, projectObjectEntry,
+						taskObjectDefinition));
 			}
 		};
 	}
@@ -163,11 +137,5 @@ public class TaskStatisticsResourceImpl extends BaseTaskStatisticsResourceImpl {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

@@ -688,3 +688,95 @@ test(
 		});
 	}
 );
+
+test(
+	'Destination picker filters folders by section when moving content vs file',
+	{tag: '@LPD-89762'},
+	async ({apiHelpers, assetsPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+		const contentTitle = `Content ${getRandomString()}`;
+		const fileTitle = `File ${getRandomString()}`;
+
+		await test.step('Create a new Space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a content in that Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		});
+
+		await test.step('Create a file in that Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: `file_${getRandomString()}.png`,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: fileTitle,
+				},
+				'cms/basic-documents',
+				spaceName
+			);
+		});
+
+		await test.step('Move To picker for a content shows only the Contents folder', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Move',
+				filter: contentTitle,
+			});
+
+			const dialog = assetsPage.getCopyOrMoveDestinationDialog();
+
+			await dialog.getByLabel(spaceName).click();
+
+			await expect(
+				dialog.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+			await expect(
+				dialog.getByLabel('Contents', {exact: true})
+			).toBeVisible();
+
+			await dialog
+				.getByRole('button', {exact: true, name: 'Cancel'})
+				.click();
+		});
+
+		await test.step('Move To picker for a file shows only the Files folder', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Move',
+				filter: fileTitle,
+			});
+
+			const dialog = assetsPage.getCopyOrMoveDestinationDialog();
+
+			await dialog.getByLabel(spaceName).click();
+
+			await expect(
+				dialog.getByText('Showing 1 to 1 of 1 entries.')
+			).toBeVisible();
+			await expect(
+				dialog.getByLabel('Files', {exact: true})
+			).toBeVisible();
+
+			await dialog
+				.getByRole('button', {exact: true, name: 'Cancel'})
+				.click();
+		});
+	}
+);

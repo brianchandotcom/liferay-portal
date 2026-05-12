@@ -21,12 +21,12 @@ describe('getConnectorAvailableDataAlert', () => {
 			).toBeNull();
 		});
 
-		it('with data: dismissible info / "Your data may take some time to appear" message', () => {
+		it('with data: syncing kind / "Your data may take some time to appear" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(activeDataSource, true)
 			).toEqual({
-				dismissible: true,
 				displayType: 'info',
+				kind: 'syncing',
 				message: SYNCING_COMPLETES_MESSAGE
 			});
 		});
@@ -44,12 +44,12 @@ describe('getConnectorAvailableDataAlert', () => {
 			).toBeNull();
 		});
 
-		it('with data (90d): non-dismissible info / "Previously synced data remains available" message', () => {
+		it('with data (90d): previously-synced kind / "Previously synced data remains available" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(inactiveDataSource, true)
 			).toEqual({
-				dismissible: false,
 				displayType: 'info',
+				kind: 'previously-synced',
 				message: PREVIOUSLY_SYNCED_MESSAGE
 			});
 		});
@@ -61,22 +61,22 @@ describe('getConnectorAvailableDataAlert', () => {
 			status: DataSourceStatuses.Inactive
 		});
 
-		it('with data: non-dismissible info / "Previously synced data remains available" message', () => {
+		it('with data: previously-synced kind / "Previously synced data remains available" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(disconnectedDataSource, true)
 			).toEqual({
-				dismissible: false,
 				displayType: 'info',
+				kind: 'previously-synced',
 				message: PREVIOUSLY_SYNCED_MESSAGE
 			});
 		});
 
-		it('without data: still shows non-dismissible / "Previously synced data remains available" message', () => {
+		it('without data: still shows previously-synced kind / "Previously synced data remains available" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(disconnectedDataSource, false)
 			).toEqual({
-				dismissible: false,
 				displayType: 'info',
+				kind: 'previously-synced',
 				message: PREVIOUSLY_SYNCED_MESSAGE
 			});
 		});

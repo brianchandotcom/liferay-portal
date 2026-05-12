@@ -38,6 +38,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -100,6 +101,11 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				_commerceOrder.getShippingAddressId(),
 				_commerceOrder.getCommerceShippingMethodId(),
 				_commerceOrder.getShippingOptionName(), _serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		CommerceTestUtil.deleteCommerceShipment(_commerceShipment);
 	}
 
 	@Ignore

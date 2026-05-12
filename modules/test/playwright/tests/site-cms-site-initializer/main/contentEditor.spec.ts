@@ -1091,7 +1091,10 @@ test(
 
 		await contentsPage.saveContentAsDraft();
 
-		// Check that the content is saved as draft
+		// Go back to the Content list and check that the content is saved as
+		// draft
+
+		await contentsPage.goto();
 
 		await expect(
 			page

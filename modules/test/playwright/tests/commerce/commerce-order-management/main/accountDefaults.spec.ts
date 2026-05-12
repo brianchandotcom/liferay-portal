@@ -1346,8 +1346,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -1447,8 +1445,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
 
 		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
@@ -1571,8 +1567,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -1689,8 +1683,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -1805,8 +1797,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -1930,8 +1920,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -2036,8 +2024,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
 
 		const term1 = await apiHelpers.headlessCommerceAdminOrder.postTerm({
@@ -2160,8 +2146,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -2278,8 +2262,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -2397,8 +2379,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -2523,8 +2503,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -2702,8 +2680,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -3143,8 +3119,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(120000);
-
 		const {account, buyerUser} = await createAccountWithBuyerUser(
 			apiHelpers,
 			site.id
@@ -3303,8 +3277,6 @@ test(
 		editAccountPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		const minium2 = await miniumSetUp(
 			apiHelpers,
 			'Minium-' + getRandomInt()

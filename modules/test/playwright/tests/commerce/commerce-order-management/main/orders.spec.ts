@@ -113,8 +113,6 @@ test(
 	'Buyer without VIEW_BILLING_ADDRESS permission sees an error at checkout when no default billing address is set',
 	{tag: ['@LPD-89343']},
 	async ({apiHelpers, checkoutPage, commerceMiniCartPage, page}) => {
-		test.setTimeout(120000);
-
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: 'Commerce Account ' + getRandomString(),
 			type: 'business',
@@ -193,8 +191,6 @@ test(
 		commerceAdminOrdersPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: 'Commerce Account ' + getRandomString(),
 			type: 'business',
@@ -446,8 +442,6 @@ test(
 		commerceAdminOrdersPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: 'Commerce Account ' + getRandomString(),
 			type: 'business',
@@ -511,8 +505,6 @@ test(
 		commerceAdminShipmentsPage,
 		page,
 	}) => {
-		test.setTimeout(300000);
-
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: 'Commerce Account ' + getRandomString(),
 			type: 'business',
@@ -600,8 +592,11 @@ test(
 			.shipmentStatusLink('Finish Processing')
 			.click();
 		await commerceAdminShipmentsPage.shipmentStatusLink('Ship').click();
+
 		await waitForAlert(page);
+
 		await commerceAdminShipmentsPage.shipmentStatusLink('Deliver').click();
+
 		await waitForAlert(page);
 
 		await commerceAdminOrdersPage.goto();
@@ -652,8 +647,6 @@ test(
 		commerceMiniCartPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: 'Commerce Account ' + getRandomString(),
 			type: 'business',
@@ -829,8 +822,6 @@ test(
 	'Orders admin can be filtered by Account, Channel, and Order Status',
 	{tag: ['@COMMERCE-5997', '@LPD-89343']},
 	async ({apiHelpers, commerceAdminOrdersPage}) => {
-		test.setTimeout(180000);
-
 		const account1Name = 'Commerce Account 1 ' + getRandomString();
 		const account2Name = 'Commerce Account 2 ' + getRandomString();
 
@@ -920,8 +911,6 @@ test(
 	'When multiple Minimum Order Amount rules are active, the highest-priority rule is enforced and the buyer cannot checkout',
 	{tag: ['@LPD-89343']},
 	async ({apiHelpers, commerceMiniCartPage, orderDetailsPage, page}) => {
-		test.setTimeout(180000);
-
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: 'Commerce Account ' + getRandomString(),
 			type: 'business',
@@ -1020,8 +1009,6 @@ test(
 		commerceMiniCartPage,
 		page,
 	}) => {
-		test.setTimeout(300000);
-
 		const accountName = 'Account Name ' + getRandomString();
 		const otherAccountName = 'Commerce Account ' + getRandomString();
 
@@ -1196,8 +1183,6 @@ test(
 	'Buyer authenticated on the admin-order endpoint sees only orders they personally created',
 	{tag: ['@COMMERCE-10895', '@LPD-89343']},
 	async ({apiHelpers, page}) => {
-		test.setTimeout(180000);
-
 		const accountAName = 'Commerce Account A ' + getRandomString();
 		const accountBName = 'Commerce Account B ' + getRandomString();
 
@@ -1360,8 +1345,6 @@ test(
 		commerceAdminOrdersPage,
 		page,
 	}) => {
-		test.setTimeout(180000);
-
 		const printedNote = 'Test Print Note Content ' + getRandomString();
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({

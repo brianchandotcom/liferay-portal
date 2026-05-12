@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -19,6 +21,12 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SitemapURLProvider {
 
 	public String getClassName();
+
+	public default Date getLastModified(long companyId, long groupId)
+		throws PortalException {
+
+		return null;
+	}
 
 	public default boolean isInclude(long companyId, long groupId)
 		throws PortalException {

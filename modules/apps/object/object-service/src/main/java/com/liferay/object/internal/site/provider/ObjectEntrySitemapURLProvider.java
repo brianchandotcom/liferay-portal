@@ -10,8 +10,10 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +37,8 @@ import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +58,82 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return ObjectEntry.class.getName();
+	}
+
+	@Override
+	public Date getLastModified(long companyId, long groupId)
+		throws PortalException {
+
+		Date lastModified = null;
+
+		Long[] objectDefinitionIds =
+			_sitemapConfigurationManager.getCompanySitemapObjectDefinitionIds(
+				companyId);
+
+		List<Long> siteDefinitionIds = new ArrayList<>();
+		List<Long> companyDefinitionIds = new ArrayList<>();
+
+		for (long objectDefinitionId : objectDefinitionIds) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectDefinitionId);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_COMPANY)) {
+
+				companyDefinitionIds.add(
+					objectDefinition.getObjectDefinitionId());
+			}
+			else {
+				siteDefinitionIds.add(objectDefinition.getObjectDefinitionId());
+			}
+		}
+
+		if (!siteDefinitionIds.isEmpty()) {
+			lastModified = _getLatestModifiedDate(
+				groupId, siteDefinitionIds.toArray(new Long[0]));
+		}
+
+		if (!companyDefinitionIds.isEmpty()) {
+			Date companyDate = _getLatestModifiedDate(
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				companyDefinitionIds.toArray(new Long[0]));
+
+			if ((companyDate != null) &&
+				((lastModified == null) || companyDate.after(lastModified))) {
+
+				lastModified = companyDate;
+			}
+		}
+
+		return lastModified;
+	}
+
+	@Override
+	public boolean isInclude(long companyId, long groupId)
+		throws PortalException {
+
+		Long[] companySitemapObjectDefinitionIds =
+			_sitemapConfigurationManager.getCompanySitemapObjectDefinitionIds(
+				companyId);
+
+		for (Long companySitemapObjectDefinitionId :
+				companySitemapObjectDefinitionIds) {
+
+			if (_sitemapConfigurationManager.isObjectDefinitionCompanyIncluded(
+					companyId,
+					String.valueOf(companySitemapObjectDefinitionId))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -187,6 +267,39 @@ public class ObjectEntrySitemapURLProvider implements SitemapURLProvider {
 		}
 
 		return String.valueOf(objectEntry.getObjectEntryId());
+	}
+
+	private Date _getLatestModifiedDate(
+		long groupId, Long[] objectDefinitionIds) {
+
+		List<Date> modifiedDates = _objectEntryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				ObjectEntryTable.INSTANCE.modifiedDate
+			).from(
+				ObjectEntryTable.INSTANCE
+			).where(
+				ObjectEntryTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					ObjectEntryTable.INSTANCE.objectDefinitionId.in(
+						objectDefinitionIds)
+				).and(
+					ObjectEntryTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				).and(
+					ObjectEntryTable.INSTANCE.modifiedDate.isNotNull()
+				)
+			).orderBy(
+				ObjectEntryTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (modifiedDates.isEmpty()) {
+			return null;
+		}
+
+		return modifiedDates.get(0);
 	}
 
 	private ObjectDefinition _getObjectDefinitionFromLayoutPageTemplateEntry(

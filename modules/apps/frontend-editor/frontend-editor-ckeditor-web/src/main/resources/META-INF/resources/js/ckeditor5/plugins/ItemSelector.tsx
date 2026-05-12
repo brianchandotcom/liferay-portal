@@ -11,6 +11,37 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import getIcon from '../utils/getIcon';
 import {LiferayEditorConfig} from '../utils/types';
 
+const ITEM_SELECTOR_FOLDER_ID_PARAM =
+	'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
+
+let lastFolderId: number | string | null = null;
+
+function rememberFolder(folderId: number | string | undefined) {
+	if (folderId !== null && folderId !== undefined && folderId !== '') {
+		lastFolderId = folderId;
+	}
+}
+
+function withFolderId(url: string, folderId: number | string | null) {
+	if (folderId === null || folderId === '') {
+		return url;
+	}
+
+	try {
+		const parsed = new URL(url);
+
+		parsed.searchParams.set(
+			ITEM_SELECTOR_FOLDER_ID_PARAM,
+			String(folderId)
+		);
+
+		return parsed.toString();
+	}
+	catch (error) {
+		return url;
+	}
+}
+
 class ItemSelector extends Plugin {
 	init() {
 		const editor = this.editor;
@@ -41,7 +72,15 @@ class ItemSelector extends Plugin {
 
 				buttonView.on('execute', () => {
 					openSelectionModal({
-						onSelect: ({value}: {value: string}) => {
+						onSelect: ({
+							folderId,
+							value,
+						}: {
+							folderId?: number | string;
+							value: string;
+						}) => {
+							rememberFolder(folderId);
+
 							let url;
 
 							try {
@@ -66,7 +105,10 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: filebrowserImageBrowseUrl,
+						url: withFolderId(
+							filebrowserImageBrowseUrl,
+							lastFolderId
+						),
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
 				});
@@ -93,7 +135,15 @@ class ItemSelector extends Plugin {
 
 				buttonView.on('execute', () => {
 					openSelectionModal({
-						onSelect: ({value}: {value: any}) => {
+						onSelect: ({
+							folderId,
+							value,
+						}: {
+							folderId?: number | string;
+							value: any;
+						}) => {
+							rememberFolder(folderId);
+
 							let url: string;
 
 							try {
@@ -118,7 +168,10 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: filebrowserVideoBrowseUrl,
+						url: withFolderId(
+							filebrowserVideoBrowseUrl,
+							lastFolderId
+						),
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
 				});

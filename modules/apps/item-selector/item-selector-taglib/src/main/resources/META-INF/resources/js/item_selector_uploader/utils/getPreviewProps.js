@@ -32,6 +32,7 @@ function getUploadFileMetadata(file) {
 function getPreviewProps({
 	closeCaption,
 	file,
+	folderId,
 	itemData,
 	itemSelectedEventName,
 	uploadItemReturnType,
@@ -58,6 +59,7 @@ function getPreviewProps({
 		handleSelectedItem: ({returntype, value}) => {
 			getOpener().Liferay.fire(itemSelectedEventName, {
 				data: {
+					folderId,
 					returnType: returntype,
 					value,
 				},

@@ -5,7 +5,9 @@
 
 package com.liferay.portal.kernel.upgrade.recorder;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.util.CallableStatementWrapper;
@@ -289,8 +291,16 @@ public class UpgradeSQLRecorder {
 
 	}
 
+	protected static SafeCloseable suppressRecording() {
+		return _skipRecording.setWithSafeCloseable(Boolean.TRUE);
+	}
+
 	private static <T> T _execute(SQLCallable<T> sqlCallable, Object object)
 		throws SQLException {
+
+		if (_skipRecording.get()) {
+			return sqlCallable.call();
+		}
 
 		long startTime = System.currentTimeMillis();
 
@@ -498,6 +508,10 @@ public class UpgradeSQLRecorder {
 		new CopyOnWriteArrayList<>();
 	private static final Set<RunningSQL> _runningSQLs =
 		new CopyOnWriteArraySet<>();
+	private static final CentralizedThreadLocal<Boolean> _skipRecording =
+		new CentralizedThreadLocal<>(
+			UpgradeSQLRecorder.class.getName() + "._skipRecording",
+			() -> Boolean.FALSE);
 	private static volatile String _upgradeProcessClassName = StringPool.BLANK;
 
 	@FunctionalInterface

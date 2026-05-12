@@ -27,7 +27,7 @@ test(
 	'A Space Content Reviewer cannot access the Vocabularies admin page',
 	{tag: '@LPD-89497'},
 	async ({apiHelpers, page, spaceSummaryPage}) => {
-		const spaceName = `Space ${getRandomString()}`;
+		const spaceName = getRandomString();
 
 		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 			name: spaceName,

@@ -512,7 +512,7 @@ test(
 			.getSiteByFriendlyUrlPath('cms')
 			.then((response) => response.id);
 
-		const spaceName = `Space ${getRandomString()}`;
+		const spaceName = getRandomString();
 
 		const {id: spaceId} =
 			await apiHelpers.headlessAssetLibrary.createAssetLibrary({

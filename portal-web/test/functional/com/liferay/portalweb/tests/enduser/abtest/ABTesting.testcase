@@ -287,7 +287,7 @@ definition {
 
 	@description = "LPS-97882: Validate if, when the user tries to edit an existing A/B Test, after edit the mandatory information, A/B Test sidebar appears with the A/B Testing configuration"
 	@priority = 3
-	test ChangesAppliedAfterEdit {
+	test EditChangesPersistence {
 		task ("Create AB test") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",

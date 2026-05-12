@@ -7470,6 +7470,9 @@ public class DefaultObjectEntryManagerImplTest
 		_assertVersionedObjectEntriesCopyAction(
 			dtoConverterContext, _objectDefinition6, objectEntry,
 			String.valueOf(_depotEntry.getGroupId()), false);
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@FeatureFlag("LPD-17564")

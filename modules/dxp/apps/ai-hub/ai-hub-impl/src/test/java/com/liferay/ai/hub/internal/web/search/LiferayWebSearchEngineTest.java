@@ -6,9 +6,8 @@
 package com.liferay.ai.hub.internal.web.search;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import dev.langchain4j.web.search.WebSearchRequest;
@@ -40,20 +39,8 @@ public class LiferayWebSearchEngineTest {
 	private void _testSearch(String homePageURL) {
 		try (MockedStatic<OAuth2ApplicationLocalServiceUtil>
 				oAuth2ApplicationLocalServiceUtilMockedStatic =
-					Mockito.mockStatic(OAuth2ApplicationLocalServiceUtil.class);
-			MockedStatic<OAuth2AuthorizationLocalServiceUtil>
-				oAuth2AuthorizationLocalServiceUtilMockedStatic =
 					Mockito.mockStatic(
-						OAuth2AuthorizationLocalServiceUtil.class)) {
-
-			oAuth2AuthorizationLocalServiceUtilMockedStatic.when(
-				() ->
-					OAuth2AuthorizationLocalServiceUtil.
-						getOAuth2AuthorizationByAccessTokenContent(
-							Mockito.any())
-			).thenReturn(
-				Mockito.mock(OAuth2Authorization.class)
-			);
+						OAuth2ApplicationLocalServiceUtil.class)) {
 
 			OAuth2Application oAuth2Application = Mockito.mock(
 				OAuth2Application.class);
@@ -72,7 +59,9 @@ public class LiferayWebSearchEngineTest {
 			);
 
 			LiferayWebSearchEngine liferayWebSearchEngine =
-				new LiferayWebSearchEngine("Bearer token", null, 0, null);
+				new LiferayWebSearchEngine(
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+					RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
 			SecurityException securityException = Assert.assertThrows(
 				SecurityException.class,

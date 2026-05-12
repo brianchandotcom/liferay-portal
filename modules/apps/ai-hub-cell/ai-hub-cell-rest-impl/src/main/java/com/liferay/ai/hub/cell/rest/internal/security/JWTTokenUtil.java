@@ -34,39 +34,24 @@ public class JWTTokenUtil {
 			Company company = CompanyLocalServiceUtil.getCompany(
 				CompanyThreadLocal.getCompanyId());
 
-			return _generateToken(
-				TimeUnit.MINUTES.toMillis(10), company.getVirtualHostname(),
-				PrincipalThreadLocal.getUserId());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to generate a signed token", exception);
-			}
+			Date now = new Date();
 
-			return null;
-		}
-	}
+			SignedJWT signedJWT = new SignedJWT(
+				new JWSHeader(JWSAlgorithm.HS256),
+				new JWTClaimsSet.Builder(
+				).expirationTime(
+					new Date(now.getTime() + TimeUnit.MINUTES.toMillis(10))
+				).issuer(
+					company.getVirtualHostname()
+				).issueTime(
+					now
+				).subject(
+					String.valueOf(PrincipalThreadLocal.getUserId())
+				).build());
 
-	private static String _generateToken(
-		long expirationTime, String issuer, long userId) {
-
-		Date now = new Date();
-
-		SignedJWT signedJWT = new SignedJWT(
-			new JWSHeader(JWSAlgorithm.HS256),
-			new JWTClaimsSet.Builder(
-			).expirationTime(
-				new Date(now.getTime() + expirationTime)
-			).issuer(
-				issuer
-			).issueTime(
-				now
-			).subject(
-				String.valueOf(userId)
-			).build());
-
-		try {
 			signedJWT.sign(new MACSigner(_getSecret()));
+
+			return signedJWT.serialize();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -75,8 +60,6 @@ public class JWTTokenUtil {
 
 			return null;
 		}
-
-		return signedJWT.serialize();
 	}
 
 	private static byte[] _getSecret() throws Exception {

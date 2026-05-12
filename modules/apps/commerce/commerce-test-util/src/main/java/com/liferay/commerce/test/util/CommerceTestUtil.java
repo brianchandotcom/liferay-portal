@@ -623,6 +623,23 @@ public class CommerceTestUtil {
 		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 	}
 
+	public static void deleteCommerceShipment(CommerceShipment commerceShipment)
+		throws PortalException {
+
+		if (commerceShipment == null) {
+			return;
+		}
+
+		CommerceShipment fetchedCommerceShipment =
+			CommerceShipmentLocalServiceUtil.fetchCommerceShipment(
+				commerceShipment.getCommerceShipmentId());
+
+		if (fetchedCommerceShipment != null) {
+			CommerceShipmentLocalServiceUtil.deleteCommerceShipment(
+				fetchedCommerceShipment, false);
+		}
+	}
+
 	public static void deleteCommerceShipmentsByGroupId(long groupId)
 		throws PortalException {
 
@@ -632,8 +649,7 @@ public class CommerceTestUtil {
 				null);
 
 		for (CommerceShipment commerceShipment : commerceShipments) {
-			CommerceShipmentLocalServiceUtil.deleteCommerceShipment(
-				commerceShipment, false);
+			deleteCommerceShipment(commerceShipment);
 		}
 	}
 
@@ -645,8 +661,7 @@ public class CommerceTestUtil {
 				commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CommerceShipment commerceShipment : commerceShipments) {
-			CommerceShipmentLocalServiceUtil.deleteCommerceShipment(
-				commerceShipment, false);
+			deleteCommerceShipment(commerceShipment);
 		}
 	}
 

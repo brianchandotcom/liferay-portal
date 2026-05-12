@@ -50,6 +50,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -101,6 +102,11 @@ public class CommerceShipmentItemTest {
 			_commerceChannel, _user, _group, _commerceOrder);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		CommerceTestUtil.deleteCommerceShipment(_commerceShipment);
+	}
+
 	@Test
 	public void testAddCommerceShipmentItem() throws Exception {
 		frutillaRule.scenario(
@@ -143,8 +149,6 @@ public class CommerceShipmentItemTest {
 			commerceShipmentItems.get(0);
 
 		Assert.assertEquals(commerceShipmentItem, actualCommerceShipmentItem);
-
-		_resetCommerceShipment();
 	}
 
 	@Test(expected = CommerceShipmentStatusException.class)
@@ -183,8 +187,6 @@ public class CommerceShipmentItemTest {
 		Assert.assertEquals(
 			_commerceShipment.getStatus(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
-
-		_resetCommerceShipment();
 	}
 
 	@Test
@@ -234,8 +236,6 @@ public class CommerceShipmentItemTest {
 
 		Assert.assertFalse(
 			BigDecimalUtil.eq(BigDecimal.ONE, actualCPInstanceStockQuantity));
-
-		_resetCommerceShipment();
 	}
 
 	@Test
@@ -286,8 +286,6 @@ public class CommerceShipmentItemTest {
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(BigDecimal.ONE, actualCPInstanceStockQuantity));
-
-		_resetCommerceShipment();
 	}
 
 	@Test
@@ -332,8 +330,6 @@ public class CommerceShipmentItemTest {
 		Assert.assertNull(
 			_commerceShipmentItemLocalService.fetchCommerceShipmentItem(
 				commerceShipmentItem.getCommerceShipmentItemId()));
-
-		_resetCommerceShipment();
 	}
 
 	@Test(
@@ -379,8 +375,6 @@ public class CommerceShipmentItemTest {
 
 		_commerceShipmentItemLocalService.deleteCommerceShipmentItem(
 			newCommerceShipmentItem.getCommerceShipmentItemId());
-
-		_resetCommerceShipment();
 	}
 
 	@Test(expected = CommerceShipmentStatusException.class)
@@ -427,19 +421,10 @@ public class CommerceShipmentItemTest {
 		Assert.assertEquals(
 			commerceShipmentItem.getQuantity(),
 			newCommerceShipmentItem.getQuantity());
-
-		_resetCommerceShipment();
 	}
 
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
-
-	private void _resetCommerceShipment() throws Exception {
-		_commerceShipmentLocalService.deleteCommerceShipment(
-			_commerceShipment, true);
-
-		_commerceShipmentLocalService.addCommerceShipment(_commerceShipment);
-	}
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

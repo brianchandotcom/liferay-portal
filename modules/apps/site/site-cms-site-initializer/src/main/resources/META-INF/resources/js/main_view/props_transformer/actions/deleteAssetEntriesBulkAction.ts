@@ -42,13 +42,12 @@ export function executeBulkDeleteAction(
  */
 function getBulkDeleteMessage(
 	selectedData: any,
-	allEntriesHaveTrashEnabled: boolean,
 	someEntriesHaveTrashEnabled: boolean
 ): {
 	confirmationMessage: string;
 	title: string;
 } {
-	if (someEntriesHaveTrashEnabled && !allEntriesHaveTrashEnabled) {
+	if (someEntriesHaveTrashEnabled) {
 		return {
 			confirmationMessage: Liferay.Language.get(
 				'bulk-delete-cms-entries-confirmation'
@@ -56,7 +55,8 @@ function getBulkDeleteMessage(
 			title: Liferay.Language.get('delete-entries'),
 		};
 	}
-	else if (selectedData.selectAll) {
+
+	if (selectedData.selectAll) {
 		return {
 			confirmationMessage: Liferay.Language.get(
 				'delete-all-entries-confirmation'
@@ -64,7 +64,8 @@ function getBulkDeleteMessage(
 			title: Liferay.Language.get('delete-all-entries'),
 		};
 	}
-	else if (selectedData.items.length > 1) {
+
+	if (selectedData.items.length > 1) {
 		return {
 			confirmationMessage: sub(
 				Liferay.Language.get('delete-entries-confirmation'),
@@ -115,28 +116,34 @@ async function handleBulkDeletion({
 	showConfirmationModal?: boolean;
 	trashEnabled?: boolean;
 }): Promise<void> {
-	const spaces = await getEntriesSpaces(selectedData?.items || []);
+	let allEntriesHaveTrashEnabled: boolean;
+	let someEntriesHaveTrashEnabled: boolean;
 
-	// Trash status checks
+	if (trashEnabled === null || trashEnabled === undefined) {
+		const spaces = await getEntriesSpaces(selectedData?.items || []);
 
-	const allEntriesHaveTrashEnabled = spaces.every(
-		(space) => space.settings.trashEnabled
-	);
-	const someEntriesHaveTrashEnabled = spaces.some(
-		(space) => space.settings.trashEnabled
-	);
+		allEntriesHaveTrashEnabled =
+			!!spaces.length &&
+			spaces.every((space) => space.settings.trashEnabled);
+
+		someEntriesHaveTrashEnabled =
+			!spaces.length ||
+			spaces.some((space) => space.settings.trashEnabled);
+	}
+	else {
+		allEntriesHaveTrashEnabled = trashEnabled;
+		someEntriesHaveTrashEnabled = trashEnabled;
+	}
 
 	const bulkDeleteMessage =
 		getCustomBulkDeleteMessage ?? getBulkDeleteMessage;
 
 	const {confirmationMessage, title} = bulkDeleteMessage(
 		selectedData,
-		allEntriesHaveTrashEnabled,
 		someEntriesHaveTrashEnabled
 	);
 	if (
 		showConfirmationModal ||
-		selectedData.selectAll ||
 		!allEntriesHaveTrashEnabled ||
 		isFromRecycleBin(selectedData)
 	) {

@@ -239,14 +239,8 @@ public class LanguageTag extends IncludeTag {
 		formAction = HttpComponentsUtil.setParameter(
 			formAction, "layoutId", layout.getLayoutId());
 
-		String doAsUserId = themeDisplay.getDoAsUserId();
-
-		if (Validator.isNotNull(doAsUserId)) {
-			formAction = HttpComponentsUtil.setParameter(
-				formAction, "doAsUserId", doAsUserId);
-		}
-
-		return formAction;
+		return PortalUtil.addPreservedParameters(
+			themeDisplay, layout, formAction, true);
 	}
 
 	private List<LanguageEntry> _getLanguageEntries(

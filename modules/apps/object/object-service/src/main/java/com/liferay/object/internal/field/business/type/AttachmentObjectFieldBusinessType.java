@@ -36,7 +36,6 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -601,7 +600,7 @@ public class AttachmentObjectFieldBusinessType
 					}
 				).put(
 					"resolution",
-					_getResolution(tiffImageLength, tiffImageWidth)
+					_getResolution(tiffImageLength, tiffImageWidth, locale)
 				).build();
 			});
 	}
@@ -637,12 +636,32 @@ public class AttachmentObjectFieldBusinessType
 			});
 	}
 
-	private String _getResolution(long imageLength, long imageWidth) {
-		if ((imageLength <= 0) && (imageWidth <= 0)) {
+	private String _getResolution(
+		long imageLength, long imageWidth, Locale locale) {
+
+		if ((imageLength <= 0) || (imageWidth <= 0)) {
 			return null;
 		}
 
-		return StringBundler.concat(imageWidth, "x", imageLength);
+		long max = Math.max(imageLength, imageWidth);
+		long min = Math.min(imageLength, imageWidth);
+
+		if ((min <= _RESOLUTION_SMALL_MIN) && (max <= _RESOLUTION_SMALL_MAX)) {
+			return _language.format(
+				locale, "resolution-small-up-to-x-x",
+				new Object[] {_RESOLUTION_SMALL_MAX, _RESOLUTION_SMALL_MIN});
+		}
+
+		if ((min <= _RESOLUTION_MEDIUM_MIN) &&
+			(max <= _RESOLUTION_MEDIUM_MAX)) {
+
+			return _language.format(
+				locale, "resolution-medium-up-to-x-x",
+				new Object[] {_RESOLUTION_MEDIUM_MAX, _RESOLUTION_MEDIUM_MIN});
+		}
+
+		return _language.format(
+			locale, "resolution-large-bigger-than-x", _RESOLUTION_MEDIUM_MAX);
 	}
 
 	private Scope _getScope(
@@ -686,6 +705,14 @@ public class AttachmentObjectFieldBusinessType
 				return thumbnailURL;
 			});
 	}
+
+	private static final long _RESOLUTION_MEDIUM_MAX = 1024;
+
+	private static final long _RESOLUTION_MEDIUM_MIN = 768;
+
+	private static final long _RESOLUTION_SMALL_MAX = 400;
+
+	private static final long _RESOLUTION_SMALL_MIN = 300;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AttachmentObjectFieldBusinessType.class);

@@ -11,13 +11,14 @@ import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {
 	addBreakdownByAttribute,
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
-import {createSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -32,10 +33,15 @@ let channel;
 let project;
 
 test.beforeEach(async ({apiHelpers, page, site}) => {
-	await createSitePage({
-		apiHelpers,
-		pageTitle: 'My Page',
-		siteName: site.name,
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
+		]),
+		siteId: site.id,
+		title: 'My Page',
 	});
 
 	const result = await syncAnalyticsCloud({

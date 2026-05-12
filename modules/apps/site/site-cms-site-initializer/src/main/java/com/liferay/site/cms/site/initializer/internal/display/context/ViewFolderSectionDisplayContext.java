@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
+import com.liferay.trash.TrashHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -55,7 +56,8 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			objectEntryFolderModelResourcePermission,
 		Portal portal,
 		TranslationInfoItemFieldValuesExporterRegistry
-			translationInfoItemFieldValuesExporterRegistry) {
+			translationInfoItemFieldValuesExporterRegistry,
+		TrashHelper trashHelper) {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
@@ -65,6 +67,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			translationInfoItemFieldValuesExporterRegistry);
 
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
+		_trashHelper = trashHelper;
 	}
 
 	@Override
@@ -92,6 +95,22 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		).put(
 			"rootObjectEntryFolderExternalReferenceCode",
 			getRootObjectEntryFolderExternalReferenceCode()
+		).put(
+			"trashEnabled",
+			() -> {
+				if (objectEntryFolder == null) {
+					return null;
+				}
+
+				Group group = groupLocalService.fetchGroup(
+					objectEntryFolder.getGroupId());
+
+				if ((group != null) && _trashHelper.isTrashEnabled(group)) {
+					return true;
+				}
+
+				return false;
+			}
 		).build();
 	}
 
@@ -328,5 +347,6 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private String _objectFolderExternalReferenceCode;
 	private String _rootObjectEntryFolderExternalReferenceCode;
+	private final TrashHelper _trashHelper;
 
 }

@@ -76,7 +76,7 @@ Common merge-worthy signals — classic patterns from Liferay test names:
 
 ### Shrunk Test Files
 
-After `ExitPlanMode` returns the user's approval, apply each operation in the order it appears in the plan and commit after each one with the `/commit` skill — one commit per operation, never squashed. The per-merge granularity is exactly what makes the diff reviewable.
+After `ExitPlanMode` returns the user's approval, apply each operation in the order it appears in the plan and commit after each one — one commit per operation, never squashed. The per-merge granularity is exactly what makes the diff reviewable.
 
 - **Rename** — change the keeper's `test <OldName>` to `test <FinalName>` with no other edits. Commit message: `<TICKET> Rename test <Keeper> to <FinalName>`.
 - **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source. When the same condition is asserted at different strengths (e.g., `AssertTextEquals.assertPartialText("web/<site-path>")` vs the weaker `AssertVisible value1="http://"`), keep the stronger one. Commit message: `<TICKET> Merge test <Source> into <FinalName>`.

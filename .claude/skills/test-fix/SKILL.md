@@ -82,7 +82,7 @@ Label the ticket with the `claude-test-fix` label so every ticket created by thi
 
 Only when the test was fixed (verdict `Bug in portal` or `Outdated test`): the URL of the pull request opened for the fix.
 
-Use the logic in the `start-work` skill to create the branch from the ticket key, then invoke the `commit` skill. Find the owner of the changed files using `<repo-root>/.github/CODEOWNERS` and invoke the `pr` skill with it as the target repository. Override the user's title-only default and pass the body content explicitly so the pull request explains the regression.
+Use the logic in the `start-work` skill to create the branch from the ticket key, then commit the fix. Find the owner of the changed files using `<repo-root>/.github/CODEOWNERS` and invoke the `pr` skill with it as the target repository. Override the user's title-only default and pass the body content explicitly so the pull request explains the regression.
 
 Use this template:
 

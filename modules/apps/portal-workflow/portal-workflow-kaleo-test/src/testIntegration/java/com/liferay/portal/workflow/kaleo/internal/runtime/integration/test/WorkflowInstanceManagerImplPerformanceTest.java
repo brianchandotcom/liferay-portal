@@ -1,0 +1,286 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.performance.PerformanceTimer;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
+
+import java.io.Closeable;
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import org.junit.Assume;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Alberto Sousa
+ * @author Feliphe Marinho
+ */
+@RunWith(Arquillian.class)
+public class WorkflowInstanceManagerImplPerformanceTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
+
+	public static void assume() {
+		Assume.assumeTrue(Validator.isNull(System.getenv("JENKINS_HOME")));
+	}
+
+	@Test
+	public void testMultipleThreadsStartWorkflowInstance() throws Exception {
+		Properties properties = PropertiesUtil.load(
+			WorkflowInstanceManagerImplPerformanceTest.class.
+				getResourceAsStream(
+					"dependencies/workflow-instance-performance.properties"),
+			"UTF-8");
+
+		WorkflowDefinition workflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				_createWorkflowDefinitionBytes(
+					GetterUtil.getInteger(
+						properties.getProperty("workflow.node.count"))),
+				TestPropsValues.getCompanyId(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
+
+		int workflowInstanceThreadCount = GetterUtil.getInteger(
+			properties.getProperty("workflow.instance.thread.count"));
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			workflowInstanceThreadCount);
+
+		int workflowInstanceCount = GetterUtil.getInteger(
+			properties.getProperty("workflow.instance.count"));
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			List<Future<Void>> futures = new ArrayList<>(workflowInstanceCount);
+
+			try (Closeable closeable = new PerformanceTimer(
+					GetterUtil.getInteger(
+						properties.getProperty(
+							"workflow.instance.start.max.time")),
+					StringBundler.concat(
+						"Start ", workflowInstanceCount,
+						" workflow instances in parallel across ",
+						workflowInstanceThreadCount, " threads"))) {
+
+				for (int i = 0; i < workflowInstanceCount; i++) {
+					futures.add(
+						executorService.submit(
+							new CompanyInheritableThreadLocalCallable<>(
+								() -> {
+									_workflowInstanceManager.
+										startWorkflowInstance(
+											TestPropsValues.getCompanyId(), 0,
+											TestPropsValues.getUserId(),
+											workflowDefinition.getName(),
+											workflowDefinition.getVersion(),
+											null,
+											HashMapBuilder.
+												<String, Serializable>put(
+													WorkflowConstants.
+														CONTEXT_SERVICE_CONTEXT,
+													new ServiceContext()
+												).build(),
+											true);
+
+									return null;
+								})));
+				}
+
+				for (Future<Void> future : futures) {
+					future.get();
+				}
+			}
+		}
+		finally {
+			executorService.shutdown();
+
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+	}
+
+	private void _changeStartWorkflowNodeTarget(
+		JSONArray workflowDefinitionChildNodesJSONArray) {
+
+		JSONObject startWorkflowNodeJSONObject =
+			workflowDefinitionChildNodesJSONArray.getJSONObject(2);
+
+		JSONArray startWorkflowNodeChildNodesJSONArray =
+			startWorkflowNodeJSONObject.getJSONArray("#child-nodes");
+
+		for (int i = 0; i < startWorkflowNodeChildNodesJSONArray.length();
+			 i++) {
+
+			JSONObject startWorkflowNodeChildNodeJSONObject =
+				startWorkflowNodeChildNodesJSONArray.getJSONObject(i);
+
+			if (!Objects.equals(
+					startWorkflowNodeChildNodeJSONObject.getString("#tag-name"),
+					"transitions")) {
+
+				continue;
+			}
+
+			JSONArray transitionsChildNodesJSONArray =
+				startWorkflowNodeChildNodeJSONObject.getJSONArray(
+					"#child-nodes");
+
+			JSONObject transitionJSONObject =
+				transitionsChildNodesJSONArray.getJSONObject(0);
+
+			JSONArray transitionChildNodesJSONArray =
+				transitionJSONObject.getJSONArray("#child-nodes");
+
+			for (int j = 0; j < transitionChildNodesJSONArray.length(); j++) {
+				JSONObject transitionChildNodeJSONObject =
+					transitionChildNodesJSONArray.getJSONObject(j);
+
+				if (Objects.equals(
+						transitionChildNodeJSONObject.getString("#tag-name"),
+						"target")) {
+
+					transitionChildNodeJSONObject.put(
+						"#value", "workflowNode1");
+
+					return;
+				}
+			}
+		}
+	}
+
+	private byte[] _createWorkflowDefinitionBytes(int workflowNodeCount)
+		throws Exception {
+
+		ClassLoader classLoader =
+			WorkflowInstanceManagerImplPerformanceTest.class.getClassLoader();
+
+		byte[] bytes = FileUtil.getBytes(
+			classLoader.getResourceAsStream(
+				"com/liferay/portal/workflow/kaleo/dependencies" +
+					"/minimal-workflow-definition.json"));
+
+		if (workflowNodeCount <= 0) {
+			return bytes;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			new String(bytes));
+
+		JSONArray jsonArray = jsonObject.getJSONArray("#child-nodes");
+
+		_changeStartWorkflowNodeTarget(jsonArray);
+
+		for (int i = 1; i <= workflowNodeCount; i++) {
+			String targetWorkflowNodeName = "workflowNode" + (i + 1);
+
+			if (i == workflowNodeCount) {
+				targetWorkflowNodeName = "end";
+			}
+
+			jsonArray.put(
+				_createWorkflowNodeJSONObject(
+					"workflowNode" + i, targetWorkflowNodeName));
+		}
+
+		String json = jsonObject.toString();
+
+		return json.getBytes();
+	}
+
+	private JSONObject _createWorkflowNodeJSONObject(
+		String name, String targetNodeName) {
+
+		return JSONUtil.put(
+			"#child-nodes",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"#tag-name", "name"
+				).put(
+					"#value", name
+				),
+				JSONUtil.put(
+					"#child-nodes",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"#child-nodes",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"#tag-name", "name"
+								).put(
+									"#value", "next"
+								),
+								JSONUtil.put(
+									"#tag-name", "target"
+								).put(
+									"#value", targetNodeName
+								),
+								JSONUtil.put(
+									"#tag-name", "default"
+								).put(
+									"#value", "true"
+								))
+						).put(
+							"#tag-name", "transition"
+						))
+				).put(
+					"#tag-name", "transitions"
+				))
+		).put(
+			"#tag-name", "state"
+		);
+	}
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Inject
+	private WorkflowInstanceManager _workflowInstanceManager;
+
+}

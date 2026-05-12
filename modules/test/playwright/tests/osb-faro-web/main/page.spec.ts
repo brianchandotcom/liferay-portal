@@ -1241,23 +1241,23 @@ test.skip(
 				.getByRole('menuitem', {name: 'Test Static Segment'})
 				.click();
 
-			expect(filterLabel).toBeVisible();
+			await expect(filterLabel).toBeVisible();
 		});
 
 		const numberOfViews = page.getByText('1', {exact: true}).first();
 
 		await test.step('Check the number of views with the filter', async () => {
-			expect(numberOfViews).toBeVisible();
+			await expect(numberOfViews).toBeVisible();
 		});
 
 		await test.step('Remove segment from filter', async () => {
 			await page.getByLabel('Close').click();
 
-			expect(filterLabel).not.toBeVisible();
+			await expect(filterLabel).not.toBeVisible();
 		});
 
 		await test.step('Check the number of views without the filter', async () => {
-			expect(numberOfViews).toBeVisible();
+			await expect(numberOfViews).toBeVisible();
 		});
 	}
 );

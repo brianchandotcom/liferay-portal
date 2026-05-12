@@ -37,7 +37,7 @@ export const test = mergeTests(
 const userEmailAddress = getRandomString() + '@liferay.com';
 
 test.beforeEach(async ({page}) => {
-	page.setViewportSize({height: 1080, width: 1920});
+	await page.setViewportSize({height: 1080, width: 1920});
 
 	page.on('dialog', async (dialog) => {
 		await dialog.accept();

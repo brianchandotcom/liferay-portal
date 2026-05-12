@@ -464,7 +464,7 @@ test(
 		});
 
 		await test.step('Check that the analysis result appears', async () => {
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -479,7 +479,7 @@ test(
 				.getByLabel('Close')
 				.click();
 
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -605,7 +605,7 @@ test(
 		});
 
 		await test.step('Check that the analysis result appears', async () => {
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -621,7 +621,7 @@ test(
 				.getByLabel('Close')
 				.click();
 
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -747,7 +747,7 @@ test(
 		});
 
 		await test.step('Check that the analysis result appears', async () => {
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -760,7 +760,7 @@ test(
 				.getByLabel('Close')
 				.click();
 
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -886,7 +886,7 @@ test(
 		});
 
 		await test.step('Check that the analysis result appears', async () => {
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -901,7 +901,7 @@ test(
 				.getByLabel('Close')
 				.click();
 
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -1027,7 +1027,7 @@ test(
 		});
 
 		await test.step('Check that the analysis result appears', async () => {
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -1042,7 +1042,7 @@ test(
 				.getByLabel('Close')
 				.click();
 
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -1086,7 +1086,7 @@ test(
 		});
 
 		await test.step('Check that the analysis result appears', async () => {
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')
@@ -1102,7 +1102,7 @@ test(
 				.getByLabel('Close')
 				.click();
 
-			expect(
+			await expect(
 				page
 					.getByRole('row', {name: 'customEvent'})
 					.locator('div')

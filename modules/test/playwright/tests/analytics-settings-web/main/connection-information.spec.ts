@@ -160,9 +160,7 @@ test(
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(
-			page.getByText('Synced SitesConfigured').isVisible()
-		).toBeTruthy();
+		await expect(page.getByText('Synced SitesConfigured')).toBeVisible();
 
 		await goToSettingsStep({
 			page,
@@ -178,9 +176,7 @@ test(
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(
-			page.getByText('Synced SitesConfigured').isVisible()
-		).toBeTruthy();
+		await expect(page.getByText('Synced SitesConfigured')).toBeVisible();
 
 		await goToSettingsStep({
 			page,
@@ -196,8 +192,6 @@ test(
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(
-			page.getByText('Synced SitesUnconfigured').isVisible()
-		).toBeTruthy();
+		await expect(page.getByText('Synced SitesUnconfigured')).toBeVisible();
 	}
 );

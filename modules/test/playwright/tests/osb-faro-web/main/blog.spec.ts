@@ -121,10 +121,8 @@ test('View all blogs in the property in assets', async ({apiHelpers, page}) => {
 
 		expect(blogTitles.length).toBe(1);
 
-		expect(
-			await page
-				.locator('.blogs-root .table-title')
-				.getByText('My Blog 2')
+		await expect(
+			page.locator('.blogs-root .table-title').getByText('My Blog 2')
 		).toBeVisible();
 
 		await searchByTerm({page, searchTerm: 'My Blog 1'});
@@ -133,10 +131,8 @@ test('View all blogs in the property in assets', async ({apiHelpers, page}) => {
 
 		expect(blogTitles.length).toBe(1);
 
-		expect(
-			await page
-				.locator('.blogs-root .table-title')
-				.getByText('My Blog 1')
+		await expect(
+			page.locator('.blogs-root .table-title').getByText('My Blog 1')
 		).toBeVisible();
 	});
 });

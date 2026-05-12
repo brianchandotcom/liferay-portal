@@ -166,8 +166,8 @@ test('Documents visitor behavior card shows expected amount of views', async ({
 
 		expect(documentTitles.length).toBe(1);
 
-		expect(
-			await page
+		await expect(
+			page
 				.locator('.documents-and-media-root .table-title')
 				.getByText('My Document 1')
 		).toBeVisible();

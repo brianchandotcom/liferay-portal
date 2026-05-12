@@ -202,7 +202,9 @@ test(
 		await test.step('Go to Distribution tab', async () => {
 			await page.getByRole('link', {name: 'Distribution'}).click();
 
-			expect(page.getByText('Distribution by attribute')).toBeVisible();
+			await expect(
+				page.getByText('Distribution by attribute')
+			).toBeVisible();
 		});
 
 		await test.step('Add a new breakdown', async () => {
@@ -212,7 +214,7 @@ test(
 		});
 
 		await test.step('Check if the correct results appear (email and maximum count)', async () => {
-			expect(
+			await expect(
 				page.getByText(`${individualName}@liferay.com - 100.0%`)
 			).toBeVisible();
 		});

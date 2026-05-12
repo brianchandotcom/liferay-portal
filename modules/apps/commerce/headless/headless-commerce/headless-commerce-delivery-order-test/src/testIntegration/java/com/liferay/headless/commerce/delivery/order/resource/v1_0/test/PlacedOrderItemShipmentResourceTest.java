@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 
@@ -139,6 +140,13 @@ public class PlacedOrderItemShipmentResourceTest
 			_country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			_serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		for (CommerceShipment commerceShipment : _commerceShipments) {
+			CommerceTestUtil.deleteCommerceShipment(commerceShipment);
+		}
 	}
 
 	@Override

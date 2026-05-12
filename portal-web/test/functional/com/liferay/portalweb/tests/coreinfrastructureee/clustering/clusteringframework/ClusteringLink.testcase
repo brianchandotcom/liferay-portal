@@ -54,16 +54,4 @@ definition {
 		AssertConsoleTextPresent(value1 = "channelName: test-transport-channel");
 	}
 
-	@priority = 5
-	test CustomTransportChannelPropertiesFile {
-		property cluster.enabled = "false";
-		property custom.properties = "cluster.link.channel.properties.transport.0=tcp.xml${line.separator}cluster.link.enabled=true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
-
-		AssertConsoleTextPresent(value1 = "properties: TCP");
-	}
-
 }

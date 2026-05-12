@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class DDMStructureVersionPersistenceImpl
 		OrderByComparator<DDMStructureVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStructureVersion.class)) {
-
-			return _collectionPersistenceFinderByStructureId.find(
-				finderCache, new Object[] {structureId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByStructureId.find(
+			finderCache, new Object[] {structureId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -237,13 +231,8 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Override
 	public int countByStructureId(long structureId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStructureVersion.class)) {
-
-			return _collectionPersistenceFinderByStructureId.count(
-				finderCache, new Object[] {structureId});
-		}
+		return _collectionPersistenceFinderByStructureId.count(
+			finderCache, new Object[] {structureId});
 	}
 
 	private FinderPath _finderPathFetchByS_V;
@@ -305,14 +294,8 @@ public class DDMStructureVersionPersistenceImpl
 	public DDMStructureVersion fetchByS_V(
 		long structureId, String version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStructureVersion.class)) {
-
-			return _uniquePersistenceFinderByS_V.fetch(
-				finderCache, new Object[] {structureId, version},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByS_V.fetch(
+			finderCache, new Object[] {structureId, version}, useFinderCache);
 	}
 
 	/**
@@ -428,14 +411,9 @@ public class DDMStructureVersionPersistenceImpl
 		OrderByComparator<DDMStructureVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStructureVersion.class)) {
-
-			return _collectionPersistenceFinderByS_S.find(
-				finderCache, new Object[] {structureId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByS_S.find(
+			finderCache, new Object[] {structureId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -503,13 +481,8 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Override
 	public int countByS_S(long structureId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMStructureVersion.class)) {
-
-			return _collectionPersistenceFinderByS_S.count(
-				finderCache, new Object[] {structureId, status});
-		}
+		return _collectionPersistenceFinderByS_S.count(
+			finderCache, new Object[] {structureId, status});
 	}
 
 	public DDMStructureVersionPersistenceImpl() {
@@ -954,4 +927,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:758952877
+// LIFERAY-SERVICE-BUILDER-HASH:-566506530

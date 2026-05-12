@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -550,21 +548,6 @@ public class FaroNotificationPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_G_GTC_O_T_GROUPID_2 =
-		"faroNotification.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_CREATETIME_2 =
-		"faroNotification.createTime > ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_OWNERID_2 =
-		"faroNotification.ownerId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_TYPE_2 =
-		"faroNotification.type = ? AND faroNotification.read = [$FALSE$]";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_TYPE_3 =
-		"(faroNotification.type IS NULL OR faroNotification.type = '') AND faroNotification.read = [$FALSE$]";
-
 	private FinderPath _finderPathWithPaginationFindByG_GtC_O_T_S;
 	private FinderPath _finderPathWithPaginationCountByG_GtC_O_T_S;
 	private CollectionPersistenceFinder<FaroNotification>
@@ -926,27 +909,6 @@ public class FaroNotificationPersistenceImpl
 				subtype
 			});
 	}
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_GROUPID_2 =
-		"faroNotification.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_CREATETIME_2 =
-		"faroNotification.createTime > ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_OWNERID_2 =
-		"faroNotification.ownerId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_TYPE_2 =
-		"faroNotification.type = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_TYPE_3 =
-		"(faroNotification.type IS NULL OR faroNotification.type = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_2 =
-		"faroNotification.subtype = ?";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_3 =
-		"(faroNotification.subtype IS NULL OR faroNotification.subtype = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_GtC_O_R_T_S;
 	private FinderPath _finderPathWithPaginationCountByG_GtC_O_R_T_S;
@@ -1328,30 +1290,6 @@ public class FaroNotificationPersistenceImpl
 				type, subtype
 			});
 	}
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_GROUPID_2 =
-		"faroNotification.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_CREATETIME_2 =
-		"faroNotification.createTime > ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_2 =
-		"faroNotification.ownerId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_READ_2 =
-		"faroNotification.read = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_2 =
-		"faroNotification.type = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_3 =
-		"(faroNotification.type IS NULL OR faroNotification.type = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_2 =
-		"faroNotification.subtype = ?";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_3 =
-		"(faroNotification.subtype IS NULL OR faroNotification.subtype = '')";
 
 	public FaroNotificationPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1745,9 +1683,6 @@ public class FaroNotificationPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroNotification exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FaroNotificationPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"read", "type"});
 
@@ -1757,4 +1692,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1073780961
+// LIFERAY-SERVICE-BUILDER-HASH:-2085159806

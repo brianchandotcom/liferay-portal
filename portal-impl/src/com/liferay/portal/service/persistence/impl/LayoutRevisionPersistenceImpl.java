@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -2880,13 +2878,10 @@ public class LayoutRevisionPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutRevision exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutRevisionPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:856281345
+// LIFERAY-SERVICE-BUILDER-HASH:1213479984

@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class DDLRecordSetVersionPersistenceImpl
 		OrderByComparator<DDLRecordSetVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordSetVersion.class)) {
-
-			return _collectionPersistenceFinderByRecordSetId.find(
-				finderCache, new Object[] {recordSetId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRecordSetId.find(
+			finderCache, new Object[] {recordSetId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -237,13 +231,8 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Override
 	public int countByRecordSetId(long recordSetId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordSetVersion.class)) {
-
-			return _collectionPersistenceFinderByRecordSetId.count(
-				finderCache, new Object[] {recordSetId});
-		}
+		return _collectionPersistenceFinderByRecordSetId.count(
+			finderCache, new Object[] {recordSetId});
 	}
 
 	private FinderPath _finderPathFetchByRS_V;
@@ -305,14 +294,8 @@ public class DDLRecordSetVersionPersistenceImpl
 	public DDLRecordSetVersion fetchByRS_V(
 		long recordSetId, String version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordSetVersion.class)) {
-
-			return _uniquePersistenceFinderByRS_V.fetch(
-				finderCache, new Object[] {recordSetId, version},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByRS_V.fetch(
+			finderCache, new Object[] {recordSetId, version}, useFinderCache);
 	}
 
 	/**
@@ -428,14 +411,9 @@ public class DDLRecordSetVersionPersistenceImpl
 		OrderByComparator<DDLRecordSetVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordSetVersion.class)) {
-
-			return _collectionPersistenceFinderByRS_S.find(
-				finderCache, new Object[] {recordSetId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRS_S.find(
+			finderCache, new Object[] {recordSetId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -503,13 +481,8 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Override
 	public int countByRS_S(long recordSetId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordSetVersion.class)) {
-
-			return _collectionPersistenceFinderByRS_S.count(
-				finderCache, new Object[] {recordSetId, status});
-		}
+		return _collectionPersistenceFinderByRS_S.count(
+			finderCache, new Object[] {recordSetId, status});
 	}
 
 	public DDLRecordSetVersionPersistenceImpl() {
@@ -952,4 +925,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:839930023
+// LIFERAY-SERVICE-BUILDER-HASH:-160795737

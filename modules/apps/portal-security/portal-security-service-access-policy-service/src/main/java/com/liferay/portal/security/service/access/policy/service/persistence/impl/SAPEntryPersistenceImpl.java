@@ -5,24 +5,20 @@
 
 package com.liferay.portal.security.service.access.policy.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -47,7 +43,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -89,7 +84,7 @@ public class SAPEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
-	private CollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -251,105 +246,8 @@ public class SAPEntryPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<SAPEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByUuid(uuid, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByUuid(
-					uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, SAPEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, SAPEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			return (List<SAPEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid.filterFind(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator);
 	}
 
 	/**
@@ -383,77 +281,14 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByUuid(uuid);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<SAPEntry> sapEntries = findByUuid(uuid);
-
-			sapEntries = InlineSQLHelperUtil.filter(sapEntries);
-
-			return sapEntries.size();
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_SAPENTRY_WHERE);
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid.filterCount(
+			finderCache, new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL =
-		"sapEntry.uuid_ = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL =
-		"(sapEntry.uuid_ IS NULL OR sapEntry.uuid_ = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
-	private CollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -633,109 +468,9 @@ public class SAPEntryPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<SAPEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, SAPEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, SAPEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			queryPos.add(companyId);
-
-			return (List<SAPEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid_C.filterFind(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -772,84 +507,14 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByUuid_C(uuid, companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<SAPEntry> sapEntries = findByUuid_C(uuid, companyId);
-
-			sapEntries = InlineSQLHelperUtil.filter(sapEntries);
-
-			return sapEntries.size();
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_SAPENTRY_WHERE);
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid_C.filterCount(
+			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL =
-		"sapEntry.uuid_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL =
-		"(sapEntry.uuid_ IS NULL OR sapEntry.uuid_ = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"sapEntry.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
-	private CollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -1015,92 +680,9 @@ public class SAPEntryPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<SAPEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId(companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, SAPEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, SAPEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<SAPEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1134,61 +716,14 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByCompanyId(companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<SAPEntry> sapEntries = findByCompanyId(companyId);
-
-			sapEntries = InlineSQLHelperUtil.filter(sapEntries);
-
-			return sapEntries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_SAPENTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			finderCache, new Object[] {companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"sapEntry.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_D;
 	private FinderPath _finderPathWithoutPaginationFindByC_D;
 	private FinderPath _finderPathCountByC_D;
-	private CollectionPersistenceFinder<SAPEntry>
+	private FilterCollectionPersistenceFinder<SAPEntry>
 		_collectionPersistenceFinderByC_D;
 
 	/**
@@ -1374,97 +909,9 @@ public class SAPEntryPersistenceImpl
 		long companyId, boolean defaultSAPEntry, int start, int end,
 		OrderByComparator<SAPEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_D(
-				companyId, defaultSAPEntry, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_D(
-					companyId, defaultSAPEntry, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_WHERE);
-		}
-		else {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_D_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_D_DEFAULTSAPENTRY_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(SAPEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, SAPEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, SAPEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(defaultSAPEntry);
-
-			return (List<SAPEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_D.filterFind(
+			finderCache, new Object[] {companyId, defaultSAPEntry}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1501,63 +948,10 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByC_D(long companyId, boolean defaultSAPEntry) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_D(companyId, defaultSAPEntry);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<SAPEntry> sapEntries = findByC_D(companyId, defaultSAPEntry);
-
-			sapEntries = InlineSQLHelperUtil.filter(sapEntries);
-
-			return sapEntries.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_SAPENTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_D_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_D_DEFAULTSAPENTRY_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), SAPEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(defaultSAPEntry);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_D.filterCount(
+			finderCache, new Object[] {companyId, defaultSAPEntry}, companyId,
+			0);
 	}
-
-	private static final String _FINDER_COLUMN_C_D_COMPANYID_2 =
-		"sapEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_D_DEFAULTSAPENTRY_2 =
-		"sapEntry.defaultSAPEntry = ?";
 
 	private FinderPath _finderPathFetchByC_N;
 	private UniquePersistenceFinder<SAPEntry> _uniquePersistenceFinderByC_N;
@@ -1881,14 +1275,24 @@ public class SAPEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
 			false, null);
 
-		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
-			_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-			SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"sapEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
-				SAPEntry::getUuid));
+		_collectionPersistenceFinderByUuid =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid,
+				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
+				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					SAPEntryImpl.class, SAPEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_SAPENTRY_WHERE,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_SAPENTRY_WHERE,
+					SAPEntryModelImpl.ORDER_BY_SQL,
+					SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"sapEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
+					true, SAPEntry::getUuid));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -1910,12 +1314,21 @@ public class SAPEntryPersistenceImpl
 			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByUuid_C,
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SAPENTRY_WHERE,
 				_SQL_COUNT_SAPENTRY_WHERE, SAPEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					SAPEntryImpl.class, SAPEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_SAPENTRY_WHERE,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_SAPENTRY_WHERE,
+					SAPEntryModelImpl.ORDER_BY_SQL,
+					SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sapEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, SAPEntry::getUuid),
@@ -1942,12 +1355,21 @@ public class SAPEntryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByCompanyId,
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SAPENTRY_WHERE,
 				_SQL_COUNT_SAPENTRY_WHERE, SAPEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					SAPEntryImpl.class, SAPEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_SAPENTRY_WHERE,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_SAPENTRY_WHERE,
+					SAPEntryModelImpl.ORDER_BY_SQL,
+					SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId));
@@ -1971,17 +1393,27 @@ public class SAPEntryPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"companyId", "defaultSAPEntry"}, false);
 
-		_collectionPersistenceFinderByC_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_D,
-			_finderPathWithoutPaginationFindByC_D, _finderPathCountByC_D,
-			_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-			SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				true, SAPEntry::getCompanyId),
-			new FinderColumn<>(
-				"sapEntry.", "defaultSAPEntry", FinderColumn.Type.BOOLEAN, "=",
-				true, true, SAPEntry::isDefaultSAPEntry));
+		_collectionPersistenceFinderByC_D =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_D,
+				_finderPathWithoutPaginationFindByC_D, _finderPathCountByC_D,
+				_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
+				SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					SAPEntryImpl.class, SAPEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_SAPENTRY_WHERE,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_SAPENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_SAPENTRY_WHERE,
+					SAPEntryModelImpl.ORDER_BY_SQL,
+					SAPEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, SAPEntry::getCompanyId),
+				new FinderColumn<>(
+					"sapEntry.", "defaultSAPEntry", FinderColumn.Type.BOOLEAN,
+					"=", true, true, SAPEntry::isDefaultSAPEntry));
 
 		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
@@ -2073,8 +1505,6 @@ public class SAPEntryPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "SAPEntry";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "SAPEntry.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SAPEntry exists with the key {";
 
@@ -2090,4 +1520,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-994384991
+// LIFERAY-SERVICE-BUILDER-HASH:1380777447

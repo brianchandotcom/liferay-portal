@@ -340,9 +340,6 @@ public class BrowserTrackerPersistenceImpl
 		EntityCacheUtil.removeCache(BrowserTrackerImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		BrowserTrackerModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_BROWSERTRACKER =
 		"SELECT browserTracker FROM BrowserTracker browserTracker";
 
@@ -361,4 +358,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1788316143
+// LIFERAY-SERVICE-BUILDER-HASH:-1854613741

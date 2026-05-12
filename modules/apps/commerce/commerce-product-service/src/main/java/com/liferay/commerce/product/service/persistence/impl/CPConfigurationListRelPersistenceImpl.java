@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.impl.CPConfigurationListRelModelImpl;
 import com.liferay.commerce.product.service.persistence.CPConfigurationListRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPConfigurationListRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -167,14 +166,9 @@ public class CPConfigurationListRelPersistenceImpl
 		OrderByComparator<CPConfigurationListRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPConfigurationListRel.class)) {
-
-			return _collectionPersistenceFinderByCPConfigurationListId.find(
-				finderCache, new Object[] {CPConfigurationListId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPConfigurationListId.find(
+			finderCache, new Object[] {CPConfigurationListId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -242,13 +236,8 @@ public class CPConfigurationListRelPersistenceImpl
 	 */
 	@Override
 	public int countByCPConfigurationListId(long CPConfigurationListId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPConfigurationListRel.class)) {
-
-			return _collectionPersistenceFinderByCPConfigurationListId.count(
-				finderCache, new Object[] {CPConfigurationListId});
-		}
+		return _collectionPersistenceFinderByCPConfigurationListId.count(
+			finderCache, new Object[] {CPConfigurationListId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -338,14 +327,9 @@ public class CPConfigurationListRelPersistenceImpl
 		OrderByComparator<CPConfigurationListRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPConfigurationListRel.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {classNameId, CPConfigurationListId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, CPConfigurationListId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -415,13 +399,8 @@ public class CPConfigurationListRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long CPConfigurationListId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPConfigurationListRel.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {classNameId, CPConfigurationListId});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, CPConfigurationListId});
 	}
 
 	private FinderPath _finderPathFetchByC_C_C;
@@ -490,15 +469,10 @@ public class CPConfigurationListRelPersistenceImpl
 		long classNameId, long classPK, long CPConfigurationListId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPConfigurationListRel.class)) {
-
-			return _uniquePersistenceFinderByC_C_C.fetch(
-				finderCache,
-				new Object[] {classNameId, classPK, CPConfigurationListId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_C_C.fetch(
+			finderCache,
+			new Object[] {classNameId, classPK, CPConfigurationListId},
+			useFinderCache);
 	}
 
 	/**
@@ -989,4 +963,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:221491657
+// LIFERAY-SERVICE-BUILDER-HASH:2037218006

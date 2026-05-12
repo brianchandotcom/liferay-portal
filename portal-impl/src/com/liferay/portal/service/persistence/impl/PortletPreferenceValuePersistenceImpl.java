@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -158,15 +157,10 @@ public class PortletPreferenceValuePersistenceImpl
 		OrderByComparator<PortletPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByPortletPreferencesId.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByPortletPreferencesId.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -235,14 +229,9 @@ public class PortletPreferenceValuePersistenceImpl
 	 */
 	@Override
 	public int countByPortletPreferencesId(long portletPreferencesId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByPortletPreferencesId.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId});
-		}
+		return _collectionPersistenceFinderByPortletPreferencesId.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByP_N;
@@ -331,15 +320,10 @@ public class PortletPreferenceValuePersistenceImpl
 		OrderByComparator<PortletPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByP_N.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId, name}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByP_N.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId, name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -410,14 +394,9 @@ public class PortletPreferenceValuePersistenceImpl
 	 */
 	@Override
 	public int countByP_N(long portletPreferencesId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByP_N.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId, name});
-		}
+		return _collectionPersistenceFinderByP_N.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId, name});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_N_SV;
@@ -510,15 +489,10 @@ public class PortletPreferenceValuePersistenceImpl
 		OrderByComparator<PortletPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByC_N_SV.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, smallValue}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_N_SV.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, smallValue}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -593,14 +567,9 @@ public class PortletPreferenceValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_N_SV(long companyId, String name, String smallValue) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByC_N_SV.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, name, smallValue});
-		}
+		return _collectionPersistenceFinderByC_N_SV.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, smallValue});
 	}
 
 	private FinderPath _finderPathFetchByP_I_N;
@@ -669,15 +638,9 @@ public class PortletPreferenceValuePersistenceImpl
 		long portletPreferencesId, int index, String name,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _uniquePersistenceFinderByP_I_N.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId, index, name},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByP_I_N.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId, index, name}, useFinderCache);
 	}
 
 	/**
@@ -807,15 +770,10 @@ public class PortletPreferenceValuePersistenceImpl
 		int end, OrderByComparator<PortletPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByP_N_SV.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId, name, smallValue}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByP_N_SV.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId, name, smallValue}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -895,14 +853,9 @@ public class PortletPreferenceValuePersistenceImpl
 	public int countByP_N_SV(
 		long portletPreferencesId, String name, String smallValue) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferenceValue.class)) {
-
-			return _collectionPersistenceFinderByP_N_SV.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {portletPreferencesId, name, smallValue});
-		}
+		return _collectionPersistenceFinderByP_N_SV.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {portletPreferencesId, name, smallValue});
 	}
 
 	public PortletPreferenceValuePersistenceImpl() {
@@ -1397,4 +1350,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-116053127
+// LIFERAY-SERVICE-BUILDER-HASH:1022717792

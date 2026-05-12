@@ -13,35 +13,31 @@ import com.liferay.calendar.model.impl.CalendarResourceModelImpl;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
 import com.liferay.calendar.service.persistence.CalendarResourceUtil;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -57,7 +53,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -171,14 +166,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -240,13 +230,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -306,13 +291,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -427,14 +407,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -502,19 +477,14 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
-	private CollectionPersistenceFinder<CalendarResource>
+	private FilterCollectionPersistenceFinder<CalendarResource>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -589,14 +559,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -688,98 +653,9 @@ public class CalendarResourcePersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId(groupId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, CalendarResourceImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, CalendarResourceImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			return (List<CalendarResource>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterFind(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			groupId);
 	}
 
 	/**
@@ -801,13 +677,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -818,57 +689,9 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByGroupId(groupId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<CalendarResource> calendarResources = findByGroupId(groupId);
-
-			calendarResources = InlineSQLHelperUtil.filter(
-				calendarResources, groupId);
-
-			return calendarResources.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE);
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterCount(
+			finderCache, new Object[] {groupId}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"calendarResource.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByActive;
 	private FinderPath _finderPathWithoutPaginationFindByActive;
@@ -947,14 +770,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByActive.find(
-				finderCache, new Object[] {active}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByActive.find(
+			finderCache, new Object[] {active}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1017,19 +835,14 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByActive(boolean active) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByActive.count(
-				finderCache, new Object[] {active});
-		}
+		return _collectionPersistenceFinderByActive.count(
+			finderCache, new Object[] {active});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
 	private FinderPath _finderPathCountByG_C;
-	private CollectionPersistenceFinder<CalendarResource>
+	private FilterCollectionPersistenceFinder<CalendarResource>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -1108,14 +921,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByG_C.find(
-				finderCache, new Object[] {new long[] {groupId}, code}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C.find(
+			finderCache, new Object[] {new long[] {groupId}, code}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1225,115 +1033,9 @@ public class CalendarResourcePersistenceImpl
 		long groupId, String code, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C(groupId, code, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C(
-					groupId, code, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		code = Objects.toString(code, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_GROUPID_2);
-
-		boolean bindCode = false;
-
-		if (code.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_CODE_3_SQL);
-		}
-		else {
-			bindCode = true;
-
-			sb.append(_FINDER_COLUMN_G_C_CODE_2_SQL);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, CalendarResourceImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, CalendarResourceImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			if (bindCode) {
-				queryPos.add(code);
-			}
-
-			return (List<CalendarResource>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C.filterFind(
+			finderCache, new Object[] {groupId, code}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -1390,127 +1092,11 @@ public class CalendarResourcePersistenceImpl
 		long[] groupIds, String code, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return findByG_C(groupIds, code, start, end, orderByComparator);
-		}
+		groupIds = ArrayUtil.sortedUnique(groupIds);
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C(
-					groupIds, code, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupIds);
-		}
-
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		code = Objects.toString(code, "");
-
-		StringBundler sb = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		if (groupIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_G_C_GROUPID_7);
-
-			sb.append(StringUtil.merge(groupIds));
-
-			sb.append(")");
-
-			sb.append(")");
-
-			sb.append(WHERE_AND);
-		}
-
-		boolean bindCode = false;
-
-		if (code.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_CODE_3_SQL);
-		}
-		else {
-			bindCode = true;
-
-			sb.append(_FINDER_COLUMN_G_C_CODE_2_SQL);
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, CalendarResourceImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, CalendarResourceImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindCode) {
-				queryPos.add(code);
-			}
-
-			return (List<CalendarResource>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C.filterFind(
+			finderCache, new Object[] {groupIds, code}, start, end,
+			orderByComparator, groupIds);
 	}
 
 	/**
@@ -1593,15 +1179,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByG_C.find(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), code}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), code},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1625,13 +1205,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByG_C(long groupId, String code) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByG_C.count(
-				finderCache, new Object[] {new long[] {groupId}, code});
-		}
+		return _collectionPersistenceFinderByG_C.count(
+			finderCache, new Object[] {new long[] {groupId}, code});
 	}
 
 	/**
@@ -1643,14 +1218,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByG_C(long[] groupIds, String code) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByG_C.count(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), code});
-		}
+		return _collectionPersistenceFinderByG_C.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), code});
 	}
 
 	/**
@@ -1662,70 +1231,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, String code) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_C(groupId, code);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<CalendarResource> calendarResources = findByG_C(groupId, code);
-
-			calendarResources = InlineSQLHelperUtil.filter(
-				calendarResources, groupId);
-
-			return calendarResources.size();
-		}
-
-		code = Objects.toString(code, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_C_GROUPID_2);
-
-		boolean bindCode = false;
-
-		if (code.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_CODE_3_SQL);
-		}
-		else {
-			bindCode = true;
-
-			sb.append(_FINDER_COLUMN_G_C_CODE_2_SQL);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			if (bindCode) {
-				queryPos.add(code);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C.filterCount(
+			finderCache, new Object[] {groupId, code}, groupId);
 	}
 
 	/**
@@ -1737,112 +1244,16 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_C(long[] groupIds, String code) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return countByG_C(groupIds, code);
-		}
+		groupIds = ArrayUtil.sortedUnique(groupIds);
 
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<CalendarResource> calendarResources =
-				InlineSQLHelperUtil.filter(findByG_C(groupIds, code), groupIds);
-
-			return calendarResources.size();
-		}
-
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		code = Objects.toString(code, "");
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE);
-
-		if (groupIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_G_C_GROUPID_7);
-
-			sb.append(StringUtil.merge(groupIds));
-
-			sb.append(")");
-
-			sb.append(")");
-
-			sb.append(WHERE_AND);
-		}
-
-		boolean bindCode = false;
-
-		if (code.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_CODE_3_SQL);
-		}
-		else {
-			bindCode = true;
-
-			sb.append(_FINDER_COLUMN_G_C_CODE_2_SQL);
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindCode) {
-				queryPos.add(code);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C.filterCount(
+			finderCache, new Object[] {groupIds, code}, groupIds);
 	}
-
-	private static final String _FINDER_COLUMN_G_C_GROUPID_2 =
-		"calendarResource.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_GROUPID_7 =
-		"calendarResource.groupId IN (";
-
-	private static final String _FINDER_COLUMN_G_C_CODE_2 =
-		"calendarResource.code = ?";
-
-	private static final String _FINDER_COLUMN_G_C_CODE_3 =
-		"(calendarResource.code IS NULL OR calendarResource.code = '')";
-
-	private static final String _FINDER_COLUMN_G_C_CODE_2_SQL =
-		"calendarResource.code_ = ?";
-
-	private static final String _FINDER_COLUMN_G_C_CODE_3_SQL =
-		"(calendarResource.code_ IS NULL OR calendarResource.code_ = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_A;
 	private FinderPath _finderPathCountByG_A;
-	private CollectionPersistenceFinder<CalendarResource>
+	private FilterCollectionPersistenceFinder<CalendarResource>
 		_collectionPersistenceFinderByG_A;
 
 	/**
@@ -1921,14 +1332,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByG_A.find(
-				finderCache, new Object[] {groupId, active}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_A.find(
+			finderCache, new Object[] {groupId, active}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2029,102 +1435,9 @@ public class CalendarResourcePersistenceImpl
 		long groupId, boolean active, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_A(groupId, active, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_A(
-					groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_A_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_A_ACTIVE_2_SQL);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(CalendarResourceModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, CalendarResourceImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, CalendarResourceImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(active);
-
-			return (List<CalendarResource>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_A.filterFind(
+			finderCache, new Object[] {groupId, active}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -2148,13 +1461,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByG_A(long groupId, boolean active) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByG_A.count(
-				finderCache, new Object[] {groupId, active});
-		}
+		return _collectionPersistenceFinderByG_A.count(
+			finderCache, new Object[] {groupId, active});
 	}
 
 	/**
@@ -2166,65 +1474,9 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_A(long groupId, boolean active) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_A(groupId, active);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<CalendarResource> calendarResources = findByG_A(
-				groupId, active);
-
-			calendarResources = InlineSQLHelperUtil.filter(
-				calendarResources, groupId);
-
-			return calendarResources.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_A_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_A_ACTIVE_2_SQL);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), CalendarResource.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(active);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_A.filterCount(
+			finderCache, new Object[] {groupId, active}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_A_GROUPID_2 =
-		"calendarResource.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_A_ACTIVE_2_SQL =
-		"calendarResource.active_ = ?";
 
 	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<CalendarResource>
@@ -2284,14 +1536,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource fetchByC_C(
 		long classNameId, long classPK, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _uniquePersistenceFinderByC_C.fetch(
-				finderCache, new Object[] {classNameId, classPK},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_C.fetch(
+			finderCache, new Object[] {classNameId, classPK}, useFinderCache);
 	}
 
 	/**
@@ -2412,14 +1658,9 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByC_LikeC_A.find(
-				finderCache, new Object[] {companyId, code, active}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_LikeC_A.find(
+			finderCache, new Object[] {companyId, code, active}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2493,13 +1734,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public int countByC_LikeC_A(long companyId, String code, boolean active) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarResource.class)) {
-
-			return _collectionPersistenceFinderByC_LikeC_A.count(
-				finderCache, new Object[] {companyId, code, active});
-		}
+		return _collectionPersistenceFinderByC_LikeC_A.count(
+			finderCache, new Object[] {companyId, code, active});
 	}
 
 	public CalendarResourcePersistenceImpl() {
@@ -2909,13 +2145,23 @@ public class CalendarResourcePersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByGroupId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByGroupId,
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_CALENDARRESOURCE_WHERE,
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CalendarResourceImpl.class, CalendarResource.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE,
+					CalendarResourceModelImpl.ORDER_BY_SQL,
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId));
@@ -2969,18 +2215,30 @@ public class CalendarResourcePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "code_"}, 0, 2, false, null);
 
-		_collectionPersistenceFinderByG_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C,
-			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
-			_SQL_SELECT_CALENDARRESOURCE_WHERE,
-			_SQL_COUNT_CALENDARRESOURCE_WHERE,
-			CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new ArrayableFinderColumn<>(
-				"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
-				false, true, true, CalendarResource::getGroupId),
-			new FinderColumn<>(
-				"calendarResource.", "code", FinderColumn.Type.STRING, "=",
-				true, true, CalendarResource::getCode));
+		_collectionPersistenceFinderByG_C =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_C,
+				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				_SQL_SELECT_CALENDARRESOURCE_WHERE,
+				_SQL_COUNT_CALENDARRESOURCE_WHERE,
+				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CalendarResourceImpl.class, CalendarResource.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE,
+					CalendarResourceModelImpl.ORDER_BY_SQL,
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new ArrayableFinderColumn<>(
+					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, CalendarResource::getGroupId),
+				new FinderColumn<>(
+					"calendarResource.", "code", FinderColumn.Type.STRING, "=",
+					true, true, CalendarResource::getCode));
 
 		_finderPathWithPaginationFindByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
@@ -3001,18 +2259,30 @@ public class CalendarResourcePersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "active_"}, false);
 
-		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_A,
-			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
-			_SQL_SELECT_CALENDARRESOURCE_WHERE,
-			_SQL_COUNT_CALENDARRESOURCE_WHERE,
-			CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
-				true, true, CalendarResource::getGroupId),
-			new FinderColumn<>(
-				"calendarResource.", "active", FinderColumn.Type.BOOLEAN, "=",
-				true, true, CalendarResource::isActive));
+		_collectionPersistenceFinderByG_A =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_A,
+				_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+				_SQL_SELECT_CALENDARRESOURCE_WHERE,
+				_SQL_COUNT_CALENDARRESOURCE_WHERE,
+				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CalendarResourceImpl.class, CalendarResource.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_WHERE,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_CALENDARRESOURCE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_CALENDARRESOURCE_WHERE,
+					CalendarResourceModelImpl.ORDER_BY_SQL,
+					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, CalendarResource::getGroupId),
+				new FinderColumn<>(
+					"calendarResource.", "active", FinderColumn.Type.BOOLEAN,
+					"=", true, true, CalendarResource::isActive));
 
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
@@ -3142,8 +2412,6 @@ public class CalendarResourcePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "CalendarResource";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "CalendarResource.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CalendarResource exists with the key {";
 
@@ -3159,4 +2427,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1038514691
+// LIFERAY-SERVICE-BUILDER-HASH:-482540277

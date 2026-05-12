@@ -8,8 +8,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchAutoEscapeEntryException;
@@ -221,14 +219,8 @@ public class AutoEscapeEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		AutoEscapeEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_AUTOESCAPEENTRY =
 		"SELECT autoEscapeEntry FROM AutoEscapeEntry autoEscapeEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AutoEscapeEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -236,4 +228,4 @@ public class AutoEscapeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:325092905
+// LIFERAY-SERVICE-BUILDER-HASH:1604104799

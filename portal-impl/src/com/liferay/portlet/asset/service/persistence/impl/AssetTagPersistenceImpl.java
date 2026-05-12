@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
@@ -171,14 +170,9 @@ public class AssetTagPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -240,13 +234,8 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -305,14 +294,9 @@ public class AssetTagPersistenceImpl
 	public AssetTag fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -426,15 +410,9 @@ public class AssetTagPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -503,14 +481,8 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -588,15 +560,10 @@ public class AssetTagPersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new long[] {groupId}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -719,15 +686,10 @@ public class AssetTagPersistenceImpl
 		long[] groupIds, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(groupIds)}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(groupIds)}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -750,14 +712,9 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new long[] {groupId}});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}});
 	}
 
 	/**
@@ -768,18 +725,10 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long[] groupIds) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(groupIds)});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"assetTag.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByName;
 	private FinderPath _finderPathWithoutPaginationFindByName;
@@ -855,15 +804,10 @@ public class AssetTagPersistenceImpl
 		String name, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByName.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new String[] {name}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByName.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new String[] {name}}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -985,15 +929,10 @@ public class AssetTagPersistenceImpl
 		String[] names, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByName.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(names)}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByName.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(names)}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1016,14 +955,9 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByName.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new String[] {name}});
-		}
+		return _collectionPersistenceFinderByName.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new String[] {name}});
 	}
 
 	/**
@@ -1034,21 +968,10 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByName(String[] names) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByName.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(names)});
-		}
+		return _collectionPersistenceFinderByName.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(names)});
 	}
-
-	private static final String _FINDER_COLUMN_NAME_NAME_2 =
-		"lower(assetTag.name) = ?";
-
-	private static final String _FINDER_COLUMN_NAME_NAME_3 =
-		"(assetTag.name IS NULL OR assetTag.name = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_N;
 	private FinderPath _finderPathWithoutPaginationFindByG_N;
@@ -1131,14 +1054,9 @@ public class AssetTagPersistenceImpl
 		long groupId, String name, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByG_N.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1206,13 +1124,8 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByG_N(long groupId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByG_N.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
-		}
+		return _collectionPersistenceFinderByG_N.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_LikeN;
@@ -1296,15 +1209,10 @@ public class AssetTagPersistenceImpl
 		long groupId, String name, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new long[] {groupId}, name}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LikeN.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}, name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1442,15 +1350,10 @@ public class AssetTagPersistenceImpl
 		long[] groupIds, String name, int start, int end,
 		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(groupIds), name}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LikeN.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(groupIds), name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1475,14 +1378,9 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByG_LikeN(long groupId, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {new long[] {groupId}, name});
-		}
+		return _collectionPersistenceFinderByG_LikeN.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}, name});
 	}
 
 	/**
@@ -1494,24 +1392,10 @@ public class AssetTagPersistenceImpl
 	 */
 	@Override
 	public int countByG_LikeN(long[] groupIds, String name) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {ArrayUtil.sortedUnique(groupIds), name});
-		}
+		return _collectionPersistenceFinderByG_LikeN.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ArrayUtil.sortedUnique(groupIds), name});
 	}
-
-	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 =
-		"assetTag.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 =
-		"lower(assetTag.name) LIKE ?";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 =
-		"(assetTag.name IS NULL OR assetTag.name LIKE '')";
 
 	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<AssetTag> _uniquePersistenceFinderByERC_G;
@@ -1570,14 +1454,9 @@ public class AssetTagPersistenceImpl
 	public AssetTag fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetTag.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {externalReferenceCode, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId}, useFinderCache);
 	}
 
 	/**
@@ -2550,4 +2429,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2145790899
+// LIFERAY-SERVICE-BUILDER-HASH:718437467

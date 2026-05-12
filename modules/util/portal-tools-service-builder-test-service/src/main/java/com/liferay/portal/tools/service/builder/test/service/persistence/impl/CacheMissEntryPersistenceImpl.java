@@ -9,8 +9,6 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -282,14 +280,8 @@ public class CacheMissEntryPersistenceImpl
 	@ServiceReference(type = CTPersistenceHelper.class)
 	protected CTPersistenceHelper ctPersistenceHelper;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		CacheMissEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_CACHEMISSENTRY =
 		"SELECT cacheMissEntry FROM CacheMissEntry cacheMissEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CacheMissEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -297,4 +289,4 @@ public class CacheMissEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2080827751
+// LIFERAY-SERVICE-BUILDER-HASH:-683115105

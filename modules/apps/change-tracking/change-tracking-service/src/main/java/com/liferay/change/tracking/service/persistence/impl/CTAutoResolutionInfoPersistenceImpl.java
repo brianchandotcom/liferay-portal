@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -564,16 +562,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_C_MCNI_SMCPK_CTCOLLECTIONID_2 =
-		"ctAutoResolutionInfo.ctCollectionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_MCNI_SMCPK_MODELCLASSNAMEID_2 =
-		"ctAutoResolutionInfo.modelClassNameId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_2 =
-			"ctAutoResolutionInfo.sourceModelClassPK = ?";
-
 	public CTAutoResolutionInfoPersistenceImpl() {
 		setModelClass(CTAutoResolutionInfo.class);
 
@@ -914,13 +902,10 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTAutoResolutionInfo exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTAutoResolutionInfoPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-663968618
+// LIFERAY-SERVICE-BUILDER-HASH:1592880633

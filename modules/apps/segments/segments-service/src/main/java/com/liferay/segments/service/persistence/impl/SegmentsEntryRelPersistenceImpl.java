@@ -5,7 +5,6 @@
 
 package com.liferay.segments.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class SegmentsEntryRelPersistenceImpl
 		OrderByComparator<SegmentsEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _collectionPersistenceFinderBySegmentsEntryId.find(
-				finderCache, new Object[] {segmentsEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderBySegmentsEntryId.find(
+			finderCache, new Object[] {segmentsEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -234,13 +228,8 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countBySegmentsEntryId(long segmentsEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _collectionPersistenceFinderBySegmentsEntryId.count(
-				finderCache, new Object[] {segmentsEntryId});
-		}
+		return _collectionPersistenceFinderBySegmentsEntryId.count(
+			finderCache, new Object[] {segmentsEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCN_CPK;
@@ -326,14 +315,9 @@ public class SegmentsEntryRelPersistenceImpl
 		OrderByComparator<SegmentsEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _collectionPersistenceFinderByCN_CPK.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCN_CPK.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -402,13 +386,8 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByCN_CPK(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _collectionPersistenceFinderByCN_CPK.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByCN_CPK.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_CN_CPK;
@@ -501,14 +480,9 @@ public class SegmentsEntryRelPersistenceImpl
 		OrderByComparator<SegmentsEntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _collectionPersistenceFinderByG_CN_CPK.find(
-				finderCache, new Object[] {groupId, classNameId, classPK},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_CN_CPK.find(
+			finderCache, new Object[] {groupId, classNameId, classPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -582,13 +556,8 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByG_CN_CPK(long groupId, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _collectionPersistenceFinderByG_CN_CPK.count(
-				finderCache, new Object[] {groupId, classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByG_CN_CPK.count(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	private FinderPath _finderPathFetchByS_CN_CPK;
@@ -657,15 +626,9 @@ public class SegmentsEntryRelPersistenceImpl
 		long segmentsEntryId, long classNameId, long classPK,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					SegmentsEntryRel.class)) {
-
-			return _uniquePersistenceFinderByS_CN_CPK.fetch(
-				finderCache,
-				new Object[] {segmentsEntryId, classNameId, classPK},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByS_CN_CPK.fetch(
+			finderCache, new Object[] {segmentsEntryId, classNameId, classPK},
+			useFinderCache);
 	}
 
 	/**
@@ -1180,4 +1143,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-200994254
+// LIFERAY-SERVICE-BUILDER-HASH:1550775692

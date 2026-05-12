@@ -10,7 +10,6 @@ import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRelTable;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyGroupRelPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyGroupRelUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -155,14 +154,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -227,13 +221,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -294,14 +283,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	public AssetVocabularyGroupRel fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -419,15 +403,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -496,14 +474,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -584,14 +556,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -656,13 +623,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByVocabularyId;
@@ -744,14 +706,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByVocabularyId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByVocabularyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -816,13 +773,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByVocabularyId(long vocabularyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _collectionPersistenceFinderByVocabularyId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId});
-		}
+		return _collectionPersistenceFinderByVocabularyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId});
 	}
 
 	private FinderPath _finderPathFetchByG_V;
@@ -884,14 +836,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	public AssetVocabularyGroupRel fetchByG_V(
 		long groupId, long vocabularyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AssetVocabularyGroupRel.class)) {
-
-			return _uniquePersistenceFinderByG_V.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, vocabularyId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_V.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, vocabularyId}, useFinderCache);
 	}
 
 	/**
@@ -1403,4 +1350,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1654148890
+// LIFERAY-SERVICE-BUILDER-HASH:-1557122886

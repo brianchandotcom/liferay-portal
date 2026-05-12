@@ -411,9 +411,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		MFAEmailOTPEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_MFAEMAILOTPENTRY =
 		"SELECT mfaEmailOTPEntry FROM MFAEmailOTPEntry mfaEmailOTPEntry";
 
@@ -432,4 +429,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2136480457
+// LIFERAY-SERVICE-BUILDER-HASH:-998862420

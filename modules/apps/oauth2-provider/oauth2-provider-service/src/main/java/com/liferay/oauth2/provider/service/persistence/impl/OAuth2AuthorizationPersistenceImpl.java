@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1709,9 +1707,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuth2Authorization exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2AuthorizationPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"oAuth2ApplicationScopeAliasesId"});
 
@@ -1721,4 +1716,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1329075749
+// LIFERAY-SERVICE-BUILDER-HASH:-1215027337

@@ -14,7 +14,6 @@ import com.liferay.calendar.model.impl.CalendarBookingModelImpl;
 import com.liferay.calendar.service.persistence.CalendarBookingPersistence;
 import com.liferay.calendar.service.persistence.CalendarBookingUtil;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -175,14 +174,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -244,13 +238,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -310,13 +299,8 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -431,14 +415,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -506,13 +485,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCalendarId;
@@ -594,14 +568,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByCalendarId.find(
-				finderCache, new Object[] {calendarId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCalendarId.find(
+			finderCache, new Object[] {calendarId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -664,13 +633,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByCalendarId(long calendarId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByCalendarId.count(
-				finderCache, new Object[] {calendarId});
-		}
+		return _collectionPersistenceFinderByCalendarId.count(
+			finderCache, new Object[] {calendarId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCalendarResourceId;
@@ -754,14 +718,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByCalendarResourceId.find(
-				finderCache, new Object[] {calendarResourceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCalendarResourceId.find(
+			finderCache, new Object[] {calendarResourceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -827,13 +786,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByCalendarResourceId(long calendarResourceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByCalendarResourceId.count(
-				finderCache, new Object[] {calendarResourceId});
-		}
+		return _collectionPersistenceFinderByCalendarResourceId.count(
+			finderCache, new Object[] {calendarResourceId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByParentCalendarBookingId;
@@ -920,14 +874,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByParentCalendarBookingId.find(
-				finderCache, new Object[] {parentCalendarBookingId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByParentCalendarBookingId.find(
+			finderCache, new Object[] {parentCalendarBookingId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -994,13 +943,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByParentCalendarBookingId(long parentCalendarBookingId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByParentCalendarBookingId.count(
-				finderCache, new Object[] {parentCalendarBookingId});
-		}
+		return _collectionPersistenceFinderByParentCalendarBookingId.count(
+			finderCache, new Object[] {parentCalendarBookingId});
 	}
 
 	private FinderPath
@@ -1088,15 +1032,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByRecurringCalendarBookingId.
-				find(
-					finderCache, new Object[] {recurringCalendarBookingId},
-					start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRecurringCalendarBookingId.find(
+			finderCache, new Object[] {recurringCalendarBookingId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1169,13 +1107,8 @@ public class CalendarBookingPersistenceImpl
 	public int countByRecurringCalendarBookingId(
 		long recurringCalendarBookingId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByRecurringCalendarBookingId.
-				count(finderCache, new Object[] {recurringCalendarBookingId});
-		}
+		return _collectionPersistenceFinderByRecurringCalendarBookingId.count(
+			finderCache, new Object[] {recurringCalendarBookingId});
 	}
 
 	private FinderPath _finderPathFetchByC_P;
@@ -1240,14 +1173,9 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking fetchByC_P(
 		long calendarId, long parentCalendarBookingId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _uniquePersistenceFinderByC_P.fetch(
-				finderCache, new Object[] {calendarId, parentCalendarBookingId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_P.fetch(
+			finderCache, new Object[] {calendarId, parentCalendarBookingId},
+			useFinderCache);
 	}
 
 	/**
@@ -1339,14 +1267,8 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking fetchByC_V(
 		long calendarId, String vEventUid, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _uniquePersistenceFinderByC_V.fetch(
-				finderCache, new Object[] {calendarId, vEventUid},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_V.fetch(
+			finderCache, new Object[] {calendarId, vEventUid}, useFinderCache);
 	}
 
 	/**
@@ -1461,14 +1383,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByC_S.find(
-				finderCache, new Object[] {calendarId, new int[] {status}},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_S.find(
+			finderCache, new Object[] {calendarId, new int[] {status}}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1607,15 +1524,10 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByC_S.find(
-				finderCache,
-				new Object[] {calendarId, ArrayUtil.sortedUnique(statuses)},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_S.find(
+			finderCache,
+			new Object[] {calendarId, ArrayUtil.sortedUnique(statuses)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1639,13 +1551,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByC_S(long calendarId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByC_S.count(
-				finderCache, new Object[] {calendarId, new int[] {status}});
-		}
+		return _collectionPersistenceFinderByC_S.count(
+			finderCache, new Object[] {calendarId, new int[] {status}});
 	}
 
 	/**
@@ -1657,21 +1564,10 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByC_S(long calendarId, int[] statuses) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByC_S.count(
-				finderCache,
-				new Object[] {calendarId, ArrayUtil.sortedUnique(statuses)});
-		}
+		return _collectionPersistenceFinderByC_S.count(
+			finderCache,
+			new Object[] {calendarId, ArrayUtil.sortedUnique(statuses)});
 	}
-
-	private static final String _FINDER_COLUMN_C_S_CALENDARID_2 =
-		"calendarBooking.calendarId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
-		"calendarBooking.status = ?";
 
 	private FinderPath _finderPathWithPaginationFindByP_S;
 	private FinderPath _finderPathWithoutPaginationFindByP_S;
@@ -1760,14 +1656,9 @@ public class CalendarBookingPersistenceImpl
 		OrderByComparator<CalendarBooking> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByP_S.find(
-				finderCache, new Object[] {parentCalendarBookingId, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByP_S.find(
+			finderCache, new Object[] {parentCalendarBookingId, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1837,13 +1728,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public int countByP_S(long parentCalendarBookingId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _collectionPersistenceFinderByP_S.count(
-				finderCache, new Object[] {parentCalendarBookingId, status});
-		}
+		return _collectionPersistenceFinderByP_S.count(
+			finderCache, new Object[] {parentCalendarBookingId, status});
 	}
 
 	private FinderPath _finderPathFetchByERC_G;
@@ -1908,14 +1794,9 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CalendarBooking.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				finderCache, new Object[] {externalReferenceCode, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -2738,4 +2619,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1970197417
+// LIFERAY-SERVICE-BUILDER-HASH:1113104552

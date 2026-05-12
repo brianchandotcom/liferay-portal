@@ -1444,4 +1444,4 @@ public class CommerceOrderAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1570363641
+// LIFERAY-SERVICE-BUILDER-HASH:487201841

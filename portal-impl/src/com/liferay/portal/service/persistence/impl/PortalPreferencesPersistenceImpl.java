@@ -564,4 +564,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1285311326
+// LIFERAY-SERVICE-BUILDER-HASH:-1166031600

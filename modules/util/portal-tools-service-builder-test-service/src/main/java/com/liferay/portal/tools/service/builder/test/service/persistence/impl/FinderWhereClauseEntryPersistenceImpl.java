@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -456,13 +454,10 @@ public class FinderWhereClauseEntryPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FinderWhereClauseEntry exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FinderWhereClauseEntryPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:507467478
+// LIFERAY-SERVICE-BUILDER-HASH:-1192860580

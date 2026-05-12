@@ -671,4 +671,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1639873985
+// LIFERAY-SERVICE-BUILDER-HASH:1246117503

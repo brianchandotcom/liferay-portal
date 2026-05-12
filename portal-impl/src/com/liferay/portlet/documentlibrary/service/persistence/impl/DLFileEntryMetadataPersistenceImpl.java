@@ -11,7 +11,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -164,14 +163,9 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -235,13 +229,8 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
@@ -327,15 +316,9 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -404,14 +387,8 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
@@ -493,14 +470,9 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileEntryId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -565,13 +537,8 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryId(long fileEntryId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId});
-		}
+		return _collectionPersistenceFinderByFileEntryId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFileVersionId;
@@ -653,14 +620,9 @@ public class DLFileEntryMetadataPersistenceImpl
 		OrderByComparator<DLFileEntryMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByFileVersionId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {fileVersionId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileVersionId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileVersionId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -725,13 +687,8 @@ public class DLFileEntryMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByFileVersionId(long fileVersionId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _collectionPersistenceFinderByFileVersionId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {fileVersionId});
-		}
+		return _collectionPersistenceFinderByFileVersionId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileVersionId});
 	}
 
 	private FinderPath _finderPathFetchByD_F;
@@ -796,14 +753,9 @@ public class DLFileEntryMetadataPersistenceImpl
 	public DLFileEntryMetadata fetchByD_F(
 		long DDMStructureId, long fileVersionId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _uniquePersistenceFinderByD_F.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {DDMStructureId, fileVersionId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByD_F.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {DDMStructureId, fileVersionId}, useFinderCache);
 	}
 
 	/**
@@ -900,15 +852,9 @@ public class DLFileEntryMetadataPersistenceImpl
 	public DLFileEntryMetadata fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntryMetadata.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId}, useFinderCache);
 	}
 
 	/**
@@ -1484,4 +1430,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1005141170
+// LIFERAY-SERVICE-BUILDER-HASH:-663668012

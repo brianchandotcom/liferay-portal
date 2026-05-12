@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -545,13 +543,10 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BatchEngineImportTaskError exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineImportTaskErrorPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:904046179
+// LIFERAY-SERVICE-BUILDER-HASH:-602983463

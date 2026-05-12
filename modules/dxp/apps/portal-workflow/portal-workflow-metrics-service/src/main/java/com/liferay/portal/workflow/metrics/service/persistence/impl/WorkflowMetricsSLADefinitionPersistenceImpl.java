@@ -2166,4 +2166,4 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1596695393
+// LIFERAY-SERVICE-BUILDER-HASH:996969705

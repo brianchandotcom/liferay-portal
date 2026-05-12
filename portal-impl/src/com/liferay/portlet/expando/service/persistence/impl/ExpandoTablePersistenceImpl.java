@@ -10,7 +10,6 @@ import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoTableUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -156,15 +155,10 @@ public class ExpandoTablePersistenceImpl
 		OrderByComparator<ExpandoTable> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoTable.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -235,14 +229,9 @@ public class ExpandoTablePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoTable.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, classNameId});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId});
 	}
 
 	private FinderPath _finderPathFetchByC_C_N;
@@ -309,14 +298,9 @@ public class ExpandoTablePersistenceImpl
 	public ExpandoTable fetchByC_C_N(
 		long companyId, long classNameId, String name, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoTable.class)) {
-
-			return _uniquePersistenceFinderByC_C_N.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, classNameId, name}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_C_N.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, name}, useFinderCache);
 	}
 
 	/**
@@ -675,4 +659,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1911705531
+// LIFERAY-SERVICE-BUILDER-HASH:1288846753

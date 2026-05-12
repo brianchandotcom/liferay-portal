@@ -14,24 +14,20 @@ import com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl;
 import com.liferay.osb.patcher.service.persistence.PatcherAccountPersistence;
 import com.liferay.osb.patcher.service.persistence.PatcherAccountUtil;
 import com.liferay.osb.patcher.service.persistence.impl.constants.OSBPatcherPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -50,7 +46,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -92,7 +87,7 @@ public class PatcherAccountPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
-	private CollectionPersistenceFinder<PatcherAccount>
+	private FilterCollectionPersistenceFinder<PatcherAccount>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -261,96 +256,9 @@ public class PatcherAccountPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<PatcherAccount> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId(companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(PatcherAccountModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), PatcherAccount.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, PatcherAccountImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, PatcherAccountImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<PatcherAccount>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -384,56 +292,9 @@ public class PatcherAccountPersistenceImpl
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByCompanyId(companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<PatcherAccount> patcherAccounts = findByCompanyId(companyId);
-
-			patcherAccounts = InlineSQLHelperUtil.filter(patcherAccounts);
-
-			return patcherAccounts.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE);
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), PatcherAccount.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			finderCache, new Object[] {companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"patcherAccount.companyId = ?";
 
 	private FinderPath _finderPathFetchByAccountEntryCode;
 	private UniquePersistenceFinder<PatcherAccount>
@@ -526,7 +387,7 @@ public class PatcherAccountPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_LikeA;
 	private FinderPath _finderPathWithPaginationCountByC_LikeA;
-	private CollectionPersistenceFinder<PatcherAccount>
+	private FilterCollectionPersistenceFinder<PatcherAccount>
 		_collectionPersistenceFinderByC_LikeA;
 
 	/**
@@ -716,114 +577,9 @@ public class PatcherAccountPersistenceImpl
 		long companyId, String accountEntryCode, int start, int end,
 		OrderByComparator<PatcherAccount> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_LikeA(
-				companyId, accountEntryCode, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_LikeA(
-					companyId, accountEntryCode, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		accountEntryCode = Objects.toString(accountEntryCode, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_LIKEA_COMPANYID_2);
-
-		boolean bindAccountEntryCode = false;
-
-		if (accountEntryCode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_LIKEA_ACCOUNTENTRYCODE_3);
-		}
-		else {
-			bindAccountEntryCode = true;
-
-			sb.append(_FINDER_COLUMN_C_LIKEA_ACCOUNTENTRYCODE_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(PatcherAccountModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), PatcherAccount.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, PatcherAccountImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, PatcherAccountImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (bindAccountEntryCode) {
-				queryPos.add(accountEntryCode);
-			}
-
-			return (List<PatcherAccount>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_LikeA.filterFind(
+			finderCache, new Object[] {companyId, accountEntryCode}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -860,80 +616,10 @@ public class PatcherAccountPersistenceImpl
 	 */
 	@Override
 	public int filterCountByC_LikeA(long companyId, String accountEntryCode) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_LikeA(companyId, accountEntryCode);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<PatcherAccount> patcherAccounts = findByC_LikeA(
-				companyId, accountEntryCode);
-
-			patcherAccounts = InlineSQLHelperUtil.filter(patcherAccounts);
-
-			return patcherAccounts.size();
-		}
-
-		accountEntryCode = Objects.toString(accountEntryCode, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_LIKEA_COMPANYID_2);
-
-		boolean bindAccountEntryCode = false;
-
-		if (accountEntryCode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_LIKEA_ACCOUNTENTRYCODE_3);
-		}
-		else {
-			bindAccountEntryCode = true;
-
-			sb.append(_FINDER_COLUMN_C_LIKEA_ACCOUNTENTRYCODE_2);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), PatcherAccount.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (bindAccountEntryCode) {
-				queryPos.add(accountEntryCode);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_LikeA.filterCount(
+			finderCache, new Object[] {companyId, accountEntryCode}, companyId,
+			0);
 	}
-
-	private static final String _FINDER_COLUMN_C_LIKEA_COMPANYID_2 =
-		"patcherAccount.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_LIKEA_ACCOUNTENTRYCODE_2 =
-		"patcherAccount.accountEntryCode LIKE ?";
-
-	private static final String _FINDER_COLUMN_C_LIKEA_ACCOUNTENTRYCODE_3 =
-		"(patcherAccount.accountEntryCode IS NULL OR patcherAccount.accountEntryCode LIKE '')";
 
 	public PatcherAccountPersistenceImpl() {
 		setModelClass(PatcherAccount.class);
@@ -1486,12 +1172,22 @@ public class PatcherAccountPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByCompanyId,
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					PatcherAccountImpl.class, PatcherAccount.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE,
+					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE,
+					PatcherAccountModelImpl.ORDER_BY_SQL,
+					PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId));
@@ -1526,12 +1222,22 @@ public class PatcherAccountPersistenceImpl
 			new String[] {"companyId", "accountEntryCode"}, false);
 
 		_collectionPersistenceFinderByC_LikeA =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByC_LikeA, null,
 				_finderPathWithPaginationCountByC_LikeA,
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					PatcherAccountImpl.class, PatcherAccount.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE,
+					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE,
+					PatcherAccountModelImpl.ORDER_BY_SQL,
+					PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId),
@@ -1622,9 +1328,6 @@ public class PatcherAccountPersistenceImpl
 	private static final String _FILTER_ENTITY_TABLE =
 		"OSBPatcher_PatcherAccount";
 
-	private static final String _ORDER_BY_ENTITY_TABLE =
-		"OSBPatcher_PatcherAccount.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherAccount exists with the key {";
 
@@ -1637,4 +1340,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1205424928
+// LIFERAY-SERVICE-BUILDER-HASH:246351570

@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchContactException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -1004,13 +1002,10 @@ public class ContactPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Contact exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContactPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return FinderCacheUtil.getFinderCache();
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2055549450
+// LIFERAY-SERVICE-BUILDER-HASH:-45501526

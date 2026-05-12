@@ -10,7 +10,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -154,14 +153,9 @@ public class AnnouncementsFlagPersistenceImpl
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -226,13 +220,8 @@ public class AnnouncementsFlagPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByEntryId;
@@ -313,14 +302,9 @@ public class AnnouncementsFlagPersistenceImpl
 		OrderByComparator<AnnouncementsFlag> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			return _collectionPersistenceFinderByEntryId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {entryId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByEntryId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {entryId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -384,13 +368,8 @@ public class AnnouncementsFlagPersistenceImpl
 	 */
 	@Override
 	public int countByEntryId(long entryId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			return _collectionPersistenceFinderByEntryId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {entryId});
-		}
+		return _collectionPersistenceFinderByEntryId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {entryId});
 	}
 
 	private FinderPath _finderPathFetchByU_E_V;
@@ -457,14 +436,9 @@ public class AnnouncementsFlagPersistenceImpl
 	public AnnouncementsFlag fetchByU_E_V(
 		long userId, long entryId, int value, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			return _uniquePersistenceFinderByU_E_V.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {userId, entryId, value}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByU_E_V.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, entryId, value}, useFinderCache);
 	}
 
 	/**
@@ -874,4 +848,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-634266347
+// LIFERAY-SERVICE-BUILDER-HASH:1274397066

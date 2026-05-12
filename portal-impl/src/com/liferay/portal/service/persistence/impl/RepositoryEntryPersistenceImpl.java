@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -155,14 +154,9 @@ public class RepositoryEntryPersistenceImpl
 		OrderByComparator<RepositoryEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -225,13 +219,8 @@ public class RepositoryEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -291,14 +280,9 @@ public class RepositoryEntryPersistenceImpl
 	public RepositoryEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -413,15 +397,9 @@ public class RepositoryEntryPersistenceImpl
 		OrderByComparator<RepositoryEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -490,14 +468,8 @@ public class RepositoryEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByRepositoryId;
@@ -579,14 +551,9 @@ public class RepositoryEntryPersistenceImpl
 		OrderByComparator<RepositoryEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _collectionPersistenceFinderByRepositoryId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {repositoryId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRepositoryId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -651,13 +618,8 @@ public class RepositoryEntryPersistenceImpl
 	 */
 	@Override
 	public int countByRepositoryId(long repositoryId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _collectionPersistenceFinderByRepositoryId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {repositoryId});
-		}
+		return _collectionPersistenceFinderByRepositoryId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId});
 	}
 
 	private FinderPath _finderPathFetchByR_M;
@@ -718,14 +680,9 @@ public class RepositoryEntryPersistenceImpl
 	public RepositoryEntry fetchByR_M(
 		long repositoryId, String mappedId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					RepositoryEntry.class)) {
-
-			return _uniquePersistenceFinderByR_M.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {repositoryId, mappedId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByR_M.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {repositoryId, mappedId}, useFinderCache);
 	}
 
 	/**
@@ -1221,4 +1178,4 @@ public class RepositoryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1833975317
+// LIFERAY-SERVICE-BUILDER-HASH:-812939119

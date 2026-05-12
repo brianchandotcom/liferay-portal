@@ -13,7 +13,6 @@ import com.liferay.data.engine.model.impl.DEDataListViewModelImpl;
 import com.liferay.data.engine.service.persistence.DEDataListViewPersistence;
 import com.liferay.data.engine.service.persistence.DEDataListViewUtil;
 import com.liferay.data.engine.service.persistence.impl.constants.DEPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class DEDataListViewPersistenceImpl
 		OrderByComparator<DEDataListView> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -232,13 +226,8 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -298,13 +287,8 @@ public class DEDataListViewPersistenceImpl
 	public DEDataListView fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -419,14 +403,9 @@ public class DEDataListViewPersistenceImpl
 		OrderByComparator<DEDataListView> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -494,13 +473,8 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
@@ -582,14 +556,9 @@ public class DEDataListViewPersistenceImpl
 		OrderByComparator<DEDataListView> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByDDMStructureId.find(
-				finderCache, new Object[] {ddmStructureId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDDMStructureId.find(
+			finderCache, new Object[] {ddmStructureId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -653,13 +622,8 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Override
 	public int countByDDMStructureId(long ddmStructureId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByDDMStructureId.count(
-				finderCache, new Object[] {ddmStructureId});
-		}
+		return _collectionPersistenceFinderByDDMStructureId.count(
+			finderCache, new Object[] {ddmStructureId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_DDMSI;
@@ -754,14 +718,9 @@ public class DEDataListViewPersistenceImpl
 		OrderByComparator<DEDataListView> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByG_C_DDMSI.find(
-				finderCache, new Object[] {groupId, companyId, ddmStructureId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_DDMSI.find(
+			finderCache, new Object[] {groupId, companyId, ddmStructureId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -839,13 +798,8 @@ public class DEDataListViewPersistenceImpl
 	public int countByG_C_DDMSI(
 		long groupId, long companyId, long ddmStructureId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DEDataListView.class)) {
-
-			return _collectionPersistenceFinderByG_C_DDMSI.count(
-				finderCache, new Object[] {groupId, companyId, ddmStructureId});
-		}
+		return _collectionPersistenceFinderByG_C_DDMSI.count(
+			finderCache, new Object[] {groupId, companyId, ddmStructureId});
 	}
 
 	public DEDataListViewPersistenceImpl() {
@@ -1368,4 +1322,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:76011969
+// LIFERAY-SERVICE-BUILDER-HASH:600099910

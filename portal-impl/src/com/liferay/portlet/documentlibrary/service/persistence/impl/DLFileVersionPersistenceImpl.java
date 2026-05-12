@@ -10,7 +10,6 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFileVersionTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -158,14 +157,9 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -228,13 +222,8 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -294,14 +283,9 @@ public class DLFileVersionPersistenceImpl
 	public DLFileVersion fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -416,15 +400,9 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -493,14 +471,8 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -581,14 +553,9 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -651,13 +618,8 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFileEntryId;
@@ -739,14 +701,9 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileEntryId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -810,13 +767,8 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByFileEntryId(long fileEntryId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByFileEntryId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId});
-		}
+		return _collectionPersistenceFinderByFileEntryId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByMimeType;
@@ -897,14 +849,9 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByMimeType.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {mimeType},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByMimeType.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {mimeType}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -967,13 +914,8 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByMimeType(String mimeType) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByMimeType.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {mimeType});
-		}
+		return _collectionPersistenceFinderByMimeType.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {mimeType});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_SU;
@@ -1059,15 +1001,10 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_SU.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, storeUUID}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_SU.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, storeUUID}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1137,14 +1074,9 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_SU(long companyId, String storeUUID) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_SU.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, storeUUID});
-		}
+		return _collectionPersistenceFinderByC_SU.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, storeUUID});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_NotS;
@@ -1229,15 +1161,9 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_NotS.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, status}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_NotS.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1306,14 +1232,8 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_NotS(long companyId, int status) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_NotS.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, status});
-		}
+		return _collectionPersistenceFinderByC_NotS.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status});
 	}
 
 	private FinderPath _finderPathFetchByF_V;
@@ -1374,14 +1294,9 @@ public class DLFileVersionPersistenceImpl
 	public DLFileVersion fetchByF_V(
 		long fileEntryId, String version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _uniquePersistenceFinderByF_V.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {fileEntryId, version}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByF_V.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, version}, useFinderCache);
 	}
 
 	/**
@@ -1497,15 +1412,10 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByF_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {fileEntryId, new int[] {status}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByF_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, new int[] {status}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1644,15 +1554,10 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByF_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {fileEntryId, ArrayUtil.sortedUnique(statuses)},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByF_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, ArrayUtil.sortedUnique(statuses)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1677,14 +1582,9 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByF_S(long fileEntryId, int status) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByF_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {fileEntryId, new int[] {status}});
-		}
+		return _collectionPersistenceFinderByF_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, new int[] {status}});
 	}
 
 	/**
@@ -1696,21 +1596,10 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByF_S(long fileEntryId, int[] statuses) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByF_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {fileEntryId, ArrayUtil.sortedUnique(statuses)});
-		}
+		return _collectionPersistenceFinderByF_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {fileEntryId, ArrayUtil.sortedUnique(statuses)});
 	}
-
-	private static final String _FINDER_COLUMN_F_S_FILEENTRYID_2 =
-		"dlFileVersion.fileEntryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_F_S_STATUS_2 =
-		"dlFileVersion.status = ?";
 
 	private FinderPath _finderPathWithPaginationFindByLtD_S;
 	private FinderPath _finderPathWithPaginationCountByLtD_S;
@@ -1794,15 +1683,10 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByLtD_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {displayDate, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLtD_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {displayDate, status}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1872,14 +1756,9 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByLtD_S(Date displayDate, int status) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByLtD_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {displayDate, status});
-		}
+		return _collectionPersistenceFinderByLtD_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {displayDate, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_F_S;
@@ -1972,15 +1851,10 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByG_F_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, folderId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_F_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, folderId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2055,14 +1929,9 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByG_F_S(long groupId, long folderId, int status) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByG_F_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, folderId, status});
-		}
+		return _collectionPersistenceFinderByG_F_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, folderId, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_E_S;
@@ -2156,15 +2025,10 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_E_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, expirationDate, new int[] {status}},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_E_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, expirationDate, new int[] {status}}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2319,17 +2183,12 @@ public class DLFileVersionPersistenceImpl
 		OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_E_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					companyId, expirationDate, ArrayUtil.sortedUnique(statuses)
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_E_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, expirationDate, ArrayUtil.sortedUnique(statuses)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2356,14 +2215,9 @@ public class DLFileVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_E_S(long companyId, Date expirationDate, int status) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_E_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, expirationDate, new int[] {status}});
-		}
+		return _collectionPersistenceFinderByC_E_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, expirationDate, new int[] {status}});
 	}
 
 	/**
@@ -2378,29 +2232,12 @@ public class DLFileVersionPersistenceImpl
 	public int countByC_E_S(
 		long companyId, Date expirationDate, int[] statuses) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByC_E_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					companyId, expirationDate, ArrayUtil.sortedUnique(statuses)
-				});
-		}
+		return _collectionPersistenceFinderByC_E_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, expirationDate, ArrayUtil.sortedUnique(statuses)
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_E_S_COMPANYID_2 =
-		"dlFileVersion.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_E_S_EXPIRATIONDATE_1 =
-		"dlFileVersion.expirationDate IS NULL AND ";
-
-	private static final String _FINDER_COLUMN_C_E_S_EXPIRATIONDATE_2 =
-		"dlFileVersion.expirationDate = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_E_S_STATUS_2 =
-		"dlFileVersion.status = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_F_T_V;
 	private FinderPath _finderPathWithoutPaginationFindByG_F_T_V;
@@ -2499,15 +2336,10 @@ public class DLFileVersionPersistenceImpl
 		int end, OrderByComparator<DLFileVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByG_F_T_V.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, folderId, title, version}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_F_T_V.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, folderId, title, version}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2591,14 +2423,9 @@ public class DLFileVersionPersistenceImpl
 	public int countByG_F_T_V(
 		long groupId, long folderId, String title, String version) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			return _collectionPersistenceFinderByG_F_T_V.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, folderId, title, version});
-		}
+		return _collectionPersistenceFinderByG_F_T_V.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, folderId, title, version});
 	}
 
 	public DLFileVersionPersistenceImpl() {
@@ -3386,4 +3213,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-220129492
+// LIFERAY-SERVICE-BUILDER-HASH:-736134692

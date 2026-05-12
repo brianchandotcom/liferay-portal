@@ -962,12 +962,6 @@ public class LaunchSetPersistenceImpl
 			new Object[] {companyId, ArrayUtil.sortedUnique(statuses)});
 	}
 
-	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
-		"launchSet.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
-		"launchSet.status = ?";
-
 	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<LaunchSet> _uniquePersistenceFinderByERC_C;
 
@@ -1573,4 +1567,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1186008346
+// LIFERAY-SERVICE-BUILDER-HASH:-2036199311

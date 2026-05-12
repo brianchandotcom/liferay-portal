@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImp
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -237,13 +231,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -304,13 +293,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	public DDMFormInstanceRecord fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -428,14 +412,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -503,13 +482,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -590,14 +564,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -661,13 +630,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFormInstanceId;
@@ -751,14 +715,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByFormInstanceId.find(
-				finderCache, new Object[] {formInstanceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFormInstanceId.find(
+			finderCache, new Object[] {formInstanceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -822,13 +781,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public int countByFormInstanceId(long formInstanceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByFormInstanceId.count(
-				finderCache, new Object[] {formInstanceId});
-		}
+		return _collectionPersistenceFinderByFormInstanceId.count(
+			finderCache, new Object[] {formInstanceId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByU_F;
@@ -916,14 +870,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByU_F.find(
-				finderCache, new Object[] {userId, formInstanceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByU_F.find(
+			finderCache, new Object[] {userId, formInstanceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -993,13 +942,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public int countByU_F(long userId, long formInstanceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByU_F.count(
-				finderCache, new Object[] {userId, formInstanceId});
-		}
+		return _collectionPersistenceFinderByU_F.count(
+			finderCache, new Object[] {userId, formInstanceId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByF_F;
@@ -1089,14 +1033,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByF_F.find(
-				finderCache, new Object[] {formInstanceId, formInstanceVersion},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByF_F.find(
+			finderCache, new Object[] {formInstanceId, formInstanceVersion},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1166,14 +1105,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public int countByF_F(long formInstanceId, String formInstanceVersion) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceRecord.class)) {
-
-			return _collectionPersistenceFinderByF_F.count(
-				finderCache,
-				new Object[] {formInstanceId, formInstanceVersion});
-		}
+		return _collectionPersistenceFinderByF_F.count(
+			finderCache, new Object[] {formInstanceId, formInstanceVersion});
 	}
 
 	public DDMFormInstanceRecordPersistenceImpl() {
@@ -1777,4 +1710,4 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1260171945
+// LIFERAY-SERVICE-BUILDER-HASH:-262805531

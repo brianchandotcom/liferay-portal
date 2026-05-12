@@ -13,7 +13,6 @@ import com.liferay.layout.seo.model.impl.LayoutSEOSiteModelImpl;
 import com.liferay.layout.seo.service.persistence.LayoutSEOSitePersistence;
 import com.liferay.layout.seo.service.persistence.LayoutSEOSiteUtil;
 import com.liferay.layout.seo.service.persistence.impl.constants.LayoutSEOPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class LayoutSEOSitePersistenceImpl
 		OrderByComparator<LayoutSEOSite> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOSite.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -232,13 +226,8 @@ public class LayoutSEOSitePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOSite.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -298,13 +287,8 @@ public class LayoutSEOSitePersistenceImpl
 	public LayoutSEOSite fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOSite.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -419,14 +403,9 @@ public class LayoutSEOSitePersistenceImpl
 		OrderByComparator<LayoutSEOSite> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOSite.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -494,13 +473,8 @@ public class LayoutSEOSitePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOSite.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathFetchByGroupId;
@@ -555,13 +529,8 @@ public class LayoutSEOSitePersistenceImpl
 	 */
 	@Override
 	public LayoutSEOSite fetchByGroupId(long groupId, boolean useFinderCache) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOSite.class)) {
-
-			return _uniquePersistenceFinderByGroupId.fetch(
-				finderCache, new Object[] {groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByGroupId.fetch(
+			finderCache, new Object[] {groupId}, useFinderCache);
 	}
 
 	/**
@@ -1050,4 +1019,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:224239831
+// LIFERAY-SERVICE-BUILDER-HASH:-369953909

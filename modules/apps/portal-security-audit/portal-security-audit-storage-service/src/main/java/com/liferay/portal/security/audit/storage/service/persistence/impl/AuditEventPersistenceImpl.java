@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -487,13 +485,10 @@ public class AuditEventPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AuditEvent exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AuditEventPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return dummyFinderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:550248359
+// LIFERAY-SERVICE-BUILDER-HASH:1365205996

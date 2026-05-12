@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -701,9 +699,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ContactsLayoutTemplate exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ContactsLayoutTemplatePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"settings", "type"});
 
@@ -713,4 +708,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1983989177
+// LIFERAY-SERVICE-BUILDER-HASH:1755053302

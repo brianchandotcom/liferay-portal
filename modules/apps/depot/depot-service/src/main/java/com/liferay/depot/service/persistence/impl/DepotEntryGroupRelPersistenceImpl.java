@@ -13,7 +13,6 @@ import com.liferay.depot.model.impl.DepotEntryGroupRelModelImpl;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -236,13 +230,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -302,13 +291,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	public DepotEntryGroupRel fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -423,14 +407,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -498,13 +477,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
@@ -586,14 +560,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByDepotEntryId.find(
-				finderCache, new Object[] {depotEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDepotEntryId.find(
+			finderCache, new Object[] {depotEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -657,13 +626,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByDepotEntryId(long depotEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByDepotEntryId.count(
-				finderCache, new Object[] {depotEntryId});
-		}
+		return _collectionPersistenceFinderByDepotEntryId.count(
+			finderCache, new Object[] {depotEntryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByToGroupId;
@@ -744,14 +708,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByToGroupId.find(
-				finderCache, new Object[] {toGroupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByToGroupId.find(
+			finderCache, new Object[] {toGroupId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -815,13 +774,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByToGroupId(long toGroupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByToGroupId.count(
-				finderCache, new Object[] {toGroupId});
-		}
+		return _collectionPersistenceFinderByToGroupId.count(
+			finderCache, new Object[] {toGroupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByDDMSA_TGI;
@@ -912,14 +866,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByDDMSA_TGI.find(
-				finderCache, new Object[] {ddmStructuresAvailable, toGroupId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByDDMSA_TGI.find(
+			finderCache, new Object[] {ddmStructuresAvailable, toGroupId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -993,13 +942,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	public int countByDDMSA_TGI(
 		boolean ddmStructuresAvailable, long toGroupId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByDDMSA_TGI.count(
-				finderCache, new Object[] {ddmStructuresAvailable, toGroupId});
-		}
+		return _collectionPersistenceFinderByDDMSA_TGI.count(
+			finderCache, new Object[] {ddmStructuresAvailable, toGroupId});
 	}
 
 	private FinderPath _finderPathFetchByD_TGI;
@@ -1061,14 +1005,9 @@ public class DepotEntryGroupRelPersistenceImpl
 	public DepotEntryGroupRel fetchByD_TGI(
 		long depotEntryId, long toGroupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _uniquePersistenceFinderByD_TGI.fetch(
-				finderCache, new Object[] {depotEntryId, toGroupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByD_TGI.fetch(
+			finderCache, new Object[] {depotEntryId, toGroupId},
+			useFinderCache);
 	}
 
 	/**
@@ -1186,14 +1125,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByS_TGI.find(
-				finderCache, new Object[] {searchable, toGroupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByS_TGI.find(
+			finderCache, new Object[] {searchable, toGroupId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1263,13 +1197,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByS_TGI(boolean searchable, long toGroupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByS_TGI.count(
-				finderCache, new Object[] {searchable, toGroupId});
-		}
+		return _collectionPersistenceFinderByS_TGI.count(
+			finderCache, new Object[] {searchable, toGroupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByTGI_T;
@@ -1355,14 +1284,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		OrderByComparator<DepotEntryGroupRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByTGI_T.find(
-				finderCache, new Object[] {toGroupId, type}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByTGI_T.find(
+			finderCache, new Object[] {toGroupId, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1430,13 +1354,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public int countByTGI_T(long toGroupId, int type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			return _collectionPersistenceFinderByTGI_T.count(
-				finderCache, new Object[] {toGroupId, type});
-		}
+		return _collectionPersistenceFinderByTGI_T.count(
+			finderCache, new Object[] {toGroupId, type});
 	}
 
 	public DepotEntryGroupRelPersistenceImpl() {
@@ -2080,4 +1999,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2028684836
+// LIFERAY-SERVICE-BUILDER-HASH:591678768

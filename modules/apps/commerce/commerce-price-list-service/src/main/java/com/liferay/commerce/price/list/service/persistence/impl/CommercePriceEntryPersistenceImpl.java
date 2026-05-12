@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryUtil;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -176,14 +175,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -246,13 +240,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
@@ -338,14 +327,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -413,13 +397,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -500,14 +479,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -571,13 +545,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCommercePriceListId;
@@ -661,14 +630,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByCommercePriceListId.find(
-				finderCache, new Object[] {commercePriceListId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCommercePriceListId.find(
+			finderCache, new Object[] {commercePriceListId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -735,13 +699,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCommercePriceListId(long commercePriceListId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByCommercePriceListId.count(
-				finderCache, new Object[] {commercePriceListId});
-		}
+		return _collectionPersistenceFinderByCommercePriceListId.count(
+			finderCache, new Object[] {commercePriceListId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceUuid;
@@ -825,14 +784,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByCPInstanceUuid.find(
-				finderCache, new Object[] {CPInstanceUuid}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPInstanceUuid.find(
+			finderCache, new Object[] {CPInstanceUuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -896,13 +850,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPInstanceUuid(String CPInstanceUuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByCPInstanceUuid.count(
-				finderCache, new Object[] {CPInstanceUuid});
-		}
+		return _collectionPersistenceFinderByCPInstanceUuid.count(
+			finderCache, new Object[] {CPInstanceUuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -992,14 +941,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {commercePriceListId, CPInstanceUuid},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {commercePriceListId, CPInstanceUuid},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1069,14 +1013,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long commercePriceListId, String CPInstanceUuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache,
-				new Object[] {commercePriceListId, CPInstanceUuid});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {commercePriceListId, CPInstanceUuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByLtD_S;
@@ -1161,14 +1099,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByLtD_S.find(
-				finderCache, new Object[] {displayDate, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLtD_S.find(
+			finderCache, new Object[] {displayDate, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1236,13 +1169,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLtD_S(Date displayDate, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByLtD_S.count(
-				finderCache, new Object[] {displayDate, status});
-		}
+		return _collectionPersistenceFinderByLtD_S.count(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByLtE_S;
@@ -1329,14 +1257,9 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByLtE_S.find(
-				finderCache, new Object[] {expirationDate, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLtE_S.find(
+			finderCache, new Object[] {expirationDate, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1406,13 +1329,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLtE_S(Date expirationDate, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByLtE_S.count(
-				finderCache, new Object[] {expirationDate, status});
-		}
+		return _collectionPersistenceFinderByLtE_S.count(
+			finderCache, new Object[] {expirationDate, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_S;
@@ -1508,15 +1426,10 @@ public class CommercePriceEntryPersistenceImpl
 		int end, OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_S.find(
-				finderCache,
-				new Object[] {commercePriceListId, CPInstanceUuid, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_S.find(
+			finderCache,
+			new Object[] {commercePriceListId, CPInstanceUuid, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1596,14 +1509,9 @@ public class CommercePriceEntryPersistenceImpl
 	public int countByC_C_S(
 		long commercePriceListId, String CPInstanceUuid, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C_S.count(
-				finderCache,
-				new Object[] {commercePriceListId, CPInstanceUuid, status});
-		}
+		return _collectionPersistenceFinderByC_C_S.count(
+			finderCache,
+			new Object[] {commercePriceListId, CPInstanceUuid, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_Q_U;
@@ -1701,15 +1609,10 @@ public class CommercePriceEntryPersistenceImpl
 		OrderByComparator<CommercePriceEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByC_Q_U.find(
-				finderCache,
-				new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_Q_U.find(
+			finderCache,
+			new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1789,14 +1692,9 @@ public class CommercePriceEntryPersistenceImpl
 	public int countByC_Q_U(
 		String CPInstanceUuid, BigDecimal quantity, String unitOfMeasureKey) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _collectionPersistenceFinderByC_Q_U.count(
-				finderCache,
-				new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey});
-		}
+		return _collectionPersistenceFinderByC_Q_U.count(
+			finderCache,
+			new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey});
 	}
 
 	private FinderPath _finderPathFetchByERC_C;
@@ -1861,14 +1759,9 @@ public class CommercePriceEntryPersistenceImpl
 	public CommercePriceEntry fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CommercePriceEntry.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				finderCache, new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -2723,4 +2616,4 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:30707780
+// LIFERAY-SERVICE-BUILDER-HASH:-40742727

@@ -13,7 +13,6 @@ import com.liferay.fragment.model.impl.FragmentEntryVersionModelImpl;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -177,14 +176,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByFragmentEntryId.find(
-				finderCache, new Object[] {fragmentEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFragmentEntryId.find(
+			finderCache, new Object[] {fragmentEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -248,13 +242,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByFragmentEntryId(long fragmentEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByFragmentEntryId.count(
-				finderCache, new Object[] {fragmentEntryId});
-		}
+		return _collectionPersistenceFinderByFragmentEntryId.count(
+			finderCache, new Object[] {fragmentEntryId});
 	}
 
 	private FinderPath _finderPathFetchByFragmentEntryId_Version;
@@ -320,14 +309,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public FragmentEntryVersion fetchByFragmentEntryId_Version(
 		long fragmentEntryId, int version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _uniquePersistenceFinderByFragmentEntryId_Version.fetch(
-				finderCache, new Object[] {fragmentEntryId, version},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByFragmentEntryId_Version.fetch(
+			finderCache, new Object[] {fragmentEntryId, version},
+			useFinderCache);
 	}
 
 	/**
@@ -440,14 +424,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -511,13 +490,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUuid_Version;
@@ -605,14 +579,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_Version.find(
-				finderCache, new Object[] {uuid, version}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_Version.find(
+			finderCache, new Object[] {uuid, version}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -680,13 +649,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_Version(String uuid, int version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_Version.count(
-				finderCache, new Object[] {uuid, version});
-		}
+		return _collectionPersistenceFinderByUuid_Version.count(
+			finderCache, new Object[] {uuid, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUUID_G;
@@ -771,14 +735,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUUID_G.find(
-				finderCache, new Object[] {uuid, groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -846,13 +805,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUUID_G.count(
-				finderCache, new Object[] {uuid, groupId});
-		}
+		return _collectionPersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G_Version;
@@ -920,14 +874,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public FragmentEntryVersion fetchByUUID_G_Version(
 		String uuid, long groupId, int version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _uniquePersistenceFinderByUUID_G_Version.fetch(
-				finderCache, new Object[] {uuid, groupId, version},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G_Version.fetch(
+			finderCache, new Object[] {uuid, groupId, version}, useFinderCache);
 	}
 
 	/**
@@ -1048,14 +996,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1123,13 +1066,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C_Version;
@@ -1222,14 +1160,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_C_Version.find(
-				finderCache, new Object[] {uuid, companyId, version}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C_Version.find(
+			finderCache, new Object[] {uuid, companyId, version}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1305,13 +1238,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C_Version(String uuid, long companyId, int version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByUuid_C_Version.count(
-				finderCache, new Object[] {uuid, companyId, version});
-		}
+		return _collectionPersistenceFinderByUuid_C_Version.count(
+			finderCache, new Object[] {uuid, companyId, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -1392,14 +1320,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1463,13 +1386,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Version;
@@ -1557,14 +1475,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByGroupId_Version.find(
-				finderCache, new Object[] {groupId, version}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId_Version.find(
+			finderCache, new Object[] {groupId, version}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1632,13 +1545,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId_Version(long groupId, int version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByGroupId_Version.count(
-				finderCache, new Object[] {groupId, version});
-		}
+		return _collectionPersistenceFinderByGroupId_Version.count(
+			finderCache, new Object[] {groupId, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFragmentCollectionId;
@@ -1723,14 +1631,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByFragmentCollectionId.find(
-				finderCache, new Object[] {fragmentCollectionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFragmentCollectionId.find(
+			finderCache, new Object[] {fragmentCollectionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1798,13 +1701,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByFragmentCollectionId(long fragmentCollectionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByFragmentCollectionId.count(
-				finderCache, new Object[] {fragmentCollectionId});
-		}
+		return _collectionPersistenceFinderByFragmentCollectionId.count(
+			finderCache, new Object[] {fragmentCollectionId});
 	}
 
 	private FinderPath
@@ -1896,15 +1794,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByFragmentCollectionId_Version.
-				find(
-					finderCache, new Object[] {fragmentCollectionId, version},
-					start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFragmentCollectionId_Version.find(
+			finderCache, new Object[] {fragmentCollectionId, version}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1981,14 +1873,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByFragmentCollectionId_Version(
 		long fragmentCollectionId, int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByFragmentCollectionId_Version.
-				count(
-					finderCache, new Object[] {fragmentCollectionId, version});
-		}
+		return _collectionPersistenceFinderByFragmentCollectionId_Version.count(
+			finderCache, new Object[] {fragmentCollectionId, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByType;
@@ -2066,14 +1952,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByType.find(
-				finderCache, new Object[] {type}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByType.find(
+			finderCache, new Object[] {type}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2135,13 +2016,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByType(int type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByType.count(
-				finderCache, new Object[] {type});
-		}
+		return _collectionPersistenceFinderByType.count(
+			finderCache, new Object[] {type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByType_Version;
@@ -2229,14 +2105,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByType_Version.find(
-				finderCache, new Object[] {type, version}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByType_Version.find(
+			finderCache, new Object[] {type, version}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2304,13 +2175,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByType_Version(int type, int version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByType_Version.count(
-				finderCache, new Object[] {type, version});
-		}
+		return _collectionPersistenceFinderByType_Version.count(
+			finderCache, new Object[] {type, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI;
@@ -2399,14 +2265,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI.find(
-				finderCache, new Object[] {groupId, fragmentCollectionId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI.find(
+			finderCache, new Object[] {groupId, fragmentCollectionId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2476,13 +2337,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByG_FCI(long groupId, long fragmentCollectionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI.count(
-				finderCache, new Object[] {groupId, fragmentCollectionId});
-		}
+		return _collectionPersistenceFinderByG_FCI.count(
+			finderCache, new Object[] {groupId, fragmentCollectionId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_Version;
@@ -2578,15 +2434,9 @@ public class FragmentEntryVersionPersistenceImpl
 		int end, OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_Version.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, version}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_Version.find(
+			finderCache, new Object[] {groupId, fragmentCollectionId, version},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2664,14 +2514,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_Version(
 		long groupId, long fragmentCollectionId, int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_Version.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, version});
-		}
+		return _collectionPersistenceFinderByG_FCI_Version.count(
+			finderCache, new Object[] {groupId, fragmentCollectionId, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FEK;
@@ -2760,14 +2604,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FEK.find(
-				finderCache, new Object[] {groupId, fragmentEntryKey}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FEK.find(
+			finderCache, new Object[] {groupId, fragmentEntryKey}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2837,13 +2676,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByG_FEK(long groupId, String fragmentEntryKey) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FEK.count(
-				finderCache, new Object[] {groupId, fragmentEntryKey});
-		}
+		return _collectionPersistenceFinderByG_FEK.count(
+			finderCache, new Object[] {groupId, fragmentEntryKey});
 	}
 
 	private FinderPath _finderPathFetchByG_FEK_Version;
@@ -2912,14 +2746,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, String fragmentEntryKey, int version,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _uniquePersistenceFinderByG_FEK_Version.fetch(
-				finderCache, new Object[] {groupId, fragmentEntryKey, version},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_FEK_Version.fetch(
+			finderCache, new Object[] {groupId, fragmentEntryKey, version},
+			useFinderCache);
 	}
 
 	/**
@@ -3050,14 +2879,9 @@ public class FragmentEntryVersionPersistenceImpl
 		int end, OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN.find(
-				finderCache, new Object[] {groupId, fragmentCollectionId, name},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN.find(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3135,14 +2959,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_LikeN(
 		long groupId, long fragmentCollectionId, String name) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, name});
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN.count(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_LikeN_Version;
@@ -3244,15 +3062,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN_Version.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, name, version},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN_Version.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, version}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3341,14 +3154,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_LikeN_Version(
 		long groupId, long fragmentCollectionId, String name, int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN_Version.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, name, version});
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN_Version.count(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T;
@@ -3443,14 +3251,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T.find(
-				finderCache, new Object[] {groupId, fragmentCollectionId, type},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_T.find(
+			finderCache, new Object[] {groupId, fragmentCollectionId, type},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3528,14 +3331,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_T(
 		long groupId, long fragmentCollectionId, int type) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, type});
-		}
+		return _collectionPersistenceFinderByG_FCI_T.count(
+			finderCache, new Object[] {groupId, fragmentCollectionId, type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T_Version;
@@ -3637,15 +3434,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T_Version.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, type, version},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_T_Version.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, version}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3731,14 +3523,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_T_Version(
 		long groupId, long fragmentCollectionId, int type, int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T_Version.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, type, version});
-		}
+		return _collectionPersistenceFinderByG_FCI_T_Version.count(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_S;
@@ -3834,15 +3621,9 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_S.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, status}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_S.find(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3920,14 +3701,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_S.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, status});
-		}
+		return _collectionPersistenceFinderByG_FCI_S.count(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_S_Version;
@@ -4029,15 +3804,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_S_Version.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, status, version},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_S_Version.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, status, version},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4123,14 +3893,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_S_Version(
 		long groupId, long fragmentCollectionId, int status, int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_S_Version.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, status, version});
-		}
+		return _collectionPersistenceFinderByG_FCI_S_Version.count(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, status, version});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_LikeN_S;
@@ -4232,15 +3997,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN_S.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, name, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN_S.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4324,14 +4084,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_LikeN_S(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN_S.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, name, status});
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN_S.count(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_LikeN_S_Version;
@@ -4439,17 +4194,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN_S_Version.find(
-				finderCache,
-				new Object[] {
-					groupId, fragmentCollectionId, name, status, version
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN_S_Version.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status, version},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4548,16 +4296,11 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name, int status,
 		int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_LikeN_S_Version.count(
-				finderCache,
-				new Object[] {
-					groupId, fragmentCollectionId, name, status, version
-				});
-		}
+		return _collectionPersistenceFinderByG_FCI_LikeN_S_Version.count(
+			finderCache,
+			new Object[] {
+				groupId, fragmentCollectionId, name, status, version
+			});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T_S;
@@ -4659,15 +4402,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T_S.find(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, type, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_T_S.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4751,14 +4489,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public int countByG_FCI_T_S(
 		long groupId, long fragmentCollectionId, int type, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T_S.count(
-				finderCache,
-				new Object[] {groupId, fragmentCollectionId, type, status});
-		}
+		return _collectionPersistenceFinderByG_FCI_T_S.count(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_FCI_T_S_Version;
@@ -4866,17 +4599,10 @@ public class FragmentEntryVersionPersistenceImpl
 		OrderByComparator<FragmentEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T_S_Version.find(
-				finderCache,
-				new Object[] {
-					groupId, fragmentCollectionId, type, status, version
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_FCI_T_S_Version.find(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status, version},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4975,16 +4701,11 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int type, int status,
 		int version) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntryVersion.class)) {
-
-			return _collectionPersistenceFinderByG_FCI_T_S_Version.count(
-				finderCache,
-				new Object[] {
-					groupId, fragmentCollectionId, type, status, version
-				});
-		}
+		return _collectionPersistenceFinderByG_FCI_T_S_Version.count(
+			finderCache,
+			new Object[] {
+				groupId, fragmentCollectionId, type, status, version
+			});
 	}
 
 	public FragmentEntryVersionPersistenceImpl() {
@@ -6582,4 +6303,4 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-378769029
+// LIFERAY-SERVICE-BUILDER-HASH:-38932810

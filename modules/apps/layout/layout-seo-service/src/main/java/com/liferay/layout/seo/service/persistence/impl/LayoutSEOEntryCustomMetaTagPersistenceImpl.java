@@ -13,7 +13,6 @@ import com.liferay.layout.seo.model.impl.LayoutSEOEntryCustomMetaTagModelImpl;
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryCustomMetaTagPersistence;
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryCustomMetaTagUtil;
 import com.liferay.layout.seo.service.persistence.impl.constants.LayoutSEOPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -167,14 +164,9 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 		OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOEntryCustomMetaTag.class)) {
-
-			return _collectionPersistenceFinderByG_L.find(
-				finderCache, new Object[] {groupId, layoutSEOEntryId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_L.find(
+			finderCache, new Object[] {groupId, layoutSEOEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -244,13 +236,8 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	 */
 	@Override
 	public int countByG_L(long groupId, long layoutSEOEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					LayoutSEOEntryCustomMetaTag.class)) {
-
-			return _collectionPersistenceFinderByG_L.count(
-				finderCache, new Object[] {groupId, layoutSEOEntryId});
-		}
+		return _collectionPersistenceFinderByG_L.count(
+			finderCache, new Object[] {groupId, layoutSEOEntryId});
 	}
 
 	public LayoutSEOEntryCustomMetaTagPersistenceImpl() {
@@ -614,13 +601,10 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSEOEntryCustomMetaTag exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSEOEntryCustomMetaTagPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-423846004
+// LIFERAY-SERVICE-BUILDER-HASH:-1621336301

@@ -13,7 +13,6 @@ import com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersistence;
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryUtil;
 import com.liferay.adaptive.media.image.service.persistence.impl.constants.AMImageEntryPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -231,13 +225,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -297,13 +286,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -418,14 +402,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -493,13 +472,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -578,14 +552,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -647,13 +616,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -734,14 +698,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -803,13 +762,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByConfigurationUuid;
@@ -893,14 +847,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByConfigurationUuid.find(
-				finderCache, new Object[] {configurationUuid}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByConfigurationUuid.find(
+			finderCache, new Object[] {configurationUuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -966,13 +915,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByConfigurationUuid(String configurationUuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByConfigurationUuid.count(
-				finderCache, new Object[] {configurationUuid});
-		}
+		return _collectionPersistenceFinderByConfigurationUuid.count(
+			finderCache, new Object[] {configurationUuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByFileVersionId;
@@ -1054,14 +998,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByFileVersionId.find(
-				finderCache, new Object[] {fileVersionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFileVersionId.find(
+			finderCache, new Object[] {fileVersionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1124,13 +1063,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByFileVersionId(long fileVersionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByFileVersionId.count(
-				finderCache, new Object[] {fileVersionId});
-		}
+		return _collectionPersistenceFinderByFileVersionId.count(
+			finderCache, new Object[] {fileVersionId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -1219,14 +1153,9 @@ public class AMImageEntryPersistenceImpl
 		OrderByComparator<AMImageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {companyId, configurationUuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {companyId, configurationUuid}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1296,13 +1225,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, String configurationUuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {companyId, configurationUuid});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {companyId, configurationUuid});
 	}
 
 	private FinderPath _finderPathFetchByC_F;
@@ -1365,14 +1289,9 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByC_F(
 		String configurationUuid, long fileVersionId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AMImageEntry.class)) {
-
-			return _uniquePersistenceFinderByC_F.fetch(
-				finderCache, new Object[] {configurationUuid, fileVersionId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_F.fetch(
+			finderCache, new Object[] {configurationUuid, fileVersionId},
+			useFinderCache);
 	}
 
 	/**
@@ -2004,4 +1923,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2011660895
+// LIFERAY-SERVICE-BUILDER-HASH:758473369

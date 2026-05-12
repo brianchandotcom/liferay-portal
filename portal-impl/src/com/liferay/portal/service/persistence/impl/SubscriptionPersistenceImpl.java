@@ -968,18 +968,6 @@ public class SubscriptionPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_C_U_C_C_COMPANYID_2 =
-		"subscription.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_C_C_USERID_2 =
-		"subscription.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2 =
-		"subscription.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_C_C_CLASSPK_2 =
-		"subscription.classPK = ?";
-
 	public SubscriptionPersistenceImpl() {
 		setModelClass(Subscription.class);
 
@@ -1413,4 +1401,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1828366375
+// LIFERAY-SERVICE-BUILDER-HASH:-1236318560

@@ -1746,4 +1746,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-348404751
+// LIFERAY-SERVICE-BUILDER-HASH:1506085045

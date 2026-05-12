@@ -13,7 +13,6 @@ import com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl;
 import com.liferay.json.storage.service.persistence.JSONStorageEntryPersistence;
 import com.liferay.json.storage.service.persistence.JSONStorageEntryUtil;
 import com.liferay.json.storage.service.persistence.impl.constants.JSONStorePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -167,14 +166,9 @@ public class JSONStorageEntryPersistenceImpl
 		OrderByComparator<JSONStorageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _collectionPersistenceFinderByCN_CPK.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCN_CPK.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -243,13 +237,8 @@ public class JSONStorageEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCN_CPK(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _collectionPersistenceFinderByCN_CPK.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByCN_CPK.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_CN_I_T_VL;
@@ -355,15 +344,10 @@ public class JSONStorageEntryPersistenceImpl
 		OrderByComparator<JSONStorageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _collectionPersistenceFinderByC_CN_I_T_VL.find(
-				finderCache,
-				new Object[] {companyId, classNameId, index, type, valueLong},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_CN_I_T_VL.find(
+			finderCache,
+			new Object[] {companyId, classNameId, index, type, valueLong},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -452,14 +436,9 @@ public class JSONStorageEntryPersistenceImpl
 	public int countByC_CN_I_T_VL(
 		long companyId, long classNameId, int index, int type, long valueLong) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _collectionPersistenceFinderByC_CN_I_T_VL.count(
-				finderCache,
-				new Object[] {companyId, classNameId, index, type, valueLong});
-		}
+		return _collectionPersistenceFinderByC_CN_I_T_VL.count(
+			finderCache,
+			new Object[] {companyId, classNameId, index, type, valueLong});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_CN_K_T_VL;
@@ -566,15 +545,10 @@ public class JSONStorageEntryPersistenceImpl
 		OrderByComparator<JSONStorageEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _collectionPersistenceFinderByC_CN_K_T_VL.find(
-				finderCache,
-				new Object[] {companyId, classNameId, key, type, valueLong},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_CN_K_T_VL.find(
+			finderCache,
+			new Object[] {companyId, classNameId, key, type, valueLong}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -665,14 +639,9 @@ public class JSONStorageEntryPersistenceImpl
 		long companyId, long classNameId, String key, int type,
 		long valueLong) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _collectionPersistenceFinderByC_CN_K_T_VL.count(
-				finderCache,
-				new Object[] {companyId, classNameId, key, type, valueLong});
-		}
+		return _collectionPersistenceFinderByC_CN_K_T_VL.count(
+			finderCache,
+			new Object[] {companyId, classNameId, key, type, valueLong});
 	}
 
 	private FinderPath _finderPathFetchByCN_CPK_P_I_K;
@@ -753,17 +722,12 @@ public class JSONStorageEntryPersistenceImpl
 		long classNameId, long classPK, long parentJSONStorageEntryId,
 		int index, String key, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JSONStorageEntry.class)) {
-
-			return _uniquePersistenceFinderByCN_CPK_P_I_K.fetch(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, parentJSONStorageEntryId, index, key
-				},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByCN_CPK_P_I_K.fetch(
+			finderCache,
+			new Object[] {
+				classNameId, classPK, parentJSONStorageEntryId, index, key
+			},
+			useFinderCache);
 	}
 
 	/**
@@ -1344,4 +1308,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1814271384
+// LIFERAY-SERVICE-BUILDER-HASH:-37370872

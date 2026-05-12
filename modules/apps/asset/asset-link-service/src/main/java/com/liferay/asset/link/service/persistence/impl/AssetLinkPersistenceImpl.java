@@ -13,7 +13,6 @@ import com.liferay.asset.link.model.impl.AssetLinkModelImpl;
 import com.liferay.asset.link.service.persistence.AssetLinkPersistence;
 import com.liferay.asset.link.service.persistence.AssetLinkUtil;
 import com.liferay.asset.link.service.persistence.impl.constants.AssetPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -162,14 +161,9 @@ public class AssetLinkPersistenceImpl
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByEntryId1.find(
-				finderCache, new Object[] {entryId1}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByEntryId1.find(
+			finderCache, new Object[] {entryId1}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -231,13 +225,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByEntryId1(long entryId1) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByEntryId1.count(
-				finderCache, new Object[] {entryId1});
-		}
+		return _collectionPersistenceFinderByEntryId1.count(
+			finderCache, new Object[] {entryId1});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByEntryId2;
@@ -316,14 +305,9 @@ public class AssetLinkPersistenceImpl
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByEntryId2.find(
-				finderCache, new Object[] {entryId2}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByEntryId2.find(
+			finderCache, new Object[] {entryId2}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -385,13 +369,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByEntryId2(long entryId2) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByEntryId2.count(
-				finderCache, new Object[] {entryId2});
-		}
+		return _collectionPersistenceFinderByEntryId2.count(
+			finderCache, new Object[] {entryId2});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByE_E;
@@ -477,14 +456,9 @@ public class AssetLinkPersistenceImpl
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByE_E.find(
-				finderCache, new Object[] {entryId1, entryId2}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByE_E.find(
+			finderCache, new Object[] {entryId1, entryId2}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -552,13 +526,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByE_E(long entryId1, long entryId2) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByE_E.count(
-				finderCache, new Object[] {entryId1, entryId2});
-		}
+		return _collectionPersistenceFinderByE_E.count(
+			finderCache, new Object[] {entryId1, entryId2});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByE1_T;
@@ -643,14 +612,9 @@ public class AssetLinkPersistenceImpl
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByE1_T.find(
-				finderCache, new Object[] {entryId1, type}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByE1_T.find(
+			finderCache, new Object[] {entryId1, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -718,13 +682,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByE1_T(long entryId1, int type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByE1_T.count(
-				finderCache, new Object[] {entryId1, type});
-		}
+		return _collectionPersistenceFinderByE1_T.count(
+			finderCache, new Object[] {entryId1, type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByE2_T;
@@ -809,14 +768,9 @@ public class AssetLinkPersistenceImpl
 		OrderByComparator<AssetLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByE2_T.find(
-				finderCache, new Object[] {entryId2, type}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByE2_T.find(
+			finderCache, new Object[] {entryId2, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -884,13 +838,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public int countByE2_T(long entryId2, int type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _collectionPersistenceFinderByE2_T.count(
-				finderCache, new Object[] {entryId2, type});
-		}
+		return _collectionPersistenceFinderByE2_T.count(
+			finderCache, new Object[] {entryId2, type});
 	}
 
 	private FinderPath _finderPathFetchByE_E_T;
@@ -953,14 +902,9 @@ public class AssetLinkPersistenceImpl
 	public AssetLink fetchByE_E_T(
 		long entryId1, long entryId2, int type, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetLink.class)) {
-
-			return _uniquePersistenceFinderByE_E_T.fetch(
-				finderCache, new Object[] {entryId1, entryId2, type},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByE_E_T.fetch(
+			finderCache, new Object[] {entryId1, entryId2, type},
+			useFinderCache);
 	}
 
 	/**
@@ -1503,4 +1447,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1710760806
+// LIFERAY-SERVICE-BUILDER-HASH:981482305

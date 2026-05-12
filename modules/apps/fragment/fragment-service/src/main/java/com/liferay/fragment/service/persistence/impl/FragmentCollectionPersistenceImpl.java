@@ -14,7 +14,6 @@ import com.liferay.fragment.model.impl.FragmentCollectionModelImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentCollectionUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -177,14 +176,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -247,13 +241,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -313,13 +302,8 @@ public class FragmentCollectionPersistenceImpl
 	public FragmentCollection fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -434,14 +418,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -509,13 +488,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -596,14 +570,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {new long[] {groupId}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -731,14 +700,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -760,13 +724,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {new long[] {groupId}});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {new long[] {groupId}});
 	}
 
 	/**
@@ -777,17 +736,9 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long[] groupIds) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"fragmentCollection.groupId = ?";
 
 	private FinderPath _finderPathFetchByG_FCK;
 	private UniquePersistenceFinder<FragmentCollection>
@@ -851,14 +802,9 @@ public class FragmentCollectionPersistenceImpl
 	public FragmentCollection fetchByG_FCK(
 		long groupId, String fragmentCollectionKey, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _uniquePersistenceFinderByG_FCK.fetch(
-				finderCache, new Object[] {groupId, fragmentCollectionKey},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_FCK.fetch(
+			finderCache, new Object[] {groupId, fragmentCollectionKey},
+			useFinderCache);
 	}
 
 	/**
@@ -974,14 +920,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.find(
-				finderCache, new Object[] {new long[] {groupId}, name}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LikeN.find(
+			finderCache, new Object[] {new long[] {groupId}, name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1122,15 +1063,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.find(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), name}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LikeN.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), name},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1154,13 +1089,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByG_LikeN(long groupId, String name) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.count(
-				finderCache, new Object[] {new long[] {groupId}, name});
-		}
+		return _collectionPersistenceFinderByG_LikeN.count(
+			finderCache, new Object[] {new long[] {groupId}, name});
 	}
 
 	/**
@@ -1172,24 +1102,9 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByG_LikeN(long[] groupIds, String name) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN.count(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), name});
-		}
+		return _collectionPersistenceFinderByG_LikeN.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), name});
 	}
-
-	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 =
-		"fragmentCollection.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 =
-		"fragmentCollection.name LIKE ?";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 =
-		"(fragmentCollection.name IS NULL OR fragmentCollection.name LIKE '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_M;
 	private FinderPath _finderPathWithoutPaginationFindByG_M;
@@ -1276,14 +1191,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_M.find(
-				finderCache, new Object[] {new long[] {groupId}, marketplace},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_M.find(
+			finderCache, new Object[] {new long[] {groupId}, marketplace},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1424,15 +1334,10 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_M.find(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), marketplace},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_M.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), marketplace}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1456,13 +1361,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByG_M(long groupId, boolean marketplace) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_M.count(
-				finderCache, new Object[] {new long[] {groupId}, marketplace});
-		}
+		return _collectionPersistenceFinderByG_M.count(
+			finderCache, new Object[] {new long[] {groupId}, marketplace});
 	}
 
 	/**
@@ -1474,21 +1374,10 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByG_M(long[] groupIds, boolean marketplace) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_M.count(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), marketplace});
-		}
+		return _collectionPersistenceFinderByG_M.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), marketplace});
 	}
-
-	private static final String _FINDER_COLUMN_G_M_GROUPID_2 =
-		"fragmentCollection.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_M_MARKETPLACE_2 =
-		"fragmentCollection.marketplace = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_LikeN_M;
 	private FinderPath _finderPathWithPaginationCountByG_LikeN_M;
@@ -1579,15 +1468,9 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN_M.find(
-				finderCache,
-				new Object[] {new long[] {groupId}, name, marketplace}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LikeN_M.find(
+			finderCache, new Object[] {new long[] {groupId}, name, marketplace},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1738,17 +1621,10 @@ public class FragmentCollectionPersistenceImpl
 		OrderByComparator<FragmentCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN_M.find(
-				finderCache,
-				new Object[] {
-					ArrayUtil.sortedUnique(groupIds), name, marketplace
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LikeN_M.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), name, marketplace},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1779,14 +1655,9 @@ public class FragmentCollectionPersistenceImpl
 	public int countByG_LikeN_M(
 		long groupId, String name, boolean marketplace) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN_M.count(
-				finderCache,
-				new Object[] {new long[] {groupId}, name, marketplace});
-		}
+		return _collectionPersistenceFinderByG_LikeN_M.count(
+			finderCache,
+			new Object[] {new long[] {groupId}, name, marketplace});
 	}
 
 	/**
@@ -1801,29 +1672,10 @@ public class FragmentCollectionPersistenceImpl
 	public int countByG_LikeN_M(
 		long[] groupIds, String name, boolean marketplace) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _collectionPersistenceFinderByG_LikeN_M.count(
-				finderCache,
-				new Object[] {
-					ArrayUtil.sortedUnique(groupIds), name, marketplace
-				});
-		}
+		return _collectionPersistenceFinderByG_LikeN_M.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), name, marketplace});
 	}
-
-	private static final String _FINDER_COLUMN_G_LIKEN_M_GROUPID_2 =
-		"fragmentCollection.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_M_NAME_2 =
-		"fragmentCollection.name LIKE ? AND ";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_M_NAME_3 =
-		"(fragmentCollection.name IS NULL OR fragmentCollection.name LIKE '') AND ";
-
-	private static final String _FINDER_COLUMN_G_LIKEN_M_MARKETPLACE_2 =
-		"fragmentCollection.marketplace = ?";
 
 	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<FragmentCollection>
@@ -1887,14 +1739,9 @@ public class FragmentCollectionPersistenceImpl
 	public FragmentCollection fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				finderCache, new Object[] {externalReferenceCode, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -2621,4 +2468,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1306911455
+// LIFERAY-SERVICE-BUILDER-HASH:-1396661718

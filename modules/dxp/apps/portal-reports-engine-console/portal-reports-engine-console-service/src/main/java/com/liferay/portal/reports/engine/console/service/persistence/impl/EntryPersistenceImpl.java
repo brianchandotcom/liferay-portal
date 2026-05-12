@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -303,14 +301,8 @@ public class EntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		EntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_ENTRY =
 		"SELECT entry FROM Entry entry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -318,4 +310,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1319932996
+// LIFERAY-SERVICE-BUILDER-HASH:264337746

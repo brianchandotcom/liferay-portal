@@ -13,7 +13,6 @@ import com.liferay.knowledge.base.model.impl.KBCommentModelImpl;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
 import com.liferay.knowledge.base.service.persistence.KBCommentUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -166,14 +165,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -234,13 +228,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -299,13 +288,8 @@ public class KBCommentPersistenceImpl
 	public KBComment fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -420,14 +404,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -495,13 +474,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -580,14 +554,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -648,13 +617,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C;
@@ -740,14 +704,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByG_C.find(
-				finderCache, new Object[] {groupId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C.find(
+			finderCache, new Object[] {groupId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -816,13 +775,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByG_C(long groupId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByG_C.count(
-				finderCache, new Object[] {groupId, classNameId});
-		}
+		return _collectionPersistenceFinderByG_C.count(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
@@ -907,14 +861,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByG_S.find(
-				finderCache, new Object[] {groupId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_S.find(
+			finderCache, new Object[] {groupId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -982,13 +931,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByG_S(long groupId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByG_S.count(
-				finderCache, new Object[] {groupId, status});
-		}
+		return _collectionPersistenceFinderByG_S.count(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -1074,14 +1018,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1150,13 +1089,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByU_C_C;
@@ -1249,14 +1183,9 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByU_C_C.find(
-				finderCache, new Object[] {userId, classNameId, classPK}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByU_C_C.find(
+			finderCache, new Object[] {userId, classNameId, classPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1330,13 +1259,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByU_C_C(long userId, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByU_C_C.count(
-				finderCache, new Object[] {userId, classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByU_C_C.count(
+			finderCache, new Object[] {userId, classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_S;
@@ -1429,15 +1353,10 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByC_C_S.find(
-				finderCache,
-				new Object[] {classNameId, classPK, new int[] {status}}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_S.find(
+			finderCache,
+			new Object[] {classNameId, classPK, new int[] {status}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1590,17 +1509,12 @@ public class KBCommentPersistenceImpl
 		OrderByComparator<KBComment> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByC_C_S.find(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, ArrayUtil.sortedUnique(statuses)
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_S.find(
+			finderCache,
+			new Object[] {
+				classNameId, classPK, ArrayUtil.sortedUnique(statuses)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1627,14 +1541,9 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_S(long classNameId, long classPK, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByC_C_S.count(
-				finderCache,
-				new Object[] {classNameId, classPK, new int[] {status}});
-		}
+		return _collectionPersistenceFinderByC_C_S.count(
+			finderCache,
+			new Object[] {classNameId, classPK, new int[] {status}});
 	}
 
 	/**
@@ -1647,26 +1556,12 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_S(long classNameId, long classPK, int[] statuses) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBComment.class)) {
-
-			return _collectionPersistenceFinderByC_C_S.count(
-				finderCache,
-				new Object[] {
-					classNameId, classPK, ArrayUtil.sortedUnique(statuses)
-				});
-		}
+		return _collectionPersistenceFinderByC_C_S.count(
+			finderCache,
+			new Object[] {
+				classNameId, classPK, ArrayUtil.sortedUnique(statuses)
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_S_CLASSNAMEID_2 =
-		"kbComment.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_S_CLASSPK_2 =
-		"kbComment.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_S_STATUS_2 =
-		"kbComment.status = ?";
 
 	public KBCommentPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2308,4 +2203,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:268317730
+// LIFERAY-SERVICE-BUILDER-HASH:-1864493241

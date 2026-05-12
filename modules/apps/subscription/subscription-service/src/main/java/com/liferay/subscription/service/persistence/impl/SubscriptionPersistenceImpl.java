@@ -5,7 +5,6 @@
 
 package com.liferay.subscription.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -162,14 +161,9 @@ public class SubscriptionPersistenceImpl
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -231,13 +225,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
@@ -315,14 +304,9 @@ public class SubscriptionPersistenceImpl
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByUserId.find(
-				finderCache, new Object[] {userId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUserId.find(
+			finderCache, new Object[] {userId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -384,13 +368,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByUserId.count(
-				finderCache, new Object[] {userId});
-		}
+		return _collectionPersistenceFinderByUserId.count(
+			finderCache, new Object[] {userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
@@ -475,14 +454,9 @@ public class SubscriptionPersistenceImpl
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByG_U.find(
-				finderCache, new Object[] {groupId, userId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_U.find(
+			finderCache, new Object[] {groupId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -550,13 +524,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByG_U.count(
-				finderCache, new Object[] {groupId, userId});
-		}
+		return _collectionPersistenceFinderByG_U.count(
+			finderCache, new Object[] {groupId, userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -642,14 +611,9 @@ public class SubscriptionPersistenceImpl
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {companyId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {companyId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -719,13 +683,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {companyId, classNameId});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByU_C;
@@ -811,14 +770,9 @@ public class SubscriptionPersistenceImpl
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByU_C.find(
-				finderCache, new Object[] {userId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByU_C.find(
+			finderCache, new Object[] {userId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -886,13 +840,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public int countByU_C(long userId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByU_C.count(
-				finderCache, new Object[] {userId, classNameId});
-		}
+		return _collectionPersistenceFinderByU_C.count(
+			finderCache, new Object[] {userId, classNameId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C;
@@ -986,14 +935,9 @@ public class SubscriptionPersistenceImpl
 		OrderByComparator<Subscription> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_C_C.find(
-				finderCache, new Object[] {companyId, classNameId, classPK},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_C.find(
+			finderCache, new Object[] {companyId, classNameId, classPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1067,13 +1011,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long companyId, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_C_C.count(
-				finderCache, new Object[] {companyId, classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C_C.count(
+			finderCache, new Object[] {companyId, classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_U_C_C;
@@ -1198,15 +1137,10 @@ public class SubscriptionPersistenceImpl
 			}
 		}
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_U_C_C.find(
-				finderCache,
-				new Object[] {companyId, userId, classNameId, classPKs}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_U_C_C.find(
+			finderCache,
+			new Object[] {companyId, userId, classNameId, classPKs}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1274,15 +1208,9 @@ public class SubscriptionPersistenceImpl
 		long companyId, long userId, long classNameId, long classPK,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _uniquePersistenceFinderByC_U_C_C.fetch(
-				finderCache,
-				new Object[] {companyId, userId, classNameId, classPK},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_U_C_C.fetch(
+			finderCache, new Object[] {companyId, userId, classNameId, classPK},
+			useFinderCache);
 	}
 
 	/**
@@ -1318,16 +1246,11 @@ public class SubscriptionPersistenceImpl
 	public int countByC_U_C_C(
 		long companyId, long userId, long classNameId, long classPK) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_U_C_C.count(
-				finderCache,
-				new Object[] {
-					companyId, userId, classNameId, new long[] {classPK}
-				});
-		}
+		return _collectionPersistenceFinderByC_U_C_C.count(
+			finderCache,
+			new Object[] {
+				companyId, userId, classNameId, new long[] {classPK}
+			});
 	}
 
 	/**
@@ -1343,30 +1266,12 @@ public class SubscriptionPersistenceImpl
 	public int countByC_U_C_C(
 		long companyId, long userId, long classNameId, long[] classPKs) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					Subscription.class)) {
-
-			return _collectionPersistenceFinderByC_U_C_C.count(
-				finderCache,
-				new Object[] {
-					companyId, userId, classNameId,
-					ArrayUtil.sortedUnique(classPKs)
-				});
-		}
+		return _collectionPersistenceFinderByC_U_C_C.count(
+			finderCache,
+			new Object[] {
+				companyId, userId, classNameId, ArrayUtil.sortedUnique(classPKs)
+			});
 	}
-
-	private static final String _FINDER_COLUMN_C_U_C_C_COMPANYID_2 =
-		"subscription.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_C_C_USERID_2 =
-		"subscription.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2 =
-		"subscription.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_C_C_CLASSPK_2 =
-		"subscription.classPK = ?";
 
 	public SubscriptionPersistenceImpl() {
 		setModelClass(Subscription.class);
@@ -1974,4 +1879,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:705971052
+// LIFERAY-SERVICE-BUILDER-HASH:1331957933

@@ -14,16 +14,13 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,13 +31,13 @@ import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -49,7 +46,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -179,14 +175,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -247,13 +238,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -313,13 +299,8 @@ public class DDMTemplatePersistenceImpl
 	public DDMTemplate fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -434,14 +415,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -509,19 +485,14 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
-	private CollectionPersistenceFinder<DDMTemplate>
+	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -594,14 +565,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -693,95 +659,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByGroupId(groupId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterFind(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			groupId);
 	}
 
 	/**
@@ -803,13 +683,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -820,56 +695,9 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByGroupId(groupId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = findByGroupId(groupId);
-
-			ddmTemplates = InlineSQLHelperUtil.filter(ddmTemplates, groupId);
-
-			return ddmTemplates.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByGroupId.filterCount(
+			finderCache, new Object[] {groupId}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"ddmTemplate.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByClassPK;
 	private FinderPath _finderPathWithoutPaginationFindByClassPK;
@@ -947,14 +775,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByClassPK.find(
-				finderCache, new Object[] {classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByClassPK.find(
+			finderCache, new Object[] {classPK}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1016,13 +839,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByClassPK(long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByClassPK.count(
-				finderCache, new Object[] {classPK});
-		}
+		return _collectionPersistenceFinderByClassPK.count(
+			finderCache, new Object[] {classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByTemplateKey;
@@ -1104,14 +922,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByTemplateKey.find(
-				finderCache, new Object[] {templateKey}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByTemplateKey.find(
+			finderCache, new Object[] {templateKey}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1174,13 +987,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByTemplateKey(String templateKey) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByTemplateKey.count(
-				finderCache, new Object[] {templateKey});
-		}
+		return _collectionPersistenceFinderByTemplateKey.count(
+			finderCache, new Object[] {templateKey});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByType;
@@ -1258,14 +1066,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByType.find(
-				finderCache, new Object[] {type}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByType.find(
+			finderCache, new Object[] {type}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1326,13 +1129,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByType(String type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByType.count(
-				finderCache, new Object[] {type});
-		}
+		return _collectionPersistenceFinderByType.count(
+			finderCache, new Object[] {type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByLanguage;
@@ -1413,14 +1211,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByLanguage.find(
-				finderCache, new Object[] {language}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLanguage.find(
+			finderCache, new Object[] {language}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1482,13 +1275,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByLanguage(String language) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByLanguage.count(
-				finderCache, new Object[] {language});
-		}
+		return _collectionPersistenceFinderByLanguage.count(
+			finderCache, new Object[] {language});
 	}
 
 	private FinderPath _finderPathFetchBySmallImageId;
@@ -1545,13 +1333,8 @@ public class DDMTemplatePersistenceImpl
 	public DDMTemplate fetchBySmallImageId(
 		long smallImageId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _uniquePersistenceFinderBySmallImageId.fetch(
-				finderCache, new Object[] {smallImageId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderBySmallImageId.fetch(
+			finderCache, new Object[] {smallImageId}, useFinderCache);
 	}
 
 	/**
@@ -1584,7 +1367,7 @@ public class DDMTemplatePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C;
 	private FinderPath _finderPathCountByG_C;
-	private CollectionPersistenceFinder<DDMTemplate>
+	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -1664,14 +1447,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C.find(
-				finderCache, new Object[] {groupId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C.find(
+			finderCache, new Object[] {groupId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1771,100 +1549,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C(
-				groupId, classNameId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_CLASSNAMEID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C.filterFind(
+			finderCache, new Object[] {groupId, classNameId}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -1888,13 +1575,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByG_C(long groupId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C.count(
-				finderCache, new Object[] {groupId, classNameId});
-		}
+		return _collectionPersistenceFinderByG_C.count(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -1906,68 +1588,14 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, long classNameId) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_C(groupId, classNameId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = findByG_C(groupId, classNameId);
-
-			ddmTemplates = InlineSQLHelperUtil.filter(ddmTemplates, groupId);
-
-			return ddmTemplates.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_C_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_CLASSNAMEID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C.filterCount(
+			finderCache, new Object[] {groupId, classNameId}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_C_GROUPID_2 =
-		"ddmTemplate.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_CLASSNAMEID_2 =
-		"ddmTemplate.classNameId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_CPK;
 	private FinderPath _finderPathWithoutPaginationFindByG_CPK;
 	private FinderPath _finderPathCountByG_CPK;
-	private CollectionPersistenceFinder<DDMTemplate>
+	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_CPK;
 
 	/**
@@ -2047,14 +1675,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_CPK.find(
-				finderCache, new Object[] {new long[] {groupId}, classPK},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_CPK.find(
+			finderCache, new Object[] {new long[] {groupId}, classPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2164,99 +1787,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_CPK(groupId, classPK, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_CPK(
-					groupId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_CPK_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_CPK_CLASSPK_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classPK);
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_CPK.filterFind(
+			finderCache, new Object[] {groupId, classPK}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -2311,112 +1844,11 @@ public class DDMTemplatePersistenceImpl
 		long[] groupIds, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return findByG_CPK(
-				groupIds, classPK, start, end, orderByComparator);
-		}
+		groupIds = ArrayUtil.sortedUnique(groupIds);
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_CPK(
-					groupIds, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator),
-				groupIds);
-		}
-
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		if (groupIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_G_CPK_GROUPID_7);
-
-			sb.append(StringUtil.merge(groupIds));
-
-			sb.append(")");
-
-			sb.append(")");
-
-			sb.append(WHERE_AND);
-		}
-
-		sb.append(_FINDER_COLUMN_G_CPK_CLASSPK_2);
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classPK);
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_CPK.filterFind(
+			finderCache, new Object[] {groupIds, classPK}, start, end,
+			orderByComparator, groupIds);
 	}
 
 	/**
@@ -2500,15 +1932,10 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_CPK.find(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), classPK}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_CPK.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), classPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2532,13 +1959,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByG_CPK(long groupId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_CPK.count(
-				finderCache, new Object[] {new long[] {groupId}, classPK});
-		}
+		return _collectionPersistenceFinderByG_CPK.count(
+			finderCache, new Object[] {new long[] {groupId}, classPK});
 	}
 
 	/**
@@ -2550,14 +1972,9 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByG_CPK(long[] groupIds, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_CPK.count(
-				finderCache,
-				new Object[] {ArrayUtil.sortedUnique(groupIds), classPK});
-		}
+		return _collectionPersistenceFinderByG_CPK.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), classPK});
 	}
 
 	/**
@@ -2569,56 +1986,8 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_CPK(long groupId, long classPK) {
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_CPK(groupId, classPK);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = findByG_CPK(groupId, classPK);
-
-			ddmTemplates = InlineSQLHelperUtil.filter(ddmTemplates, groupId);
-
-			return ddmTemplates.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_CPK_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_CPK_CLASSPK_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classPK);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_CPK.filterCount(
+			finderCache, new Object[] {groupId, classPK}, groupId);
 	}
 
 	/**
@@ -2630,90 +1999,16 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int filterCountByG_CPK(long[] groupIds, long classPK) {
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return countByG_CPK(groupIds, classPK);
-		}
+		groupIds = ArrayUtil.sortedUnique(groupIds);
 
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = InlineSQLHelperUtil.filter(
-				findByG_CPK(groupIds, classPK), groupIds);
-
-			return ddmTemplates.size();
-		}
-
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		if (groupIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_G_CPK_GROUPID_7);
-
-			sb.append(StringUtil.merge(groupIds));
-
-			sb.append(")");
-
-			sb.append(")");
-
-			sb.append(WHERE_AND);
-		}
-
-		sb.append(_FINDER_COLUMN_G_CPK_CLASSPK_2);
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classPK);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_CPK.filterCount(
+			finderCache, new Object[] {groupIds, classPK}, groupIds);
 	}
-
-	private static final String _FINDER_COLUMN_G_CPK_GROUPID_2 =
-		"ddmTemplate.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_CPK_GROUPID_7 =
-		"ddmTemplate.groupId IN (";
-
-	private static final String _FINDER_COLUMN_G_CPK_CLASSPK_2 =
-		"ddmTemplate.classPK = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
 	private FinderPath _finderPathCountByG_C_C;
-	private CollectionPersistenceFinder<DDMTemplate>
+	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C_C;
 
 	/**
@@ -2800,15 +2095,10 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.find(
-				finderCache,
-				new Object[] {new long[] {groupId}, classNameId, classPK},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C.find(
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, classPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2931,104 +2221,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C_C(
-				groupId, classNameId, classPK, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C_C(
-					groupId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(6);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C.filterFind(
+			finderCache, new Object[] {groupId, classNameId, classPK}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3090,116 +2285,11 @@ public class DDMTemplatePersistenceImpl
 		long[] groupIds, long classNameId, long classPK, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return findByG_C_C(
-				groupIds, classNameId, classPK, start, end, orderByComparator);
-		}
+		groupIds = ArrayUtil.sortedUnique(groupIds);
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C_C(
-					groupIds, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupIds);
-		}
-
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		if (groupIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_G_C_C_GROUPID_7);
-
-			sb.append(StringUtil.merge(groupIds));
-
-			sb.append(")");
-
-			sb.append(")");
-
-			sb.append(WHERE_AND);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C.filterFind(
+			finderCache, new Object[] {groupIds, classNameId, classPK}, start,
+			end, orderByComparator, groupIds);
 	}
 
 	/**
@@ -3291,17 +2381,12 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.find(
-				finderCache,
-				new Object[] {
-					ArrayUtil.sortedUnique(groupIds), classNameId, classPK
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C.find(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds), classNameId, classPK
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3328,14 +2413,9 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByG_C_C(long groupId, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.count(
-				finderCache,
-				new Object[] {new long[] {groupId}, classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByG_C_C.count(
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, classPK});
 	}
 
 	/**
@@ -3348,16 +2428,11 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByG_C_C(long[] groupIds, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.count(
-				finderCache,
-				new Object[] {
-					ArrayUtil.sortedUnique(groupIds), classNameId, classPK
-				});
-		}
+		return _collectionPersistenceFinderByG_C_C.count(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds), classNameId, classPK
+			});
 	}
 
 	/**
@@ -3372,61 +2447,8 @@ public class DDMTemplatePersistenceImpl
 	public int filterCountByG_C_C(
 		long groupId, long classNameId, long classPK) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_C_C(groupId, classNameId, classPK);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = findByG_C_C(
-				groupId, classNameId, classPK);
-
-			ddmTemplates = InlineSQLHelperUtil.filter(ddmTemplates, groupId);
-
-			return ddmTemplates.size();
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C.filterCount(
+			finderCache, new Object[] {groupId, classNameId, classPK}, groupId);
 	}
 
 	/**
@@ -3441,92 +2463,12 @@ public class DDMTemplatePersistenceImpl
 	public int filterCountByG_C_C(
 		long[] groupIds, long classNameId, long classPK) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
-			return countByG_C_C(groupIds, classNameId, classPK);
-		}
+		groupIds = ArrayUtil.sortedUnique(groupIds);
 
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = InlineSQLHelperUtil.filter(
-				findByG_C_C(groupIds, classNameId, classPK), groupIds);
-
-			return ddmTemplates.size();
-		}
-
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		if (groupIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_G_C_C_GROUPID_7);
-
-			sb.append(StringUtil.merge(groupIds));
-
-			sb.append(")");
-
-			sb.append(")");
-
-			sb.append(WHERE_AND);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupIds);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C.filterCount(
+			finderCache, new Object[] {groupIds, classNameId, classPK},
+			groupIds);
 	}
-
-	private static final String _FINDER_COLUMN_G_C_C_GROUPID_2 =
-		"ddmTemplate.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_GROUPID_7 =
-		"ddmTemplate.groupId IN (";
-
-	private static final String _FINDER_COLUMN_G_C_C_CLASSNAMEID_2 =
-		"ddmTemplate.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_CLASSPK_2 =
-		"ddmTemplate.classPK = ?";
 
 	private FinderPath _finderPathFetchByG_C_T;
 	private UniquePersistenceFinder<DDMTemplate>
@@ -3594,14 +2536,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, String templateKey,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _uniquePersistenceFinderByG_C_T.fetch(
-				finderCache, new Object[] {groupId, classNameId, templateKey},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_C_T.fetch(
+			finderCache, new Object[] {groupId, classNameId, templateKey},
+			useFinderCache);
 	}
 
 	/**
@@ -3729,14 +2666,9 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByC_C_T.find(
-				finderCache, new Object[] {classNameId, classPK, type}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_T.find(
+			finderCache, new Object[] {classNameId, classPK, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3810,19 +2742,14 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public int countByC_C_T(long classNameId, long classPK, String type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByC_C_T.count(
-				finderCache, new Object[] {classNameId, classPK, type});
-		}
+		return _collectionPersistenceFinderByC_C_T.count(
+			finderCache, new Object[] {classNameId, classPK, type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T;
 	private FinderPath _finderPathCountByG_C_C_T;
-	private CollectionPersistenceFinder<DDMTemplate>
+	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C_C_T;
 
 	/**
@@ -3916,14 +2843,9 @@ public class DDMTemplatePersistenceImpl
 		int end, OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_T.find(
-				finderCache, new Object[] {groupId, classNameId, classPK, type},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C_T.find(
+			finderCache, new Object[] {groupId, classNameId, classPK, type},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4039,122 +2961,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, long classPK, String type, int start,
 		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C_C_T(
-				groupId, classNameId, classPK, type, start, end,
-				orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C_C_T(
-					groupId, classNameId, classPK, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		type = Objects.toString(type, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				6 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(7);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_CLASSPK_2);
-
-		boolean bindType = false;
-
-		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_C_T_TYPE_3_SQL);
-		}
-		else {
-			bindType = true;
-
-			sb.append(_FINDER_COLUMN_G_C_C_T_TYPE_2_SQL);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			if (bindType) {
-				queryPos.add(type);
-			}
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C_T.filterFind(
+			finderCache, new Object[] {groupId, classNameId, classPK, type},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -4186,14 +2995,8 @@ public class DDMTemplatePersistenceImpl
 	public int countByG_C_C_T(
 		long groupId, long classNameId, long classPK, String type) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_T.count(
-				finderCache,
-				new Object[] {groupId, classNameId, classPK, type});
-		}
+		return _collectionPersistenceFinderByG_C_C_T.count(
+			finderCache, new Object[] {groupId, classNameId, classPK, type});
 	}
 
 	/**
@@ -4209,99 +3012,15 @@ public class DDMTemplatePersistenceImpl
 	public int filterCountByG_C_C_T(
 		long groupId, long classNameId, long classPK, String type) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_C_C_T(groupId, classNameId, classPK, type);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = findByG_C_C_T(
-				groupId, classNameId, classPK, type);
-
-			ddmTemplates = InlineSQLHelperUtil.filter(ddmTemplates, groupId);
-
-			return ddmTemplates.size();
-		}
-
-		type = Objects.toString(type, "");
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_CLASSPK_2);
-
-		boolean bindType = false;
-
-		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_C_T_TYPE_3_SQL);
-		}
-		else {
-			bindType = true;
-
-			sb.append(_FINDER_COLUMN_G_C_C_T_TYPE_2_SQL);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			if (bindType) {
-				queryPos.add(type);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C_T.filterCount(
+			finderCache, new Object[] {groupId, classNameId, classPK, type},
+			groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_C_C_T_GROUPID_2 =
-		"ddmTemplate.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_CLASSNAMEID_2 =
-		"ddmTemplate.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_CLASSPK_2 =
-		"ddmTemplate.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_2_SQL =
-		"ddmTemplate.type_ = ?";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_3_SQL =
-		"(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_T_M;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T_M;
 	private FinderPath _finderPathCountByG_C_C_T_M;
-	private CollectionPersistenceFinder<DDMTemplate>
+	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C_C_T_M;
 
 	/**
@@ -4400,15 +3119,10 @@ public class DDMTemplatePersistenceImpl
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_T_M.find(
-				finderCache,
-				new Object[] {groupId, classNameId, classPK, type, mode}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C_T_M.find(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, type, mode}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4531,138 +3245,10 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, long classPK, String type, String mode,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_C_C_T_M(
-				groupId, classNameId, classPK, type, mode, start, end,
-				orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByG_C_C_T_M(
-					groupId, classNameId, classPK, type, mode,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator),
-				groupId);
-		}
-
-		type = Objects.toString(type, "");
-		mode = Objects.toString(mode, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				7 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(8);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
-
-		boolean bindType = false;
-
-		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3_SQL);
-		}
-		else {
-			bindType = true;
-
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2_SQL);
-		}
-
-		boolean bindMode = false;
-
-		if (mode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3_SQL);
-		}
-		else {
-			bindMode = true;
-
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2_SQL);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DDMTemplateModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, DDMTemplateImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, DDMTemplateImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			if (bindType) {
-				queryPos.add(type);
-			}
-
-			if (bindMode) {
-				queryPos.add(mode);
-			}
-
-			return (List<DDMTemplate>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C_T_M.filterFind(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, type, mode}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -4699,14 +3285,9 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, long classPK, String type,
 		String mode) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_T_M.count(
-				finderCache,
-				new Object[] {groupId, classNameId, classPK, type, mode});
-		}
+		return _collectionPersistenceFinderByG_C_C_T_M.count(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, type, mode});
 	}
 
 	/**
@@ -4724,116 +3305,10 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, long classPK, String type,
 		String mode) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DDMTemplate> ddmTemplates = findByG_C_C_T_M(
-				groupId, classNameId, classPK, type, mode);
-
-			ddmTemplates = InlineSQLHelperUtil.filter(ddmTemplates, groupId);
-
-			return ddmTemplates.size();
-		}
-
-		type = Objects.toString(type, "");
-		mode = Objects.toString(mode, "");
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_M_GROUPID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2);
-
-		sb.append(_FINDER_COLUMN_G_C_C_T_M_CLASSPK_2);
-
-		boolean bindType = false;
-
-		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_3_SQL);
-		}
-		else {
-			bindType = true;
-
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_TYPE_2_SQL);
-		}
-
-		boolean bindMode = false;
-
-		if (mode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_MODE_3_SQL);
-		}
-		else {
-			bindMode = true;
-
-			sb.append(_FINDER_COLUMN_G_C_C_T_M_MODE_2_SQL);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DDMTemplate.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(groupId);
-
-			queryPos.add(classNameId);
-
-			queryPos.add(classPK);
-
-			if (bindType) {
-				queryPos.add(type);
-			}
-
-			if (bindMode) {
-				queryPos.add(mode);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByG_C_C_T_M.filterCount(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, type, mode}, groupId);
 	}
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_GROUPID_2 =
-		"ddmTemplate.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_CLASSNAMEID_2 =
-		"ddmTemplate.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_CLASSPK_2 =
-		"ddmTemplate.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_2_SQL =
-		"ddmTemplate.type_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_TYPE_3_SQL =
-		"(ddmTemplate.type_ IS NULL OR ddmTemplate.type_ = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_2_SQL =
-		"ddmTemplate.mode_ = ?";
-
-	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_3_SQL =
-		"(ddmTemplate.mode_ IS NULL OR ddmTemplate.mode_ = '')";
 
 	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<DDMTemplate>
@@ -4895,14 +3370,9 @@ public class DDMTemplatePersistenceImpl
 	public DDMTemplate fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMTemplate.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				finderCache, new Object[] {externalReferenceCode, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -5406,12 +3876,22 @@ public class DDMTemplatePersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByGroupId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByGroupId,
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DDMTEMPLATE_WHERE,
 				_SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DDMTemplateImpl.class, DDMTemplate.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateModelImpl.ORDER_BY_SQL,
+					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId));
@@ -5561,17 +4041,28 @@ public class DDMTemplatePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "classNameId"}, false);
 
-		_collectionPersistenceFinderByG_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C,
-			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
-			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
-			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
-				true, DDMTemplate::getGroupId),
-			new FinderColumn<>(
-				"ddmTemplate.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, true, DDMTemplate::getClassNameId));
+		_collectionPersistenceFinderByG_C =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_C,
+				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
+				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DDMTemplateImpl.class, DDMTemplate.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateModelImpl.ORDER_BY_SQL,
+					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, DDMTemplate::getGroupId),
+				new FinderColumn<>(
+					"ddmTemplate.", "classNameId", FinderColumn.Type.LONG, "=",
+					true, true, DDMTemplate::getClassNameId));
 
 		_finderPathWithPaginationFindByG_CPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CPK",
@@ -5592,17 +4083,29 @@ public class DDMTemplatePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "classPK"}, false);
 
-		_collectionPersistenceFinderByG_CPK = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_CPK,
-			_finderPathWithoutPaginationFindByG_CPK, _finderPathCountByG_CPK,
-			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
-			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new ArrayableFinderColumn<>(
-				"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=", false,
-				true, true, DDMTemplate::getGroupId),
-			new FinderColumn<>(
-				"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=", true,
-				true, DDMTemplate::getClassPK));
+		_collectionPersistenceFinderByG_CPK =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_CPK,
+				_finderPathWithoutPaginationFindByG_CPK,
+				_finderPathCountByG_CPK, _SQL_SELECT_DDMTEMPLATE_WHERE,
+				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DDMTemplateImpl.class, DDMTemplate.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateModelImpl.ORDER_BY_SQL,
+					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new ArrayableFinderColumn<>(
+					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, DDMTemplate::getGroupId),
+				new FinderColumn<>(
+					"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=",
+					true, true, DDMTemplate::getClassPK));
 
 		_finderPathWithPaginationFindByG_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
@@ -5627,20 +4130,32 @@ public class DDMTemplatePersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
 
-		_collectionPersistenceFinderByG_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C_C,
-			_finderPathWithoutPaginationFindByG_C_C, _finderPathCountByG_C_C,
-			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
-			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new ArrayableFinderColumn<>(
-				"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=", false,
-				true, true, DDMTemplate::getGroupId),
-			new FinderColumn<>(
-				"ddmTemplate.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, true, DDMTemplate::getClassNameId),
-			new FinderColumn<>(
-				"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=", true,
-				true, DDMTemplate::getClassPK));
+		_collectionPersistenceFinderByG_C_C =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_C_C,
+				_finderPathWithoutPaginationFindByG_C_C,
+				_finderPathCountByG_C_C, _SQL_SELECT_DDMTEMPLATE_WHERE,
+				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DDMTemplateImpl.class, DDMTemplate.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateModelImpl.ORDER_BY_SQL,
+					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new ArrayableFinderColumn<>(
+					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, DDMTemplate::getGroupId),
+				new FinderColumn<>(
+					"ddmTemplate.", "classNameId", FinderColumn.Type.LONG, "=",
+					true, true, DDMTemplate::getClassNameId),
+				new FinderColumn<>(
+					"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=",
+					true, true, DDMTemplate::getClassPK));
 
 		_finderPathFetchByG_C_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
@@ -5734,12 +4249,22 @@ public class DDMTemplatePersistenceImpl
 			false, null);
 
 		_collectionPersistenceFinderByG_C_C_T =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByG_C_C_T,
 				_finderPathWithoutPaginationFindByG_C_C_T,
 				_finderPathCountByG_C_C_T, _SQL_SELECT_DDMTEMPLATE_WHERE,
 				_SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DDMTemplateImpl.class, DDMTemplate.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateModelImpl.ORDER_BY_SQL,
+					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId),
@@ -5791,12 +4316,22 @@ public class DDMTemplatePersistenceImpl
 			0, 24, false, null);
 
 		_collectionPersistenceFinderByG_C_C_T_M =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByG_C_C_T_M,
 				_finderPathWithoutPaginationFindByG_C_C_T_M,
 				_finderPathCountByG_C_C_T_M, _SQL_SELECT_DDMTEMPLATE_WHERE,
 				_SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DDMTemplateImpl.class, DDMTemplate.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateModelImpl.ORDER_BY_SQL,
+					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId),
@@ -5908,8 +4443,6 @@ public class DDMTemplatePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "DDMTemplate";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "DDMTemplate.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMTemplate exists with the key {";
 
@@ -5925,4 +4458,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-667541974
+// LIFERAY-SERVICE-BUILDER-HASH:641963617

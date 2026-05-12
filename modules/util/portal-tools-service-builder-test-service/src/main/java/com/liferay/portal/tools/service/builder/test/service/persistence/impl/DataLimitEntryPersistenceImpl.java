@@ -8,8 +8,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -274,14 +272,8 @@ public class DataLimitEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		DataLimitEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_DATALIMITENTRY =
 		"SELECT dataLimitEntry FROM DataLimitEntry dataLimitEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DataLimitEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -289,4 +281,4 @@ public class DataLimitEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-316185876
+// LIFERAY-SERVICE-BUILDER-HASH:-1842341408

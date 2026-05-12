@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -162,14 +161,9 @@ public class DDLRecordVersionPersistenceImpl
 		OrderByComparator<DDLRecordVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByRecordId.find(
-				finderCache, new Object[] {recordId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRecordId.find(
+			finderCache, new Object[] {recordId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -232,13 +226,8 @@ public class DDLRecordVersionPersistenceImpl
 	 */
 	@Override
 	public int countByRecordId(long recordId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByRecordId.count(
-				finderCache, new Object[] {recordId});
-		}
+		return _collectionPersistenceFinderByRecordId.count(
+			finderCache, new Object[] {recordId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByR_R;
@@ -327,14 +316,9 @@ public class DDLRecordVersionPersistenceImpl
 		OrderByComparator<DDLRecordVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByR_R.find(
-				finderCache, new Object[] {recordSetId, recordSetVersion},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByR_R.find(
+			finderCache, new Object[] {recordSetId, recordSetVersion}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -404,13 +388,8 @@ public class DDLRecordVersionPersistenceImpl
 	 */
 	@Override
 	public int countByR_R(long recordSetId, String recordSetVersion) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByR_R.count(
-				finderCache, new Object[] {recordSetId, recordSetVersion});
-		}
+		return _collectionPersistenceFinderByR_R.count(
+			finderCache, new Object[] {recordSetId, recordSetVersion});
 	}
 
 	private FinderPath _finderPathFetchByR_V;
@@ -470,13 +449,8 @@ public class DDLRecordVersionPersistenceImpl
 	public DDLRecordVersion fetchByR_V(
 		long recordId, String version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _uniquePersistenceFinderByR_V.fetch(
-				finderCache, new Object[] {recordId, version}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByR_V.fetch(
+			finderCache, new Object[] {recordId, version}, useFinderCache);
 	}
 
 	/**
@@ -590,14 +564,9 @@ public class DDLRecordVersionPersistenceImpl
 		OrderByComparator<DDLRecordVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByR_S.find(
-				finderCache, new Object[] {recordId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByR_S.find(
+			finderCache, new Object[] {recordId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -665,13 +634,8 @@ public class DDLRecordVersionPersistenceImpl
 	 */
 	@Override
 	public int countByR_S(long recordId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByR_S.count(
-				finderCache, new Object[] {recordId, status});
-		}
+		return _collectionPersistenceFinderByR_S.count(
+			finderCache, new Object[] {recordId, status});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByU_R_R_S;
@@ -773,15 +737,10 @@ public class DDLRecordVersionPersistenceImpl
 		OrderByComparator<DDLRecordVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByU_R_R_S.find(
-				finderCache,
-				new Object[] {userId, recordSetId, recordSetVersion, status},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByU_R_R_S.find(
+			finderCache,
+			new Object[] {userId, recordSetId, recordSetVersion, status}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -865,14 +824,9 @@ public class DDLRecordVersionPersistenceImpl
 	public int countByU_R_R_S(
 		long userId, long recordSetId, String recordSetVersion, int status) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecordVersion.class)) {
-
-			return _collectionPersistenceFinderByU_R_R_S.count(
-				finderCache,
-				new Object[] {userId, recordSetId, recordSetVersion, status});
-		}
+		return _collectionPersistenceFinderByU_R_R_S.count(
+			finderCache,
+			new Object[] {userId, recordSetId, recordSetVersion, status});
 	}
 
 	public DDLRecordVersionPersistenceImpl() {
@@ -1384,4 +1338,4 @@ public class DDLRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:188006592
+// LIFERAY-SERVICE-BUILDER-HASH:900029218

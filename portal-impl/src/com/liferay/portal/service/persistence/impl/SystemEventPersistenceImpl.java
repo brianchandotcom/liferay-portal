@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -15,8 +14,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchSystemEventException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -153,14 +150,9 @@ public class SystemEventPersistenceImpl
 		OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -223,13 +215,8 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_S;
@@ -316,15 +303,10 @@ public class SystemEventPersistenceImpl
 		OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByG_S.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, systemEventSetKey}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_S.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, systemEventSetKey}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -395,14 +377,9 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public int countByG_S(long groupId, long systemEventSetKey) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByG_S.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, systemEventSetKey});
-		}
+		return _collectionPersistenceFinderByG_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, systemEventSetKey});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
@@ -495,15 +472,10 @@ public class SystemEventPersistenceImpl
 		OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -578,14 +550,9 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_C(long groupId, long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByG_C_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_T;
@@ -685,15 +652,10 @@ public class SystemEventPersistenceImpl
 		int end, OrderByComparator<SystemEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_T.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, classNameId, classPK, type}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C_T.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -777,14 +739,9 @@ public class SystemEventPersistenceImpl
 	public int countByG_C_C_T(
 		long groupId, long classNameId, long classPK, int type) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_T.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, classNameId, classPK, type});
-		}
+		return _collectionPersistenceFinderByG_C_C_T.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK, type});
 	}
 
 	public SystemEventPersistenceImpl() {
@@ -1227,9 +1184,6 @@ public class SystemEventPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SystemEvent exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SystemEventPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
 
@@ -1239,4 +1193,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-651866019
+// LIFERAY-SERVICE-BUILDER-HASH:-1458829954

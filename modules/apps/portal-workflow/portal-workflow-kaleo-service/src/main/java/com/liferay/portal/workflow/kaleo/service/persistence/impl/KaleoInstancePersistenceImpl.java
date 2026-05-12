@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -164,14 +163,9 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -233,13 +227,8 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
@@ -326,14 +315,9 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByKaleoDefinitionVersionId.find(
-				finderCache, new Object[] {kaleoDefinitionVersionId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.find(
+			finderCache, new Object[] {kaleoDefinitionVersionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -403,13 +387,8 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Override
 	public int countByKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByKaleoDefinitionVersionId.count(
-				finderCache, new Object[] {kaleoDefinitionVersionId});
-		}
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.count(
+			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
@@ -495,14 +474,9 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByC_U.find(
-				finderCache, new Object[] {companyId, userId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_U.find(
+			finderCache, new Object[] {companyId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -570,13 +544,8 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Override
 	public int countByC_U(long companyId, long userId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByC_U.count(
-				finderCache, new Object[] {companyId, userId});
-		}
+		return _collectionPersistenceFinderByC_U.count(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByKDI_C;
@@ -665,14 +634,9 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByKDI_C.find(
-				finderCache, new Object[] {kaleoDefinitionId, completed}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByKDI_C.find(
+			finderCache, new Object[] {kaleoDefinitionId, completed}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -742,13 +706,8 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Override
 	public int countByKDI_C(long kaleoDefinitionId, boolean completed) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByKDI_C.count(
-				finderCache, new Object[] {kaleoDefinitionId, completed});
-		}
+		return _collectionPersistenceFinderByKDI_C.count(
+			finderCache, new Object[] {kaleoDefinitionId, completed});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByKDVI_C;
@@ -839,14 +798,9 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByKDVI_C.find(
-				finderCache, new Object[] {kaleoDefinitionVersionId, completed},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByKDVI_C.find(
+			finderCache, new Object[] {kaleoDefinitionVersionId, completed},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -918,14 +872,8 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Override
 	public int countByKDVI_C(long kaleoDefinitionVersionId, boolean completed) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByKDVI_C.count(
-				finderCache,
-				new Object[] {kaleoDefinitionVersionId, completed});
-		}
+		return _collectionPersistenceFinderByKDVI_C.count(
+			finderCache, new Object[] {kaleoDefinitionVersionId, completed});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCN_CPK;
@@ -1011,14 +959,9 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByCN_CPK.find(
-				finderCache, new Object[] {className, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCN_CPK.find(
+			finderCache, new Object[] {className, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1086,13 +1029,8 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Override
 	public int countByCN_CPK(String className, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByCN_CPK.count(
-				finderCache, new Object[] {className, classPK});
-		}
+		return _collectionPersistenceFinderByCN_CPK.count(
+			finderCache, new Object[] {className, classPK});
 	}
 
 	private FinderPath _finderPathFetchByKII_C_U;
@@ -1161,14 +1099,9 @@ public class KaleoInstancePersistenceImpl
 		long kaleoInstanceId, long companyId, long userId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _uniquePersistenceFinderByKII_C_U.fetch(
-				finderCache, new Object[] {kaleoInstanceId, companyId, userId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByKII_C_U.fetch(
+			finderCache, new Object[] {kaleoInstanceId, companyId, userId},
+			useFinderCache);
 	}
 
 	/**
@@ -1307,18 +1240,13 @@ public class KaleoInstancePersistenceImpl
 		OrderByComparator<KaleoInstance> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByC_KDN_KDV_CD.find(
-				finderCache,
-				new Object[] {
-					companyId, kaleoDefinitionName, kaleoDefinitionVersion,
-					completionDate
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_KDN_KDV_CD.find(
+			finderCache,
+			new Object[] {
+				companyId, kaleoDefinitionName, kaleoDefinitionVersion,
+				completionDate
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1416,17 +1344,12 @@ public class KaleoInstancePersistenceImpl
 		long companyId, String kaleoDefinitionName, int kaleoDefinitionVersion,
 		Date completionDate) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoInstance.class)) {
-
-			return _collectionPersistenceFinderByC_KDN_KDV_CD.count(
-				finderCache,
-				new Object[] {
-					companyId, kaleoDefinitionName, kaleoDefinitionVersion,
-					completionDate
-				});
-		}
+		return _collectionPersistenceFinderByC_KDN_KDV_CD.count(
+			finderCache,
+			new Object[] {
+				companyId, kaleoDefinitionName, kaleoDefinitionVersion,
+				completionDate
+			});
 	}
 
 	public KaleoInstancePersistenceImpl() {
@@ -2068,4 +1991,4 @@ public class KaleoInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1732089438
+// LIFERAY-SERVICE-BUILDER-HASH:475984660

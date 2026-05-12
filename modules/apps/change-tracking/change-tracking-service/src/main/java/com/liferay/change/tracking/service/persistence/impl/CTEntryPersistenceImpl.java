@@ -1270,16 +1270,6 @@ public class CTEntryPersistenceImpl
 			});
 	}
 
-	private static final String _FINDER_COLUMN_NOTC_MCNI_MCPK_CTCOLLECTIONID_2 =
-		"ctEntry.ctCollectionId != ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_NOTC_MCNI_MCPK_MODELCLASSNAMEID_2 =
-			"ctEntry.modelClassNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_NOTC_MCNI_MCPK_MODELCLASSPK_2 =
-		"ctEntry.modelClassPK = ?";
-
 	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CTEntry> _uniquePersistenceFinderByERC_C;
 
@@ -1936,4 +1926,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1127979261
+// LIFERAY-SERVICE-BUILDER-HASH:-259218880

@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefi
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionListTypeDefinitionRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionListTypeDefinitionRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -177,14 +176,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				orderByComparator,
 			boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPSpecificationOptionListTypeDefinitionRel.class)) {
-
-			return _collectionPersistenceFinderByCPSpecificationOptionId.find(
-				finderCache, new Object[] {CPSpecificationOptionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPSpecificationOptionId.find(
+			finderCache, new Object[] {CPSpecificationOptionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -257,13 +251,8 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public int countByCPSpecificationOptionId(long CPSpecificationOptionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPSpecificationOptionListTypeDefinitionRel.class)) {
-
-			return _collectionPersistenceFinderByCPSpecificationOptionId.count(
-				finderCache, new Object[] {CPSpecificationOptionId});
-		}
+		return _collectionPersistenceFinderByCPSpecificationOptionId.count(
+			finderCache, new Object[] {CPSpecificationOptionId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
@@ -354,14 +343,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				orderByComparator,
 			boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPSpecificationOptionListTypeDefinitionRel.class)) {
-
-			return _collectionPersistenceFinderByListTypeDefinitionId.find(
-				finderCache, new Object[] {listTypeDefinitionId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByListTypeDefinitionId.find(
+			finderCache, new Object[] {listTypeDefinitionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -434,13 +418,8 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public int countByListTypeDefinitionId(long listTypeDefinitionId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPSpecificationOptionListTypeDefinitionRel.class)) {
-
-			return _collectionPersistenceFinderByListTypeDefinitionId.count(
-				finderCache, new Object[] {listTypeDefinitionId});
-		}
+		return _collectionPersistenceFinderByListTypeDefinitionId.count(
+			finderCache, new Object[] {listTypeDefinitionId});
 	}
 
 	private FinderPath _finderPathFetchByC_L;
@@ -510,15 +489,10 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		long CPSpecificationOptionId, long listTypeDefinitionId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPSpecificationOptionListTypeDefinitionRel.class)) {
-
-			return _uniquePersistenceFinderByC_L.fetch(
-				finderCache,
-				new Object[] {CPSpecificationOptionId, listTypeDefinitionId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_L.fetch(
+			finderCache,
+			new Object[] {CPSpecificationOptionId, listTypeDefinitionId},
+			useFinderCache);
 	}
 
 	/**
@@ -1024,4 +998,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1964099073
+// LIFERAY-SERVICE-BUILDER-HASH:-1471040321

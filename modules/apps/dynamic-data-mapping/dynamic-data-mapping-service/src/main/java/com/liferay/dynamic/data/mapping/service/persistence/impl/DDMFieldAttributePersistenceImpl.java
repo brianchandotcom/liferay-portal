@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributeUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -163,14 +162,9 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByStorageId.find(
-				finderCache, new Object[] {storageId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByStorageId.find(
+			finderCache, new Object[] {storageId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -234,13 +228,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByStorageId(long storageId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByStorageId.count(
-				finderCache, new Object[] {storageId});
-		}
+		return _collectionPersistenceFinderByStorageId.count(
+			finderCache, new Object[] {storageId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByS_AN;
@@ -329,14 +318,9 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByS_AN.find(
-				finderCache, new Object[] {storageId, attributeName}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByS_AN.find(
+			finderCache, new Object[] {storageId, attributeName}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -406,13 +390,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByS_AN(long storageId, String attributeName) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByS_AN.count(
-				finderCache, new Object[] {storageId, attributeName});
-		}
+		return _collectionPersistenceFinderByS_AN.count(
+			finderCache, new Object[] {storageId, attributeName});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByS_L;
@@ -500,15 +479,9 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByS_L.find(
-				finderCache,
-				new Object[] {storageId, new String[] {languageId}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByS_L.find(
+			finderCache, new Object[] {storageId, new String[] {languageId}},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -649,15 +622,10 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByS_L.find(
-				finderCache,
-				new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByS_L.find(
+			finderCache,
+			new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -681,14 +649,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByS_L(long storageId, String languageId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByS_L.count(
-				finderCache,
-				new Object[] {storageId, new String[] {languageId}});
-		}
+		return _collectionPersistenceFinderByS_L.count(
+			finderCache, new Object[] {storageId, new String[] {languageId}});
 	}
 
 	/**
@@ -700,24 +662,10 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByS_L(long storageId, String[] languageIds) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByS_L.count(
-				finderCache,
-				new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)});
-		}
+		return _collectionPersistenceFinderByS_L.count(
+			finderCache,
+			new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)});
 	}
-
-	private static final String _FINDER_COLUMN_S_L_STORAGEID_2 =
-		"ddmFieldAttribute.storageId = ? AND ";
-
-	private static final String _FINDER_COLUMN_S_L_LANGUAGEID_2 =
-		"ddmFieldAttribute.languageId = ?";
-
-	private static final String _FINDER_COLUMN_S_L_LANGUAGEID_3 =
-		"(ddmFieldAttribute.languageId IS NULL OR ddmFieldAttribute.languageId = '')";
 
 	private FinderPath _finderPathWithPaginationFindByAN_SAV;
 	private FinderPath _finderPathWithoutPaginationFindByAN_SAV;
@@ -807,14 +755,9 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByAN_SAV.find(
-				finderCache, new Object[] {attributeName, smallAttributeValue},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByAN_SAV.find(
+			finderCache, new Object[] {attributeName, smallAttributeValue},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -886,13 +829,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByAN_SAV(String attributeName, String smallAttributeValue) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _collectionPersistenceFinderByAN_SAV.count(
-				finderCache, new Object[] {attributeName, smallAttributeValue});
-		}
+		return _collectionPersistenceFinderByAN_SAV.count(
+			finderCache, new Object[] {attributeName, smallAttributeValue});
 	}
 
 	private FinderPath _finderPathFetchByF_AN_L;
@@ -961,14 +899,9 @@ public class DDMFieldAttributePersistenceImpl
 		long fieldId, String attributeName, String languageId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFieldAttribute.class)) {
-
-			return _uniquePersistenceFinderByF_AN_L.fetch(
-				finderCache, new Object[] {fieldId, attributeName, languageId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByF_AN_L.fetch(
+			finderCache, new Object[] {fieldId, attributeName, languageId},
+			useFinderCache);
 	}
 
 	/**
@@ -1483,4 +1416,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-146000012
+// LIFERAY-SERVICE-BUILDER-HASH:-54098333

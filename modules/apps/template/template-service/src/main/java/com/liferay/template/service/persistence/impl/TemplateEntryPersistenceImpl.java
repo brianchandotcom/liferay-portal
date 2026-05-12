@@ -5,7 +5,6 @@
 
 package com.liferay.template.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -175,14 +174,9 @@ public class TemplateEntryPersistenceImpl
 		OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -244,13 +238,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -310,13 +299,8 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -431,14 +415,9 @@ public class TemplateEntryPersistenceImpl
 		OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -506,13 +485,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -591,14 +565,9 @@ public class TemplateEntryPersistenceImpl
 		OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {new long[] {groupId}}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -725,14 +694,9 @@ public class TemplateEntryPersistenceImpl
 		OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -754,13 +718,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {new long[] {groupId}});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {new long[] {groupId}});
 	}
 
 	/**
@@ -771,17 +730,9 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long[] groupIds) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"templateEntry.groupId = ?";
 
 	private FinderPath _finderPathFetchByDDMTemplateId;
 	private UniquePersistenceFinder<TemplateEntry>
@@ -837,13 +788,8 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry fetchByDDMTemplateId(
 		long ddmTemplateId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _uniquePersistenceFinderByDDMTemplateId.fetch(
-				finderCache, new Object[] {ddmTemplateId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByDDMTemplateId.fetch(
+			finderCache, new Object[] {ddmTemplateId}, useFinderCache);
 	}
 
 	/**
@@ -959,14 +905,9 @@ public class TemplateEntryPersistenceImpl
 		OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByG_IICN.find(
-				finderCache, new Object[] {groupId, infoItemClassName}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_IICN.find(
+			finderCache, new Object[] {groupId, infoItemClassName}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1036,13 +977,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_IICN(long groupId, String infoItemClassName) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByG_IICN.count(
-				finderCache, new Object[] {groupId, infoItemClassName});
-		}
+		return _collectionPersistenceFinderByG_IICN.count(
+			finderCache, new Object[] {groupId, infoItemClassName});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_IICN_IIFVK;
@@ -1141,18 +1077,13 @@ public class TemplateEntryPersistenceImpl
 		int start, int end, OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByG_IICN_IIFVK.find(
-				finderCache,
-				new Object[] {
-					new long[] {groupId}, infoItemClassName,
-					infoItemFormVariationKey
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_IICN_IIFVK.find(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, infoItemClassName,
+				infoItemFormVariationKey
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1316,18 +1247,13 @@ public class TemplateEntryPersistenceImpl
 		OrderByComparator<TemplateEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByG_IICN_IIFVK.find(
-				finderCache,
-				new Object[] {
-					ArrayUtil.sortedUnique(groupIds), infoItemClassName,
-					infoItemFormVariationKey
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_IICN_IIFVK.find(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds), infoItemClassName,
+				infoItemFormVariationKey
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1363,17 +1289,12 @@ public class TemplateEntryPersistenceImpl
 		long groupId, String infoItemClassName,
 		String infoItemFormVariationKey) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByG_IICN_IIFVK.count(
-				finderCache,
-				new Object[] {
-					new long[] {groupId}, infoItemClassName,
-					infoItemFormVariationKey
-				});
-		}
+		return _collectionPersistenceFinderByG_IICN_IIFVK.count(
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, infoItemClassName,
+				infoItemFormVariationKey
+			});
 	}
 
 	/**
@@ -1389,37 +1310,13 @@ public class TemplateEntryPersistenceImpl
 		long[] groupIds, String infoItemClassName,
 		String infoItemFormVariationKey) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _collectionPersistenceFinderByG_IICN_IIFVK.count(
-				finderCache,
-				new Object[] {
-					ArrayUtil.sortedUnique(groupIds), infoItemClassName,
-					infoItemFormVariationKey
-				});
-		}
+		return _collectionPersistenceFinderByG_IICN_IIFVK.count(
+			finderCache,
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds), infoItemClassName,
+				infoItemFormVariationKey
+			});
 	}
-
-	private static final String _FINDER_COLUMN_G_IICN_IIFVK_GROUPID_2 =
-		"templateEntry.groupId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_G_IICN_IIFVK_INFOITEMCLASSNAME_2 =
-			"templateEntry.infoItemClassName = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_G_IICN_IIFVK_INFOITEMCLASSNAME_3 =
-			"(templateEntry.infoItemClassName IS NULL OR templateEntry.infoItemClassName = '') AND ";
-
-	private static final String
-		_FINDER_COLUMN_G_IICN_IIFVK_INFOITEMFORMVARIATIONKEY_2 =
-			"templateEntry.infoItemFormVariationKey = ?";
-
-	private static final String
-		_FINDER_COLUMN_G_IICN_IIFVK_INFOITEMFORMVARIATIONKEY_3 =
-			"(templateEntry.infoItemFormVariationKey IS NULL OR templateEntry.infoItemFormVariationKey = '')";
 
 	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<TemplateEntry>
@@ -1482,14 +1379,9 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TemplateEntry.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				finderCache, new Object[] {externalReferenceCode, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -2181,4 +2073,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:882587862
+// LIFERAY-SERVICE-BUILDER-HASH:-2097295084

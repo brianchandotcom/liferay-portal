@@ -5,7 +5,6 @@
 
 package com.liferay.trash.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -160,14 +159,9 @@ public class TrashEntryPersistenceImpl
 		OrderByComparator<TrashEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -229,13 +223,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -316,14 +305,9 @@ public class TrashEntryPersistenceImpl
 		OrderByComparator<TrashEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -385,13 +369,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_LtCD;
@@ -476,14 +455,9 @@ public class TrashEntryPersistenceImpl
 		OrderByComparator<TrashEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByG_LtCD.find(
-				finderCache, new Object[] {groupId, createDate}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_LtCD.find(
+			finderCache, new Object[] {groupId, createDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -551,13 +525,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_LtCD(long groupId, Date createDate) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByG_LtCD.count(
-				finderCache, new Object[] {groupId, createDate});
-		}
+		return _collectionPersistenceFinderByG_LtCD.count(
+			finderCache, new Object[] {groupId, createDate});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_CN;
@@ -643,14 +612,9 @@ public class TrashEntryPersistenceImpl
 		OrderByComparator<TrashEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByG_CN.find(
-				finderCache, new Object[] {groupId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_CN.find(
+			finderCache, new Object[] {groupId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -719,13 +683,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_CN(long groupId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByG_CN.count(
-				finderCache, new Object[] {groupId, classNameId});
-		}
+		return _collectionPersistenceFinderByG_CN.count(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_CN;
@@ -811,14 +770,9 @@ public class TrashEntryPersistenceImpl
 		OrderByComparator<TrashEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByC_CN.find(
-				finderCache, new Object[] {companyId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_CN.find(
+			finderCache, new Object[] {companyId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -888,13 +842,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_CN(long companyId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _collectionPersistenceFinderByC_CN.count(
-				finderCache, new Object[] {companyId, classNameId});
-		}
+		return _collectionPersistenceFinderByC_CN.count(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	private FinderPath _finderPathFetchByCN_CPK;
@@ -955,14 +904,8 @@ public class TrashEntryPersistenceImpl
 	public TrashEntry fetchByCN_CPK(
 		long classNameId, long classPK, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					TrashEntry.class)) {
-
-			return _uniquePersistenceFinderByCN_CPK.fetch(
-				finderCache, new Object[] {classNameId, classPK},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByCN_CPK.fetch(
+			finderCache, new Object[] {classNameId, classPK}, useFinderCache);
 	}
 
 	/**
@@ -1483,4 +1426,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-214047405
+// LIFERAY-SERVICE-BUILDER-HASH:1877734208

@@ -13,7 +13,6 @@ import com.liferay.change.tracking.sample.model.impl.CTSParentModelImpl;
 import com.liferay.change.tracking.sample.service.persistence.CTSParentPersistence;
 import com.liferay.change.tracking.sample.service.persistence.CTSParentUtil;
 import com.liferay.change.tracking.sample.service.persistence.impl.constants.CTSPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -22,8 +21,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -156,14 +153,9 @@ public class CTSParentPersistenceImpl
 		OrderByComparator<CTSParent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSParent.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -225,13 +217,8 @@ public class CTSParentPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSParent.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -318,14 +305,9 @@ public class CTSParentPersistenceImpl
 		OrderByComparator<CTSParent> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSParent.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {companyId, ctsGrandParentId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {companyId, ctsGrandParentId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -395,13 +377,8 @@ public class CTSParentPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, long ctsGrandParentId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CTSParent.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {companyId, ctsGrandParentId});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {companyId, ctsGrandParentId});
 	}
 
 	public CTSParentPersistenceImpl() {
@@ -758,13 +735,10 @@ public class CTSParentPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTSParent exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTSParentPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1536674437
+// LIFERAY-SERVICE-BUILDER-HASH:-229833473

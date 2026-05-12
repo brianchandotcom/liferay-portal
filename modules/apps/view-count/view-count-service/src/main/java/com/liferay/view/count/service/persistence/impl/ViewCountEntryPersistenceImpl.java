@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -503,9 +501,6 @@ public class ViewCountEntryPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ViewCountEntry exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewCountEntryPersistenceImpl.class);
-
 	private static final Set<String> _compoundPKColumnNames = SetUtil.fromArray(
 		new String[] {"companyId", "classNameId", "classPK"});
 
@@ -515,4 +510,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1325757372
+// LIFERAY-SERVICE-BUILDER-HASH:-211904062

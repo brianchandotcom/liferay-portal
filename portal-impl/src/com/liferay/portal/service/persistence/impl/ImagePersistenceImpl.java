@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -15,8 +14,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -150,14 +147,9 @@ public class ImagePersistenceImpl
 		int size, int start, int end,
 		OrderByComparator<Image> orderByComparator, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Image.class)) {
-
-			return _collectionPersistenceFinderByLtSize.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {size}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLtSize.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {size}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -219,13 +211,8 @@ public class ImagePersistenceImpl
 	 */
 	@Override
 	public int countByLtSize(int size) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Image.class)) {
-
-			return _collectionPersistenceFinderByLtSize.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {size});
-		}
+		return _collectionPersistenceFinderByLtSize.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {size});
 	}
 
 	public ImagePersistenceImpl() {
@@ -535,9 +522,6 @@ public class ImagePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Image exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImagePersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type", "size"});
 
@@ -547,4 +531,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1698265949
+// LIFERAY-SERVICE-BUILDER-HASH:-241274120

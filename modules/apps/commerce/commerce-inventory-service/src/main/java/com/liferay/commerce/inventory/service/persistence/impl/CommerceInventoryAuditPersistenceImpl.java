@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -754,9 +752,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceInventoryAudit exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceInventoryAuditPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryAuditId"});
 
@@ -766,4 +761,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1928826489
+// LIFERAY-SERVICE-BUILDER-HASH:1749146241

@@ -8,8 +8,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchDSLQueryStatusEntryException;
@@ -226,14 +224,8 @@ public class DSLQueryStatusEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		DSLQueryStatusEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_DSLQUERYSTATUSENTRY =
 		"SELECT dslQueryStatusEntry FROM DSLQueryStatusEntry dslQueryStatusEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DSLQueryStatusEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -241,4 +233,4 @@ public class DSLQueryStatusEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:665522132
+// LIFERAY-SERVICE-BUILDER-HASH:-1073123864

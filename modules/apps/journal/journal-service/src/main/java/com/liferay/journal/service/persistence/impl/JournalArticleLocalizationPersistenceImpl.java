@@ -13,7 +13,6 @@ import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
 import com.liferay.journal.service.persistence.JournalArticleLocalizationUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -167,14 +166,9 @@ public class JournalArticleLocalizationPersistenceImpl
 		OrderByComparator<JournalArticleLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
-
-			return _collectionPersistenceFinderByC_A.find(
-				finderCache, new Object[] {companyId, articlePK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_A.find(
+			finderCache, new Object[] {companyId, articlePK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -243,13 +237,8 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByC_A(long companyId, long articlePK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
-
-			return _collectionPersistenceFinderByC_A.count(
-				finderCache, new Object[] {companyId, articlePK});
-		}
+		return _collectionPersistenceFinderByC_A.count(
+			finderCache, new Object[] {companyId, articlePK});
 	}
 
 	private FinderPath _finderPathFetchByC_A_L;
@@ -318,14 +307,9 @@ public class JournalArticleLocalizationPersistenceImpl
 		long companyId, long articlePK, String languageId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					JournalArticleLocalization.class)) {
-
-			return _uniquePersistenceFinderByC_A_L.fetch(
-				finderCache, new Object[] {companyId, articlePK, languageId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_A_L.fetch(
+			finderCache, new Object[] {companyId, articlePK, languageId},
+			useFinderCache);
 	}
 
 	/**
@@ -753,4 +737,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-45554123
+// LIFERAY-SERVICE-BUILDER-HASH:-1880991036

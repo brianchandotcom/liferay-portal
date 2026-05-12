@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -154,14 +153,9 @@ public class LayoutSetPersistenceImpl
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -223,13 +217,8 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByLayoutSetPrototypeUuid;
@@ -314,15 +303,10 @@ public class LayoutSetPersistenceImpl
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByLayoutSetPrototypeUuid.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {layoutSetPrototypeUuid}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByLayoutSetPrototypeUuid.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetPrototypeUuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -390,14 +374,9 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countByLayoutSetPrototypeUuid(String layoutSetPrototypeUuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByLayoutSetPrototypeUuid.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {layoutSetPrototypeUuid});
-		}
+		return _collectionPersistenceFinderByLayoutSetPrototypeUuid.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetPrototypeUuid});
 	}
 
 	private FinderPath _finderPathFetchByG_P;
@@ -457,14 +436,9 @@ public class LayoutSetPersistenceImpl
 	public LayoutSet fetchByG_P(
 		long groupId, boolean privateLayout, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _uniquePersistenceFinderByG_P.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, privateLayout}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_P.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout}, useFinderCache);
 	}
 
 	/**
@@ -584,15 +558,10 @@ public class LayoutSetPersistenceImpl
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByC_L.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, layoutSetPrototypeUuid}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_L.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetPrototypeUuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -664,14 +633,9 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countByC_L(long companyId, String layoutSetPrototypeUuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByC_L.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, layoutSetPrototypeUuid});
-		}
+		return _collectionPersistenceFinderByC_L.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetPrototypeUuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByP_L;
@@ -757,15 +721,10 @@ public class LayoutSetPersistenceImpl
 		OrderByComparator<LayoutSet> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByP_L.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {privateLayout, logoId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByP_L.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {privateLayout, logoId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -836,14 +795,9 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public int countByP_L(boolean privateLayout, long logoId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					LayoutSet.class)) {
-
-			return _collectionPersistenceFinderByP_L.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {privateLayout, logoId});
-		}
+		return _collectionPersistenceFinderByP_L.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {privateLayout, logoId});
 	}
 
 	public LayoutSetPersistenceImpl() {
@@ -1307,4 +1261,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1836984385
+// LIFERAY-SERVICE-BUILDER-HASH:-1719124840

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -1118,9 +1116,6 @@ public class ObjectViewSortColumnPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectViewSortColumn exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ObjectViewSortColumnPersistenceImpl.class);
-
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid"});
 
@@ -1130,4 +1125,4 @@ public class ObjectViewSortColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-542358910
+// LIFERAY-SERVICE-BUILDER-HASH:261385472

@@ -13,24 +13,18 @@ import com.liferay.notification.model.impl.NotificationQueueEntryModelImpl;
 import com.liferay.notification.service.persistence.NotificationQueueEntryPersistence;
 import com.liferay.notification.service.persistence.NotificationQueueEntryUtil;
 import com.liferay.notification.service.persistence.impl.constants.NotificationPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -40,13 +34,10 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -89,7 +80,7 @@ public class NotificationQueueEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
-	private CollectionPersistenceFinder<NotificationQueueEntry>
+	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -260,98 +251,9 @@ public class NotificationQueueEntryPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId(companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, NotificationQueueEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, NotificationQueueEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<NotificationQueueEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -385,63 +287,14 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByCompanyId(companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<NotificationQueueEntry> notificationQueueEntries =
-				findByCompanyId(companyId);
-
-			notificationQueueEntries = InlineSQLHelperUtil.filter(
-				notificationQueueEntries);
-
-			return notificationQueueEntries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			finderCache, new Object[] {companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"notificationQueueEntry.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
 	private FinderPath _finderPathCountByNotificationTemplateId;
-	private CollectionPersistenceFinder<NotificationQueueEntry>
+	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByNotificationTemplateId;
 
 	/**
@@ -623,100 +476,9 @@ public class NotificationQueueEntryPersistenceImpl
 		long notificationTemplateId, int start, int end,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByNotificationTemplateId(
-				notificationTemplateId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByNotificationTemplateId(
-					notificationTemplateId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(
-			_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, NotificationQueueEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, NotificationQueueEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(notificationTemplateId);
-
-			return (List<NotificationQueueEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByNotificationTemplateId.filterFind(
+			finderCache, new Object[] {notificationTemplateId}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -752,64 +514,13 @@ public class NotificationQueueEntryPersistenceImpl
 	public int filterCountByNotificationTemplateId(
 		long notificationTemplateId) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByNotificationTemplateId(notificationTemplateId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<NotificationQueueEntry> notificationQueueEntries =
-				findByNotificationTemplateId(notificationTemplateId);
-
-			notificationQueueEntries = InlineSQLHelperUtil.filter(
-				notificationQueueEntries);
-
-			return notificationQueueEntries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
-
-		sb.append(
-			_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(notificationTemplateId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByNotificationTemplateId.filterCount(
+			finderCache, new Object[] {notificationTemplateId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2 =
-			"notificationQueueEntry.notificationTemplateId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByLtSentDate;
 	private FinderPath _finderPathWithPaginationCountByLtSentDate;
-	private CollectionPersistenceFinder<NotificationQueueEntry>
+	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByLtSentDate;
 
 	/**
@@ -980,109 +691,9 @@ public class NotificationQueueEntryPersistenceImpl
 		Date sentDate, int start, int end,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByLtSentDate(sentDate, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByLtSentDate(
-					sentDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindSentDate = false;
-
-		if (sentDate == null) {
-			sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_1);
-		}
-		else {
-			bindSentDate = true;
-
-			sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, NotificationQueueEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, NotificationQueueEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindSentDate) {
-				queryPos.add(new Timestamp(sentDate.getTime()));
-			}
-
-			return (List<NotificationQueueEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByLtSentDate.filterFind(
+			finderCache, new Object[] {sentDate}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1116,77 +727,14 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByLtSentDate(Date sentDate) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByLtSentDate(sentDate);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<NotificationQueueEntry> notificationQueueEntries =
-				findByLtSentDate(sentDate);
-
-			notificationQueueEntries = InlineSQLHelperUtil.filter(
-				notificationQueueEntries);
-
-			return notificationQueueEntries.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
-
-		boolean bindSentDate = false;
-
-		if (sentDate == null) {
-			sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_1);
-		}
-		else {
-			bindSentDate = true;
-
-			sb.append(_FINDER_COLUMN_LTSENTDATE_SENTDATE_2);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindSentDate) {
-				queryPos.add(new Timestamp(sentDate.getTime()));
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByLtSentDate.filterCount(
+			finderCache, new Object[] {sentDate});
 	}
-
-	private static final String _FINDER_COLUMN_LTSENTDATE_SENTDATE_1 =
-		"notificationQueueEntry.sentDate IS NULL";
-
-	private static final String _FINDER_COLUMN_LTSENTDATE_SENTDATE_2 =
-		"notificationQueueEntry.sentDate < ?";
 
 	private FinderPath _finderPathWithPaginationFindByT_S;
 	private FinderPath _finderPathWithoutPaginationFindByT_S;
 	private FinderPath _finderPathCountByT_S;
-	private CollectionPersistenceFinder<NotificationQueueEntry>
+	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByT_S;
 
 	/**
@@ -1368,115 +916,9 @@ public class NotificationQueueEntryPersistenceImpl
 		String type, int status, int start, int end,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByT_S(type, status, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByT_S(
-					type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		type = Objects.toString(type, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindType = false;
-
-		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_T_S_TYPE_3_SQL);
-		}
-		else {
-			bindType = true;
-
-			sb.append(_FINDER_COLUMN_T_S_TYPE_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_T_S_STATUS_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(NotificationQueueEntryModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, NotificationQueueEntryImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, NotificationQueueEntryImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindType) {
-				queryPos.add(type);
-			}
-
-			queryPos.add(status);
-
-			return (List<NotificationQueueEntry>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByT_S.filterFind(
+			finderCache, new Object[] {type, status}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1513,81 +955,9 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public int filterCountByT_S(String type, int status) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByT_S(type, status);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<NotificationQueueEntry> notificationQueueEntries = findByT_S(
-				type, status);
-
-			notificationQueueEntries = InlineSQLHelperUtil.filter(
-				notificationQueueEntries);
-
-			return notificationQueueEntries.size();
-		}
-
-		type = Objects.toString(type, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE);
-
-		boolean bindType = false;
-
-		if (type.isEmpty()) {
-			sb.append(_FINDER_COLUMN_T_S_TYPE_3_SQL);
-		}
-		else {
-			bindType = true;
-
-			sb.append(_FINDER_COLUMN_T_S_TYPE_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_T_S_STATUS_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), NotificationQueueEntry.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindType) {
-				queryPos.add(type);
-			}
-
-			queryPos.add(status);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByT_S.filterCount(
+			finderCache, new Object[] {type, status});
 	}
-
-	private static final String _FINDER_COLUMN_T_S_TYPE_2_SQL =
-		"notificationQueueEntry.type_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_T_S_TYPE_3_SQL =
-		"(notificationQueueEntry.type_ IS NULL OR notificationQueueEntry.type_ = '') AND ";
-
-	private static final String _FINDER_COLUMN_T_S_STATUS_2 =
-		"notificationQueueEntry.status = ?";
 
 	public NotificationQueueEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1831,7 +1201,7 @@ public class NotificationQueueEntryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByCompanyId,
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId,
@@ -1839,6 +1209,17 @@ public class NotificationQueueEntryPersistenceImpl
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					NotificationQueueEntryImpl.class,
+					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1867,7 +1248,7 @@ public class NotificationQueueEntryPersistenceImpl
 			new String[] {"notificationTemplateId"}, false);
 
 		_collectionPersistenceFinderByNotificationTemplateId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByNotificationTemplateId,
 				_finderPathWithoutPaginationFindByNotificationTemplateId,
 				_finderPathCountByNotificationTemplateId,
@@ -1875,6 +1256,17 @@ public class NotificationQueueEntryPersistenceImpl
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					NotificationQueueEntryImpl.class,
+					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "notificationTemplateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1894,13 +1286,24 @@ public class NotificationQueueEntryPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByLtSentDate =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByLtSentDate, null,
 				_finderPathWithPaginationCountByLtSentDate,
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					NotificationQueueEntryImpl.class,
+					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "sentDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -1925,19 +1328,32 @@ public class NotificationQueueEntryPersistenceImpl
 			new String[] {String.class.getName(), Integer.class.getName()},
 			new String[] {"type_", "status"}, 0, 1, false, null);
 
-		_collectionPersistenceFinderByT_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_S,
-			_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
-			_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-			_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
-			NotificationQueueEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-			"",
-			new FinderColumn<>(
-				"notificationQueueEntry.", "type", FinderColumn.Type.STRING,
-				"=", true, true, NotificationQueueEntry::getType),
-			new FinderColumn<>(
-				"notificationQueueEntry.", "status", FinderColumn.Type.INTEGER,
-				"=", true, true, NotificationQueueEntry::getStatus));
+		_collectionPersistenceFinderByT_S =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByT_S,
+				_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
+				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
+				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					NotificationQueueEntryImpl.class,
+					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
+					NotificationQueueEntryModelImpl.
+						ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"notificationQueueEntry.", "type", FinderColumn.Type.STRING,
+					"=", true, true, NotificationQueueEntry::getType),
+				new FinderColumn<>(
+					"notificationQueueEntry.", "status",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					NotificationQueueEntry::getStatus));
 
 		NotificationQueueEntryUtil.setPersistence(this);
 	}
@@ -2015,14 +1431,8 @@ public class NotificationQueueEntryPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "NotificationQueueEntry";
 
-	private static final String _ORDER_BY_ENTITY_TABLE =
-		"NotificationQueueEntry.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationQueueEntry exists with the key {";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		NotificationQueueEntryPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
@@ -2033,4 +1443,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1274321408
+// LIFERAY-SERVICE-BUILDER-HASH:-1007055021

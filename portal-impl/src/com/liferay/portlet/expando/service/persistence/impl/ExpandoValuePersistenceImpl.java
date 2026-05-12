@@ -10,7 +10,6 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.model.ExpandoValueTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoValueUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -151,14 +150,9 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByTableId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {tableId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByTableId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -221,13 +215,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByTableId(long tableId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByTableId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {tableId});
-		}
+		return _collectionPersistenceFinderByTableId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByColumnId;
@@ -308,14 +297,9 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByColumnId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {columnId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByColumnId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -378,13 +362,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByColumnId(long columnId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByColumnId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {columnId});
-		}
+		return _collectionPersistenceFinderByColumnId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByRowId;
@@ -462,14 +441,9 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByRowId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {rowId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRowId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {rowId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -532,13 +506,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByRowId(long rowId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByRowId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {rowId});
-		}
+		return _collectionPersistenceFinderByRowId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {rowId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByT_C;
@@ -624,15 +593,9 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, columnId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByT_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -701,14 +664,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_C(long tableId, long columnId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, columnId});
-		}
+		return _collectionPersistenceFinderByT_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByT_R;
@@ -793,14 +750,9 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_R.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByT_R.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -869,14 +821,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_R(long tableId, long rowId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_R.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, rowId});
-		}
+		return _collectionPersistenceFinderByT_R.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByT_CPK;
@@ -962,15 +908,9 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_CPK.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, classPK}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByT_CPK.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1039,14 +979,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_CPK(long tableId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_CPK.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, classPK});
-		}
+		return _collectionPersistenceFinderByT_CPK.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK});
 	}
 
 	private FinderPath _finderPathFetchByC_R;
@@ -1105,14 +1039,9 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByC_R(
 		long columnId, long rowId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _uniquePersistenceFinderByC_R.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {columnId, rowId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_R.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId, rowId},
+			useFinderCache);
 	}
 
 	/**
@@ -1227,15 +1156,10 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {classNameId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1305,14 +1229,9 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK});
 	}
 
 	private FinderPath _finderPathFetchByT_C_C;
@@ -1378,14 +1297,9 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByT_C_C(
 		long tableId, long columnId, long classPK, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _uniquePersistenceFinderByT_C_C.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, columnId, classPK}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByT_C_C.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, classPK}, useFinderCache);
 	}
 
 	/**
@@ -1510,15 +1424,10 @@ public class ExpandoValuePersistenceImpl
 		OrderByComparator<ExpandoValue> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_C_D.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, columnId, data}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByT_C_D.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, data}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1593,14 +1502,9 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public int countByT_C_D(long tableId, long columnId, String data) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ExpandoValue.class)) {
-
-			return _collectionPersistenceFinderByT_C_D.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {tableId, columnId, data});
-		}
+		return _collectionPersistenceFinderByT_C_D.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, data});
 	}
 
 	public ExpandoValuePersistenceImpl() {
@@ -2180,4 +2084,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:467402208
+// LIFERAY-SERVICE-BUILDER-HASH:1665029282

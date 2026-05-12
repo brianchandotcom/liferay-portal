@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -231,13 +225,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -296,13 +285,8 @@ public class DDLRecordPersistenceImpl
 	public DDLRecord fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -417,14 +401,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -492,13 +471,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -577,14 +551,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -646,13 +615,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByRecordSetId;
@@ -734,14 +698,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByRecordSetId.find(
-				finderCache, new Object[] {recordSetId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByRecordSetId.find(
+			finderCache, new Object[] {recordSetId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -803,13 +762,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByRecordSetId(long recordSetId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByRecordSetId.count(
-				finderCache, new Object[] {recordSetId});
-		}
+		return _collectionPersistenceFinderByRecordSetId.count(
+			finderCache, new Object[] {recordSetId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByR_U;
@@ -895,14 +849,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByR_U.find(
-				finderCache, new Object[] {recordSetId, userId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByR_U.find(
+			finderCache, new Object[] {recordSetId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -970,13 +919,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByR_U(long recordSetId, long userId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByR_U.count(
-				finderCache, new Object[] {recordSetId, userId});
-		}
+		return _collectionPersistenceFinderByR_U.count(
+			finderCache, new Object[] {recordSetId, userId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByR_R;
@@ -1065,14 +1009,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByR_R.find(
-				finderCache, new Object[] {recordSetId, recordSetVersion},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByR_R.find(
+			finderCache, new Object[] {recordSetId, recordSetVersion}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1142,13 +1081,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByR_R(long recordSetId, String recordSetVersion) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByR_R.count(
-				finderCache, new Object[] {recordSetId, recordSetVersion});
-		}
+		return _collectionPersistenceFinderByR_R.count(
+			finderCache, new Object[] {recordSetId, recordSetVersion});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -1234,14 +1168,9 @@ public class DDLRecordPersistenceImpl
 		OrderByComparator<DDLRecord> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				finderCache, new Object[] {className, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {className, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1309,13 +1238,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(String className, long classPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				finderCache, new Object[] {className, classPK});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {className, classPK});
 	}
 
 	public DDLRecordPersistenceImpl() {
@@ -1914,4 +1838,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2053401909
+// LIFERAY-SERVICE-BUILDER-HASH:-133183531

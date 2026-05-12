@@ -379,9 +379,6 @@ public class ReleasePersistenceImpl
 		EntityCacheUtil.removeCache(ReleaseImpl.class.getName());
 	}
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		ReleaseModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_RELEASE_ =
 		"SELECT release_ FROM Release release_";
 
@@ -403,4 +400,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2045600321
+// LIFERAY-SERVICE-BUILDER-HASH:1335640256

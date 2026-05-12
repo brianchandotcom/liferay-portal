@@ -13,7 +13,6 @@ import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelModelIm
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPDefinitionOptionValueRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -166,14 +165,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -237,13 +231,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -304,13 +293,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	public CPDefinitionOptionValueRel fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -428,14 +412,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -503,13 +482,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
@@ -590,14 +564,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByGroupId.find(
-				finderCache, new Object[] {groupId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -661,13 +630,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByGroupId.count(
-				finderCache, new Object[] {groupId});
-		}
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -748,14 +712,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -819,13 +778,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionOptionRelId;
@@ -912,14 +866,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCPDefinitionOptionRelId.find(
-				finderCache, new Object[] {CPDefinitionOptionRelId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPDefinitionOptionRelId.find(
+			finderCache, new Object[] {CPDefinitionOptionRelId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -987,13 +936,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByCPDefinitionOptionRelId(long CPDefinitionOptionRelId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCPDefinitionOptionRelId.count(
-				finderCache, new Object[] {CPDefinitionOptionRelId});
-		}
+		return _collectionPersistenceFinderByCPDefinitionOptionRelId.count(
+			finderCache, new Object[] {CPDefinitionOptionRelId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCPInstanceUuid;
@@ -1077,14 +1021,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCPInstanceUuid.find(
-				finderCache, new Object[] {CPInstanceUuid}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCPInstanceUuid.find(
+			finderCache, new Object[] {CPInstanceUuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1148,13 +1087,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByCPInstanceUuid(String CPInstanceUuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCPInstanceUuid.count(
-				finderCache, new Object[] {CPInstanceUuid});
-		}
+		return _collectionPersistenceFinderByCPInstanceUuid.count(
+			finderCache, new Object[] {CPInstanceUuid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByKey;
@@ -1234,14 +1168,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByKey.find(
-				finderCache, new Object[] {key}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByKey.find(
+			finderCache, new Object[] {key}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1305,13 +1234,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	 */
 	@Override
 	public int countByKey(String key) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByKey.count(
-				finderCache, new Object[] {key});
-		}
+		return _collectionPersistenceFinderByKey.count(
+			finderCache, new Object[] {key});
 	}
 
 	private FinderPath _finderPathFetchByC_K;
@@ -1376,14 +1300,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	public CPDefinitionOptionValueRel fetchByC_K(
 		long CPDefinitionOptionRelId, String key, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _uniquePersistenceFinderByC_K.fetch(
-				finderCache, new Object[] {CPDefinitionOptionRelId, key},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_K.fetch(
+			finderCache, new Object[] {CPDefinitionOptionRelId, key},
+			useFinderCache);
 	}
 
 	/**
@@ -1505,15 +1424,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCDORI_P.find(
-				finderCache,
-				new Object[] {CPDefinitionOptionRelId, preselected}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCDORI_P.find(
+			finderCache, new Object[] {CPDefinitionOptionRelId, preselected},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1588,14 +1501,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	public int countByCDORI_P(
 		long CPDefinitionOptionRelId, boolean preselected) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionOptionValueRel.class)) {
-
-			return _collectionPersistenceFinderByCDORI_P.count(
-				finderCache,
-				new Object[] {CPDefinitionOptionRelId, preselected});
-		}
+		return _collectionPersistenceFinderByCDORI_P.count(
+			finderCache, new Object[] {CPDefinitionOptionRelId, preselected});
 	}
 
 	public CPDefinitionOptionValueRelPersistenceImpl() {
@@ -2297,4 +2204,4 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1624106906
+// LIFERAY-SERVICE-BUILDER-HASH:-783196496

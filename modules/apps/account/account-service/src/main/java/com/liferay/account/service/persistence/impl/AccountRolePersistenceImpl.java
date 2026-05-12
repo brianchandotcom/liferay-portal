@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,10 +30,9 @@ import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -43,7 +40,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -93,7 +89,7 @@ public class AccountRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
-	private CollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -262,94 +258,9 @@ public class AccountRolePersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<AccountRole> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId(companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, AccountRoleImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, AccountRoleImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<AccountRole>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -383,61 +294,14 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByCompanyId(companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<AccountRole> accountRoles = findByCompanyId(companyId);
-
-			accountRoles = InlineSQLHelperUtil.filter(accountRoles);
-
-			return accountRoles.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE);
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			finderCache, new Object[] {companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"accountRole.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
 	private FinderPath _finderPathCountByAccountEntryId;
-	private CollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole>
 		_collectionPersistenceFinderByAccountEntryId;
 
 	/**
@@ -616,95 +480,9 @@ public class AccountRolePersistenceImpl
 		long accountEntryId, int start, int end,
 		OrderByComparator<AccountRole> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByAccountEntryId(
-				accountEntryId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByAccountEntryId(
-					accountEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, AccountRoleImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, AccountRoleImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(accountEntryId);
-
-			return (List<AccountRole>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByAccountEntryId.filterFind(
+			finderCache, new Object[] {accountEntryId}, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -758,103 +536,9 @@ public class AccountRolePersistenceImpl
 		long[] accountEntryIds, int start, int end,
 		OrderByComparator<AccountRole> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByAccountEntryId(
-				accountEntryIds, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByAccountEntryId(
-					accountEntryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		if (accountEntryIds == null) {
-			accountEntryIds = new long[0];
-		}
-		else if (accountEntryIds.length > 1) {
-			accountEntryIds = ArrayUtil.sortedUnique(accountEntryIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		if (accountEntryIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_7);
-
-			sb.append(StringUtil.merge(accountEntryIds));
-
-			sb.append(")");
-
-			sb.append(")");
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, AccountRoleImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, AccountRoleImpl.class);
-			}
-
-			return (List<AccountRole>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByAccountEntryId.filterFind(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(accountEntryIds)},
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -983,53 +667,8 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public int filterCountByAccountEntryId(long accountEntryId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByAccountEntryId(accountEntryId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<AccountRole> accountRoles = findByAccountEntryId(
-				accountEntryId);
-
-			accountRoles = InlineSQLHelperUtil.filter(accountRoles);
-
-			return accountRoles.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE);
-
-		sb.append(_FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(accountEntryId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByAccountEntryId.filterCount(
+			finderCache, new Object[] {accountEntryId});
 	}
 
 	/**
@@ -1040,74 +679,10 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public int filterCountByAccountEntryId(long[] accountEntryIds) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByAccountEntryId(accountEntryIds);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<AccountRole> accountRoles = InlineSQLHelperUtil.filter(
-				findByAccountEntryId(accountEntryIds));
-
-			return accountRoles.size();
-		}
-
-		if (accountEntryIds == null) {
-			accountEntryIds = new long[0];
-		}
-		else if (accountEntryIds.length > 1) {
-			accountEntryIds = ArrayUtil.sortedUnique(accountEntryIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE);
-
-		if (accountEntryIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_7);
-
-			sb.append(StringUtil.merge(accountEntryIds));
-
-			sb.append(")");
-
-			sb.append(")");
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByAccountEntryId.filterCount(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(accountEntryIds)});
 	}
-
-	private static final String _FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2 =
-		"accountRole.accountEntryId = ?";
-
-	private static final String _FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_7 =
-		"accountRole.accountEntryId IN (";
 
 	private FinderPath _finderPathFetchByRoleId;
 	private UniquePersistenceFinder<AccountRole>
@@ -1191,7 +766,7 @@ public class AccountRolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_A;
 	private FinderPath _finderPathWithoutPaginationFindByC_A;
 	private FinderPath _finderPathCountByC_A;
-	private CollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole>
 		_collectionPersistenceFinderByC_A;
 
 	/**
@@ -1387,99 +962,9 @@ public class AccountRolePersistenceImpl
 		long companyId, long accountEntryId, int start, int end,
 		OrderByComparator<AccountRole> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_A(
-				companyId, accountEntryId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A(
-					companyId, accountEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_ACCOUNTENTRYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, AccountRoleImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, AccountRoleImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(accountEntryId);
-
-			return (List<AccountRole>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A.filterFind(
+			finderCache, new Object[] {companyId, accountEntryId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1537,109 +1022,10 @@ public class AccountRolePersistenceImpl
 		long companyId, long[] accountEntryIds, int start, int end,
 		OrderByComparator<AccountRole> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_A(
-				companyId, accountEntryIds, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_A(
-					companyId, accountEntryIds, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		if (accountEntryIds == null) {
-			accountEntryIds = new long[0];
-		}
-		else if (accountEntryIds.length > 1) {
-			accountEntryIds = ArrayUtil.sortedUnique(accountEntryIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
-
-		if (accountEntryIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_C_A_ACCOUNTENTRYID_7);
-
-			sb.append(StringUtil.merge(accountEntryIds));
-
-			sb.append(")");
-
-			sb.append(")");
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(AccountRoleModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, AccountRoleImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, AccountRoleImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<AccountRole>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A.filterFind(
+			finderCache,
+			new Object[] {companyId, ArrayUtil.sortedUnique(accountEntryIds)},
+			start, end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1778,57 +1164,9 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public int filterCountByC_A(long companyId, long accountEntryId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_A(companyId, accountEntryId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<AccountRole> accountRoles = findByC_A(
-				companyId, accountEntryId);
-
-			accountRoles = InlineSQLHelperUtil.filter(accountRoles);
-
-			return accountRoles.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_A_ACCOUNTENTRYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(accountEntryId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A.filterCount(
+			finderCache, new Object[] {companyId, accountEntryId}, companyId,
+			0);
 	}
 
 	/**
@@ -1840,83 +1178,11 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public int filterCountByC_A(long companyId, long[] accountEntryIds) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_A(companyId, accountEntryIds);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<AccountRole> accountRoles = InlineSQLHelperUtil.filter(
-				findByC_A(companyId, accountEntryIds));
-
-			return accountRoles.size();
-		}
-
-		if (accountEntryIds == null) {
-			accountEntryIds = new long[0];
-		}
-		else if (accountEntryIds.length > 1) {
-			accountEntryIds = ArrayUtil.sortedUnique(accountEntryIds);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_A_COMPANYID_2);
-
-		if (accountEntryIds.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_C_A_ACCOUNTENTRYID_7);
-
-			sb.append(StringUtil.merge(accountEntryIds));
-
-			sb.append(")");
-
-			sb.append(")");
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), AccountRole.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_A.filterCount(
+			finderCache,
+			new Object[] {companyId, ArrayUtil.sortedUnique(accountEntryIds)},
+			companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_C_A_COMPANYID_2 =
-		"accountRole.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_A_ACCOUNTENTRYID_2 =
-		"accountRole.accountEntryId = ?";
-
-	private static final String _FINDER_COLUMN_C_A_ACCOUNTENTRYID_7 =
-		"accountRole.accountEntryId IN (";
 
 	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<AccountRole>
@@ -2268,12 +1534,22 @@ public class AccountRolePersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByCompanyId,
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_ACCOUNTROLE_WHERE,
 				_SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					AccountRoleImpl.class, AccountRole.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE,
+					AccountRoleModelImpl.ORDER_BY_SQL,
+					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountRole::getCompanyId));
@@ -2297,12 +1573,22 @@ public class AccountRolePersistenceImpl
 			new String[] {"accountEntryId"}, false);
 
 		_collectionPersistenceFinderByAccountEntryId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByAccountEntryId,
 				_finderPathWithoutPaginationFindByAccountEntryId,
 				_finderPathCountByAccountEntryId, _SQL_SELECT_ACCOUNTROLE_WHERE,
 				_SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					AccountRoleImpl.class, AccountRole.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE,
+					AccountRoleModelImpl.ORDER_BY_SQL,
+					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"accountRole.", "accountEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountRole::getAccountEntryId));
@@ -2337,17 +1623,28 @@ public class AccountRolePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "accountEntryId"}, false);
 
-		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A,
-			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
-			_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
-			AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"accountRole.", "companyId", FinderColumn.Type.LONG, "=", true,
-				true, AccountRole::getCompanyId),
-			new ArrayableFinderColumn<>(
-				"accountRole.", "accountEntryId", FinderColumn.Type.LONG, "=",
-				false, true, true, AccountRole::getAccountEntryId));
+		_collectionPersistenceFinderByC_A =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_A,
+				_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
+				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					AccountRoleImpl.class, AccountRole.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE,
+					AccountRoleModelImpl.ORDER_BY_SQL,
+					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, AccountRole::getCompanyId),
+				new ArrayableFinderColumn<>(
+					"accountRole.", "accountEntryId", FinderColumn.Type.LONG,
+					"=", false, true, true, AccountRole::getAccountEntryId));
 
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
@@ -2441,8 +1738,6 @@ public class AccountRolePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "AccountRole";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "AccountRole.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountRole exists with the key {";
 
@@ -2455,4 +1750,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1114002058
+// LIFERAY-SERVICE-BUILDER-HASH:184733505

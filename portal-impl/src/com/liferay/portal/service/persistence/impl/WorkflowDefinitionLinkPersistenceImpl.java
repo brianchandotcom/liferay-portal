@@ -5,7 +5,6 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -167,14 +166,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -239,13 +233,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -306,14 +295,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public WorkflowDefinitionLink fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
+			useFinderCache);
 	}
 
 	/**
@@ -431,15 +415,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -508,14 +486,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -596,14 +568,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -668,13 +635,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				FinderCacheUtil.getFinderCache(), new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
@@ -762,15 +724,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByC_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -841,14 +798,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByC_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {companyId, classNameId});
-		}
+		return _collectionPersistenceFinderByC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C;
@@ -942,15 +894,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classNameId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1025,14 +972,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_C(long groupId, long companyId, long classNameId) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classNameId});
-		}
+		return _collectionPersistenceFinderByG_C_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_CPK;
@@ -1125,15 +1067,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_CPK.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classPK}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_CPK.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1208,14 +1145,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_CPK(long groupId, long companyId, long classPK) {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_CPK.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classPK});
-		}
+		return _collectionPersistenceFinderByG_C_CPK.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_W_W;
@@ -1315,17 +1247,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByC_W_W.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					companyId, workflowDefinitionName, workflowDefinitionVersion
-				},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_W_W.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, workflowDefinitionName, workflowDefinitionVersion
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1416,16 +1343,11 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByC_W_W.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					companyId, workflowDefinitionName, workflowDefinitionVersion
-				});
-		}
+		return _collectionPersistenceFinderByC_W_W.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, workflowDefinitionName, workflowDefinitionVersion
+			});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_C;
@@ -1525,15 +1447,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		int end, OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_C.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classNameId, classPK}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1617,14 +1534,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public int countByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_C.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classNameId, classPK});
-		}
+		return _collectionPersistenceFinderByG_C_C_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_C_T;
@@ -1731,15 +1643,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_C_T.find(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {groupId, companyId, classNameId, classPK, typePK},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C_C_T.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK, typePK},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1834,16 +1741,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId, long classPK,
 		long typePK) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_C_T.count(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {
-					groupId, companyId, classNameId, classPK, typePK
-				});
-		}
+		return _collectionPersistenceFinderByG_C_C_C_T.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK, typePK});
 	}
 
 	private FinderPath _finderPathFetchByERC_G;
@@ -1908,14 +1808,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public WorkflowDefinitionLink fetchByERC_G(
 		String externalReferenceCode, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					WorkflowDefinitionLink.class)) {
-
-			return _uniquePersistenceFinderByERC_G.fetch(
-				FinderCacheUtil.getFinderCache(),
-				new Object[] {externalReferenceCode, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_G.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId}, useFinderCache);
 	}
 
 	/**
@@ -2799,4 +2694,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1816408298
+// LIFERAY-SERVICE-BUILDER-HASH:1337393864

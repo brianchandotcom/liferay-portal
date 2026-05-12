@@ -13,7 +13,6 @@ import com.liferay.friendly.url.model.impl.FriendlyURLEntryLocalizationModelImpl
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationUtil;
 import com.liferay.friendly.url.service.persistence.impl.constants.FURLPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -164,14 +163,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByFriendlyURLEntryId.find(
-				finderCache, new Object[] {friendlyURLEntryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFriendlyURLEntryId.find(
+			finderCache, new Object[] {friendlyURLEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -238,13 +232,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByFriendlyURLEntryId(long friendlyURLEntryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByFriendlyURLEntryId.count(
-				finderCache, new Object[] {friendlyURLEntryId});
-		}
+		return _collectionPersistenceFinderByFriendlyURLEntryId.count(
+			finderCache, new Object[] {friendlyURLEntryId});
 	}
 
 	private FinderPath _finderPathFetchByFriendlyURLEntryId_LanguageId;
@@ -312,15 +301,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	public FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
 		long friendlyURLEntryId, String languageId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _uniquePersistenceFinderByFriendlyURLEntryId_LanguageId.
-				fetch(
-					finderCache, new Object[] {friendlyURLEntryId, languageId},
-					useFinderCache);
-		}
+		return _uniquePersistenceFinderByFriendlyURLEntryId_LanguageId.fetch(
+			finderCache, new Object[] {friendlyURLEntryId, languageId},
+			useFinderCache);
 	}
 
 	/**
@@ -447,14 +430,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByG_C_U.find(
-				finderCache, new Object[] {groupId, classNameId, urlTitle},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_U.find(
+			finderCache, new Object[] {groupId, classNameId, urlTitle}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -529,13 +507,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_U(long groupId, long classNameId, String urlTitle) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByG_C_U.count(
-				finderCache, new Object[] {groupId, classNameId, urlTitle});
-		}
+		return _collectionPersistenceFinderByG_C_U.count(
+			finderCache, new Object[] {groupId, classNameId, urlTitle});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_C_U_C;
@@ -638,15 +611,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByC_C_U_C.find(
-				finderCache,
-				new Object[] {companyId, classNameId, urlTitle, ctCollectionId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_C_U_C.find(
+			finderCache,
+			new Object[] {companyId, classNameId, urlTitle, ctCollectionId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -737,16 +705,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		long companyId, long classNameId, String urlTitle,
 		long ctCollectionId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByC_C_U_C.count(
-				finderCache,
-				new Object[] {
-					companyId, classNameId, urlTitle, ctCollectionId
-				});
-		}
+		return _collectionPersistenceFinderByC_C_U_C.count(
+			finderCache,
+			new Object[] {companyId, classNameId, urlTitle, ctCollectionId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_L;
@@ -848,15 +809,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_L.find(
-				finderCache,
-				new Object[] {groupId, classNameId, classPK, languageId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_C_L.find(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, languageId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -941,14 +897,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	public int countByG_C_C_L(
 		long groupId, long classNameId, long classPK, String languageId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByG_C_C_L.count(
-				finderCache,
-				new Object[] {groupId, classNameId, classPK, languageId});
-		}
+		return _collectionPersistenceFinderByG_C_C_L.count(
+			finderCache,
+			new Object[] {groupId, classNameId, classPK, languageId});
 	}
 
 	private FinderPath _finderPathFetchByG_C_L_U;
@@ -1020,15 +971,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		long groupId, long classNameId, String languageId, String urlTitle,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _uniquePersistenceFinderByG_C_L_U.fetch(
-				finderCache,
-				new Object[] {groupId, classNameId, languageId, urlTitle},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByG_C_L_U.fetch(
+			finderCache,
+			new Object[] {groupId, classNameId, languageId, urlTitle},
+			useFinderCache);
 	}
 
 	/**
@@ -1167,15 +1113,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByG_C_NotL_U.find(
-				finderCache,
-				new Object[] {groupId, classNameId, languageId, urlTitle},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByG_C_NotL_U.find(
+			finderCache,
+			new Object[] {groupId, classNameId, languageId, urlTitle}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1260,14 +1201,9 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	public int countByG_C_NotL_U(
 		long groupId, long classNameId, String languageId, String urlTitle) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FriendlyURLEntryLocalization.class)) {
-
-			return _collectionPersistenceFinderByG_C_NotL_U.count(
-				finderCache,
-				new Object[] {groupId, classNameId, languageId, urlTitle});
-		}
+		return _collectionPersistenceFinderByG_C_NotL_U.count(
+			finderCache,
+			new Object[] {groupId, classNameId, languageId, urlTitle});
 	}
 
 	public FriendlyURLEntryLocalizationPersistenceImpl() {
@@ -1908,4 +1844,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1459458655
+// LIFERAY-SERVICE-BUILDER-HASH:1628795063

@@ -14,7 +14,6 @@ import com.liferay.commerce.product.model.impl.CPMeasurementUnitModelImpl;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -173,14 +172,9 @@ public class CPMeasurementUnitPersistenceImpl
 		OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByUuid.find(
-				finderCache, new Object[] {uuid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -242,13 +236,8 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByUuid.count(
-				finderCache, new Object[] {uuid});
-		}
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	private FinderPath _finderPathFetchByUUID_G;
@@ -308,13 +297,8 @@ public class CPMeasurementUnitPersistenceImpl
 	public CPMeasurementUnit fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _uniquePersistenceFinderByUUID_G.fetch(
-				finderCache, new Object[] {uuid, groupId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -429,14 +413,9 @@ public class CPMeasurementUnitPersistenceImpl
 		OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.find(
-				finderCache, new Object[] {uuid, companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -504,13 +483,8 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByUuid_C.count(
-				finderCache, new Object[] {uuid, companyId});
-		}
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
@@ -591,14 +565,9 @@ public class CPMeasurementUnitPersistenceImpl
 		OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -662,13 +631,8 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathFetchByC_K;
@@ -728,13 +692,8 @@ public class CPMeasurementUnitPersistenceImpl
 	public CPMeasurementUnit fetchByC_K(
 		long companyId, String key, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _uniquePersistenceFinderByC_K.fetch(
-				finderCache, new Object[] {companyId, key}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByC_K.fetch(
+			finderCache, new Object[] {companyId, key}, useFinderCache);
 	}
 
 	/**
@@ -848,14 +807,9 @@ public class CPMeasurementUnitPersistenceImpl
 		OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByC_T.find(
-				finderCache, new Object[] {companyId, type}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_T.find(
+			finderCache, new Object[] {companyId, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -923,13 +877,8 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByC_T(long companyId, int type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByC_T.count(
-				finderCache, new Object[] {companyId, type});
-		}
+		return _collectionPersistenceFinderByC_T.count(
+			finderCache, new Object[] {companyId, type});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_P_T;
@@ -1022,14 +971,9 @@ public class CPMeasurementUnitPersistenceImpl
 		OrderByComparator<CPMeasurementUnit> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByC_P_T.find(
-				finderCache, new Object[] {companyId, primary, type}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_P_T.find(
+			finderCache, new Object[] {companyId, primary, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1103,13 +1047,8 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByC_P_T(long companyId, boolean primary, int type) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _collectionPersistenceFinderByC_P_T.count(
-				finderCache, new Object[] {companyId, primary, type});
-		}
+		return _collectionPersistenceFinderByC_P_T.count(
+			finderCache, new Object[] {companyId, primary, type});
 	}
 
 	private FinderPath _finderPathFetchByERC_C;
@@ -1174,14 +1113,9 @@ public class CPMeasurementUnitPersistenceImpl
 	public CPMeasurementUnit fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPMeasurementUnit.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				finderCache, new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -1886,4 +1820,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-424886189
+// LIFERAY-SERVICE-BUILDER-HASH:1064051453

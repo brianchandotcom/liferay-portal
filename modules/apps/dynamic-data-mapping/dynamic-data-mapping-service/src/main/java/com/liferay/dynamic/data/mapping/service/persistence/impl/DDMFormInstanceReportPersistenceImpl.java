@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceReportModelImp
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -139,13 +138,8 @@ public class DDMFormInstanceReportPersistenceImpl
 	public DDMFormInstanceReport fetchByFormInstanceId(
 		long formInstanceId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceReport.class)) {
-
-			return _uniquePersistenceFinderByFormInstanceId.fetch(
-				finderCache, new Object[] {formInstanceId}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByFormInstanceId.fetch(
+			finderCache, new Object[] {formInstanceId}, useFinderCache);
 	}
 
 	/**
@@ -527,9 +521,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		DDMFormInstanceReportModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_DDMFORMINSTANCEREPORT =
 		"SELECT ddmFormInstanceReport FROM DDMFormInstanceReport ddmFormInstanceReport";
 
@@ -551,4 +542,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:361427159
+// LIFERAY-SERVICE-BUILDER-HASH:-2147453968

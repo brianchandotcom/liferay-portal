@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,12 +30,11 @@ import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -100,7 +96,7 @@ public class DispatchTriggerPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -266,110 +262,8 @@ public class DispatchTriggerPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByUuid(uuid, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByUuid(
-					uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid.filterFind(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator);
 	}
 
 	/**
@@ -403,77 +297,14 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public int filterCountByUuid(String uuid) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByUuid(uuid);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByUuid(uuid);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_UUID_2_SQL);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid.filterCount(
+			finderCache, new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL =
-		"dispatchTrigger.uuid_ = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3_SQL =
-		"(dispatchTrigger.uuid_ IS NULL OR dispatchTrigger.uuid_ = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -656,114 +487,9 @@ public class DispatchTriggerPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			queryPos.add(companyId);
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid_C.filterFind(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -800,85 +526,14 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public int filterCountByUuid_C(String uuid, long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByUuid_C(uuid, companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByUuid_C(
-				uuid, companyId);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		uuid = Objects.toString(uuid, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		boolean bindUuid = false;
-
-		if (uuid.isEmpty()) {
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_3_SQL);
-		}
-		else {
-			bindUuid = true;
-
-			sb.append(_FINDER_COLUMN_UUID_C_UUID_2_SQL);
-		}
-
-		sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			if (bindUuid) {
-				queryPos.add(uuid);
-			}
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByUuid_C.filterCount(
+			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL =
-		"dispatchTrigger.uuid_ = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3_SQL =
-		"(dispatchTrigger.uuid_ IS NULL OR dispatchTrigger.uuid_ = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"dispatchTrigger.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -1048,97 +703,9 @@ public class DispatchTriggerPersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByCompanyId(companyId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterFind(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1172,61 +739,14 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public int filterCountByCompanyId(long companyId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByCompanyId(companyId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByCompanyId(companyId);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByCompanyId.filterCount(
+			finderCache, new Object[] {companyId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"dispatchTrigger.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByActive;
 	private FinderPath _finderPathWithoutPaginationFindByActive;
 	private FinderPath _finderPathCountByActive;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByActive;
 
 	/**
@@ -1395,97 +915,8 @@ public class DispatchTriggerPersistenceImpl
 		boolean active, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByActive(active, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				3 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByActive.filterFind(
+			finderCache, new Object[] {active}, start, end, orderByComparator);
 	}
 
 	/**
@@ -1519,61 +950,14 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public int filterCountByActive(boolean active) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByActive(active);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByActive(active);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByActive.filterCount(
+			finderCache, new Object[] {active});
 	}
-
-	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2_SQL =
-		"dispatchTrigger.active_ = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_U;
 	private FinderPath _finderPathCountByC_U;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByC_U;
 
 	/**
@@ -1754,101 +1138,9 @@ public class DispatchTriggerPersistenceImpl
 		long companyId, long userId, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_U(companyId, userId, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_U_USERID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(userId);
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_U.filterFind(
+			finderCache, new Object[] {companyId, userId}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1885,69 +1177,14 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public int filterCountByC_U(long companyId, long userId) {
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_U(companyId, userId);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByC_U(
-				companyId, userId);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
-
-		sb.append(_FINDER_COLUMN_C_U_USERID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			queryPos.add(userId);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_U.filterCount(
+			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 =
-		"dispatchTrigger.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_USERID_2 =
-		"dispatchTrigger.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_DTET;
 	private FinderPath _finderPathWithoutPaginationFindByC_DTET;
 	private FinderPath _finderPathCountByC_DTET;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByC_DTET;
 
 	/**
@@ -2139,117 +1376,9 @@ public class DispatchTriggerPersistenceImpl
 		long companyId, String dispatchTaskExecutorType, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_DTET(
-				companyId, dispatchTaskExecutorType, start, end,
-				orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByC_DTET(
-					companyId, dispatchTaskExecutorType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		dispatchTaskExecutorType = Objects.toString(
-			dispatchTaskExecutorType, "");
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
-
-		boolean bindDispatchTaskExecutorType = false;
-
-		if (dispatchTaskExecutorType.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
-		}
-		else {
-			bindDispatchTaskExecutorType = true;
-
-			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
-		}
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (bindDispatchTaskExecutorType) {
-				queryPos.add(dispatchTaskExecutorType);
-			}
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_DTET.filterFind(
+			finderCache, new Object[] {companyId, dispatchTaskExecutorType},
+			start, end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -2290,83 +1419,10 @@ public class DispatchTriggerPersistenceImpl
 	public int filterCountByC_DTET(
 		long companyId, String dispatchTaskExecutorType) {
 
-		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_DTET(companyId, dispatchTaskExecutorType);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByC_DTET(
-				companyId, dispatchTaskExecutorType);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		dispatchTaskExecutorType = Objects.toString(
-			dispatchTaskExecutorType, "");
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_DTET_COMPANYID_2);
-
-		boolean bindDispatchTaskExecutorType = false;
-
-		if (dispatchTaskExecutorType.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3);
-		}
-		else {
-			bindDispatchTaskExecutorType = true;
-
-			sb.append(_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(companyId);
-
-			if (bindDispatchTaskExecutorType) {
-				queryPos.add(dispatchTaskExecutorType);
-			}
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByC_DTET.filterCount(
+			finderCache, new Object[] {companyId, dispatchTaskExecutorType},
+			companyId, 0);
 	}
-
-	private static final String _FINDER_COLUMN_C_DTET_COMPANYID_2 =
-		"dispatchTrigger.companyId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_2 =
-			"dispatchTrigger.dispatchTaskExecutorType = ?";
-
-	private static final String
-		_FINDER_COLUMN_C_DTET_DISPATCHTASKEXECUTORTYPE_3 =
-			"(dispatchTrigger.dispatchTaskExecutorType IS NULL OR dispatchTrigger.dispatchTaskExecutorType = '')";
 
 	private FinderPath _finderPathFetchByC_N;
 	private UniquePersistenceFinder<DispatchTrigger>
@@ -2461,7 +1517,7 @@ public class DispatchTriggerPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByA_DTCM;
 	private FinderPath _finderPathWithoutPaginationFindByA_DTCM;
 	private FinderPath _finderPathCountByA_DTCM;
-	private CollectionPersistenceFinder<DispatchTrigger>
+	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByA_DTCM;
 
 	/**
@@ -2663,102 +1719,9 @@ public class DispatchTriggerPersistenceImpl
 		boolean active, int dispatchTaskClusterMode, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_DTCM(
-				active, dispatchTaskClusterMode, start, end, orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByA_DTCM(
-					active, dispatchTaskClusterMode, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByFields().length * 2));
-		}
-		else {
-			sb = new StringBundler(5);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			queryPos.add(dispatchTaskClusterMode);
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByA_DTCM.filterFind(
+			finderCache, new Object[] {active, dispatchTaskClusterMode}, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -2817,114 +1780,12 @@ public class DispatchTriggerPersistenceImpl
 		boolean active, int[] dispatchTaskClusterModes, int start, int end,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByA_DTCM(
-				active, dispatchTaskClusterModes, start, end,
-				orderByComparator);
-		}
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			isPermissionsInMemoryFilterEnabled()) {
-
-			return InlineSQLHelperUtil.filter(
-				findByA_DTCM(
-					active, dispatchTaskClusterModes, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator));
-		}
-
-		if (dispatchTaskClusterModes == null) {
-			dispatchTaskClusterModes = new int[0];
-		}
-		else if (dispatchTaskClusterModes.length > 1) {
-			dispatchTaskClusterModes = ArrayUtil.sortedUnique(
-				dispatchTaskClusterModes);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (getDB().isSupportsInlineDistinct()) {
-			sb.append(_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE);
-		}
-		else {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
-
-		if (dispatchTaskClusterModes.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7);
-
-			sb.append(StringUtil.merge(dispatchTaskClusterModes));
-
-			sb.append(")");
-
-			sb.append(")");
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			sb.append(
-				_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				sb.append(
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-			}
-			else {
-				sb.append(DispatchTriggerModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_ALIAS, DispatchTriggerImpl.class);
-			}
-			else {
-				sqlQuery.addEntity(
-					_FILTER_ENTITY_TABLE, DispatchTriggerImpl.class);
-			}
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			return (List<DispatchTrigger>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByA_DTCM.filterFind(
+			finderCache,
+			new Object[] {
+				active, ArrayUtil.sortedUnique(dispatchTaskClusterModes)
+			},
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -3074,57 +1935,8 @@ public class DispatchTriggerPersistenceImpl
 	public int filterCountByA_DTCM(
 		boolean active, int dispatchTaskClusterMode) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByA_DTCM(active, dispatchTaskClusterMode);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = findByA_DTCM(
-				active, dispatchTaskClusterMode);
-
-			dispatchTriggers = InlineSQLHelperUtil.filter(dispatchTriggers);
-
-			return dispatchTriggers.size();
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
-
-		sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			queryPos.add(dispatchTaskClusterMode);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByA_DTCM.filterCount(
+			finderCache, new Object[] {active, dispatchTaskClusterMode});
 	}
 
 	/**
@@ -3138,89 +1950,12 @@ public class DispatchTriggerPersistenceImpl
 	public int filterCountByA_DTCM(
 		boolean active, int[] dispatchTaskClusterModes) {
 
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByA_DTCM(active, dispatchTaskClusterModes);
-		}
-
-		if (isPermissionsInMemoryFilterEnabled()) {
-			List<DispatchTrigger> dispatchTriggers = InlineSQLHelperUtil.filter(
-				findByA_DTCM(active, dispatchTaskClusterModes));
-
-			return dispatchTriggers.size();
-		}
-
-		if (dispatchTaskClusterModes == null) {
-			dispatchTaskClusterModes = new int[0];
-		}
-		else if (dispatchTaskClusterModes.length > 1) {
-			dispatchTaskClusterModes = ArrayUtil.sortedUnique(
-				dispatchTaskClusterModes);
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE);
-
-		sb.append(_FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL);
-
-		if (dispatchTaskClusterModes.length > 0) {
-			sb.append("(");
-
-			sb.append(_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7);
-
-			sb.append(StringUtil.merge(dispatchTaskClusterModes));
-
-			sb.append(")");
-
-			sb.append(")");
-		}
-
-		sb.setStringAt(
-			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(
-			sb.toString(), DispatchTrigger.class.getName(),
-			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar(
-				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(active);
-
-			Long count = (Long)sqlQuery.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
+		return _collectionPersistenceFinderByA_DTCM.filterCount(
+			finderCache,
+			new Object[] {
+				active, ArrayUtil.sortedUnique(dispatchTaskClusterModes)
+			});
 	}
-
-	private static final String _FINDER_COLUMN_A_DTCM_ACTIVE_2 =
-		"dispatchTrigger.active = ? AND ";
-
-	private static final String _FINDER_COLUMN_A_DTCM_ACTIVE_2_SQL =
-		"dispatchTrigger.active_ = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_2 =
-			"dispatchTrigger.dispatchTaskClusterMode = ?";
-
-	private static final String
-		_FINDER_COLUMN_A_DTCM_DISPATCHTASKCLUSTERMODE_7 =
-			"dispatchTrigger.dispatchTaskClusterMode IN (";
 
 	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<DispatchTrigger>
@@ -3628,14 +2363,27 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
 			false, null);
 
-		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
-			_SQL_SELECT_DISPATCHTRIGGER_WHERE, _SQL_COUNT_DISPATCHTRIGGER_WHERE,
-			DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=", true,
-				true, DispatchTrigger::getUuid));
+		_collectionPersistenceFinderByUuid =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid,
+				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
+					true, true, DispatchTrigger::getUuid));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -3657,13 +2405,23 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByUuid_C,
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, DispatchTrigger::getUuid),
@@ -3690,13 +2448,23 @@ public class DispatchTriggerPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByCompanyId =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByCompanyId,
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId));
@@ -3720,13 +2488,23 @@ public class DispatchTriggerPersistenceImpl
 			false);
 
 		_collectionPersistenceFinderByActive =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByActive,
 				_finderPathWithoutPaginationFindByActive,
 				_finderPathCountByActive, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, DispatchTrigger::isActive));
@@ -3750,17 +2528,30 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, false);
 
-		_collectionPersistenceFinderByC_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_U,
-			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
-			_SQL_SELECT_DISPATCHTRIGGER_WHERE, _SQL_COUNT_DISPATCHTRIGGER_WHERE,
-			DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"dispatchTrigger.", "companyId", FinderColumn.Type.LONG, "=",
-				true, true, DispatchTrigger::getCompanyId),
-			new FinderColumn<>(
-				"dispatchTrigger.", "userId", FinderColumn.Type.LONG, "=", true,
-				true, DispatchTrigger::getUserId));
+		_collectionPersistenceFinderByC_U =
+			new FilterCollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_U,
+				_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, DispatchTrigger::getCompanyId),
+				new FinderColumn<>(
+					"dispatchTrigger.", "userId", FinderColumn.Type.LONG, "=",
+					true, true, DispatchTrigger::getUserId));
 
 		_finderPathWithPaginationFindByC_DTET = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DTET",
@@ -3784,13 +2575,23 @@ public class DispatchTriggerPersistenceImpl
 			null);
 
 		_collectionPersistenceFinderByC_DTET =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByC_DTET,
 				_finderPathWithoutPaginationFindByC_DTET,
 				_finderPathCountByC_DTET, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId),
@@ -3835,13 +2636,23 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {"active_", "dispatchTaskClusterMode"}, false);
 
 		_collectionPersistenceFinderByA_DTCM =
-			new CollectionPersistenceFinder<>(
+			new FilterCollectionPersistenceFinder<>(
 				this, _finderPathWithPaginationFindByA_DTCM,
 				_finderPathWithoutPaginationFindByA_DTCM,
 				_finderPathCountByA_DTCM, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, DispatchTrigger::isActive),
@@ -3943,8 +2754,6 @@ public class DispatchTriggerPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "DispatchTrigger";
 
-	private static final String _ORDER_BY_ENTITY_TABLE = "DispatchTrigger.";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DispatchTrigger exists with the key {";
 
@@ -3960,4 +2769,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2117176789
+// LIFERAY-SERVICE-BUILDER-HASH:1963031645

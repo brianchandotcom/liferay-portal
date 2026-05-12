@@ -418,9 +418,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		MFATimeBasedOTPEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_MFATIMEBASEDOTPENTRY =
 		"SELECT mfaTimeBasedOTPEntry FROM MFATimeBasedOTPEntry mfaTimeBasedOTPEntry";
 
@@ -439,4 +436,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-236418629
+// LIFERAY-SERVICE-BUILDER-HASH:839760382

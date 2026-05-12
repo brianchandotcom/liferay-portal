@@ -14,7 +14,6 @@ import com.liferay.asset.category.property.model.impl.AssetCategoryPropertyModel
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyPersistence;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyUtil;
 import com.liferay.asset.category.property.service.persistence.impl.constants.AssetPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -175,14 +174,9 @@ public class AssetCategoryPropertyPersistenceImpl
 		OrderByComparator<AssetCategoryProperty> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.find(
-				finderCache, new Object[] {companyId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -246,13 +240,8 @@ public class AssetCategoryPropertyPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _collectionPersistenceFinderByCompanyId.count(
-				finderCache, new Object[] {companyId});
-		}
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByCategoryId;
@@ -334,14 +323,9 @@ public class AssetCategoryPropertyPersistenceImpl
 		OrderByComparator<AssetCategoryProperty> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _collectionPersistenceFinderByCategoryId.find(
-				finderCache, new Object[] {categoryId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByCategoryId.find(
+			finderCache, new Object[] {categoryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -405,13 +389,8 @@ public class AssetCategoryPropertyPersistenceImpl
 	 */
 	@Override
 	public int countByCategoryId(long categoryId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _collectionPersistenceFinderByCategoryId.count(
-				finderCache, new Object[] {categoryId});
-		}
+		return _collectionPersistenceFinderByCategoryId.count(
+			finderCache, new Object[] {categoryId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_K;
@@ -496,14 +475,9 @@ public class AssetCategoryPropertyPersistenceImpl
 		OrderByComparator<AssetCategoryProperty> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _collectionPersistenceFinderByC_K.find(
-				finderCache, new Object[] {companyId, key}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_K.find(
+			finderCache, new Object[] {companyId, key}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -571,13 +545,8 @@ public class AssetCategoryPropertyPersistenceImpl
 	 */
 	@Override
 	public int countByC_K(long companyId, String key) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _collectionPersistenceFinderByC_K.count(
-				finderCache, new Object[] {companyId, key});
-		}
+		return _collectionPersistenceFinderByC_K.count(
+			finderCache, new Object[] {companyId, key});
 	}
 
 	private FinderPath _finderPathFetchByCA_K;
@@ -638,13 +607,8 @@ public class AssetCategoryPropertyPersistenceImpl
 	public AssetCategoryProperty fetchByCA_K(
 		long categoryId, String key, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _uniquePersistenceFinderByCA_K.fetch(
-				finderCache, new Object[] {categoryId, key}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByCA_K.fetch(
+			finderCache, new Object[] {categoryId, key}, useFinderCache);
 	}
 
 	/**
@@ -739,14 +703,9 @@ public class AssetCategoryPropertyPersistenceImpl
 	public AssetCategoryProperty fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetCategoryProperty.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				finderCache, new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -1353,4 +1312,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-846447957
+// LIFERAY-SERVICE-BUILDER-HASH:-1382046429

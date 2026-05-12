@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -14,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -169,14 +166,9 @@ public class KaleoTimerPersistenceImpl
 		OrderByComparator<KaleoTimer> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoTimer.class)) {
-
-			return _collectionPersistenceFinderByKCN_KCPK.find(
-				finderCache, new Object[] {kaleoClassName, kaleoClassPK}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByKCN_KCPK.find(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -246,13 +238,8 @@ public class KaleoTimerPersistenceImpl
 	 */
 	@Override
 	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoTimer.class)) {
-
-			return _collectionPersistenceFinderByKCN_KCPK.count(
-				finderCache, new Object[] {kaleoClassName, kaleoClassPK});
-		}
+		return _collectionPersistenceFinderByKCN_KCPK.count(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_Blocking;
@@ -348,15 +335,9 @@ public class KaleoTimerPersistenceImpl
 		int end, OrderByComparator<KaleoTimer> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoTimer.class)) {
-
-			return _collectionPersistenceFinderByKCN_KCPK_Blocking.find(
-				finderCache,
-				new Object[] {kaleoClassName, kaleoClassPK, blocking}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByKCN_KCPK_Blocking.find(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK, blocking},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -435,14 +416,8 @@ public class KaleoTimerPersistenceImpl
 	public int countByKCN_KCPK_Blocking(
 		String kaleoClassName, long kaleoClassPK, boolean blocking) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoTimer.class)) {
-
-			return _collectionPersistenceFinderByKCN_KCPK_Blocking.count(
-				finderCache,
-				new Object[] {kaleoClassName, kaleoClassPK, blocking});
-		}
+		return _collectionPersistenceFinderByKCN_KCPK_Blocking.count(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK, blocking});
 	}
 
 	public KaleoTimerPersistenceImpl() {
@@ -860,13 +835,10 @@ public class KaleoTimerPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoTimer exists with the key {";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoTimerPersistenceImpl.class);
-
 	@Override
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:143283257
+// LIFERAY-SERVICE-BUILDER-HASH:1370069834

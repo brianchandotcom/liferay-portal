@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -163,14 +162,9 @@ public class KaleoNodeSettingPersistenceImpl
 		OrderByComparator<KaleoNodeSetting> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoNodeSetting.class)) {
-
-			return _collectionPersistenceFinderByKaleoNodeId.find(
-				finderCache, new Object[] {kaleoNodeId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByKaleoNodeId.find(
+			finderCache, new Object[] {kaleoNodeId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -234,13 +228,8 @@ public class KaleoNodeSettingPersistenceImpl
 	 */
 	@Override
 	public int countByKaleoNodeId(long kaleoNodeId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoNodeSetting.class)) {
-
-			return _collectionPersistenceFinderByKaleoNodeId.count(
-				finderCache, new Object[] {kaleoNodeId});
-		}
+		return _collectionPersistenceFinderByKaleoNodeId.count(
+			finderCache, new Object[] {kaleoNodeId});
 	}
 
 	private FinderPath _finderPathFetchByKNI_N;
@@ -300,13 +289,8 @@ public class KaleoNodeSettingPersistenceImpl
 	public KaleoNodeSetting fetchByKNI_N(
 		long kaleoNodeId, String name, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KaleoNodeSetting.class)) {
-
-			return _uniquePersistenceFinderByKNI_N.fetch(
-				finderCache, new Object[] {kaleoNodeId, name}, useFinderCache);
-		}
+		return _uniquePersistenceFinderByKNI_N.fetch(
+			finderCache, new Object[] {kaleoNodeId, name}, useFinderCache);
 	}
 
 	/**
@@ -732,4 +716,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-144015017
+// LIFERAY-SERVICE-BUILDER-HASH:-2042327012

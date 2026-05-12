@@ -384,9 +384,6 @@ public class DLStorageQuotaPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		DLStorageQuotaModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_DLSTORAGEQUOTA =
 		"SELECT dlStorageQuota FROM DLStorageQuota dlStorageQuota";
 
@@ -405,4 +402,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1133674636
+// LIFERAY-SERVICE-BUILDER-HASH:275290629

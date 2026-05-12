@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelIm
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -168,14 +167,9 @@ public class DDMFormInstanceVersionPersistenceImpl
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceVersion.class)) {
-
-			return _collectionPersistenceFinderByFormInstanceId.find(
-				finderCache, new Object[] {formInstanceId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByFormInstanceId.find(
+			finderCache, new Object[] {formInstanceId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -239,13 +233,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 	 */
 	@Override
 	public int countByFormInstanceId(long formInstanceId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceVersion.class)) {
-
-			return _collectionPersistenceFinderByFormInstanceId.count(
-				finderCache, new Object[] {formInstanceId});
-		}
+		return _collectionPersistenceFinderByFormInstanceId.count(
+			finderCache, new Object[] {formInstanceId});
 	}
 
 	private FinderPath _finderPathFetchByF_V;
@@ -309,14 +298,9 @@ public class DDMFormInstanceVersionPersistenceImpl
 	public DDMFormInstanceVersion fetchByF_V(
 		long formInstanceId, String version, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceVersion.class)) {
-
-			return _uniquePersistenceFinderByF_V.fetch(
-				finderCache, new Object[] {formInstanceId, version},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByF_V.fetch(
+			finderCache, new Object[] {formInstanceId, version},
+			useFinderCache);
 	}
 
 	/**
@@ -435,14 +419,9 @@ public class DDMFormInstanceVersionPersistenceImpl
 		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceVersion.class)) {
-
-			return _collectionPersistenceFinderByF_S.find(
-				finderCache, new Object[] {formInstanceId, status}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByF_S.find(
+			finderCache, new Object[] {formInstanceId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -512,13 +491,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 	 */
 	@Override
 	public int countByF_S(long formInstanceId, int status) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDMFormInstanceVersion.class)) {
-
-			return _collectionPersistenceFinderByF_S.count(
-				finderCache, new Object[] {formInstanceId, status});
-		}
+		return _collectionPersistenceFinderByF_S.count(
+			finderCache, new Object[] {formInstanceId, status});
 	}
 
 	public DDMFormInstanceVersionPersistenceImpl() {
@@ -968,4 +942,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-140614439
+// LIFERAY-SERVICE-BUILDER-HASH:763591114

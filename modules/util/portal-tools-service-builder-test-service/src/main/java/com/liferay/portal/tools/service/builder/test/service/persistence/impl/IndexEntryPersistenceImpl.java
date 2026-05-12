@@ -5,7 +5,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -157,14 +156,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByOwnerId.find(
-				finderCache, new Object[] {ownerId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByOwnerId.find(
+			finderCache, new Object[] {ownerId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -226,13 +220,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByOwnerId(long ownerId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByOwnerId.count(
-				finderCache, new Object[] {ownerId});
-		}
+		return _collectionPersistenceFinderByOwnerId.count(
+			finderCache, new Object[] {ownerId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByPlid;
@@ -310,14 +299,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByPlid.find(
-				finderCache, new Object[] {plid}, start, end, orderByComparator,
-				useFinderCache);
-		}
+		return _collectionPersistenceFinderByPlid.find(
+			finderCache, new Object[] {plid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -378,13 +362,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByPlid(long plid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByPlid.count(
-				finderCache, new Object[] {plid});
-		}
+		return _collectionPersistenceFinderByPlid.count(
+			finderCache, new Object[] {plid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByPortletId;
@@ -465,14 +444,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByPortletId.find(
-				finderCache, new Object[] {portletId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByPortletId.find(
+			finderCache, new Object[] {portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -534,13 +508,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByPortletId(String portletId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByPortletId.count(
-				finderCache, new Object[] {portletId});
-		}
+		return _collectionPersistenceFinderByPortletId.count(
+			finderCache, new Object[] {portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_P;
@@ -626,14 +595,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_P.find(
-				finderCache, new Object[] {ownerType, portletId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_P.find(
+			finderCache, new Object[] {ownerType, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -702,13 +666,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByO_P(int ownerType, String portletId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_P.count(
-				finderCache, new Object[] {ownerType, portletId});
-		}
+		return _collectionPersistenceFinderByO_P.count(
+			finderCache, new Object[] {ownerType, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByP_P;
@@ -793,14 +752,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByP_P.find(
-				finderCache, new Object[] {plid, portletId}, start, end,
-				orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByP_P.find(
+			finderCache, new Object[] {plid, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -868,13 +822,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByP_P(long plid, String portletId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByP_P.count(
-				finderCache, new Object[] {plid, portletId});
-		}
+		return _collectionPersistenceFinderByP_P.count(
+			finderCache, new Object[] {plid, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_O_P;
@@ -967,14 +916,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_O_P.find(
-				finderCache, new Object[] {ownerId, ownerType, plid}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_O_P.find(
+			finderCache, new Object[] {ownerId, ownerType, plid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1048,13 +992,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByO_O_P(long ownerId, int ownerType, long plid) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_O_P.count(
-				finderCache, new Object[] {ownerId, ownerType, plid});
-		}
+		return _collectionPersistenceFinderByO_O_P.count(
+			finderCache, new Object[] {ownerId, ownerType, plid});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_O_PI;
@@ -1147,14 +1086,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_O_PI.find(
-				finderCache, new Object[] {ownerId, ownerType, portletId},
-				start, end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_O_PI.find(
+			finderCache, new Object[] {ownerId, ownerType, portletId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1228,13 +1162,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByO_O_PI(long ownerId, int ownerType, String portletId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_O_PI.count(
-				finderCache, new Object[] {ownerId, ownerType, portletId});
-		}
+		return _collectionPersistenceFinderByO_O_PI.count(
+			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByO_P_P;
@@ -1327,14 +1256,9 @@ public class IndexEntryPersistenceImpl
 		OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_P_P.find(
-				finderCache, new Object[] {ownerType, plid, portletId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByO_P_P.find(
+			finderCache, new Object[] {ownerType, plid, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1408,13 +1332,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByO_P_P(int ownerType, long plid, String portletId) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByO_P_P.count(
-				finderCache, new Object[] {ownerType, plid, portletId});
-		}
+		return _collectionPersistenceFinderByO_P_P.count(
+			finderCache, new Object[] {ownerType, plid, portletId});
 	}
 
 	private FinderPath _finderPathWithPaginationFindByC_O_O_LikeP;
@@ -1513,15 +1432,10 @@ public class IndexEntryPersistenceImpl
 		int start, int end, OrderByComparator<IndexEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByC_O_O_LikeP.find(
-				finderCache,
-				new Object[] {companyId, ownerId, ownerType, portletId}, start,
-				end, orderByComparator, useFinderCache);
-		}
+		return _collectionPersistenceFinderByC_O_O_LikeP.find(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1605,14 +1519,9 @@ public class IndexEntryPersistenceImpl
 	public int countByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _collectionPersistenceFinderByC_O_O_LikeP.count(
-				finderCache,
-				new Object[] {companyId, ownerId, ownerType, portletId});
-		}
+		return _collectionPersistenceFinderByC_O_O_LikeP.count(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
 	private FinderPath _finderPathFetchByO_O_P_P;
@@ -1684,14 +1593,9 @@ public class IndexEntryPersistenceImpl
 		long ownerId, int ownerType, long plid, String portletId,
 		boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _uniquePersistenceFinderByO_O_P_P.fetch(
-				finderCache, new Object[] {ownerId, ownerType, plid, portletId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByO_O_P_P.fetch(
+			finderCache, new Object[] {ownerId, ownerType, plid, portletId},
+			useFinderCache);
 	}
 
 	/**
@@ -1790,14 +1694,9 @@ public class IndexEntryPersistenceImpl
 	public IndexEntry fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					IndexEntry.class)) {
-
-			return _uniquePersistenceFinderByERC_C.fetch(
-				finderCache, new Object[] {externalReferenceCode, companyId},
-				useFinderCache);
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -2530,4 +2429,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1143338171
+// LIFERAY-SERVICE-BUILDER-HASH:7571477

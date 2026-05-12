@@ -418,9 +418,6 @@ public class PatcherFixComponentPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		PatcherFixComponentModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_PATCHERFIXCOMPONENT =
 		"SELECT patcherFixComponent FROM PatcherFixComponent patcherFixComponent";
 
@@ -439,4 +436,4 @@ public class PatcherFixComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:54878099
+// LIFERAY-SERVICE-BUILDER-HASH:-75729854

@@ -22,6 +22,7 @@ interface PortletDataControlProps {
 	control: PortletDataHandlerControl;
 	level?: number;
 	onChange: (value: HandlerSelection | undefined) => void;
+	showDeletions?: boolean;
 	value: HandlerSelection | undefined;
 }
 
@@ -30,6 +31,7 @@ export default function PortletDataControl({
 	control,
 	level = 0,
 	onChange,
+	showDeletions,
 	value,
 }: PortletDataControlProps) {
 	if (control.type === 'Choice') {
@@ -72,6 +74,7 @@ export default function PortletDataControl({
 						<CountIndicators
 							additionCount={control.additionCount}
 							deletionCount={control.deletionCount}
+							showDeletions={showDeletions}
 						/>
 					)}
 				</div>
@@ -92,6 +95,7 @@ export default function PortletDataControl({
 									)
 								)
 							}
+							showDeletions={showDeletions}
 							value={currentSelection[nestedControl.name]}
 						/>
 					)

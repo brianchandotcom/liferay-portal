@@ -5,8 +5,14 @@
 
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -21,6 +27,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -45,6 +53,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContextTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpHttpServletRequest();
+		_setUpLanguageUtil();
 		_setUpLayoutPageTemplateEntryPermission();
 		_setUpThemeDisplay();
 	}
@@ -102,6 +111,59 @@ public class LayoutPageTemplateManagementToolbarDisplayContextTest {
 					getAvailableActions(_layoutPageTemplateEntry)));
 	}
 
+	@Test
+	@TestInfo("LPD-89086")
+	public void testGetCreationMenu() throws Exception {
+		for (boolean featureFlagEnabled : new boolean[] {false, true}) {
+			try (MockedStatic<FeatureFlagManagerUtil>
+					featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+						FeatureFlagManagerUtil.class)) {
+
+				featureFlagManagerUtilMockedStatic.when(
+					() -> FeatureFlagManagerUtil.isEnabled(
+						Mockito.anyLong(), Mockito.eq("LPD-76864"))
+				).thenReturn(
+					featureFlagEnabled
+				);
+
+				LayoutPageTemplateManagementToolbarDisplayContext
+					layoutPageTemplateManagementToolbarDisplayContext =
+						new LayoutPageTemplateManagementToolbarDisplayContext(
+							_httpServletRequest,
+							_getMockLiferayPortletActionRequest(),
+							new MockLiferayPortletRenderResponse(),
+							Mockito.mock(
+								LayoutPageTemplateDisplayContext.class));
+
+				CreationMenu creationMenu =
+					layoutPageTemplateManagementToolbarDisplayContext.
+						getCreationMenu();
+
+				List<DropdownItem> primaryDropdownItems =
+					(List<DropdownItem>)creationMenu.get("primaryItems");
+
+				if (featureFlagEnabled) {
+					Assert.assertEquals(
+						Boolean.TRUE,
+						primaryDropdownItems.get(
+							1
+						).get(
+							"deprecated"
+						));
+
+					Assert.assertEquals(
+						primaryDropdownItems.toString(), 2,
+						primaryDropdownItems.size());
+				}
+				else {
+					Assert.assertEquals(
+						primaryDropdownItems.toString(), 1,
+						primaryDropdownItems.size());
+				}
+			}
+		}
+	}
+
 	private MockLiferayPortletActionRequest
 		_getMockLiferayPortletActionRequest() {
 
@@ -133,6 +195,12 @@ public class LayoutPageTemplateManagementToolbarDisplayContextTest {
 		);
 	}
 
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(Mockito.mock(Language.class));
+	}
+
 	private void _setUpLayoutPageTemplateEntryPermission() {
 		_layoutPageTemplateEntryPermissionMockedStatic.when(
 			() -> LayoutPageTemplateEntryPermission.contains(
@@ -148,6 +216,12 @@ public class LayoutPageTemplateManagementToolbarDisplayContextTest {
 			_themeDisplay.getPermissionChecker()
 		).thenReturn(
 			Mockito.mock(PermissionChecker.class)
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroup()
+		).thenReturn(
+			Mockito.mock(Group.class)
 		);
 	}
 

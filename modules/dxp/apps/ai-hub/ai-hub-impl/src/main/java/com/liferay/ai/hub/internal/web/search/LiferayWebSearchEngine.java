@@ -90,13 +90,14 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 		String homePageURL = oAuth2Application.getHomePageURL();
 
-		URL url = new URL(homePageURL);
+		URL urlObject = new URL(homePageURL);
 
 		if (!PortalRunMode.isTestMode() &&
 			InetAddressUtil.isLocalInetAddress(
-				InetAddressUtil.getInetAddressByName(url.getHost()))) {
+				InetAddressUtil.getInetAddressByName(urlObject.getHost()))) {
 
-			throw new SecurityException("Local links are not allowed: " + url);
+			throw new SecurityException(
+				"Local links are not allowed: " + urlObject);
 		}
 
 		List<WebSearchOrganicResult> webSearchOrganicResults =

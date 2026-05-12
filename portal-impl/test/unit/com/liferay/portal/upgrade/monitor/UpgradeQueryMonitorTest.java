@@ -96,7 +96,7 @@ public class UpgradeQueryMonitorTest {
 	@Test
 	public void testStart() throws Exception {
 
-		// disabled
+		// Disabled
 
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -109,7 +109,7 @@ public class UpgradeQueryMonitorTest {
 					UpgradeQueryMonitor.class, _SCHEDULED_EXECUTOR_SERVICE));
 		}
 
-		// enabled
+		// Enabled
 
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(

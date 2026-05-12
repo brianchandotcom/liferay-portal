@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -82,7 +83,12 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 							add(_getDeactivateActionUnsafeConsumer());
 						}
 
-						add(_getExecuteLayoutSetPrototypeSyncUnsafeConsumer());
+						if (FeatureFlagManagerUtil.isEnabled(
+								_themeDisplay.getCompanyId(), "LPD-82107")) {
+
+							add(
+								_getExecuteLayoutSetPrototypeSyncUnsafeConsumer());
+						}
 					}
 					else if (!_layoutSetPrototype.isActive()) {
 						add(_getActivateActionUnsafeConsumer());

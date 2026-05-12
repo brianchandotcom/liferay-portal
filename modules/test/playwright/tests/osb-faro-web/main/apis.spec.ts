@@ -6,27 +6,24 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {JSONWebServicesOSBFaroApiHelper} from '../../../helpers/json-web-services/JSONWebServicesOSBFaroApiHelper';
-import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from './utils/channel';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
-test('Generate a new token after expired', async ({apiHelpers, page}) => {
-	const channelName = 'My Property - ' + getRandomString();
-
-	const {channel, project} = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
+test('Generate a new token after expired', async ({
+	apiHelpers,
+	page,
+	project,
+}) => {
 	await test.step('Generate a new access token with instant expiration', async () => {
 		const jSONWebServicesOSBFaroApiHelper =
 			new JSONWebServicesOSBFaroApiHelper(apiHelpers);
@@ -65,12 +62,5 @@ test('Generate a new token after expired', async ({apiHelpers, page}) => {
 				page.getByText('New token was generated.')
 			).toBeVisible();
 		});
-	});
-
-	await test.step('delete channel', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
 	});
 });

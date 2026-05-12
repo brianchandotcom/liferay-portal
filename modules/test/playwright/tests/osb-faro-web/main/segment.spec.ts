@@ -6,9 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
@@ -19,7 +19,7 @@ import performLogin, {
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
-import {createChannel, switchChannel} from './utils/channel';
+import {switchChannel} from './utils/channel';
 import {
 	addBreakdownByAttribute,
 	goToDistributionTabAndSelectAttribute,
@@ -62,25 +62,21 @@ import {
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
-
-let channel;
-let channelName;
-let project;
 
 test(
 	'Add a Batch segment using an individual property',
 	{
 		tag: '@LRAC-11460',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const individualName = 'ac';
 		const individuals = [
 			generateIndividual({
@@ -166,7 +162,7 @@ test.skip(
 	{
 		tag: '@LRAC-8233',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 
 		const individuals = [
@@ -204,7 +200,7 @@ test.skip(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -246,7 +242,7 @@ test.skip(
 	{
 		tag: '@LPD-27065',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const customEventName = 'CustomEvent' + new Date().getTime();
 
 		await test.step('Send a custom event', async () => {
@@ -418,7 +414,7 @@ test.skip(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
 			generateIndividual({
@@ -617,7 +613,7 @@ test.skip(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const firstIndividualsName = 'ac';
 		const secondIndividualsName = 'dxp';
 		const knownIndividuals = [
@@ -739,7 +735,7 @@ test.skip(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
 			generateIndividual({
@@ -972,7 +968,7 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-	async ({page}) => {
+	async ({analyticsChannel: channel, page, project}) => {
 		await test.step('Create dynamic segment with a nested criterion', async () => {
 			await navigateToACPageViaURL({
 				acPage: ACPage.segmentPage,
@@ -1081,7 +1077,7 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const firstIndividualName = 'ac';
 		const secondndividualName = 'dxp';
 		const individuals = [
@@ -1206,7 +1202,7 @@ test.skip(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const knownIndividualName = 'ac';
 		const knownIndividual = [
 			generateIndividual({
@@ -1549,24 +1545,3 @@ test.skip(
 		});
 	}
 );
-
-test.beforeEach(async ({apiHelpers}) => {
-	channelName = 'My Property - ' + getRandomString();
-
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel and delete site on the DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
-});

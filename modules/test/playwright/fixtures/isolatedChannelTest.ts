@@ -9,6 +9,7 @@ import {backendPageTest} from './backendPageTest';
 
 type AnalyticsChannel = {
 	id: string;
+	name: string;
 };
 
 type AnalyticsProject = {

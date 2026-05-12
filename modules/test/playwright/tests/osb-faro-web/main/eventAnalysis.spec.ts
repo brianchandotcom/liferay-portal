@@ -7,17 +7,15 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {selectAndExpectToHaveValue} from '../../../utils/selectAndExpectToHaveValue';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
-import {createChannel} from './utils/channel';
 import {
 	addBreakdown,
 	addCustomEvent,
@@ -34,7 +32,6 @@ import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	assetPublisherPagesTest,
 	pageEditorPagesTest,
 	pagesPagesTest,
@@ -42,38 +39,14 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
 const randomString = getRandomString();
 
-const channelName = 'My Property ' + randomString;
 const pageTitle = 'My Page';
-
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers, page}) => {
-	await test.step('Delete channel and delete site on de DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-
-		await page.goto(liferayConfig.environment.baseUrl);
-	});
-});
 
 test(
 	'Change data type with event already in use',
@@ -81,7 +54,7 @@ test(
 		tag: '@LRAC-6280',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 
@@ -354,7 +327,7 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 
@@ -495,7 +468,7 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 
@@ -637,7 +610,7 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 
@@ -776,7 +749,7 @@ test(
 		tag: '@LRAC-9481',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 
@@ -917,7 +890,7 @@ test(
 		tag: '@LRAC-7868',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 
@@ -1118,7 +1091,7 @@ test(
 		tag: '@LRAC-11746',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		await test.step('Send a custom event', async () => {
 			const date = new Date();
 

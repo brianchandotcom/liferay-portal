@@ -29,7 +29,6 @@ export const test = mergeTests(
 const randomString = getRandomString();
 
 const channelName = 'My Property ' + randomString;
-const pageTitle = 'My Page';
 const siteName = 'My Site ' + randomString;
 
 let channel;
@@ -42,7 +41,7 @@ test.beforeEach(async ({apiHelpers, page}) => {
 
 	await createSitePage({
 		apiHelpers,
-		pageTitle,
+		pageTitle: 'My Page',
 		siteName,
 	});
 

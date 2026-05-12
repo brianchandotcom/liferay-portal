@@ -13,37 +13,17 @@ import Footer from '../../components/Footer';
 import {
 	DateFilterValues,
 	FilterType,
-	HOURS_BY_MODIFIED_LAST,
+	normalizeDateFilter,
 } from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
 import {
 	ExportPreviewParams,
-	ExportPreviewQuery,
 	getExportPreview,
 } from '../../services/getExportPreview';
 import {ExportPreview} from '../../types/exportImportPreview';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
-
-function dateFilterToQuery(values: DateFilterValues): ExportPreviewQuery {
-	if (values.range === FilterType.Last) {
-		return {
-			last: HOURS_BY_MODIFIED_LAST[values.last],
-			range: 'last',
-		};
-	}
-
-	if (values.range === FilterType.Range) {
-		return {
-			endDate: new Date(values.endDate).toISOString(),
-			range: 'dateRange',
-			startDate: new Date(values.startDate).toISOString(),
-		};
-	}
-
-	return {range: 'all'};
-}
 
 export function NewExport({
 	backURL,
@@ -109,7 +89,7 @@ export function NewExport({
 		}
 
 		getPreview({
-			query: dateFilterToQuery(filterValues),
+			query: normalizeDateFilter(filterValues),
 			url: exportPreviewAPIURL,
 		});
 	};
@@ -130,7 +110,7 @@ export function NewExport({
 
 				// eslint-disable-next-line no-console
 				console.log({
-					...dateFilterToQuery(values.dateFilter),
+					...normalizeDateFilter(values.dateFilter),
 					contentSelection: values.contentSelection,
 					deletions: values.deletions,
 					fileName: values.fileName,

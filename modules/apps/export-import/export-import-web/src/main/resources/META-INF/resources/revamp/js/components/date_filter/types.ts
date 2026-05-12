@@ -21,6 +21,13 @@ export type DateFilterValues =
 	| {last: ModifiedLastType; range: FilterType.Last}
 	| {endDate: string; range: FilterType.Range; startDate: string};
 
+export type NormalizedDateFilter = {
+	endDate?: string;
+	last?: number;
+	range?: FilterType;
+	startDate?: string;
+};
+
 export type EditingState = {
 	filterType: FilterType;
 	fromDate: string;

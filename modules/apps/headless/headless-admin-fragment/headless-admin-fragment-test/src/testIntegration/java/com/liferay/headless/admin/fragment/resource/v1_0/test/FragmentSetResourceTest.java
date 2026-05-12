@@ -231,6 +231,23 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				nullNameFragmentSet.getExternalReferenceCode(),
 				nullNameFragmentSet));
 
+		FragmentSet nullDescriptionFragmentSet =
+			testPutSiteFragmentSet_addFragmentSet();
+
+		nullDescriptionFragmentSet.setDescription((String)null);
+		nullDescriptionFragmentSet.setName(RandomTestUtil.randomString());
+
+		FragmentSet nullDescriptionPutFragmentSet =
+			fragmentSetResource.putSiteFragmentSet(
+				testGroup.getExternalReferenceCode(),
+				nullDescriptionFragmentSet.getExternalReferenceCode(),
+				nullDescriptionFragmentSet);
+
+		Assert.assertEquals("", nullDescriptionPutFragmentSet.getDescription());
+		Assert.assertEquals(
+			nullDescriptionFragmentSet.getName(),
+			nullDescriptionPutFragmentSet.getName());
+
 		_testPutSiteFragmentSetBatch();
 	}
 

@@ -1381,7 +1381,7 @@ definition {
 
 	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in the draft status"
 	@priority = 3
-	test RenameSegmentABTestDraft {
+	test RenameSegmentInABTestStates {
 		task ("Create a segment and an Experience using the segment created") {
 			ContentPages.gotoPageEditor();
 

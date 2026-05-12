@@ -14,6 +14,8 @@ import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForModal} from '../../../utils/waitFor';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {checkInZip} from '../../../utils/zip';
+import {DefaultPermissionsPage} from '../permissions/pages/DefaultPermissionsPage';
+import {PermissionsPage} from '../permissions/pages/PermissionsPage';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -3056,6 +3058,212 @@ test(
 						name: `${title} (Copy)`,
 					})
 				).toBeVisible();
+			}
+		});
+	}
+);
+
+test(
+	'Permissions can be reset to defaults in bulk from the All section',
+	{tag: '@LPD-85553'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+
+		const contentNames = [getRandomString(), getRandomString()];
+
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		for (const contentName of contentNames) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentName,
+				},
+				applicationName,
+				spaceName
+			);
+		}
+
+		const permissionsPage = new PermissionsPage(page);
+
+		const overriddenPermissions = [
+			{action: 'DELETE_DISCUSSION', checked: true, role: 'Power User'},
+			{action: 'UPDATE_DISCUSSION', checked: true, role: 'User'},
+		];
+
+		await test.step('Override permissions on each asset individually', async () => {
+			await assetsPage.gotoAll();
+
+			for (const contentName of contentNames) {
+				await page
+					.getByRole('button', {name: `${contentName} Actions`})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.last()
+					.click();
+
+				await permissionsPage.checkPermissionsAndSave(
+					overriddenPermissions
+				);
+			}
+		});
+
+		await test.step('Bulk reset permissions to parent defaults', async () => {
+			await assetsPage.selectItems(contentNames);
+
+			await page
+				.getByTestId('visualization-mode-table')
+				.getByLabel('Actions')
+				.click();
+
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: 'Reset to Default Permissions',
+				})
+				.click();
+
+			await page.getByRole('button', {name: 'Confirm'}).click();
+
+			await waitForAlert(
+				page,
+				`Info:Reset permissions action started for ${contentNames.length} assets.`,
+				{type: 'info'}
+			);
+		});
+
+		await test.step('Verify the overridden permissions were cleared', async () => {
+			for (const contentName of contentNames) {
+				await page
+					.getByRole('button', {name: `${contentName} Actions`})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.last()
+					.click();
+
+				await permissionsPage.verifyPermissions([
+					{
+						action: 'DELETE_DISCUSSION',
+						checked: false,
+						role: 'Power User',
+					},
+					{
+						action: 'UPDATE_DISCUSSION',
+						checked: false,
+						role: 'User',
+					},
+				]);
+			}
+		});
+	}
+);
+
+test(
+	'Permissions can be edited by role in bulk from the All section',
+	{tag: '@LPD-85553'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+
+		const contentNames = [getRandomString(), getRandomString()];
+
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		for (const contentName of contentNames) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentName,
+				},
+				applicationName,
+				spaceName
+			);
+		}
+
+		const defaultPermissionsPage = new DefaultPermissionsPage(page);
+		const permissionsPage = new PermissionsPage(page);
+
+		await test.step('Bulk edit Permissions by Role for the selected assets', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.selectItems(contentNames);
+
+			await page
+				.getByTestId('visualization-mode-table')
+				.getByLabel('Actions')
+				.click();
+
+			await page
+				.getByRole('menuitem', {
+					exact: true,
+					name: 'Edit Permissions by Role',
+				})
+				.click();
+
+			await expect(defaultPermissionsPage.permissionsModal).toBeVisible();
+
+			await defaultPermissionsPage.permissionsModalSelectRole.selectOption(
+				'Power User'
+			);
+
+			await defaultPermissionsPage.permissionsModal
+				.getByTestId('row-checkbox-Power User_VIEW')
+				.check();
+
+			await defaultPermissionsPage.permissionsModalSaveButton.click();
+
+			await waitForAlert(
+				page,
+				`update action started for ${contentNames.length} assets`,
+				{type: 'info'}
+			);
+
+			await defaultPermissionsPage.permissionsModalCancelButton.click();
+		});
+
+		await test.step('Verify the selected assets received the new permissions', async () => {
+			const expected = [
+				{action: 'VIEW', checked: true, role: 'Power User'},
+			];
+
+			for (const contentName of contentNames) {
+				await page
+					.getByRole('button', {name: `${contentName} Actions`})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.click();
+
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.last()
+					.click();
+
+				await permissionsPage.verifyPermissions(expected);
 			}
 		});
 	}

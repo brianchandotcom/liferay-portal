@@ -6,17 +6,15 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
 import {
 	connectToAnalyticsCloud,
 	disconnectFromAnalyticsCloud,
 	goPreviousStep,
 	goToAnalyticsCloudInstanceSettings,
 } from '../../analytics-settings-web/main/utils/analytics-settings';
-import {createChannel} from './utils/channel';
 import {
 	checkDataSourceStatus,
 	createDataSource,
@@ -28,7 +26,7 @@ import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -40,14 +38,7 @@ test(
 		tag: '@LPD-44493',
 	},
 
-	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
+	async ({page, project}) => {
 		const {token} = await createDataSource(page);
 
 		await test.step('Go to DXP --> Instance Settings --> Analytics Cloud and disconnect the workspace', async () => {
@@ -114,13 +105,6 @@ test(
 				dataSourceStatus: 'Disconnected',
 				page,
 			});
-		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
 		});
 	}
 );

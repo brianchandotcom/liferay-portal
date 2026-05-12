@@ -6,13 +6,11 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
@@ -20,10 +18,10 @@ import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -57,38 +55,12 @@ async function checkAcquisitionChannelCount(
 	expect(acquisitionChannelCount).toBe(count);
 }
 
-const channelName = 'My Property ' + getRandomString();
-
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers, page}) => {
-	await test.step('Delete channel and delete site on de DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-
-		await page.goto(liferayConfig.environment.baseUrl);
-	});
-});
-
 test(
 	'Check if acquisition card displays PAID SEARCH channel after receiving an event',
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -160,7 +132,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -232,7 +204,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -304,7 +276,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -376,7 +348,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -448,7 +420,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -520,7 +492,7 @@ test(
 	{
 		tag: '@Legacy',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -593,7 +565,7 @@ test(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';
@@ -666,7 +638,7 @@ test(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const individualName = 'user1';

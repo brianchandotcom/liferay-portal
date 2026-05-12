@@ -6,31 +6,29 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {createChannel} from './utils/channel';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 
-const test = mergeTests(apiHelpersTest, loginAnalyticsCloudTest(), loginTest());
+const test = mergeTests(
+	apiHelpersTest,
+	isolatedChannelTest,
+	loginAnalyticsCloudTest(),
+	loginTest()
+);
 
 test(
 	'Can edit a user role from the user management settings page',
 	{
 		tag: '@LRAC-9062',
 	},
-	async ({apiHelpers, page}) => {
+	async ({apiHelpers, page, project}) => {
 
-		// Create a channel and invite a user via API
-
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
+		// Invite a user to the isolated channel via API
 
 		const userEmail = `ac-${getRandomString()}@liferay.com`;
 
@@ -99,15 +97,10 @@ test(
 
 		await expect(userRow.getByText('Member')).toBeVisible();
 
-		// Cleanup the invited user and the channel
+		// Cleanup the invited user (channel is cleaned up by the fixture)
 
 		await apiHelpers.jsonWebServicesOSBFaro.deleteUser(
 			user.id,
-			project.groupId
-		);
-
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
 			project.groupId
 		);
 	}

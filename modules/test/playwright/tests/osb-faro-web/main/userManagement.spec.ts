@@ -5,47 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from './utils/channel';
 import {ACPage, navigateToACSettingsViaURL} from './utils/navigation';
 
 export const test = mergeTests(
-	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const channelName = 'My Property - ' + getRandomString();
-
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel and delete site on the DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
-});
 
 test(
 	'Delete button to manage user permissions',
@@ -53,7 +26,7 @@ test(
 		tag: '@LRAC-9063',
 	},
 
-	async ({page}) => {
+	async ({page, project}) => {
 		await test.step('go to AC Properties Page', async () => {
 			await navigateToACSettingsViaURL({
 				acPage: ACPage.userManagementPage,

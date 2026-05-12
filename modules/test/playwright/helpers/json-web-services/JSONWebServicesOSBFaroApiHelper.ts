@@ -8,6 +8,7 @@ import {ApiHelpers} from '../ApiHelpers';
 
 type Channel = {
 	id: string;
+	name: string;
 };
 
 type FaroUser = {

@@ -49,10 +49,8 @@ function clearedFilter(filter: IBaseFilterState): IBaseFilterState {
 	return {
 		...filter,
 		active: false,
-		selectedData: {
-			exclude: false,
-			selectedItems: [],
-		},
+		odataFilterString: undefined,
+		selectedData: undefined,
 	};
 }
 

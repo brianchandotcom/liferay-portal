@@ -367,7 +367,7 @@ public class UpgradeLogProgressTracker {
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to determine DB type", exception);
+				_log.debug("Unable to determine database type", exception);
 			}
 
 			return sql;

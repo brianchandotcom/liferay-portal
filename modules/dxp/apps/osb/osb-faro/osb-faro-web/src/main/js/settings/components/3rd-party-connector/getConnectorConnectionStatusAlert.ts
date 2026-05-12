@@ -23,16 +23,20 @@ export function getConnectorConnectionStatusAlert(
 	}
 
 	if (status === ConnectorStatus.Active) {
+		if (entityCount > 0) {
+			return {
+				displayType: 'success',
+				message: Liferay.Language.get(
+					'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
+				)
+			};
+		}
+
 		return {
-			displayType: 'success',
-			message:
-				entityCount > 0
-					? Liferay.Language.get(
-							'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
-					  )
-					: Liferay.Language.get(
-							'you-have-successfully-connected-to-your-data-source-complete-your-data-source-configuration-to-start-syncing-data'
-					  )
+			displayType: 'warning',
+			message: Liferay.Language.get(
+				'you-have-successfully-connected-to-your-data-source-complete-your-data-source-configuration-to-start-syncing-data'
+			)
 		};
 	}
 

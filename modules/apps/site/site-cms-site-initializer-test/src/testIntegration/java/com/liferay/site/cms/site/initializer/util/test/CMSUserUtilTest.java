@@ -118,12 +118,12 @@ public class CMSUserUtilTest {
 	}
 
 	private void _assertUserIds(long... expectedUserIds) {
+		Arrays.sort(expectedUserIds);
+
 		long[] actualUserIds = TransformUtil.transformToLongArray(
 			CMSUserUtil.getUsers(), User::getUserId);
 
 		Arrays.sort(actualUserIds);
-
-		Arrays.sort(expectedUserIds);
 
 		Assert.assertArrayEquals(expectedUserIds, actualUserIds);
 	}

@@ -1404,7 +1404,7 @@ definition {
 			ABTest.createVariant(variantName = "Variant name");
 		}
 
-		task ("Go to Segments page and try to rename that segment") {
+		task ("Go to Segments page and rename the segment while AB test is in draft") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
 			Segmentation.editSegment(entry = "SegmentForABTest");
@@ -1416,54 +1416,38 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the changes have been applied") {
+		task ("Assert the rename has been applied in draft state") {
 			LexiconEntry.viewEntryName(rowEntry = "SegmentForABTest 2");
 		}
-	}
 
-	@description = "LPS-99225: Validate if the admin can rename a segment in an experience with an A/B test in terminated status"
-	@priority = 3
-	test RenameSegmentABTestTerminated {
-		task ("Create a segment and an Experience using the segment created") {
-			ContentPages.gotoPageEditor();
+		task ("Navigate back to content page and run + terminate the AB test") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-			Segmentation.createExperienceWithSegment(
-				newExperience = "NewExp1",
-				newSegment = "SegmentForABTest");
-
-			Button.clickPublish();
-		}
-
-		task ("Create a new A/B test with a new experience, run and terminate it") {
 			ABTest.openABTestPanel();
 
 			ContentPages.changeExperience(experienceName = "NewExp1");
-
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
 
 			ABTest.runTest();
 
 			ABTest.terminateTest();
 		}
 
-		task ("Go to Segments page and try to rename that segment") {
+		task ("Go to Segments page and rename the segment while AB test is terminated") {
 			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
-			Segmentation.editSegment(entry = "SegmentForABTest");
+			Segmentation.editSegment(entry = "SegmentForABTest 2");
 
-			Segmentation.fillTitle(titleField = "SegmentForABTest 2");
+			Segmentation.fillTitle(titleField = "SegmentForABTest 3");
 
 			Button.clickSave();
 
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the changes have been applied") {
-			LexiconEntry.viewEntryName(rowEntry = "SegmentForABTest 2");
+		task ("Assert the rename has been applied in terminated state") {
+			LexiconEntry.viewEntryName(rowEntry = "SegmentForABTest 3");
 		}
 	}
 

@@ -153,9 +153,7 @@ describe('SpaceConnectedSitesModal', () => {
 					id: siteErc,
 					logo: mockUnconnectedSite.logo,
 					name: mockUnconnectedSite.name,
-					searchable: !!JSON.parse(
-						(body?.searchable as string) || 'false'
-					),
+					searchable: body?.searchable ?? false,
 				},
 				error: null,
 			})
@@ -415,7 +413,7 @@ describe('SpaceConnectedSitesModal', () => {
 				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
 					DEFAULT_PROPS.externalReferenceCode,
 					'1',
-					{searchable: 'false'}
+					{searchable: false}
 				);
 			});
 

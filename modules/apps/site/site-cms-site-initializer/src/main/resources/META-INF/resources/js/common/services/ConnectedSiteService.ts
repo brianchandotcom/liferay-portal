@@ -6,10 +6,14 @@
 import {Site} from '../types/Site';
 import ApiHelper from './ApiHelper';
 
+export type ConnectedSiteRequestBody = {
+	searchable?: boolean;
+};
+
 async function connectSiteToSpace(
 	externalReferenceCode: string,
 	siteExternalReferenceCode: string,
-	body: Record<string, string> = {searchable: 'true'}
+	body: ConnectedSiteRequestBody = {searchable: true}
 ) {
 	return await ApiHelper.put<Site>(
 		`/o/headless-asset-library/v1.0/asset-libraries/${externalReferenceCode}/connected-sites/${siteExternalReferenceCode}`,

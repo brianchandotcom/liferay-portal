@@ -5,6 +5,7 @@
 
 package com.liferay.depot.web.internal.servlet.taglib;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
@@ -76,14 +77,20 @@ public class DepotBreadcrumbEntryContributorImpl
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		try {
+			DepotEntry depotEntry = _getDepotEntry(
+				scopeGroup.getGroupId(), depotEntryId);
+
+			if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+				return originalBreadcrumbEntries;
+			}
+
 			breadcrumbEntries.add(
 				_getAssetLibrariesBreadcrumbEntry(
 					themeDisplay.getControlPanelGroup(), httpServletRequest));
 
 			breadcrumbEntries.add(
 				_getAssetLibraryBreadcrumbEntry(
-					_getDepotEntry(scopeGroup.getGroupId(), depotEntryId),
-					httpServletRequest));
+					depotEntry, httpServletRequest));
 
 			if (originalBreadcrumbEntries.isEmpty() &&
 				!Objects.equals(

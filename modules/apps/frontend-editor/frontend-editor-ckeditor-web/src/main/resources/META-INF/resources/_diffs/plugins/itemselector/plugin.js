@@ -29,6 +29,32 @@
 	const defaultVideoHeight = 300;
 	const defaultVideoWidth = 400;
 
+	function rememberFolder(folderId) {
+		if (folderId !== null && folderId !== undefined && folderId !== '') {
+			lastFolderId = folderId;
+		}
+	}
+
+	function withFolderId(url, folderId) {
+		if (folderId === null || folderId === undefined || folderId === '') {
+			return url;
+		}
+
+		try {
+			const parsed = new URL(url, window.location.origin);
+
+			parsed.searchParams.set(
+				ITEM_SELECTOR_FOLDER_ID_PARAM,
+				String(folderId)
+			);
+
+			return parsed.toString();
+		}
+		catch (error) {
+			return url;
+		}
+	}
+
 	CKEDITOR.plugins.add('itemselector', {
 		_bindBrowseButton(
 			editor,
@@ -374,43 +400,17 @@
 				editor.config.itemSelectorMaintainState
 			);
 
-			let modalURL = url;
-
-			if (maintainState && lastFolderId !== null && lastFolderId !== '') {
-				try {
-					const parsed = new URL(modalURL, window.location.origin);
-
-					parsed.searchParams.set(
-						ITEM_SELECTOR_FOLDER_ID_PARAM,
-						String(lastFolderId)
-					);
-
-					modalURL = parsed.toString();
-				}
-				catch (error) {
-
-					// Leave modalURL unchanged if URL parsing fails.
-
-				}
-			}
-
 			Liferay.Util.openSelectionModal({
 				onSelect: (selectedItem) => {
-					if (
-						maintainState &&
-						selectedItem &&
-						selectedItem.folderId !== null &&
-						selectedItem.folderId !== undefined &&
-						selectedItem.folderId !== ''
-					) {
-						lastFolderId = selectedItem.folderId;
+					if (maintainState && selectedItem) {
+						rememberFolder(selectedItem.folderId);
 					}
 
 					callback(selectedItem);
 				},
 				selectEventName: editor.name + 'selectItem',
 				title: Liferay.Language.get('select-item'),
-				url: modalURL,
+				url: maintainState ? withFolderId(url, lastFolderId) : url,
 				zIndex: CKEDITOR.getNextZIndex(),
 			});
 		},

@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.util;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -348,6 +349,27 @@ public class UriInfoUtil {
 			if (!path.startsWith(PortalUtil.getPathContext())) {
 				uriBuilder.replacePath(PortalUtil.getPathContext(path));
 			}
+		}
+
+		String webServerHost = PropsUtil.get(PropsKeys.WEB_SERVER_HOST);
+
+		if (Validator.isNotNull(webServerHost)) {
+			boolean secure = _isSecure();
+
+			uriBuilder.host(webServerHost);
+
+			_setPort(
+				uriBuilder,
+				GetterUtil.getInteger(
+					PropsUtil.get(
+						secure ? PropsKeys.WEB_SERVER_HTTPS_PORT :
+							PropsKeys.WEB_SERVER_HTTP_PORT),
+					secure ? Http.HTTPS_PORT : Http.HTTP_PORT),
+				secure);
+
+			uriBuilder.scheme(secure ? Http.HTTPS : Http.HTTP);
+
+			return uriBuilder;
 		}
 
 		if (Validator.isNotNull(_getHost(uriBuilder)) && _isSecure()) {

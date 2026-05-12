@@ -24,7 +24,7 @@ export function FormikFieldDateFilter({
 
 	return (
 		<DateFilter
-			appliedValue={field.value ?? {filterType: FilterType.All}}
+			appliedValue={field.value ?? {range: FilterType.All}}
 			itemsCount={itemsCount}
 			onApplyFilter={(filterValues) => {
 				helpers.setValue(filterValues);

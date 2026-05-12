@@ -6,7 +6,7 @@
 export enum FilterType {
 	All = 'all',
 	Last = 'last',
-	Range = 'range',
+	Range = 'dateRange',
 }
 
 export enum ModifiedLastType {
@@ -17,9 +17,9 @@ export enum ModifiedLastType {
 }
 
 export type DateFilterValues =
-	| {filterType: FilterType.All}
-	| {filterType: FilterType.Last; modifiedLast: ModifiedLastType}
-	| {filterType: FilterType.Range; fromDate: string; toDate: string};
+	| {range: FilterType.All}
+	| {last: ModifiedLastType; range: FilterType.Last}
+	| {endDate: string; range: FilterType.Range; startDate: string};
 
 export type EditingState = {
 	filterType: FilterType;

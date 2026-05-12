@@ -47,20 +47,13 @@ public class UriInfoUtil {
 
 		UriBuilder uriBuilder = getBaseUriBuilder(uriInfo);
 
-		uriBuilder.host(PortalUtil.getForwardedHost(httpServletRequest));
-
-		int port = PortalUtil.getForwardedPort(httpServletRequest);
-
 		boolean secure = PortalUtil.isSecure(httpServletRequest);
 
-		if (((port != Http.HTTP_PORT) && !secure) ||
-			((port != Http.HTTPS_PORT) && secure)) {
+		uriBuilder.host(PortalUtil.getForwardedHost(httpServletRequest));
 
-			uriBuilder.port(port);
-		}
-		else {
-			uriBuilder.port(-1);
-		}
+		_setPort(
+			uriBuilder, PortalUtil.getForwardedPort(httpServletRequest),
+			secure);
 
 		if (secure) {
 			uriBuilder.scheme(Http.HTTPS);
@@ -333,6 +326,19 @@ public class UriInfoUtil {
 		return false;
 	}
 
+	private static void _setPort(
+		UriBuilder uriBuilder, int port, boolean secure) {
+
+		if (((port != Http.HTTP_PORT) && !secure) ||
+			((port != Http.HTTPS_PORT) && secure)) {
+
+			uriBuilder.port(port);
+		}
+		else {
+			uriBuilder.port(_NO_PORT);
+		}
+	}
+
 	private static UriBuilder _updateUriBuilder(UriBuilder uriBuilder) {
 		if (!Validator.isBlank(PortalUtil.getPathContext())) {
 			URI uri = uriBuilder.build();
@@ -350,6 +356,8 @@ public class UriInfoUtil {
 
 		return uriBuilder;
 	}
+
+	private static final int _NO_PORT = -1;
 
 	private static volatile Field _uriBuilderHostField;
 

@@ -46,12 +46,15 @@ public interface SitemapConfigurationManager {
 			long companyId, long[] companySitemapGroupIds,
 			long[] companySitemapObjectDefinitionIds, boolean includeCategories,
 			boolean includePages, boolean includeWebContent,
-			boolean xmlSitemapIndexEnabled)
+			String xmlSitemapGroupingMode, boolean xmlSitemapIndexEnabled)
 		throws ConfigurationException;
 
 	public void saveSitemapGroupConfiguration(
 			long groupId, boolean includeCategories, boolean includePages,
 			boolean includeWebContent)
+		throws ConfigurationException;
+
+	public String xmlSitemapGroupingMode(long companyId)
 		throws ConfigurationException;
 
 	public boolean xmlSitemapIndexCompanyEnabled(long companyId)

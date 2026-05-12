@@ -8,6 +8,7 @@ package com.liferay.portal.search.elasticsearch8.internal.logging;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -35,7 +36,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.function.ThrowingRunnable;
 
 /**
  * @author Bryan Engler
@@ -71,7 +71,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testAddDocuments() {
+	public void testAddDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -90,10 +90,13 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			_assertRuntimeException(
-				"Bulk add failed",
-				() -> indexWriter.addDocuments(
-					createSearchContext(), documents));
+			try {
+				indexWriter.addDocuments(createSearchContext(), documents);
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk add failed", systemException.getMessage());
+			}
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -124,7 +127,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testDeleteDocument() {
+	public void testDeleteDocument() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.INFO)) {
@@ -156,7 +159,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testDeleteDocuments() {
+	public void testDeleteDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -174,9 +177,13 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			_assertRuntimeException(
-				"Bulk delete failed",
-				() -> indexWriter.deleteDocuments(searchContext, uids));
+			try {
+				indexWriter.deleteDocuments(searchContext, uids);
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk delete failed", systemException.getMessage());
+			}
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -233,7 +240,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testUpdateDocument() {
+	public void testUpdateDocument() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -249,10 +256,13 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			_assertRuntimeException(
-				"Update failed",
-				() -> indexWriter.updateDocument(
-					createSearchContext(), document));
+			try {
+				indexWriter.updateDocument(createSearchContext(), document);
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Update failed", systemException.getMessage());
+			}
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -263,7 +273,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testUpdateDocuments() {
+	public void testUpdateDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -283,10 +293,13 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			_assertRuntimeException(
-				"Bulk update failed",
-				() -> indexWriter.updateDocuments(
-					createSearchContext(), documents));
+			try {
+				indexWriter.updateDocuments(createSearchContext(), documents);
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk update failed", systemException.getMessage());
+			}
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -326,15 +339,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 		Assert.assertEquals(logLevel, logEntry.getPriority());
 		consumer.accept(logEntry.getMessage());
-	}
-
-	private void _assertRuntimeException(
-		String expectedMessage, ThrowingRunnable runnable) {
-
-		RuntimeException runtimeException = Assert.assertThrows(
-			RuntimeException.class, runnable);
-
-		Assert.assertEquals(expectedMessage, runtimeException.getMessage());
 	}
 
 	private static final String _UID = "1";

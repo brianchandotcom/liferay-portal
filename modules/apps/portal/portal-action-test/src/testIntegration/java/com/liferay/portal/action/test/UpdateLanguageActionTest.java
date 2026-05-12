@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
@@ -25,12 +26,15 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -45,6 +49,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -76,8 +81,10 @@ public class UpdateLanguageActionTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -276,6 +283,16 @@ public class UpdateLanguageActionTest {
 	private void _testExecuteWithImpersonationPreservesSessionLocale()
 		throws Exception {
 
+		User impersonatedUser = UserTestUtil.addUser(_group.getGroupId());
+
+		impersonatedUser.setLanguageId(LocaleUtil.toLanguageId(_sourceLocale));
+
+		impersonatedUser = _userLocalService.updateUser(impersonatedUser);
+
+		User user = TestPropsValues.getUser();
+
+		String userLanguageId = user.getLanguageId();
+
 		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -287,7 +304,6 @@ public class UpdateLanguageActionTest {
 
 		mockHttpServletRequest.setParameter("languageId", languageId);
 
-		mockHttpServletRequest.setParameter("persistState", "false");
 		mockHttpServletRequest.setParameter(
 			"redirect",
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
@@ -301,10 +317,13 @@ public class UpdateLanguageActionTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
-		themeDisplay.setDoAsUserId(RandomTestUtil.randomString());
+		themeDisplay.setDoAsUserId(
+			String.valueOf(impersonatedUser.getUserId()));
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setSignedIn(true);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(impersonatedUser);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -320,6 +339,17 @@ public class UpdateLanguageActionTest {
 
 		Assert.assertEquals(
 			_sourceLocale, httpSession.getAttribute(WebKeys.LOCALE));
+
+		impersonatedUser = _userLocalService.getUser(
+			impersonatedUser.getUserId());
+
+		Assert.assertEquals(languageId, impersonatedUser.getLanguageId());
+
+		user = _userLocalService.getUser(user.getUserId());
+
+		Assert.assertEquals(userLanguageId, user.getLanguageId());
+
+		_userLocalService.deleteUser(impersonatedUser);
 	}
 
 	private void _testGetRedirect(
@@ -717,5 +747,8 @@ public class UpdateLanguageActionTest {
 	private final Locale _sourceLocale = LocaleUtil.FRANCE;
 	private final Locale _sourceUKLocale = LocaleUtil.UK;
 	private final Locale _targetLocale = LocaleUtil.GERMANY;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -53,6 +53,8 @@ export function NewImport({
 				)}
 				initialValues={{
 					contentSelection: undefined,
+					importPermissions: false,
+					replicateDeletions: false,
 				}}
 				isStepValid={(values) => !!values.contentSelection}
 				title={Liferay.Language.get('data-selection')}

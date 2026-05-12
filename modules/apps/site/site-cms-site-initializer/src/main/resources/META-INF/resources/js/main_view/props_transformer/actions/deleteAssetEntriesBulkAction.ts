@@ -106,12 +106,14 @@ async function handleBulkDeletion({
 	getCustomBulkDeleteMessage,
 	selectedData,
 	showConfirmationModal,
+	trashEnabled,
 }: {
 	apiURL: string;
 	dataSetId: string;
 	getCustomBulkDeleteMessage?: typeof getBulkDeleteMessage;
 	selectedData: IBulkActionFDSData;
 	showConfirmationModal?: boolean;
+	trashEnabled?: boolean;
 }): Promise<void> {
 	const spaces = await getEntriesSpaces(selectedData?.items || []);
 
@@ -202,12 +204,14 @@ export default async function deleteAssetEntriesBulkAction({
 	getCustomBulkDeleteMessage,
 	selectedData,
 	showConfirmationModal,
+	trashEnabled,
 }: {
 	apiURL?: string;
 	dataSetId?: string;
 	getCustomBulkDeleteMessage?: typeof getBulkDeleteMessage;
 	selectedData: IBulkActionFDSData;
 	showConfirmationModal?: boolean;
+	trashEnabled?: boolean;
 }): Promise<void> {
 	await handleBulkDeletion({
 		apiURL,
@@ -215,5 +219,6 @@ export default async function deleteAssetEntriesBulkAction({
 		getCustomBulkDeleteMessage,
 		selectedData,
 		showConfirmationModal,
+		trashEnabled,
 	});
 }

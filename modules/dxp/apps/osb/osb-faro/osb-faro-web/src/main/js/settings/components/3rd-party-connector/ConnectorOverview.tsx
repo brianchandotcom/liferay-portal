@@ -27,6 +27,7 @@ import {getConnectorAvailableDataAlert} from './getConnectorAvailableDataAlert';
 import {getConnectorConnectionStatusAlert} from './getConnectorConnectionStatusAlert';
 import {getConnectorStatus} from './getConnectorStatus';
 import {getConnectorStatusDisplay} from './getConnectorStatusDisplay';
+import {revoke} from 'shared/api/api-tokens';
 import {Text} from '@clayui/core';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDisconnectDataSource} from '../data-source/utils';
@@ -54,20 +55,15 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 	dataSource: initialDataSource,
 	open
 }) => {
-	const getDataSourceToken = (ds: DataSource) =>
-		(ds.credentials?.get('privateKey') as string) ?? '';
-
 	const [loading, setLoading] = useState(false);
 	const [dataSource, setDataSource] = useState(initialDataSource);
-	const [token, setToken] = useState(getDataSourceToken(initialDataSource));
+	const [token, setToken] = useState('');
 
 	const {groupId = '', id = ''} = useParams<{
 		groupId: string;
 		id: string;
 	}>();
 	const currentUser = useCurrentUser();
-
-	const dataSourceActive = dataSource.status === DataSourceStatuses.Active;
 
 	const endpointURL = `${window.location.origin}${config.endpointPath}`;
 
@@ -96,19 +92,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 	const connectorStatus = getConnectorStatus(dataSource);
 
 	useEffect(() => {
-		const dataSourceToken = getDataSourceToken(dataSource);
-
-		if (dataSourceToken) {
-			setToken(dataSourceToken);
-		}
-	}, [dataSource]);
-
-	useEffect(() => {
-		if (
-			token ||
-			dataSourceActive ||
-			connectorStatus === ConnectorStatus.Disconnected
-		) {
+		if (connectorStatus === ConnectorStatus.Disconnected) {
 			return;
 		}
 
@@ -132,7 +116,7 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 		};
 
 		fetchConnectorTokenForGroup();
-	}, [config.slug, connectorStatus, dataSourceActive, groupId, token]);
+	}, [config.slug, connectorStatus, groupId]);
 
 	const handleGenerateToken = async () => {
 		try {
@@ -164,9 +148,9 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 	const {handleDisconnect} = useDisconnectDataSource({
 		addAlert,
 		beforeSubmit: async () => {
-			// This endpoint is returning 500 status and need to be fixed to enable the line below.
-			// Token should be revoke and generate a new one after clicking to generate token.
-			// await revoke({groupId, token});
+			if (token) {
+				await revoke({groupId, token});
+			}
 		},
 		close,
 		groupId,

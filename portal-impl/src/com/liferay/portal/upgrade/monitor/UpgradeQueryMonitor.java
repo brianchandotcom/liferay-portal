@@ -94,8 +94,8 @@ public final class UpgradeQueryMonitor {
 					_log.warn(
 						StringBundler.concat(
 							"Locked query \"", lockedQueryInfo.getQuery(),
-							"\" (id ", lockedQueryInfo.getId(),
-							") running for ",
+							"\" with ID ", lockedQueryInfo.getId(),
+							" has been running for ",
 							TimeUnit.MILLISECONDS.toSeconds(
 								lockedQueryInfo.getDuration()),
 							" seconds"));

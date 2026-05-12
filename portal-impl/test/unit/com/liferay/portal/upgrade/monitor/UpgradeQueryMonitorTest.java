@@ -129,16 +129,11 @@ public class UpgradeQueryMonitorTest {
 
 	@Test
 	public void testStop() throws Exception {
-
-		// not started
-
 		UpgradeQueryMonitor.stop();
 
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
 				UpgradeQueryMonitor.class, _SCHEDULED_EXECUTOR_SERVICE));
-
-		// started
 
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(

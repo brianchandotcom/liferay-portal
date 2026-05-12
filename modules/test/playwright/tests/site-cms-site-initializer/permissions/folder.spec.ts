@@ -336,7 +336,7 @@ test(
 			await spaceSummaryPage.goto(spaceName);
 			await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
 			await spaceSummaryPage.addRoleToSpaceMember(
-				'Content Reviewer',
+				'Space Content Reviewer',
 				user.name
 			);
 		});
@@ -364,6 +364,7 @@ test(
 			await assetsPage.execItemAction({
 				action: 'Copy To',
 				filter: contentTitle,
+				parentAction: 'Copy',
 			});
 
 			await copyFolderModalPage.space(spaceName).click();
@@ -384,6 +385,7 @@ test(
 			await assetsPage.execItemAction({
 				action: 'Copy To',
 				filter: contentTitle,
+				parentAction: 'Copy',
 			});
 
 			await copyFolderModalPage.space(spaceName).click();

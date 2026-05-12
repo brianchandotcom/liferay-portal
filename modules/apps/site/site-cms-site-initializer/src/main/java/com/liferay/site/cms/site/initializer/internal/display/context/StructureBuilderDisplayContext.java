@@ -19,17 +19,21 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -38,8 +42,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -102,6 +110,8 @@ public class StructureBuilderDisplayContext {
 
 					return true;
 				}
+			).put(
+				"countries", _getCountries()
 			).put(
 				"editStructureDisplayPageURL",
 				() -> StringBundler.concat(
@@ -174,6 +184,53 @@ public class StructureBuilderDisplayContext {
 				"objectDefinitions", _getObjectDefinitionsJSONObject()
 			)
 		).build();
+	}
+
+	private Set<String> _getAvailableCountriesA2Codes() {
+		Set<String> availableCountriesA2Codes = new HashSet<>();
+
+		for (String languageId : PropsValues.LOCALES) {
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+			String a2 = locale.getCountry();
+
+			if (Validator.isNotNull(a2)) {
+				availableCountriesA2Codes.add(a2);
+			}
+		}
+
+		return availableCountriesA2Codes;
+	}
+
+	private List<Map<String, String>> _getCountries() {
+		List<Map<String, String>> countries = new ArrayList<>();
+
+		Set<String> availableCountriesA2Codes = _getAvailableCountriesA2Codes();
+
+		String languageId = LocaleUtil.toLanguageId(_themeDisplay.getLocale());
+
+		for (Country country :
+				CountryLocalServiceUtil.getCompanyCountries(
+					_themeDisplay.getCompanyId(), true)) {
+
+			if (!availableCountriesA2Codes.contains(country.getA2()) ||
+				Validator.isNull(country.getIdd())) {
+
+				continue;
+			}
+
+			countries.add(
+				HashMapBuilder.put(
+					"a2", country.getA2()
+				).put(
+					"name", country.getTitle(languageId)
+				).put(
+					"prefix", country.getIdd()
+				).build());
+		}
+
+		return ListUtil.sort(
+			countries, Comparator.comparing(country -> country.get("name")));
 	}
 
 	private ObjectDefinition _getObjectDefinition() throws Exception {

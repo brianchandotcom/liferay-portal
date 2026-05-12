@@ -138,7 +138,7 @@ definition {
 
 	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
 	@priority = 3
-	test ABTestIconVisibleWithPermissions {
+	test ABTestIconVisibilityInControlBar {
 		task ("Create user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

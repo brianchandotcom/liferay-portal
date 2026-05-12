@@ -22,6 +22,7 @@ interface ExecItemActionArgs {
 		| 'Edit'
 		| 'Expire'
 		| 'Export for Translation'
+		| 'Move'
 		| 'Move To'
 		| 'Share'
 		| 'Show Details'
@@ -31,9 +32,13 @@ interface ExecItemActionArgs {
 	parentAction?: 'Copy';
 }
 
-interface BulkCopyOrMoveArgs {
+interface CopyOrMoveDestinationArgs {
 	destinationFolder: string;
 	destinationSpace: string;
+}
+
+interface ItemCopyOrMoveArgs extends CopyOrMoveDestinationArgs {
+	itemTitle: string;
 }
 
 export class AssetsPage {
@@ -140,7 +145,7 @@ export class AssetsPage {
 		await this.dataSetFragmentPage.execBulkItemAction({action});
 	}
 
-	async bulkCopyTo(args: BulkCopyOrMoveArgs) {
+	async bulkCopyTo(args: CopyOrMoveDestinationArgs) {
 		await this.page
 			.getByRole('button', {exact: true, name: 'Copy To'})
 			.click();
@@ -148,12 +153,31 @@ export class AssetsPage {
 		await this.selectCopyOrMoveDestination(args);
 	}
 
-	async bulkMoveTo(args: BulkCopyOrMoveArgs) {
+	async bulkMoveTo(args: CopyOrMoveDestinationArgs) {
 		await this.page
 			.getByRole('button', {exact: true, name: 'Move To'})
 			.click();
 
 		await this.selectCopyOrMoveDestination(args);
+	}
+
+	async copyTo({itemTitle, ...destination}: ItemCopyOrMoveArgs) {
+		await this.execItemAction({
+			action: 'Copy To',
+			filter: itemTitle,
+			parentAction: 'Copy',
+		});
+
+		await this.selectCopyOrMoveDestination(destination);
+	}
+
+	async moveTo({itemTitle, ...destination}: ItemCopyOrMoveArgs) {
+		await this.execItemAction({
+			action: 'Move',
+			filter: itemTitle,
+		});
+
+		await this.selectCopyOrMoveDestination(destination);
 	}
 
 	getCopyOrMoveDestinationDialog() {
@@ -163,7 +187,7 @@ export class AssetsPage {
 	async selectCopyOrMoveDestination({
 		destinationFolder,
 		destinationSpace,
-	}: BulkCopyOrMoveArgs) {
+	}: CopyOrMoveDestinationArgs) {
 		const dialog = this.getCopyOrMoveDestinationDialog();
 
 		await dialog.waitFor();

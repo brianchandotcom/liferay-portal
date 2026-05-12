@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
@@ -19,7 +20,6 @@ import {faroConfig} from '../../osb-faro-web/main/faro.config';
 import {clickOnLink} from '../../osb-faro-web/main/utils/actions';
 import {
 	createSitePage,
-	navigateToDXPandDeleteSite,
 	navigateToSitePage,
 } from '../../osb-faro-web/main/utils/portal';
 import {openABTesSidebar} from './utils/ab-test';
@@ -30,6 +30,7 @@ const test = mergeTests(
 		'LPD-78863': {enabled: true, system: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -74,14 +75,8 @@ test(
 	{
 		tag: '@LPD-34179',
 	},
-	async ({apiHelpers, page}) => {
+	async ({apiHelpers, page, site}) => {
 		const channelName = 'My Property - ' + getRandomString();
-
-		const siteName = 'My Site ' + getRandomString();
-
-		const site = await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
 
 		const pageTitle = 'My Page';
 
@@ -92,7 +87,7 @@ test(
 			await createSitePage({
 				apiHelpers,
 				pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			const result = await syncAnalyticsCloud({
@@ -108,7 +103,7 @@ test(
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await page.waitForSelector('.segments-experiment-icon');
@@ -184,12 +179,6 @@ test(
 						`[${channel.id}]`,
 						project.groupId
 					);
-				});
-			}
-
-			if (site) {
-				await test.step('delete site on DXP side', async () => {
-					await navigateToDXPandDeleteSite({apiHelpers, page, site});
 				});
 			}
 		}

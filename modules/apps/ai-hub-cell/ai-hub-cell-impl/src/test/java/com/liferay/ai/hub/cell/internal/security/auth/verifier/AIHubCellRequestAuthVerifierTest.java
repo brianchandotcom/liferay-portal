@@ -102,7 +102,7 @@ public class AIHubCellRequestAuthVerifierTest {
 				String.valueOf(userId)
 			).build());
 
-		signedJWT.sign(new MACSigner(_secretBytes));
+		signedJWT.sign(new MACSigner(_bytes));
 
 		return signedJWT.serialize();
 	}
@@ -117,16 +117,16 @@ public class AIHubCellRequestAuthVerifierTest {
 		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
 			AIHubCellConfiguration.class);
 
-		_secretBytes = new byte[64];
+		_bytes = new byte[64];
 
-		for (int i = 0; i < _secretBytes.length; i++) {
-			_secretBytes[i] = SecureRandomUtil.nextByte();
+		for (int i = 0; i < _bytes.length; i++) {
+			_bytes[i] = SecureRandomUtil.nextByte();
 		}
 
 		Mockito.when(
 			aiHubCellConfiguration.secret()
 		).thenReturn(
-			Base64.encode(_secretBytes)
+			Base64.encode(_bytes)
 		);
 
 		configurationProviderUtilMockedStatic.when(
@@ -170,6 +170,6 @@ public class AIHubCellRequestAuthVerifierTest {
 	private static final AIHubCellRequestAuthVerifier
 		_aiHubCellRequestAuthVerifier = new AIHubCellRequestAuthVerifier();
 
-	private byte[] _secretBytes;
+	private byte[] _bytes;
 
 }

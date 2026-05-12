@@ -436,6 +436,7 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 				)}
 
 				<ConnectorEntities
+					connectorStatus={getConnectorStatus(dataSource)}
 					entities={config.entities}
 					syncedCounts={syncedCounts}
 				/>

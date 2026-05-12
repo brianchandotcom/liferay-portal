@@ -654,6 +654,34 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public Results<Individual> getAccountIndividuals(
+		FaroProject faroProject, String accountId, int cur, int delta,
+		String sortString) {
+
+		Map<String, Object> uriVariables = getUriVariables(
+			faroProject, cur, delta, null);
+
+		uriVariables.put("id", accountId);
+
+		if (Validator.isNotNull(sortString)) {
+			uriVariables.put(
+				"sort",
+				Arrays.asList(
+					StringUtil.replace(
+						sortString, CharPool.COLON, CharPool.COMMA)));
+		}
+
+		PagedModel<?, Individual> pagedModel = get(
+			faroProject, Rels.ACCOUNT_INDIVIDUALS,
+			new ParameterizedTypeReference
+				<EntityModelPagedModel<Individual>>() {
+			},
+			uriVariables);
+
+		return pagedModel.getResults();
+	}
+
+	@Override
 	public Results<IndividualSegment> getAccountIndividualSegments(
 		FaroProject faroProject, String accountId, String channelId,
 		String query, String status, int cur, int delta,

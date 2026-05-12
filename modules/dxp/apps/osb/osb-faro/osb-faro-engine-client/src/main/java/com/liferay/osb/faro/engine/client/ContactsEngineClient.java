@@ -184,6 +184,10 @@ public interface ContactsEngineClient {
 		FaroProject faroProject, Long channelId, String fieldMappingFieldName,
 		String query, int cur, int delta);
 
+	public Results<Individual> getAccountIndividuals(
+		FaroProject faroProject, String accountId, int cur, int delta,
+		String sortString);
+
 	public Results<IndividualSegment> getAccountIndividualSegments(
 		FaroProject faroProject, String accountId, String channelId,
 		String query, String status, int cur, int delta,

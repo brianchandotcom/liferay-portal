@@ -374,45 +374,61 @@ describe('ConnectorOverview', () => {
 	});
 
 	describe('Token state and auto-fetch', () => {
-		it('initializes the token from dataSource.credentials.privateKey when present', () => {
-			const {getAllByTestId} = renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active, {
-					credentials: {privateKey: 'stored-token'}
-				})
+		it.each([
+			['Active', DataSourceStatuses.Active],
+			['Inactive', DataSourceStatuses.Inactive]
+		])(
+			'fetches the OAuth2 token for status %s by calling generateConnectorToken with the connector slug',
+			async (_, status) => {
+				renderOverview({
+					dataSource: buildDataSource(status)
+				});
+
+				await waitFor(() =>
+					expect(generateConnectorToken).toHaveBeenCalledWith({
+						groupId: '23',
+						type: 'acme'
+					})
+				);
+			}
+		);
+
+		it('renders the fetched token in the Token copy input', async () => {
+			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
+				token: 'fetched-token'
 			});
 
-			const values = getAllByTestId('copy-input-value').map(
-				node => node.textContent
-			);
-
-			expect(values).toContain('stored-token');
-		});
-
-		it('starts with an empty token when credentials.privateKey is missing', () => {
 			const {getAllByTestId} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Active)
 			});
 
-			const tokenValue = getAllByTestId('copy-input').find(node =>
-				node
-					.querySelector('[data-testid="copy-input-title"]')
-					?.textContent?.match(/^Token$/)
-			);
+			await waitFor(() => {
+				const values = getAllByTestId('copy-input-value').map(
+					node => node.textContent
+				);
 
-			expect(
-				tokenValue?.querySelector('[data-testid="copy-input-value"]')
-					?.textContent
-			).toBe('');
+				expect(values).toContain('fetched-token');
+			});
 		});
 
-		it('syncs the token when dataSource is refetched with a new privateKey', async () => {
-			(fetch as jest.Mock).mockResolvedValueOnce({
-				credentials: {privateKey: 'refreshed-token'},
-				id: 'ds-1',
-				status: DataSourceStatuses.Active
+		it('does not auto-fetch a token when the data source is disconnected (user mints a new one via Generate Token)', async () => {
+			renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
+					state: DataSourceStates.Disconnected
+				})
 			});
 
-			const {getAllByTestId, getByLabelText} = renderOverview({
+			await Promise.resolve();
+
+			expect(generateConnectorToken).not.toHaveBeenCalled();
+		});
+
+		it('on Generate Token click: stores the freshly minted token in state', async () => {
+			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
+				token: 'freshly-minted-token'
+			});
+
+			const {getByLabelText} = renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
 					state: DataSourceStates.Disconnected
 				})
@@ -420,48 +436,12 @@ describe('ConnectorOverview', () => {
 
 			fireEvent.click(getByLabelText('Generate Token'));
 
-			await waitFor(() => {
-				const values = getAllByTestId('copy-input-value').map(
-					node => node.textContent
-				);
-
-				expect(values).toContain('refreshed-token');
-			});
-		});
-
-		it('skips the auto-fetch when the token is already set from credentials', async () => {
-			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
-					credentials: {privateKey: 'stored-token'}
-				})
-			});
-
-			await Promise.resolve();
-
-			expect(generateConnectorToken).not.toHaveBeenCalled();
-		});
-
-		it('auto-fetches a token for INACTIVE data sources without a credentials privateKey', async () => {
-			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Inactive)
-			});
-
 			await waitFor(() =>
 				expect(generateConnectorToken).toHaveBeenCalledWith({
 					groupId: '23',
 					type: 'acme'
 				})
 			);
-		});
-
-		it('does not auto-fetch a token when the data source is already active', async () => {
-			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active)
-			});
-
-			await Promise.resolve();
-
-			expect(generateConnectorToken).not.toHaveBeenCalled();
 		});
 	});
 
@@ -510,60 +490,89 @@ describe('ConnectorOverview', () => {
 			expect(handleDisconnect).toHaveBeenCalled();
 		});
 
-		// TODO: Re-enable this test once the OAuth2 revoke endpoint is
-		// fixed on the backend (currently returns 500 with "Unable to
-		// revoke OAuth2 authorization") and the `revoke({groupId, token})`
-		// call is uncommented in ConnectorOverview's beforeSubmit.
-		it.skip('disconnect: passes a beforeSubmit that revokes the current token (so revoke runs before the disconnect endpoint)', async () => {
-			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active, {
-					credentials: {privateKey: 'stored-token'}
-				})
+		it('disconnect: passes a beforeSubmit that revokes the fetched OAuth2 token (so revoke runs before the disconnect endpoint)', async () => {
+			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
+				token: 'fetched-token'
 			});
 
-			const {beforeSubmit} = useDisconnectDataSourceMock.mock.calls[0][0];
+			const {getAllByTestId} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Active)
+			});
+
+			await waitFor(() => {
+				const values = getAllByTestId('copy-input-value').map(
+					node => node.textContent
+				);
+
+				expect(values).toContain('fetched-token');
+			});
+
+			const {beforeSubmit} =
+				useDisconnectDataSourceMock.mock.calls[
+					useDisconnectDataSourceMock.mock.calls.length - 1
+				][0];
 
 			await beforeSubmit();
 
 			expect(revoke).toHaveBeenCalledWith({
 				groupId: '23',
-				token: 'stored-token'
+				token: 'fetched-token'
 			});
 		});
 
-		it('disconnect: beforeSubmit is a no-op when there is no token to revoke', async () => {
+		it('disconnect: beforeSubmit is a no-op when the auto-fetch did not produce a token', async () => {
+			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({});
+
 			renderOverview({
 				dataSource: buildDataSource(DataSourceStatuses.Active)
 			});
 
-			const {beforeSubmit} = useDisconnectDataSourceMock.mock.calls[0][0];
+			await waitFor(() =>
+				expect(generateConnectorToken).toHaveBeenCalled()
+			);
+
+			const {beforeSubmit} =
+				useDisconnectDataSourceMock.mock.calls[
+					useDisconnectDataSourceMock.mock.calls.length - 1
+				][0];
 
 			await beforeSubmit();
 
 			expect(revoke).not.toHaveBeenCalled();
 		});
 
-		// TODO: Re-enable this test once the OAuth2 revoke endpoint is
-		// fixed on the backend and the `revoke({groupId, token})` call
-		// is uncommented in ConnectorOverview's beforeSubmit.
-		it.skip('disconnect: beforeSubmit swallows revoke failures so the disconnect can still proceed', async () => {
+		it('disconnect: beforeSubmit propagates revoke failures so the shared hook can show its error alert', async () => {
+			(generateConnectorToken as jest.Mock).mockResolvedValueOnce({
+				token: 'fetched-token'
+			});
 			(revoke as jest.Mock).mockRejectedValueOnce(
 				new Error('Unable to revoke OAuth2 authorization')
 			);
 
-			renderOverview({
-				dataSource: buildDataSource(DataSourceStatuses.Active, {
-					credentials: {privateKey: 'stored-token'}
-				})
+			const {getAllByTestId} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Active)
 			});
 
-			const {beforeSubmit} = useDisconnectDataSourceMock.mock.calls[0][0];
+			await waitFor(() => {
+				const values = getAllByTestId('copy-input-value').map(
+					node => node.textContent
+				);
 
-			await expect(beforeSubmit()).resolves.toBeUndefined();
+				expect(values).toContain('fetched-token');
+			});
+
+			const {beforeSubmit} =
+				useDisconnectDataSourceMock.mock.calls[
+					useDisconnectDataSourceMock.mock.calls.length - 1
+				][0];
+
+			await expect(beforeSubmit()).rejects.toThrow(
+				'Unable to revoke OAuth2 authorization'
+			);
 
 			expect(revoke).toHaveBeenCalledWith({
 				groupId: '23',
-				token: 'stored-token'
+				token: 'fetched-token'
 			});
 		});
 
@@ -572,7 +581,10 @@ describe('ConnectorOverview', () => {
 				dataSource: buildDataSource(DataSourceStatuses.Active)
 			});
 
-			const {onSubmit} = useDisconnectDataSourceMock.mock.calls[0][0];
+			const {onSubmit} =
+				useDisconnectDataSourceMock.mock.calls[
+					useDisconnectDataSourceMock.mock.calls.length - 1
+				][0];
 
 			await onSubmit();
 

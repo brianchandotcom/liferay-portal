@@ -70,6 +70,13 @@ export class CategoriesPage {
 		await this.closePermissionsModalButton.click();
 	}
 
+	async clearSearch() {
+		await this.page
+			.locator('.search-resume')
+			.getByRole('button', {name: 'Clear Search'})
+			.click();
+	}
+
 	async clickCreateNewCategoryButton() {
 		await this.createNewCategoryButton.click();
 
@@ -131,5 +138,9 @@ export class CategoriesPage {
 			: await this.deleteConfirmationModal
 					.getByRole('button', {name: 'Cancel'})
 					.click();
+	}
+
+	async search(value: string) {
+		await this.dataSetFragmentPage.search(value);
 	}
 }

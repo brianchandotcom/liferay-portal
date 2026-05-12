@@ -6,7 +6,7 @@
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
-const SITE_TEMPLATE_TYPE = 'SiteTemplate';
+import {SITE_TEMPLATE_TYPE} from '../../../common/utils/constants';
 
 const SiteRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 	const label =

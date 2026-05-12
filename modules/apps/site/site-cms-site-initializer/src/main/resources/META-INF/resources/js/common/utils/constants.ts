@@ -56,6 +56,8 @@ export const ROOT_FOLDER_ERC = {
 	FILES: 'L_FILES',
 } as const;
 
+export const SITE_TEMPLATE_TYPE = 'SiteTemplate';
+
 export const ROOT_FOLDER_ERCS: ReadonlySet<string> = new Set([
 	ROOT_FOLDER_ERC.CONTENTS,
 	ROOT_FOLDER_ERC.FILES,

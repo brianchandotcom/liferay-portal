@@ -25,6 +25,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -3728,6 +3729,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(
 			panelCategoryKey, objectDefinitionAA.getPanelCategoryKey());
+
+		_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
+			objectDefinitionAA);
 	}
 
 	@Test
@@ -4971,6 +4975,53 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
+	private void
+			_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
+				ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectDefinition finalObjectDefinition = objectDefinition;
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingValueException.
+				StandaloneObjectEntriesAlreadyExist.class,
+			StringBundler.concat(
+				"Standalone object entries already exist for object ",
+				"definition \"", finalObjectDefinition.getShortName(), "\""),
+			() -> _updateCustomObjectDefinition(
+				finalObjectDefinition.getClassName(), finalObjectDefinition,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.
+							NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+					).value(
+						StringPool.FALSE
+					).build())));
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+		Assert.assertFalse(
+			_updateCustomObjectDefinition(
+				finalObjectDefinition.getClassName(), finalObjectDefinition,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.
+							NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+					).value(
+						StringPool.FALSE
+					).build())
+			).isAllowStandaloneObjectEntry());
+	}
+
 	private ObjectDefinition _updateCustomObjectDefinition(
 			String externalReferenceCode, long objectDefinitionId,
 			long descriptionObjectFieldId, long titleObjectFieldId,
@@ -4994,6 +5045,15 @@ public class ObjectDefinitionLocalServiceTest {
 
 	private ObjectDefinition _updateCustomObjectDefinition(
 			String className, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _updateCustomObjectDefinition(
+			className, objectDefinition, Collections.emptyList());
+	}
+
+	private ObjectDefinition _updateCustomObjectDefinition(
+			String className, ObjectDefinition objectDefinition,
+			List<ObjectDefinitionSetting> objectDefinitionSettings)
 		throws Exception {
 
 		return _objectDefinitionLocalService.updateCustomObjectDefinition(
@@ -5021,7 +5081,7 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.getPanelCategoryKey(),
 			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
 			objectDefinition.getScope(), objectDefinition.getStatus(),
-			Collections.emptyList(), Collections.emptyList(),
+			objectDefinitionSettings, Collections.emptyList(),
 			Collections.emptyList(), new ServiceContext());
 	}
 

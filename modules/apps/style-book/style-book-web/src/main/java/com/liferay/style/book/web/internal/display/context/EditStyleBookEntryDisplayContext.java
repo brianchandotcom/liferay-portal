@@ -606,11 +606,12 @@ public class EditStyleBookEntryDisplayContext {
 	private void _setViewAttributes() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(_getRedirect());
+
 		String backURLTitle = ParamUtil.getString(
 			_httpServletRequest, "backURLTitle");
 
-		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(_getRedirect());
 		portletDisplay.setURLBackTitle(
 			Validator.isNotNull(backURLTitle) ? backURLTitle :
 				portletDisplay.getPortletDisplayName());

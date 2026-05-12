@@ -79,7 +79,10 @@ function onInputChange() {
 	}
 
 	fileName.innerText = fileInput.files[0].name;
-	fileInput.setAttribute('name', input.name);
+
+	if (!input.localizable) {
+		fileInput.setAttribute('name', input.name);
+	}
 
 	hiddenFileInput.setAttribute('name', '');
 	hiddenFileInput.value = '';

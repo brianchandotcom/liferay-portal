@@ -144,7 +144,10 @@ function onInputChange() {
 	const file = fileInput.files[0];
 
 	showPreview(file, file?.name);
-	fileInput.setAttribute('name', input.name);
+
+	if (!input.localizable) {
+		fileInput.setAttribute('name', input.name);
+	}
 
 	hiddenFileInput.setAttribute('name', '');
 	hiddenFileInput.value = '';

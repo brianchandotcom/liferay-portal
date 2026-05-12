@@ -415,9 +415,14 @@ describe('CMSShareModalContent', () => {
 			] as Collaborator[],
 		};
 
-		const {queryByLabelText, queryByText} = renderComponent(emailProps);
+		const {getByLabelText, getByRole, queryByText} =
+			renderComponent(emailProps);
 
-		expect(queryByLabelText('edit-permissions')).not.toBeInTheDocument();
+		fireEvent.click(getByLabelText('edit-permissions'));
+
+		expect(
+			getByRole('option', {name: 'view-and-download'})
+		).toBeInTheDocument();
 		expect(
 			queryByText('view-download-and-comment')
 		).not.toBeInTheDocument();

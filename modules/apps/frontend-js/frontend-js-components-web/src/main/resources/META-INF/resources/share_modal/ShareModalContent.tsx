@@ -151,6 +151,7 @@ const _defaultRenderAutocompleteItem = ({
 
 function CollaboratorListItem({
 	actionIds,
+	alwaysShowPermissionSelector = false,
 	canManageCollaborators = true,
 	dateExpired,
 	error,
@@ -167,6 +168,7 @@ function CollaboratorListItem({
 	user,
 }: {
 	actionIds: string;
+	alwaysShowPermissionSelector?: boolean;
 	canManageCollaborators?: boolean;
 	dateExpired?: string;
 	error?: string;
@@ -217,7 +219,8 @@ function CollaboratorListItem({
 						{renderCollaboratorBadge({toBeShared, type, user})}
 					</div>
 
-					{permissionOptions.length > 1 ? (
+					{alwaysShowPermissionSelector ||
+					permissionOptions.length > 1 ? (
 						<div>
 							<PermissionSelector
 								actionIds={actionIds}
@@ -344,6 +347,7 @@ function CollaboratorListItem({
 export default function ShareModalContent({
 	autocompleteHelpText,
 	autocompleteLabel = Liferay.Language.get('add-people-to-collaborate'),
+	alwaysShowPermissionSelector = false,
 	autocompleteURL = '',
 	canManageCollaborators = true,
 	closeModal,
@@ -364,6 +368,7 @@ export default function ShareModalContent({
 	transformSourceItems = _identityTransformSourceItems,
 	transformSubmitPayload = _defaultTransformSubmitPayload,
 }: {
+	alwaysShowPermissionSelector?: boolean;
 	autocompleteHelpText?: string;
 	autocompleteLabel?: string;
 	autocompleteURL: string;
@@ -657,6 +662,9 @@ export default function ShareModalContent({
 							<ul className="c-mb-0 list-group">
 								{collaborators.map((item) => (
 									<CollaboratorListItem
+										alwaysShowPermissionSelector={
+											alwaysShowPermissionSelector
+										}
 										canManageCollaborators={
 											canManageCollaborators
 										}

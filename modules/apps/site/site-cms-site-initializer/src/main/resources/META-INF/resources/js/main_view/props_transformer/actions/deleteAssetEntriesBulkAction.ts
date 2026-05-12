@@ -49,36 +49,59 @@ function getBulkDeleteMessage(
 } {
 	if (someEntriesHaveTrashEnabled) {
 		return {
-			confirmationMessage: Liferay.Language.get(
-				'bulk-delete-cms-entries-confirmation'
-			),
-			title: Liferay.Language.get('delete-entries'),
+			confirmationMessage: getBodyHTML([
+				Liferay.Language.get(
+					'you-are-about-to-delete-the-selected-items-from-multiple-spaces'
+				),
+				Liferay.Language.get(
+					'bulk-delete-from-multiple-spaces-warning'
+				),
+				Liferay.Language.get('are-you-sure-you-want-to-continue'),
+			]),
+			title: selectedData.items.length
+				? sub(Liferay.Language.get('delete-x-items'), [
+						selectedData.items.length,
+					])
+				: Liferay.Language.get('delete-all-items'),
 		};
 	}
 
 	if (selectedData.selectAll) {
 		return {
-			confirmationMessage: Liferay.Language.get(
-				'delete-all-entries-confirmation'
-			),
-			title: Liferay.Language.get('delete-all-entries'),
+			confirmationMessage: getBodyHTML([
+				Liferay.Language.get('delete-all-items-confirmation'),
+			]),
+			title: Liferay.Language.get('delete-all-items'),
 		};
 	}
 
 	if (selectedData.items.length > 1) {
 		return {
-			confirmationMessage: sub(
-				Liferay.Language.get('delete-entries-confirmation'),
-				[selectedData.items.length]
-			),
-			title: Liferay.Language.get('delete-entries'),
+			confirmationMessage: getBodyHTML([
+				sub(Liferay.Language.get('delete-x-items-confirmation'), [
+					selectedData.items.length,
+				]),
+			]),
+			title: sub(Liferay.Language.get('delete-x-items'), [
+				selectedData.items.length,
+			]),
 		};
 	}
 
 	return {
-		confirmationMessage: Liferay.Language.get('delete-entry-confirmation'),
-		title: Liferay.Language.get('delete-entry'),
+		confirmationMessage: getBodyHTML([
+			Liferay.Language.get('delete-item-confirmation'),
+		]),
+		title: Liferay.Language.get('delete-item'),
 	};
+}
+
+function getBodyHTML(lines: string[]): string {
+	return `
+    	<div>
+    		${lines.map((line) => `<p>${line}</p>`).join('')}
+		</div>
+  	`;
 }
 
 /**
@@ -165,13 +188,7 @@ async function showModal(
 	selectedData: any
 ): Promise<void> {
 	openCMSModal({
-		bodyHTML: `
-			<div>
-				<p>
-					${confirmationMessage}
-				</p>
-			</div>
-		`,
+		bodyHTML: confirmationMessage,
 		buttons: [
 			{
 				displayType: 'secondary',

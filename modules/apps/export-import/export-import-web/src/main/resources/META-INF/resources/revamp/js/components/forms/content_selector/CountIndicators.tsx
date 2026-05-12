@@ -28,7 +28,7 @@ export default function CountIndicators({
 	return (
 		<>
 			{hasItems ? (
-				<span className="font-weight-normal ml-2 small text-secondary">
+				<span className="content-selector-items-count font-weight-normal ml-2 small text-secondary">
 					{sub(Liferay.Language.get('x-items'), additionCount)}
 				</span>
 			) : null}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.TicketTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
 import com.liferay.sharing.service.SharingEntryLocalService;
@@ -36,11 +37,22 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onAfterCreate(User user) {
+		if (user.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			return;
+		}
+
 		_updateSharingEntries(user);
 	}
 
 	@Override
 	public void onAfterUpdate(User originalUser, User user) {
+		if ((originalUser.getStatus() == user.getStatus()) ||
+			(originalUser.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
+			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
+			return;
+		}
+
 		_updateSharingEntries(user);
 	}
 
@@ -60,6 +72,17 @@ public class UserModelListener extends BaseModelListener<User> {
 		);
 	}
 
+	private Predicate _getWherePredicate(User user) {
+		return TicketTable.INSTANCE.companyId.eq(
+			user.getCompanyId()
+		).and(
+			TicketTable.INSTANCE.type.eq(
+				TicketConstants.TYPE_INVITE_COLLABORATOR)
+		).and(
+			TicketTable.INSTANCE.expirationDate.gt(new Date())
+		);
+	}
+
 	private void _updateSharingEntries(User user) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -72,7 +95,7 @@ public class UserModelListener extends BaseModelListener<User> {
 						).innerJoinON(
 							SharingEntryTable.INSTANCE, _getPredicate()
 						).where(
-							_wherePredicate(user)
+							_getWherePredicate(user)
 						));
 
 				for (Ticket ticket : tickets) {
@@ -115,17 +138,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		sharingEntry.setToUserId(user.getUserId());
 
 		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
-	}
-
-	private Predicate _wherePredicate(User user) {
-		return TicketTable.INSTANCE.companyId.eq(
-			user.getCompanyId()
-		).and(
-			TicketTable.INSTANCE.type.eq(
-				TicketConstants.TYPE_INVITE_COLLABORATOR)
-		).and(
-			TicketTable.INSTANCE.expirationDate.gt(new Date())
-		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

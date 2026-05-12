@@ -267,7 +267,7 @@ public class SystemObjectEntryItemSelectorView
 		private String _getTitleFieldValue() {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinition(
-					_objectDefinition.getObjectDefinitionId());
+					_themeDisplay.getCompanyId(), _objectDefinition.getName());
 
 			if (objectDefinition == null) {
 				return StringPool.BLANK;

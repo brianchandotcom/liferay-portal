@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -23,6 +24,84 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
+
+function createSpace(apiHelpers: DataApiHelpers, name: string) {
+	return apiHelpers.headlessAssetLibrary.createAssetLibrary({
+		name,
+		settings: {},
+		type: 'Space',
+	});
+}
+
+function createSpaces(apiHelpers: DataApiHelpers, ...names: string[]) {
+	return Promise.all(names.map((name) => createSpace(apiHelpers, name)));
+}
+
+function createFolder(
+	apiHelpers: DataApiHelpers,
+	{
+		parentObjectEntryFolderExternalReferenceCode,
+		scopeKey,
+		title,
+	}: {
+		parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS' | 'L_FILES';
+		scopeKey: string;
+		title: string;
+	}
+) {
+	return apiHelpers.objectFolder.createObjectEntryFolder({
+		parentObjectEntryFolderExternalReferenceCode,
+		scopeKey,
+		title,
+	});
+}
+
+function createContent(
+	apiHelpers: DataApiHelpers,
+	{
+		applicationName = 'cms/basic-web-contents',
+		objectEntryFolderExternalReferenceCode = 'L_CONTENTS',
+		scopeKey,
+		title,
+	}: {
+		applicationName?: string;
+		objectEntryFolderExternalReferenceCode?: string;
+		scopeKey: string;
+		title: string;
+	}
+) {
+	return apiHelpers.objectEntry.postObjectEntry(
+		{objectEntryFolderExternalReferenceCode, title},
+		applicationName,
+		scopeKey
+	);
+}
+
+function createFile(
+	apiHelpers: DataApiHelpers,
+	{
+		objectEntryFolderExternalReferenceCode = 'L_FILES',
+		scopeKey,
+		title,
+	}: {
+		objectEntryFolderExternalReferenceCode?: string;
+		scopeKey: string;
+		title: string;
+	}
+) {
+	return apiHelpers.objectEntry.postObjectEntry(
+		{
+			file: {
+				fileBase64: 'R0lGODlhAQABAAAAACw=',
+				name: `file_${getRandomString()}.png`,
+			},
+			objectEntryFolderExternalReferenceCode,
+			title,
+		},
+		'cms/basic-documents',
+		scopeKey
+	);
+}
 
 test.beforeEach(async ({apiHelpers, page}) => {
 	const user = await apiHelpers.headlessAdminUser.postUserAccount();
@@ -54,35 +133,27 @@ test(
 		const contentTitle = `Content ${getRandomString()}`;
 
 		await test.step('Create a new Space', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpace(apiHelpers, spaceName);
 		});
 
 		let destinationFolderId: number;
 
 		await test.step('Create a destination folder in the Space', async () => {
-			const folder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					scopeKey: spaceName,
-					title: destinationFolderName,
-				});
+			const folder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: spaceName,
+				title: destinationFolderName,
+			});
 
 			destinationFolderId = folder.id;
 		});
 
 		await test.step('Create a content at the root of the Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: contentTitle,
-				},
+			await createContent(apiHelpers, {
 				applicationName,
-				spaceName
-			);
+				scopeKey: spaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Move the content to the destination folder', async () => {
@@ -141,41 +212,31 @@ test(
 		const contentTitle = `Content ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		let destinationFolderId: number;
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			const folder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					scopeKey: destinationSpaceName,
-					title: destinationFolderName,
-				});
+			const folder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: destinationSpaceName,
+				title: destinationFolderName,
+			});
 
 			destinationFolderId = folder.id;
 		});
 
 		await test.step('Create a content in the source Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: contentTitle,
-				},
+			await createContent(apiHelpers, {
 				applicationName,
-				sourceSpaceName
-			);
+				scopeKey: sourceSpaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Move the content to the destination folder in the destination Space', async () => {
@@ -249,45 +310,30 @@ test(
 		const fileTitle = `File ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		let destinationFolderId: number;
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			const folder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
-					scopeKey: destinationSpaceName,
-					title: destinationFolderName,
-				});
+			const folder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+				scopeKey: destinationSpaceName,
+				title: destinationFolderName,
+			});
 
 			destinationFolderId = folder.id;
 		});
 
 		await test.step('Create a file in the source Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
-						name: `file_${getRandomString()}.png`,
-					},
-					objectEntryFolderExternalReferenceCode: 'L_FILES',
-					title: fileTitle,
-				},
-				applicationName,
-				sourceSpaceName
-			);
+			await createFile(apiHelpers, {
+				scopeKey: sourceSpaceName,
+				title: fileTitle,
+			});
 		});
 
 		await test.step('Copy the file to the destination folder in the destination Space', async () => {
@@ -362,21 +408,15 @@ test(
 		const contentTitle = `Content ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			await apiHelpers.objectFolder.createObjectEntryFolder({
+			await createFolder(apiHelpers, {
 				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 				scopeKey: destinationSpaceName,
 				title: destinationFolderName,
@@ -384,22 +424,19 @@ test(
 		});
 
 		await test.step('Create a source folder with a content inside it in the source Space', async () => {
-			const sourceFolder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					scopeKey: sourceSpaceName,
-					title: sourceFolderName,
-				});
+			const sourceFolder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: sourceSpaceName,
+				title: sourceFolderName,
+			});
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode:
-						sourceFolder.externalReferenceCode,
-					title: contentTitle,
-				},
+			await createContent(apiHelpers, {
 				applicationName,
-				sourceSpaceName
-			);
+				objectEntryFolderExternalReferenceCode:
+					sourceFolder.externalReferenceCode,
+				scopeKey: sourceSpaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Move the source folder to the destination folder in the destination Space', async () => {
@@ -472,21 +509,15 @@ test(
 		const contentTitle = `Content ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			await apiHelpers.objectFolder.createObjectEntryFolder({
+			await createFolder(apiHelpers, {
 				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 				scopeKey: destinationSpaceName,
 				title: destinationFolderName,
@@ -494,22 +525,19 @@ test(
 		});
 
 		await test.step('Create a source folder with a content inside it in the source Space', async () => {
-			const sourceFolder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					scopeKey: sourceSpaceName,
-					title: sourceFolderName,
-				});
+			const sourceFolder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: sourceSpaceName,
+				title: sourceFolderName,
+			});
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode:
-						sourceFolder.externalReferenceCode,
-					title: contentTitle,
-				},
+			await createContent(apiHelpers, {
 				applicationName,
-				sourceSpaceName
-			);
+				objectEntryFolderExternalReferenceCode:
+					sourceFolder.externalReferenceCode,
+				scopeKey: sourceSpaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Copy the source folder to the destination folder in the destination Space', async () => {
@@ -582,24 +610,17 @@ test(
 		let sourceSpaceERC: string;
 
 		await test.step('Create source and destination Spaces', async () => {
-			const sourceSpace =
-				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-					name: sourceSpaceName,
-					settings: {},
-					type: 'Space',
-				});
+			const [sourceSpace] = await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 
 			sourceSpaceERC = sourceSpace.externalReferenceCode;
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
 		});
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			await apiHelpers.objectFolder.createObjectEntryFolder({
+			await createFolder(apiHelpers, {
 				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 				scopeKey: destinationSpaceName,
 				title: destinationFolderName,
@@ -659,14 +680,11 @@ test(
 		});
 
 		await test.step('Seed a content in the source Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: contentTitle,
-				},
+			await createContent(apiHelpers, {
 				applicationName,
-				sourceSpaceName
-			);
+				scopeKey: sourceSpaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Try to move the content to the destination Space', async () => {
@@ -698,37 +716,21 @@ test(
 		const fileTitle = `File ${getRandomString()}`;
 
 		await test.step('Create a new Space', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: spaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpace(apiHelpers, spaceName);
 		});
 
 		await test.step('Create a content in that Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: contentTitle,
-				},
-				'cms/basic-web-contents',
-				spaceName
-			);
+			await createContent(apiHelpers, {
+				scopeKey: spaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Create a file in that Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
-						name: `file_${getRandomString()}.png`,
-					},
-					objectEntryFolderExternalReferenceCode: 'L_FILES',
-					title: fileTitle,
-				},
-				'cms/basic-documents',
-				spaceName
-			);
+			await createFile(apiHelpers, {
+				scopeKey: spaceName,
+				title: fileTitle,
+			});
 		});
 
 		await test.step('Move To picker for a content shows only the Contents folder', async () => {
@@ -798,45 +800,30 @@ test(
 		const fileTitle = `File ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		let destinationFolderId: number;
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			const folder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
-					scopeKey: destinationSpaceName,
-					title: destinationFolderName,
-				});
+			const folder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+				scopeKey: destinationSpaceName,
+				title: destinationFolderName,
+			});
 
 			destinationFolderId = folder.id;
 		});
 
 		await test.step('Create a file in the source Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
-						name: `file_${getRandomString()}.png`,
-					},
-					objectEntryFolderExternalReferenceCode: 'L_FILES',
-					title: fileTitle,
-				},
-				applicationName,
-				sourceSpaceName
-			);
+			await createFile(apiHelpers, {
+				scopeKey: sourceSpaceName,
+				title: fileTitle,
+			});
 		});
 
 		await test.step('Move the file to the destination folder in the destination Space', async () => {
@@ -910,41 +897,31 @@ test(
 		const contentTitle = `Content ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		let destinationFolderId: number;
 
 		await test.step('Create a destination folder in the destination Space', async () => {
-			const folder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					scopeKey: destinationSpaceName,
-					title: destinationFolderName,
-				});
+			const folder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: destinationSpaceName,
+				title: destinationFolderName,
+			});
 
 			destinationFolderId = folder.id;
 		});
 
 		await test.step('Create a content in the source Space', async () => {
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: contentTitle,
-				},
+			await createContent(apiHelpers, {
 				applicationName,
-				sourceSpaceName
-			);
+				scopeKey: sourceSpaceName,
+				title: contentTitle,
+			});
 		});
 
 		await test.step('Copy the content to the destination folder in the destination Space', async () => {
@@ -1019,21 +996,15 @@ test(
 		const fileTitle = `File ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		await test.step('Create a destination Files folder in the destination Space', async () => {
-			await apiHelpers.objectFolder.createObjectEntryFolder({
+			await createFolder(apiHelpers, {
 				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
 				scopeKey: destinationSpaceName,
 				title: destinationFolderName,
@@ -1041,26 +1012,18 @@ test(
 		});
 
 		await test.step('Create a source Files folder with a file inside it in the source Space', async () => {
-			const sourceFolder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
-					scopeKey: sourceSpaceName,
-					title: sourceFolderName,
-				});
+			const sourceFolder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+				scopeKey: sourceSpaceName,
+				title: sourceFolderName,
+			});
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
-						name: `file_${getRandomString()}.png`,
-					},
-					objectEntryFolderExternalReferenceCode:
-						sourceFolder.externalReferenceCode,
-					title: fileTitle,
-				},
-				applicationName,
-				sourceSpaceName
-			);
+			await createFile(apiHelpers, {
+				objectEntryFolderExternalReferenceCode:
+					sourceFolder.externalReferenceCode,
+				scopeKey: sourceSpaceName,
+				title: fileTitle,
+			});
 		});
 
 		await test.step('Move the source folder to the destination folder in the destination Space', async () => {
@@ -1133,21 +1096,15 @@ test(
 		const fileTitle = `File ${getRandomString()}`;
 
 		await test.step('Create source and destination Spaces', async () => {
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: sourceSpaceName,
-				settings: {},
-				type: 'Space',
-			});
-
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: destinationSpaceName,
-				settings: {},
-				type: 'Space',
-			});
+			await createSpaces(
+				apiHelpers,
+				sourceSpaceName,
+				destinationSpaceName
+			);
 		});
 
 		await test.step('Create a destination Files folder in the destination Space', async () => {
-			await apiHelpers.objectFolder.createObjectEntryFolder({
+			await createFolder(apiHelpers, {
 				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
 				scopeKey: destinationSpaceName,
 				title: destinationFolderName,
@@ -1155,26 +1112,18 @@ test(
 		});
 
 		await test.step('Create a source Files folder with a file inside it in the source Space', async () => {
-			const sourceFolder =
-				await apiHelpers.objectFolder.createObjectEntryFolder({
-					parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
-					scopeKey: sourceSpaceName,
-					title: sourceFolderName,
-				});
+			const sourceFolder = await createFolder(apiHelpers, {
+				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+				scopeKey: sourceSpaceName,
+				title: sourceFolderName,
+			});
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{
-					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
-						name: `file_${getRandomString()}.png`,
-					},
-					objectEntryFolderExternalReferenceCode:
-						sourceFolder.externalReferenceCode,
-					title: fileTitle,
-				},
-				applicationName,
-				sourceSpaceName
-			);
+			await createFile(apiHelpers, {
+				objectEntryFolderExternalReferenceCode:
+					sourceFolder.externalReferenceCode,
+				scopeKey: sourceSpaceName,
+				title: fileTitle,
+			});
 		});
 
 		await test.step('Copy the source folder to the destination folder in the destination Space', async () => {

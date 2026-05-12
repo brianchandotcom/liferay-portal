@@ -7,35 +7,16 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {
-	FormikFieldCheckbox,
-	FormikFieldRadioGroup,
-} from '../../../components/forms/formik';
+import {FormikFieldRadioGroup} from '../../../components/forms/formik';
 
 export const SETTINGS_STEP_INITIAL_VALUES = {
 	authorshipStrategy: 'useOriginalAuthor',
-	importPermissions: false,
 	updateDataStrategy: 'mirror',
 };
 
 export default function SettingsStep() {
 	return (
 		<>
-			<ClayLayout.Sheet>
-				<SectionHeader
-					symbol="lock"
-					title={Liferay.Language.get('permissions')}
-				/>
-
-				<FormikFieldCheckbox
-					description={Liferay.Language.get(
-						'export-import-permissions-help'
-					)}
-					label={Liferay.Language.get('import-permissions')}
-					name="importPermissions"
-				/>
-			</ClayLayout.Sheet>
-
 			<ClayLayout.Sheet>
 				<SectionHeader
 					name="authorshipStrategy"

@@ -89,7 +89,7 @@ const ConnectableActions = ({
 		const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 			externalReferenceCode,
 			site.externalReferenceCode,
-			{searchable: String(!site.searchable)}
+			{searchable: !site.searchable}
 		);
 
 		if (data) {

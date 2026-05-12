@@ -222,20 +222,20 @@ public class TreeTestUtil {
 		Queue<String> externalReferenceCodes = new ArrayDeque<>(
 			Arrays.asList("A", "AA", "AB", "AAA", "AAB"));
 
-		HashMapBuilder.HashMapWrapper<String, Serializable> rootValuesBuilder =
-			HashMapBuilder.<String, Serializable>put(
+		HashMapBuilder.HashMapWrapper<String, Serializable>
+			rootValuesHashMapBuilder = HashMapBuilder.<String, Serializable>put(
 				"externalReferenceCode",
 				externalReferenceCodes.poll() + externalReferenceCodeSuffix);
 
 		_putAccountEntryRestrictedValue(
 			accountEntryId, objectDefinitionLocalService,
 			objectFieldLocalService, rootNode.getPrimaryKey(),
-			rootValuesBuilder);
+			rootValuesHashMapBuilder);
 
 		ObjectEntry rootObjectEntry = objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(), rootNode.getPrimaryKey(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null, rootValuesBuilder.build(),
+			null, rootValuesHashMapBuilder.build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		Map<Long, Long> objectEntryIds = HashMapBuilder.put(
@@ -245,8 +245,8 @@ public class TreeTestUtil {
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
 
-			HashMapBuilder.HashMapWrapper<String, Serializable> valuesBuilder =
-				HashMapBuilder.<String, Serializable>put(
+			HashMapBuilder.HashMapWrapper<String, Serializable>
+				valuesHashMapBuilder = HashMapBuilder.<String, Serializable>put(
 					"externalReferenceCode",
 					externalReferenceCodes.poll() + externalReferenceCodeSuffix
 				).put(
@@ -273,13 +273,14 @@ public class TreeTestUtil {
 
 			_putAccountEntryRestrictedValue(
 				accountEntryId, objectDefinitionLocalService,
-				objectFieldLocalService, node.getPrimaryKey(), valuesBuilder);
+				objectFieldLocalService, node.getPrimaryKey(),
+				valuesHashMapBuilder);
 
 			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 				0, TestPropsValues.getUserId(), node.getPrimaryKey(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, valuesBuilder.build(),
+				null, valuesHashMapBuilder.build(),
 				ServiceContextTestUtil.getServiceContext());
 
 			objectEntryIds.put(
@@ -486,7 +487,8 @@ public class TreeTestUtil {
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectFieldLocalService objectFieldLocalService,
 			long objectDefinitionId,
-			HashMapBuilder.HashMapWrapper<String, Serializable> valuesBuilder)
+			HashMapBuilder.HashMapWrapper<String, Serializable>
+				valuesHashMapBuilder)
 		throws PortalException {
 
 		if (accountEntryId == null) {
@@ -507,7 +509,7 @@ public class TreeTestUtil {
 		ObjectField objectField = objectFieldLocalService.getObjectField(
 			accountEntryRestrictedObjectFieldId);
 
-		valuesBuilder.put(objectField.getName(), accountEntryId);
+		valuesHashMapBuilder.put(objectField.getName(), accountEntryId);
 	}
 
 }

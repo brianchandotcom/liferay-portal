@@ -16,13 +16,12 @@ import {InputGroupWithSelect} from '../../common/components/InputGroupWithSelect
 import ConnectedSiteService from '../../common/services/ConnectedSiteService';
 import {Site} from '../../common/types/Site';
 import {SiteTemplate} from '../../common/types/SiteTemplate';
+import {SITE_TEMPLATE_TYPE} from '../../common/utils/constants';
 
 enum ConnectableKind {
 	SITES = 'sites',
 	SITE_TEMPLATES = 'site-templates',
 }
-
-const SITE_TEMPLATE_TYPE = 'SiteTemplate';
 
 const showErrorMessage = (message: string) => {
 	openToast({

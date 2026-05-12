@@ -62,7 +62,7 @@ export default function ContentSection({
 	};
 
 	return (
-		<div className="mb-5 sheet">
+		<div className="mt-0 sheet">
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol expand={false}>
 					<ClayCheckbox

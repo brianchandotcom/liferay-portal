@@ -84,6 +84,9 @@ public class OrderStockManagementTest {
 	@After
 	public void tearDown() throws Exception {
 		for (CommerceOrder commerceOrder : _commerceOrders) {
+			CommerceTestUtil.deleteCommerceShipmentsByOrderId(
+				commerceOrder.getCommerceOrderId());
+
 			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
 		}
 

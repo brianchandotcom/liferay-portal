@@ -3,6 +3,7 @@ task deployGlowroot
 dependencies {
 	compileInclude group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
 	compileInclude group: "org.glowroot", name: "glowroot-agent-plugin-api", version: "0.13.6"
+	testCompileOnly project(":core:petra:petra-string")
 }
 
 deployGlowroot {

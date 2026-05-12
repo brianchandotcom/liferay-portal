@@ -296,6 +296,7 @@ const SnapshotsControls = () => {
 					value: {
 						configuration: JSON.parse(snapshot.viewConfig),
 						erc: snapshot.externalReferenceCode,
+						id: snapshot.id,
 						label: snapshot.label,
 					},
 				});

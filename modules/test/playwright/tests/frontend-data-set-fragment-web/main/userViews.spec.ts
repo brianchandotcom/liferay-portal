@@ -582,9 +582,9 @@ test(
 		});
 
 		await test.step('Permission, expiration date, and resharing controls are hidden on the collaborator row', async () => {
-			await expect(
-				shareModal.getByLabel('Edit Permissions')
-			).toHaveCount(0);
+			await expect(shareModal.getByLabel('Edit Permissions')).toHaveCount(
+				0
+			);
 
 			await expect(
 				shareModal.getByLabel('Set Expiration Date')

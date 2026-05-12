@@ -121,18 +121,18 @@ public class OAuth2ApplicationIdResolverUtilTest {
 
 	@Test
 	public void testResolveWithValidBearerToken() throws Exception {
-		String token = RandomTestUtil.randomString();
-
-		long oAuth2ApplicationId = RandomTestUtil.randomLong();
-
 		OAuth2Authorization oAuth2Authorization = Mockito.mock(
 			OAuth2Authorization.class);
+
+		long oAuth2ApplicationId = RandomTestUtil.randomLong();
 
 		Mockito.when(
 			oAuth2Authorization.getOAuth2ApplicationId()
 		).thenReturn(
 			oAuth2ApplicationId
 		);
+
+		String token = RandomTestUtil.randomString();
 
 		Mockito.when(
 			_oAuth2AuthorizationLocalService.

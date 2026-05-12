@@ -48,10 +48,10 @@ test(
 		await test.step('Navigate to All Assets and create a new content', async () => {
 			await assetsPage.gotoAll();
 
-			await assetsPage.createContent(structureLabel);
+			await contentsPage.createContent(structureLabel);
 
 			await expect(
-				page.getByRole('heading', {name: `Edit ${structureLabel}`})
+				page.getByRole('heading', {name: `New ${structureLabel}`})
 			).toBeVisible();
 
 			await page.getByPlaceholder(`New ${structureLabel}`).fill(title);
@@ -62,7 +62,7 @@ test(
 		await test.step('Open Info Panel and assert that title is not empty', async () => {
 			await assetsPage.execItemAction({
 				action: 'Show Details',
-				filter: structureLabel,
+				filter: title,
 			});
 
 			await expect(

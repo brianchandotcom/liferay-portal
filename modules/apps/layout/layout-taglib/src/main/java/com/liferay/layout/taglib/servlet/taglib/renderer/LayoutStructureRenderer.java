@@ -1336,9 +1336,21 @@ public class LayoutStructureRenderer {
 
 		JspWriter jspWriter = _pageContext.getOut();
 
+		String editInfoItemActionURL =
+			_renderLayoutStructureDisplayContext.getEditInfoItemActionURL();
+
+		editInfoItemActionURL = HttpComponentsUtil.addParameter(
+			editInfoItemActionURL, "formItemId",
+			formStyledLayoutStructureItem.getItemId());
+		editInfoItemActionURL = HttpComponentsUtil.addParameter(
+			editInfoItemActionURL, "p_l_id", _themeDisplay.getPlid());
+		editInfoItemActionURL = HttpComponentsUtil.addParameter(
+			editInfoItemActionURL, "segmentsExperienceId",
+			SegmentsExperienceUtil.getSegmentsExperienceId(
+				_httpServletRequest));
+
 		jspWriter.write("<form action=\"");
-		jspWriter.write(
-			_renderLayoutStructureDisplayContext.getEditInfoItemActionURL());
+		jspWriter.write(editInfoItemActionURL);
 		jspWriter.write("\" class=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);

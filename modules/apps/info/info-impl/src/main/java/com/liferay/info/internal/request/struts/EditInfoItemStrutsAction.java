@@ -12,9 +12,11 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.exception.InfoFormFileUploadException;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
 import com.liferay.info.exception.InfoFormPrincipalException;
+import com.liferay.info.exception.InfoFormUploadRequestSizeException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
@@ -44,6 +46,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.petra.io.DummyOutputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.InfoFormException;
@@ -62,6 +65,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -76,6 +80,9 @@ import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.text.SimpleDateFormat;
 
@@ -109,6 +116,32 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 		String formItemId = ParamUtil.getString(
 			httpServletRequest, "formItemId");
+
+		UploadException uploadException =
+			(UploadException)httpServletRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			InfoFormException infoFormException;
+
+			if (uploadException.isExceededUploadRequestSizeLimit()) {
+				infoFormException = new InfoFormUploadRequestSizeException();
+			}
+			else {
+				infoFormException = new InfoFormFileUploadException();
+			}
+
+			SessionErrors.add(
+				httpServletRequest, formItemId, infoFormException);
+
+			_drainHttpServletRequestBody(httpServletRequest);
+
+			httpServletResponse.sendRedirect(
+				_portal.escapeRedirect(
+					httpServletRequest.getHeader(HttpHeaders.REFERER)));
+
+			return null;
+		}
 
 		Map<String, InfoFieldValue<Object>> infoFieldValues = null;
 
@@ -444,6 +477,19 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				new InfoItemReference(className, 0)
 			).build(),
 			status);
+	}
+
+	private void _drainHttpServletRequestBody(
+		HttpServletRequest httpServletRequest) {
+
+		try (InputStream inputStream = httpServletRequest.getInputStream()) {
+			inputStream.transferTo(new DummyOutputStream());
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+		}
 	}
 
 	private FragmentEntryLink _getCaptchaFragmentEntryLink(

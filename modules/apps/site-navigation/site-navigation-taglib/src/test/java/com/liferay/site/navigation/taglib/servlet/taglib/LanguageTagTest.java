@@ -46,7 +46,7 @@ public class LanguageTagTest {
 	@Test
 	public void testGetFormAction() throws Exception {
 		String formAction = ReflectionTestUtil.invoke(
-			_createLanguageTag(StringPool.BLANK), "_getFormAction",
+			_getLanguageTag(StringPool.BLANK), "_getFormAction",
 			new Class<?>[0]);
 
 		Assert.assertFalse(formAction.contains("doAsUserId="));
@@ -54,12 +54,12 @@ public class LanguageTagTest {
 		String doAsUserId = RandomTestUtil.randomString();
 
 		formAction = ReflectionTestUtil.invoke(
-			_createLanguageTag(doAsUserId), "_getFormAction", new Class<?>[0]);
+			_getLanguageTag(doAsUserId), "_getFormAction", new Class<?>[0]);
 
 		Assert.assertTrue(formAction.contains("doAsUserId=" + doAsUserId));
 	}
 
-	private LanguageTag _createLanguageTag(String doAsUserId) {
+	private LanguageTag _getLanguageTag(String doAsUserId) {
 		LanguageTag languageTag = new LanguageTag();
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);

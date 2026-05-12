@@ -1,17 +1,15 @@
 assemble:
-    -   from: build/vite
+    -   from: build/static
         into: static
 liferay-sample-custom-element-7:
-    cssURLs:
-        -   "**/index*.css"
     friendlyURLMapping: liferay-sample-custom-element-7
     htmlElementName: liferay-sample-custom-element-7
     instanceable: false
     name: Liferay Sample Custom Element 7
     portletCategoryName: category.client-extensions
     properties:
-        fdsName: com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-classic
+        fds-name: com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-classic
     type: customElement
     urls:
-        -   main.js
+        -   index.*.js
     useESM: true

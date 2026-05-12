@@ -1155,7 +1155,7 @@ definition {
 
 	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"
 	@priority = 3
-	test EyeButton {
+	test ClickableElementIDBoxInteractions {
 		task ("Edit the Content page to add a button fragment") {
 			ContentPages.gotoPageEditor();
 

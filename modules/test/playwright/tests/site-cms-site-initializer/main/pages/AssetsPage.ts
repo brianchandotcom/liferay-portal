@@ -218,6 +218,20 @@ export class AssetsPage {
 		await this.page.getByRole('heading', {name: 'Contents'}).waitFor();
 	}
 
+	async gotoSpaceFiles(spaceName: string) {
+		await this.gotoAll();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: spaceName})
+			.click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Files'})
+			.click();
+
+		await this.page.getByRole('heading', {name: 'Files'}).waitFor();
+	}
+
 	async execItemAction({action, filter, parentAction}: ExecItemActionArgs) {
 		await this.dataSetFragmentPage.execItemAction({
 			action,

@@ -103,6 +103,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 		_originalXMLSitemapIndexEnabled =
 			_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
 				_company.getCompanyId());
+		_originalXMLSitemapIndexMode =
+			_sitemapConfigurationManager.xmlSitemapIndexMode(
+				_company.getCompanyId());
 
 		_originalName = PrincipalThreadLocal.getName();
 
@@ -116,7 +119,8 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			ArrayUtil.toArray(_originalCompanySitemapGroupIds),
 			ArrayUtil.toArray(_originalCompanySitemapObjectDefinitionIds),
 			_originalIncludeCategories, _originalIncludePages,
-			_originalIncludeWebContent, _originalXMLSitemapIndexEnabled);
+			_originalIncludeWebContent, _originalXMLSitemapIndexEnabled,
+			_originalXMLSitemapIndexMode);
 
 		PrincipalThreadLocal.setName(_originalName);
 	}
@@ -440,6 +444,7 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	private static boolean _originalIncludeWebContent;
 	private static String _originalName;
 	private static boolean _originalXMLSitemapIndexEnabled;
+	private static String _originalXMLSitemapIndexMode;
 
 	@Inject
 	private static SitemapConfigurationManager _sitemapConfigurationManager;

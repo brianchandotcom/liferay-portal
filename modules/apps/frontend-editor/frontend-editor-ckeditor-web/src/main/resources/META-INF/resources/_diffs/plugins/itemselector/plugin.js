@@ -378,7 +378,7 @@
 
 			if (maintainState && lastFolderId !== null && lastFolderId !== '') {
 				try {
-					const parsed = new URL(modalURL);
+					const parsed = new URL(modalURL, window.location.origin);
 
 					parsed.searchParams.set(
 						ITEM_SELECTOR_FOLDER_ID_PARAM,

@@ -25,6 +25,8 @@ function main {
 			--exclude "node_modules_cache" \
 			--exclude "poshi" \
 			--exclude "quickstart" \
+			--exclude "tests/e2e" \
+			--exclude "tests/integration" \
 			--exclude "themes" \
 			liferay-sample-workspace/ "${dir}"
 	done

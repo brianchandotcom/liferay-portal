@@ -1,4 +1,5 @@
 .DS_Store
+/.env
 /.idea
 /bundles
 /poshi/poshi-ext.properties
@@ -9,3 +10,5 @@ build
 dist
 node_modules
 node_modules_cache
+playwright-report
+test-results

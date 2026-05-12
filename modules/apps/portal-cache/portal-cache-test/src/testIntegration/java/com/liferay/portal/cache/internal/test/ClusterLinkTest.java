@@ -30,6 +30,7 @@ import java.nio.file.StandardOpenOption;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -84,12 +85,13 @@ public class ClusterLinkTest implements Serializable {
 			"cluster.link.channel.properties.transport.0=udp.xml");
 	}
 
-	private static String _getControlChannelTransportName() {
+	private static <S> String _getChannelTransportName(
+		Class<S> clazz, Function<S, Object> clusterChannelExtractor) {
+
 		return SystemBundleUtil.callService(
-			ClusterExecutor.class,
-			clusterExecutor -> {
-				Object clusterChannel = ReflectionTestUtil.getFieldValue(
-					clusterExecutor, "_clusterChannel");
+			clazz,
+			service -> {
+				Object clusterChannel = clusterChannelExtractor.apply(service);
 
 				Object jChannel = ReflectionTestUtil.getFieldValue(
 					clusterChannel, "_jChannel");
@@ -100,27 +102,26 @@ public class ClusterLinkTest implements Serializable {
 				Object transport = ReflectionTestUtil.invoke(
 					protocolStack, "getTransport", new Class<?>[0]);
 
-				return transport.getClass().getSimpleName();
+				return transport.getClass(
+				).getSimpleName();
 			});
 	}
 
+	private static String _getControlChannelTransportName() {
+		return _getChannelTransportName(
+			ClusterExecutor.class,
+			clusterExecutor -> ReflectionTestUtil.getFieldValue(
+				clusterExecutor, "_clusterChannel"));
+	}
+
 	private static String _getTransportChannelTransportName() {
-		return SystemBundleUtil.callService(
+		return _getChannelTransportName(
 			ClusterLink.class,
 			clusterLink -> {
 				List<?> clusterChannels = ReflectionTestUtil.getFieldValue(
 					clusterLink, "_clusterChannels");
 
-				Object jChannel = ReflectionTestUtil.getFieldValue(
-					clusterChannels.get(0), "_jChannel");
-
-				Object protocolStack = ReflectionTestUtil.invoke(
-					jChannel, "getProtocolStack", new Class<?>[0]);
-
-				Object transport = ReflectionTestUtil.invoke(
-					protocolStack, "getTransport", new Class<?>[0]);
-
-				return transport.getClass().getSimpleName();
+				return clusterChannels.get(0);
 			});
 	}
 

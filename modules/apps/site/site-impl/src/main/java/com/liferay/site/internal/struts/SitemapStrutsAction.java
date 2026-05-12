@@ -113,14 +113,26 @@ public class SitemapStrutsAction implements StrutsAction {
 				layoutSet.getGroupId());
 
 			if (currentGroup.isActive()) {
-				String assetType = ParamUtil.getString(
-					httpServletRequest, "assetType");
+				String assetTypeKey = ParamUtil.getString(
+					httpServletRequest, "assetTypeKey");
+
+				String assetTypeClassName =
+					_sitemapManager.getAssetTypeClassName(assetTypeKey);
+
 				String layoutUuid = ParamUtil.getString(
 					httpServletRequest, "layoutUuid");
 
 				String sitemap = _sitemapManager.getSitemap(
 					layoutUuid, layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(), themeDisplay, assetType);
+					layoutSet.isPrivateLayout(), themeDisplay,
+					assetTypeClassName);
+
+				if (sitemap == null) {
+					httpServletResponse.sendError(
+						HttpServletResponse.SC_NOT_FOUND);
+
+					return null;
+				}
 
 				ServletResponseUtil.sendFile(
 					httpServletRequest, httpServletResponse, null,

@@ -569,3 +569,122 @@ test(
 		});
 	}
 );
+
+test(
+	'Move shows an error when the destination Space lacks the content structure',
+	{tag: '@LPD-89762'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const sourceSpaceName = `Space ${getRandomString()}`;
+		const destinationSpaceName = `Space ${getRandomString()}`;
+		const destinationFolderName = `Destination ${getRandomString()}`;
+		const contentTitle = `Content ${getRandomString()}`;
+
+		let sourceSpaceERC: string;
+
+		await test.step('Create source and destination Spaces', async () => {
+			const sourceSpace =
+				await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+					name: sourceSpaceName,
+					settings: {},
+					type: 'Space',
+				});
+
+			sourceSpaceERC = sourceSpace.externalReferenceCode;
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a destination folder in the destination Space', async () => {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: destinationSpaceName,
+				title: destinationFolderName,
+			});
+		});
+
+		let applicationName: string;
+
+		await test.step('Create a content structure available only in the source Space', async () => {
+			const definition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionSettings: [
+						{
+							name: 'acceptedGroupExternalReferenceCodes',
+							value: sourceSpaceERC as unknown as object,
+						},
+					],
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: getRandomString(),
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: 'en_US',
+							label: {en_US: 'Title'},
+							localized: true,
+							name: 'title',
+							required: true,
+						},
+					],
+					objectFolderExternalReferenceCode:
+						'L_CMS_CONTENT_STRUCTURES',
+					scope: 'depot',
+					status: {code: 0},
+					titleObjectFieldName: 'title',
+				});
+
+			expect(
+				definition.id,
+				'object definition was created'
+			).toBeDefined();
+			expect(
+				definition.restContextPath,
+				'object definition has a REST context path'
+			).toBeDefined();
+
+			apiHelpers.data.push({
+				id: definition.id as number,
+				type: 'objectDefinition',
+			});
+
+			applicationName = (definition.restContextPath as string).replace(
+				/^\/o\//,
+				''
+			);
+		});
+
+		await test.step('Seed a content in the source Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				applicationName,
+				sourceSpaceName
+			);
+		});
+
+		await test.step('Try to move the content to the destination Space', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.moveTo({
+				destinationFolder: destinationFolderName,
+				destinationSpace: destinationSpaceName,
+				itemTitle: contentTitle,
+			});
+		});
+
+		await test.step('Error toast informs the asset cannot be moved', async () => {
+			await waitForAlert(
+				page,
+				'Error:The asset cannot be moved because its content type is not available in the destination space.',
+				{type: 'danger'}
+			);
+		});
+	}
+);

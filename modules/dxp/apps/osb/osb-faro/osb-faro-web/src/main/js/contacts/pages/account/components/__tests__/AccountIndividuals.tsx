@@ -88,10 +88,10 @@ describe('AccountIndividuals', () => {
 
 		expect(fields).toHaveLength(4);
 		expect(fields.map((field: any) => field.fieldName)).toEqual([
-			'individualName',
+			'name',
 			'department',
 			'jobTitle',
-			'lastActive'
+			'lastActivityDate'
 		]);
 		expect(fields.every((field: any) => field.sortable === true)).toBe(
 			true

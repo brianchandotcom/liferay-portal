@@ -4,6 +4,11 @@ import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({id: 'acc-123'})
+}));
+
 jest.mock('../AccountDetailsModal', () => ({
 	__esModule: true,
 	default: ({onClose}: {onClose: () => void}) => (

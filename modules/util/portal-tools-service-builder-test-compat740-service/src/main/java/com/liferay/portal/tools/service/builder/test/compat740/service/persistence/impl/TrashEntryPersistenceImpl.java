@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -309,14 +307,8 @@ public class TrashEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static final String _ENTITY_ALIAS_PREFIX =
-		TrashEntryModelImpl.ENTITY_ALIAS + ".";
-
 	private static final String _SQL_SELECT_TRASHENTRY =
 		"SELECT trashEntry FROM TrashEntry trashEntry";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TrashEntryPersistenceImpl.class);
 
 	@Override
 	protected FinderCache getFinderCache() {
@@ -324,4 +316,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-479470254
+// LIFERAY-SERVICE-BUILDER-HASH:1429670388

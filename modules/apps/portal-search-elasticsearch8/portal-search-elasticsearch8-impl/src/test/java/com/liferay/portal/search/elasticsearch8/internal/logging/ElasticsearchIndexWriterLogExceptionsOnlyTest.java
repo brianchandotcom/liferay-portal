@@ -214,7 +214,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 					StringBundler.concat(
 						ElasticsearchException.class.getName(),
 						": [es/delete] failed: [index_not_found_exception] no ",
-						"such index [", _UID, "]"),
+						"such index [1]"),
 					message),
 				logCapture, LoggerTestUtil.INFO);
 		}
@@ -257,7 +257,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
 
-			String expectedMessage = "no such index [" + _UID + "]";
+			String expectedMessage = "no such index [1]";
 
 			SearchContext searchContext = new SearchContext();
 

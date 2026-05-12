@@ -17,6 +17,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import createTempFile from '../../../utils/createTempFile';
 import getRandomString from '../../../utils/getRandomString';
 import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 import chooseFileFromDocumentLibrary from '../main/utils/chooseFileFromDocumentLibrary';
@@ -552,6 +553,135 @@ test.describe('File Upload Fragment', () => {
 
 			await expect(
 				dialogIFrame.getByText('balinese.jpg')
+			).not.toBeVisible();
+		}
+	);
+
+	test(
+		'Shows an error when the upload exceeds the configured maximum upload request size',
+		{tag: '@LPD-89640'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create the object
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'lpd89640UploadLimitERC',
+					label: {en_US: 'LPD 89640 Upload Limit'},
+					name: 'LPD89640UploadLimit',
+					objectFields: [
+						{
+							DBType: 'Long',
+							businessType: 'Attachment',
+							defaultValue: 'null',
+							externalReferenceCode: 'bigFileERC',
+							label: {en_US: 'Big File'},
+							localized: true,
+							name: 'bigFile',
+							objectFieldSettings: [
+								{
+									name: 'acceptedFileExtensions',
+									value: 'jpeg, jpg, pdf, png',
+								} as any,
+								{
+									name: 'maximumFileSize',
+									value: 200,
+								} as any,
+								{
+									name: 'fileSource',
+									value: 'userComputerToDocumentsAndMedia',
+								} as any,
+								{
+									name: 'showFilesInLibrary',
+									value: false,
+								} as any,
+							],
+							required: false,
+						},
+					],
+					pluralLabel: {en_US: 'LPD 89640 Upload Limit'},
+					portlet: true,
+					scope: 'company',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment mapped to the object
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({id: formId});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(
+				formId,
+				'LPD 89640 Upload Limit',
+				'all',
+				{addLocalizationSelect: true}
+			);
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Write a 110 MB synthetic file (over the 100 MB request limit)
+
+			const oversizedFilePath = createTempFile(
+				`bigFile-${getRandomString()}.jpg`,
+				Buffer.alloc(110 * 1024 * 1024)
+			);
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			const fileUploadInput = page.locator('.file-upload');
+
+			await fileUploadInput
+				.getByText('Select File', {exact: true})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(oversizedFilePath);
+
+			// Submit the form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			// Check the error is displayed
+
+			await expect(
+				page.getByText(
+					/File size is larger than the allowed overall maximum upload request size/
+				)
+			).toBeVisible();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
 			).not.toBeVisible();
 		}
 	);

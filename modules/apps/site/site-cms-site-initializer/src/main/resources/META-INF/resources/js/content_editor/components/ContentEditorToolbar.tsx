@@ -13,7 +13,7 @@ import ClayLink from '@clayui/link';
 import {AIAssistantChat} from '@liferay/ai-hub-cell-js-components-web';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
-import {useSessionState} from 'frontend-js-components-web';
+import {openToast, useSessionState} from 'frontend-js-components-web';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
@@ -32,6 +32,9 @@ export const EVENT_HANDLE_PREVIEW = 'contentEditor:handlePreview';
 export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
 const STATUS_DRAFT_CODE = 2;
+
+const SUCCESS_MESSAGE_SESSION_KEY =
+	'com.liferay.site.cms.site.initializer.successMessage';
 
 export default function ContentEditorToolbar({
 	backURL,
@@ -104,7 +107,7 @@ export default function ContentEditorToolbar({
 				const value = titleInput?.value.trim() || headerTitle;
 
 				sessionStorage.setItem(
-					'com.liferay.site.cms.site.initializer.successMessage',
+					SUCCESS_MESSAGE_SESSION_KEY,
 					sub(message, `<strong>${value}</strong>`),
 					sessionStorage.TYPES.NECESSARY
 				);
@@ -167,6 +170,19 @@ export default function ContentEditorToolbar({
 
 		return () => Liferay.detach(EVENT_CLOSE_PREVIEW, closePreview);
 	}, [setShowPreview]);
+
+	useEffect(() => {
+		const message = sessionStorage.getItem(
+			SUCCESS_MESSAGE_SESSION_KEY,
+			sessionStorage.TYPES.NECESSARY
+		);
+
+		if (message) {
+			openToast({message, type: 'success'});
+
+			sessionStorage.removeItem(SUCCESS_MESSAGE_SESSION_KEY);
+		}
+	}, []);
 
 	return (
 		<Toolbar

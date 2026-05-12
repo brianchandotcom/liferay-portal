@@ -451,8 +451,8 @@ test(
 	async ({apiHelpers, exportImportPage, page, site: siteA}) => {
 		test.slow();
 
-		const originalContent = `Original-${getRandomString()}`;
-		const webContentTitle = `WC-${getRandomString()}`;
+		const webContentTitle1 = `Original-${getRandomString()}`;
+		const webContentTitle2 = `WC-${getRandomString()}`;
 
 		// Create a web content on site A
 
@@ -461,10 +461,10 @@ test(
 
 		const webContent =
 			await apiHelpers.jsonWebServicesJournal.addWebContent({
-				content: originalContent,
+				content: webContentTitle1,
 				ddmStructureId: basicWebContentStructureId,
 				groupId: siteA.id,
-				titleMap: {en_US: webContentTitle},
+				titleMap: {en_US: webContentTitle2},
 			});
 
 		// Create a fragment whose HTML embeds a Web Content Display widget
@@ -516,7 +516,7 @@ test(
 			`/web${siteA.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await expect(page.getByText(originalContent)).toBeVisible();
+		await expect(page.getByText(webContentTitle1)).toBeVisible();
 
 		// Export site A as a LAR
 
@@ -540,6 +540,6 @@ test(
 			`/web${siteB.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await expect(page.getByText(originalContent)).toBeVisible();
+		await expect(page.getByText(webContentTitle1)).toBeVisible();
 	}
 );

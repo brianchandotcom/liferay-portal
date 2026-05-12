@@ -468,6 +468,11 @@ components:
                         A flag that indicates whether the task is complete.
                     readOnly: true
                     type: boolean
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The task's creator.
+                    readOnly: true
                 dateCompletion:
                     description:
                         The task's completion date.

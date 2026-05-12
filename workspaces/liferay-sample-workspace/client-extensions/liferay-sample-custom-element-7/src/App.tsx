@@ -53,7 +53,7 @@ function App({fdsName}: AppProps) {
 	};
 
 	return (
-		<div className="liferay-sample-custom-element-7-search">
+		<div style={{display: 'flex', gap: '0.5rem', padding: '1rem'}}>
 			<input
 				className="form-control"
 				disabled={!atom}
@@ -68,6 +68,7 @@ function App({fdsName}: AppProps) {
 						? `Search in ${fdsName}`
 						: `Waiting for FDS "${fdsName}"...`
 				}
+				style={{flex: 1}}
 				type="text"
 				value={query}
 			/>

@@ -116,6 +116,8 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		// TODO LPD-89751 Check permissions before proceeding with the sync
+
 		long layoutSetPrototypeId = ParamUtil.getLong(
 			actionRequest, "layoutSetPrototypeId");
 

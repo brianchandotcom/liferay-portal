@@ -22,15 +22,16 @@ const renderComponent = () => {
 	);
 };
 
+const mockExportPreviewWithDeletions = {
+	additionCount: 42,
+	deletionCount: 5,
+	portletDataHandlerSections: mockPortletDataHandlerSections,
+};
+
 describe('NewExport', () => {
 	beforeEach(() => {
 		fetch.resetMocks();
-		fetch.mockResponse(
-			JSON.stringify({
-				additionCount: 42,
-				portletDataHandlerSections: mockPortletDataHandlerSections,
-			})
-		);
+		fetch.mockResponse(JSON.stringify(mockExportPreviewWithDeletions));
 	});
 
 	it('renders the export form', async () => {
@@ -171,5 +172,50 @@ describe('NewExport', () => {
 		await waitFor(() => {
 			expect(exportButton).toBeEnabled();
 		});
+	});
+
+	it('hides the deletions checkbox when the preview has no deletions', async () => {
+		fetch.resetMocks();
+		fetch.mockResponse(
+			JSON.stringify({
+				...mockExportPreviewWithDeletions,
+				deletionCount: 0,
+			})
+		);
+
+		renderComponent();
+
+		await screen.findByText('loaded');
+
+		expect(
+			screen.queryByLabelText('export-individual-deletions')
+		).not.toBeInTheDocument();
+	});
+
+	it('renders the deletions checkbox unchecked when the preview has deletions', async () => {
+		renderComponent();
+
+		const deletionsCheckbox = await screen.findByLabelText(
+			'export-individual-deletions'
+		);
+
+		expect(deletionsCheckbox).toBeInTheDocument();
+		expect(deletionsCheckbox).not.toBeChecked();
+	});
+
+	it('toggles the deletions checkbox when clicked', async () => {
+		renderComponent();
+
+		const deletionsCheckbox = await screen.findByLabelText(
+			'export-individual-deletions'
+		);
+
+		await userEvent.click(deletionsCheckbox);
+
+		expect(deletionsCheckbox).toBeChecked();
+
+		await userEvent.click(deletionsCheckbox);
+
+		expect(deletionsCheckbox).not.toBeChecked();
 	});
 });

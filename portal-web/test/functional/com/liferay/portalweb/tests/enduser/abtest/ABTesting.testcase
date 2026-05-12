@@ -318,6 +318,30 @@ definition {
 				value1 = "Bounce Rate");
 		}
 
+		task ("Open edit modal, modify mandatory values and close") {
+			ABTest.openEditABTest();
+
+			ABTest.fillInput(
+				key_testTitle = "AB test title 2",
+				labelValue = "Test Name");
+
+			ABTest.selectGoal(key_goal = "Click");
+
+			Click(locator1 = "Modal#CLOSE_BUTTON");
+		}
+
+		task ("Assert the changes have not been applied after closing the modal") {
+			AssertTextEquals(
+				key_title = "AB test title",
+				locator1 = "ABTest#AB_TEST_TITLE_DXP",
+				value1 = "AB test title");
+
+			AssertTextEquals(
+				key_name = "Bounce Rate",
+				locator1 = "ABTest#AB_TEST_DETAILS_FIELD",
+				value1 = "Bounce Rate");
+		}
+
 		task ("Open modal Edit test A/B, modify mandatory values and save") {
 			ABTest.openEditABTest();
 
@@ -342,40 +366,6 @@ definition {
 				key_name = "Click",
 				locator1 = "ABTest#AB_TEST_DETAILS_FIELD",
 				value1 = "Click");
-		}
-	}
-
-	@description = "LPS-97882: Validate if when the user is editing the A/B Testing, he can close the modal, and the changes in the A/B Testing is not saved"
-	@priority = 3
-	test ChangesNotAppliedAfterCloseModal {
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-		}
-
-		task ("Open modal Edit test A/B, modify mandatory values and close") {
-			ABTest.openEditABTest();
-
-			ABTest.fillInput(
-				key_testTitle = "AB test title 2",
-				labelValue = "Test Name");
-
-			ABTest.selectGoal(key_goal = "Click");
-
-			Click(locator1 = "Modal#CLOSE_BUTTON");
-		}
-
-		task ("Assert that changes have not been applied") {
-			AssertTextEquals(
-				key_title = "AB test title",
-				locator1 = "ABTest#AB_TEST_TITLE_DXP",
-				value1 = "AB test title");
-
-			AssertTextEquals(
-				key_name = "Bounce Rate",
-				locator1 = "ABTest#AB_TEST_DETAILS_FIELD",
-				value1 = "Bounce Rate");
 		}
 	}
 

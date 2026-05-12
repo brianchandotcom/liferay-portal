@@ -52,32 +52,56 @@ baseTest(
 		tag: '@LPD-89541',
 	},
 	async ({documentLibraryPage, journalEditArticlePage, page, site}) => {
-		await documentLibraryPage.goto(site.friendlyUrlPath);
-		await documentLibraryPage.goToCreateNewFolder();
 		const folderName = getRandomString();
-		await page.getByLabel('Name Required').fill(folderName);
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 
 		const iframe = page.frameLocator('iframe[title="Select Item"]');
 
-		await page.getByLabel('Image', {exact: true}).click();
-		await iframe.getByRole('link', {name: folderName}).click();
-		await iframe
-			.locator('input[type="file"]')
-			.setInputFiles(
-				path.join(
-					__dirname,
-					'../../frontend-js-item-selector-web/main/dependencies/sample_image.png'
-				)
-			);
-		await iframe.getByRole('button', {name: 'Add'}).click();
+		await baseTest.step(
+			'Create a folder in Documents and Media',
+			async () => {
+				await documentLibraryPage.goto(site.friendlyUrlPath);
+				await documentLibraryPage.goToCreateNewFolder();
 
-		await page.getByLabel('Image', {exact: true}).click();
-		await expect(
-			iframe.getByText('sample_image', {exact: false})
-		).toBeVisible();
+				await page.getByLabel('Name Required').fill(folderName);
+
+				await page.getByRole('button', {name: 'Save'}).click();
+			}
+		);
+
+		await baseTest.step(
+			'Select an image from inside the folder',
+			async () => {
+				await journalEditArticlePage.goto({
+					siteUrl: site.friendlyUrlPath,
+				});
+
+				await page.getByLabel('Image', {exact: true}).click();
+
+				await iframe.getByRole('link', {name: folderName}).click();
+
+				await iframe
+					.locator('input[type="file"]')
+					.setInputFiles(
+						path.join(
+							__dirname,
+							'../../frontend-js-item-selector-web/main/dependencies/sample_image.png'
+						)
+					);
+
+				await iframe.getByRole('button', {name: 'Add'}).click();
+			}
+		);
+
+		await baseTest.step(
+			'Reopen the image selector and verify the folder is remembered',
+			async () => {
+				await page.getByLabel('Image', {exact: true}).click();
+
+				await expect(
+					iframe.getByText('sample_image.png', {exact: true})
+				).toBeVisible();
+			}
+		);
 	}
 );
 

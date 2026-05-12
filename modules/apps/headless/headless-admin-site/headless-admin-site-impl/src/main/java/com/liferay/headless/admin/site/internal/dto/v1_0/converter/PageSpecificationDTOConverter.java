@@ -315,6 +315,11 @@ public class PageSpecificationDTOConverter
 							{
 								setExternalReferenceCode(
 									layout::getStyleBookEntryERC);
+								setScope(
+									() -> ItemScopeUtil.getItemScope(
+										layout.getCompanyId(),
+										layout.getStyleBookEntryScopeERC(),
+										layout.getGroupId()));
 							}
 						};
 					});

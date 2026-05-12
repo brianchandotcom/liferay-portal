@@ -7,6 +7,7 @@ package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
+import com.liferay.osb.faro.engine.client.model.Individual;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
@@ -16,6 +17,7 @@ import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDetailsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDisplay;
+import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -67,6 +69,27 @@ public class AccountController extends BaseFaroController {
 		return new AccountDisplay(
 			contactsEngineClient.getAccount(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id));
+	}
+
+	@GET
+	@Path("/{id}/individuals")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public FaroFDSResultsDisplay getAccountIndividuals(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize,
+			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
+				sortString)
+		throws Exception {
+
+		Results<Individual> results =
+			contactsEngineClient.getAccountIndividuals(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
+				page, pageSize, sortString);
+
+		Function<Individual, IndividualDisplay> function =
+			IndividualDisplay::new;
+
+		return new FaroFDSResultsDisplay(results, function, page, pageSize);
 	}
 
 	@GET

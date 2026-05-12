@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.cell.internal.security;
+package com.liferay.ai.hub.cell.internal.security.auth.verifier;
 
 import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.test.log.LogCapture;
@@ -35,7 +36,7 @@ import org.mockito.Mockito;
 /**
  * @author Rafael Praxedes
  */
-public class JWTTokenUtilTest {
+public class AIHubCellRequestAuthVerifierTest {
 
 	@ClassRule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
@@ -53,7 +54,11 @@ public class JWTTokenUtilTest {
 				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
 			Assert.assertEquals(
-				_USER_ID, JWTTokenUtil.getUserId(_ISSUER, token));
+				Long.valueOf(_USER_ID),
+				ReflectionTestUtil.invoke(
+					_aiHubCellRequestAuthVerifier, "_getUserId",
+					new Class<?>[] {String.class, String.class}, _ISSUER,
+					token));
 
 			_testGetUserId(
 				"Invalid JWT issuer", RandomTestUtil.randomString(),
@@ -138,10 +143,13 @@ public class JWTTokenUtilTest {
 		String expectedLogMessage, String issuer, String token) {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.ai.hub.cell.internal.security.JWTTokenUtil",
+				"com.liferay.ai.hub.cell.internal.security.auth.verifier." +
+					"AIHubCellRequestAuthVerifier",
 				LoggerTestUtil.DEBUG)) {
 
-			JWTTokenUtil.getUserId(issuer, token);
+			ReflectionTestUtil.invoke(
+				_aiHubCellRequestAuthVerifier, "_getUserId",
+				new Class<?>[] {String.class, String.class}, issuer, token);
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -158,6 +166,9 @@ public class JWTTokenUtilTest {
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
+
+	private static final AIHubCellRequestAuthVerifier
+		_aiHubCellRequestAuthVerifier = new AIHubCellRequestAuthVerifier();
 
 	private byte[] _secretBytes;
 

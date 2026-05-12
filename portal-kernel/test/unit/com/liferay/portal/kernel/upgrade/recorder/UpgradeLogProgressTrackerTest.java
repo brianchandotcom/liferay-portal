@@ -7,14 +7,20 @@ package com.liferay.portal.kernel.upgrade.recorder;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
@@ -22,10 +28,17 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -92,6 +105,146 @@ public class UpgradeLogProgressTrackerTest {
 	}
 
 	@Test
+	public void testBuildCountSQL() throws Exception {
+		Assert.assertEquals(
+			"select count(1) from (select * from Foo) tempCountTable_",
+			_invokeBuildCountSQL(_SELECT_SQL));
+
+		Assert.assertNull(_invokeBuildCountSQL("call foo()"));
+
+		Assert.assertNull(_invokeBuildCountSQL("update Foo set x = 1"));
+		Assert.assertNull(
+			_invokeBuildCountSQL("insert into Foo (x) values (1)"));
+		Assert.assertNull(_invokeBuildCountSQL("delete from Foo"));
+		Assert.assertNull(_invokeBuildCountSQL("create table Foo (x int)"));
+
+		Assert.assertNull(_invokeBuildCountSQL("selectivity_score"));
+
+		String result = _invokeBuildCountSQL("select * from Foo order by id");
+
+		Assert.assertTrue(result.contains("tempCountTable_"));
+		Assert.assertTrue(
+			StringUtil.toLowerCase(
+				result
+			).contains(
+				"order by id"
+			));
+
+		String resultWithSemicolon = _invokeBuildCountSQL("select * from Foo;");
+
+		Assert.assertFalse(resultWithSemicolon.contains(";) tempCountTable_"));
+	}
+
+	@Test
+	public void testBuildCountSQLStripsOrderByOnSQLServer() throws Exception {
+		try (MockedStatic<DBManagerUtil> dbManagerUtilMockedStatic =
+				Mockito.mockStatic(DBManagerUtil.class)) {
+
+			dbManagerUtilMockedStatic.when(
+				DBManagerUtil::getDBType
+			).thenReturn(
+				DBType.SQLSERVER
+			);
+
+			String result = _invokeBuildCountSQL(
+				"select * from Foo order by id");
+
+			Assert.assertTrue(result.contains("tempCountTable_"));
+			Assert.assertFalse(
+				StringUtil.toLowerCase(
+					result
+				).contains(
+					"order by id"
+				));
+
+			String resultWithSemicolon = _invokeBuildCountSQL(
+				"select * from Foo order by id;");
+
+			Assert.assertFalse(resultWithSemicolon.contains("order by id;"));
+		}
+	}
+
+	@Test
+	public void testClearParametersResetsUnsafeFlag() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_WITH_PARAMETER_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					countPreparedStatement.executeQuery()
+				).thenReturn(
+					countResultSet
+				);
+
+				Mockito.when(
+					countResultSet.next()
+				).thenReturn(
+					true
+				);
+
+				Mockito.when(
+					countResultSet.getLong(1)
+				).thenReturn(
+					RandomTestUtil.randomLong()
+				);
+
+				wrappedPreparedStatement.setBinaryStream(
+					1, new ByteArrayInputStream(new byte[] {1}));
+				wrappedPreparedStatement.clearParameters();
+				wrappedPreparedStatement.setInt(1, RandomTestUtil.randomInt());
+
+				Mockito.verify(
+					countPreparedStatement
+				).clearParameters();
+
+				Mockito.verify(
+					countPreparedStatement
+				).setInt(
+					Mockito.eq(1), Mockito.anyInt()
+				);
+
+				ResultSet resultSet = _mockResultSet();
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				ResultSet wrappedResultSet =
+					wrappedPreparedStatement.executeQuery();
+
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_lastLogTime", 0L);
+
+				wrappedResultSet.next();
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.atLeastOnce()
+				).executeQuery();
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
 	public void testCloseIsIdempotent() throws Exception {
 		Log log = _getLog();
 
@@ -105,8 +258,7 @@ public class UpgradeLogProgressTrackerTest {
 			UpgradeLogProgressTracker.start();
 
 			try {
-				String upgradeProcessClassName =
-					"com.liferay.test.SampleUpgradeProcess";
+				String upgradeProcessClassName = _UPGRADE_PROCESS_CLASS_NAME;
 
 				ResultSet resultSet = _mockResultSet();
 
@@ -137,7 +289,7 @@ public class UpgradeLogProgressTrackerTest {
 				Mockito.verify(
 					log, Mockito.times(1)
 				).info(
-					registryKey + " finished."
+					registryKey + " is finished."
 				);
 			}
 			finally {
@@ -163,7 +315,7 @@ public class UpgradeLogProgressTrackerTest {
 				ResultSet resultSet = _mockResultSet();
 
 				ResultSet wrappedResultSet = _wrapResultSet(
-					"com.liferay.test.SampleUpgradeProcess", resultSet);
+					_UPGRADE_PROCESS_CLASS_NAME, resultSet);
 
 				Assert.assertTrue(wrappedResultSet.next());
 
@@ -173,6 +325,287 @@ public class UpgradeLogProgressTrackerTest {
 					log, Mockito.never()
 				).info(
 					Mockito.anyString()
+				);
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testConcurrentResultSetIterationDoesNotCorruptRegistry()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				int iterationsPerThread = 200;
+				int threadCount = 4;
+
+				AtomicReference<Throwable> throwableReference =
+					new AtomicReference<>();
+
+				CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+
+				ExecutorService executorService = Executors.newFixedThreadPool(
+					threadCount);
+
+				try {
+					for (int i = 0; i < threadCount; i++) {
+						executorService.submit(
+							() -> {
+								try {
+									for (int j = 0; j < iterationsPerThread;
+										 j++) {
+
+										ResultSet resultSet = _mockResultSet();
+
+										ResultSet wrappedResultSet =
+											_wrapResultSet(
+												_UPGRADE_PROCESS_CLASS_NAME,
+												resultSet);
+
+										wrappedResultSet.next();
+										wrappedResultSet.close();
+									}
+								}
+								catch (Throwable throwable) {
+									throwableReference.compareAndSet(
+										null, throwable);
+								}
+								finally {
+									countDownLatch.countDown();
+								}
+							});
+					}
+
+					Assert.assertTrue(
+						countDownLatch.await(30, TimeUnit.SECONDS));
+				}
+				finally {
+					executorService.shutdown();
+				}
+
+				Throwable throwable = throwableReference.get();
+
+				if (throwable != null) {
+					throw new AssertionError("Worker thread failed", throwable);
+				}
+
+				Map<String, Long> lastKnownProgresses =
+					UpgradeLogProgressTracker.getLastKnownProgresses();
+
+				Assert.assertTrue(lastKnownProgresses.isEmpty());
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testCountQueryAppliesTenSecondTimeout() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					countPreparedStatement.executeQuery()
+				).thenReturn(
+					countResultSet
+				);
+
+				ResultSet resultSet = _mockResultSet();
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				ResultSet wrappedResultSet =
+					wrappedPreparedStatement.executeQuery();
+
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_lastLogTime", 0L);
+
+				wrappedResultSet.next();
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.atLeastOnce()
+				).setQueryTimeout(
+					10
+				);
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testCountQueryDoesNotPolluteSqlRecorder() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable thresholdSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD", 0L)) {
+
+			UpgradeLogProgressTracker.start();
+			UpgradeSQLRecorder.start();
+
+			try {
+				Connection underlyingConnection = Mockito.mock(
+					Connection.class);
+
+				PreparedStatement countPreparedStatement = Mockito.mock(
+					PreparedStatement.class);
+
+				PreparedStatement mainPreparedStatement = Mockito.mock(
+					PreparedStatement.class);
+
+				Mockito.when(
+					underlyingConnection.prepareStatement(_SELECT_SQL)
+				).thenReturn(
+					mainPreparedStatement
+				);
+
+				Mockito.when(
+					underlyingConnection.prepareStatement(
+						Mockito.startsWith("select count(1) from ("))
+				).thenReturn(
+					countPreparedStatement
+				);
+
+				Mockito.when(
+					countPreparedStatement.executeQuery()
+				).thenThrow(
+					new SQLException("count failed")
+				);
+
+				ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					mainPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				Connection recorderWrappedConnection =
+					UpgradeSQLRecorder.getConnectionWrapper(
+						underlyingConnection, _UPGRADE_PROCESS_CLASS_NAME);
+
+				Connection trackerWrappedConnection =
+					UpgradeLogProgressTracker.wrap(
+						recorderWrappedConnection, _UPGRADE_PROCESS_CLASS_NAME);
+
+				PreparedStatement wrappedPreparedStatement =
+					trackerWrappedConnection.prepareStatement(_SELECT_SQL);
+
+				wrappedPreparedStatement.executeQuery();
+
+				for (UpgradeSQLRecorder.FailedSQL failedSQL :
+						UpgradeSQLRecorder.getFailedSQLs()) {
+
+					Assert.assertFalse(
+						failedSQL.getSQL(
+						).contains(
+							"select count(1)"
+						));
+				}
+
+				for (UpgradeSQLRecorder.RunningSQL runningSQL :
+						UpgradeSQLRecorder.getRunningSQLs()) {
+
+					Assert.assertFalse(
+						runningSQL.getSQL(
+						).contains(
+							"select count(1)"
+						));
+				}
+			}
+			finally {
+				UpgradeSQLRecorder.stop();
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testCountQueryFailureDegrades() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				Mockito.when(
+					countPreparedStatement.executeQuery()
+				).thenThrow(
+					new SQLException("count failed")
+				);
+
+				ResultSet resultSet = _mockResultSet();
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				ResultSet wrappedResultSet =
+					wrappedPreparedStatement.executeQuery();
+
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_lastLogTime", 0L);
+
+				Assert.assertTrue(wrappedResultSet.next());
+
+				String registryKey = ReflectionTestUtil.getFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_registryKey");
+
+				Mockito.verify(
+					log
+				).info(
+					registryKey + " is still executing. Processed 1 rows."
 				);
 			}
 			finally {
@@ -207,7 +640,7 @@ public class UpgradeLogProgressTrackerTest {
 				);
 
 				ResultSet wrappedResultSet = _wrapResultSet(
-					"com.liferay.test.SampleUpgradeProcess", resultSet);
+					_UPGRADE_PROCESS_CLASS_NAME, resultSet);
 
 				Assert.assertEquals(
 					columnValue, wrappedResultSet.getString(columnName));
@@ -236,8 +669,7 @@ public class UpgradeLogProgressTrackerTest {
 			UpgradeLogProgressTracker.start();
 
 			try {
-				String upgradeProcessClassName =
-					"com.liferay.test.SampleUpgradeProcess";
+				String upgradeProcessClassName = _UPGRADE_PROCESS_CLASS_NAME;
 
 				ResultSet innerResultSet = _mockResultSet();
 				ResultSet outerResultSet = _mockResultSet();
@@ -340,8 +772,7 @@ public class UpgradeLogProgressTrackerTest {
 			try {
 				ResultSet resultSet = _mockResultSet();
 
-				String upgradeProcessClassName =
-					"com.liferay.test.SampleUpgradeProcess";
+				String upgradeProcessClassName = _UPGRADE_PROCESS_CLASS_NAME;
 
 				ResultSet wrappedResultSet = _wrapResultSet(
 					upgradeProcessClassName, resultSet);
@@ -382,8 +813,7 @@ public class UpgradeLogProgressTrackerTest {
 					false
 				);
 
-				String upgradeProcessClassName =
-					"com.liferay.test.SampleUpgradeProcess";
+				String upgradeProcessClassName = _UPGRADE_PROCESS_CLASS_NAME;
 
 				ResultSet wrappedResultSet = _wrapResultSet(
 					upgradeProcessClassName, resultSet);
@@ -404,6 +834,87 @@ public class UpgradeLogProgressTrackerTest {
 					UpgradeLogProgressTracker.getLastKnownProgresses();
 
 				Assert.assertTrue(lastKnownProgresses.isEmpty());
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testNextDropsTotalWhenRowCountExceedsIt() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					countPreparedStatement.executeQuery()
+				).thenReturn(
+					countResultSet
+				);
+
+				Mockito.when(
+					countResultSet.next()
+				).thenReturn(
+					true
+				);
+
+				Mockito.when(
+					countResultSet.getLong(1)
+				).thenReturn(
+					10L
+				);
+
+				ResultSet resultSet = _mockResultSet();
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				ResultSet wrappedResultSet =
+					wrappedPreparedStatement.executeQuery();
+
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_lastLogTime", 0L);
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_rowCount", 20L);
+
+				Assert.assertTrue(wrappedResultSet.next());
+
+				String registryKey = ReflectionTestUtil.getFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_registryKey");
+
+				Mockito.verify(
+					log
+				).info(
+					registryKey + " is still executing. Processed 21 rows."
+				);
+
+				Map<String, Long> lastKnownTotalCounts =
+					UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+				Assert.assertNull(lastKnownTotalCounts.get(registryKey));
 			}
 			finally {
 				UpgradeLogProgressTracker.stop();
@@ -433,7 +944,7 @@ public class UpgradeLogProgressTrackerTest {
 					ResultSet resultSet = _mockResultSet();
 
 					String upgradeProcessClassName =
-						"com.liferay.test.SampleUpgradeProcess";
+						_UPGRADE_PROCESS_CLASS_NAME;
 
 					ResultSet wrappedResultSet = _wrapResultSet(
 						upgradeProcessClassName, resultSet);
@@ -480,8 +991,7 @@ public class UpgradeLogProgressTrackerTest {
 			UpgradeLogProgressTracker.start();
 
 			try {
-				String upgradeProcessClassName =
-					"com.liferay.test.SampleUpgradeProcess";
+				String upgradeProcessClassName = _UPGRADE_PROCESS_CLASS_NAME;
 
 				ResultSet resultSet = _mockResultSet();
 
@@ -530,8 +1040,7 @@ public class UpgradeLogProgressTrackerTest {
 			UpgradeLogProgressTracker.start();
 
 			try {
-				String upgradeProcessClassName =
-					"com.liferay.test.SampleUpgradeProcess";
+				String upgradeProcessClassName = _UPGRADE_PROCESS_CLASS_NAME;
 
 				ResultSet resultSet = _mockResultSet();
 
@@ -564,6 +1073,177 @@ public class UpgradeLogProgressTrackerTest {
 					log
 				).info(
 					registryKey + " is still executing. Processed 2 rows."
+				);
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testNextLogsWithTotalAndPercentage() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					countPreparedStatement.executeQuery()
+				).thenReturn(
+					countResultSet
+				);
+
+				Mockito.when(
+					countResultSet.next()
+				).thenReturn(
+					true
+				);
+
+				Mockito.when(
+					countResultSet.getLong(1)
+				).thenReturn(
+					200L
+				);
+
+				ResultSet resultSet = _mockResultSet();
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				ResultSet wrappedResultSet =
+					wrappedPreparedStatement.executeQuery();
+
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_lastLogTime", 0L);
+
+				Assert.assertTrue(wrappedResultSet.next());
+
+				String registryKey = ReflectionTestUtil.getFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_registryKey");
+
+				Mockito.verify(
+					log
+				).info(
+					registryKey +
+						" is still executing. Processed 1 of 200 rows. (0%)"
+				);
+
+				Map<String, Long> lastKnownTotalCounts =
+					UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+				Assert.assertEquals(
+					Long.valueOf(200L), lastKnownTotalCounts.get(registryKey));
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testParameterMirroringWhitelist() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_WITH_PARAMETER_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				wrappedPreparedStatement.setInt(1, RandomTestUtil.randomInt());
+				wrappedPreparedStatement.setLong(
+					2, RandomTestUtil.randomLong());
+				wrappedPreparedStatement.setString(
+					3, RandomTestUtil.randomString());
+				wrappedPreparedStatement.setNull(4, Types.INTEGER);
+				wrappedPreparedStatement.setBoolean(5, true);
+
+				Mockito.verify(
+					countPreparedStatement
+				).setInt(
+					Mockito.eq(1), Mockito.anyInt()
+				);
+
+				Mockito.verify(
+					countPreparedStatement
+				).setLong(
+					Mockito.eq(2), Mockito.anyLong()
+				);
+
+				Mockito.verify(
+					countPreparedStatement
+				).setString(
+					Mockito.eq(3), Mockito.anyString()
+				);
+
+				Mockito.verify(
+					countPreparedStatement
+				).setNull(
+					4, Types.INTEGER
+				);
+
+				Mockito.verify(
+					countPreparedStatement
+				).setBoolean(
+					5, true
+				);
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testSafeSetObjectWithScalarMirrors() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_WITH_PARAMETER_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				Long value = RandomTestUtil.randomLong();
+
+				wrappedPreparedStatement.setObject(1, value);
+
+				Mockito.verify(
+					countPreparedStatement
+				).setObject(
+					1, value
 				);
 			}
 			finally {
@@ -626,6 +1306,187 @@ public class UpgradeLogProgressTrackerTest {
 	}
 
 	@Test
+	public void testStatementCloseFinishesTrackedResultSets() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", 1L)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				ResultSet resultSet = _mockResultSet();
+
+				ResultSet wrappedResultSet = _wrapResultSet(
+					_UPGRADE_PROCESS_CLASS_NAME, resultSet);
+
+				ReflectionTestUtil.setFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_lastLogTime", 0L);
+
+				Assert.assertTrue(wrappedResultSet.next());
+
+				String registryKey = ReflectionTestUtil.getFieldValue(
+					ProxyUtil.getInvocationHandler(wrappedResultSet),
+					"_registryKey");
+
+				Map<String, Long> lastKnownProgresses =
+					UpgradeLogProgressTracker.getLastKnownProgresses();
+
+				Assert.assertEquals(
+					Long.valueOf(1L), lastKnownProgresses.get(registryKey));
+
+				Statement wrappedStatement = wrappedResultSet.getStatement();
+
+				wrappedStatement.close();
+
+				Assert.assertNull(lastKnownProgresses.get(registryKey));
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testStatementConfigSettersNotMirrored() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				wrappedPreparedStatement.setFetchSize(100);
+				wrappedPreparedStatement.setMaxRows(50);
+				wrappedPreparedStatement.setQueryTimeout(30);
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).setFetchSize(
+					Mockito.anyInt()
+				);
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).setMaxRows(
+					Mockito.anyInt()
+				);
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).setQueryTimeout(
+					Mockito.anyInt()
+				);
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testUnsafeSetObjectWithStreamSkipsCount() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_WITH_PARAMETER_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				InputStream inputStream = new ByteArrayInputStream(
+					new byte[] {1, 2});
+
+				wrappedPreparedStatement.setObject(1, inputStream);
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).setObject(
+					Mockito.anyInt(), Mockito.any()
+				);
+
+				ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				wrappedPreparedStatement.executeQuery();
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).executeQuery();
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
+	public void testUnsafeStreamSetterSkipsCount() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true)) {
+
+			UpgradeLogProgressTracker.start();
+
+			try {
+				PreparedStatement[] statements = _setUpPreparedMirror(
+					_SELECT_WITH_PARAMETER_SQL);
+
+				PreparedStatement countPreparedStatement = statements[0];
+				PreparedStatement wrappedPreparedStatement = statements[1];
+
+				InputStream inputStream = new ByteArrayInputStream(
+					new byte[] {1, 2});
+
+				wrappedPreparedStatement.setBinaryStream(1, inputStream);
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).setBinaryStream(
+					Mockito.anyInt(), Mockito.any()
+				);
+
+				ResultSet resultSet = Mockito.mock(ResultSet.class);
+
+				Mockito.when(
+					wrappedPreparedStatement.executeQuery()
+				).thenReturn(
+					resultSet
+				);
+
+				wrappedPreparedStatement.executeQuery();
+
+				Mockito.verify(
+					countPreparedStatement, Mockito.never()
+				).executeQuery();
+			}
+			finally {
+				UpgradeLogProgressTracker.stop();
+			}
+		}
+	}
+
+	@Test
 	public void testWrapDisabled() throws Exception {
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -637,7 +1498,7 @@ public class UpgradeLogProgressTrackerTest {
 				Connection connection = Mockito.mock(Connection.class);
 
 				Connection wrappedConnection = UpgradeLogProgressTracker.wrap(
-					connection, "com.liferay.test.SampleUpgradeProcess");
+					connection, _UPGRADE_PROCESS_CLASS_NAME);
 
 				Assert.assertSame(connection, wrappedConnection);
 			}
@@ -659,7 +1520,7 @@ public class UpgradeLogProgressTrackerTest {
 				Connection connection = Mockito.mock(Connection.class);
 
 				Connection wrappedConnection = UpgradeLogProgressTracker.wrap(
-					connection, "com.liferay.test.SampleUpgradeProcess");
+					connection, _UPGRADE_PROCESS_CLASS_NAME);
 
 				Assert.assertNotSame(connection, wrappedConnection);
 
@@ -772,6 +1633,15 @@ public class UpgradeLogProgressTrackerTest {
 		return log;
 	}
 
+	private String _invokeBuildCountSQL(String sql) throws Exception {
+		Method method = UpgradeLogProgressTracker.class.getDeclaredMethod(
+			"_buildCountSQL", String.class);
+
+		method.setAccessible(true);
+
+		return (String)method.invoke(null, sql);
+	}
+
 	private ResultSet _mockResultSet() throws Exception {
 		ResultSet resultSet = Mockito.mock(ResultSet.class);
 
@@ -782,6 +1652,41 @@ public class UpgradeLogProgressTrackerTest {
 		);
 
 		return resultSet;
+	}
+
+	private PreparedStatement[] _setUpPreparedMirror(String sql)
+		throws Exception {
+
+		Connection connection = Mockito.mock(Connection.class);
+
+		PreparedStatement countPreparedStatement = Mockito.mock(
+			PreparedStatement.class);
+
+		PreparedStatement mainPreparedStatement = Mockito.mock(
+			PreparedStatement.class);
+
+		Mockito.when(
+			connection.prepareStatement(sql)
+		).thenReturn(
+			mainPreparedStatement
+		);
+
+		Mockito.when(
+			connection.prepareStatement(
+				Mockito.startsWith("select count(1) from ("))
+		).thenReturn(
+			countPreparedStatement
+		);
+
+		Connection wrappedConnection = UpgradeLogProgressTracker.wrap(
+			connection, _UPGRADE_PROCESS_CLASS_NAME);
+
+		PreparedStatement wrappedPreparedStatement =
+			wrappedConnection.prepareStatement(sql);
+
+		return new PreparedStatement[] {
+			countPreparedStatement, wrappedPreparedStatement
+		};
 	}
 
 	private ResultSet _wrapResultSet(
@@ -810,6 +1715,14 @@ public class UpgradeLogProgressTrackerTest {
 
 		return wrappedStatement.executeQuery("select 1");
 	}
+
+	private static final String _SELECT_SQL = "select * from Foo";
+
+	private static final String _SELECT_WITH_PARAMETER_SQL =
+		"select * from Foo where x = ?";
+
+	private static final String _UPGRADE_PROCESS_CLASS_NAME =
+		"com.liferay.test.SampleUpgradeProcess";
 
 	private Log _originalLog;
 

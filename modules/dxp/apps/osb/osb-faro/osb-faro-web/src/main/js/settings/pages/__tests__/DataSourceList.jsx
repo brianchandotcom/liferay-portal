@@ -370,6 +370,21 @@ describe('isDataSourceVisible', () => {
 		});
 	});
 
+	it('should show Demandbase, Hubspot and Salesforce only when the subscription is Liferay Data Platform Enterprise', () => {
+		[
+			DataSourceTypes.Demandbase,
+			DataSourceTypes.Hubspot,
+			DataSourceTypes.Salesforce
+		].forEach(type => {
+			expect(
+				isDataSourceVisible(
+					type,
+					SubscriptionNames.LiferayDataPlatformEnterprise
+				)
+			).toBe(true);
+		});
+	});
+
 	it('should hide Demandbase, Hubspot and Salesforce for any subscription other than Liferay Data Platform', () => {
 		const nonLDPSubscriptions = [
 			SubscriptionNames.LiferayAnalyticsCloudBasic,

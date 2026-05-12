@@ -4,6 +4,26 @@
 @import 'components/table';
 @import 'portlet/portlet';
 
+// These are temporary CSS variable overrides due to theme stylebook
+// frontend-token-definitions being applied to admin theme. These will be
+// removed once that is fixed.
+
+html:root {
+	@include clay-css($c-root);
+}
+
+@media (prefers-color-scheme: dark) {
+	html:root {
+		@include clay-css($c-dark);
+	}
+}
+
+@media (prefers-color-scheme: dark) and (prefers-contrast: more) {
+	html:root {
+		@include clay-css($c-dark-high-contrast);
+	}
+}
+
 #wrapper {
 	padding: 0;
 
@@ -25,7 +45,7 @@
 	}
 
 	.main-content-nav {
-		margin-left: $grid-gutter-width * -0.5;
+		margin-left: calc(#{$grid-gutter-width} * -0.5);
 		margin-top: 20px;
 	}
 }

@@ -188,10 +188,7 @@ const ConnectableSelector = ({
 				);
 			}
 			else if (error) {
-				showErrorMessage(
-					error ||
-						Liferay.Language.get('unable-to-connect-site-to-space')
-				);
+				showErrorMessage(error);
 			}
 
 			resetSelection();
@@ -221,12 +218,7 @@ const ConnectableSelector = ({
 				);
 			}
 			else if (error) {
-				showErrorMessage(
-					error ||
-						Liferay.Language.get(
-							'unable-to-connect-site-template-to-space'
-						)
-				);
+				showErrorMessage(error);
 			}
 
 			resetSelection();

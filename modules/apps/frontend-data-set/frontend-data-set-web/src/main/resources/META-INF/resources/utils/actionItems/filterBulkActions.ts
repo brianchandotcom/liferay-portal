@@ -20,19 +20,34 @@ const filterBulkActions = ({
 		return [];
 	}
 
-	return bulkActions.filter((bulkAction) => {
-		return (
-			!bulkAction.isVisible ||
-			bulkAction.isVisible({
-				activeFilters: globalFDSState?.filters.filter(
-					(filter: IBaseFilterState) => filter?.active
-				),
-				activeSearch: globalFDSState.search,
-				allItemsSelectedActive,
-				selectedItems,
-			})
-		);
-	});
+	const bulkActionCallbackContext = {
+		activeFilters: globalFDSState?.filters.filter(
+			(filter: IBaseFilterState) => filter?.active
+		),
+		activeSearch: globalFDSState.search,
+		allItemsSelectedActive,
+		selectedItems,
+	};
+
+	return bulkActions
+		.filter(
+			(bulkAction) =>
+				!bulkAction.isVisible ||
+				bulkAction.isVisible(bulkActionCallbackContext)
+		)
+		.map((bulkAction) => {
+			if (!bulkAction.isDisabled) {
+				return bulkAction;
+			}
+
+			return {
+				...bulkAction,
+				data: {
+					...bulkAction.data,
+					disabled: bulkAction.isDisabled(bulkActionCallbackContext),
+				},
+			};
+		});
 };
 
 export default filterBulkActions;

@@ -10261,13 +10261,7 @@ ${output.content}</echo>
 
 				import java.io.File;
 
-				String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
-
-				String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
-
-				String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
-
-				File libDir = new File(project.getBaseDir(), libPath);
+				File libDir = new File(project.getBaseDir(), "tools/sdk/dependencies/com.liferay.source.formatter/lib");
 
 				File jarFile = new File(libDir, "com.liferay.source.formatter.jar");
 
@@ -10275,7 +10269,9 @@ ${output.content}</echo>
 					throw new RuntimeException("Unable to find " + jarFile);
 				}
 
-				CloudBucketUtil.syncS3Files(s3LibPath, libDir.getAbsolutePath());
+				String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
+
+				CloudBucketUtil.syncS3Files(project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA, libDir.getAbsolutePath());
 
 				System.out.println("Published source-formatter to S3 at tree SHA " + treeSHA);
 			]]>

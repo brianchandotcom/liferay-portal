@@ -349,3 +349,113 @@ test(
 		});
 	}
 );
+
+test(
+	'Can move a folder with its contents to a different Space',
+	{tag: '@LPD-89762'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const sourceSpaceName = `Space ${getRandomString()}`;
+		const destinationSpaceName = `Space ${getRandomString()}`;
+		const destinationFolderName = `Destination ${getRandomString()}`;
+		const sourceFolderName = `Source ${getRandomString()}`;
+		const contentTitle = `Content ${getRandomString()}`;
+
+		await test.step('Create source and destination Spaces', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: sourceSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a destination folder in the destination Space', async () => {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: destinationSpaceName,
+				title: destinationFolderName,
+			});
+		});
+
+		await test.step('Create a source folder with a content inside it in the source Space', async () => {
+			const sourceFolder =
+				await apiHelpers.objectFolder.createObjectEntryFolder({
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: sourceSpaceName,
+					title: sourceFolderName,
+				});
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode:
+						sourceFolder.externalReferenceCode,
+					title: contentTitle,
+				},
+				applicationName,
+				sourceSpaceName
+			);
+		});
+
+		await test.step('Move the source folder to the destination folder in the destination Space', async () => {
+			await assetsPage.gotoSpaceContents(sourceSpaceName);
+
+			await assetsPage.moveTo({
+				destinationFolder: destinationFolderName,
+				destinationSpace: destinationSpaceName,
+				itemTitle: sourceFolderName,
+			});
+		});
+
+		await test.step('Info alert for the folder move is displayed', async () => {
+			await waitForAlert(
+				page,
+				`Info:Moving ${sourceFolderName} to ${destinationFolderName}.`,
+				{type: 'info'}
+			);
+		});
+
+		await test.step('Success alert for the folder move is displayed', async () => {
+			await waitForAlert(
+				page,
+				`Success:${sourceFolderName} was successfully moved to ${destinationFolderName}.`,
+				{first: true}
+			);
+		});
+
+		await test.step('The content is now in the destination Space', async () => {
+			const response =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
+					applicationName,
+					encodeURIComponent(destinationSpaceName),
+					new URLSearchParams({pageSize: '100'})
+				);
+
+			const movedItems = response.items.filter(
+				(item: {title: string}) => item.title === contentTitle
+			);
+
+			expect(movedItems).toHaveLength(1);
+		});
+
+		await test.step('The content is no longer in the source Space', async () => {
+			const response =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
+					applicationName,
+					encodeURIComponent(sourceSpaceName),
+					new URLSearchParams({pageSize: '100'})
+				);
+
+			const sourceItems = response.items.filter(
+				(item: {title: string}) => item.title === contentTitle
+			);
+
+			expect(sourceItems).toHaveLength(0);
+		});
+	}
+);

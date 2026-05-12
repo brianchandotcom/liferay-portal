@@ -26,7 +26,7 @@ const InterestDisplay: React.FC<IDisplayComponentProps> = ({
 
 			<span>{operatorLabel}</span>
 
-			<span>{Liferay.Language.get('interested-in-fragment')}</span>
+			<span>{Liferay.Language.get('interested-in').toLowerCase()}</span>
 
 			<b>{maybeFormatValue(interestName, type, timeZoneId)}</b>
 		</>

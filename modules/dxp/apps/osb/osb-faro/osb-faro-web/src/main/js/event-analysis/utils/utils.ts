@@ -85,45 +85,46 @@ type PartialOperatorLabelsMap = Partial<Record<Operators, string>>;
 
 export const DATE_OPERATOR_LABELS_MAP: PartialOperatorLabelsMap = {
 	[Operators.Between]: '-',
-	[Operators.EQ]: Liferay.Language.get('is-fragment'),
-	[Operators.GT]: Liferay.Language.get('after-fragment'),
-	[Operators.LT]: Liferay.Language.get('before-fragment')
+	[Operators.EQ]: Liferay.Language.get('is').toLowerCase(),
+	[Operators.GT]: Liferay.Language.get('after').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('before').toLowerCase()
 };
 
 export const DATE_OPERATOR_LONGHAND_LABELS_MAP: PartialOperatorLabelsMap = {
-	[Operators.Between]: Liferay.Language.get('is-between-fragment'),
-	[Operators.EQ]: Liferay.Language.get('is-fragment'),
-	[Operators.GT]: Liferay.Language.get('after-fragment'),
-	[Operators.LT]: Liferay.Language.get('before-fragment')
+	[Operators.Between]: Liferay.Language.get('is-between').toLowerCase(),
+	[Operators.EQ]: Liferay.Language.get('is').toLowerCase(),
+	[Operators.GT]: Liferay.Language.get('after').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('before').toLowerCase()
 };
 
 export const DURATION_OPERATOR_LABELS_MAP: PartialOperatorLabelsMap = {
-	[Operators.GT]: Liferay.Language.get('is-greater-than-fragment'),
-	[Operators.LT]: Liferay.Language.get('is-less-than-fragment')
+	[Operators.GT]: Liferay.Language.get('is-greater-than').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('is-less-than').toLowerCase()
 };
 
 export const DURATION_OPERATOR_LONGHAND_LABELS_MAP: PartialOperatorLabelsMap = {
-	[Operators.GT]: Liferay.Language.get('is-greater-than-fragment'),
-	[Operators.LT]: Liferay.Language.get('is-less-than-fragment')
+	[Operators.GT]: Liferay.Language.get('is-greater-than').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('is-less-than').toLowerCase()
 };
 
 export const NUMBER_OPERATOR_LABELS_MAP: PartialOperatorLabelsMap = {
 	[Operators.Between]: '-',
-	[Operators.GT]: Liferay.Language.get('is-greater-than-fragment'),
-	[Operators.LT]: Liferay.Language.get('is-less-than-fragment')
+	[Operators.GT]: Liferay.Language.get('is-greater-than').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('is-less-than').toLowerCase()
 };
 
 export const NUMBER_OPERATOR_LONGHAND_LABELS_MAP: PartialOperatorLabelsMap = {
-	[Operators.Between]: Liferay.Language.get('between-fragment'),
-	[Operators.GT]: Liferay.Language.get('is-greater-than-fragment'),
-	[Operators.LT]: Liferay.Language.get('is-less-than-fragment')
+	[Operators.Between]: Liferay.Language.get('between').toLowerCase(),
+	[Operators.GT]: Liferay.Language.get('is-greater-than').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('is-less-than').toLowerCase()
 };
 
 export const STRING_OPERATOR_LABELS_MAP: PartialOperatorLabelsMap = {
-	[Operators.Contains]: Liferay.Language.get('contains-fragment'),
-	[Operators.NotContains]: Liferay.Language.get('does-not-contain-fragment'),
-	[Operators.EQ]: Liferay.Language.get('is-fragment'),
-	[Operators.NE]: Liferay.Language.get('is-not-fragment')
+	[Operators.Contains]: Liferay.Language.get('contains').toLowerCase(),
+	[Operators.NotContains]:
+		Liferay.Language.get('does-not-contain').toLowerCase(),
+	[Operators.EQ]: Liferay.Language.get('is').toLowerCase(),
+	[Operators.NE]: Liferay.Language.get('is-not').toLowerCase()
 };
 
 const getBooleanDisplay = (

@@ -16,19 +16,19 @@ describe('utils', () => {
 	describe('getOperatorLabel', () => {
 		it.each`
 			operatorKey                | type                                | retVal
-			${EQ}                      | ${PropertyTypes.AccountText}        | ${Liferay.Language.get('is-fragment')}
-			${ActivitiesFilterByCount} | ${PropertyTypes.Behavior}           | ${Liferay.Language.get('has-fragment')}
-			${EQ}                      | ${PropertyTypes.SessionGeolocation} | ${Liferay.Language.get('was-fragment')}
-			${EQ}                      | ${PropertyTypes.SessionText}        | ${Liferay.Language.get('is-fragment')}
-			${EQ}                      | ${PropertyTypes.Text}               | ${Liferay.Language.get('is-fragment')}
-			${EQ}                      | ${PropertyTypes.Boolean}            | ${Liferay.Language.get('is-fragment')}
-			${LT}                      | ${PropertyTypes.Date}               | ${Liferay.Language.get('is-before-fragment')}
-			${LT}                      | ${PropertyTypes.DateTime}           | ${Liferay.Language.get('is-before-fragment')}
-			${LT}                      | ${PropertyTypes.SessionDateTime}    | ${Liferay.Language.get('is-before-fragment')}
-			${LT}                      | ${PropertyTypes.AccountNumber}      | ${Liferay.Language.get('less-than-fragment')}
-			${LT}                      | ${PropertyTypes.Duration}           | ${Liferay.Language.get('less-than-fragment')}
-			${LT}                      | ${PropertyTypes.Number}             | ${Liferay.Language.get('less-than-fragment')}
-			${LT}                      | ${PropertyTypes.SessionNumber}      | ${Liferay.Language.get('less-than-fragment')}
+			${EQ}                      | ${PropertyTypes.AccountText}        | ${Liferay.Language.get('is').toLowerCase()}
+			${ActivitiesFilterByCount} | ${PropertyTypes.Behavior}           | ${Liferay.Language.get('has').toLowerCase()}
+			${EQ}                      | ${PropertyTypes.SessionGeolocation} | ${Liferay.Language.get('was').toLowerCase()}
+			${EQ}                      | ${PropertyTypes.SessionText}        | ${Liferay.Language.get('is').toLowerCase()}
+			${EQ}                      | ${PropertyTypes.Text}               | ${Liferay.Language.get('is').toLowerCase()}
+			${EQ}                      | ${PropertyTypes.Boolean}            | ${Liferay.Language.get('is').toLowerCase()}
+			${LT}                      | ${PropertyTypes.Date}               | ${Liferay.Language.get('is-before').toLowerCase()}
+			${LT}                      | ${PropertyTypes.DateTime}           | ${Liferay.Language.get('is-before').toLowerCase()}
+			${LT}                      | ${PropertyTypes.SessionDateTime}    | ${Liferay.Language.get('is-before').toLowerCase()}
+			${LT}                      | ${PropertyTypes.AccountNumber}      | ${Liferay.Language.get('less-than').toLowerCase()}
+			${LT}                      | ${PropertyTypes.Duration}           | ${Liferay.Language.get('less-than').toLowerCase()}
+			${LT}                      | ${PropertyTypes.Number}             | ${Liferay.Language.get('less-than').toLowerCase()}
+			${LT}                      | ${PropertyTypes.SessionNumber}      | ${Liferay.Language.get('less-than').toLowerCase()}
 		`(
 			'get $retVal for $type from $operatorKey',
 			({operatorKey, retVal, type}) => {

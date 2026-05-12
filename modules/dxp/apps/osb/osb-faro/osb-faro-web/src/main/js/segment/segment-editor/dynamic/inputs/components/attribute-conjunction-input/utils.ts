@@ -12,9 +12,9 @@ import {isNumber} from 'lodash';
 import {isValid} from '../../../utils/utils';
 
 const ATTRIBUTES_DATE_AND_DURATION_OPERATORS_LONGHAND_LABELS_MAP = {
-	[Operators.EQ]: Liferay.Language.get('is-fragment'),
-	[Operators.GT]: Liferay.Language.get('is-after-fragment'),
-	[Operators.LT]: Liferay.Language.get('is-before-fragment')
+	[Operators.EQ]: Liferay.Language.get('is').toLowerCase(),
+	[Operators.GT]: Liferay.Language.get('is-after').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('is-before').toLowerCase()
 };
 
 const ATTRIBUTES_DATE_AND_DURATION_OPTIONS = [
@@ -24,10 +24,10 @@ const ATTRIBUTES_DATE_AND_DURATION_OPTIONS = [
 ];
 
 export const ATTRIBUTES_NUMBER_OPERATOR_LONGHAND_LABELS_MAP = {
-	[Operators.EQ]: Liferay.Language.get('is-equal-to-fragment'),
-	[Operators.GT]: Liferay.Language.get('greater-than-fragment'),
-	[Operators.LT]: Liferay.Language.get('less-than-fragment'),
-	[Operators.NE]: Liferay.Language.get('is-not-equal-to-fragment')
+	[Operators.EQ]: Liferay.Language.get('is-equal-to').toLowerCase(),
+	[Operators.GT]: Liferay.Language.get('greater-than').toLowerCase(),
+	[Operators.LT]: Liferay.Language.get('less-than').toLowerCase(),
+	[Operators.NE]: Liferay.Language.get('is-not-equal-to').toLowerCase()
 };
 
 const ATTRIBUTE_NUMBER_OPTIONS = [
@@ -38,12 +38,12 @@ const ATTRIBUTE_NUMBER_OPTIONS = [
 ];
 
 const ATTRIBUTES_STRING_OPERATOR_LABELS_MAP = {
-	[FunctionalOperators.Contains]: Liferay.Language.get('contains-fragment'),
-	[NotOperators.NotContains]: Liferay.Language.get(
-		'does-not-contain-fragment'
-	),
-	[RelationalOperators.EQ]: Liferay.Language.get('is-fragment'),
-	[RelationalOperators.NE]: Liferay.Language.get('is-not-fragment')
+	[FunctionalOperators.Contains]:
+		Liferay.Language.get('contains').toLowerCase(),
+	[NotOperators.NotContains]:
+		Liferay.Language.get('does-not-contain').toLowerCase(),
+	[RelationalOperators.EQ]: Liferay.Language.get('is').toLowerCase(),
+	[RelationalOperators.NE]: Liferay.Language.get('is-not').toLowerCase()
 };
 
 export const createOption = (option: string, dataType: DataTypes) => {

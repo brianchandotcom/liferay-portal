@@ -346,8 +346,8 @@ const NewRequestModal: React.FC<INewRequestModalProps> = ({
 																key='EXAMPLE_FILE'
 															>
 																{Liferay.Language.get(
-																	'here-fragment'
-																)}
+																	'here'
+																).toLowerCase()}
 															</ClayLink>
 														],
 														false

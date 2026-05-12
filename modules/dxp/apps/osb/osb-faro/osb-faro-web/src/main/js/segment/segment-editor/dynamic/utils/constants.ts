@@ -379,7 +379,7 @@ export const SUPPORTED_OPERATORS_MAP = {
 		},
 		{
 			key: NotOperators.NotContains,
-			label: Liferay.Language.get('does-not-contain-fragment'),
+			label: Liferay.Language.get('does-not-contain').toLowerCase(),
 			name: NotOperators.NotContains
 		},
 		{
@@ -459,12 +459,12 @@ export const STRING_OPTIONS = [
 ];
 
 export const STRING_OPERATOR_LABELS_MAP = {
-	[FunctionalOperators.Contains]: Liferay.Language.get('contains-fragment'),
-	[NotOperators.NotContains]: Liferay.Language.get(
-		'does-not-contain-fragment'
-	),
-	[RelationalOperators.EQ]: Liferay.Language.get('is-fragment'),
-	[RelationalOperators.NE]: Liferay.Language.get('is-not-fragment')
+	[FunctionalOperators.Contains]:
+		Liferay.Language.get('contains').toLowerCase(),
+	[NotOperators.NotContains]:
+		Liferay.Language.get('does-not-contain').toLowerCase(),
+	[RelationalOperators.EQ]: Liferay.Language.get('is').toLowerCase(),
+	[RelationalOperators.NE]: Liferay.Language.get('is-not').toLowerCase()
 };
 
 export const BOOLEAN_OPTIONS = [

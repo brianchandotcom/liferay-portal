@@ -322,7 +322,7 @@ export const AccessTokenList: React.FC<IAccessTokenListProps> = ({groupId}) => (
 					key='API_OVERVIEW_DOCUMENTATION'
 					target='_blank'
 				>
-					{Liferay.Language.get('documentation-fragment')}
+					{Liferay.Language.get('documentation').toLowerCase()}
 				</ClayLink>
 			],
 			false

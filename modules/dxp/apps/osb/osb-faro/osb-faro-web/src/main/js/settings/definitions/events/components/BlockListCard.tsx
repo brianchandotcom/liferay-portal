@@ -327,7 +327,9 @@ const BlockListCard: React.FC<IBlockListCardProps> = ({
 								key='DOCUMENTATION_LINK'
 								target='_blank'
 							>
-								{Liferay.Language.get('documentation-fragment')}
+								{Liferay.Language.get(
+									'documentation'
+								).toLowerCase()}
 							</ClayLink>
 						],
 						false

@@ -51,7 +51,7 @@ const EventDisplay: React.FC<IDisplayComponentProps> = ({
 
 			<span>{operatorLabel}</span>
 
-			<span>{Liferay.Language.get('performed-fragment')}</span>
+			<span>{Liferay.Language.get('performed').toLowerCase()}</span>
 
 			<b>{label}</b>
 

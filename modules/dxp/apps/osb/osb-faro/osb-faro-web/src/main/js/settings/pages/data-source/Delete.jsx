@@ -124,19 +124,8 @@ export class Delete extends React.Component {
 					<WrappedDeleteDataSource
 						actionRequestFn={this.deleteDataSource}
 						dataSource={dataSource}
-						deleteMessage={sub(
-							Liferay.Language.get(
-								'to-complete,-copy-the-following-sentence-to-confirm-your-intention-and-click-x.-once-you-have-x,-you-can-not-undo-this-operation'
-							),
-							[
-								Liferay.Language.get(
-									'delete-data-source'
-								).toLowerCase(),
-
-								Liferay.Language.get(
-									'deleted-this-data-source-fragment'
-								)
-							]
+						deleteMessage={Liferay.Language.get(
+							'to-complete-copy-the-following-sentence-to-confirm-your-action-and-click-delete-data-source-once-you-delete-this-data-source-you-cannot-undo-this-operation'
 						)}
 						deletePhrase={Liferay.Language.get('remove-x')}
 						entitiesCount={entitiesCount}

@@ -92,7 +92,7 @@ const FREQUENCY_TYPE_LABELS: Record<
 		value: SegmentActivationFrequencyTypes.Indefinitely
 	},
 	[SegmentActivationFrequencyTypes.Between]: {
-		label: Liferay.Language.get('between-fragment').toLowerCase(),
+		label: Liferay.Language.get('between').toLowerCase(),
 		value: SegmentActivationFrequencyTypes.Between
 	}
 };

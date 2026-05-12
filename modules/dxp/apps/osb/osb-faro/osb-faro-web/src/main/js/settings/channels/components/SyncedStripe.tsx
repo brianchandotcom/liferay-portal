@@ -64,7 +64,7 @@ const SyncedStripe: React.FC<ISyncedStripeProps> = ({
 				[
 					<b key='INSTANCE_SETTINGS'>
 						{Liferay.Language.get(
-							'instance-settings-analytics-cloud-fragment'
+							'instance-settings-analytics-cloud'
 						)}
 					</b>
 				],

@@ -29,7 +29,7 @@ const AttributeConjunctionDisplay: React.FC<
 
 	const operatorOptions = getOperatorOptions(dataType);
 
-	const {label = Liferay.Language.get('is-fragment')} =
+	const {label = Liferay.Language.get('is').toLowerCase()} =
 		operatorOptions?.find(
 			({value}: {value: string}) => value === operatorName
 		) || {};

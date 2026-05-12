@@ -351,7 +351,9 @@ const EventInput: React.FC<IEventInputProps> = ({
 									label
 									shrink
 								>
-									{Liferay.Language.get('performed-fragment')}
+									{Liferay.Language.get(
+										'performed'
+									).toLowerCase()}
 								</Form.GroupItem>
 
 								<Form.GroupItem
@@ -411,7 +413,7 @@ const EventInput: React.FC<IEventInputProps> = ({
 										shrink
 									>
 										{Liferay.Language.get(
-											'where-attribute-fragment'
+											'where-attribute'
 										)}
 									</Form.GroupItem>
 

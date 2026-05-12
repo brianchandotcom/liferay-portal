@@ -43,7 +43,7 @@ export default class InterestBooleanInput extends React.Component<ISegmentEditor
 					</Form.GroupItem>
 
 					<Form.GroupItem className='operator' label shrink>
-						{Liferay.Language.get('interested-in-fragment')}
+						{Liferay.Language.get('interested-in').toLowerCase()}
 					</Form.GroupItem>
 
 					<Form.GroupItem className='display-value' label shrink>

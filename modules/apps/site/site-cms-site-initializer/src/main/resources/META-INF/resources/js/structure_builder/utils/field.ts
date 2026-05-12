@@ -18,8 +18,10 @@ export const FIELD_TYPES = [
 	'integer',
 	'decimal',
 	'select-from-list',
+	'phone-number',
 	'date',
 	'datetime',
+	'email',
 	'boolean',
 	'upload',
 ] as const;
@@ -29,8 +31,10 @@ export const FIELD_TYPE_LABEL: Record<FieldType, string> = {
 	'date': Liferay.Language.get('date'),
 	'datetime': Liferay.Language.get('date-and-time'),
 	'decimal': Liferay.Language.get('decimal'),
+	'email': Liferay.Language.get('email'),
 	'integer': Liferay.Language.get('numeric'),
 	'long-text': Liferay.Language.get('long-text'),
+	'phone-number': Liferay.Language.get('phone-number'),
 	'rich-text': Liferay.Language.get('rich-text'),
 	'select-from-list': Liferay.Language.get('select-from-list'),
 	'text': Liferay.Language.get('text'),
@@ -42,8 +46,10 @@ export const FIELD_TYPE_ICON: Record<FieldType, string> = {
 	'date': 'calendar',
 	'datetime': 'date-time',
 	'decimal': 'decimal',
+	'email': 'envelope-closed',
 	'integer': 'number',
 	'long-text': 'field-area',
+	'phone-number': 'phone',
 	'rich-text': 'textbox',
 	'select-from-list': 'select',
 	'text': 'custom-field',
@@ -70,10 +76,14 @@ export function getFieldBusinessType(
 			return 'DateTime';
 		case 'decimal':
 			return 'Decimal';
+		case 'email':
+			return 'Text';
 		case 'integer':
 			return 'Integer';
 		case 'long-text':
 			return 'LongText';
+		case 'phone-number':
+			return 'Text';
 		case 'rich-text':
 			return 'RichText';
 		case 'text':
@@ -90,8 +100,10 @@ export const FIELD_TYPE_TO_DB_TYPE: Record<FieldType, string> = {
 	'date': 'Date',
 	'datetime': 'DateTime',
 	'decimal': 'Double',
+	'email': 'String',
 	'integer': 'Integer',
 	'long-text': 'Clob',
+	'phone-number': 'String',
 	'rich-text': 'Clob',
 	'select-from-list': 'String',
 	'text': 'String',
@@ -139,6 +151,14 @@ export type DateTimeField = BaseField & {
 	type: 'datetime';
 };
 
+export type EmailField = BaseField & {
+	settings: {
+		autocompleteDomains?: string[];
+		blockedDomains?: string[];
+	};
+	type: 'email';
+} & UniqueValuesSettingsField;
+
 export type LongTextField = BaseField & {
 	type: 'long-text';
 } & MaxLengthSettingsField;
@@ -146,6 +166,15 @@ export type LongTextField = BaseField & {
 export type NumericField = BaseField & {
 	type: 'integer';
 } & UniqueValuesSettingsField;
+
+export type PhoneNumberField = BaseField & {
+	settings: {
+		fixedCountryCode?: string;
+		prefixType: 'defined-by-user' | 'fixed';
+	};
+	type: 'phone-number';
+} & MaxLengthSettingsField &
+	UniqueValuesSettingsField;
 
 export type SelectFromListField = BaseField & {
 	multiselection: boolean;
@@ -173,8 +202,10 @@ export type UploadField = BaseField & {
 
 export type Field =
 	| DateTimeField
+	| EmailField
 	| LongTextField
 	| NumericField
+	| PhoneNumberField
 	| SelectFromListField
 	| TextField
 	| UploadField
@@ -184,9 +215,11 @@ export type Field =
 				FieldType,
 				[
 					'datetime',
+					'email',
 					'long-text',
 					'multiselect',
 					'numeric',
+					'phone-number',
 					'select-from-list',
 					'text',
 					'upload',
@@ -248,6 +281,15 @@ export function getDefaultField({
 			multiselection: false,
 			picklistId: 0,
 			type: 'select-from-list',
+		};
+	}
+	else if (type === 'phone-number') {
+		return {
+			...base,
+			settings: {
+				prefixType: 'defined-by-user',
+			},
+			type: 'phone-number',
 		};
 	}
 	else if (type === 'upload') {

@@ -4,14 +4,17 @@
  */
 
 import getDateTimeFieldComponents from '../components/field_components/DateTimeFieldComponents';
+import getEmailFieldComponents from '../components/field_components/EmailFieldComponents';
 import getLongTextFieldComponents from '../components/field_components/LongTextFieldComponents';
 import getNumericFieldComponents from '../components/field_components/NumericFieldComponents';
+import getPhoneNumberFieldComponents from '../components/field_components/PhoneNumberFieldComponents';
 import getSelectFromListFieldComponents from '../components/field_components/SelectFromListFieldComponents';
 import getTextFieldComponents from '../components/field_components/TextFieldComponents';
 import getUploadFieldComponents from '../components/field_components/UploadFieldComponents';
 import {Field, FieldType} from './field';
 
 type FieldComponents = {
+	AdvancedTabComponent: React.FC<{disabled?: boolean; field: Field}>;
 	FirstSectionComponent: React.FC<{disabled?: boolean; field: Field}>;
 	SecondSectionComponent: React.FC<{disabled?: boolean; field: Field}>;
 };
@@ -21,8 +24,10 @@ const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {
 	'date': () => ({}),
 	'datetime': getDateTimeFieldComponents,
 	'decimal': () => ({}),
+	'email': getEmailFieldComponents,
 	'integer': getNumericFieldComponents,
 	'long-text': getLongTextFieldComponents,
+	'phone-number': getPhoneNumberFieldComponents,
 	'rich-text': () => ({}),
 	'select-from-list': getSelectFromListFieldComponents,
 	'text': getTextFieldComponents,
@@ -34,9 +39,14 @@ export default function getFieldComponents(
 ): FieldComponents {
 	const getter = GETTERS[fieldType];
 
-	const {FirstSectionComponent, SecondSectionComponent} = getter?.() ?? {};
+	const {
+		AdvancedTabComponent,
+		FirstSectionComponent,
+		SecondSectionComponent,
+	} = getter?.() ?? {};
 
 	return {
+		AdvancedTabComponent: AdvancedTabComponent ?? (() => null),
 		FirstSectionComponent: FirstSectionComponent ?? (() => null),
 		SecondSectionComponent: SecondSectionComponent ?? (() => null),
 	};

@@ -45,7 +45,7 @@ export default function StructureFieldSettings({
 					</ClayTabs.Item>
 
 					<ClayTabs.Item>
-						{Liferay.Language.get('search')}
+						{Liferay.Language.get('advanced')}
 					</ClayTabs.Item>
 				</ClayTabs.List>
 
@@ -55,7 +55,7 @@ export default function StructureFieldSettings({
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<SearchTab field={field} isReferenced={isReferenced} />
+						<AdvancedTab field={field} isReferenced={isReferenced} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -182,7 +182,7 @@ function GeneralTab({
 	);
 }
 
-function SearchTab({
+function AdvancedTab({
 	field,
 	isReferenced,
 }: {

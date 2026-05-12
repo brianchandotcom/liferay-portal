@@ -11,13 +11,15 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.site.cmp.site.initializer.internal.constants.CMPSiteInitializerFDSNames" %><%@
+page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewAllTasksSectionDisplayContext" %><%@
 page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewAssigneeSectionDisplayContext" %><%@
 page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectInfoSummarySectionDisplayContext" %><%@
 page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectManagerAssigneeSectionDisplayContext" %><%@
 page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectSponsorAssigneeSectionDisplayContext" %><%@
+page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectTasksSectionDisplayContext" %><%@
 page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectsSectionDisplayContext" %><%@
 page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewTaskInfoSummarySectionDisplayContext" %><%@
-page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewTasksSectionDisplayContext" %>
+page import="com.liferay.site.cmp.site.initializer.internal.display.context.ViewWorkflowTasksSectionDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

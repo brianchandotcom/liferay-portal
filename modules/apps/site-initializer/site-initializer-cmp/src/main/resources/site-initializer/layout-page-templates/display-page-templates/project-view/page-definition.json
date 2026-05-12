@@ -526,7 +526,7 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewTasksJSPSectionFragmentRenderer"
+												"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewProjectTasksJSPSectionFragmentRenderer"
 											},
 											"fragmentConfig": {
 											},

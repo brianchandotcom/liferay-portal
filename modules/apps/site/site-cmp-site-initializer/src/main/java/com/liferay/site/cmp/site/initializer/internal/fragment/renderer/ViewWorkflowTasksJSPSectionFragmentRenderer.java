@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cmp.site.initializer.internal.display.context.ViewAllTasksSectionDisplayContext;
+import com.liferay.site.cmp.site.initializer.internal.display.context.ViewWorkflowTasksSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -26,11 +26,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Fábio Alves
  */
 @Component(service = FragmentRenderer.class)
-public class ViewAllTasksJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewAllTasksSectionDisplayContext> {
+public class ViewWorkflowTasksJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer
+		<ViewWorkflowTasksSectionDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -39,18 +40,18 @@ public class ViewAllTasksJSPSectionFragmentRenderer
 
 	@Override
 	public String getLabelKey() {
-		return "all-tasks";
+		return "workflow";
 	}
 
 	@Override
-	protected ViewAllTasksSectionDisplayContext getDisplayContext(
+	protected ViewWorkflowTasksSectionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return new ViewAllTasksSectionDisplayContext(
+		return new ViewWorkflowTasksSectionDisplayContext(
 			_assetTagLocalService, _classNameLocalService,
 			_depotEntryLocalService, httpServletRequest,
 			_listTypeEntryLocalService, _objectEntryService,
@@ -67,7 +68,7 @@ public class ViewAllTasksJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_all_tasks.jsp";
+		return "/view_workflow_tasks.jsp";
 	}
 
 	@Reference

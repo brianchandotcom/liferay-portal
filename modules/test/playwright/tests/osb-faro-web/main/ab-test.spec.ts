@@ -6,8 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -28,10 +28,10 @@ import {createSitePage, navigateToSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest(),
 	pageEditorPagesTest
@@ -42,19 +42,13 @@ test(
 	{
 		tag: '@LRAC-14220',
 	},
-	async ({apiHelpers, page}) => {
-		const siteName = getRandomString();
-
-		await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
+	async ({apiHelpers, page, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		await createSitePage({
 			apiHelpers,
 			pageTitle,
-			siteName,
+			siteName: site.name,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -63,14 +57,14 @@ test(
 			apiHelpers,
 			channelName,
 			page,
-			siteName,
+			siteName: site.name,
 		});
 
 		await test.step('Go to site page', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await page.waitForSelector('.segments-experiment-icon');
@@ -130,19 +124,13 @@ test(
 	{
 		tag: '@LRAC-14220',
 	},
-	async ({apiHelpers, page}) => {
-		const siteName = getRandomString();
-
-		await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
+	async ({apiHelpers, page, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		await createSitePage({
 			apiHelpers,
 			pageTitle,
-			siteName,
+			siteName: site.name,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -151,14 +139,14 @@ test(
 			apiHelpers,
 			channelName,
 			page,
-			siteName,
+			siteName: site.name,
 		});
 
 		await test.step('Go to site page', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await page.waitForSelector('.segments-experiment-icon');
@@ -223,19 +211,13 @@ test(
 	{
 		tag: '@LPS-103334',
 	},
-	async ({apiHelpers, page, pageEditorPage}) => {
-		const siteName = getRandomString();
-
-		await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await createSitePage({
 			apiHelpers,
 			pageTitle,
-			siteName,
+			siteName: site.name,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -244,14 +226,14 @@ test(
 			apiHelpers,
 			channelName,
 			page,
-			siteName,
+			siteName: site.name,
 		});
 
 		await test.step('Go to site page', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await page.waitForSelector('.segments-experiment-icon');
@@ -262,7 +244,7 @@ test(
 				layout,
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await pageEditorPage.createExperience('Experience 1');
@@ -276,7 +258,7 @@ test(
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await clickAndExpectToBeVisible({
@@ -305,7 +287,7 @@ test(
 				layout,
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await pageEditorPage.openExperienceSelector();
@@ -320,19 +302,13 @@ test(
 	{
 		tag: '@LPS-101341',
 	},
-	async ({apiHelpers, page, pageEditorPage}) => {
-		const siteName = getRandomString();
-
-		await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await createSitePage({
 			apiHelpers,
 			pageTitle,
-			siteName,
+			siteName: site.name,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -341,7 +317,7 @@ test(
 			apiHelpers,
 			channelName,
 			page,
-			siteName,
+			siteName: site.name,
 		});
 
 		await test.step('Create a new Experience', async () => {
@@ -349,7 +325,7 @@ test(
 				layout,
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await pageEditorPage.createExperience('Experience 1');
@@ -363,7 +339,7 @@ test(
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await clickAndExpectToBeVisible({
@@ -412,7 +388,7 @@ test(
 				layout,
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await pageEditorPage.openExperienceSelector();
@@ -427,19 +403,13 @@ test(
 	{
 		tag: '@LPS-103334',
 	},
-	async ({apiHelpers, page, pageEditorPage}) => {
-		const siteName = getRandomString();
-
-		await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		const layout = await createSitePage({
 			apiHelpers,
 			pageTitle,
-			siteName,
+			siteName: site.name,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -448,7 +418,7 @@ test(
 			apiHelpers,
 			channelName,
 			page,
-			siteName,
+			siteName: site.name,
 		});
 
 		await test.step('Create a new Experience', async () => {
@@ -456,7 +426,7 @@ test(
 				layout,
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await pageEditorPage.createExperience('Experience 1');
@@ -470,7 +440,7 @@ test(
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await clickAndExpectToBeVisible({
@@ -511,7 +481,7 @@ test(
 				layout,
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await pageEditorPage.openExperienceSelector();
@@ -526,19 +496,13 @@ test(
 	{
 		tag: '@LRAC-14220',
 	},
-	async ({apiHelpers, page}) => {
-		const siteName = getRandomString();
-
-		await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
+	async ({apiHelpers, page, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
 		await createSitePage({
 			apiHelpers,
 			pageTitle,
-			siteName,
+			siteName: site.name,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -547,14 +511,14 @@ test(
 			apiHelpers,
 			channelName,
 			page,
-			siteName,
+			siteName: site.name,
 		});
 
 		await test.step('Go to site page', async () => {
 			await navigateToSitePage({
 				page,
 				pageName: pageTitle,
-				siteName,
+				siteName: site.name,
 			});
 
 			await page.waitForSelector('.segments-experiment-icon');

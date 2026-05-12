@@ -8,7 +8,10 @@ package com.liferay.portal.cache.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -62,12 +65,32 @@ public class ClusterLinkTest implements Serializable {
 	@Test
 	public void testControlChannelProperties() throws Exception {
 		_testControlChannelProperties(
-			false,
+			false, "TCP",
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
 		_testControlChannelProperties(
-			true,
+			true, "UDP",
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml",
 			"cluster.link.channel.properties.transport.0=udp.xml");
+	}
+
+	private static String _getControlChannelTransportName() {
+		return SystemBundleUtil.callService(
+			ClusterExecutor.class,
+			clusterExecutor -> {
+				Object clusterChannel = ReflectionTestUtil.getFieldValue(
+					clusterExecutor, "_clusterChannel");
+
+				Object jChannel = ReflectionTestUtil.getFieldValue(
+					clusterChannel, "_jChannel");
+
+				Object protocolStack = ReflectionTestUtil.invoke(
+					jChannel, "getProtocolStack", new Class<?>[0]);
+
+				Object transport = ReflectionTestUtil.invoke(
+					protocolStack, "getTransport", new Class<?>[0]);
+
+				return transport.getClass().getSimpleName();
+			});
 	}
 
 	private Closeable _applyPortalExtPropertiesLines(
@@ -106,7 +129,8 @@ public class ClusterLinkTest implements Serializable {
 	}
 
 	private void _testControlChannelProperties(
-			boolean keepStarted, String... portalExtPropertiesLines)
+			boolean keepStarted, String expectedTransportName,
+			String... portalExtPropertiesLines)
 		throws Exception {
 
 		try (Closeable closeable = _applyPortalExtPropertiesLines(
@@ -131,6 +155,11 @@ public class ClusterLinkTest implements Serializable {
 			Assert.assertNotNull(
 				_tomcatNode1.syncExecute(
 					ClusterExecutorUtil::getLocalClusterNode));
+
+			Assert.assertEquals(
+				expectedTransportName,
+				_tomcatNode1.syncExecute(
+					ClusterLinkTest::_getControlChannelTransportName));
 		}
 	}
 

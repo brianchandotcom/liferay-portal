@@ -27,18 +27,18 @@ import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
 
 function dateFilterToQuery(values: DateFilterValues): ExportPreviewQuery {
-	if (values.filterType === FilterType.Last) {
+	if (values.range === FilterType.Last) {
 		return {
-			last: HOURS_BY_MODIFIED_LAST[values.modifiedLast],
+			last: HOURS_BY_MODIFIED_LAST[values.last],
 			range: 'last',
 		};
 	}
 
-	if (values.filterType === FilterType.Range) {
+	if (values.range === FilterType.Range) {
 		return {
-			endDate: new Date(values.toDate).toISOString(),
+			endDate: new Date(values.endDate).toISOString(),
 			range: 'dateRange',
-			startDate: new Date(values.fromDate).toISOString(),
+			startDate: new Date(values.startDate).toISOString(),
 		};
 	}
 
@@ -100,7 +100,7 @@ export function NewExport({
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
 		if (
-			filterValues.filterType === FilterType.All &&
+			filterValues.range === FilterType.All &&
 			initialPreviewRef.current
 		) {
 			setPreview(initialPreviewRef.current);
@@ -118,7 +118,7 @@ export function NewExport({
 		<Formik
 			initialValues={{
 				contentSelection: undefined,
-				dateFilter: {filterType: FilterType.All} as DateFilterValues,
+				dateFilter: {range: FilterType.All} as DateFilterValues,
 				fileName: '',
 			}}
 			onSubmit={async (values) => {

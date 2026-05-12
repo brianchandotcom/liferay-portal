@@ -214,6 +214,14 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		OpenIdConnectSession openIdConnectSession = Mockito.mock(
 			OpenIdConnectSession.class);
 
+		long companyId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			openIdConnectSession.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
 		String authServerWellKnownURI = RandomTestUtil.randomString();
 
 		Mockito.when(
@@ -230,14 +238,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			clientId
 		);
 
-		long companyId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			openIdConnectSession.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
 		Mockito.when(
 			openIdConnectSession.getRefreshToken()
 		).thenReturn(
@@ -246,6 +246,18 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		OAuthClientEntry oAuthClientEntry = Mockito.mock(
 			OAuthClientEntry.class);
+
+		Mockito.when(
+			oAuthClientEntry.getOAuthClientEntryId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getCompanyId()
+		).thenReturn(
+			companyId
+		);
 
 		Mockito.when(
 			oAuthClientEntry.getAuthServerWellKnownURI()
@@ -260,12 +272,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		);
 
 		Mockito.when(
-			oAuthClientEntry.getCompanyId()
-		).thenReturn(
-			companyId
-		);
-
-		Mockito.when(
 			oAuthClientEntry.getInfoJSON()
 		).thenReturn(
 			"{\"client_id\": \"test-client\"}"
@@ -275,12 +281,6 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			oAuthClientEntry.getMetadataCacheInSeconds()
 		).thenReturn(
 			3600
-		);
-
-		Mockito.when(
-			oAuthClientEntry.getOAuthClientEntryId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(
@@ -411,6 +411,12 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		Mockito.verify(
 			openIdConnectSession
+		).setAccessToken(
+			refreshedAccessToken.toJSONString()
+		);
+
+		Mockito.verify(
+			openIdConnectSession
 		).setIdToken(
 			refreshedIdTokenString
 		);
@@ -423,20 +429,14 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		Mockito.verify(
 			openIdConnectSession
-		).setSessionId(
-			refreshedSessionId
-		);
-
-		Mockito.verify(
-			openIdConnectSession
-		).setAccessToken(
-			refreshedAccessToken.toJSONString()
-		);
-
-		Mockito.verify(
-			openIdConnectSession
 		).setRefreshToken(
 			refreshedRefreshToken.toString()
+		);
+
+		Mockito.verify(
+			openIdConnectSession
+		).setSessionId(
+			refreshedSessionId
 		);
 	}
 

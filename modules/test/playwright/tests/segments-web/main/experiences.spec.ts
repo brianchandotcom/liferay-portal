@@ -185,3 +185,59 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Asks for confirmation when canceling segment creation with unsaved changes',
+	{
+		tag: '@LPS-90588',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open New Experience editor and start a new segment
+
+		await pageEditorPage.experienceSelector.click();
+
+		await page.getByText('Select Experience').waitFor();
+		await page.getByLabel('New Experience').click();
+
+		await page.getByText('New Segment').waitFor();
+		await page.getByText('New Segment').click();
+
+		await page.getByText('No Conditions yet').waitFor();
+
+		// Mark the segment dirty so canceling triggers the confirmation
+
+		await page.getByPlaceholder('Untitled Segment').fill('Dirty segment');
+
+		// Accept the unsaved-changes confirm
+
+		page.once('dialog', async (dialog) => {
+			expect(dialog.message()).toContain('unsaved changes');
+
+			await dialog.accept();
+		});
+
+		await page.getByText('Cancel', {exact: true}).click();
+
+		// Back in the Experience editor with default values
+
+		await expect(
+			page.locator('.modal-title', {hasText: 'New Experience'})
+		).toBeVisible();
+
+		await expect(page.getByPlaceholder('Experience Name')).toHaveValue('');
+
+		await expect(
+			page.getByLabel('Audience').locator(':checked')
+		).toHaveText('Anyone');
+	}
+);

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -96,6 +97,14 @@ public class ShippingAddressResourceTest
 				_commerceOrder.getShippingAddressId(),
 				_commerceOrder.getCommerceShippingMethodId(),
 				_commerceOrder.getShippingOptionName(), _serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		CommerceTestUtil.deleteCommerceShipment(_commerceShipment);
+
+		CommerceTestUtil.deleteCommerceShipment(
+			_commerceShipmentWithExternalReferenceCode);
 	}
 
 	@Override

@@ -46,7 +46,7 @@ export default function ContentSelector({
 			aria-describedby={errorId}
 			aria-invalid={errorMessage ? true : undefined}
 			aria-labelledby={ariaLabelledby}
-			className="mt-4"
+			className="c-gap-4 d-flex flex-column mt-4"
 			role="group"
 		>
 			{visibleSections.map((section: PortletDataHandlerSection) => (

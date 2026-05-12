@@ -27,7 +27,7 @@ export default function DataSelectionStep({
 			<FileSummary importPreview={importPreview} />
 
 			{importPreview.deletionCount > 0 && (
-				<ClayLayout.Sheet>
+				<ClayLayout.Sheet className="mt-4">
 					<ClayLayout.SheetHeader className="mb-1">
 						<div className="mb-2 sheet-title">
 							{Liferay.Language.get('deletions')}
@@ -44,7 +44,7 @@ export default function DataSelectionStep({
 				</ClayLayout.Sheet>
 			)}
 
-			<ClayLayout.Sheet>
+			<ClayLayout.Sheet className="mt-4">
 				<ClayLayout.SheetHeader className="mb-1">
 					<div className="mb-2 sheet-title">
 						{Liferay.Language.get('permissions')}

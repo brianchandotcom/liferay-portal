@@ -4,6 +4,8 @@
  */
 
 export interface PortletDataHandlerBoolean {
+	additionCount?: number;
+	deletionCount?: number;
 	label: string;
 	name: string;
 	portletDataHandlerControls?: PortletDataHandlerControl[];
@@ -32,6 +34,8 @@ export type PortletDataHandlerControl =
 export type PortletDataHandler = Omit<PortletDataHandlerBoolean, 'type'>;
 
 export interface PortletDataHandlerSection {
+	additionCount?: number;
+	deletionCount?: number;
 	label: string;
 	name: string;
 	portletDataHandlers: PortletDataHandler[];

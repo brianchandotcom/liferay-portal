@@ -14,6 +14,7 @@ import {
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import CountIndicators from './CountIndicators';
 import PortletDataControlChoice from './PortletDataControlChoice';
 
 interface PortletDataControlProps {
@@ -60,12 +61,19 @@ export default function PortletDataControl({
 			</ClayLayout.ContentCol>
 
 			<ClayLayout.ContentCol expand>
-				<div className="align-items-center d-flex justify-content-between">
+				<div className="align-items-center d-flex">
 					<span
 						className={`small ${level === 0 ? 'font-weight-semi-bold' : ''}`}
 					>
 						{control.label}
 					</span>
+
+					{control.type === 'Boolean' && (
+						<CountIndicators
+							additionCount={control.additionCount}
+							deletionCount={control.deletionCount}
+						/>
+					)}
 				</div>
 
 				{control.portletDataHandlerControls?.map((nestedControl) =>

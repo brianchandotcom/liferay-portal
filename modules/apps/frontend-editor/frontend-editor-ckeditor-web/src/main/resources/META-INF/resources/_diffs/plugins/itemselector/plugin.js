@@ -370,9 +370,13 @@
 		},
 
 		_openSelectionModal(editor, url, callback) {
+			const maintainState = Boolean(
+				editor.config.itemSelectorMaintainState
+			);
+
 			let modalURL = url;
 
-			if (lastFolderId !== null && lastFolderId !== '') {
+			if (maintainState && lastFolderId !== null && lastFolderId !== '') {
 				try {
 					const parsed = new URL(modalURL);
 
@@ -393,6 +397,7 @@
 			Liferay.Util.openSelectionModal({
 				onSelect: (selectedItem) => {
 					if (
+						maintainState &&
 						selectedItem &&
 						selectedItem.folderId !== null &&
 						selectedItem.folderId !== undefined &&

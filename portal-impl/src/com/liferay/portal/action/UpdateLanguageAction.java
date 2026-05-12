@@ -312,9 +312,10 @@ public class UpdateLanguageAction implements Action {
 		}
 
 		if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, "doAsUserLanguageId",
-				LocaleUtil.toLanguageId(locale));
+			return HttpComponentsUtil.setParameter(
+				PortalUtil.addPreservedParameters(
+					themeDisplay, layout, redirect, true),
+				"doAsUserLanguageId", LocaleUtil.toLanguageId(locale));
 		}
 
 		return redirect;

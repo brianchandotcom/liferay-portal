@@ -128,7 +128,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	}
 
 	@Test
-	public void testGetInfoItemFieldValuesProxyObjectEntry() throws Exception {
+	public void testGetInfoItemFieldValues() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =

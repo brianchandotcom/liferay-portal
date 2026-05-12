@@ -352,16 +352,6 @@
 	}
 }
 
-.content-selector-items-count {
-	&:after {
-		content: ')';
-	}
-
-	&:before {
-		content: '(';
-	}
-}
-
 html#{$cadmin-selector} {
 	.cadmin {
 		.site-cms-export-import-dialog {

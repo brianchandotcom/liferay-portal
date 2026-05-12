@@ -17,6 +17,17 @@ import org.json.JSONObject;
  */
 public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		if (_projectName != null) {
+			jsonObject.put("project_name", _projectName);
+		}
+
+		return jsonObject;
+	}
+
 	public String getProjectName() {
 		return _projectName;
 	}
@@ -117,6 +128,10 @@ public class PlaywrightSegmentTestClassGroup extends SegmentTestClassGroup {
 		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
 
 		super(parentBatchTestClassGroup, jsonObject);
+
+		if (jsonObject.has("project_name")) {
+			_projectName = jsonObject.getString("project_name");
+		}
 	}
 
 	@Override

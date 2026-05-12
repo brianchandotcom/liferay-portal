@@ -87,8 +87,10 @@
 
 	.modal-body {
 		display: flex;
-		height: 70vh;
-		min-height: 500px;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+		overflow-y: auto;
 
 		& > .row {
 			flex: 1;

@@ -104,6 +104,22 @@ public class ClusterLinkTest implements Serializable {
 	}
 
 	@Test
+	public void testCustomClusteringAddress() throws Exception {
+		String ipAddress = "127.0.0.1";
+
+		try (Closeable closeable = _applyPortalExtPropertiesLines(
+				true, _tomcatNode1, "cluster.link.autodetect.address=",
+				"cluster.link.bind.addr[\"cluster-link-control\"]=" +
+					ipAddress)) {
+
+			InetAddress bindInetAddress = _tomcatNode1.syncExecute(
+				ClusterLinkTest::_getControlChannelBindAddress);
+
+			Assert.assertEquals(ipAddress, bindInetAddress.getHostAddress());
+		}
+	}
+
+	@Test
 	public void testCustomizeChannelNames() throws Exception {
 		ClusterNode clusterNode1 = _tomcatNode1.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);

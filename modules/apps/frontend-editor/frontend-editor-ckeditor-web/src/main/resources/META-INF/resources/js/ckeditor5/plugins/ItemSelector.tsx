@@ -28,7 +28,7 @@ function withFolderId(url: string, folderId: number | string | null) {
 	}
 
 	try {
-		const parsed = new URL(url);
+		const parsed = new URL(url, window.location.origin);
 
 		parsed.searchParams.set(
 			ITEM_SELECTOR_FOLDER_ID_PARAM,

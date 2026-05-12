@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
+import {postImportPreview} from '../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview';
 import {mockPortletDataHandlerSections} from '../../mocks/mockPortletDataHandlerSections';
 
 jest.mock('frontend-js-web', () => {
@@ -219,5 +220,46 @@ describe('NewImport', () => {
 
 		expect(screen.getByText('Design')).toBeInTheDocument();
 		expect(screen.getByText('Theme Settings')).toBeInTheDocument();
+
+		expect(screen.getByLabelText('import-permissions')).toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('replicate-selected-deletions')
+		).not.toBeInTheDocument();
+	});
+
+	it('shows the deletions checkbox on the Data Selection step when the lar has deletions', async () => {
+		(postImportPreview as jest.Mock).mockImplementationOnce(() =>
+			Promise.resolve({
+				data: {
+					additionCount: 0,
+					author: 'Test User',
+					deletionCount: 5,
+					exportDate: '2000-07-27T00:00:00Z',
+					fileEntryId: 1,
+					fileName: 'site.lar',
+					fileSize: 4096,
+					portletDataHandlerSections: [],
+				},
+				error: null,
+			})
+		);
+
+		renderComponent();
+
+		await user.type(screen.getByLabelText(/^name/i), 'My import');
+
+		await uploadFile('site.lar');
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', {name: /continue/i})
+			).toBeEnabled();
+		});
+
+		await user.click(screen.getByRole('button', {name: /continue/i}));
+
+		expect(
+			screen.getByLabelText('replicate-selected-deletions')
+		).toBeInTheDocument();
 	});
 });

@@ -6,11 +6,14 @@
 import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
-
 import {useEffect, useMemo, useState} from 'react';
+import {Button, Input, Select} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import SearchBuilder from '~/lib/SearchBuilder';
-import NotificationQueueService from '~/services/actions/notificationAction';
+import SetupHighPriorityContactForm from '~/features/project/containers/HighPriorityContacts/SetupHighPriorityContact';
+import {
+	STATUS_CODE,
+	STATUS_TAG_TYPE_NAMES,
+} from '~/features/project/utils/constants';
 import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	addContactRoleLiferay,
@@ -20,13 +23,9 @@ import {
 	updateLiferayContact,
 	updateRaysourceContact,
 } from '~/features/project/utils/getHighPriorityContacts';
-import {
-	STATUS_CODE,
-	STATUS_TAG_TYPE_NAMES,
-} from '~/features/project/utils/constants';
-import i18n from '~/utils/I18n';
-import {Button, Input, Select} from '~/components';
-import SetupHighPriorityContactForm from '~/features/project/containers/HighPriorityContacts/SetupHighPriorityContact';
+import useHasPaaSExperience from '~/hooks/useHasPaaSExperience';
+import SearchBuilder from '~/lib/SearchBuilder';
+import NotificationQueueService from '~/services/actions/notificationAction';
 import {patchAccountSubscriptionGroups} from '~/services/liferay/graphql/account-subscription-groups/queries/patchAccountSubscriptionGroups';
 import {
 	addAdminDXPCloud,
@@ -36,10 +35,12 @@ import {
 	getListTypeDefinitions,
 } from '~/services/liferay/graphql/queries';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
+import i18n from '~/utils/I18n';
 import getInitialDXPAdmin from '~/utils/getInitialDXPAdmin';
 import getKebabCase from '~/utils/getKebabCase';
 import sortLiferayVersions from '~/utils/sortLiferayVersions';
 import {isLowercaseAndNumbers} from '~/utils/validations.form';
+
 import Layout from '../../../../components/FormLayout';
 import AdminInputs from './AdminInputs';
 
@@ -75,13 +76,18 @@ const SetupDXPCloudPage = ({
 	});
 	const {provisioningServerAPI} = useAppPropertiesContext();
 
+	const hasPaaSExperience = useHasPaaSExperience(project?.accountKey);
+
 	const [addHighPriorityContact, setAddHighPriorityContact] = useState({
+		cloudNative: [],
 		criticalIncident: [],
 	});
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState({
+		cloudNative: [],
 		criticalIncident: [],
 	});
-	const [isCriticalIncidentEmpty, setIsCriticalIncidentEmpty] = useState(false);
+	const [isCriticalIncidentEmpty, setIsCriticalIncidentEmpty] =
+		useState(false);
 
 	const [step, setStep] = useState(1);
 
@@ -272,8 +278,9 @@ const SetupDXPCloudPage = ({
 				},
 			});
 
-			const notificationTemplateService =
-				new NotificationQueueService(client);
+			const notificationTemplateService = new NotificationQueueService(
+				client
+			);
 
 			try {
 				const adminInfo = dxp?.admins?.map(
@@ -289,11 +296,9 @@ const SetupDXPCloudPage = ({
 				await notificationTemplateService.send(
 					'SETUP-DXP-CLOUD-ENVIRONMENT',
 					{
-						'[%DATE_AND_TIME_SUBMITTED%]':
-							new Date().toUTCString(),
+						'[%DATE_AND_TIME_SUBMITTED%]': new Date().toUTCString(),
 						'[%PROJECT_CODE%]': project.code,
-						'[%PROJECT_DATA_CENTER_REGION%]':
-							dxp?.dataCenterRegion,
+						'[%PROJECT_DATA_CENTER_REGION%]': dxp?.dataCenterRegion,
 						'[%PROJECT_DISASTER_CENTER_REGION%]':
 							dxp?.disasterDataCenterRegion
 								? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
@@ -410,7 +415,8 @@ const SetupDXPCloudPage = ({
 						disabled={
 							step === 1
 								? baseButtonDisabled
-								: isCriticalIncidentEmpty || isLoadingSubmitButton
+								: isCriticalIncidentEmpty ||
+									isLoadingSubmitButton
 						}
 						displayType="primary"
 						isLoading={isLoadingSubmitButton}
@@ -462,8 +468,7 @@ const SetupDXPCloudPage = ({
 									required
 									type="text"
 									validations={[
-										(value) =>
-											isLowercaseAndNumbers(value),
+										(value) => isLowercaseAndNumbers(value),
 									]}
 								/>
 
@@ -472,12 +477,10 @@ const SetupDXPCloudPage = ({
 										'liferay-dxp-version'
 									)}
 									name="dxp.version"
-									options={dxpVersions.map(
-										(version) => ({
-											label: version.name,
-											value: version.name,
-										})
-									)}
+									options={dxpVersions.map((version) => ({
+										label: version.name,
+										value: version.name,
+									}))}
 									required
 								/>
 
@@ -582,6 +585,28 @@ const SetupDXPCloudPage = ({
 						}
 					/>
 
+					{hasPaaSExperience && (
+						<SetupHighPriorityContactForm
+							addContactList={(contactList) =>
+								handleHighPriorityContacts(
+									contactList,
+									'cloudNative',
+									setAddHighPriorityContact
+								)
+							}
+							disableSubmit={() => {}}
+							filter={
+								HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative
+							}
+							removedContactList={(contactList) =>
+								handleHighPriorityContacts(
+									contactList,
+									'cloudNative',
+									setRemoveHighPriorityContact
+								)
+							}
+						/>
+					)}
 				</div>
 			)}
 		</Layout>

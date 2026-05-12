@@ -95,6 +95,7 @@ const ContactSection = ({contacts, hasAdministratorRole, onEdit, title}) => {
 const IncidentContactCard = ({
 	accountSubscriptionGroupsNames,
 	hasActiveProduct,
+	hasPaaSExperience,
 }) => {
 	const [{project}] = useAppContext();
 
@@ -133,16 +134,18 @@ const IncidentContactCard = ({
 		refetch();
 	};
 
-	const isCloudNative = accountSubscriptionGroupsNames?.some(
-		(name) => name === PRODUCT_TYPES.cloudNative
-	);
-
 	const isLXCEnvironment = accountSubscriptionGroupsNames?.some((name) =>
 		[
 			PRODUCT_TYPES.liferayCloud,
 			PRODUCT_TYPES.liferayExperienceCloud,
 		].includes(name)
 	);
+
+	const isCloudNative = accountSubscriptionGroupsNames?.some(
+		(name) => name === PRODUCT_TYPES.cloudNative
+	);
+
+	const showCloudNativeCard = hasPaaSExperience && !isLXCEnvironment;
 
 	useEffect(() => {
 		if (!userAccountsData) {
@@ -172,10 +175,14 @@ const IncidentContactCard = ({
 		}
 	}, [userAccountsData]);
 
-	const hasCloudNativeContact = !!currentHighPriorityContacts.cloudNative?.length;
-	const hasCriticalIncidentContact = !!currentHighPriorityContacts.criticalIncident?.length;
-	const hasPrivacyBreachContact = !!currentHighPriorityContacts.privacyBreach?.length;
-	const hasSecurityBreachContact = !!currentHighPriorityContacts.securityBreach?.length;
+	const hasCloudNativeContact =
+		!!currentHighPriorityContacts.cloudNative?.length;
+	const hasCriticalIncidentContact =
+		!!currentHighPriorityContacts.criticalIncident?.length;
+	const hasPrivacyBreachContact =
+		!!currentHighPriorityContacts.privacyBreach?.length;
+	const hasSecurityBreachContact =
+		!!currentHighPriorityContacts.securityBreach?.length;
 
 	const handleOnClick = (category) => {
 		setModalFilter(category);
@@ -292,11 +299,13 @@ const IncidentContactCard = ({
 							</div>
 						)}
 
-						{isCloudNative && (
+						{showCloudNativeCard && (
 							<div className="customer-portal-card-footer customer-portal-card-footer-style-ac">
 								<div className="customer-portal-card-footer-title">
 									<h1>
-										{i18n.translate('cloud-native-contacts')}
+										{i18n.translate(
+											'cloud-native-contacts'
+										)}
 									</h1>
 								</div>
 
@@ -342,11 +351,15 @@ const IncidentContactCard = ({
 							>
 								<IncidentContactEditForm
 									close={closeModal}
-									hasCloudNativeContact={hasCloudNativeContact}
+									hasCloudNativeContact={
+										hasCloudNativeContact
+									}
 									hasCriticalIncidentContact={
 										hasCriticalIncidentContact
 									}
-									hasPrivacyBreachContact={hasPrivacyBreachContact}
+									hasPrivacyBreachContact={
+										hasPrivacyBreachContact
+									}
 									hasSecurityBreachContact={
 										hasSecurityBreachContact
 									}

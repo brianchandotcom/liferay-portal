@@ -9,6 +9,7 @@ import {useOutletContext} from 'react-router-dom';
 import IncidentContactCard from '~/features/project/containers/IncidentContactCard';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
+import useHasPaaSExperience from '~/hooks/useHasPaaSExperience';
 import SearchBuilder from '~/lib/SearchBuilder';
 import {getAccountSubscriptionGroups} from '~/services/liferay/graphql/queries';
 import i18n from '~/utils/I18n';
@@ -16,7 +17,11 @@ import i18n from '~/utils/I18n';
 import ManageProductUsers from './components/ManageProductUsers/ManageProductUsers';
 import TeamMembersTable from './components/TeamMembersTable/TeamMembersTable';
 
-const targetProducts = ['Analytics Cloud', 'Liferay Cloud'];
+const targetProducts = [
+	'Analytics Cloud',
+	'Liferay Cloud',
+	PRODUCT_TYPES.dxpCloud,
+];
 
 const TeamMembers = () => {
 	const {setHasSideMenu} = useOutletContext();
@@ -53,6 +58,10 @@ const TeamMembers = () => {
 			item?.activationStatus === 'Active'
 	);
 
+	const hasPaaSExperience = useHasPaaSExperience(
+		koroneikiAccount?.accountKey
+	);
+
 	const loading = loadingCurrentKoroneikiAccount || loadingSubscriptionGroups;
 
 	useEffect(() => {
@@ -86,6 +95,7 @@ const TeamMembers = () => {
 							accountSubscriptionGroupsNames
 						}
 						hasActiveProduct={hasActiveProduct}
+						hasPaaSExperience={hasPaaSExperience}
 					/>
 				)}
 			</div>

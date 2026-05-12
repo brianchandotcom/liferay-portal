@@ -80,13 +80,13 @@ The elapsed time of the run, formatted as `<minutes>m <seconds>s`.
 
 The Task created in **Claim the Failure** is the persistent ticket of record for every verdict. Update it at the end of the run based on the verdict:
 
-- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. Title summarises the regression, description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Link the Bug to `<TASK_KEY>` with the **Fix** issue link type so the Task surfaces it as **is fixed by**, and keep `<TASK_KEY>` as the commit key. Return the Bug URL alongside the Task URL.
+- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. Title summarises the regression, description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Link the Bug to the Task with the **Fix** issue link type so the Task surfaces it as **is fixed by**. Return the Bug URL alongside the Task URL.
 
-- **Outdated test** — keep `<TASK_KEY>` as the commit key. Return the Task URL.
+- **Outdated test** — return the Task URL.
 
-- **No fix needed** — close `<TASK_KEY>` as `Won't Do` with a comment containing the literal `Test passes locally`. No PR is opened.
+- **No fix needed** — close the Task as `Won't Do` with a comment containing the literal `Test passes locally`. No PR is opened.
 
-- **Unresolved** — leave `<TASK_KEY>` in **In Progress**, append the handover summary as a comment, and return its URL so the human picking it up has a single landing page.
+- **Unresolved** — leave the Task in **In Progress**, append the handover summary as a comment, and return its URL so the human picking it up has a single landing page.
 
 ### Pull Request
 
@@ -94,10 +94,10 @@ Only when the test was fixed (verdict `Bug in portal` or `Outdated test`): the U
 
 Invoke the `commit` skill, then find the owner of the changed files using `<repo-root>/.github/CODEOWNERS` and invoke the `pr` skill with it as the target repository. Override the user's title-only default and pass the body content explicitly so the pull request explains the regression.
 
-Use this template:
+Use this template. The browse URL on the first line points at the ticket the `pr` skill resolves (the Technical Task subtask, not the parent Task), so reviewers land on the same ticket where the pull request URL is recorded:
 
 ```markdown
-https://liferay.atlassian.net/browse/LPD-XXXXX
+https://liferay.atlassian.net/browse/<TICKET>
 
 ## Failing Test
 
@@ -130,8 +130,6 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 1. Invoke the `jira-task` skill with summary `<test-name>` and a description that names the case result ID, the source build, and the failure trace excerpt. Add the `claude-test-fix` label.
 
 1. Invoke the `start-work` skill on the new Task.
-
-1. Carry the Task key forward as `<TASK_KEY>` for the rest of the workflow.
 
 ### 2. Reproduce Locally
 

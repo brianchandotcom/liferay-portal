@@ -68,6 +68,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -476,10 +477,18 @@ public class BaseBatchEngineTaskExecutorTest {
 	@Inject
 	protected BlogsEntryLocalService blogsEntryLocalService;
 
-	protected final DateFormat dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ssX");
+	protected final DateFormat dateFormat = _createDateFormat();
 	protected int initialCount;
 	protected User user;
+
+	private DateFormat _createDateFormat() {
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		return dateFormat;
+	}
 
 	private ServiceRegistration<?>
 		_batchEngineTaskItemDelegateServiceRegistration;

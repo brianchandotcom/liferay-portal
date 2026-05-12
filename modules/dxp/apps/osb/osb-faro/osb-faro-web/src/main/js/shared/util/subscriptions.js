@@ -20,6 +20,7 @@ export const SubscriptionNames = {
 	LiferayAnalyticsCloudEnterpriseTrackedPages:
 		'Liferay Analytics Cloud Enterprise Tracked Pages',
 	LiferayDataPlatform: 'Liferay Data Platform',
+	LiferayDataPlatformEnterprise: 'Liferay Data Platform Enterprise',
 	LiferaySaasBusinessPlan: 'Liferay SaaS - Business Plan',
 	LiferaySaasCspCustomUserTier: 'Liferay SaaS - CSP - Custom User Tier',
 	LiferaySaasCspCustomUserTierExtraUser:
@@ -81,6 +82,7 @@ export const PLAN_TYPES = {
 	[SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts]: INDIVIDUALS,
 	[SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages]: PAGEVIEWS,
 	[SubscriptionNames.LiferayDataPlatform]: 'dataPlatform',
+	[SubscriptionNames.LiferayDataPlatformEnterprise]: 'dataPlatformEnterprise',
 	[SubscriptionNames.LiferaySaasBusinessPlan]: 'lxcBusiness',
 	[SubscriptionNames.LiferaySaasCspCustomUserTier]: 'lxcCspCustomUserTier',
 	[SubscriptionNames.LiferaySaasCspCustomUserTierExtraUser]:

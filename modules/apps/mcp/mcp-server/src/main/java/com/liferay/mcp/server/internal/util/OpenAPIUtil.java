@@ -137,14 +137,14 @@ public class OpenAPIUtil {
 		}
 
 		return McpSchema.Tool.builder(
-		).name(
-			operationJSONObject.getString("operationId")
 		).description(
 			_getToolDescription(method, operationJSONObject, path)
 		).inputSchema(
 			_getInputJsonSchema(
 				operationJSONObject,
 				pathItemJSONObject.getJSONArray("parameters"), rootJSONObject)
+		).name(
+			operationJSONObject.getString("operationId")
 		).build();
 	}
 

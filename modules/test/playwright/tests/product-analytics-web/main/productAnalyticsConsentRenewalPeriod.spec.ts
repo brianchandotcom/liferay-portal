@@ -95,7 +95,7 @@ test.beforeEach(
 		});
 
 		await test.step('Verify Product Analytics Banner appears, then Accept All cookies', async () => {
-			page.reload();
+			await page.reload();
 
 			await expect(
 				productAnalyticsBannerPage.bannerLocator
@@ -376,7 +376,7 @@ test(
 
 			await waitForAlert(page);
 
-			page.reload();
+			await page.reload();
 
 			await expect(
 				productAnalyticsBannerPage.bannerLocator
@@ -427,7 +427,7 @@ async function validateConsentRenewalPeriodValue(
 
 		await waitForAlert(page);
 
-		page.reload();
+		await page.reload();
 
 		await expect(productAnalyticsBannerPage.bannerLocator).toBeVisible();
 

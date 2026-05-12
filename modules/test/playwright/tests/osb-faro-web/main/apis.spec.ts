@@ -57,7 +57,7 @@ test('Generate a new token after expired', async ({apiHelpers, page}) => {
 		await test.step('Check if it is possible to create a new token', async () => {
 			const generateNewTokenButton = page.getByText('Generate Token');
 
-			expect(generateNewTokenButton).toBeVisible();
+			await expect(generateNewTokenButton).toBeVisible();
 
 			await generateNewTokenButton.click();
 

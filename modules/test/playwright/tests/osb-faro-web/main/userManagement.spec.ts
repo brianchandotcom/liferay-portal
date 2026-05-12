@@ -79,16 +79,16 @@ test(
 
 			await page.getByRole('button', {name: 'Send'}).click();
 
-			expect(
+			await expect(
 				page.getByText('Success:Invitations have been sent.')
 			).toBeVisible();
 		});
 
 		await test.step('check users', async () => {
-			expect(
+			await expect(
 				page.getByRole('cell', {name: 'user1@liferay.com'})
 			).toBeVisible();
-			expect(
+			await expect(
 				page.getByRole('cell', {name: 'user2@liferay.com'})
 			).toBeVisible();
 		});
@@ -101,10 +101,10 @@ test(
 
 			await page.getByRole('button', {name: 'Continue'}).click();
 
-			expect(
+			await expect(
 				page.getByText('Success:1 user has been deleted.').first()
 			).toBeVisible();
-			expect(
+			await expect(
 				page.getByRole('cell', {name: 'user1@liferay.com'})
 			).not.toBeVisible();
 		});
@@ -117,10 +117,10 @@ test(
 
 			await page.getByRole('button', {name: 'Continue'}).click();
 
-			expect(
+			await expect(
 				page.getByText('Success:1 user has been deleted.').nth(1)
 			).toBeVisible();
-			expect(
+			await expect(
 				page.getByRole('cell', {name: 'user2@liferay.com'})
 			).not.toBeVisible();
 		});

@@ -51,9 +51,11 @@ test(
 		await test.step('Check the first screen of the onboarding modal', async () => {
 			await page.waitForTimeout(1000);
 
-			expect(page.getByText('Welcome to Analytics Cloud')).toBeVisible();
+			await expect(
+				page.getByText('Welcome to Analytics Cloud')
+			).toBeVisible();
 
-			expect(
+			await expect(
 				page.getByText(
 					'Just a few more steps to set up your workspace.'
 				)
@@ -65,27 +67,31 @@ test(
 		});
 
 		await test.step('Check the onboarding connection modal information', async () => {
-			expect(page.getByText('Connect Your DXP Analytics')).toBeVisible();
-			expect(
+			await expect(
+				page.getByText('Connect Your DXP Analytics')
+			).toBeVisible();
+			await expect(
 				page.getByText('Copy this token to your DXP instance.')
 			).toBeVisible();
-			expect(
+			await expect(
 				page.locator('.modal-container').getByText('DXP Requirements')
 			).toBeVisible();
 
 			await page.getByRole('combobox').click();
 
-			expect(
+			await expect(
 				page.getByRole('option', {
 					name: 'DXP 2024.Q1.1 Quarterly Release',
 				})
 			).toBeHidden();
-			expect(
+			await expect(
 				page.getByRole('option', {
 					name: 'DXP Version 7.3 U30 + and above with hotfix',
 				})
 			).toBeHidden();
-			expect(page.getByRole('link', {name: 'Download'})).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: 'Download'})
+			).toBeVisible();
 		});
 
 		await test.step('Click on "click here" and check if a new tab with connection documentation appears', async () => {
@@ -118,27 +124,31 @@ test(
 		});
 
 		await test.step('Check the data source connection modal information', async () => {
-			expect(page.getByText('Connect Your DXP Analytics')).toBeVisible();
-			expect(
+			await expect(
+				page.getByText('Connect Your DXP Analytics')
+			).toBeVisible();
+			await expect(
 				page.getByText('Copy this token to your DXP instance.')
 			).toBeVisible();
-			expect(
+			await expect(
 				page.locator('.modal-container').getByText('DXP Requirements')
 			).toBeVisible();
 
 			await page.getByRole('combobox').click();
 
-			expect(
+			await expect(
 				page.getByRole('option', {
 					name: 'DXP 2024.Q1.1 Quarterly Release',
 				})
 			).toBeHidden();
-			expect(
+			await expect(
 				page.getByRole('option', {
 					name: 'DXP Version 7.3 U30 + and above with hotfix',
 				})
 			).toBeHidden();
-			expect(page.getByRole('link', {name: 'Download'})).toBeVisible();
+			await expect(
+				page.getByRole('link', {name: 'Download'})
+			).toBeVisible();
 		});
 	}
 );

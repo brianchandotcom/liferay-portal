@@ -2,6 +2,7 @@ import * as accounts from './accounts';
 import * as activities from './activities';
 import * as apiTokens from './api-tokens';
 import * as blockedKeywords from './blocked-keywords';
+import * as categories from './categories';
 import * as channels from './channels';
 import * as connector from './connector';
 import * as contactsCards from './contacts-cards';
@@ -21,11 +22,13 @@ import * as preferences from './preferences';
 import * as projects from './projects';
 import * as session from './session';
 import * as user from './user';
+import * as vocabularies from './vocabularies';
 
 export {
 	accounts,
 	activities,
 	apiTokens,
+	categories,
 	blockedKeywords,
 	channels,
 	connector,
@@ -45,5 +48,6 @@ export {
 	preferences,
 	projects,
 	session,
-	user
+	user,
+	vocabularies
 };

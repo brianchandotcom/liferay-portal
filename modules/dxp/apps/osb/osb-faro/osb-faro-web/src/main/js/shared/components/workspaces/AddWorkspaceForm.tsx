@@ -441,19 +441,19 @@ const AddWorkspaceForm: React.FC<IAddWorkspaceFormProps> = ({
 														<li>
 															{Liferay.Language.get(
 																'service-interruptions'
-															)}
+															).toLowerCase()}
 														</li>
 
 														<li>
 															{Liferay.Language.get(
 																'security-incidents'
-															)}
+															).toLowerCase()}
 														</li>
 
 														<li>
 															{Liferay.Language.get(
 																'other-urgent-service-updates-that-require-action'
-															)}
+															).toLowerCase()}
 														</li>
 													</ul>
 												</div>

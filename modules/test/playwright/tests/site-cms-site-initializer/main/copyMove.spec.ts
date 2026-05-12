@@ -1060,8 +1060,6 @@ test(
 		await test.step('Move the source folder to the destination folder in the destination Space', async () => {
 			await assetsPage.gotoSpaceFiles(sourceSpaceName);
 
-			await assetsPage.changeVisualizationMode('Table');
-
 			await assetsPage.moveTo({
 				destinationFolder: destinationFolderName,
 				destinationSpace: destinationSpaceName,
@@ -1175,8 +1173,6 @@ test(
 
 		await test.step('Copy the source folder to the destination folder in the destination Space', async () => {
 			await assetsPage.gotoSpaceFiles(sourceSpaceName);
-
-			await assetsPage.changeVisualizationMode('Table');
 
 			await assetsPage.copyTo({
 				destinationFolder: destinationFolderName,

@@ -230,6 +230,8 @@ export class AssetsPage {
 			.click();
 
 		await this.page.getByRole('heading', {name: 'Files'}).waitFor();
+
+		await this.changeVisualizationMode('Table');
 	}
 
 	async execItemAction({action, filter, parentAction}: ExecItemActionArgs) {

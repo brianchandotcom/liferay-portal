@@ -131,7 +131,7 @@ public class UpdateLanguageActionTest {
 	@Test
 	@TestInfo("LPD-88958")
 	public void testExecute() throws Exception {
-		_testExecuteWithImpersonationPreservesSessionLocale();
+		_testExecuteWithImpersonation();
 	}
 
 	@Test
@@ -280,9 +280,7 @@ public class UpdateLanguageActionTest {
 		return separator + friendlyURLMap.get(locale);
 	}
 
-	private void _testExecuteWithImpersonationPreservesSessionLocale()
-		throws Exception {
-
+	private void _testExecuteWithImpersonation() throws Exception {
 		User impersonatedUser = UserTestUtil.addUser(_group.getGroupId());
 
 		impersonatedUser.setLanguageId(LocaleUtil.toLanguageId(_sourceLocale));

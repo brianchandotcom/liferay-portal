@@ -5,5 +5,5 @@ createDockerContainer {
 }
 
 node {
-	nodeVersion = "16.15.1"
+	nodeVersion = "20.19.1"
 }

@@ -27,6 +27,7 @@ dependencies {
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-oauth2-resource-server", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-web", version: "2.7.18"
 	implementation group: "org.springframework.boot", name: "spring-boot-starter-webflux", version: "2.7.18"
+	testImplementation group: "org.springframework.boot", name: "spring-boot-starter-test", version: "2.7.18"
 }
 
 repositories {

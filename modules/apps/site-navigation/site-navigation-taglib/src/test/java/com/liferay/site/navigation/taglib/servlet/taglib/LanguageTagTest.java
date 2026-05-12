@@ -72,7 +72,7 @@ public class LanguageTagTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "/web/guest/home");
+			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

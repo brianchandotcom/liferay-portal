@@ -79,8 +79,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -380,9 +380,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_appender, "_upgradeReport");
 
 			ReflectionTestUtil.setFieldValue(
-				upgradeReport, "_dlSizeCallable",
-				(Callable<Long>)() -> {
-					Thread.sleep(5 * Time.SECOND);
+				upgradeReport, "_dlSizeFunction",
+				(Function<File, Long>)f -> {
+					try {
+						Thread.sleep(5 * Time.SECOND);
+					}
+					catch (InterruptedException interruptedException) {
+						throw new RuntimeException(interruptedException);
+					}
 
 					return 0L;
 				});
@@ -423,8 +428,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender, "_upgradeReport");
 
 		ReflectionTestUtil.setFieldValue(
-			upgradeReport, "_dlSizeCallable",
-			(Callable<Long>)() -> 1073742000L);
+			upgradeReport, "_dlSizeFunction",
+			(Function<File, Long>)f -> 1073742000L);
 
 		_appender.stop();
 
@@ -442,7 +447,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender, "_upgradeReport");
 
 		ReflectionTestUtil.setFieldValue(
-			upgradeReport, "_dlSizeCallable", (Callable<Long>)() -> 1048576L);
+			upgradeReport, "_dlSizeFunction",
+			(Function<File, Long>)f -> 1048576L);
 
 		_appender.stop();
 

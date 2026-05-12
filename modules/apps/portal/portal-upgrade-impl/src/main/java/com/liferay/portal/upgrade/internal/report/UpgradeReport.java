@@ -75,11 +75,11 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -404,8 +404,7 @@ public class UpgradeReport {
 					}
 
 					FutureTask<Long> dlSizeFutureTask = new FutureTask<>(
-						(_dlSizeCallable != null) ? _dlSizeCallable :
-							() -> FileUtils.sizeOfDirectory(rootDirFile));
+						() -> _dlSizeFunction.apply(rootDirFile));
 
 					try {
 						Thread dlSizeThread = new Thread(
@@ -1100,7 +1099,8 @@ public class UpgradeReport {
 	private static final Snapshot<ReleaseManager> _releaseManagerSnapshot =
 		new Snapshot<>(UpgradeReport.class, ReleaseManager.class);
 
-	private Callable<Long> _dlSizeCallable;
+	private final Function<File, Long> _dlSizeFunction =
+		FileUtils::sizeOfDirectory;
 	private String _executionDateString;
 	private String _executionTimeString;
 	private final int _initialBuildNumber;

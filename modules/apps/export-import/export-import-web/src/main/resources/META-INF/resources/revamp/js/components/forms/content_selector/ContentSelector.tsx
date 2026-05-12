@@ -18,6 +18,7 @@ interface ContentSelectorProps {
 	'name': string;
 	'onChange': (value: ContentSelection | undefined) => void;
 	'sections': PortletDataHandlerSection[];
+	'showDeletions'?: boolean;
 	'value': ContentSelection | undefined;
 }
 
@@ -27,6 +28,7 @@ export default function ContentSelector({
 	name,
 	onChange,
 	sections,
+	showDeletions,
 	value,
 }: ContentSelectorProps) {
 	const currentValue = value || {};
@@ -53,6 +55,7 @@ export default function ContentSelector({
 						)
 					}
 					section={section}
+					showDeletions={showDeletions}
 					value={currentValue[section.name]}
 				/>
 			))}

@@ -389,7 +389,7 @@ public abstract class BaseFragmentSetResourceImpl
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-fragment/v1.0/sites/{siteExternalReferenceCode}/fragment-sets/{fragmentSetExternalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "marketplace": ___, "name": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates the fragment set with the given external reference code, or creates it if it does not exist."
+		description = "Updates the fragment set with the given external reference code, or creates it if it does not exist. On update, only `name` and `description` are honored; `externalReferenceCode`, `key`, and `marketplace` are immutable and any values sent for them in the request body are ignored."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1186,4 +1186,4 @@ public abstract class BaseFragmentSetResourceImpl
 		LogFactoryUtil.getLog(BaseFragmentSetResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1355018529
+// LIFERAY-REST-BUILDER-HASH:-52687682

@@ -8,6 +8,7 @@ import {useObservedMaxWidth} from '@clayui/shared';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
+import {sessionStorage} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import {
@@ -16,6 +17,7 @@ import {
 } from './ContentEditorToolbar';
 import PreviewBody from './preview/PreviewBody';
 import PreviewHeader from './preview/PreviewHeader';
+import {PREVIEW_VISIBLE_SESSION_KEY} from './preview/sessionKeys';
 import useIsContentEdited from './useIsContentEdited';
 import useLocalizationLanguageId from './useLocalizationLanguageId';
 
@@ -34,7 +36,13 @@ export default function ContentEditorPreview({
 	title: string;
 }) {
 	const isContentEdited = useIsContentEdited(FORM_SELECTOR);
-	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [isVisible, setIsVisible] = useState<boolean>(
+		() =>
+			sessionStorage.getItem(
+				PREVIEW_VISIBLE_SESSION_KEY,
+				sessionStorage.TYPES.NECESSARY
+			) === 'true'
+	);
 	const [resizeWidth, setResizeWidth] = useSessionState(
 		PREVIEW_WIDTH_SESSION_KEY,
 		window.innerWidth / 2

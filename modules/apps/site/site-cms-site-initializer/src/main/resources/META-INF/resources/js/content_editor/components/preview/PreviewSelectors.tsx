@@ -21,8 +21,8 @@ type Props = {
 	loadSites: () => Promise<Site[]>;
 	previewURL: string | undefined;
 	selectChannel: (key: React.Key) => void;
-	selectedChannelKey: React.Key;
-	selectedDisplayPageKey: React.Key;
+	selectedChannelKey: React.Key | undefined;
+	selectedDisplayPageKey: React.Key | undefined;
 	setSelectedDisplayPageKey: (key: React.Key) => void;
 	showPreviewInNewTabLink?: boolean;
 	sitesStatus: Status;

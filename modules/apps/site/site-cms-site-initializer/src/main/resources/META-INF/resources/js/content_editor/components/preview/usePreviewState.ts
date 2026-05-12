@@ -3,10 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useSessionState} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {Status} from '../../../common/components/AsyncPicker';
 import ApiHelper from '../../../common/services/ApiHelper';
+import {
+	PREVIEW_CHANNEL_SESSION_KEY,
+	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+} from './sessionKeys';
 
 export type Site = {
 	displayPageTemplates: {
@@ -23,9 +28,10 @@ export default function usePreviewState(
 	getPreviewDataURL: string,
 	languageId: Liferay.Language.Locale
 ) {
-	const [selectedChannelKey, setSelectedChannelKey] = useState<React.Key>('');
+	const [selectedChannelKey, setSelectedChannelKey] =
+		useSessionState<React.Key>(PREVIEW_CHANNEL_SESSION_KEY, '');
 	const [selectedDisplayPageKey, setSelectedDisplayPageKey] =
-		useState<React.Key>('');
+		useSessionState<React.Key>(PREVIEW_DISPLAY_PAGE_SESSION_KEY, '');
 	const [sites, setSites] = useState<Site[]>([]);
 	const [sitesStatus, setSitesStatus] = useState<Status>('saving');
 
@@ -91,10 +97,13 @@ export default function usePreviewState(
 		return localizedURL.toString();
 	}, [displayPageTemplates, languageId, selectedDisplayPageKey]);
 
-	const selectChannel = useCallback((key: React.Key) => {
-		setSelectedChannelKey(key);
-		setSelectedDisplayPageKey('');
-	}, []);
+	const selectChannel = useCallback(
+		(key: React.Key) => {
+			setSelectedChannelKey(key);
+			setSelectedDisplayPageKey('');
+		},
+		[setSelectedChannelKey, setSelectedDisplayPageKey]
+	);
 
 	const showDisplayPageTemplateAlert =
 		displayPageTemplates !== undefined && !displayPageTemplates.length;

@@ -20,13 +20,13 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -97,13 +97,6 @@ public class ObjectEntrySynonymSearchTest {
 
 		_objectDefinition = _addObjectDefinition();
 
-		// The synonym test values are placed in the localized "body" field
-		// (not the title field). The "title" field holds a random value with a
-		// non-synonym prefix so the wildcard query against the separately
-		// indexed "objectEntryTitle" field cannot match any synonym token and
-		// produce false positives, isolating the search to the
-		// nestedFieldArray.value_<lang> path the fix targets.
-
 		_addObjectEntry("Query Builder Initiative");
 		_addObjectEntry("UQB Initiative");
 		_addObjectEntry("product delivery Initiative");
@@ -156,21 +149,11 @@ public class ObjectEntrySynonymSearchTest {
 					).indexed(
 						true
 					).labelMap(
-						LocalizedMapUtil.getLocalizedMap("Body")
+						LocalizedMapUtil.getLocalizedMap("Content")
 					).localized(
 						true
 					).name(
-						_BODY_FIELD_NAME
-					).build(),
-					new TextObjectFieldBuilder(
-					).indexed(
-						true
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap("Summary")
-					).localized(
-						true
-					).name(
-						_SUMMARY_FIELD_NAME
+						Field.CONTENT
 					).build(),
 					new TextObjectFieldBuilder(
 					).indexed(
@@ -196,26 +179,18 @@ public class ObjectEntrySynonymSearchTest {
 			_user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
-	private static void _addObjectEntry(String bodyEnglishValue)
-		throws Exception {
-
+	private static void _addObjectEntry(String content) throws Exception {
 		_objectEntryLocalService.addObjectEntry(
 			0, _user.getUserId(), _objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				_BODY_FIELD_NAME + "_i18n",
-				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US), bodyEnglishValue
-				).build()
+				_TITLE_FIELD_NAME, "title"
 			).put(
-				_SUMMARY_FIELD_NAME + "_i18n",
+				Field.CONTENT + "_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US),
-					_NOISE_PREFIX + RandomTestUtil.randomString()
+					LocaleUtil.toLanguageId(LocaleUtil.US), content
 				).build()
-			).put(
-				_TITLE_FIELD_NAME, _NOISE_PREFIX + RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -265,17 +240,8 @@ public class ObjectEntrySynonymSearchTest {
 		List<Document> documents = searchResponse.getDocuments71();
 
 		Assert.assertEquals(
-			"Expected " + expectedCount + " documents for keyword \"" +
-				keyword + "\". Request: " + searchResponse.getRequestString() +
-					". Documents: " + documents,
-			expectedCount, documents.size());
+			searchResponse.getRequestString(), expectedCount, documents.size());
 	}
-
-	private static final String _BODY_FIELD_NAME = "body";
-
-	private static final String _NOISE_PREFIX = "noise";
-
-	private static final String _SUMMARY_FIELD_NAME = "summary";
 
 	private static final String[] _SYNONYM_SETS = {
 		"product delivery,PD", "query,uqb"

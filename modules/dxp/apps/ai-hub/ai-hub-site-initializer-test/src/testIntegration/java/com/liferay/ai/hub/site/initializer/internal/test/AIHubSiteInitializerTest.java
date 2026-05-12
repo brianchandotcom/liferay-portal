@@ -72,9 +72,10 @@ public class AIHubSiteInitializerTest {
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
-		_assertListTypeDefinitionExists("L_AI_HUB_CRAWL_JOB_STATUSES");
 		_assertListTypeDefinitionExists(
-			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES");
+			"L_AI_HUB_CRAWL_JOB_STATUSES", "queued");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES", "clickToChat");
 
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
@@ -116,7 +117,8 @@ public class AIHubSiteInitializerTest {
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
-	private void _assertListTypeDefinitionExists(String externalReferenceCode)
+	private void _assertListTypeDefinitionExists(
+			String externalReferenceCode, String listTypeEntryKey)
 		throws Exception {
 
 		ListTypeDefinition listTypeDefinition =
@@ -126,7 +128,7 @@ public class AIHubSiteInitializerTest {
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "clickToChat");
+				listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey);
 
 		Assert.assertTrue(listTypeEntry.isSystem());
 	}

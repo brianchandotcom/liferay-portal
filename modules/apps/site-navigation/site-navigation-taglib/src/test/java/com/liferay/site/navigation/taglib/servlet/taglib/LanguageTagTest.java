@@ -60,31 +60,7 @@ public class LanguageTagTest {
 			doAsUserId
 		);
 
-		Mockito.when(
-			themeDisplay.getPathMain()
-		).thenReturn(
-			"/c"
-		);
-
-		Mockito.when(
-			themeDisplay.getScopeGroupId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
 		Layout layout = Mockito.mock(Layout.class);
-
-		Mockito.when(
-			layout.isPrivateLayout()
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			layout.getLayoutId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
 
 		Mockito.when(
 			themeDisplay.getLayout()

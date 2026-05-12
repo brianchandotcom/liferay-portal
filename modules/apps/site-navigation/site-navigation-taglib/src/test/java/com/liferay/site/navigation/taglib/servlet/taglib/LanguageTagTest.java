@@ -45,8 +45,18 @@ public class LanguageTagTest {
 
 	@Test
 	public void testGetFormAction() throws Exception {
-		_testGetFormActionOmitsDoAsUserId();
-		_testGetFormActionPropagatesDoAsUserId();
+		String formAction = ReflectionTestUtil.invoke(
+			_createLanguageTag(StringPool.BLANK), "_getFormAction",
+			new Class<?>[0]);
+
+		Assert.assertFalse(formAction.contains("doAsUserId="));
+
+		String doAsUserId = RandomTestUtil.randomString();
+
+		formAction = ReflectionTestUtil.invoke(
+			_createLanguageTag(doAsUserId), "_getFormAction", new Class<?>[0]);
+
+		Assert.assertTrue(formAction.contains("doAsUserId=" + doAsUserId));
 	}
 
 	private LanguageTag _createLanguageTag(String doAsUserId) {
@@ -81,26 +91,6 @@ public class LanguageTagTest {
 				Mockito.mock(ServletContext.class), mockHttpServletRequest));
 
 		return languageTag;
-	}
-
-	private void _testGetFormActionOmitsDoAsUserId() throws Exception {
-		LanguageTag languageTag = _createLanguageTag(StringPool.BLANK);
-
-		String formAction = ReflectionTestUtil.invoke(
-			languageTag, "_getFormAction", new Class<?>[0]);
-
-		Assert.assertFalse(formAction.contains("doAsUserId="));
-	}
-
-	private void _testGetFormActionPropagatesDoAsUserId() throws Exception {
-		String doAsUserId = RandomTestUtil.randomString();
-
-		LanguageTag languageTag = _createLanguageTag(doAsUserId);
-
-		String formAction = ReflectionTestUtil.invoke(
-			languageTag, "_getFormAction", new Class<?>[0]);
-
-		Assert.assertTrue(formAction.contains("doAsUserId=" + doAsUserId));
 	}
 
 }

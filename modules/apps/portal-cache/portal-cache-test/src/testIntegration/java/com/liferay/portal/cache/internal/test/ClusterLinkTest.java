@@ -10,6 +10,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
@@ -73,6 +74,16 @@ public class ClusterLinkTest implements Serializable {
 			"cluster.link.channel.properties.transport.0=udp.xml");
 	}
 
+	@Test
+	public void testTransportChannelProperties() throws Exception {
+		_testTransportChannelProperties(
+			false, "TCP",
+			"cluster.link.channel.properties.transport.0=tcp.xml");
+		_testTransportChannelProperties(
+			true, "UDP",
+			"cluster.link.channel.properties.transport.0=udp.xml");
+	}
+
 	private static String _getControlChannelTransportName() {
 		return SystemBundleUtil.callService(
 			ClusterExecutor.class,
@@ -82,6 +93,26 @@ public class ClusterLinkTest implements Serializable {
 
 				Object jChannel = ReflectionTestUtil.getFieldValue(
 					clusterChannel, "_jChannel");
+
+				Object protocolStack = ReflectionTestUtil.invoke(
+					jChannel, "getProtocolStack", new Class<?>[0]);
+
+				Object transport = ReflectionTestUtil.invoke(
+					protocolStack, "getTransport", new Class<?>[0]);
+
+				return transport.getClass().getSimpleName();
+			});
+	}
+
+	private static String _getTransportChannelTransportName() {
+		return SystemBundleUtil.callService(
+			ClusterLink.class,
+			clusterLink -> {
+				List<?> clusterChannels = ReflectionTestUtil.getFieldValue(
+					clusterLink, "_clusterChannels");
+
+				Object jChannel = ReflectionTestUtil.getFieldValue(
+					clusterChannels.get(0), "_jChannel");
 
 				Object protocolStack = ReflectionTestUtil.invoke(
 					jChannel, "getProtocolStack", new Class<?>[0]);
@@ -160,6 +191,41 @@ public class ClusterLinkTest implements Serializable {
 				expectedTransportName,
 				_tomcatNode1.syncExecute(
 					ClusterLinkTest::_getControlChannelTransportName));
+		}
+	}
+
+	private void _testTransportChannelProperties(
+			boolean keepStarted, String expectedTransportName,
+			String... portalExtPropertiesLines)
+		throws Exception {
+
+		try (Closeable closeable = _applyPortalExtPropertiesLines(
+				keepStarted, _tomcatNode1, portalExtPropertiesLines)) {
+
+			// Assert portal-ext.properties lines are set correctly on node 1
+
+			for (String portalExtLine : portalExtPropertiesLines) {
+				List<String> parts = StringUtil.split(
+					portalExtLine, CharPool.EQUAL);
+
+				String key = parts.get(0);
+				String expectedValue = parts.get(1);
+
+				Assert.assertEquals(
+					expectedValue,
+					_tomcatNode1.syncExecute(() -> PropsUtil.get(key)));
+			}
+
+			// Assert node 1 can get its cluster node successfully
+
+			Assert.assertNotNull(
+				_tomcatNode1.syncExecute(
+					ClusterExecutorUtil::getLocalClusterNode));
+
+			Assert.assertEquals(
+				expectedTransportName,
+				_tomcatNode1.syncExecute(
+					ClusterLinkTest::_getTransportChannelTransportName));
 		}
 	}
 

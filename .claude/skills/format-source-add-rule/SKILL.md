@@ -60,7 +60,7 @@ Validate that the appended rule reproduces the input commit when applied to the 
 
 ### Commit the Rule
 
-After the self-test passes, stage only `.claude/skills/format-source/SKILL.md` and invoke the `commit` skill with this commit message format:
+After the self-test passes, stage only `.claude/skills/format-source/SKILL.md` and commit with this commit message format:
 
 ```
 <ticket> Add rule derived from <sha>

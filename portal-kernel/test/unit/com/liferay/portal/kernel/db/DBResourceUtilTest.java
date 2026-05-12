@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -121,9 +122,9 @@ public class DBResourceUtilTest {
 
 	@Test
 	public void testParseCreateTableSQLWhenSQLIsNull() {
-		String createTableSQL = DBResourceUtil.parseCreateTableSQL(null);
+		Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(null);
 
-		Assert.assertTrue(createTableSQL.isEmpty());
+		Assert.assertTrue(tableNames.isEmpty());
 	}
 
 	private InputStream _getSQLFileInputStream(String lineSeparator) {

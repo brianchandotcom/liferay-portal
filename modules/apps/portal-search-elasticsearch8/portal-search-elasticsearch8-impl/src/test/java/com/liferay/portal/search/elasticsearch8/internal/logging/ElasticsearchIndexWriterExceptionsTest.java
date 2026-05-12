@@ -49,12 +49,25 @@ public class ElasticsearchIndexWriterExceptionsTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testAddDocument() {
-		_assertElasticsearchException(
-			"failed to parse field [expirationDate] of type [date]",
-			() -> addDocument(
+	public void testAddDocument() throws SearchException {
+		try {
+			addDocument(
 				DocumentCreationHelpers.singleKeyword(
-					Field.EXPIRATION_DATE, "text")));
+					Field.EXPIRATION_DATE, "text"));
+
+			Assert.fail("Expected ElasticsearchException was not thrown");
+		}
+		catch (ElasticsearchException elasticsearchException) {
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
+
+			_assertElasticsearchException(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				elasticsearchException, "document_parsing_exception");
+		}
 	}
 
 	@Test
@@ -91,16 +104,23 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testCommit() {
+	public void testCommit() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(1);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		_assertElasticsearchException(
-			"[index_not_found_exception] no such index",
-			() -> indexWriter.commit(searchContext));
+		try {
+			indexWriter.commit(searchContext);
+
+			Assert.fail("Expected ElasticsearchException was not thrown");
+		}
+		catch (ElasticsearchException elasticsearchException) {
+			_assertElasticsearchException(
+				message -> Assert.assertEquals("no such index [1]", message),
+				elasticsearchException, "index_not_found_exception");
+		}
 	}
 
 	@Test
@@ -167,16 +187,23 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	@Test
-	public void testDeleteEntityDocuments() {
+	public void testDeleteEntityDocuments() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(1);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		_assertElasticsearchException(
-			"[index_not_found_exception] no such index",
-			() -> indexWriter.deleteEntityDocuments(searchContext, "test"));
+		try {
+			indexWriter.deleteEntityDocuments(searchContext, "test");
+
+			Assert.fail("Expected ElasticsearchException was not thrown");
+		}
+		catch (ElasticsearchException elasticsearchException) {
+			_assertElasticsearchException(
+				message -> Assert.assertEquals("no such index [1]", message),
+				elasticsearchException, "index_not_found_exception");
+		}
 	}
 
 	@Test
@@ -275,16 +302,17 @@ public class ElasticsearchIndexWriterExceptionsTest
 	}
 
 	private void _assertElasticsearchException(
-		String expectedMessage, ThrowingRunnable runnable) {
+		Consumer<String> consumer,
+		ElasticsearchException elasticsearchException, String expectedType) {
 
-		ElasticsearchException elasticsearchException = Assert.assertThrows(
-			ElasticsearchException.class, runnable);
+		Assert.assertEquals(
+			expectedType,
+			elasticsearchException.error(
+			).type());
 
-		String message = elasticsearchException.getMessage();
-
-		Assert.assertTrue(
-			message + " does not contain " + expectedMessage,
-			message.contains(expectedMessage));
+		consumer.accept(
+			elasticsearchException.error(
+			).reason());
 	}
 
 	private void _assertLogCapture(

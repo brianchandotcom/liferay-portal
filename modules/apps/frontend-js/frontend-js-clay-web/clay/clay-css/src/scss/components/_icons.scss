@@ -14,6 +14,35 @@
 	@include clay-css($lexicon-icon-xl);
 }
 
+.lexicon-icon-arrows-all {
+	height: 0.73913em; // 34/46 aspect ratio
+	margin-top: 0;
+	width: 1em;
+}
+
+.arrows-state-horizontal {
+	.arrows-keycap-down,
+	.arrows-keycap-up {
+		fill: $gray-300;
+	}
+}
+
+.arrows-state-vertical {
+	.arrows-keycap-left,
+	.arrows-keycap-right {
+		fill: $gray-300;
+	}
+}
+
+.clay-keyboard-arrows-indicator {
+	display: inline-flex;
+	font-size: 2.875rem; // 46px — natural design size
+
+	.lexicon-icon {
+		margin-top: 0;
+	}
+}
+
 .order-arrow-down-active {
 	.order-arrow-arrow-down {
 		fill: $order-arrow-down-active-color;

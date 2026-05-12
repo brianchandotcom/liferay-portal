@@ -7,17 +7,15 @@ import ClayLabel from '@clayui/label';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-interface CountIndicatorsProps {
-	additionCount?: number;
-	deletionCount?: number;
-	showDeletions?: boolean;
-}
-
-export default function CountIndicators({
+export default function SectionTags({
 	additionCount,
 	deletionCount,
 	showDeletions = true,
-}: CountIndicatorsProps) {
+}: {
+	additionCount?: number;
+	deletionCount?: number;
+	showDeletions?: boolean;
+}) {
 	const hasItems = !!additionCount;
 	const hasDeletions = showDeletions && !!deletionCount;
 
@@ -26,18 +24,18 @@ export default function CountIndicators({
 	}
 
 	return (
-		<>
+		<div className="align-items-center c-gap-2 d-inline-flex ml-2">
 			{hasItems ? (
-				<span className="content-selector-items-count font-weight-normal ml-2 small text-secondary">
+				<ClayLabel displayType="secondary">
 					{sub(Liferay.Language.get('x-items'), additionCount)}
-				</span>
+				</ClayLabel>
 			) : null}
 
 			{hasDeletions ? (
-				<ClayLabel className="ml-2" displayType="warning">
+				<ClayLabel displayType="warning">
 					{sub(Liferay.Language.get('x-deletions'), deletionCount)}
 				</ClayLabel>
 			) : null}
-		</>
+		</div>
 	);
 }

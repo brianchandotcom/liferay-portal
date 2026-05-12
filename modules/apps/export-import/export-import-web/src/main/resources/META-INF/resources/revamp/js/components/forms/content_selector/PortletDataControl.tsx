@@ -14,8 +14,8 @@ import {
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
-import CountIndicators from './CountIndicators';
 import PortletDataControlChoice from './PortletDataControlChoice';
+import SectionTags from './SectionTags';
 
 interface PortletDataControlProps {
 	className?: string;
@@ -71,7 +71,7 @@ export default function PortletDataControl({
 					</span>
 
 					{control.type === 'Boolean' && (
-						<CountIndicators
+						<SectionTags
 							additionCount={control.additionCount}
 							deletionCount={control.deletionCount}
 							showDeletions={showDeletions}

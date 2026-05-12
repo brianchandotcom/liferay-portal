@@ -148,7 +148,7 @@ test(
 						.getByText('Location')
 				).toBeVisible();
 
-				await infoPanelPage.dropdownTab('Comments').click();
+				await infoPanelPage.selectTab('Comments').click();
 			});
 
 			await test.step('Add, edit and delete comments in the info Panel Comments', async () => {

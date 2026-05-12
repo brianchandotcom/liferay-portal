@@ -1028,7 +1028,7 @@ definition {
 
 	@description = "LPS-99349: Validate if the user can edit the variant for A/B Test content with success"
 	@priority = 5
-	test EditVariantContent {
+	test EditVariantContentSaveAndDiscard {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",

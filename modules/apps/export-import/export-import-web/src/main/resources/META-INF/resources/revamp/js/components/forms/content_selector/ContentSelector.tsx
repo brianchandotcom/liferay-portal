@@ -34,6 +34,13 @@ export default function ContentSelector({
 	const currentValue = value || {};
 	const errorId = errorMessage ? `${name}-error-message` : undefined;
 
+	const visibleSections = sections.filter((section) => {
+		const hasOnlyDeletions =
+			!section.additionCount && !!section.deletionCount;
+
+		return showDeletions || !hasOnlyDeletions;
+	});
+
 	return (
 		<div
 			aria-describedby={errorId}
@@ -42,7 +49,7 @@ export default function ContentSelector({
 			className="mt-4"
 			role="group"
 		>
-			{sections.map((section: PortletDataHandlerSection) => (
+			{visibleSections.map((section: PortletDataHandlerSection) => (
 				<ContentSection
 					key={section.name}
 					onChange={(sectionValue) =>

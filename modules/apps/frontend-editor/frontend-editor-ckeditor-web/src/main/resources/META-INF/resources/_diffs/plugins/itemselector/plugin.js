@@ -10,6 +10,11 @@
 	const STR_VIDEO_HTML_RETURN_TYPE =
 		'com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType';
 
+	const ITEM_SELECTOR_FOLDER_ID_PARAM =
+		'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
+
+	let lastFolderId = null;
+
 	const TPL_AUDIO_SCRIPT =
 		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
 
@@ -365,11 +370,42 @@
 		},
 
 		_openSelectionModal(editor, url, callback) {
+			let modalURL = url;
+
+			if (lastFolderId !== null && lastFolderId !== '') {
+				try {
+					const parsed = new URL(modalURL);
+
+					parsed.searchParams.set(
+						ITEM_SELECTOR_FOLDER_ID_PARAM,
+						String(lastFolderId)
+					);
+
+					modalURL = parsed.toString();
+				}
+				catch (error) {
+
+					// Leave modalURL unchanged if URL parsing fails.
+
+				}
+			}
+
 			Liferay.Util.openSelectionModal({
-				onSelect: callback,
+				onSelect: (selectedItem) => {
+					if (
+						selectedItem &&
+						selectedItem.folderId !== null &&
+						selectedItem.folderId !== undefined &&
+						selectedItem.folderId !== ''
+					) {
+						lastFolderId = selectedItem.folderId;
+					}
+
+					callback(selectedItem);
+				},
 				selectEventName: editor.name + 'selectItem',
 				title: Liferay.Language.get('select-item'),
-				url,
+				url: modalURL,
 				zIndex: CKEDITOR.getNextZIndex(),
 			});
 		},

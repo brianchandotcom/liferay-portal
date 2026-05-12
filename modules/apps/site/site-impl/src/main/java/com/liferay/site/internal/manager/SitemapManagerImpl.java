@@ -5,7 +5,10 @@
 
 package com.liferay.site.internal.manager;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -45,6 +48,7 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
+import com.liferay.site.constants.SitemapConstants;
 import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 
@@ -215,6 +219,16 @@ public class SitemapManagerImpl implements SitemapManager {
 	}
 
 	@Override
+	public String getAssetTypeFromSlug(String slug) {
+		return _classNamesBySlugMap.get(slug);
+	}
+
+	@Override
+	public Map<String, String> getAssetTypeSlugs() {
+		return _slugsByClassNameMap;
+	}
+
+	@Override
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -227,6 +241,38 @@ public class SitemapManagerImpl implements SitemapManager {
 			String layoutUuid, long groupId, boolean privateLayout,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		return getSitemap(
+			layoutUuid, groupId, privateLayout, themeDisplay, null);
+	}
+
+	@Override
+	public String getSitemap(
+			String layoutUuid, long groupId, boolean privateLayout,
+			ThemeDisplay themeDisplay, String assetType)
+		throws PortalException {
+
+		if (Validator.isNotNull(assetType)) {
+			long companyId = themeDisplay.getCompanyId();
+
+			SitemapURLProvider sitemapURLProvider =
+				_serviceTrackerMap.getService(assetType);
+
+			if ((sitemapURLProvider == null) ||
+				!_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
+					companyId) ||
+				!StringUtil.equals(
+					_sitemapConfigurationManager.xmlSitemapGroupingMode(
+						companyId),
+					SitemapConstants.GROUPING_MODE_ASSET_TYPE) ||
+				!sitemapURLProvider.isInclude(companyId, groupId)) {
+
+				return null;
+			}
+
+			return _getAssetTypeSitemap(
+				groupId, privateLayout, themeDisplay, assetType);
+		}
 
 		if (Validator.isNull(layoutUuid) &&
 			_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
@@ -253,6 +299,54 @@ public class SitemapManagerImpl implements SitemapManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+	}
+
+	private Document _createSitemapDocument(
+		String rootElementName, String rootElementNamespace) {
+
+		Document document = _saxReader.createDocument();
+
+		document.setXMLEncoding(StringPool.UTF8);
+
+		Element rootElement = document.addElement(
+			rootElementName, rootElementNamespace);
+
+		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		rootElement.addAttribute(
+			"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+		rootElement.addAttribute(
+			"xsi:schemaLocation",
+			"http://www.w3.org/1999/xhtml " +
+				"http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd");
+
+		return document;
+	}
+
+	private String _getAssetTypeSitemap(
+			long groupId, boolean privateLayout, ThemeDisplay themeDisplay,
+			String assetType)
+		throws PortalException {
+
+		Document document = _createSitemapDocument(
+			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+		Element rootElement = document.getRootElement();
+
+		_initEntriesAndSize(rootElement);
+
+		SitemapURLProvider sitemapURLProvider = _serviceTrackerMap.getService(
+			assetType);
+
+		for (LayoutSet curLayoutSet :
+				_getLayoutSets(groupId, null, privateLayout, themeDisplay)) {
+
+			sitemapURLProvider.visitLayoutSet(
+				rootElement, curLayoutSet, themeDisplay);
+		}
+
+		_removeEntriesAndSize(rootElement);
+
+		return document.asXML();
 	}
 
 	private String _getFriendlyURL(String path, long groupId) {
@@ -319,14 +413,10 @@ public class SitemapManagerImpl implements SitemapManager {
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Document document = _saxReader.createDocument();
-
-		document.setXMLEncoding(StringPool.UTF8);
-
-		Element rootElement = document.addElement(
+		Document document = _createSitemapDocument(
 			"sitemapindex", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
-		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		Element rootElement = document.getRootElement();
 
 		_initEntriesAndSize(rootElement);
 
@@ -409,20 +499,10 @@ public class SitemapManagerImpl implements SitemapManager {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Document document = _saxReader.createDocument();
-
-		document.setXMLEncoding(StringPool.UTF8);
-
-		Element rootElement = document.addElement(
+		Document document = _createSitemapDocument(
 			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
 
-		rootElement.addAttribute(
-			"xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		rootElement.addAttribute(
-			"xsi:schemaLocation",
-			"http://www.w3.org/1999/xhtml " +
-				"http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd");
-		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
+		Element rootElement = document.getRootElement();
 
 		_initEntriesAndSize(rootElement);
 
@@ -651,6 +731,23 @@ public class SitemapManagerImpl implements SitemapManager {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+	private static final Map<String, String> _classNamesBySlugMap;
+	private static final Map<String, String> _slugsByClassNameMap = Map.of(
+		AssetCategory.class.getName(), "categories",
+		JournalArticle.class.getName(), "web-content", Layout.class.getName(),
+		"pages", ObjectEntry.class.getName(), "object-entries");
+
+	static {
+		Map<String, String> map = new ConcurrentHashMap<>();
+
+		for (Map.Entry<String, String> entry :
+				_slugsByClassNameMap.entrySet()) {
+
+			map.put(entry.getValue(), entry.getKey());
+		}
+
+		_classNamesBySlugMap = Collections.unmodifiableMap(map);
+	}
 
 	private final Map<Long, Long> _companyIds = new ConcurrentHashMap<>();
 

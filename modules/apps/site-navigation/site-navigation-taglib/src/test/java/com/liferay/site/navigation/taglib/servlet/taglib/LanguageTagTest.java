@@ -5,7 +5,6 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib;
 
-import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,9 +38,6 @@ public class LanguageTagTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		ClassLoaderPool.register(
-			"ShieldedContainerClassLoader", PortalImpl.class.getClassLoader());
-
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -56,11 +52,25 @@ public class LanguageTagTest {
 	private LanguageTag _createLanguageTag(String doAsUserId) {
 		LanguageTag languageTag = new LanguageTag();
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
-		themeDisplay.setDoAsUserId(doAsUserId);
-		themeDisplay.setPathMain("/c");
-		themeDisplay.setScopeGroupId(RandomTestUtil.randomLong());
+		Mockito.when(
+			themeDisplay.getDoAsUserId()
+		).thenReturn(
+			doAsUserId
+		);
+
+		Mockito.when(
+			themeDisplay.getPathMain()
+		).thenReturn(
+			"/c"
+		);
+
+		Mockito.when(
+			themeDisplay.getScopeGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
 
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -76,7 +86,11 @@ public class LanguageTagTest {
 			RandomTestUtil.randomLong()
 		);
 
-		themeDisplay.setLayout(layout);
+		Mockito.when(
+			themeDisplay.getLayout()
+		).thenReturn(
+			layout
+		);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

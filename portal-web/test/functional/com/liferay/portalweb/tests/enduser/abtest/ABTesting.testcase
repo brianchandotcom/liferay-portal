@@ -1168,7 +1168,7 @@ definition {
 
 	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
 	@priority = 3
-	test NotificationLinkToContentPage {
+	test ABTestNotificationFlows {
 		task ("Create user and sync contact with AC") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

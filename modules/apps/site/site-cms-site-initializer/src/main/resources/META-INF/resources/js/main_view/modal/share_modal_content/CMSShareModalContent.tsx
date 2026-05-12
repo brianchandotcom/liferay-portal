@@ -185,7 +185,11 @@ export default function CMSShareModalContent({
 					{type === COLLABORATOR_TYPE.USER ? (
 						'image' in user && user.image ? (
 							<div className="sticker-overlay">
-								<img className="sticker-img" src={user.image} />
+								<img
+									alt={user.name}
+									className="sticker-img"
+									src={user.image}
+								/>
 							</div>
 						) : (
 							<ClayIcon symbol="user" />

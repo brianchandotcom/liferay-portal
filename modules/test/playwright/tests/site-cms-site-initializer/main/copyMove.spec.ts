@@ -749,6 +749,9 @@ test(
 			await expect(
 				dialog.getByLabel('Contents', {exact: true})
 			).toBeVisible();
+			await expect(
+				dialog.getByLabel('Files', {exact: true})
+			).not.toBeVisible();
 
 			await dialog
 				.getByRole('button', {exact: true, name: 'Cancel'})
@@ -773,6 +776,9 @@ test(
 			await expect(
 				dialog.getByLabel('Files', {exact: true})
 			).toBeVisible();
+			await expect(
+				dialog.getByLabel('Contents', {exact: true})
+			).not.toBeVisible();
 
 			await dialog
 				.getByRole('button', {exact: true, name: 'Cancel'})

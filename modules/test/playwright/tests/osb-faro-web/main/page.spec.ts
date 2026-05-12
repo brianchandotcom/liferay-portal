@@ -7,13 +7,13 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import {createChannel, switchChannel} from './utils/channel';
+import {switchChannel} from './utils/channel';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {Nanites, runNanites} from './utils/nanites';
 import {
@@ -42,43 +42,20 @@ import {
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	assetPublisherPagesTest,
 	pageEditorPagesTest,
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
 const randomString = getRandomString();
 
-const channelName = 'My Property ' + randomString;
 const pageTitle = 'My Page';
-
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel and delete site on the DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
-});
 
 test(
 	'Assert clicking on a page in the pages lists navigates to the page profile',
@@ -86,7 +63,7 @@ test(
 		tag: '@LRAC-8112 Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 
 		const individuals = [
@@ -121,7 +98,7 @@ test(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -195,7 +172,7 @@ test(
 		tag: '@LRAC-14813',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle = 'My Page ' + randomString;
 
 		const individualName = 'user1';
@@ -283,7 +260,7 @@ test(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle1 = 'My Page 1';
 		const pageTitle2 = 'My Page 2';
 		const pageTitle3 = 'My Page 3';
@@ -345,7 +322,7 @@ test(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -383,7 +360,7 @@ test(
 	{
 		tag: '@LPD-27586',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const individualName = 'user1';
 		const individuals = [
 			generateIndividual({
@@ -636,7 +613,7 @@ test.skip(
 		tag: '@LRAC-8988',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle = 'Snúið Vinsælar þú';
 
 		const individualName = 'user1';
@@ -672,7 +649,7 @@ test.skip(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -716,7 +693,7 @@ test(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const firstIndividual = 'user1';
 		const secondIndividual = 'user2';
 		const thirdIndividual = 'user3';
@@ -839,7 +816,7 @@ test(
 		tag: '@Legacy',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 		const individuals = [
 			generateIndividual({
@@ -874,7 +851,7 @@ test(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -924,7 +901,7 @@ test.skip(
 		tag: '@LRAC-14827',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 		const individuals = [
 			generateIndividual({
@@ -959,7 +936,7 @@ test.skip(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -1021,7 +998,7 @@ test.skip(
 		tag: '@LRAC-14827',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const pageTitle1 = 'My Page 1';
 		const pageTitle2 = 'My Page 2';
 		const pageURL1 = 'https://www.liferay.com/page1';
@@ -1085,7 +1062,7 @@ test.skip(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -1135,7 +1112,7 @@ test.skip(
 		tag: '@LRAC-14836',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const individualName = 'user1';
 		const individuals = [
 			generateIndividual({
@@ -1170,7 +1147,7 @@ test.skip(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});
@@ -1268,7 +1245,7 @@ test(
 		tag: '@LRAC-14794',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const individualName = 'user1';
 		const individuals = [
 			generateIndividual({
@@ -1302,7 +1279,7 @@ test(
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACWorkspace({page});
 			await switchChannel({
-				channelName,
+				channelName: channel.name,
 				page,
 			});
 		});

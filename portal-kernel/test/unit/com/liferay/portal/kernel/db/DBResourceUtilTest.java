@@ -121,10 +121,9 @@ public class DBResourceUtilTest {
 
 	@Test
 	public void testParseCreateTableSQLWhenSQLIsNull() {
-		Assert.assertTrue(
-			DBResourceUtil.parseCreateTableSQL(
-				null
-			).isEmpty());
+		String createTableSQL = DBResourceUtil.parseCreateTableSQL(null);
+
+		Assert.assertTrue(createTableSQL.isEmpty());
 	}
 
 	private InputStream _getSQLFileInputStream(String lineSeparator) {

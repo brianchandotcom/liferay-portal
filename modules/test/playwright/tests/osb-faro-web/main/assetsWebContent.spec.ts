@@ -36,8 +36,6 @@ export const test = mergeTests(
 	loginTest()
 );
 
-const pageTitle = 'My Page';
-
 test(
 	'Web content appears on card shows the pages that the web content appears on.',
 
@@ -59,7 +57,7 @@ test(
 				channelId: channel.id,
 				eventDate: date1.toISOString(),
 				eventId: 'webContentViewed',
-				title: pageTitle,
+				title: 'My Page',
 				userId: 'user1',
 			},
 		]);

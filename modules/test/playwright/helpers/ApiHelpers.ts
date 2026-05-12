@@ -654,6 +654,11 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'product') {
 				await this.headlessCommerceAdminCatalog.deleteProduct(item.id);
 			}
+			else if (item.type === 'productGroup') {
+				await this.headlessCommerceAdminCatalog.deleteProductGroup(
+					item.id
+				);
+			}
 			else if (item.type === 'productConfiguration') {
 				await this.headlessCommerceAdminCatalog.deleteProductConfiguration(
 					item.id

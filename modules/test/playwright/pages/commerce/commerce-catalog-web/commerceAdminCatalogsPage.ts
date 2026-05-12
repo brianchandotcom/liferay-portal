@@ -12,6 +12,7 @@ export class CommerceAdminCatalogsPage {
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly catalogActionsButton: (catalogName: string) => Locator;
 	readonly catalogId: Locator;
+	readonly catalogLink: (name: string) => Locator;
 	readonly catalogSaveButton: Locator;
 	readonly modalFieldName: Locator;
 	readonly modalFrameLocator: FrameLocator;
@@ -31,6 +32,8 @@ export class CommerceAdminCatalogsPage {
 				name: `${catalogName} Actions`,
 			});
 		this.catalogId = page.locator('span:has-text("ID")+strong');
+		this.catalogLink = (name: string) =>
+			page.getByRole('link', {exact: true, name});
 		this.catalogSaveButton = page.getByRole('link', {
 			exact: true,
 			name: 'Save',

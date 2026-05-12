@@ -1460,3 +1460,66 @@ test(
 		).toHaveCount(0);
 	}
 );
+
+test(
+	'A discount eligibility entry can be added and then removed via the row actions menu',
+	{tag: ['@COMMERCE-6234', '@LPD-85008']},
+	async ({
+		apiHelpers,
+		commerceAdminDiscountDetailsPage,
+		commerceAdminDiscountsPage,
+		page,
+	}) => {
+		const randomString = getRandomString().slice(0, 8);
+		const accountName = `Test Account Run${randomString}`;
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'business',
+		});
+
+		const discount =
+			await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+				active: true,
+				level: 'L1',
+				percentageLevel1: 20,
+				target: 'products',
+				title: `Test Discount ${getRandomString()}`,
+				usePercentage: true,
+			});
+
+		await apiHelpers.headlessCommerceAdminPricing.postDiscountAccount(
+			discount.id,
+			account.id
+		);
+
+		await commerceAdminDiscountsPage.goto();
+
+		await commerceAdminDiscountsPage.discountLink(discount.title).click();
+		await commerceAdminDiscountDetailsPage.eligibilityTab.click();
+		await commerceAdminDiscountDetailsPage.specificAccountsRadio.check();
+
+		await expect(
+			commerceAdminDiscountDetailsPage.eligibilityEntryCell(accountName)
+		).toBeVisible();
+
+		await expect(async () => {
+			await commerceAdminDiscountDetailsPage
+				.eligibilityRowActions(accountName)
+				.click();
+
+			await expect(
+				commerceAdminDiscountDetailsPage.eligibilityRowRemoveMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await commerceAdminDiscountDetailsPage.eligibilityRowRemoveMenuItem.click();
+		await commerceAdminDiscountDetailsPage.publishButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceAdminDiscountDetailsPage.eligibilityEntryCell(accountName)
+		).toHaveCount(0);
+	}
+);

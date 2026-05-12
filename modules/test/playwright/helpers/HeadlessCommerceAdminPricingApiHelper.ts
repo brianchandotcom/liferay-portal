@@ -107,6 +107,12 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
+	async deletePriceModifier(priceModifierId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-modifiers/${priceModifierId}`
+		);
+	}
+
 	async getBasePriceList(catalogId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'price-list'`
@@ -125,9 +131,52 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
+	async getBasePromoPriceList(catalogId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'promotion'`
+		);
+	}
+
 	async getBasePromoPriceListId(catalogId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'promotion'&fields=id`
+		);
+	}
+
+	async getPriceEntry(priceEntryId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-entries/${priceEntryId}`
+		);
+	}
+
+	async getPriceListEntries(
+		priceListId: number,
+		{pageSize = 200}: {pageSize?: number} = {}
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceListId}/price-entries?pageSize=${pageSize}`
+		);
+	}
+
+	async getPriceListModifiers(
+		priceListId: number,
+		{pageSize = 200}: {pageSize?: number} = {}
+	) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceListId}/price-modifiers?pageSize=${pageSize}`
+		);
+	}
+
+	async getPriceLists({
+		pageSize = 200,
+		search,
+	}: {pageSize?: number; search?: string} = {}) {
+		const searchParam = search
+			? `&search=${encodeURIComponent(search)}`
+			: '';
+
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?pageSize=${pageSize}${searchParam}`
 		);
 	}
 
@@ -235,5 +284,88 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		}
 
 		return priceList;
+	}
+
+	async postPriceListAccountRel(priceListId: number, accountId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceListId}/price-list-accounts`,
+			{
+				data: {accountId, priceListId},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postPriceListChannel(priceListId: number, channelId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceListId}/price-list-channels`,
+			{
+				data: {channelId, priceListId},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postDiscountAccount(discountId: number, accountId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/discounts/${discountId}/discount-accounts`,
+			{
+				data: {accountId, discountId},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postDiscountProductGroup(discountId: number, productGroupId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/discounts/${discountId}/discount-product-groups`,
+			{
+				data: {discountId, productGroupId},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postPriceModifier(
+		priceListId: number,
+		priceModifier: {
+			active?: boolean;
+			modifierAmount: number;
+			modifierType: string;
+			priority?: number;
+			target: string;
+			title: string;
+		}
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists/${priceListId}/price-modifiers`,
+			{
+				data: {active: true, ...priceModifier},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postPriceModifierProduct(priceModifierId: number, productId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-modifiers/${priceModifierId}/price-modifier-products`,
+			{
+				data: {priceModifierId, productId},
+				failOnStatusCode: true,
+			}
+		);
+	}
+
+	async postPriceModifierProductGroup(
+		priceModifierId: number,
+		productGroupId: number
+	) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-modifiers/${priceModifierId}/price-modifier-product-groups`,
+			{
+				data: {priceModifierId, productGroupId},
+				failOnStatusCode: true,
+			}
+		);
 	}
 }

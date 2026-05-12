@@ -20,6 +20,8 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 	readonly draftStatus: Locator;
 	readonly editDiscountRuleFrame: FrameLocator;
 	readonly eligibilityEntryCell: (name: string) => Locator;
+	readonly eligibilityRowActions: (name: string) => Locator;
+	readonly eligibilityRowRemoveMenuItem: Locator;
 	readonly eligibilityTab: Locator;
 	readonly errorAlert: (text: string) => Locator;
 	readonly maximumDiscountAmountInput: Locator;
@@ -125,6 +127,15 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 			);
 		this.eligibilityEntryCell = (name: string) =>
 			page.getByRole('cell', {name}).first();
+		this.eligibilityRowActions = (name: string) =>
+			page
+				.getByRole('row')
+				.filter({hasText: name})
+				.getByRole('button', {name: 'Actions'});
+		this.eligibilityRowRemoveMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Remove',
+		});
 		this.eligibilityTab = page.getByRole('link', {
 			exact: true,
 			name: 'Eligibility',

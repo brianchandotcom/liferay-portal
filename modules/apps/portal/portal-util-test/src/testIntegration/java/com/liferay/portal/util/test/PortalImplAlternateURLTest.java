@@ -230,56 +230,53 @@ public class PortalImplAlternateURLTest {
 			portletPreferences.getValue(
 				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, null);
 
-		try {
-			portletPreferences.setValue(
-				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
+		portletPreferences.setValue(
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "1");
 
-			portletPreferences.store();
+		portletPreferences.store();
 
-			String canonicalURL = StringBundler.concat(
-				"http://", defaultVirtualHostname, ":8080",
+		String canonicalURL = StringBundler.concat(
+			"http://", defaultVirtualHostname, ":8080",
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			_group.getFriendlyURL(), layout.getFriendlyURL());
+
+		Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
+			canonicalURL, themeDisplay, layout);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"http://", defaultVirtualHostname, ":8080/fr",
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-				_group.getFriendlyURL(), layout.getFriendlyURL());
+				_group.getFriendlyURL(),
+				layout.getFriendlyURL(LocaleUtil.FRANCE)),
+			alternateURLs.get(LocaleUtil.FRANCE));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"http://", germanVirtualHostname, ":8080/de",
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(),
+				layout.getFriendlyURL(LocaleUtil.GERMANY)),
+			alternateURLs.get(LocaleUtil.GERMANY));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"http://", spanishVirtualHostname, ":8080/es",
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(),
+				layout.getFriendlyURL(LocaleUtil.SPAIN)),
+			alternateURLs.get(LocaleUtil.SPAIN));
+		Assert.assertEquals(canonicalURL, alternateURLs.get(LocaleUtil.US));
 
-			Map<Locale, String> alternateURLs = _portal.getAlternateURLs(
-				canonicalURL, themeDisplay, layout);
-
-			Assert.assertEquals(
-				StringBundler.concat(
-					"http://", defaultVirtualHostname, ":8080/fr",
-					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-					_group.getFriendlyURL(),
-					layout.getFriendlyURL(LocaleUtil.FRANCE)),
-				alternateURLs.get(LocaleUtil.FRANCE));
-			Assert.assertEquals(
-				StringBundler.concat(
-					"http://", germanVirtualHostname, ":8080/de",
-					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-					_group.getFriendlyURL(),
-					layout.getFriendlyURL(LocaleUtil.GERMANY)),
-				alternateURLs.get(LocaleUtil.GERMANY));
-			Assert.assertEquals(
-				StringBundler.concat(
-					"http://", spanishVirtualHostname, ":8080/es",
-					PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-					_group.getFriendlyURL(),
-					layout.getFriendlyURL(LocaleUtil.SPAIN)),
-				alternateURLs.get(LocaleUtil.SPAIN));
-			Assert.assertEquals(canonicalURL, alternateURLs.get(LocaleUtil.US));
+		if (previousLocalePrependFriendlyURLStyle == null) {
+			portletPreferences.reset(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
-		finally {
-			if (previousLocalePrependFriendlyURLStyle == null) {
-				portletPreferences.reset(
-					PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
-			}
-			else {
-				portletPreferences.setValue(
-					PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-					previousLocalePrependFriendlyURLStyle);
-			}
-
-			portletPreferences.store();
+		else {
+			portletPreferences.setValue(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+				previousLocalePrependFriendlyURLStyle);
 		}
+
+		portletPreferences.store();
 	}
 
 	@Test

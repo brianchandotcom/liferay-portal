@@ -5,6 +5,7 @@
 
 package com.liferay.sharing.internal.model.listener;
 
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.model.TicketTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
@@ -78,6 +80,12 @@ public class UserModelListener extends BaseModelListener<User> {
 		).and(
 			TicketTable.INSTANCE.type.eq(
 				TicketConstants.TYPE_INVITE_COLLABORATOR)
+		).and(
+			DSLFunctionFactoryUtil.castClobText(
+				TicketTable.INSTANCE.extraInfo
+			).eq(
+				StringUtil.lowerCase(user.getEmailAddress())
+			)
 		).and(
 			TicketTable.INSTANCE.expirationDate.gt(new Date())
 		);

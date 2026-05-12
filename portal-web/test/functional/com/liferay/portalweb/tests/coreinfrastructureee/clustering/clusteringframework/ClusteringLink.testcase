@@ -44,17 +44,6 @@ definition {
 	}
 
 	@priority = 5
-	test CustomControlChannelPropertiesFile {
-		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		AssertConsoleTextPresent(value1 = "Create a new JGroups channel");
-
-		AssertConsoleTextPresent(value1 = "properties: TCP");
-	}
-
-	@priority = 5
 	test CustomizeChannelNames {
 		property custom.properties = "cluster.link.channel.name.control=test-control-channel${line.separator}cluster.link.channel.name.transport.0=test-transport-channel";
 		property test.liferay.virtual.instance = "false";

@@ -87,15 +87,8 @@ public class UpdateLanguageAction implements Action {
 		// Send redirect
 
 		try {
-			String redirect = getRedirect(
-				httpServletRequest, themeDisplay, locale);
-
-			if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
-				redirect = HttpComponentsUtil.setParameter(
-					redirect, "doAsUserLanguageId", languageId);
-			}
-
-			httpServletResponse.sendRedirect(redirect);
+			httpServletResponse.sendRedirect(
+				getRedirect(httpServletRequest, themeDisplay, locale));
 		}
 		catch (IllegalArgumentException | NoSuchLayoutException exception) {
 			if (_log.isDebugEnabled()) {
@@ -316,6 +309,12 @@ public class UpdateLanguageAction implements Action {
 
 		if (Validator.isNotNull(queryString)) {
 			redirect = redirect + queryString;
+		}
+
+		if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+			redirect = HttpComponentsUtil.setParameter(
+				redirect, "doAsUserLanguageId",
+				LocaleUtil.toLanguageId(locale));
 		}
 
 		return redirect;

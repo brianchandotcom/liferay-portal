@@ -47,6 +47,41 @@ baseTest(
 );
 
 baseTest(
+	'Image Selector reopens at the last accessed folder',
+	{
+		tag: '@LPD-89541',
+	},
+	async ({documentLibraryPage, journalEditArticlePage, page, site}) => {
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await documentLibraryPage.goToCreateNewFolder();
+		const folderName = getRandomString();
+		await page.getByLabel('Name Required').fill(folderName);
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const iframe = page.frameLocator('iframe[title="Select Item"]');
+
+		await page.getByLabel('Image', {exact: true}).click();
+		await iframe.getByRole('link', {name: folderName}).click();
+		await iframe
+			.locator('input[type="file"]')
+			.setInputFiles(
+				path.join(
+					__dirname,
+					'../../frontend-js-item-selector-web/main/dependencies/sample_image.png'
+				)
+			);
+		await iframe.getByRole('button', {name: 'Add'}).click();
+
+		await page.getByLabel('Image', {exact: true}).click();
+		await expect(
+			iframe.getByText('sample_image', {exact: false})
+		).toBeVisible();
+	}
+);
+
+baseTest(
 	'Item Selector preview shows the no-preview state for non-previewable documents',
 	{
 		tag: '@LPD-87398',

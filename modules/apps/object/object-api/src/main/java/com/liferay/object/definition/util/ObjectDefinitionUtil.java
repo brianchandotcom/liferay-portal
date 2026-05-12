@@ -8,6 +8,7 @@ package com.liferay.object.definition.util;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
@@ -38,6 +39,15 @@ public class ObjectDefinitionUtil {
 		sb.append(RandomUtil.nextInt(10));
 
 		return sb.toString();
+	}
+
+	public static String getItemClassName(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			return objectDefinition.getClassName() + StringPool.POUND +
+				objectDefinition.getObjectDefinitionId();
+		}
+
+		return objectDefinition.getClassName();
 	}
 
 	public static String getModifiableSystemObjectDefinitionRESTContextPath(

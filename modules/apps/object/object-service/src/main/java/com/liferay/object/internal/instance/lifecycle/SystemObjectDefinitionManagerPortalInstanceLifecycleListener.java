@@ -24,6 +24,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
@@ -62,7 +63,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
@@ -225,9 +225,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 							systemObjectDefinitionManager);
 			}
 
-			String itemClassName =
-				objectDefinition.getClassName() + StringPool.POUND +
-					objectDefinition.getObjectDefinitionId();
+			String itemClassName = ObjectDefinitionUtil.getItemClassName(
+				objectDefinition);
 
 			_bundleContext.registerService(
 				InfoCollectionProvider.class,

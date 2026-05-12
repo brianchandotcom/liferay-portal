@@ -55,21 +55,24 @@ public class AIHubCellRequestAuthVerifierTest {
 
 			Assert.assertFalse(token.isEmpty());
 
+			Company company = _mockCompany(_VIRTUAL_HOSTNAME);
+
 			Assert.assertEquals(
 				Long.valueOf(_USER_ID),
 				ReflectionTestUtil.invoke(
 					_aiHubCellRequestAuthVerifier, "_getUserId",
-					new Class<?>[] {String.class, String.class},
-					_VIRTUAL_HOSTNAME, token));
+					new Class<?>[] {Company.class, String.class}, company,
+					token));
 
 			_testGetUserId(
-				"Invalid JWT issuer", RandomTestUtil.randomString(), token);
+				_mockCompany(RandomTestUtil.randomString()),
+				"Invalid JWT issuer", token);
 			_testGetUserId(
-				"Invalid JWT signature", _VIRTUAL_HOSTNAME,
+				company, "Invalid JWT signature",
 				token.substring(0, token.length() - 5) + "abcde");
 
 			_testGetUserId(
-				"Unable to parse and verify the JWT token", _VIRTUAL_HOSTNAME,
+				company, "Unable to parse and verify the JWT token",
 				RandomTestUtil.randomString());
 		}
 
@@ -77,24 +80,32 @@ public class AIHubCellRequestAuthVerifierTest {
 				configurationProviderUtilMockedStatic =
 					_mockConfigurationProviderUtil()) {
 
-			_testGetUserId("Invalid JWT signature", _VIRTUAL_HOSTNAME, token);
+			_testGetUserId(
+				_mockCompany(_VIRTUAL_HOSTNAME), "Invalid JWT signature",
+				token);
 		}
 	}
 
-	private MockedStatic<CompanyLocalServiceUtil>
-		_mockCompanyLocalServiceUtil() {
-
-		MockedStatic<CompanyLocalServiceUtil>
-			companyLocalServiceUtilMockedStatic = Mockito.mockStatic(
-				CompanyLocalServiceUtil.class);
-
+	private Company _mockCompany(String virtualHostname) {
 		Company company = Mockito.mock(Company.class);
 
 		Mockito.when(
 			company.getVirtualHostname()
 		).thenReturn(
-			_VIRTUAL_HOSTNAME
+			virtualHostname
 		);
+
+		return company;
+	}
+
+	private MockedStatic<CompanyLocalServiceUtil>
+		_mockCompanyLocalServiceUtil() {
+
+		Company company = _mockCompany(_VIRTUAL_HOSTNAME);
+
+		MockedStatic<CompanyLocalServiceUtil>
+			companyLocalServiceUtilMockedStatic = Mockito.mockStatic(
+				CompanyLocalServiceUtil.class);
 
 		companyLocalServiceUtilMockedStatic.when(
 			() -> CompanyLocalServiceUtil.getCompany(Mockito.anyLong())
@@ -138,7 +149,7 @@ public class AIHubCellRequestAuthVerifierTest {
 	}
 
 	private void _testGetUserId(
-		String expectedLogMessage, String issuer, String token) {
+		Company company, String expectedLogMessage, String token) {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.ai.hub.cell.internal.security.auth.verifier." +
@@ -147,7 +158,7 @@ public class AIHubCellRequestAuthVerifierTest {
 
 			ReflectionTestUtil.invoke(
 				_aiHubCellRequestAuthVerifier, "_getUserId",
-				new Class<?>[] {String.class, String.class}, issuer, token);
+				new Class<?>[] {Company.class, String.class}, company, token);
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

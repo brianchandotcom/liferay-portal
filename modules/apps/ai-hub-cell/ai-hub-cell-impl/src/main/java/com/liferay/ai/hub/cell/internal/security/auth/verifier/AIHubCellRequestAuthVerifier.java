@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
@@ -32,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,10 +69,10 @@ public class AIHubCellRequestAuthVerifier implements AuthVerifier {
 				return new AuthVerifierResult();
 			}
 
-			Company company = _companyLocalService.getCompany(
-				_portal.getCompanyId(httpServletRequest));
-
-			long userId = _getUserId(company.getVirtualHostname(), token);
+			long userId = _getUserId(
+				_companyLocalService.getCompany(
+					_portal.getCompanyId(httpServletRequest)),
+				token);
 
 			if (userId == 0) {
 				AuthVerifierResult authVerifierResult =
@@ -109,22 +109,23 @@ public class AIHubCellRequestAuthVerifier implements AuthVerifier {
 		}
 	}
 
-	private byte[] _getSecret() throws Exception {
+	private byte[] _getSecret(long companyId) throws Exception {
 		AIHubCellConfiguration aiHubCellConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
-				AIHubCellConfiguration.class,
-				CompanyThreadLocal.getCompanyId());
+				AIHubCellConfiguration.class, companyId);
 
 		return Base64.decode(aiHubCellConfiguration.secret());
 	}
 
-	private long _getUserId(String issuer, String token) {
+	private long _getUserId(Company company, String token) {
 		JWTClaimsSet jwtClaimsSet = null;
 
 		try {
 			SignedJWT signedJWT = SignedJWT.parse(token);
 
-			if (!signedJWT.verify(new MACVerifier(_getSecret()))) {
+			if (!signedJWT.verify(
+					new MACVerifier(_getSecret(company.getCompanyId())))) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Invalid JWT signature");
 				}
@@ -143,8 +144,9 @@ public class AIHubCellRequestAuthVerifier implements AuthVerifier {
 			return 0;
 		}
 
-		if (Validator.isNull(issuer) ||
-			!issuer.equals(jwtClaimsSet.getIssuer())) {
+		if (Validator.isNull(jwtClaimsSet.getIssuer()) ||
+			!Objects.equals(
+				company.getVirtualHostname(), jwtClaimsSet.getIssuer())) {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Invalid JWT issuer");

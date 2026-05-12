@@ -2735,6 +2735,9 @@ public interface PropsKeys {
 	public static final String UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD =
 		"upgrade.query.monitor.lock.threshold";
 
+	public static final String UPGRADE_QUERY_MONITOR_LONG_RUNNING_THRESHOLD =
+		"upgrade.query.monitor.long.running.threshold";
+
 	public static final String UPGRADE_REPORT_DIR = "upgrade.report.dir";
 
 	public static final String UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =

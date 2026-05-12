@@ -5,6 +5,8 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.batch.engine.csv.ColumnDescriptor;
 import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.petra.function.UnsafeFunction;
@@ -17,13 +19,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +34,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 /**
  * @author Shuyang Zhou
@@ -228,10 +229,10 @@ public class ColumnValuesExtractor {
 
 		if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
 			if (ItemClassIndexUtil.isDate(fieldClass)) {
-				DateFormat dateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+				ObjectMapper objectMapper =
+					ObjectMapperProviderUtil.getBatchEngineObjectMapper();
 
-				dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+				DateFormat dateFormat = objectMapper.getDateFormat();
 
 				return new UnsafeFunction
 					<Object, Object, ReflectiveOperationException>() {

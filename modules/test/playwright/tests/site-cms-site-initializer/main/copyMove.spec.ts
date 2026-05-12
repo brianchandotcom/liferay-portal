@@ -892,3 +892,111 @@ test(
 		});
 	}
 );
+
+test(
+	'Can copy a content to a folder in a different Space',
+	{tag: '@LPD-89762'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const sourceSpaceName = `Space ${getRandomString()}`;
+		const destinationSpaceName = `Space ${getRandomString()}`;
+		const destinationFolderName = `Destination ${getRandomString()}`;
+		const contentTitle = `Content ${getRandomString()}`;
+
+		await test.step('Create source and destination Spaces', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: sourceSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		let destinationFolderId: number;
+
+		await test.step('Create a destination folder in the destination Space', async () => {
+			const folder =
+				await apiHelpers.objectFolder.createObjectEntryFolder({
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: destinationSpaceName,
+					title: destinationFolderName,
+				});
+
+			destinationFolderId = folder.id;
+		});
+
+		await test.step('Create a content in the source Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				applicationName,
+				sourceSpaceName
+			);
+		});
+
+		await test.step('Copy the content to the destination folder in the destination Space', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.copyTo({
+				destinationFolder: destinationFolderName,
+				destinationSpace: destinationSpaceName,
+				itemTitle: contentTitle,
+			});
+		});
+
+		await test.step('Info alert for the copy is displayed', async () => {
+			await waitForAlert(
+				page,
+				`Info:Copying ${contentTitle} to ${destinationFolderName}.`,
+				{type: 'info'}
+			);
+		});
+
+		await test.step('Success alert for the copy is displayed', async () => {
+			await waitForAlert(
+				page,
+				`Success:${contentTitle} was successfully copied to ${destinationFolderName}.`,
+				{first: true}
+			);
+		});
+
+		await test.step('The content is in the destination folder in the destination Space', async () => {
+			const response =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
+					applicationName,
+					encodeURIComponent(destinationSpaceName),
+					new URLSearchParams({pageSize: '100'})
+				);
+
+			const copiedItems = response.items.filter(
+				(item: {objectEntryFolderId: number}) =>
+					item.objectEntryFolderId === destinationFolderId
+			);
+
+			expect(copiedItems).toHaveLength(1);
+			expect(copiedItems[0].title).toBe(contentTitle);
+		});
+
+		await test.step('The original content is still present in the source Space', async () => {
+			const response =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
+					applicationName,
+					encodeURIComponent(sourceSpaceName),
+					new URLSearchParams({pageSize: '100'})
+				);
+
+			const sourceItems = response.items.filter(
+				(item: {title: string}) => item.title === contentTitle
+			);
+
+			expect(sourceItems).toHaveLength(1);
+		});
+	}
+);

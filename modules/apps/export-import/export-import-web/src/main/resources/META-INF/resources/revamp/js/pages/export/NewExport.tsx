@@ -118,6 +118,7 @@ export function NewExport({
 		<Formik
 			initialValues={{
 				contentSelection: undefined,
+				exportDeletions: false,
 				filename: '',
 			}}
 			onSubmit={async (values) => {
@@ -129,6 +130,7 @@ export function NewExport({
 				// eslint-disable-next-line no-console
 				console.log({
 					contentSelection: values.contentSelection,
+					exportDeletions: values.exportDeletions,
 					filename: values.filename,
 					flatValues,
 				});
@@ -157,6 +159,7 @@ export function NewExport({
 					<Setup />
 
 					<DataSelection
+						deletionCount={preview?.deletionCount}
 						itemsCount={preview?.additionCount}
 						loading={loading}
 						onApplyFilter={handleApplyFilter}

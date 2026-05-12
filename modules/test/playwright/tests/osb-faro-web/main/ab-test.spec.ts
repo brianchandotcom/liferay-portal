@@ -14,6 +14,8 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {
 	assertTerminatedABTest,
 	checkEmptyStateOnDXPSide,
@@ -24,7 +26,6 @@ import {
 } from '../../segment-experiment-web/main/utils/ab-test';
 import {checkEmptyStateOnACSide, clickOnActionButton} from './utils/ab-test';
 import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
-import {createSitePage, navigateToSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -45,10 +46,15 @@ test(
 	async ({apiHelpers, page, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName: site.name,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: pageTitle,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -61,11 +67,9 @@ test(
 		});
 
 		await test.step('Go to site page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await page.waitForSelector('.segments-experiment-icon');
 		});
@@ -127,10 +131,15 @@ test(
 	async ({apiHelpers, page, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName: site.name,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: pageTitle,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -143,11 +152,9 @@ test(
 		});
 
 		await test.step('Go to site page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await page.waitForSelector('.segments-experiment-icon');
 		});
@@ -214,10 +221,15 @@ test(
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
-		const layout = await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName: site.name,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: pageTitle,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -230,22 +242,17 @@ test(
 		});
 
 		await test.step('Go to site page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await page.waitForSelector('.segments-experiment-icon');
 		});
 
 		await test.step('Create a new Experience', async () => {
-			await navigateToSitePage({
-				layout,
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
 
 			await pageEditorPage.createExperience('Experience 1');
 
@@ -255,11 +262,9 @@ test(
 		const abTestName = 'AB Test -' + getRandomString();
 
 		await test.step('Create a new AB Test with a variant', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -283,12 +288,9 @@ test(
 		});
 
 		await test.step('Able to Edit Experience', async () => {
-			await navigateToSitePage({
-				layout,
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
 
 			await pageEditorPage.openExperienceSelector();
 
@@ -305,10 +307,15 @@ test(
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
-		const layout = await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName: site.name,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: pageTitle,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -321,12 +328,9 @@ test(
 		});
 
 		await test.step('Create a new Experience', async () => {
-			await navigateToSitePage({
-				layout,
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
 
 			await pageEditorPage.createExperience('Experience 1');
 
@@ -336,11 +340,9 @@ test(
 		const abTestName = 'AB Test -' + getRandomString();
 
 		await test.step('Create a new AB Test with a variant', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -384,12 +386,9 @@ test(
 		});
 
 		await test.step('Not able to Edit Experience', async () => {
-			await navigateToSitePage({
-				layout,
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
 
 			await pageEditorPage.openExperienceSelector();
 
@@ -406,10 +405,15 @@ test(
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
-		const layout = await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName: site.name,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: pageTitle,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -422,12 +426,9 @@ test(
 		});
 
 		await test.step('Create a new Experience', async () => {
-			await navigateToSitePage({
-				layout,
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
 
 			await pageEditorPage.createExperience('Experience 1');
 
@@ -437,11 +438,9 @@ test(
 		const abTestName = 'AB Test -' + getRandomString();
 
 		await test.step('Create a new AB Test with a variant', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
@@ -477,12 +476,9 @@ test(
 		});
 
 		await test.step('Not able to Edit Experience', async () => {
-			await navigateToSitePage({
-				layout,
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
 
 			await pageEditorPage.openExperienceSelector();
 
@@ -499,10 +495,15 @@ test(
 	async ({apiHelpers, page, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
 
-		await createSitePage({
-			apiHelpers,
-			pageTitle,
-			siteName: site.name,
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: pageTitle,
 		});
 
 		const channelName = 'My Property - ' + getRandomString();
@@ -515,11 +516,9 @@ test(
 		});
 
 		await test.step('Go to site page', async () => {
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName: site.name,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await page.waitForSelector('.segments-experiment-icon');
 		});

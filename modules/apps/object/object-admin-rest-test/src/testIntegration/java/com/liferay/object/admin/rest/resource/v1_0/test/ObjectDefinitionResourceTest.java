@@ -3333,9 +3333,16 @@ public class ObjectDefinitionResourceTest
 		ObjectDefinition parentObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
+
+		objectDefinitionResource.postObjectDefinitionPublish(
+			parentObjectDefinition.getId());
+
 		ObjectDefinition childObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
+
+		objectDefinitionResource.postObjectDefinitionPublish(
+			childObjectDefinition.getId());
 
 		TreeTestUtil.bind(
 			parentObjectDefinition.getId(), childObjectDefinition.getId(),
@@ -3375,6 +3382,22 @@ public class ObjectDefinitionResourceTest
 				Http.Method.PUT));
 
 		Assert.assertFalse(
+			_objectDefinitionLocalService.getObjectDefinition(
+				childObjectDefinition.getId()
+			).isAllowStandaloneObjectEntry());
+
+		childObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings("true"));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				childObjectDefinition.toString(),
+				"object-admin/v1.0/object-definitions/" +
+					childObjectDefinition.getId(),
+				Http.Method.PUT));
+
+		Assert.assertTrue(
 			_objectDefinitionLocalService.getObjectDefinition(
 				childObjectDefinition.getId()
 			).isAllowStandaloneObjectEntry());

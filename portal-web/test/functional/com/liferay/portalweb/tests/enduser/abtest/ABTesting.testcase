@@ -538,48 +538,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119475: When a user has selected an element and clicks on the x icon within the ID box, the ID box gets empty and the Change clickable element button changes into Select clickable element"
-	@priority = 3
-	test ClearIDBox {
-		task ("Edit the Content page to add a button fragment") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			Button.clickPublish();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-		}
-
-		task ("Take ID Element and assert the element ID appears in the ID box") {
-			var idbutton = ABTest.takeElementID();
-
-			ABTest.selectElementID();
-
-			AssertTextEquals.assertValue(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = ${idbutton});
-		}
-
-		task ("Clear ID Box") {
-			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
-		}
-
-		task ("Assert the ID box is empty") {
-			AssertTextEquals.assertValue(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "");
-		}
-	}
-
 	@description = "LPS-137274 Validate if the user can create an A/B Test by Bounce rate"
 	@priority = 5
 	@uitest
@@ -1215,6 +1173,16 @@ definition {
 				key_idElement = ${idbutton},
 				locator1 = "ABTest#TARGET_ELEMENT",
 				value1 = ${idbutton});
+		}
+
+		task ("Clear ID Box") {
+			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
+		}
+
+		task ("Assert the ID box is empty") {
+			AssertTextEquals.assertValue(
+				locator1 = "ABTest#ELEMENT_ID_INPUT",
+				value1 = "");
 		}
 	}
 

@@ -271,7 +271,9 @@ paths:
             tags: ["FragmentSet"]
         put:
             description:
-                Updates the fragment set with the given external reference code, or creates it if it does not exist.
+                Updates the fragment set with the given external reference code, or creates it if it does not exist. On
+                update, only `name` and `description` are honored; `externalReferenceCode`, `key`, and `marketplace` are
+                immutable and any values sent for them in the request body are ignored.
             operationId: putSiteFragmentSet
             parameters:
                 -   in: path

@@ -7421,6 +7421,19 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition6, objectEntry,
 			String.valueOf(_depotEntry.getGroupId()), false);
 
+		role = _addRoleUser(
+			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
+			_objectDefinition6, _user);
+
+		_assertVersionedObjectEntriesCopyAction(
+			dtoConverterContext, _objectDefinition6, objectEntry,
+			String.valueOf(_depotEntry.getGroupId()), false);
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition6.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
 		// Depot scope using the default object entry folder
 
 		PrincipalThreadLocal.setName(adminUser.getUserId());

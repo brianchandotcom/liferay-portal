@@ -392,6 +392,10 @@ public class TestrayCaseResult {
 		return null;
 	}
 
+	public void setTestrayComponent(TestrayComponent testrayComponent) {
+		_testrayComponent = testrayComponent;
+	}
+
 	public void setTestrayRun(TestrayRun testrayRun) {
 		_testrayRun = testrayRun;
 	}

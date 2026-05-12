@@ -8,23 +8,25 @@ package com.liferay.sharing.internal.model.listener;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.TicketTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,17 +63,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		_sharingEntryLocalService.deleteToUserSharingEntries(user.getUserId());
 	}
 
-	private Predicate _getPredicate() {
-		return SharingEntryTable.INSTANCE.classNameId.eq(
-			TicketTable.INSTANCE.classNameId
-		).and(
-			SharingEntryTable.INSTANCE.classPK.eq(TicketTable.INSTANCE.classPK)
-		).and(
-			SharingEntryTable.INSTANCE.toTicketId.eq(
-				TicketTable.INSTANCE.ticketId)
-		);
-	}
-
 	private Predicate _getWherePredicate(User user) {
 		return TicketTable.INSTANCE.companyId.eq(
 			user.getCompanyId()
@@ -84,60 +75,62 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	private void _updateSharingEntries(User user) {
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				List<Ticket> tickets =
-					(List<Ticket>)_ticketLocalService.dslQuery(
-						DSLQueryFactoryUtil.selectDistinct(
-							TicketTable.INSTANCE
-						).from(
-							TicketTable.INSTANCE
-						).innerJoinON(
-							SharingEntryTable.INSTANCE, _getPredicate()
-						).where(
-							_getWherePredicate(user)
-						));
+		List<SharingEntry> sharingEntries =
+			(List<SharingEntry>)_sharingEntryLocalService.dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					SharingEntryTable.INSTANCE
+				).from(
+					SharingEntryTable.INSTANCE
+				).innerJoinON(
+					TicketTable.INSTANCE,
+					SharingEntryTable.INSTANCE.toTicketId.eq(
+						TicketTable.INSTANCE.ticketId)
+				).where(
+					_getWherePredicate(user)
+				),
+				false);
 
-				for (Ticket ticket : tickets) {
-					for (SharingEntry sharingEntry :
-							_sharingEntryLocalService.getToTicketSharingEntries(
-								ticket.getTicketId())) {
+		Set<Long> ticketIds = new HashSet<>();
 
-						_updateSharingEntry(sharingEntry, user);
-					}
+		for (SharingEntry pendingSharingEntry : sharingEntries) {
+			ticketIds.add(pendingSharingEntry.getToTicketId());
 
-					_ticketLocalService.deleteTicket(ticket);
+			SharingEntry existingSharingEntry =
+				_sharingEntryLocalService.fetchSharingEntry(
+					0, pendingSharingEntry.getToUserGroupId(), user.getUserId(),
+					pendingSharingEntry.getClassNameId(),
+					pendingSharingEntry.getClassPK());
+
+			if (existingSharingEntry != null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"A sharing entry already exists for user ",
+							user.getUserId(), " with classNameId ",
+							pendingSharingEntry.getClassNameId(),
+							" and classPK ", pendingSharingEntry.getClassPK()));
 				}
 
-				return null;
-			});
-	}
-
-	private void _updateSharingEntry(SharingEntry sharingEntry, User user) {
-		SharingEntry existingSharingEntry =
-			_sharingEntryLocalService.fetchSharingEntry(
-				0, sharingEntry.getToUserGroupId(), user.getUserId(),
-				sharingEntry.getClassNameId(), sharingEntry.getClassPK());
-
-		if (existingSharingEntry != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"A sharing entry already exists for user ",
-						user.getUserId(), " with classNameId ",
-						sharingEntry.getClassNameId(), " and classPK ",
-						sharingEntry.getClassPK()));
+				_sharingEntryLocalService.deleteSharingEntry(
+					pendingSharingEntry);
 			}
+			else {
+				pendingSharingEntry.setToTicketId(0);
+				pendingSharingEntry.setToUserId(user.getUserId());
 
-			_sharingEntryLocalService.deleteSharingEntry(sharingEntry);
-
-			return;
+				_sharingEntryLocalService.updateSharingEntry(
+					pendingSharingEntry);
+			}
 		}
 
-		sharingEntry.setToTicketId(0);
-		sharingEntry.setToUserId(user.getUserId());
-
-		_sharingEntryLocalService.updateSharingEntry(sharingEntry);
+		for (Long ticketId : ticketIds) {
+			try {
+				_ticketLocalService.deleteTicket(ticketId);
+			}
+			catch (PortalException portalException) {
+				throw new ModelListenerException(portalException);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

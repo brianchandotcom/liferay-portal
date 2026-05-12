@@ -8,29 +8,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewTasksSectionDisplayContext viewTasksSectionDisplayContext = (ViewTasksSectionDisplayContext)request.getAttribute(ViewTasksSectionDisplayContext.class.getName());
+ViewAllTasksSectionDisplayContext viewAllTasksSectionDisplayContext = (ViewAllTasksSectionDisplayContext)request.getAttribute(ViewAllTasksSectionDisplayContext.class.getName());
 %>
-
-<div>
-	<react:component
-		module="{TasksQuickFilters} from site-cmp-site-initializer"
-		props="<%= viewTasksSectionDisplayContext.getTasksQuickFiltersProperties() %>"
-	/>
-</div>
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
-		additionalProps="<%= viewTasksSectionDisplayContext.getAdditionalProps() %>"
-		apiURL="<%= viewTasksSectionDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= viewTasksSectionDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= viewTasksSectionDisplayContext.getCreationMenu() %>"
-		emptyState="<%= viewTasksSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= viewTasksSectionDisplayContext.getFDSActionDropdownItems() %>"
-		fdsFilters="<%= viewTasksSectionDisplayContext.getFDSFilters() %>"
+		additionalProps="<%= viewAllTasksSectionDisplayContext.getAdditionalProps() %>"
+		apiURL="<%= viewAllTasksSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewAllTasksSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewAllTasksSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewAllTasksSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewAllTasksSectionDisplayContext.getFDSActionDropdownItems() %>"
+		fdsFilters="<%= viewAllTasksSectionDisplayContext.getFDSFilters() %>"
 		formName="fm"
-		id="<%= CMPSiteInitializerFDSNames.CMP_TASK %>"
+		id="<%= CMPSiteInitializerFDSNames.CMP_ALL_TASKS %>"
 		itemsPerPage="<%= 20 %>"
-		propsTransformer="{TasksFDSPropsTransformer} from site-cmp-site-initializer"
+		propsTransformer="{AllTasksFDSPropsTransformer} from site-cmp-site-initializer"
 		selectedItemsKey="embedded.id"
 		selectionType="multiple"
 	/>

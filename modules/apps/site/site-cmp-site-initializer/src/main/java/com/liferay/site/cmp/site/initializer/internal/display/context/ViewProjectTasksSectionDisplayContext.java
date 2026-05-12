@@ -8,8 +8,6 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryService;
@@ -17,24 +15,22 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Gabriel Albuquerque
  */
-public class ViewAllTasksSectionDisplayContext
+public class ViewProjectTasksSectionDisplayContext
 	extends BaseTasksSectionDisplayContext {
 
-	public ViewAllTasksSectionDisplayContext(
+	public ViewProjectTasksSectionDisplayContext(
 		AssetTagLocalService assetTagLocalService,
 		ClassNameLocalService classNameLocalService,
 		DepotEntryLocalService depotEntryLocalService,
@@ -57,37 +53,39 @@ public class ViewAllTasksSectionDisplayContext
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(6);
 
-		sb.append("/o/search/v1.0/search?emptySearch=true&entryClassNames=");
-		sb.append(HtmlUtil.escapeURL(objectDefinition.getClassName()));
-		sb.append(StringPool.COMMA);
-		sb.append(KaleoTaskInstanceToken.class.getName());
+		sb.append("/o/search/v1.0/search?emptySearch=true");
 		sb.append("&filter=(objectDefinitionId eq ");
 		sb.append(objectDefinition.getObjectDefinitionId());
-		sb.append(" or keywords/any(k:startswith(k, '");
-		sb.append(objectDefinition.getExternalReferenceCode());
-		sb.append("')))&nestedFields=cmpProjectToCMPTasks,embedded");
+
+		if (assetEntry != null) {
+			sb.append(" and scopeGroupId eq ");
+			sb.append(assetEntry.getGroupId());
+		}
+
+		sb.append(")&nestedFields=cmpProjectToCMPTasks,embedded");
 
 		return sb.toString();
 	}
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return FDSActionDropdownItemList.of(
-			getWorkflowTransitionsGroupFDSActionDropdownItem(),
-			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
-				ListUtil.concat(
-					getProjectTasksFDSActionDropdownItems(
-						objectDefinition.getClassName()),
-					getWorkflowTasksFDSActionDropdownItems())
-			).setSeparator(
-				true
-			).setType(
-				"group"
-			).build(
-				"other-actions"
-			));
+		return getProjectTasksFDSActionDropdownItems(
+			objectDefinition.getClassName());
+	}
+
+	public Map<String, Object> getTasksQuickFiltersProperties() {
+		return HashMapBuilder.<String, Object>put(
+			"projectId",
+			() -> {
+				if (assetEntry == null) {
+					return null;
+				}
+
+				return assetEntry.getClassPK();
+			}
+		).build();
 	}
 
 }

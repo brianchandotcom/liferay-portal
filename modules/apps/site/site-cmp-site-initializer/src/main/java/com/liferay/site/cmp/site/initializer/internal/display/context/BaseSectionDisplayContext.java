@@ -8,13 +8,10 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryService;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,26 +41,6 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public abstract String getAPIURL();
-
-	public List<DropdownItem> getBulkActionDropdownItems() {
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "date-time", "update-due-date",
-				LanguageUtil.get(httpServletRequest, "update-due-date"), "post",
-				"update-due-date", null),
-			new FDSActionDropdownItem(
-				"#", "user", "assign-task",
-				LanguageUtil.get(httpServletRequest, "assign-task"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				null, "arrow-start", "update-state",
-				LanguageUtil.get(httpServletRequest, "update-state"), "post",
-				"update-state", null),
-			new FDSActionDropdownItem(
-				"#", "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), null, null,
-				null));
-	}
 
 	public abstract CreationMenu getCreationMenu() throws Exception;
 

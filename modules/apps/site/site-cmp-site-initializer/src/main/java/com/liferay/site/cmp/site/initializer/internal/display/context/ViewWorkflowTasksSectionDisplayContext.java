@@ -10,6 +10,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryService;
@@ -17,24 +18,22 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Fábio Alves
  */
-public class ViewAllTasksSectionDisplayContext
+public class ViewWorkflowTasksSectionDisplayContext
 	extends BaseTasksSectionDisplayContext {
 
-	public ViewAllTasksSectionDisplayContext(
+	public ViewWorkflowTasksSectionDisplayContext(
 		AssetTagLocalService assetTagLocalService,
 		ClassNameLocalService classNameLocalService,
 		DepotEntryLocalService depotEntryLocalService,
@@ -57,19 +56,20 @@ public class ViewAllTasksSectionDisplayContext
 
 	@Override
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&entryClassNames=");
-		sb.append(HtmlUtil.escapeURL(objectDefinition.getClassName()));
-		sb.append(StringPool.COMMA);
 		sb.append(KaleoTaskInstanceToken.class.getName());
-		sb.append("&filter=(objectDefinitionId eq ");
-		sb.append(objectDefinition.getObjectDefinitionId());
-		sb.append(" or keywords/any(k:startswith(k, '");
+		sb.append("&filter=keywords/any(k:startswith(k, '");
 		sb.append(objectDefinition.getExternalReferenceCode());
-		sb.append("')))&nestedFields=cmpProjectToCMPTasks,embedded");
+		sb.append("'))&nestedFields=embedded");
 
 		return sb.toString();
+	}
+
+	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -77,10 +77,7 @@ public class ViewAllTasksSectionDisplayContext
 		return FDSActionDropdownItemList.of(
 			getWorkflowTransitionsGroupFDSActionDropdownItem(),
 			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
-				ListUtil.concat(
-					getProjectTasksFDSActionDropdownItems(
-						objectDefinition.getClassName()),
-					getWorkflowTasksFDSActionDropdownItems())
+				getWorkflowTasksFDSActionDropdownItems()
 			).setSeparator(
 				true
 			).setType(

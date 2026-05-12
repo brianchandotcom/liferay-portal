@@ -13,6 +13,123 @@
 					"indexed": true
 				},
 				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "tabs"
+					},
+					"fragmentConfig": {
+						"numberOfTabs": 3,
+						"persistSelectedTab": true
+					},
+					"fragmentFields": [
+						{
+							"id": "title1",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "All Tasks"
+									}
+								}
+							}
+						},
+						{
+							"id": "title2",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Project Tasks"
+									}
+								}
+							}
+						},
+						{
+							"id": "title3",
+							"value": {
+								"fragmentLink": {
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "Workflow"
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"id": "cmp-global-tasks-list-navigation-tabs",
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentDropZoneId": "1"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewAllTasksJSPSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+							"fragmentDropZoneId": "2"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewProjectTasksJSPSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+							"fragmentDropZoneId": "3"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewWorkflowTasksJSPSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
 			}
 		],
 		"type": "Root"

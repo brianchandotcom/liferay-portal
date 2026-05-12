@@ -18,16 +18,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Fábio Alves
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CMPSiteInitializerFDSNames.CMP_ALL_TASKS,
-		"frontend.data.set.name=" + CMPSiteInitializerFDSNames.CMP_PROJECT_TASKS
-	},
+	property = "frontend.data.set.name=" + CMPSiteInitializerFDSNames.CMP_WORKFLOW_TASKS,
 	service = FDSView.class
 )
-public class TaskSectionTableFDSView extends BaseTableFDSView {
+public class WorkflowTaskSectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -35,20 +32,23 @@ public class TaskSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"title", "title",
+			"assetTitle", "asset-title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"actionLink"
+				"actionLinkWorkflowTask"
 			).setContentRenderer(
-				"simpleActionLinkTableCellRenderer"
+				"assetTitleTableCellRenderer"
 			)
 		).add(
-			"assignee", "assign-to",
+			"assetType", "asset-type",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"assigneeTableCellRenderer")
+				"assetTypeTableCellRenderer")
 		).add(
-			"projectTitle", "project",
+			"embedded.creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setLocalizeLabel(true)
+		).add(
+			"task", "task",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"projectTitleTableCellRenderer")
+				"taskTableCellRenderer")
 		).add(
 			"dueDate", "due-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
@@ -56,7 +56,14 @@ public class TaskSectionTableFDSView extends BaseTableFDSView {
 		).add(
 			"state", "state-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"stateTableCellRenderer")
+				"workflowStateTableCellRenderer")
+		).add(
+			"dateModified", "last-activity-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dateTime"
+			).setSortable(
+				true
+			)
 		).build();
 	}
 

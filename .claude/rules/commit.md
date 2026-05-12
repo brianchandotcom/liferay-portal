@@ -1,28 +1,10 @@
----
+# Commit
 
-allowed-tools: [Bash, Glob, Grep, Read, Skill]
-argument-hint: "[optional message hint]"
-description: Create a Git commit with a Jira-prefixed message derived from the staged diff. Use when the user asks to commit, wants to commit changes, or invokes /commit.
-name: commit
-
----
-
-# Commit Changes
-
-Compose a well-crafted Git commit for the current set of changes.
+Follow these rules before committing any change to the repository. These rules apply to all commits.
 
 ## 1. Format Source
 
-Before composing the commit, invoke the `format-source` skill to ensure all changes follow Liferay's coding standards (both the automatic formatter and the manual rules). After it completes, any edits the formatter applied are part of what gets committed.
-
-## 2. Gather Context
-
-- When Claude modified or created files during this conversation, commit **only** those files. Stage them explicitly by name with `git add <file1> <file2> ...`. Do not include the user's own changes.
-- When Claude did **not** modify any files in this conversation, commit **all** changes. Stage modified and deleted files, but leave untracked files alone. When untracked files exist, ask the user whether to include them.
-
-Never use `git add -A` or `git add .`.
-
-When nothing is staged, unstaged, or untracked, inform the user that there is nothing to commit and stop.
+Before composing the commit, always invoke the `format-source` skill to ensure all changes follow Liferay's coding standards. After it completes, any edits the formatter applied are part of what gets committed.
 
 ## 3. Extract the Jira Ticket
 
@@ -32,7 +14,7 @@ The ticket ID follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and sim
 
 1. **Recent Commits** — when the branch name lacks a ticket, scan the last five commit messages for a ticket prefix.
 
-1. **User Argument** — when `${ARGUMENTS}` supplies a ticket ID, prefer that value.
+1. **User Argument** — when the user supplies a ticket ID, prefer that value.
 
 1. **Fallback** — when no ticket surfaces, prompt the user for one.
 
@@ -69,25 +51,4 @@ When a body is warranted:
 - Do not wrap lines in the body.
 - Write plain prose rather than bullet points, matching the repository convention.
 
-When `${ARGUMENTS}` carries a hint or description rather than a ticket ID, incorporate it into the message.
-
-## 5. Confirm and Commit
-
-Present the proposed commit message to the user and request confirmation. Once they approve, create the commit:
-
-```bash
-COMMIT_MESSAGE=$(cat <<'EOF'
-<title>
-
-<body if applicable>
-EOF
-)
-
-git commit --message "${COMMIT_MESSAGE}"
-```
-
-When the user requests changes, revise the message and reconfirm.
-
-## 6. Post-Commit
-
-Run `git status` to confirm the commit succeeded, then display the result.
+When the user provides a hint or description, incorporate it into the message.

@@ -17,7 +17,7 @@ Create a GitHub pull request for the current branch, transition the linked Jira 
 
 - The current branch is a development branch, not `master` or any other protected branch.
 
-- The working tree has no uncommitted changes. When dirty, abort and ask the user to commit first (suggest `/commit`); do not stash or discard their work.
+- The working tree has no uncommitted changes. When dirty, abort and ask the user to commit first; do not stash or discard their work.
 
 ## Input
 

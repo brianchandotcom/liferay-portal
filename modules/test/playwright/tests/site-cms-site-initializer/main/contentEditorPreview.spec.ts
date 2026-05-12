@@ -327,7 +327,7 @@ test(
 
 				await expect(
 					page.getByText(
-						'No display page templates available for preview in this channel'
+						'No display page templates are available for preview in this channel'
 					)
 				).toBeVisible();
 			});
@@ -343,7 +343,7 @@ test(
 
 				await expect(
 					page.getByText(
-						'No display page templates available for preview in this channel'
+						'No display page templates are available for preview in this channel'
 					)
 				).not.toBeVisible();
 
@@ -459,7 +459,7 @@ test(
 
 				await expect(
 					page.getByText(
-						'No display page templates available for preview in this channel'
+						'No display page templates are available for preview in this channel'
 					)
 				).toBeVisible();
 
@@ -481,7 +481,7 @@ test(
 
 				await expect(
 					page.getByText(
-						'No display page templates available for preview in this channel'
+						'No display page templates are available for preview in this channel'
 					)
 				).not.toBeVisible();
 
@@ -579,24 +579,6 @@ test(
 			});
 
 			const form = page.locator('.lfr-layout-structure-item-form');
-
-			const openPreviewAndSelectDisplayPage = async () => {
-				await contentsPage.previewButton.click();
-
-				await clickAndExpectToBeVisible({
-					autoClick: true,
-					target: page.getByRole('option', {name: site.name}),
-					trigger: page.getByLabel('Select Channel'),
-				});
-
-				await clickAndExpectToBeVisible({
-					autoClick: true,
-					target: page.getByRole('option', {
-						name: displayPageTemplateName,
-					}),
-					trigger: page.getByLabel('Select Display Page'),
-				});
-			};
 
 			const fill = async (input: Locator, value: string) => {
 				await input.waitFor({state: 'visible', timeout: 15000});
@@ -715,10 +697,24 @@ test(
 				},
 			];
 
+			await contentsPage.previewButton.click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: site.name}),
+				trigger: page.getByLabel('Select Channel'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: displayPageTemplateName,
+				}),
+				trigger: page.getByLabel('Select Display Page'),
+			});
+
 			for (const {action, label} of fieldInteractions) {
 				await test.step(`Editing the ${label} field shows the unsaved changes alert`, async () => {
-					await openPreviewAndSelectDisplayPage();
-
 					await expect(unsavedChangesAlert).not.toBeVisible();
 
 					await action();
@@ -752,6 +748,7 @@ test(
 		site,
 		spaceSummaryPage,
 	}) => {
+		const catalanTitle = `Catalan ${getRandomString()}`;
 		const displayPageTemplateName = getRandomString();
 		const englishTitle = `English ${getRandomString()}`;
 		const spanishTitle = `Spanish ${getRandomString()}`;
@@ -778,7 +775,7 @@ test(
 				});
 			});
 
-			await test.step('Create a content with the English and Spanish title', async () => {
+			await test.step('Create a content with the English, Spanish and Catalan title', async () => {
 				await contentsPage.goto();
 
 				await contentsPage.createContent(
@@ -791,6 +788,12 @@ test(
 				await localizationSelectPage.switchLanguage('es-ES');
 
 				await page.getByLabel('Title').fill(spanishTitle);
+
+				await localizationSelectPage.switchLanguage('ca-ES');
+
+				await page.getByLabel('Title').fill(catalanTitle);
+
+				await localizationSelectPage.switchLanguage('en-US');
 
 				await contentsPage.saveContent();
 			});
@@ -826,6 +829,39 @@ test(
 
 				await expect(iframe.getByText(spanishTitle)).toBeVisible();
 				await expect(iframe.getByText(englishTitle)).not.toBeVisible();
+			});
+
+			await test.step('Close the preview, switch to Catalan and reopen the preview and verify the selected language persists', async () => {
+				await contentsPage.previewButton.click();
+
+				await expect(
+					page
+						.locator('.content-editor__preview')
+						.getByText('Preview', {exact: true})
+				).not.toBeVisible();
+
+				await localizationSelectPage.switchLanguage('ca-ES');
+
+				await contentsPage.previewButton.click();
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {name: site.name}),
+					trigger: page.getByLabel('Select Channel'),
+				});
+
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: page.getByRole('option', {
+						name: displayPageTemplateName,
+					}),
+					trigger: page.getByLabel('Select Display Page'),
+				});
+
+				const iframe = page.frameLocator('iframe');
+
+				await expect(iframe.getByText(catalanTitle)).toBeVisible();
+				await expect(iframe.getByText(spanishTitle)).not.toBeVisible();
 			});
 		}
 		finally {

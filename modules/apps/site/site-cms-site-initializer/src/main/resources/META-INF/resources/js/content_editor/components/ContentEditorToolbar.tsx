@@ -22,7 +22,11 @@ import Toolbar from '../../common/components/Toolbar';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 import PreviewModal from './preview/PreviewModal';
-import {PREVIEW_VISIBLE_SESSION_KEY} from './preview/sessionKeys';
+import {
+	PREVIEW_CHANNEL_SESSION_KEY,
+	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	PREVIEW_VISIBLE_SESSION_KEY,
+} from './preview/sessionKeys';
 import useLocalizationLanguageId from './useLocalizationLanguageId';
 
 export const EVENT_CLOSE_PREVIEW = 'contentEditor:closePreview';
@@ -127,6 +131,8 @@ export default function ContentEditorToolbar({
 	const handlePublishClick = useCallback(() => {
 		flushSync(() => setRedirect(backURL));
 
+		clearSessionStates();
+
 		setSuccessMessage(
 			hasWorkflow
 				? Liferay.Language.get('x-was-submitted-for-workflow')
@@ -188,6 +194,7 @@ export default function ContentEditorToolbar({
 		<Toolbar
 			backURL={backURL}
 			className="content-editor__toolbar position-fixed"
+			onBackClick={clearSessionStates}
 			title={headerTitle}
 		>
 			{Liferay.FeatureFlags['LPD-62272'] && (
@@ -266,6 +273,7 @@ export default function ContentEditorToolbar({
 					className="d-none d-sm-flex"
 					displayType="secondary"
 					href={backURL}
+					onClick={clearSessionStates}
 					small
 				>
 					{Liferay.Language.get('cancel')}
@@ -380,7 +388,10 @@ export default function ContentEditorToolbar({
 				<PreviewModal
 					getPreviewDataURL={getPreviewDataURL}
 					languageId={localizationLanguageId}
-					onCloseModal={() => setShowPreviewModal(false)}
+					onCloseModal={() => {
+						setShowPreviewModal(false);
+						clearSessionStates();
+					}}
 					title={title}
 				/>
 			) : null}
@@ -404,4 +415,12 @@ function getSubmitTitle(title: string) {
 		</kbd>`
 		.replaceAll('\n', '')
 		.replaceAll('\t', '');
+}
+
+function clearSessionStates() {
+	[
+		PREVIEW_VISIBLE_SESSION_KEY,
+		PREVIEW_CHANNEL_SESSION_KEY,
+		PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	].forEach((key) => sessionStorage.removeItem(key));
 }

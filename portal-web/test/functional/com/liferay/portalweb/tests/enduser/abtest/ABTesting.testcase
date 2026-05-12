@@ -731,7 +731,7 @@ definition {
 
 	@description = "LPS-101341: Validate if an alert appears when the user tries to delete an experience with an AB Test in a draft mode, the user should be able to delete the experience"
 	@priority = 4
-	test DeleteExperienceWithDraftABTest {
+	test DeleteExperienceWithDraftABTestConfirmOrCancel {
 		task ("Create an experience and add on content page") {
 			ContentPages.gotoPageEditor();
 

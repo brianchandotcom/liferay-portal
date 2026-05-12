@@ -146,7 +146,10 @@ test(
 					page.getByRole('heading', {name: `${content1} (Version 1)`})
 				).toBeVisible();
 
-				await page.getByLabel('Close', {exact: true}).click();
+				await page
+					.getByLabel(`${content1} (Version 1)`)
+					.getByLabel('Close')
+					.click();
 
 				await infoPanelPage.dropdownVersionAction('Version 1').click();
 				await infoPanelPage
@@ -182,6 +185,11 @@ test(
 				await infoPanelPage
 					.dropdownVersionActionMenuItem('Restore Version')
 					.click();
+
+				await waitForAlert(
+					page,
+					'Version 1 of the content has been successfully restored.'
+				);
 
 				await expect(page.getByRole('tabpanel')).toContainText(
 					'Version 3'
@@ -354,6 +362,11 @@ test(
 				await infoPanelPage
 					.dropdownVersionActionMenuItem('Restore Version')
 					.click();
+
+				await waitForAlert(
+					page,
+					'Version 1 of the content has been successfully restored.'
+				);
 
 				await expect(page.getByRole('tabpanel')).toContainText(
 					'Version 3'

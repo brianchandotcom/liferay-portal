@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useField, useFormikContext} from 'formik';
+import {FormikValues, useField, useFormikContext} from 'formik';
 import React from 'react';
 
 import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
@@ -23,7 +23,7 @@ export function FormikFieldContentSelector({
 	sections,
 }: FormikFieldContentSelectorProps) {
 	const [field, meta, helpers] = useField<ContentSelection | undefined>(name);
-	const {setFieldTouched} = useFormikContext();
+	const {setFieldTouched, values} = useFormikContext<FormikValues>();
 
 	return (
 		<ContentSelector
@@ -35,6 +35,7 @@ export function FormikFieldContentSelector({
 				setFieldTouched(name, true, false);
 			}}
 			sections={sections}
+			showDeletions={!!values.replicateDeletions}
 			value={field.value}
 		/>
 	);

@@ -41,4 +41,17 @@ describe('CountIndicators', () => {
 		expect(screen.getByText('x-items')).toBeInTheDocument();
 		expect(screen.getByText('x-deletions')).toBeInTheDocument();
 	});
+
+	it('hides the deletions badge when showDeletions is false', () => {
+		render(
+			<CountIndicators
+				additionCount={5}
+				deletionCount={3}
+				showDeletions={false}
+			/>
+		);
+
+		expect(screen.getByText('x-items')).toBeInTheDocument();
+		expect(screen.queryByText('x-deletions')).not.toBeInTheDocument();
+	});
 });

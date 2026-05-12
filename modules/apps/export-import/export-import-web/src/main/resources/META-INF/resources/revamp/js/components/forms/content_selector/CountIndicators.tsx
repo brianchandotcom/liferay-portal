@@ -10,25 +10,30 @@ import React from 'react';
 interface CountIndicatorsProps {
 	additionCount?: number;
 	deletionCount?: number;
+	showDeletions?: boolean;
 }
 
 export default function CountIndicators({
 	additionCount,
 	deletionCount,
+	showDeletions = true,
 }: CountIndicatorsProps) {
-	if (!additionCount && !deletionCount) {
+	const hasItems = !!additionCount;
+	const hasDeletions = showDeletions && !!deletionCount;
+
+	if (!hasItems && !hasDeletions) {
 		return null;
 	}
 
 	return (
 		<>
-			{additionCount ? (
+			{hasItems ? (
 				<span className="font-weight-normal ml-2 small text-secondary">
 					{sub(Liferay.Language.get('x-items'), additionCount)}
 				</span>
 			) : null}
 
-			{deletionCount ? (
+			{hasDeletions ? (
 				<ClayLabel className="ml-2" displayType="warning">
 					{sub(Liferay.Language.get('x-deletions'), deletionCount)}
 				</ClayLabel>

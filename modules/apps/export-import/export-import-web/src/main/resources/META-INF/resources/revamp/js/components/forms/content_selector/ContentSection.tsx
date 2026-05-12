@@ -26,12 +26,14 @@ export type SectionSelection = Record<string, HandlerSelection>;
 interface ContentSectionProps {
 	onChange: (value: SectionSelection | undefined) => void;
 	section: PortletDataHandlerSectionType;
+	showDeletions?: boolean;
 	value: SectionSelection | undefined;
 }
 
 export default function ContentSection({
 	onChange,
 	section,
+	showDeletions,
 	value,
 }: ContentSectionProps) {
 	const portletContextsValue = value || {};
@@ -80,6 +82,7 @@ export default function ContentSection({
 						<CountIndicators
 							additionCount={section.additionCount}
 							deletionCount={section.deletionCount}
+							showDeletions={showDeletions}
 						/>
 					</div>
 				</ClayLayout.ContentCol>
@@ -99,6 +102,7 @@ export default function ContentSection({
 								)
 							)
 						}
+						showDeletions={showDeletions}
 						value={portletContextsValue[context.name]}
 					/>
 				))}

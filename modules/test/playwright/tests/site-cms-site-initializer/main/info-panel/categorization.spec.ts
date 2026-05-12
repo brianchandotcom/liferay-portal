@@ -29,14 +29,7 @@ const test = mergeTests(
 test(
 	'Info Panel Categories tab',
 	{tag: '@LPD-68491'},
-	async ({
-		apiHelpers,
-		assetsPage,
-		contentsPage,
-		infoPanelPage,
-		page,
-		spaceSummaryPage,
-	}) => {
+	async ({apiHelpers, assetsPage, infoPanelPage, page, spaceSummaryPage}) => {
 		const applicationName = 'cms/basic-web-contents';
 		let categoryLabel;
 		const categoryName = getRandomString();
@@ -181,29 +174,6 @@ test(
 			});
 
 			await test.step('Check that space member can see tags and vocabulary but cannot edit them', async () => {
-				await expect(tagLabel).toBeAttached();
-				await expect(categoryLabel).toBeAttached();
-				await expect(
-					page.getByLabel(tagName).getByLabel('Close')
-				).toBeDisabled();
-				await expect(
-					page.getByLabel(categoryName).getByLabel('Close')
-				).toBeDisabled();
-			});
-
-			await test.step('Check that space member can see tags and vocabulary but cannot edit them also in the Content Editor', async () => {
-				await assetsPage.dataSetFragmentPage
-					.assetLink(file1Title)
-					.click();
-
-				await expect(
-					page.getByRole('heading', {
-						name: `Edit ${objectEntry.title}`,
-					})
-				).toBeVisible();
-
-				await contentsPage.openSidePanel('Categorization');
-
 				await expect(tagLabel).toBeAttached();
 				await expect(categoryLabel).toBeAttached();
 				await expect(

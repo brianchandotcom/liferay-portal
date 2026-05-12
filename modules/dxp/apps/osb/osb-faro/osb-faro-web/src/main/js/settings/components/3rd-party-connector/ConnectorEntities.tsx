@@ -3,16 +3,18 @@ import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import Label from '@clayui/label';
 import React from 'react';
-import {ConnectorEntityDescriptor} from './types';
+import {ConnectorEntityDescriptor, ConnectorStatus} from './types';
 import {getEntityDisplay} from './getEntityDisplay';
 import {sub} from 'shared/util/lang';
 
 interface IConnectorEntitiesProps {
+	connectorStatus?: ConnectorStatus;
 	entities: ConnectorEntityDescriptor[];
 	syncedCounts: {[entity: string]: number | undefined};
 }
 
 const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
+	connectorStatus,
 	entities,
 	syncedCounts
 }) => (
@@ -21,7 +23,10 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 			{entities.map(({entity}) => {
 				const {icon, label} = getEntityDisplay(entity);
 				const count = syncedCounts[entity];
-				const configured = typeof count === 'number' && count > 0;
+				const configured =
+					connectorStatus !== ConnectorStatus.Disconnected &&
+					typeof count === 'number' &&
+					count > 0;
 
 				return (
 					<ClayList.Item flex key={entity}>

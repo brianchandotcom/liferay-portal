@@ -2,7 +2,7 @@ jest.unmock('react-dom');
 
 import ConnectorEntities from '../ConnectorEntities';
 import React from 'react';
-import {Entity} from '../types';
+import {ConnectorStatus, Entity} from '../types';
 import {render} from '@testing-library/react';
 
 describe('ConnectorEntities', () => {
@@ -82,6 +82,42 @@ describe('ConnectorEntities', () => {
 		);
 
 		expect(getByText('Unconfigured')).toBeTruthy();
+	});
+
+	it('renders the Unconfigured label when connector status is Disconnected even with count greater than zero', () => {
+		const {getByText} = render(
+			<ConnectorEntities
+				connectorStatus={ConnectorStatus.Disconnected}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 5}}
+			/>
+		);
+
+		expect(getByText('Unconfigured')).toBeTruthy();
+	});
+
+	it('renders the Configured label when connector status is Active and count is greater than zero', () => {
+		const {getByText} = render(
+			<ConnectorEntities
+				connectorStatus={ConnectorStatus.Active}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 5}}
+			/>
+		);
+
+		expect(getByText('Configured')).toBeTruthy();
+	});
+
+	it('renders the Configured label when connector status is Inactive and count is greater than zero', () => {
+		const {getByText} = render(
+			<ConnectorEntities
+				connectorStatus={ConnectorStatus.Inactive}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 5}}
+			/>
+		);
+
+		expect(getByText('Configured')).toBeTruthy();
 	});
 
 	it('renders nothing inside the list when no entities are provided', () => {

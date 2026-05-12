@@ -1144,15 +1144,15 @@ definition {
 		}
 	}
 
-	@description = "LPS-96787: Validate if the Liferay NOT receives the notification when the test status is changed by the same user that created the test"
+	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
 	@priority = 3
-	test NoNotificationAfterChangesSameUser {
-		task ("Create AB test with a variant and run test") {
+	test ABTestNotificationFlows {
+		task ("Create AB test as admin, run and terminate to test no self-notification") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			ABTest.createABTest(
 				goal = "Bounce Rate",
-				testTitle = "AB test title");
+				testTitle = "Same user AB test");
 
 			ABTest.createVariant(variantName = "Variant name");
 
@@ -1161,14 +1161,10 @@ definition {
 			ABTest.terminateTest();
 		}
 
-		task ("Assert there are not notifications") {
+		task ("Assert no notification appears when the same user changes the test status") {
 			Notifications.viewNoNotifications(activePanel = "Notifications");
 		}
-	}
 
-	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
-	@priority = 3
-	test ABTestNotificationFlows {
 		task ("Create user and sync contact with AC") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

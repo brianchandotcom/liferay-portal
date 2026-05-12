@@ -70,7 +70,7 @@ async function getCollaborators(
 
 	const data = await response.json();
 
-	return data.items;
+	return data.items ?? [];
 }
 
 async function updateCollaborators(

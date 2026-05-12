@@ -4,6 +4,19 @@
 			{
 				"definition": {
 					"fragment": {
+						"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.PageTitleBreadcrumbComponentSectionFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
 						"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewProjectsJSPSectionFragmentRenderer"
 					},
 					"fragmentConfig": {

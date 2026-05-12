@@ -11,26 +11,17 @@
 ViewProjectsSectionDisplayContext viewProjectsSectionDisplayContext = (ViewProjectsSectionDisplayContext)request.getAttribute(ViewProjectsSectionDisplayContext.class.getName());
 %>
 
-<div>
-	<div>
-		<react:component
-			module="{Breadcrumb} from site-cms-site-initializer"
-			props="<%= viewProjectsSectionDisplayContext.getBreadcrumbProps() %>"
-		/>
-	</div>
-
-	<div class="cms-section custom-empty-state">
-		<frontend-data-set:headless-display
-			apiURL="<%= viewProjectsSectionDisplayContext.getAPIURL() %>"
-			creationMenu="<%= viewProjectsSectionDisplayContext.getCreationMenu() %>"
-			emptyState="<%= viewProjectsSectionDisplayContext.getEmptyState() %>"
-			fdsActionDropdownItems="<%= viewProjectsSectionDisplayContext.getFDSActionDropdownItems() %>"
-			fdsFilters="<%= viewProjectsSectionDisplayContext.getFDSFilters() %>"
-			formName="fm"
-			id="<%= CMPSiteInitializerFDSNames.CMP_PROJECT %>"
-			itemsPerPage="<%= 20 %>"
-			propsTransformer="{ProjectsFDSPropsTransformer} from site-cmp-site-initializer"
-			selectedItemsKey="embedded.id"
-		/>
-	</div>
+<div class="cms-section custom-empty-state">
+	<frontend-data-set:headless-display
+		apiURL="<%= viewProjectsSectionDisplayContext.getAPIURL() %>"
+		creationMenu="<%= viewProjectsSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewProjectsSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewProjectsSectionDisplayContext.getFDSActionDropdownItems() %>"
+		fdsFilters="<%= viewProjectsSectionDisplayContext.getFDSFilters() %>"
+		formName="fm"
+		id="<%= CMPSiteInitializerFDSNames.CMP_PROJECT %>"
+		itemsPerPage="<%= 20 %>"
+		propsTransformer="{ProjectsFDSPropsTransformer} from site-cmp-site-initializer"
+		selectedItemsKey="embedded.id"
+	/>
 </div>

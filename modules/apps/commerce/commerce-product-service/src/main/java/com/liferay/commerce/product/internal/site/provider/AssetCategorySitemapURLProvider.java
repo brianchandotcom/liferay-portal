@@ -6,8 +6,10 @@
 package com.liferay.commerce.product.internal.site.provider;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
@@ -16,6 +18,7 @@ import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,6 +41,7 @@ import com.liferay.site.manager.SitemapManager;
 import com.liferay.site.provider.SitemapURLProvider;
 import com.liferay.site.provider.helper.SitemapURLProviderHelper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -54,6 +58,43 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 	@Override
 	public String getClassName() {
 		return AssetCategory.class.getName();
+	}
+
+	@Override
+	public Date getLastModifiedDate(long companyId, long groupId)
+		throws PortalException {
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		List<Date> modifiedDates = _assetCategoryLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				AssetCategoryTable.INSTANCE.modifiedDate
+			).from(
+				AssetCategoryTable.INSTANCE
+			).innerJoinON(
+				AssetVocabularyTable.INSTANCE,
+				AssetVocabularyTable.INSTANCE.vocabularyId.eq(
+					AssetCategoryTable.INSTANCE.vocabularyId)
+			).where(
+				AssetVocabularyTable.INSTANCE.groupId.eq(
+					company.getGroupId()
+				).and(
+					AssetVocabularyTable.INSTANCE.visibilityType.neq(
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL)
+				).and(
+					AssetCategoryTable.INSTANCE.modifiedDate.isNotNull()
+				)
+			).orderBy(
+				AssetCategoryTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				0, 1
+			));
+
+		if (modifiedDates.isEmpty()) {
+			return null;
+		}
+
+		return modifiedDates.get(0);
 	}
 
 	@Override

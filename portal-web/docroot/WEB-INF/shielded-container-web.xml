@@ -993,6 +993,22 @@
 		<url-pattern>/sitemap.xml</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-categories.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-object-entries.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-pages.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Sitemap Servlet</servlet-name>
+		<url-pattern>/sitemap-web-content.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>Sharepoint Document Workspace Servlet</servlet-name>
 		<url-pattern>/sharepoint/_vti_bin/dws.asmx</url-pattern>
 	</servlet-mapping>

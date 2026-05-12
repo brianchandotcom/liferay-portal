@@ -46,9 +46,9 @@ public interface SitemapManager {
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException;
 
-	public String getAssetTypeFromSlug(String slug);
+	public String getAssetTypeClassName(String assetTypeKey);
 
-	public Map<String, String> getAssetTypeSlugs();
+	public Map<String, String> getAssetTypeKeys();
 
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)

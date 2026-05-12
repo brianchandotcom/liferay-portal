@@ -44,6 +44,10 @@ public class FragmentCollectionFilterTagsDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getFragmentEntryLinkNamespace() {
+		return _fragmentRendererContext.getFragmentElementId();
+	}
+
 	public String getHelpText() {
 		String helpText = GetterUtil.getString(_getFieldValue("helpText"));
 
@@ -79,6 +83,8 @@ public class FragmentCollectionFilterTagsDisplayContext {
 		).put(
 			"fragmentEntryLinkId",
 			String.valueOf(_fragmentEntryLink.getFragmentEntryLinkId())
+		).put(
+			"fragmentEntryLinkNamespace", getFragmentEntryLinkNamespace()
 		).put(
 			"groupIds",
 			ArrayUtil.toStringArray(

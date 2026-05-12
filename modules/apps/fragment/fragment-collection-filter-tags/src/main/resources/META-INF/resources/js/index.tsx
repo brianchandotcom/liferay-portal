@@ -15,6 +15,7 @@ import React, {useCallback, useState} from 'react';
 interface IProps {
 	disabled: boolean;
 	fragmentEntryLinkId: string;
+	fragmentEntryLinkNamespace: string;
 	groupIds: Array<string>;
 	helpText: string;
 	label: string;
@@ -25,6 +26,7 @@ interface IProps {
 export function SelectTags({
 	disabled,
 	fragmentEntryLinkId,
+	fragmentEntryLinkNamespace,
 	groupIds,
 	helpText,
 	label,
@@ -65,6 +67,7 @@ export function SelectTags({
 			formGroupClassName="mb-0"
 			groupIds={groupIds}
 			helpText={helpText}
+			inputName={fragmentEntryLinkNamespace}
 			inputValue={inputValue}
 			label={label}
 			onInputValueChange={disabled ? () => {} : setInputValue}

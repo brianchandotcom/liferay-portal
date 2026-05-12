@@ -490,7 +490,7 @@ definition {
 
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
 	@priority = 5
-	test CheckVariantAddedInAC {
+	test CheckVariantAddedAndEditedInAC {
 		task ("Create AB test and create variant") {
 			ABTest.createABTest(
 				goal = "Bounce Rate",

@@ -244,11 +244,19 @@ public class PullRequest {
 				getUpstreamRemoteGitBranchName(),
 				gitRepositoryDir.getAbsolutePath(), getGitRepositoryName());
 
+		String senderSHA = getSenderSHA();
+
+		if (!gitWorkingDirectory.localSHAExists(senderSHA)) {
+			RemoteGitRef senderRemoteGitRef =
+				gitWorkingDirectory.getRemoteGitRef(
+					getSenderBranchName(), getSenderRemoteURL(), true);
+
+			gitWorkingDirectory.fetch(senderRemoteGitRef);
+		}
+
 		LocalGitBranch forwardLocalGitBranch =
-			gitWorkingDirectory.getRebasedLocalGitBranch(
-				forwardBranchName, getSenderBranchName(), getSenderRemoteURL(),
-				getSenderSHA(), getUpstreamRemoteGitBranchName(),
-				getUpstreamBranchSHA());
+			gitWorkingDirectory.createLocalGitBranch(
+				forwardBranchName, true, senderSHA);
 
 		RemoteGitBranch forwardRemoteGitBranch =
 			gitWorkingDirectory.pushToRemoteGitRepository(

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -62,6 +61,10 @@ public class SiteParamConverterProviderTest {
 
 	@Before
 	public void setUp() {
+		_testBaseURL =
+			"http://localhost:" + _portal.getPortalServerPort(false) +
+				"/o/test-vulcan/";
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			SiteParamConverterProviderTest.class);
 
@@ -93,7 +96,7 @@ public class SiteParamConverterProviderTest {
 				_CLASS_NAME_WEB_APPLICATION_EXCEPTION_MAPPER,
 				LoggerTestUtil.ERROR)) {
 
-			URLConnectionUtil.read(_TEST_BASE_URL + "0/name");
+			URLConnectionUtil.read(_testBaseURL + "0/name");
 		}
 	}
 
@@ -111,7 +114,7 @@ public class SiteParamConverterProviderTest {
 				LoggerTestUtil.ERROR)) {
 
 			URLConnectionUtil.read(
-				_TEST_BASE_URL + company.getGroupId() + "/name");
+				_testBaseURL + company.getGroupId() + "/name");
 		}
 	}
 
@@ -131,15 +134,15 @@ public class SiteParamConverterProviderTest {
 		Assert.assertEquals(
 			expectedGroupName,
 			URLConnectionUtil.read(
-				_TEST_BASE_URL + group.getExternalReferenceCode() + "/name"));
+				_testBaseURL + group.getExternalReferenceCode() + "/name"));
 		Assert.assertEquals(
 			expectedGroupName,
 			URLConnectionUtil.read(
-				_TEST_BASE_URL + group.getGroupId() + "/name"));
+				_testBaseURL + group.getGroupId() + "/name"));
 		Assert.assertEquals(
 			expectedGroupName,
 			URLConnectionUtil.read(
-				_TEST_BASE_URL + group.getGroupKey() + "/name"));
+				_testBaseURL + group.getGroupKey() + "/name"));
 	}
 
 	public static class TestApplication extends Application {
@@ -165,13 +168,10 @@ public class SiteParamConverterProviderTest {
 		"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 			"WebApplicationExceptionMapper";
 
-	private static final String _TEST_BASE_URL =
-		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-			"/o/test-vulcan/";
-
 	@Inject
 	private Portal _portal;
 
 	private ServiceRegistration<Application> _serviceRegistration;
+	private String _testBaseURL;
 
 }

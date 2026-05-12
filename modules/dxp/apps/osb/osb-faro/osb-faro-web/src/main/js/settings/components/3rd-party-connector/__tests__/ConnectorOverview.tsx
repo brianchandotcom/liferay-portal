@@ -174,6 +174,8 @@ const mockEntityCount = (count: number | undefined) =>
 
 describe('ConnectorOverview', () => {
 	beforeEach(() => {
+		window.localStorage.clear();
+
 		(generateConnectorToken as jest.Mock).mockClear();
 		(updateConnector as jest.Mock).mockClear();
 		(fetch as jest.Mock).mockClear();
@@ -770,6 +772,84 @@ describe('ConnectorOverview', () => {
 					'Your data may take some time to appear as syncing completes.'
 				)
 			).toBeTruthy();
+		});
+
+		it('ACTIVE with accounts: syncing alert can be dismissed and the dismissal is persisted in localStorage', () => {
+			mockEntityCount(7);
+
+			const {container, queryByText} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Active)
+			});
+
+			const closeButton = container.querySelector(
+				'.alert .close'
+			) as HTMLButtonElement;
+
+			expect(closeButton).toBeTruthy();
+
+			fireEvent.click(closeButton);
+
+			expect(
+				queryByText(
+					'Your data may take some time to appear as syncing completes.'
+				)
+			).toBeNull();
+
+			expect(
+				window.localStorage.getItem(
+					'connector-overview:syncing-alert-dismissed:ds-1'
+				)
+			).toBe('true');
+		});
+
+		it('ACTIVE with accounts: syncing alert is hidden on re-render when localStorage flag is set', () => {
+			window.localStorage.setItem(
+				'connector-overview:syncing-alert-dismissed:ds-1',
+				'true'
+			);
+
+			mockEntityCount(7);
+
+			const {queryByText} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Active)
+			});
+
+			expect(
+				queryByText(
+					'Your data may take some time to appear as syncing completes.'
+				)
+			).toBeNull();
+		});
+
+		it('ACTIVE with accounts: dismissal of one data source does not hide the alert for another data source', () => {
+			window.localStorage.setItem(
+				'connector-overview:syncing-alert-dismissed:other-ds',
+				'true'
+			);
+
+			mockEntityCount(7);
+
+			const {getByText} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Active)
+			});
+
+			expect(
+				getByText(
+					'Your data may take some time to appear as syncing completes.'
+				)
+			).toBeTruthy();
+		});
+
+		it('DISCONNECTED with data: previously-synced alert does not render a close button', () => {
+			mockEntityCount(7);
+
+			const {container} = renderOverview({
+				dataSource: buildDataSource(DataSourceStatuses.Inactive, {
+					state: DataSourceStates.Disconnected
+				})
+			});
+
+			expect(container.querySelector('.alert .close')).toBeNull();
 		});
 
 		it('INACTIVE without data: no alert', () => {

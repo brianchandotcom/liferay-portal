@@ -351,11 +351,28 @@ interface IConnectorEntityListProps {
 	groupId: string;
 }
 
+const getSyncingAlertStorageKey = (dataSourceId: string) =>
+	`connector-overview:syncing-alert-dismissed:${dataSourceId}`;
+
 const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 	config,
 	dataSource,
 	groupId
 }) => {
+	const syncingAlertStorageKey = getSyncingAlertStorageKey(
+		dataSource.id ?? ''
+	);
+
+	const [syncingAlertDismissed, setSyncingAlertDismissed] = useState(
+		() => window.localStorage.getItem(syncingAlertStorageKey) === 'true'
+	);
+
+	const handleDismissSyncingAlert = () => {
+		window.localStorage.setItem(syncingAlertStorageKey, 'true');
+
+		setSyncingAlertDismissed(true);
+	};
+
 	const countResponse = useRequest({
 		dataSourceFn: async (params: {[key: string]: any}) => {
 			const entries = await Promise.all(
@@ -429,11 +446,21 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 					title={Liferay.Language.get('available-data')}
 				/>
 
-				{availableDataAlert && (
-					<ClayAlert displayType={availableDataAlert.displayType}>
-						{availableDataAlert.message}
-					</ClayAlert>
-				)}
+				{availableDataAlert &&
+					!(
+						availableDataAlert.dismissible && syncingAlertDismissed
+					) && (
+						<ClayAlert
+							displayType={availableDataAlert.displayType}
+							onClose={
+								availableDataAlert.dismissible
+									? handleDismissSyncingAlert
+									: undefined
+							}
+						>
+							{availableDataAlert.message}
+						</ClayAlert>
+					)}
 
 				<ConnectorEntities
 					connectorStatus={getConnectorStatus(dataSource)}

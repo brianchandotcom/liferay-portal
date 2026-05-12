@@ -21,10 +21,11 @@ describe('getConnectorAvailableDataAlert', () => {
 			).toBeNull();
 		});
 
-		it('with data: info / "Your data may take some time to appear" message', () => {
+		it('with data: dismissible info / "Your data may take some time to appear" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(activeDataSource, true)
 			).toEqual({
+				dismissible: true,
 				displayType: 'info',
 				message: SYNCING_COMPLETES_MESSAGE
 			});
@@ -43,10 +44,11 @@ describe('getConnectorAvailableDataAlert', () => {
 			).toBeNull();
 		});
 
-		it('with data (90d): info / "Previously synced data remains available" message', () => {
+		it('with data (90d): non-dismissible info / "Previously synced data remains available" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(inactiveDataSource, true)
 			).toEqual({
+				dismissible: false,
 				displayType: 'info',
 				message: PREVIOUSLY_SYNCED_MESSAGE
 			});
@@ -59,19 +61,21 @@ describe('getConnectorAvailableDataAlert', () => {
 			status: DataSourceStatuses.Inactive
 		});
 
-		it('with data: info / "Previously synced data remains available" message', () => {
+		it('with data: non-dismissible info / "Previously synced data remains available" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(disconnectedDataSource, true)
 			).toEqual({
+				dismissible: false,
 				displayType: 'info',
 				message: PREVIOUSLY_SYNCED_MESSAGE
 			});
 		});
 
-		it('without data: still shows "Previously synced data remains available" message', () => {
+		it('without data: still shows non-dismissible / "Previously synced data remains available" message', () => {
 			expect(
 				getConnectorAvailableDataAlert(disconnectedDataSource, false)
 			).toEqual({
+				dismissible: false,
 				displayType: 'info',
 				message: PREVIOUSLY_SYNCED_MESSAGE
 			});

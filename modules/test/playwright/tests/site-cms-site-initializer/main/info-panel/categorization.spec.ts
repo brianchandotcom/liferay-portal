@@ -218,7 +218,8 @@ test(
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				file: {
-					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					fileBase64:
+						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=',
 					name: `file_${getRandomString()}.png`,
 				},
 				objectEntryFolderExternalReferenceCode: 'L_FILES',
@@ -366,7 +367,8 @@ test(
 			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 				{
 					file: {
-						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						fileBase64:
+							'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=',
 						name: file1Title,
 					},
 					title: file1Title,

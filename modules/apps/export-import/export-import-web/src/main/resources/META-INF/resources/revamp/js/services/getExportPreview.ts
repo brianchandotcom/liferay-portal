@@ -3,18 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {NormalizedDateFilter} from '../components/date_filter';
 import {ExportPreview} from '../types/exportImportPreview';
 import ApiHelper, {RequestResult} from './ApiHelper';
 
-export interface ExportPreviewQuery {
-	endDate?: string;
-	last?: number;
-	range?: 'all' | 'dateRange' | 'last';
-	startDate?: string;
-}
-
 export interface ExportPreviewParams {
-	query?: ExportPreviewQuery;
+	query?: NormalizedDateFilter;
 	url: string;
 }
 

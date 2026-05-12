@@ -10,6 +10,7 @@ import {
 	EditingState,
 	FilterType,
 	ModifiedLastType,
+	NormalizedDateFilter,
 } from './types';
 
 export const FILTER_OPTIONS = [
@@ -52,6 +53,27 @@ export const MODIFIED_LAST_OPTIONS = [
 		value: ModifiedLastType.D7,
 	},
 ];
+
+export function normalizeDateFilter(
+	dateFilter: DateFilterValues
+): NormalizedDateFilter {
+	if (dateFilter.range === FilterType.Last) {
+		return {
+			last: HOURS_BY_MODIFIED_LAST[dateFilter.last],
+			range: FilterType.Last,
+		};
+	}
+
+	if (dateFilter.range === FilterType.Range) {
+		return {
+			endDate: new Date(dateFilter.endDate).toISOString(),
+			range: FilterType.Range,
+			startDate: new Date(dateFilter.startDate).toISOString(),
+		};
+	}
+
+	return {range: FilterType.All};
+}
 
 export function editingToDateFilter(editing: EditingState): DateFilterValues {
 	const {filterType, fromDate, modifiedLast, toDate} = editing;

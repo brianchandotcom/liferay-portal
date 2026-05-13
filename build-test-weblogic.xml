@@ -59,8 +59,6 @@
 
 		<antcall target="prepare-osgi-module-configurations" />
 
-		<antcall target="prepare-portal-properties" />
-
 		<antcall target="prepare-portal-ext-properties" />
 
 		<antcall target="prepare-portlet-ext-properties" />

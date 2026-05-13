@@ -20,6 +20,7 @@ import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageMetric;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageRule;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycleStatus;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Activity;
 import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
@@ -780,6 +781,20 @@ public class ContactsEngineClientImpl
 				<List<AccountLifecycleStageMetric>>() {
 			},
 			uriVariables);
+	}
+
+	@Override
+	public AccountLifecycleStatus getAccountLifecycleStatus(
+			FaroProject faroProject, String accountLifecycleId, String id)
+		throws FaroEngineClientException {
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
+
+		uriVariables.put("accountLifecycleId", accountLifecycleId);
+
+		return get(
+			faroProject, Rels.ACCOUNT_LIFECYCLE_STATUS, id,
+			AccountLifecycleStatus.class, uriVariables);
 	}
 
 	@Override

@@ -2,3 +2,101 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+/* ── Card Grid ── */
+
+.card-grid {
+	.cards-container {
+		display: grid;
+		gap: 1.5rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		padding-bottom: 4rem;
+
+		@media screen and (min-width: 600px) and (max-width: 899px) {
+			gap: 1rem;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		@media screen and (max-width: 599px) {
+			gap: 0.75rem;
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+/* ── Card ── */
+
+.card:hover {
+	border-color: var(--primary-l2);
+	box-shadow: var(--elevation-fluffy-2) rgba(60, 60, 60, 0.08);
+}
+
+.card-image-wrapper {
+	background:
+		linear-gradient(80deg, var(--white), transparent 50%),
+		linear-gradient(0deg, var(--white), transparent 80%),
+		radial-gradient(circle, var(--white) 35%, var(--primary-l3));
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 221px;
+	overflow: hidden;
+	position: relative;
+
+	> * {
+		position: relative;
+		z-index: 1;
+	}
+
+	&::after {
+		background: radial-gradient(circle, var(--primary-l2), transparent 40%);
+		content: "";
+		height: 100vh;
+		pointer-events: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transform: translate3d(55%, -50%, 0);
+		width: 100vw;
+		z-index: 0;
+
+		@media (max-width: 1024px) {
+			background: radial-gradient(circle, rgba(202, 209, 247, 0.9), transparent 50%);
+			transform: translate3d(30%, -40%, 0);
+		}
+
+		@media screen and (max-width: 599px) {
+			background: radial-gradient(circle, rgba(202, 209, 247, 0.6), transparent 60%);
+			height: 80vh;
+			transform: translate3d(0%, -30%, 0);
+			width: 120vw;
+		}
+	}
+
+	@media screen and (max-width: 599px) {
+		height: 140px;
+	}
+}
+
+.card-product-image {
+	height: 120px;
+	object-fit: contain;
+	width: 120px;
+}
+
+.card-body {
+	gap: 0.75rem;
+}
+
+.card-bullet-icon {
+	background-color: var(--primary-l3);
+	border-radius: var(--border-radius-circle);
+	height: var(--spacer-4);
+	margin-top: 1px;
+	width: var(--spacer-4);
+}
+
+.card-bullet-item {
+	gap: var(--spacer-2);
+}
+

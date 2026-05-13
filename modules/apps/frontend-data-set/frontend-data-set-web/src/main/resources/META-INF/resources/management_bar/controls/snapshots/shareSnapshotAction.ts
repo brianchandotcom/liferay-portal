@@ -71,7 +71,7 @@ export default async function shareSnapshotAction({
 					),
 					creator: {
 						contentType: 'UserAccount',
-						id: Liferay.ThemeDisplay.getUserId().toString(),
+						id: Liferay.ThemeDisplay.getUserId(),
 						name: Liferay.ThemeDisplay.getUserName(),
 					},
 					initialCollaborators,

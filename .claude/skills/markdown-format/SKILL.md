@@ -17,18 +17,18 @@ When `${ARGUMENTS}` is a path to a Markdown file, format that file. When no path
 
 ## Workflow
 
-### 1. Read the File
+### Read the File
 
 Read the target file in full before making changes. Note the frontmatter, headings, code blocks, and any conventions already in use.
 
-### 2. Apply the Conventions
+### Apply the Conventions
 
 Apply all conventions defined in `.claude/rules/markdown-style.md`. Work through each category in order. Fix each category before moving to the next.
 
-### 3. Validate
+### Validate
 
 Reread the file after the pass and confirm every check still holds.
 
-### 4. Report
+### Report
 
 Summarize the changes, grouped by category (frontmatter, headings, prose, shell, lists).

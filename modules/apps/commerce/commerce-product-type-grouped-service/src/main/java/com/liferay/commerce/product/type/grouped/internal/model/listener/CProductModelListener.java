@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.type.grouped.internal.model.listener;
 
-import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -14,16 +14,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian I. Kim
+ * @author Andrea Sbarra
  */
 @Component(service = ModelListener.class)
-public class CPDefinitionModelListener extends BaseModelListener<CPDefinition> {
+public class CProductModelListener extends BaseModelListener<CProduct> {
 
 	@Override
-	public void onBeforeRemove(CPDefinition cpDefinition) {
+	public void onBeforeRemove(CProduct cProduct) {
 		_cpDefinitionGroupedEntryLocalService.
-			deleteEntryCProductCPDefinitionGroupedEntries(
-				cpDefinition.getCProductId());
+			deleteCPDefinitionGroupedEntriesByEntryCProductId(
+				cProduct.getCProductId());
 	}
 
 	@Reference

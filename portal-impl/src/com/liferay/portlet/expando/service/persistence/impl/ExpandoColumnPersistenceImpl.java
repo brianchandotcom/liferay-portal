@@ -514,7 +514,8 @@ public class ExpandoColumnPersistenceImpl
 	@Override
 	public int filterCountByT_N(long tableId, String name) {
 		return _collectionPersistenceFinderByT_N.filterCount(
-			FinderCacheUtil.getFinderCache(), new Object[] {tableId, name});
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, new String[] {name}});
 	}
 
 	/**
@@ -956,4 +957,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-960446022
+// LIFERAY-SERVICE-BUILDER-HASH:1305482355

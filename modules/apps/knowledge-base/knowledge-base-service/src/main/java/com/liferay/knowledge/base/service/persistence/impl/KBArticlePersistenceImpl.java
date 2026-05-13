@@ -4486,7 +4486,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_L.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, latest}, start,
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, latest}, start,
 			end, orderByComparator, groupId);
 	}
 
@@ -4721,7 +4722,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, boolean latest) {
 
 		return _collectionPersistenceFinderByR_G_L.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, latest},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, latest},
 			groupId);
 	}
 
@@ -4963,7 +4965,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_M.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, main}, start,
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main}, start,
 			end, orderByComparator, groupId);
 	}
 
@@ -5196,7 +5199,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, boolean main) {
 
 		return _collectionPersistenceFinderByR_G_M.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, main},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main},
 			groupId);
 	}
 
@@ -5438,7 +5442,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_S.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, status}, start,
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, status}, start,
 			end, orderByComparator, groupId);
 	}
 
@@ -5665,7 +5670,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, int status) {
 
 		return _collectionPersistenceFinderByR_G_S.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, status},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, status},
 			groupId);
 	}
 
@@ -7142,7 +7148,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_L.filterFind(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, latest},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, latest},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -7378,7 +7385,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long parentResourcePrimKey, boolean latest) {
 
 		return _collectionPersistenceFinderByG_P_L.filterCount(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, latest},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, latest},
 			groupId);
 	}
 
@@ -7623,7 +7631,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_M.filterFind(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, main},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, main},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -7859,7 +7868,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long parentResourcePrimKey, boolean main) {
 
 		return _collectionPersistenceFinderByG_P_M.filterCount(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, main},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, main},
 			groupId);
 	}
 
@@ -8104,7 +8114,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_S.filterFind(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -8340,7 +8351,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long parentResourcePrimKey, int status) {
 
 		return _collectionPersistenceFinderByG_P_S.filterCount(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, status},
 			groupId);
 	}
 
@@ -9336,7 +9348,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_L.filterFind(
-			finderCache, new Object[] {groupId, sections, latest}, start, end,
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -9560,7 +9573,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean latest) {
 
 		return _collectionPersistenceFinderByG_LikeS_L.filterCount(
-			finderCache, new Object[] {groupId, sections, latest}, groupId);
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest}, groupId);
 	}
 
 	/**
@@ -9794,8 +9808,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_M.filterFind(
-			finderCache, new Object[] {groupId, sections, main}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new String[] {sections}, main},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -10014,7 +10028,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean main) {
 
 		return _collectionPersistenceFinderByG_LikeS_M.filterCount(
-			finderCache, new Object[] {groupId, sections, main}, groupId);
+			finderCache, new Object[] {groupId, new String[] {sections}, main},
+			groupId);
 	}
 
 	/**
@@ -10251,7 +10266,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_S.filterFind(
-			finderCache, new Object[] {groupId, sections, status}, start, end,
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, status}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -10471,7 +10487,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, int status) {
 
 		return _collectionPersistenceFinderByG_LikeS_S.filterCount(
-			finderCache, new Object[] {groupId, sections, status}, groupId);
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, status}, groupId);
 	}
 
 	/**
@@ -12177,8 +12194,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByR_G_L_NotS.filterFind(
 			finderCache,
-			new Object[] {resourcePrimKey, groupId, latest, status}, start, end,
-			orderByComparator, groupId);
+			new Object[] {
+				new long[] {resourcePrimKey}, groupId, latest, status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -12432,7 +12451,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByR_G_L_NotS.filterCount(
 			finderCache,
-			new Object[] {resourcePrimKey, groupId, latest, status}, groupId);
+			new Object[] {
+				new long[] {resourcePrimKey}, groupId, latest, status
+			},
+			groupId);
 	}
 
 	/**
@@ -12689,7 +12711,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_M_NotS.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, main, status},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -12936,7 +12959,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, boolean main, int status) {
 
 		return _collectionPersistenceFinderByR_G_M_NotS.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, main, status},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main, status},
 			groupId);
 	}
 
@@ -13199,7 +13223,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_S.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -13457,7 +13483,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_S.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			groupId);
 	}
 
@@ -13721,7 +13749,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_NotS.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -13979,7 +14009,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_NotS.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			groupId);
 	}
 
@@ -14244,8 +14276,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_S.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status}, start,
-			end, orderByComparator, groupId);
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -14499,7 +14533,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_S.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
 			groupId);
 	}
 
@@ -14762,8 +14798,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_NotS.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status}, start,
-			end, orderByComparator, groupId);
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -15017,7 +15055,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_NotS.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
 			groupId);
 	}
 
@@ -15276,7 +15316,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_KBFI_UT_S.filterFind(
-			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status},
+			finderCache,
+			new Object[] {groupId, kbFolderId, urlTitle, new int[] {status}},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -15523,7 +15564,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, String urlTitle, int status) {
 
 		return _collectionPersistenceFinderByG_KBFI_UT_S.filterCount(
-			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status},
+			finderCache,
+			new Object[] {groupId, kbFolderId, urlTitle, new int[] {status}},
 			groupId);
 	}
 
@@ -16320,7 +16362,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_L_NotS.filterFind(
-			finderCache, new Object[] {groupId, sections, latest, status},
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -16567,7 +16610,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean latest, int status) {
 
 		return _collectionPersistenceFinderByG_LikeS_L_NotS.filterCount(
-			finderCache, new Object[] {groupId, sections, latest, status},
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest, status},
 			groupId);
 	}
 
@@ -16824,8 +16868,9 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_M_NotS.filterFind(
-			finderCache, new Object[] {groupId, sections, main, status}, start,
-			end, orderByComparator, groupId);
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, main, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -17071,7 +17116,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean main, int status) {
 
 		return _collectionPersistenceFinderByG_LikeS_M_NotS.filterCount(
-			finderCache, new Object[] {groupId, sections, main, status},
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, main, status},
 			groupId);
 	}
 
@@ -19784,4 +19830,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1246855266
+// LIFERAY-SERVICE-BUILDER-HASH:2016322410

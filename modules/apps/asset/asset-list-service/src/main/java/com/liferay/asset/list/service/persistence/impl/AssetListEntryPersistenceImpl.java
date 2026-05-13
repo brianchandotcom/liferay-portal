@@ -671,8 +671,8 @@ public class AssetListEntryPersistenceImpl
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			finderCache, new Object[] {groupId}, start, end, orderByComparator,
-			groupId);
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -856,7 +856,7 @@ public class AssetListEntryPersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			finderCache, new Object[] {groupId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -1256,7 +1256,7 @@ public class AssetListEntryPersistenceImpl
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeT.filterFind(
-			finderCache, new Object[] {groupId, title}, start, end,
+			finderCache, new Object[] {new long[] {groupId}, title}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -1456,7 +1456,7 @@ public class AssetListEntryPersistenceImpl
 	@Override
 	public int filterCountByG_LikeT(long groupId, String title) {
 		return _collectionPersistenceFinderByG_LikeT.filterCount(
-			finderCache, new Object[] {groupId, title}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, title}, groupId);
 	}
 
 	/**
@@ -1904,8 +1904,9 @@ public class AssetListEntryPersistenceImpl
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_AET.filterFind(
-			finderCache, new Object[] {groupId, assetEntryType}, start, end,
-			orderByComparator, groupId);
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {assetEntryType}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2118,7 +2119,9 @@ public class AssetListEntryPersistenceImpl
 	@Override
 	public int filterCountByG_AET(long groupId, String assetEntryType) {
 		return _collectionPersistenceFinderByG_AET.filterCount(
-			finderCache, new Object[] {groupId, assetEntryType}, groupId);
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {assetEntryType}},
+			groupId);
 	}
 
 	/**
@@ -2360,8 +2363,11 @@ public class AssetListEntryPersistenceImpl
 		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeT_AET.filterFind(
-			finderCache, new Object[] {groupId, title, assetEntryType}, start,
-			end, orderByComparator, groupId);
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, title, new String[] {assetEntryType}
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2604,7 +2610,10 @@ public class AssetListEntryPersistenceImpl
 		long groupId, String title, String assetEntryType) {
 
 		return _collectionPersistenceFinderByG_LikeT_AET.filterCount(
-			finderCache, new Object[] {groupId, title, assetEntryType},
+			finderCache,
+			new Object[] {
+				new long[] {groupId}, title, new String[] {assetEntryType}
+			},
 			groupId);
 	}
 
@@ -2858,8 +2867,10 @@ public class AssetListEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_AES_AET.filterFind(
 			finderCache,
-			new Object[] {groupId, assetEntrySubtype, assetEntryType}, start,
-			end, orderByComparator, groupId);
+			new Object[] {
+				new long[] {groupId}, assetEntrySubtype, assetEntryType
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3103,7 +3114,10 @@ public class AssetListEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_AES_AET.filterCount(
 			finderCache,
-			new Object[] {groupId, assetEntrySubtype, assetEntryType}, groupId);
+			new Object[] {
+				new long[] {groupId}, assetEntrySubtype, assetEntryType
+			},
+			groupId);
 	}
 
 	/**
@@ -3373,7 +3387,9 @@ public class AssetListEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_LikeT_AES_AET.filterFind(
 			finderCache,
-			new Object[] {groupId, title, assetEntrySubtype, assetEntryType},
+			new Object[] {
+				new long[] {groupId}, title, assetEntrySubtype, assetEntryType
+			},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -3638,7 +3654,9 @@ public class AssetListEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_LikeT_AES_AET.filterCount(
 			finderCache,
-			new Object[] {groupId, title, assetEntrySubtype, assetEntryType},
+			new Object[] {
+				new long[] {groupId}, title, assetEntrySubtype, assetEntryType
+			},
 			groupId);
 	}
 
@@ -4680,4 +4698,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1185897704
+// LIFERAY-SERVICE-BUILDER-HASH:-974549520

@@ -1398,8 +1398,8 @@ public class CTCollectionPersistenceImpl
 		OrderByComparator<CTCollection> orderByComparator) {
 
 		return _collectionPersistenceFinderByC_S.filterFind(
-			finderCache, new Object[] {companyId, status}, start, end,
-			orderByComparator, companyId, 0);
+			finderCache, new Object[] {companyId, new int[] {status}}, start,
+			end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1596,7 +1596,8 @@ public class CTCollectionPersistenceImpl
 	@Override
 	public int filterCountByC_S(long companyId, int status) {
 		return _collectionPersistenceFinderByC_S.filterCount(
-			finderCache, new Object[] {companyId, status}, companyId, 0);
+			finderCache, new Object[] {companyId, new int[] {status}},
+			companyId, 0);
 	}
 
 	/**
@@ -2348,4 +2349,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-354788670
+// LIFERAY-SERVICE-BUILDER-HASH:793137954

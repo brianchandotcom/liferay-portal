@@ -4226,8 +4226,8 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_T.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, type}, start, end,
-			orderByComparator, groupId);
+			new Object[] {groupId, privateLayout, new String[] {type}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -4458,7 +4458,8 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_T.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, type}, groupId);
+			new Object[] {groupId, privateLayout, new String[] {type}},
+			groupId);
 	}
 
 	/**
@@ -5340,8 +5341,8 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_ST.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, status}, start, end,
-			orderByComparator, groupId);
+			new Object[] {groupId, privateLayout, new int[] {status}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -5573,7 +5574,7 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_ST.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, status}, groupId);
+			new Object[] {groupId, privateLayout, new int[] {status}}, groupId);
 	}
 
 	/**
@@ -10036,4 +10037,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1572228861
+// LIFERAY-SERVICE-BUILDER-HASH:-1008653395

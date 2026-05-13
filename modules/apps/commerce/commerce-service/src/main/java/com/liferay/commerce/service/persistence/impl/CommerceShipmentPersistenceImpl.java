@@ -665,8 +665,8 @@ public class CommerceShipmentPersistenceImpl
 		OrderByComparator<CommerceShipment> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			finderCache, new Object[] {groupId}, start, end, orderByComparator,
-			groupId);
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -850,7 +850,7 @@ public class CommerceShipmentPersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			finderCache, new Object[] {groupId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -1069,8 +1069,8 @@ public class CommerceShipmentPersistenceImpl
 		OrderByComparator<CommerceShipment> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C.filterFind(
-			finderCache, new Object[] {groupId, commerceAddressId}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, commerceAddressId},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1276,7 +1276,8 @@ public class CommerceShipmentPersistenceImpl
 	@Override
 	public int filterCountByG_C(long groupId, long commerceAddressId) {
 		return _collectionPersistenceFinderByG_C.filterCount(
-			finderCache, new Object[] {groupId, commerceAddressId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, commerceAddressId},
+			groupId);
 	}
 
 	/**
@@ -1489,8 +1490,8 @@ public class CommerceShipmentPersistenceImpl
 		OrderByComparator<CommerceShipment> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_S.filterFind(
-			finderCache, new Object[] {groupId, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, status}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1687,7 +1688,7 @@ public class CommerceShipmentPersistenceImpl
 	@Override
 	public int filterCountByG_S(long groupId, int status) {
 		return _collectionPersistenceFinderByG_S.filterCount(
-			finderCache, new Object[] {groupId, status}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, status}, groupId);
 	}
 
 	/**
@@ -2408,4 +2409,4 @@ public class CommerceShipmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-914035035
+// LIFERAY-SERVICE-BUILDER-HASH:1931621527

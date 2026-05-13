@@ -999,8 +999,8 @@ public class CommercePriceListPersistenceImpl
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C.filterFind(
-			finderCache, new Object[] {groupId, companyId}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, companyId}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1200,7 +1200,8 @@ public class CommercePriceListPersistenceImpl
 	@Override
 	public int filterCountByG_C(long groupId, long companyId) {
 		return _collectionPersistenceFinderByG_C.filterCount(
-			finderCache, new Object[] {groupId, companyId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, companyId},
+			groupId);
 	}
 
 	/**
@@ -1987,8 +1988,8 @@ public class CommercePriceListPersistenceImpl
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_S.filterFind(
-			finderCache, new Object[] {groupId, companyId, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, companyId, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2205,7 +2206,8 @@ public class CommercePriceListPersistenceImpl
 	@Override
 	public int filterCountByG_C_S(long groupId, long companyId, int status) {
 		return _collectionPersistenceFinderByG_C_S.filterCount(
-			finderCache, new Object[] {groupId, companyId, status}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, companyId, status},
+			groupId);
 	}
 
 	/**
@@ -2438,8 +2440,8 @@ public class CommercePriceListPersistenceImpl
 		OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_NotS.filterFind(
-			finderCache, new Object[] {groupId, companyId, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, companyId, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2657,7 +2659,8 @@ public class CommercePriceListPersistenceImpl
 	@Override
 	public int filterCountByG_C_NotS(long groupId, long companyId, int status) {
 		return _collectionPersistenceFinderByG_C_NotS.filterCount(
-			finderCache, new Object[] {groupId, companyId, status}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, companyId, status},
+			groupId);
 	}
 
 	/**
@@ -3170,7 +3173,8 @@ public class CommercePriceListPersistenceImpl
 		int end, OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_T_S.filterFind(
-			finderCache, new Object[] {groupId, companyId, type, status}, start,
+			finderCache,
+			new Object[] {new long[] {groupId}, companyId, type, status}, start,
 			end, orderByComparator, groupId);
 	}
 
@@ -3416,7 +3420,8 @@ public class CommercePriceListPersistenceImpl
 		long groupId, long companyId, String type, int status) {
 
 		return _collectionPersistenceFinderByG_C_T_S.filterCount(
-			finderCache, new Object[] {groupId, companyId, type, status},
+			finderCache,
+			new Object[] {new long[] {groupId}, companyId, type, status},
 			groupId);
 	}
 
@@ -3672,7 +3677,8 @@ public class CommercePriceListPersistenceImpl
 		int end, OrderByComparator<CommercePriceList> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_T_NotS.filterFind(
-			finderCache, new Object[] {groupId, companyId, type, status}, start,
+			finderCache,
+			new Object[] {new long[] {groupId}, companyId, type, status}, start,
 			end, orderByComparator, groupId);
 	}
 
@@ -3918,7 +3924,8 @@ public class CommercePriceListPersistenceImpl
 		long groupId, long companyId, String type, int status) {
 
 		return _collectionPersistenceFinderByG_C_T_NotS.filterCount(
-			finderCache, new Object[] {groupId, companyId, type, status},
+			finderCache,
+			new Object[] {new long[] {groupId}, companyId, type, status},
 			groupId);
 	}
 
@@ -5095,4 +5102,4 @@ public class CommercePriceListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1789738942
+// LIFERAY-SERVICE-BUILDER-HASH:179180536

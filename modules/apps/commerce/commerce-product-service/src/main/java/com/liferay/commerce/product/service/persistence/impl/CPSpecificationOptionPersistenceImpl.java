@@ -1857,4 +1857,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1204663008
+// LIFERAY-SERVICE-BUILDER-HASH:-919245234

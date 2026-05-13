@@ -2306,8 +2306,9 @@ public class DLFileEntryPersistenceImpl
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_F.filterFind(
-			FinderCacheUtil.getFinderCache(), new Object[] {groupId, folderId},
-			start, end, orderByComparator, groupId);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, new long[] {folderId}}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -2506,8 +2507,8 @@ public class DLFileEntryPersistenceImpl
 	@Override
 	public int filterCountByG_F(long groupId, long folderId) {
 		return _collectionPersistenceFinderByG_F.filterCount(
-			FinderCacheUtil.getFinderCache(), new Object[] {groupId, folderId},
-			groupId);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, new long[] {folderId}}, groupId);
 	}
 
 	/**
@@ -3060,7 +3061,7 @@ public class DLFileEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_U_F.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, userId, folderId}, start, end,
+			new Object[] {groupId, userId, new long[] {folderId}}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -3278,7 +3279,7 @@ public class DLFileEntryPersistenceImpl
 	public int filterCountByG_U_F(long groupId, long userId, long folderId) {
 		return _collectionPersistenceFinderByG_U_F.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, userId, folderId}, groupId);
+			new Object[] {groupId, userId, new long[] {folderId}}, groupId);
 	}
 
 	/**
@@ -3815,8 +3816,8 @@ public class DLFileEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_F_F.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, folderId, fileEntryTypeId}, start, end,
-			orderByComparator, groupId);
+			new Object[] {groupId, new long[] {folderId}, fileEntryTypeId},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -4050,7 +4051,8 @@ public class DLFileEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_F_F.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, folderId, fileEntryTypeId}, groupId);
+			new Object[] {groupId, new long[] {folderId}, fileEntryTypeId},
+			groupId);
 	}
 
 	/**
@@ -5767,4 +5769,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-151863582
+// LIFERAY-SERVICE-BUILDER-HASH:-457444456

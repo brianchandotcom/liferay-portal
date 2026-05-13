@@ -2858,8 +2858,8 @@ public class BlogsEntryPersistenceImpl
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_U_S.filterFind(
-			finderCache, new Object[] {groupId, userId, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, userId, new int[] {status}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3073,7 +3073,8 @@ public class BlogsEntryPersistenceImpl
 	@Override
 	public int filterCountByG_U_S(long groupId, long userId, int status) {
 		return _collectionPersistenceFinderByG_U_S.filterCount(
-			finderCache, new Object[] {groupId, userId, status}, groupId);
+			finderCache, new Object[] {groupId, userId, new int[] {status}},
+			groupId);
 	}
 
 	/**
@@ -7136,4 +7137,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-331212197
+// LIFERAY-SERVICE-BUILDER-HASH:-1003069609

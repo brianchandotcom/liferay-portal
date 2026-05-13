@@ -1129,8 +1129,8 @@ public class SegmentsExperiencePersistenceImpl
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_A.filterFind(
-			finderCache, new Object[] {groupId, active}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, active}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1329,7 +1329,7 @@ public class SegmentsExperiencePersistenceImpl
 	@Override
 	public int filterCountByG_A(long groupId, boolean active) {
 		return _collectionPersistenceFinderByG_A.filterCount(
-			finderCache, new Object[] {groupId, active}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, active}, groupId);
 	}
 
 	/**
@@ -3300,7 +3300,8 @@ public class SegmentsExperiencePersistenceImpl
 		return _collectionPersistenceFinderByG_SEERC_SESERC_P_A.filterFind(
 			finderCache,
 			new Object[] {
-				groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active
+				groupId, new String[] {segmentsEntryERC}, segmentsEntryScopeERC,
+				plid, active
 			},
 			start, end, orderByComparator, groupId);
 	}
@@ -3581,7 +3582,8 @@ public class SegmentsExperiencePersistenceImpl
 		return _collectionPersistenceFinderByG_SEERC_SESERC_P_A.filterCount(
 			finderCache,
 			new Object[] {
-				groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active
+				groupId, new String[] {segmentsEntryERC}, segmentsEntryScopeERC,
+				plid, active
 			},
 			groupId);
 	}
@@ -4858,4 +4860,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:213734758
+// LIFERAY-SERVICE-BUILDER-HASH:1513632614

@@ -933,7 +933,8 @@ public class MicroblogsEntryPersistenceImpl
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByCCNI_CCPK.filterFind(
-			finderCache, new Object[] {creatorClassNameId, creatorClassPK},
+			finderCache,
+			new Object[] {creatorClassNameId, new long[] {creatorClassPK}},
 			start, end, orderByComparator);
 	}
 
@@ -1154,7 +1155,8 @@ public class MicroblogsEntryPersistenceImpl
 		long creatorClassNameId, long creatorClassPK) {
 
 		return _collectionPersistenceFinderByCCNI_CCPK.filterCount(
-			finderCache, new Object[] {creatorClassNameId, creatorClassPK});
+			finderCache,
+			new Object[] {creatorClassNameId, new long[] {creatorClassPK}});
 	}
 
 	/**
@@ -1871,8 +1873,10 @@ public class MicroblogsEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByC_CCNI_CCPK.filterFind(
 			finderCache,
-			new Object[] {companyId, creatorClassNameId, creatorClassPK}, start,
-			end, orderByComparator, companyId, 0);
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}
+			},
+			start, end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -2118,7 +2122,9 @@ public class MicroblogsEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByC_CCNI_CCPK.filterCount(
 			finderCache,
-			new Object[] {companyId, creatorClassNameId, creatorClassPK},
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}
+			},
 			companyId, 0);
 	}
 
@@ -2626,8 +2632,10 @@ public class MicroblogsEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByCCNI_CCPK_T.filterFind(
 			finderCache,
-			new Object[] {creatorClassNameId, creatorClassPK, type}, start, end,
-			orderByComparator);
+			new Object[] {
+				creatorClassNameId, new long[] {creatorClassPK}, type
+			},
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -2870,7 +2878,9 @@ public class MicroblogsEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByCCNI_CCPK_T.filterCount(
 			finderCache,
-			new Object[] {creatorClassNameId, creatorClassPK, type});
+			new Object[] {
+				creatorClassNameId, new long[] {creatorClassPK}, type
+			});
 	}
 
 	/**
@@ -3139,7 +3149,9 @@ public class MicroblogsEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByC_CCNI_CCPK_T.filterFind(
 			finderCache,
-			new Object[] {companyId, creatorClassNameId, creatorClassPK, type},
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}, type
+			},
 			start, end, orderByComparator, companyId, 0);
 	}
 
@@ -3405,7 +3417,9 @@ public class MicroblogsEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByC_CCNI_CCPK_T.filterCount(
 			finderCache,
-			new Object[] {companyId, creatorClassNameId, creatorClassPK, type},
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}, type
+			},
 			companyId, 0);
 	}
 
@@ -4576,4 +4590,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1627165538
+// LIFERAY-SERVICE-BUILDER-HASH:-2116563016

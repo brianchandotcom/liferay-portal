@@ -672,8 +672,9 @@ public class DLFileEntryTypePersistenceImpl
 		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-			end, orderByComparator, groupId);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}}, start, end, orderByComparator,
+			groupId);
 	}
 
 	/**
@@ -861,7 +862,8 @@ public class DLFileEntryTypePersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -2306,4 +2308,4 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-67147126
+// LIFERAY-SERVICE-BUILDER-HASH:-789425740

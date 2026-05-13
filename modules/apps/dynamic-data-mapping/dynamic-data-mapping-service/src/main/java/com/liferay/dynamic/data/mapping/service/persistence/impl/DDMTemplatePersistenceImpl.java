@@ -1788,8 +1788,8 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_CPK.filterFind(
-			finderCache, new Object[] {groupId, classPK}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, classPK}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1987,7 +1987,7 @@ public class DDMTemplatePersistenceImpl
 	@Override
 	public int filterCountByG_CPK(long groupId, long classPK) {
 		return _collectionPersistenceFinderByG_CPK.filterCount(
-			finderCache, new Object[] {groupId, classPK}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, classPK}, groupId);
 	}
 
 	/**
@@ -2222,7 +2222,8 @@ public class DDMTemplatePersistenceImpl
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_C.filterFind(
-			finderCache, new Object[] {groupId, classNameId, classPK}, start,
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, classPK}, start,
 			end, orderByComparator, groupId);
 	}
 
@@ -2448,7 +2449,8 @@ public class DDMTemplatePersistenceImpl
 		long groupId, long classNameId, long classPK) {
 
 		return _collectionPersistenceFinderByG_C_C.filterCount(
-			finderCache, new Object[] {groupId, classNameId, classPK}, groupId);
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, classPK}, groupId);
 	}
 
 	/**
@@ -4458,4 +4460,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:641963617
+// LIFERAY-SERVICE-BUILDER-HASH:-749911929

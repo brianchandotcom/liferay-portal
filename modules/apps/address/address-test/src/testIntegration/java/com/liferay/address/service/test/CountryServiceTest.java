@@ -62,7 +62,7 @@ public class CountryServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_country = _countryService.addCountry(
-				"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+				null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 				RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -87,7 +87,7 @@ public class CountryServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_country = _countryService.addCountry(
-				"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+				null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 				RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -99,7 +99,7 @@ public class CountryServiceTest {
 	@Test
 	public void testDeleteCountry() throws Exception {
 		_country = _countryLocalService.addCountry(
-			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+			null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -135,7 +135,7 @@ public class CountryServiceTest {
 	@Test
 	public void testUpdateActive() throws Exception {
 		_country = _countryLocalService.addCountry(
-			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+			null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -173,7 +173,7 @@ public class CountryServiceTest {
 	@Test
 	public void testUpdateCountry() throws Exception {
 		_country = _countryLocalService.addCountry(
-			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+			null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -184,11 +184,12 @@ public class CountryServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_country = _countryService.updateCountry(
-				_country.getCountryId(), _country.getA2(), _country.getA3(),
-				_country.isActive(), _country.isBillingAllowed(),
-				_country.getIdd(), RandomTestUtil.randomString(),
-				_country.getNumber(), _country.getPosition(),
-				_country.isShippingAllowed(), _country.isSubjectToVAT());
+				_country.getExternalReferenceCode(), _country.getCountryId(),
+				_country.getA2(), _country.getA3(), _country.isActive(),
+				_country.isBillingAllowed(), _country.getIdd(),
+				RandomTestUtil.randomString(), _country.getNumber(),
+				_country.getPosition(), _country.isShippingAllowed(),
+				_country.isSubjectToVAT());
 
 			Assert.fail();
 		}
@@ -208,18 +209,19 @@ public class CountryServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_country = _countryService.updateCountry(
-				_country.getCountryId(), _country.getA2(), _country.getA3(),
-				_country.isActive(), _country.isBillingAllowed(),
-				_country.getIdd(), RandomTestUtil.randomString(),
-				_country.getNumber(), _country.getPosition(),
-				_country.isShippingAllowed(), _country.isSubjectToVAT());
+				_country.getExternalReferenceCode(), _country.getCountryId(),
+				_country.getA2(), _country.getA3(), _country.isActive(),
+				_country.isBillingAllowed(), _country.getIdd(),
+				RandomTestUtil.randomString(), _country.getNumber(),
+				_country.getPosition(), _country.isShippingAllowed(),
+				_country.isSubjectToVAT());
 		}
 	}
 
 	@Test
 	public void testUpdateGroupFilterEnabled() throws Exception {
 		_country = _countryLocalService.addCountry(
-			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+			null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),

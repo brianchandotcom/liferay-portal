@@ -321,7 +321,7 @@ public class AddressLocalServiceTest {
 			TestPropsValues.getCompanyId(), "US");
 
 		Region region = _regionLocalService.addRegion(
-			country.getCountryId(), RandomTestUtil.randomBoolean(),
+			null, country.getCountryId(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());

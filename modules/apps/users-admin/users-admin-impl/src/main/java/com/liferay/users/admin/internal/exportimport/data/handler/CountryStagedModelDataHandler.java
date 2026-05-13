@@ -96,14 +96,16 @@ public class CountryStagedModelDataHandler
 			serviceContext.setUuid(country.getUuid());
 
 			importedCountry = _countryLocalService.addCountry(
-				country.getA2(), country.getA3(), country.isActive(),
-				country.isBillingAllowed(), country.getIdd(), country.getName(),
-				country.getNumber(), country.getPosition(),
-				country.isShippingAllowed(), country.isSubjectToVAT(),
-				country.isZipRequired(), serviceContext);
+				country.getExternalReferenceCode(), country.getA2(),
+				country.getA3(), country.isActive(), country.isBillingAllowed(),
+				country.getIdd(), country.getName(), country.getNumber(),
+				country.getPosition(), country.isShippingAllowed(),
+				country.isSubjectToVAT(), country.isZipRequired(),
+				serviceContext);
 		}
 		else {
 			importedCountry = _countryLocalService.updateCountry(
+				country.getExternalReferenceCode(),
 				existingCountry.getCountryId(), country.getA2(),
 				country.getA3(), country.isActive(), country.isBillingAllowed(),
 				country.getIdd(), country.getName(), country.getNumber(),

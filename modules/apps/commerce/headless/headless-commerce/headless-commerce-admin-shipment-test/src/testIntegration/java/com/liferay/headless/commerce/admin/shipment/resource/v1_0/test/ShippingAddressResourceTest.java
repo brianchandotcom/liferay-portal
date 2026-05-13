@@ -83,7 +83,7 @@ public class ShippingAddressResourceTest
 		_country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
 		_region = CommerceInventoryTestUtil.addRegion(
-			_country.getCountryId(), _serviceContext);
+			null, _country.getCountryId(), _serviceContext);
 
 		_commerceShipment =
 			CommerceShipmentLocalServiceUtil.addCommerceShipment(

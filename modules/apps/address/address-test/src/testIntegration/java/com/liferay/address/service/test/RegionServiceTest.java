@@ -55,7 +55,7 @@ public class RegionServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_country = _countryLocalService.addCountry(
-			"aa", "aaa", true, RandomTestUtil.randomBoolean(),
+			null, "aa", "aaa", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -74,9 +74,9 @@ public class RegionServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_region = _regionService.addRegion(
-				_country.getCountryId(), true, RandomTestUtil.randomString(),
-				RandomTestUtil.nextDouble(), "aa",
-				ServiceContextTestUtil.getServiceContext());
+				null, _country.getCountryId(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.nextDouble(),
+				"aa", ServiceContextTestUtil.getServiceContext());
 
 			Assert.fail();
 		}
@@ -96,16 +96,16 @@ public class RegionServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_region = _regionService.addRegion(
-				_country.getCountryId(), true, RandomTestUtil.randomString(),
-				RandomTestUtil.nextDouble(), "aa",
-				ServiceContextTestUtil.getServiceContext());
+				null, _country.getCountryId(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.nextDouble(),
+				"aa", ServiceContextTestUtil.getServiceContext());
 		}
 	}
 
 	@Test
 	public void testDeleteRegion() throws Exception {
 		_region = _regionService.addRegion(
-			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), "aa",
 			ServiceContextTestUtil.getServiceContext());
 
@@ -138,7 +138,7 @@ public class RegionServiceTest {
 	@Test
 	public void testUpdateActive() throws Exception {
 		_region = _regionService.addRegion(
-			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), "aa",
 			ServiceContextTestUtil.getServiceContext());
 
@@ -171,7 +171,7 @@ public class RegionServiceTest {
 	@Test
 	public void testUpdateRegion() throws Exception {
 		_region = _regionService.addRegion(
-			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), "aa",
 			ServiceContextTestUtil.getServiceContext());
 
@@ -179,9 +179,9 @@ public class RegionServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_region = _regionService.updateRegion(
-				_region.getRegionId(), _region.isActive(),
-				RandomTestUtil.randomString(), _region.getPosition(),
-				_region.getRegionCode());
+				_region.getExternalReferenceCode(), _region.getRegionId(),
+				_region.isActive(), RandomTestUtil.randomString(),
+				_region.getPosition(), _region.getRegionCode());
 
 			Assert.fail();
 		}
@@ -201,9 +201,9 @@ public class RegionServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_region = _regionService.updateRegion(
-				_region.getRegionId(), _region.isActive(),
-				RandomTestUtil.randomString(), _region.getPosition(),
-				_region.getRegionCode());
+				_region.getExternalReferenceCode(), _region.getRegionId(),
+				_region.isActive(), RandomTestUtil.randomString(),
+				_region.getPosition(), _region.getRegionCode());
 		}
 	}
 

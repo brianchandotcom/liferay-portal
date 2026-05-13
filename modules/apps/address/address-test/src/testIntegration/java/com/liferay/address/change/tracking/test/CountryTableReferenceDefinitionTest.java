@@ -37,7 +37,7 @@ public class CountryTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _countryLocalService.addCountry(
-			"a1", "a11", RandomTestUtil.randomBoolean(),
+			null, "a1", "a11", RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),

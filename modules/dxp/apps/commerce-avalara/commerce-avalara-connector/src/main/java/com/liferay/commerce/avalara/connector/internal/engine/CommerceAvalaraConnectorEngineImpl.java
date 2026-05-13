@@ -103,8 +103,8 @@ public class CommerceAvalaraConnectorEngineImpl
 			serviceContext.setUserId(commerceTaxMethod.getUserId());
 
 			country = _countryLocalService.addCountry(
-				"US", "USA", true, true, "", "united-states", "840", 19, true,
-				false, true, serviceContext);
+				null, "US", "USA", true, true, "", "united-states", "840", 19,
+				true, false, true, serviceContext);
 		}
 
 		long cpTaxCategoryId = 0;
@@ -156,7 +156,7 @@ public class CommerceAvalaraConnectorEngineImpl
 			serviceContext.setUserId(userId);
 
 			region = _regionLocalService.addRegion(
-				country.getCountryId(), Boolean.FALSE, regionCode, 0,
+				null, country.getCountryId(), Boolean.FALSE, regionCode, 0,
 				regionCode, serviceContext);
 		}
 

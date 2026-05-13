@@ -53,7 +53,7 @@ public class CountryResourceDTOConverterTest {
 	@Before
 	public void setUp() throws Exception {
 		_serviceBuilderCountry = _countryLocalService.addCountry(
-			"XY", "XYZ", RandomTestUtil.randomBoolean(),
+			null, "XY", "XYZ", RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),

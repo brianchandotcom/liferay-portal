@@ -70,9 +70,6 @@ public class WhereClauseEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByName_Nickname;
-	private FinderPath _finderPathWithoutPaginationFindByName_Nickname;
-	private FinderPath _finderPathCountByName_Nickname;
 	private CollectionPersistenceFinder<WhereClauseEntry>
 		_collectionPersistenceFinderByName_Nickname;
 
@@ -391,29 +388,28 @@ public class WhereClauseEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName_Nickname",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"name"}, true);
-
-		_finderPathWithoutPaginationFindByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			true, null);
-
-		_finderPathCountByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByName_Nickname =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByName_Nickname,
-				_finderPathWithoutPaginationFindByName_Nickname,
-				_finderPathCountByName_Nickname,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByName_Nickname",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByName_Nickname",
+					new String[] {String.class.getName()},
+					new String[] {"name"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByName_Nickname",
+					new String[] {String.class.getName()},
+					new String[] {"name"}, 0, 1, false, null),
 				_SQL_SELECT_WHERECLAUSEENTRY_WHERE,
 				_SQL_COUNT_WHERECLAUSEENTRY_WHERE,
 				WhereClauseEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -485,4 +481,4 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1051674584
+// LIFERAY-SERVICE-BUILDER-HASH:1259384900

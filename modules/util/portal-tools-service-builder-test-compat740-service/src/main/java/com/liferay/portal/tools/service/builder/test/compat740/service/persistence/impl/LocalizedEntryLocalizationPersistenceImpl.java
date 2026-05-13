@@ -73,9 +73,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLocalizedEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByLocalizedEntryId;
-	private FinderPath _finderPathCountByLocalizedEntryId;
 	private CollectionPersistenceFinder<LocalizedEntryLocalization>
 		_collectionPersistenceFinderByLocalizedEntryId;
 
@@ -225,7 +222,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {localizedEntryId});
 	}
 
-	private FinderPath _finderPathFetchByLocalizedEntryId_LanguageId;
 	private UniquePersistenceFinder<LocalizedEntryLocalization>
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId;
 
@@ -517,29 +513,28 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLocalizedEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLocalizedEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"localizedEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByLocalizedEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLocalizedEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"localizedEntryId"}, true);
-
-		_finderPathCountByLocalizedEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLocalizedEntryId", new String[] {Long.class.getName()},
-			new String[] {"localizedEntryId"}, false);
-
 		_collectionPersistenceFinderByLocalizedEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLocalizedEntryId,
-				_finderPathWithoutPaginationFindByLocalizedEntryId,
-				_finderPathCountByLocalizedEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLocalizedEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"localizedEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLocalizedEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"localizedEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLocalizedEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"localizedEntryId"}, false),
 				_SQL_SELECT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -549,16 +544,17 @@ public class LocalizedEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LocalizedEntryLocalization::getLocalizedEntryId));
 
-		_finderPathFetchByLocalizedEntryId_LanguageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLocalizedEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"localizedEntryId", "languageId"}, 0, 2, false,
-			LocalizedEntryLocalization::getLocalizedEntryId,
-			convertNullFunction(LocalizedEntryLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByLocalizedEntryId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByLocalizedEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"localizedEntryId", "languageId"}, 0, 2,
+					false, LocalizedEntryLocalization::getLocalizedEntryId,
+					convertNullFunction(
+						LocalizedEntryLocalization::getLanguageId)),
 				_SQL_SELECT_LOCALIZEDENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"localizedEntryLocalization.", "localizedEntryId",
@@ -635,4 +631,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:792574592
+// LIFERAY-SERVICE-BUILDER-HASH:-144748551

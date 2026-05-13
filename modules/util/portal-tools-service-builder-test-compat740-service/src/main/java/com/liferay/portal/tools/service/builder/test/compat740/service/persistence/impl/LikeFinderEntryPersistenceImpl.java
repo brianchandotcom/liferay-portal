@@ -73,7 +73,6 @@ public class LikeFinderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByO_O_P;
 	private UniquePersistenceFinder<LikeFinderEntry>
 		_uniquePersistenceFinderByO_O_P;
 
@@ -176,8 +175,6 @@ public class LikeFinderEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_O_O_LikeP;
-	private FinderPath _finderPathWithPaginationCountByC_O_O_LikeP;
 	private CollectionPersistenceFinder<LikeFinderEntry>
 		_collectionPersistenceFinderByC_O_O_LikeP;
 
@@ -543,19 +540,18 @@ public class LikeFinderEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByO_O_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "portletId"}, 0, 4, false,
-			LikeFinderEntry::getOwnerId, LikeFinderEntry::getOwnerType,
-			convertNullFunction(LikeFinderEntry::getPortletId));
-
 		_uniquePersistenceFinderByO_O_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByO_O_P, _SQL_SELECT_LIKEFINDERENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"ownerId", "ownerType", "portletId"}, 0, 4, false,
+				LikeFinderEntry::getOwnerId, LikeFinderEntry::getOwnerType,
+				convertNullFunction(LikeFinderEntry::getPortletId)),
+			_SQL_SELECT_LIKEFINDERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"likeFinderEntry.", "ownerId", FinderColumn.Type.LONG, "=",
 				true, true, LikeFinderEntry::getOwnerId),
@@ -566,30 +562,33 @@ public class LikeFinderEntryPersistenceImpl
 				"likeFinderEntry.", "portletId", FinderColumn.Type.STRING, "=",
 				true, true, LikeFinderEntry::getPortletId));
 
-		_finderPathWithPaginationFindByC_O_O_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_O_O_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "ownerId", "ownerType", "portletId"},
-			true);
-
-		_finderPathWithPaginationCountByC_O_O_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_O_O_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "ownerId", "ownerType", "portletId"},
-			false);
-
 		_collectionPersistenceFinderByC_O_O_LikeP =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_O_O_LikeP, null,
-				_finderPathWithPaginationCountByC_O_O_LikeP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_O_O_LikeP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "ownerId", "ownerType", "portletId"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_O_O_LikeP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "ownerId", "ownerType", "portletId"
+					},
+					false),
 				_SQL_SELECT_LIKEFINDERENTRY_WHERE,
 				_SQL_COUNT_LIKEFINDERENTRY_WHERE,
 				LikeFinderEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -673,4 +672,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:663172879
+// LIFERAY-SERVICE-BUILDER-HASH:-329122203

@@ -8,6 +8,7 @@ package com.liferay.mcp.server.test;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -79,6 +80,13 @@ public class MCPServerServletTest {
 	@Before
 	public void setUp() throws Exception {
 		_updateMCPServerConfiguration(true);
+
+		BatchEngineTestUtil.processBatchEngineUnits(
+			"com.liferay.mcp.server", MCPServerServletTest.class,
+			new String[] {
+				".com.liferay.mcp.server.internal.batch.01.object.definition",
+				".com.liferay.mcp.server.internal.batch.02.object.definition"
+			});
 	}
 
 	@After

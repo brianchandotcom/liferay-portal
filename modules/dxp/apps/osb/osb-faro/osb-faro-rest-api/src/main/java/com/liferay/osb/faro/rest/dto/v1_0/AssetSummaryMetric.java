@@ -93,7 +93,7 @@ public class AssetSummaryMetric implements Serializable {
 	private Supplier<String> _assetIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Display title of the asset, e.g. the page title or blog post title."
+		description = "Display title of the asset (e.g. the page title or blog post title)."
 	)
 	public String getAssetTitle() {
 		if (_assetTitleSupplier != null) {
@@ -129,7 +129,7 @@ public class AssetSummaryMetric implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Display title of the asset, e.g. the page title or blog post title."
+		description = "Display title of the asset (e.g. the page title or blog post title)."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetTitle;
@@ -138,7 +138,7 @@ public class AssetSummaryMetric implements Serializable {
 	private Supplier<String> _assetTitleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Asset category, e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE'."
+		description = "Asset category (e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE')."
 	)
 	public String getAssetType() {
 		if (_assetTypeSupplier != null) {
@@ -174,7 +174,7 @@ public class AssetSummaryMetric implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Asset category, e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE'."
+		description = "Asset category (e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE')."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String assetType;
@@ -819,4 +819,4 @@ public class AssetSummaryMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-412031606
+// LIFERAY-REST-BUILDER-HASH:1513253024

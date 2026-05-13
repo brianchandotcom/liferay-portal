@@ -47,7 +47,7 @@
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Status"
+				"en_US": "Crawl Job Status"
 			},
 			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_CRAWL_JOB_STATUSES",
 			"name": "crawlJobStatus",
@@ -58,10 +58,10 @@
 		{
 			"DBType": "Integer",
 			"businessType": "Integer",
-			"externalReferenceCode": "DOCUMENTS_INDEXED",
+			"externalReferenceCode": "INDEXED_DOCUMENTS_COUNT",
 			"indexed": true,
 			"label": {
-				"en_US": "Documents Indexed"
+				"en_US": "Indexed Documents Count"
 			},
 			"name": "indexedDocumentCount",
 			"system": true,
@@ -140,5 +140,5 @@
 	"portlet": true,
 	"scope": "company",
 	"system": true,
-	"titleObjectFieldName": "executionId"
+	"titleObjectFieldName": "externalReferenceCode"
 }

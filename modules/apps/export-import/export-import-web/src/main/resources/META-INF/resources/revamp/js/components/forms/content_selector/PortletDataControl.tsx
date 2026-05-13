@@ -73,8 +73,11 @@ export default function PortletDataControl({
 					{control.type === 'Boolean' && (
 						<SectionTags
 							additionCount={control.additionCount}
-							deletionCount={control.deletionCount}
-							showDeletions={showDeletions}
+							deletionCount={
+								showDeletions
+									? control.deletionCount
+									: undefined
+							}
 						/>
 					)}
 				</div>
@@ -95,7 +98,6 @@ export default function PortletDataControl({
 									)
 								)
 							}
-							showDeletions={showDeletions}
 							value={currentSelection[nestedControl.name]}
 						/>
 					)

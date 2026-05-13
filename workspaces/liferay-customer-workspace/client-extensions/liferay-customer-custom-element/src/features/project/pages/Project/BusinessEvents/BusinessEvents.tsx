@@ -28,7 +28,6 @@ import ManageEventModal from './components/ManageEventModal';
 import useFilters from './hooks/useFilters';
 import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
-import {normalizeEventDateTime} from './utils/getFormattedEventDate';
 import parseAssociatedTickets from './utils/parseAssociatedTickets';
 import useIsSaasOnly from './utils/useIsSaasOnly';
 
@@ -120,12 +119,8 @@ const BusinessEvents = () => {
 			const normalizedStatus = normalize(statusKey);
 
 			if (normalizedStatus === 'canceled') {
-				const normalizedDate = normalizeEventDateTime(
-					event.plannedEventDate,
-					event.timeZone?.key
-				);
-				const modified = normalizedDate
-					? new Date(normalizedDate)
+				const modified = event.plannedEventDate
+					? new Date(event.plannedEventDate)
 					: null;
 
 				if (modified && modified < oneYearAgo) {
@@ -134,11 +129,9 @@ const BusinessEvents = () => {
 			}
 
 			if (normalizedStatus === 'completed') {
-				const normalizedDate = normalizeEventDateTime(
-					event.actualEventDate,
-					event.timeZone?.key
-				);
-				const goLive = normalizedDate ? new Date(normalizedDate) : null;
+				const goLive = event.actualEventDate
+					? new Date(event.actualEventDate)
+					: null;
 
 				if (goLive && goLive < oneYearAgo) {
 					return false;
@@ -360,10 +353,7 @@ const BusinessEvents = () => {
 						<div>
 							<div className="text-neutral-10">
 								{getFormattedDate(
-									normalizeEventDateTime(
-										businessEvent?.plannedEventDate,
-										businessEvent?.timeZone?.key
-									),
+									businessEvent?.plannedEventDate,
 									'day2DMonthSYearN',
 									'UTC'
 								)}
@@ -371,10 +361,7 @@ const BusinessEvents = () => {
 
 							<div className="be-subtitle text-neutral-7">
 								{getFormattedTime(
-									normalizeEventDateTime(
-										businessEvent?.plannedEventDate,
-										businessEvent?.timeZone?.key
-									),
+									businessEvent?.plannedEventDate,
 									'UTC'
 								)}
 							</div>

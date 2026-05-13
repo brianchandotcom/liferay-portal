@@ -207,13 +207,28 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 }
 
 function zonedPartsToOdataDateTime(parts: DateTime, timeZone: string): string {
-	const asUTC = new Date(partsToInstantMs(parts));
+	const naiveUTCMs = partsToInstantMs(parts);
 
-	const offset = getTimeZoneOffset(timeZone, asUTC);
+	const offset = getTimeZoneOffset(timeZone, new Date(naiveUTCMs));
 
-	return `${parts.year}-${pad2(parts.month)}-${pad2(parts.day)}T${pad2(
-		parts.hour
-	)}:${pad2(parts.minute)}:00${offset}`;
+	const offsetMatch = /^([+-])(\d{2}):(\d{2})$/.exec(offset);
+
+	let offsetMinutes = 0;
+
+	if (offsetMatch) {
+		const sign = offsetMatch[1] === '+' ? 1 : -1;
+
+		offsetMinutes =
+			sign * (Number(offsetMatch[2]) * 60 + Number(offsetMatch[3]));
+	}
+
+	const utcDate = new Date(naiveUTCMs - offsetMinutes * 60 * 1000);
+
+	return `${utcDate.getUTCFullYear()}-${pad2(
+		utcDate.getUTCMonth() + 1
+	)}-${pad2(utcDate.getUTCDate())}T${pad2(utcDate.getUTCHours())}:${pad2(
+		utcDate.getUTCMinutes()
+	)}:00Z`;
 }
 
 function getSelectedItemsLabel({

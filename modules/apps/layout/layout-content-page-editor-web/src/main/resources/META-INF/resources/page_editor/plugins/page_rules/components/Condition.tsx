@@ -95,6 +95,7 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 	switch (type) {
 		case 'date':
 		case 'date-time':
+		case 'number':
 			return [
 				OPERATORS.EQUAL,
 				OPERATORS.NOT_EQUAL,
@@ -491,6 +492,8 @@ function ConditionValueInput({
 		);
 	}
 
+	const isNumber = fieldType === 'number';
+
 	return (
 		<ClayInput
 			aria-label={Liferay.Language.get('value')}
@@ -503,6 +506,8 @@ function ConditionValueInput({
 				}
 			}}
 			sizing="sm"
+			step={isNumber ? 'any' : undefined}
+			type={isNumber ? 'number' : 'text'}
 			value={value}
 		/>
 	);

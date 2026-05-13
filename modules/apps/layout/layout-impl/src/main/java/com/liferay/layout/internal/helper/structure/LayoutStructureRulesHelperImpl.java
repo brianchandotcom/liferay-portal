@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 
 import java.time.LocalDateTime;
@@ -511,6 +513,21 @@ public class LayoutStructureRulesHelperImpl
 			return fieldLocalDateTime.isAfter(valueLocalDateTime);
 		}
 
+		if (Objects.equals(fieldType, "number")) {
+			BigDecimal fieldBigDecimal = _toBigDecimal(fieldValue);
+			BigDecimal valueBigDecimal = _toBigDecimal(value);
+
+			if ((fieldBigDecimal == null) || (valueBigDecimal == null)) {
+				return false;
+			}
+
+			if (fieldBigDecimal.compareTo(valueBigDecimal) > 0) {
+				return true;
+			}
+
+			return false;
+		}
+
 		return false;
 	}
 
@@ -528,6 +545,21 @@ public class LayoutStructureRulesHelperImpl
 			}
 
 			return !fieldLocalDateTime.isBefore(valueLocalDateTime);
+		}
+
+		if (Objects.equals(fieldType, "number")) {
+			BigDecimal fieldBigDecimal = _toBigDecimal(fieldValue);
+			BigDecimal valueBigDecimal = _toBigDecimal(value);
+
+			if ((fieldBigDecimal == null) || (valueBigDecimal == null)) {
+				return false;
+			}
+
+			if (fieldBigDecimal.compareTo(valueBigDecimal) >= 0) {
+				return true;
+			}
+
+			return false;
 		}
 
 		return false;
@@ -549,6 +581,21 @@ public class LayoutStructureRulesHelperImpl
 			return fieldLocalDateTime.isBefore(valueLocalDateTime);
 		}
 
+		if (Objects.equals(fieldType, "number")) {
+			BigDecimal fieldBigDecimal = _toBigDecimal(fieldValue);
+			BigDecimal valueBigDecimal = _toBigDecimal(value);
+
+			if ((fieldBigDecimal == null) || (valueBigDecimal == null)) {
+				return false;
+			}
+
+			if (fieldBigDecimal.compareTo(valueBigDecimal) < 0) {
+				return true;
+			}
+
+			return false;
+		}
+
 		return false;
 	}
 
@@ -566,6 +613,21 @@ public class LayoutStructureRulesHelperImpl
 			}
 
 			return !fieldLocalDateTime.isAfter(valueLocalDateTime);
+		}
+
+		if (Objects.equals(fieldType, "number")) {
+			BigDecimal fieldBigDecimal = _toBigDecimal(fieldValue);
+			BigDecimal valueBigDecimal = _toBigDecimal(value);
+
+			if ((fieldBigDecimal == null) || (valueBigDecimal == null)) {
+				return false;
+			}
+
+			if (fieldBigDecimal.compareTo(valueBigDecimal) <= 0) {
+				return true;
+			}
+
+			return false;
 		}
 
 		return false;
@@ -589,6 +651,25 @@ public class LayoutStructureRulesHelperImpl
 				).put(
 					"itemId", actionsJSONObject.getString("itemId")
 				));
+		}
+	}
+
+	private BigDecimal _toBigDecimal(Object value) {
+		if (value == null) {
+			return null;
+		}
+
+		try {
+			return new BigDecimal(value.toString());
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to parse number from " + value,
+					numberFormatException);
+			}
+
+			return null;
 		}
 	}
 

@@ -8,14 +8,16 @@ import {Condition} from '../../types/Rule';
 
 export function translateConditionsToScript(
 	conditions: Condition[],
-	conditionType: ConditionType
+	conditionType: ConditionType,
+	fieldTypes: Record<string, string> = {}
 ) {
 	const conditionScript = conditions.map((condition) => {
 		if (condition.type === 'field') {
 			return _toFieldComparison(
 				condition.field || '',
 				condition.options?.type,
-				condition.options?.value || ''
+				condition.options?.value || '',
+				fieldTypes[condition.field || '']
 			);
 		}
 		else if (condition.type === 'form') {
@@ -63,8 +65,15 @@ export function translateConditionsToScript(
 function _toFieldComparison(
 	field: string,
 	type: NonNullable<Condition['options']>['type'] | undefined,
-	value: string
+	value: string,
+	fieldType?: string
 ) {
+	if (fieldType === 'number') {
+		const operator = _toNumericOperator(type);
+
+		return `${field} ${operator} ${value || '0'}`;
+	}
+
 	if (type === 'greater-than') {
 		return `(futureDates(${field}, "${value}") AND ${field} != "${value}")`;
 	}
@@ -84,4 +93,23 @@ function _toFieldComparison(
 	const operator = type === 'not-equal' ? '!=' : '==';
 
 	return `${field} ${operator} "${value}"`;
+}
+
+function _toNumericOperator(
+	type: NonNullable<Condition['options']>['type'] | undefined
+) {
+	switch (type) {
+		case 'greater-than':
+			return '>';
+		case 'greater-than-or-equals':
+			return '>=';
+		case 'less-than':
+			return '<';
+		case 'less-than-or-equals':
+			return '<=';
+		case 'not-equal':
+			return '!=';
+		default:
+			return '==';
+	}
 }

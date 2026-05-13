@@ -159,8 +159,11 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteEntryCProductCPDefinitionGroupedEntries(long cProductId) {
-		cpDefinitionGroupedEntryPersistence.removeByEntryCProductId(cProductId);
+	public void deleteCPDefinitionGroupedEntriesByEntryCProductId(
+		long entryCProductId) {
+
+		cpDefinitionGroupedEntryPersistence.removeByEntryCProductId(
+			entryCProductId);
 	}
 
 	@Override

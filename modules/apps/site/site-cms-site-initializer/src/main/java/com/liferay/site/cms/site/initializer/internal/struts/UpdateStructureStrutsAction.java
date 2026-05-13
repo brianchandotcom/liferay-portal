@@ -196,10 +196,14 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		JSONObject objectDefinitionJSONObject = _jsonFactory.createJSONObject(
+			objectDefinitionString);
+
 		Callable<Void> callable = new UpdateStructureCallable(
 			themeDisplay.getCompanyId(), deletedObjectRelationshipsJSONArray,
 			deletedRepeatableGroupsERCs,
 			ObjectDefinition.toDTO(objectDefinitionString),
+			objectDefinitionJSONObject.getLong("id"),
 			_getObjectRelationships(objectRelationshipsJSONArray),
 			_getObjectDefinitions(repeatableGroupObjectDefinitionsJSONArray),
 			themeDisplay.getUser());
@@ -308,9 +312,8 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				}
 			}
 
-			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(
-				_objectDefinition.getExternalReferenceCode(),
-				_objectDefinition);
+			objectDefinitionResource.putObjectDefinition(
+				_objectDefinitionId, _objectDefinition);
 
 			com.liferay.object.model.ObjectDefinition
 				serviceBuilderObjectDefinition =
@@ -345,7 +348,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		private UpdateStructureCallable(
 			long companyId, JSONArray deletedObjectRelationshipsJSONArray,
 			String[] deletedRepeatableGroupsERCs,
-			ObjectDefinition objectDefinition,
+			ObjectDefinition objectDefinition, long objectDefinitionId,
 			List<ObjectRelationship> objectRelationships,
 			List<ObjectDefinition> repeatableGroupObjectDefinitions,
 			User user) {
@@ -355,6 +358,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				deletedObjectRelationshipsJSONArray;
 			_deletedRepeatableGroupsERCs = deletedRepeatableGroupsERCs;
 			_objectDefinition = objectDefinition;
+			_objectDefinitionId = objectDefinitionId;
 			_objectRelationships = objectRelationships;
 			_repeatableGroupObjectDefinitions =
 				repeatableGroupObjectDefinitions;
@@ -365,6 +369,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		private final JSONArray _deletedObjectRelationshipsJSONArray;
 		private final String[] _deletedRepeatableGroupsERCs;
 		private final ObjectDefinition _objectDefinition;
+		private final long _objectDefinitionId;
 		private final List<ObjectRelationship> _objectRelationships;
 		private final List<ObjectDefinition> _repeatableGroupObjectDefinitions;
 		private final User _user;

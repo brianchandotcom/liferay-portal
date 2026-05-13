@@ -87,9 +87,7 @@ const _defaultCollaboratorStickerIcon = ({
 	<CollaboratorStickerIcon type={type} user={user} />
 );
 
-const _defaultCollaboratorBadge = ({
-	toBeShared,
-}: CollaboratorBadgeProps) =>
+const _defaultCollaboratorBadge = ({toBeShared}: CollaboratorBadgeProps) =>
 	toBeShared ? (
 		<span className="inline-item inline-item-after label label-inverse-light">
 			<span className="label-item label-item-expand text-nowrap">
@@ -98,10 +96,7 @@ const _defaultCollaboratorBadge = ({
 		</span>
 	) : null;
 
-const _defaultAutocompleteItem = ({
-	type,
-	user,
-}: CollaboratorIconProps) => (
+const _defaultAutocompleteItem = ({type, user}: CollaboratorIconProps) => (
 	<div className="autofit-row autofit-row-center">
 		<div className="autofit-col c-mr-1">
 			<ClaySticker className="sticker-user-icon" size="sm">

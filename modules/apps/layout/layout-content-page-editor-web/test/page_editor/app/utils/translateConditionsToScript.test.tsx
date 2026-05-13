@@ -113,6 +113,93 @@ describe('translateConditionsToScript', () => {
 		});
 	});
 
+	describe('numeric field conditions', () => {
+		const fieldTypes = {budget: 'number'};
+
+		it('emits an unquoted equality check', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('budget', 'equal', '10')],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget == 10');
+		});
+
+		it('emits an unquoted inequality check', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('budget', 'not-equal', '10')],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget != 10');
+		});
+
+		it('emits a numeric strict greater-than', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('budget', 'greater-than', '10')],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget > 10');
+		});
+
+		it('emits a numeric greater-than-or-equals', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getFieldCondition(
+							'budget',
+							'greater-than-or-equals',
+							'10'
+						),
+					],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget >= 10');
+		});
+
+		it('emits a numeric strict less-than', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('budget', 'less-than', '10')],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget < 10');
+		});
+
+		it('emits a numeric less-than-or-equals', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('budget', 'less-than-or-equals', '10')],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget <= 10');
+		});
+
+		it('defaults a missing value to 0', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						{
+							field: 'budget',
+							id: 'a',
+							options: {type: 'equal'},
+							type: 'field',
+						},
+					],
+					'all',
+					fieldTypes
+				)
+			).toBe('budget == 0');
+		});
+	});
+
 	describe('form conditions', () => {
 		it('rewrites the field name with the input__ prefix and underscores', () => {
 			expect(

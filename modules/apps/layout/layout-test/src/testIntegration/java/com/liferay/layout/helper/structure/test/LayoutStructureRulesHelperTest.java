@@ -10,6 +10,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
@@ -41,6 +42,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+
+import java.math.BigDecimal;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -279,6 +282,38 @@ public class LayoutStructureRulesHelperTest {
 		_testWithFieldCondition(
 			infoItemFieldValues, fieldName, "less-than-or-equals",
 			"2026-05-11 12:30");
+	}
+
+	@Test
+	public void testWithNumberInfoFieldType() throws Exception {
+		InfoField<NumberInfoFieldType> infoField = InfoField.builder(
+			"Test"
+		).infoFieldType(
+			NumberInfoFieldType.INSTANCE
+		).name(
+			"budget"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "budget")
+		).build();
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).infoFieldValue(
+			new InfoFieldValue<>(infoField, new BigDecimal("100"))
+		).build();
+
+		String fieldName = infoField.getUniqueId();
+
+		_testWithFieldCondition(infoItemFieldValues, fieldName, "equal", "100");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "not-equal", "50");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "greater-than", "50");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "greater-than-or-equals", "100");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "less-than", "200");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "less-than-or-equals", "100");
 	}
 
 	@Test

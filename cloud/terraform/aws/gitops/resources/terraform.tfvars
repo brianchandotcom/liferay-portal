@@ -1,3 +1,3 @@
 infrastructure_helm_chart_version="0.4.9"
 infrastructure_provider_helm_chart_version="0.3.10"
-liferay_helm_chart_version="0.4.16"
+liferay_helm_chart_version="0.4.17"

@@ -8,8 +8,17 @@ package com.liferay.portal.tools.service.builder.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.db.DBManager;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
+import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionList;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Type;
@@ -24,6 +33,7 @@ import com.liferay.portal.tools.service.builder.test.model.DynamicQueryEntry;
 import com.liferay.portal.tools.service.builder.test.service.DynamicQueryEntryLocalService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -77,14 +87,11 @@ public class DynamicQueryEntryTest {
 	}
 
 	@Test
-	public void testAddOrderAsc() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("amount"));
-
-		_assertDynamicQueryResult(
-			dynamicQuery, "alpha", "beta", "gamma", "delta");
+	public void testAddOrder() {
+		_assertAddOrder(
+			OrderFactoryUtil.asc("amount"), "alpha", "beta", "gamma", "delta");
+		_assertAddOrder(
+			OrderFactoryUtil.desc("amount"), "delta", "gamma", "beta", "alpha");
 	}
 
 	@Test
@@ -107,18 +114,8 @@ public class DynamicQueryEntryTest {
 				}
 
 				@Override
-				public String[] getOrderByFields() {
-					return new String[] {"amount"};
-				}
-
-				@Override
-				public boolean isAscending() {
-					return false;
-				}
-
-				@Override
-				public boolean isAscending(String field) {
-					return false;
+				public String getOrderBy() {
+					return "amount DESC";
 				}
 
 			});
@@ -128,36 +125,191 @@ public class DynamicQueryEntryTest {
 	}
 
 	@Test
-	public void testAddOrderDesc() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
+	public void testAlias() {
+		Class<?> clazz = _dynamicQueryEntryLocalService.getClass();
 
-		dynamicQuery.addOrder(OrderFactoryUtil.desc("amount"));
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DynamicQueryEntry.class, "parent", clazz.getClassLoader());
 
-		_assertDynamicQueryResult(
-			dynamicQuery, "delta", "gamma", "beta", "alpha");
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("parent.name", "alpha"));
+
+		_assertDynamicQueryResult(dynamicQuery, "alpha");
+
+		Property property = PropertyFactoryUtil.forName("parent.name");
+
+		dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DynamicQueryEntry.class, "parent", clazz.getClassLoader());
+
+		dynamicQuery.add(property.eq("alpha"));
+
+		_assertDynamicQueryResult(dynamicQuery, "alpha");
+
+		dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DynamicQueryEntry.class, "child", clazz.getClassLoader());
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eqProperty("child.status", "status"));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("child.name", "alpha"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("child.name"));
+
+		property = PropertyFactoryUtil.forName("name");
+
+		_assertCriterion(property.eq(dynamicQuery), "alpha");
+	}
+
+	@Test
+	public void testCompareProperty() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.eqProperty("createDate", "modifiedDate"),
+			"alpha", "gamma");
+		_assertCriterion(
+			RestrictionsFactoryUtil.geProperty("modifiedDate", "createDate"),
+			"alpha", "beta", "gamma", "delta");
+		_assertCriterion(
+			RestrictionsFactoryUtil.gtProperty("modifiedDate", "createDate"),
+			"beta", "delta");
+		_assertCriterion(
+			RestrictionsFactoryUtil.leProperty("createDate", "modifiedDate"),
+			"alpha", "beta", "gamma", "delta");
+		_assertCriterion(
+			RestrictionsFactoryUtil.ltProperty("createDate", "modifiedDate"),
+			"beta", "delta");
+		_assertCriterion(
+			RestrictionsFactoryUtil.neProperty("createDate", "modifiedDate"),
+			"beta", "delta");
+	}
+
+	@Test
+	public void testConjunction() {
+		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+		conjunction.add(RestrictionsFactoryUtil.ge("amount", 100L));
+		conjunction.add(RestrictionsFactoryUtil.le("amount", 300L));
+		conjunction.add(RestrictionsFactoryUtil.eq("status", 1));
+
+		_assertCriterion(conjunction, "alpha", "gamma");
+	}
+
+	@Test
+	public void testDisjunction() {
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		disjunction.add(RestrictionsFactoryUtil.isNull("description"));
+		disjunction.add(RestrictionsFactoryUtil.eq("name", "alpha"));
+		disjunction.add(RestrictionsFactoryUtil.like("name", "g%"));
+
+		_assertCriterion(disjunction, "alpha", "beta", "gamma");
 	}
 
 	@Test
 	public void testEq() {
+		_assertCriterion(RestrictionsFactoryUtil.eq("name", "alpha"), "alpha");
+
+		Property property = PropertyFactoryUtil.forName("name");
+
+		_assertCriterion(property.eq("alpha"), "alpha");
+
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name", "alpha"));
 
-		_assertDynamicQueryResult(dynamicQuery, "alpha");
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.eq(dynamicQuery), "alpha");
+
+		_assertCriterion(property.eqAll(dynamicQuery), "alpha");
+
+		_assertCriterion(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"name = ?", "alpha", Type.STRING),
+			"alpha");
+	}
+
+	@Test
+	public void testGe() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.ge("amount", 200L), "beta", "gamma",
+			"delta");
+
+		Property property = PropertyFactoryUtil.forName("amount");
+
+		_assertCriterion(property.ge(200L), "beta", "gamma", "delta");
+
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.ge(dynamicQuery), "beta", "gamma", "delta");
+
+		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.geAll(dynamicQuery), "gamma", "delta");
+		_assertCriterion(
+			property.geSome(dynamicQuery), "alpha", "beta", "gamma", "delta");
+	}
+
+	@Test
+	public void testGt() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.gt("amount", 200L), "gamma", "delta");
+
+		Property property = PropertyFactoryUtil.forName("amount");
+
+		_assertCriterion(property.gt(200L), "gamma", "delta");
+
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.gt(dynamicQuery), "gamma", "delta");
+
+		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.gtAll(dynamicQuery), "delta");
+		_assertCriterion(
+			property.gtSome(dynamicQuery), "beta", "gamma", "delta");
 	}
 
 	@Test
 	public void testIn() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.in("status", new Integer[] {1, 3}), "alpha",
+			"gamma", "delta");
+
+		Property property = PropertyFactoryUtil.forName("status");
+
+		_assertCriterion(
+			property.in(Arrays.asList(1, 3)), "alpha", "gamma", "delta");
+
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("status", new Integer[] {1, 3}));
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
+		dynamicQuery.add(RestrictionsFactoryUtil.ne("status", 2));
+		dynamicQuery.setProjection(property);
 
-		_assertDynamicQueryResult(dynamicQuery, "alpha", "gamma", "delta");
+		_assertCriterion(property.in(dynamicQuery), "alpha", "gamma", "delta");
+		_assertCriterion(property.notIn(dynamicQuery), "beta");
+
+		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.distinct(
+				ProjectionFactoryUtil.property("status")));
+
+		_assertCriterion(property.in(dynamicQuery), "alpha", "gamma");
 	}
 
 	@Test
@@ -195,137 +347,53 @@ public class DynamicQueryEntryTest {
 	}
 
 	@Test
-	public void testNoLimit() {
+	public void testLe() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.le("amount", 200L), "alpha", "beta");
+
+		Property property = PropertyFactoryUtil.forName("amount");
+
+		_assertCriterion(property.le(200L), "alpha", "beta");
+
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
+		dynamicQuery.setProjection(property);
 
-		_assertDynamicQueryResult(
-			dynamicQuery, "alpha", "beta", "gamma", "delta");
+		_assertCriterion(property.le(dynamicQuery), "alpha", "beta");
+
+		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.leAll(dynamicQuery), "alpha");
+		_assertCriterion(
+			property.leSome(dynamicQuery), "alpha", "beta", "gamma");
 	}
 
 	@Test
-	public void testSetLimit() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
+	public void testLike() throws Exception {
+		_assertCriterion(RestrictionsFactoryUtil.ilike("name", "A%"), "alpha");
 
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
-		dynamicQuery.setLimit(0, 2);
+		_assertCriterion(
+			RestrictionsFactoryUtil.like("name", "%a"), "alpha", "beta",
+			"gamma", "delta");
 
-		_assertDynamicQueryResult(dynamicQuery, "alpha", "beta");
-	}
+		Property property = PropertyFactoryUtil.forName("name");
 
-	@Test
-	public void testSetLimitAllPos() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
+		_assertCriterion(
+			property.like("%a"), "alpha", "beta", "gamma", "delta");
 
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
-		dynamicQuery.setLimit(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		_assertCriterion(
+			RestrictionsFactoryUtil.sqlRestriction("name like 'alph%'"),
+			"alpha");
 
-		_assertDynamicQueryResult(
-			dynamicQuery, "alpha", "beta", "gamma", "delta");
-	}
+		_assertCriterion(
+			RestrictionsFactoryUtil.sqlRestriction("name not like 'alph%'"),
+			"beta", "gamma", "delta");
 
-	@Test
-	public void testSetLimitBothNegative() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.setLimit(-5, -3);
-
-		_assertDynamicQueryResult(dynamicQuery);
-	}
-
-	@Test
-	public void testSetLimitEndAllPos() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
-		dynamicQuery.setLimit(2, QueryUtil.ALL_POS);
-
-		_assertDynamicQueryResult(dynamicQuery, "gamma", "delta");
-	}
-
-	@Test
-	public void testSetLimitEndNegative() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.setLimit(QueryUtil.ALL_POS, -50);
-
-		_assertDynamicQueryResult(dynamicQuery);
-	}
-
-	@Test
-	public void testSetLimitNegativeStart() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
-		dynamicQuery.setLimit(-5, 3);
-
-		_assertDynamicQueryResult(dynamicQuery, "alpha", "beta", "gamma");
-	}
-
-	@Test
-	public void testSetLimitSingleResult() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
-		dynamicQuery.setLimit(1, 2);
-
-		_assertDynamicQueryResult(dynamicQuery, "beta");
-	}
-
-	@Test
-	public void testSetLimitStartEqualsEnd() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.setLimit(2, 2);
-
-		_assertDynamicQueryResult(dynamicQuery);
-	}
-
-	@Test
-	public void testSetLimitStartGreaterThanEnd() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.setLimit(5, 2);
-
-		_assertDynamicQueryResult(dynamicQuery);
-	}
-
-	@Test
-	public void testSqlRestriction() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.sqlRestriction(
-				"name = ?", "alpha", Type.STRING));
-
-		_assertDynamicQueryResult(dynamicQuery, "alpha");
-	}
-
-	@Test
-	public void testSqlRestrictionLike() {
-		DynamicQuery dynamicQuery =
-			_dynamicQueryEntryLocalService.dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.sqlRestriction("name like 'alph%'"));
-
-		_assertDynamicQueryResult(dynamicQuery, "alpha");
-	}
-
-	@Test
-	public void testSqlRestrictionLikeEscape() throws Exception {
 		DynamicQueryEntry dynamicQueryEntry = _addDynamicQueryEntry(
 			"a%b", null, 500, 0, new Date(), new Date());
 
@@ -346,15 +414,231 @@ public class DynamicQueryEntryTest {
 	}
 
 	@Test
-	public void testSqlRestrictionNotLike() {
+	public void testLt() {
+		_assertCriterion(RestrictionsFactoryUtil.lt("amount", 200L), "alpha");
+
+		Property property = PropertyFactoryUtil.forName("amount");
+
+		_assertCriterion(property.lt(200L), "alpha");
+
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.sqlRestriction("name not like 'alph%'"));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.lt(dynamicQuery), "alpha");
+
+		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.ge("amount", 300L));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.ltAll(dynamicQuery), "alpha", "beta");
+		_assertCriterion(
+			property.ltSome(dynamicQuery), "alpha", "beta", "gamma");
+	}
+
+	@Test
+	public void testMix() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.and(
+				RestrictionsFactoryUtil.eq("status", 1),
+				RestrictionsFactoryUtil.ge("amount", 200L)),
+			"gamma");
+
+		_assertCriterion(
+			RestrictionsFactoryUtil.between("amount", 150L, 350L), "beta",
+			"gamma");
+
+		_assertCriterion(
+			RestrictionsFactoryUtil.not(
+				RestrictionsFactoryUtil.eq("name", "alpha")),
+			"beta", "gamma", "delta");
+
+		_assertCriterion(
+			RestrictionsFactoryUtil.or(
+				RestrictionsFactoryUtil.eq("name", "alpha"),
+				RestrictionsFactoryUtil.eq("name", "delta")),
+			"alpha", "delta");
+	}
+
+	@Test
+	public void testNe() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.ne("name", "alpha"), "beta", "gamma",
+			"delta");
+
+		Property property = PropertyFactoryUtil.forName("name");
+
+		_assertCriterion(property.ne("alpha"), "beta", "gamma", "delta");
+
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("name", "alpha"));
+		dynamicQuery.setProjection(property);
+
+		_assertCriterion(property.ne(dynamicQuery), "beta", "gamma", "delta");
+	}
+
+	@Test
+	public void testNestedConjunctionInsideDisjunction() {
+		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+		conjunction.add(RestrictionsFactoryUtil.eq("status", 1));
+		conjunction.add(RestrictionsFactoryUtil.ge("amount", 200L));
+
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		disjunction.add(conjunction);
+		disjunction.add(RestrictionsFactoryUtil.eq("name", "delta"));
+
+		_assertCriterion(disjunction, "gamma", "delta");
+	}
+
+	@Test
+	public void testNestedDisjunctionInsideConjunction() {
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+		disjunction.add(RestrictionsFactoryUtil.eq("name", "alpha"));
+		disjunction.add(RestrictionsFactoryUtil.eq("name", "gamma"));
+
+		Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+
+		conjunction.add(disjunction);
+		conjunction.add(RestrictionsFactoryUtil.eq("status", 1));
+
+		_assertCriterion(conjunction, "alpha", "gamma");
+	}
+
+	@Test
+	public void testNoLimit() {
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
 
-		_assertDynamicQueryResult(dynamicQuery, "beta", "gamma", "delta");
+		_assertDynamicQueryResult(
+			dynamicQuery, "alpha", "beta", "gamma", "delta");
+	}
+
+	@Test
+	public void testNull() {
+		_assertCriterion(
+			RestrictionsFactoryUtil.isNotNull("description"), "alpha", "gamma",
+			"delta");
+		_assertCriterion(RestrictionsFactoryUtil.isNull("description"), "beta");
+
+		Property property = PropertyFactoryUtil.forName("description");
+
+		_assertCriterion(property.isNotNull(), "alpha", "gamma", "delta");
+		_assertCriterion(property.isNull(), "beta");
+	}
+
+	@Test
+	public void testProjectionAggregates() {
+		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+
+		projectionList.add(ProjectionFactoryUtil.count("dynamicQueryEntryId"));
+		projectionList.add(ProjectionFactoryUtil.countDistinct("status"));
+		projectionList.add(ProjectionFactoryUtil.rowCount());
+		projectionList.add(ProjectionFactoryUtil.sum("amount"));
+		projectionList.add(ProjectionFactoryUtil.max("amount"));
+		projectionList.add(ProjectionFactoryUtil.min("amount"));
+		projectionList.add(ProjectionFactoryUtil.avg("amount"));
+
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.setProjection(projectionList);
+
+		List<Object[]> rows = _dynamicQueryEntryLocalService.dynamicQuery(
+			dynamicQuery);
+
+		Object[] row = rows.get(0);
+
+		Assert.assertEquals(Long.valueOf(_dynamicQueryEntries.size()), row[0]);
+		Assert.assertEquals(3L, row[1]);
+		Assert.assertEquals(Long.valueOf(_dynamicQueryEntries.size()), row[2]);
+		Assert.assertEquals(1000L, row[3]);
+		Assert.assertEquals(400L, row[4]);
+		Assert.assertEquals(100L, row[5]);
+		Assert.assertEquals(250.0, (Double)row[6], 0.001);
+	}
+
+	@Test
+	public void testProjectionGroupProperty() {
+		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
+
+		projectionList.add(ProjectionFactoryUtil.groupProperty("status"));
+		projectionList.add(ProjectionFactoryUtil.count("dynamicQueryEntryId"));
+
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("status"));
+		dynamicQuery.setProjection(projectionList);
+
+		List<Object[]> rows = _dynamicQueryEntryLocalService.dynamicQuery(
+			dynamicQuery);
+
+		Assert.assertEquals(rows.toString(), 3, rows.size());
+
+		Assert.assertArrayEquals(new Object[] {1, 2L}, rows.get(0));
+		Assert.assertArrayEquals(new Object[] {2, 1L}, rows.get(1));
+		Assert.assertArrayEquals(new Object[] {3, 1L}, rows.get(2));
+	}
+
+	@Test
+	public void testProjectionSqlGroupProjection() {
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("status"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.sqlGroupProjection(
+				"status AS s, count(*) AS c", "status", new String[] {"s", "c"},
+				new Type[] {Type.INTEGER, Type.LONG}));
+
+		List<Object[]> rows = _dynamicQueryEntryLocalService.dynamicQuery(
+			dynamicQuery);
+
+		Assert.assertEquals(rows.toString(), 3, rows.size());
+
+		Assert.assertArrayEquals(new Object[] {1, 2L}, rows.get(0));
+		Assert.assertArrayEquals(new Object[] {2, 1L}, rows.get(1));
+		Assert.assertArrayEquals(new Object[] {3, 1L}, rows.get(2));
+	}
+
+	@Test
+	public void testProjectionSqlProjection() {
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("amount"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.sqlProjection(
+				"name AS sqlName", new String[] {"sqlName"},
+				new Type[] {Type.STRING}));
+
+		_assertDynamicQueryResult(
+			dynamicQuery, "alpha", "beta", "gamma", "delta");
+	}
+
+	@Test
+	public void testSetLimit() {
+		_assertSetLimit(-5, -3);
+		_assertSetLimit(2, 2);
+		_assertSetLimit(5, 2);
+		_assertSetLimit(0, 2, "alpha", "beta");
+		_assertSetLimit(1, 2, "beta");
+		_assertSetLimit(-5, 3, "alpha", "beta", "gamma");
+		_assertSetLimit(2, QueryUtil.ALL_POS, "gamma", "delta");
+		_assertSetLimit(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, "alpha", "beta", "gamma",
+			"delta");
+		_assertSetLimit(QueryUtil.ALL_POS, -50);
 	}
 
 	private static DynamicQueryEntry _addDynamicQueryEntry(
@@ -377,6 +661,27 @@ public class DynamicQueryEntryTest {
 
 		return _dynamicQueryEntryLocalService.addDynamicQueryEntry(
 			dynamicQueryEntry);
+	}
+
+	private void _assertAddOrder(Order order, String... expectedNames) {
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.addOrder(order);
+
+		_assertDynamicQueryResult(dynamicQuery, expectedNames);
+	}
+
+	private void _assertCriterion(
+		Criterion criterion, String... expectedNames) {
+
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.add(criterion);
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
+
+		_assertDynamicQueryResult(dynamicQuery, expectedNames);
 	}
 
 	private void _assertDynamicQueryResult(
@@ -404,6 +709,16 @@ public class DynamicQueryEntryTest {
 
 			Assert.assertEquals(results.toString(), expectedNames[i], name);
 		}
+	}
+
+	private void _assertSetLimit(int start, int end, String... expectedNames) {
+		DynamicQuery dynamicQuery =
+			_dynamicQueryEntryLocalService.dynamicQuery();
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
+		dynamicQuery.setLimit(start, end);
+
+		_assertDynamicQueryResult(dynamicQuery, expectedNames);
 	}
 
 	private static final List<DynamicQueryEntry> _dynamicQueryEntries =

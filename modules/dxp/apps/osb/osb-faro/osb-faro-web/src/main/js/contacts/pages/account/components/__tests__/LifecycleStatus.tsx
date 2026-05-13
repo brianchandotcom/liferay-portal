@@ -260,6 +260,67 @@ describe('LifecycleStatus', () => {
 			expect(within(summary).getByText('At Risk')).toBeInTheDocument();
 			expect(within(summary).getByText('No')).toBeInTheDocument();
 		});
+
+		it('should render the at-risk row when no progression stage is active', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
+					statusData: {
+						id: 'al-1',
+						name: 'Default Lifecycle',
+						stages: [
+							{
+								displayOrder: 0,
+								id: 'als-aware',
+								stageType: LifecycleStages.AWARE
+							},
+							{
+								displayOrder: 1,
+								id: 'als-at-risk',
+								stageType: LifecycleStages.AT_RISK,
+								startDate: '2026-02-01T00:00:00.000Z'
+							}
+						]
+					}
+				})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			const summary = container.querySelector(
+				'.lifecycle-status-summary'
+			) as HTMLElement;
+
+			expect(summary).not.toBeNull();
+			expect(within(summary).getByText('At Risk')).toBeInTheDocument();
+			expect(within(summary).getByText('Yes')).toBeInTheDocument();
+			expect(within(summary).queryByText('Aware')).toBeNull();
+		});
+
+		it('should not render the summary when the lifecycle has no at-risk stage and no active stage', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
+					statusData: {
+						id: 'al-1',
+						name: 'Default Lifecycle',
+						stages: [
+							{
+								displayOrder: 0,
+								id: 'als-aware',
+								stageType: LifecycleStages.AWARE
+							}
+						]
+					}
+				})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			expect(
+				container.querySelector('.lifecycle-status-summary')
+			).toBeNull();
+		});
 	});
 
 	describe('request', () => {

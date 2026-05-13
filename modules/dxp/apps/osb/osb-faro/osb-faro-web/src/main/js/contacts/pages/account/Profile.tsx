@@ -15,7 +15,7 @@ const Profile: React.FC<IProfileProps> = ({account, loading}) => (
 			icon='plus-squares'
 			title={Liferay.Language.get('account-details')}
 		/>
-		<div className='account-profile-cards'>
+		<div className='account-profile-cards mb-3'>
 			<LifecycleStatus className='h-100' />
 			<AccountInfo
 				account={account}

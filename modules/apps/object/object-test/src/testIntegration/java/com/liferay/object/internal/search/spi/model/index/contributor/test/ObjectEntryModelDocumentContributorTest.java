@@ -235,16 +235,16 @@ public class ObjectEntryModelDocumentContributorTest {
 
 		Assert.assertNotNull(userField);
 
-		String userValue = userField.getValue();
+		String value = userField.getValue();
 
 		Assert.assertTrue(
-			userValue,
+			value,
 			userValue.contains(
 				StringBundler.concat(
 					objectFieldName, ": ", userClassNameId, "_", userClassPK)));
 		Assert.assertTrue(
-			userValue,
-			userValue.contains(
+			value,
+			value.contains(
 				StringBundler.concat(
 					objectFieldName, ": ", user.getFullName())));
 	}

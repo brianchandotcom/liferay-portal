@@ -4,8 +4,8 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import VocabularyInput, {
 	buildValue,
-	getCategoriesFromValue,
 	getAssetTypeFromValue,
+	getCategoriesFromValue,
 	getEventTypeFromValue
 } from '../VocabularyInput';
 import {cleanup, render} from '@testing-library/react';
@@ -98,7 +98,9 @@ describe('VocabularyInput', () => {
 
 			expect(eventIdx).toBeGreaterThanOrEqual(0);
 			expect(
-				value.getIn(['criterionGroup', 'items', eventIdx, 'value']).toJS()
+				value
+					.getIn(['criterionGroup', 'items', eventIdx, 'value'])
+					.toJS()
 			).toEqual(['webContentViewed']);
 
 			expect(getIndexFromPropertyName(value, 'activityKey')).toBe(-1);
@@ -129,7 +131,10 @@ describe('VocabularyInput', () => {
 					.getIn(['criterionGroup', 'items', eventIdx, 'value'])
 					.toJS()
 			).toEqual(
-				expect.arrayContaining(['webContentViewed', 'webContentImpressionMade'])
+				expect.arrayContaining([
+					'webContentViewed',
+					'webContentImpressionMade'
+				])
 			);
 
 			expect(getIndexFromPropertyName(value, 'activityKey')).toBe(-1);
@@ -487,9 +492,9 @@ describe('VocabularyInput', () => {
 			expect(
 				getIndexFromPropertyName(value, 'vocabularies/id')
 			).toBeGreaterThanOrEqual(0);
-			expect(getIndexFromPropertyName(value, 'day')).toBeGreaterThanOrEqual(
-				0
-			);
+			expect(
+				getIndexFromPropertyName(value, 'day')
+			).toBeGreaterThanOrEqual(0);
 		});
 
 		it('should call onChange on mount when value has operator and count but no criterionGroup (getDefaultValue stub)', () => {

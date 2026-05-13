@@ -104,22 +104,15 @@ public class EditChatbotDisplayContext {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					_CHATBOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE,
-					_themeDisplay.getCompanyId());
+					"L_AI_HUB_CHATBOT", _themeDisplay.getCompanyId());
 
 		if (objectDefinition == null) {
 			return null;
 		}
 
 		return _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(),
-			_COMPANY_LOGO_OBJECT_FIELD_NAME);
+			objectDefinition.getObjectDefinitionId(), "companyLogo");
 	}
-
-	private static final String
-		_CHATBOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODE = "L_AI_HUB_CHATBOT";
-
-	private static final String _COMPANY_LOGO_OBJECT_FIELD_NAME = "companyLogo";
 
 	private final AttachmentManager _attachmentManager;
 	private final HttpServletRequest _httpServletRequest;

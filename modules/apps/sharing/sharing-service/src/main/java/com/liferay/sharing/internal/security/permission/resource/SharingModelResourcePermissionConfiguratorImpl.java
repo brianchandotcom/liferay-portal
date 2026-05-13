@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -115,6 +116,9 @@ public class SharingModelResourcePermissionConfiguratorImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	private final Set<String> _modelClassNames = new HashSet<>();
@@ -177,9 +181,18 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				return null;
 			}
 
-			SharingConfiguration sharingConfiguration =
-				_sharingConfigurationFactory.getGroupSharingConfiguration(
-					_groupLocalService.getGroup(model.getGroupId()));
+			SharingConfiguration sharingConfiguration = null;
+
+			if (model.getGroupId() > 0) {
+				sharingConfiguration =
+					_sharingConfigurationFactory.getGroupSharingConfiguration(
+						_groupLocalService.getGroup(model.getGroupId()));
+			}
+			else {
+				sharingConfiguration =
+					_sharingConfigurationFactory.getCompanySharingConfiguration(
+						_companyLocalService.getCompany(model.getCompanyId()));
+			}
 
 			if (sharingConfiguration.isEnabled()) {
 				return true;

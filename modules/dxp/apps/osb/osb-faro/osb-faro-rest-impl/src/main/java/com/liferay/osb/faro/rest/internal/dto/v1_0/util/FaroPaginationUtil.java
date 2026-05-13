@@ -5,11 +5,14 @@
 
 package com.liferay.osb.faro.rest.internal.dto.v1_0.util;
 
+import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +54,27 @@ public class FaroPaginationUtil {
 		).put(
 			"type", type
 		).build();
+	}
+
+	public static List<OrderByField> toOrderByFields(Sort[] sorts) {
+		if (ArrayUtil.isEmpty(sorts)) {
+			return null;
+		}
+
+		List<OrderByField> orderByFields = new ArrayList<>(sorts.length);
+
+		for (Sort sort : sorts) {
+			String fieldName = sort.getFieldName();
+
+			if (fieldName == null) {
+				continue;
+			}
+
+			orderByFields.add(
+				new OrderByField(fieldName, sort.isReverse() ? "desc" : "asc"));
+		}
+
+		return orderByFields;
 	}
 
 	private static final int _DEFAULT_CUR = 1;

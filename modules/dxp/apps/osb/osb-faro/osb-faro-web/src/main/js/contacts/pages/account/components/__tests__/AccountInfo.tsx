@@ -21,13 +21,12 @@ jest.mock('../AccountDetailsModal', () => ({
 }));
 
 const mockAccount = {
-	accountName: 'Acme Corp',
 	accountType: 'Customer',
 	annualRevenue: 5000000,
-	fields: [{name: 'website', value: 'https://acme.com'}],
 	id: 'acc-123',
 	industry: 'Technology',
-	numberOfEmployees: 250
+	numberOfEmployees: 250,
+	website: 'https://acme.com'
 };
 
 describe('AccountInfo', () => {
@@ -45,7 +44,6 @@ describe('AccountInfo', () => {
 		it('should render every info label', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			expect(screen.getByText('Account Name')).toBeInTheDocument();
 			expect(screen.getByText('Account Type')).toBeInTheDocument();
 			expect(screen.getByText('Industry')).toBeInTheDocument();
 			expect(screen.getByText('Company Size')).toBeInTheDocument();
@@ -56,7 +54,6 @@ describe('AccountInfo', () => {
 		it('should render the values from the mock', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			expect(screen.getByText('Acme Corp')).toBeInTheDocument();
 			expect(screen.getByText('Customer')).toBeInTheDocument();
 			expect(screen.getByText('Technology')).toBeInTheDocument();
 			expect(screen.getByText('250')).toBeInTheDocument();

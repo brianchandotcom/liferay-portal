@@ -12,6 +12,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -87,16 +88,26 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS");
+			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS",
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS");
+			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS",
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS");
+			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS",
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS");
+			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS",
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
 			"L_AI_HUB_AGENT_DEFINITION",
-			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS");
+			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
@@ -151,7 +162,8 @@ public class AIHubSiteInitializerTest {
 	}
 
 	private void _assertObjectRelationshipExists(
-			String objectDefinitionERC, String objectRelationshipERC)
+			String objectDefinitionERC, String objectRelationshipERC,
+			String deletionType, String type)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -165,7 +177,8 @@ public class AIHubSiteInitializerTest {
 					objectRelationshipERC,
 					objectDefinition.getObjectDefinitionId());
 
-		Assert.assertNotNull(objectRelationship);
+		Assert.assertEquals(deletionType, objectRelationship.getDeletionType());
+		Assert.assertEquals(type, objectRelationship.getType());
 	}
 
 	private void _assertWorkflowDefinitionExists(

@@ -102,6 +102,10 @@ public class AddFormInstanceRecordMVCResourceCommand
 		long formInstanceId = ParamUtil.getLong(
 			resourceRequest, "formInstanceId");
 
+		if (formInstanceId == 0) {
+			return;
+		}
+
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceLocalService.getFormInstance(formInstanceId);
 

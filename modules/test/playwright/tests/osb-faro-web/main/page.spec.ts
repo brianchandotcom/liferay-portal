@@ -811,7 +811,7 @@ test(
 );
 
 test(
-	'Page profile views by technology shows which browsers are being used',
+	'Page profile views by technology shows which browsers and devices are being used',
 	{
 		tag: '@Legacy',
 	},
@@ -839,6 +839,7 @@ test(
 				browserName: 'Chrome',
 				canonicalUrl: 'https://www.liferay.com',
 				channelId: channel.id,
+				deviceType: 'Desktop',
 				eventDate: date1.toISOString(),
 				eventId: 'pageViewed',
 				title: pageTitle,
@@ -891,6 +892,16 @@ test(
 			await expect(page.locator('.legend-percentage')).toContainText(
 				'100%'
 			);
+		});
+
+		await test.step('View Technology Devices Metrics', async () => {
+			await page.getByRole('button', {name: 'Devices'}).click();
+
+			await expect(
+				page
+					.locator('.analytics-operating-system-chart')
+					.getByText('Desktop')
+			).toBeVisible();
 		});
 	}
 );

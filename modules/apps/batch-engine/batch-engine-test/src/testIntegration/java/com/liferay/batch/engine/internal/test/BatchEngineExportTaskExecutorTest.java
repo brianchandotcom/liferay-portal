@@ -188,7 +188,7 @@ public class BatchEngineExportTaskExecutorTest
 
 	@Test
 	@TestInfo("LPD-85261")
-	public void testExportBlogPostingsToJSONFileWithDateCreated()
+	public void testExportBlogPostingsToJSONFileWithDateCreatedFieldName()
 		throws Exception {
 
 		BlogsEntry blogsEntry = blogsEntryLocalService.addEntry(

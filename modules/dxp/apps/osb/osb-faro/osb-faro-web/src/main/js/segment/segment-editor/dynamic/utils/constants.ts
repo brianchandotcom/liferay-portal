@@ -635,6 +635,18 @@ export const EVENT_ID_EVENT_TYPE_MAP: Record<string, string> = {
 	webContentViewed: 'view'
 };
 
+export const ALL_APPLICATION_IDS = Array.from(
+	new Set(Object.values(ASSET_TYPE_APPLICATION_ID_MAP))
+);
+
+export const ALL_EVENT_IDS = Array.from(
+	new Set(
+		([] as string[]).concat(
+			...Object.values(EVENT_TYPE_EVENT_ID_MAP).map(m => Object.values(m))
+		)
+	)
+);
+
 export const TIME_WINDOW_OPTIONS = [
 	{
 		label: Liferay.Language.get('hours'),

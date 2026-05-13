@@ -172,7 +172,7 @@ export default function CMSShareModalContent({
 		return payload;
 	};
 
-	const renderAutocompleteItem = ({
+	const autocompleteItem = ({
 		type,
 		user,
 	}: {
@@ -226,7 +226,7 @@ export default function CMSShareModalContent({
 		</div>
 	);
 
-	const renderCollaboratorBadge = ({
+	const collaboratorBadge = ({
 		toBeShared,
 		type,
 	}: {
@@ -263,7 +263,7 @@ export default function CMSShareModalContent({
 		return null;
 	};
 
-	const renderCollaboratorStickerIcon = ({
+	const collaboratorStickerIcon = ({
 		type,
 		user,
 	}: {
@@ -309,9 +309,12 @@ export default function CMSShareModalContent({
 	return (
 		<GenericShareModalContent
 			alwaysShowPermissionSelector
+			autocompleteItem={autocompleteItem}
 			autocompleteURL={autocompleteURL}
 			canManageCollaborators={canManageCollaborators}
 			closeModal={closeModal}
+			collaboratorBadge={collaboratorBadge}
+			collaboratorStickerIcon={collaboratorStickerIcon}
 			collaboratorURL={collaboratorURL}
 			creator={creator}
 			filterCollaborators={filterCollaborators}
@@ -320,9 +323,6 @@ export default function CMSShareModalContent({
 			}
 			itemId={itemId}
 			permissionOptions={resolvePermissionOptions}
-			renderAutocompleteItem={renderAutocompleteItem}
-			renderCollaboratorBadge={renderCollaboratorBadge}
-			renderCollaboratorStickerIcon={renderCollaboratorStickerIcon}
 			title={title}
 			transformSourceItems={
 				transformSourceItems as unknown as (

@@ -111,6 +111,15 @@ public class TranslationManagerImpl implements TranslationManager {
 			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException {
 
+		if (classPKs == null) {
+			throw new XLIFFFileException.MustHaveValidParameter("classPKs");
+		}
+
+		if (targetLanguageIds == null) {
+			throw new XLIFFFileException.MustHaveValidParameter(
+				"targetLanguageIds");
+		}
+
 		if (!_language.isAvailableLocale(sourceLanguageId)) {
 			throw new XLIFFFileException.MustBeSupportedLanguage(
 				sourceLanguageId);

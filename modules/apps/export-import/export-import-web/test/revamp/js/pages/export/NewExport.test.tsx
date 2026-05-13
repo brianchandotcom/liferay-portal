@@ -11,7 +11,7 @@ import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import {NewExport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/NewExport';
-import {mockPortletDataHandlerSections} from '../../mocks/mockPortletDataHandlerSections';
+import {mockExportPreview} from '../../mocks/mockExportPreview';
 
 const renderComponent = () => {
 	return render(
@@ -22,16 +22,10 @@ const renderComponent = () => {
 	);
 };
 
-const mockExportPreviewWithDeletions = {
-	additionCount: 42,
-	deletionCount: 5,
-	portletDataHandlerSections: mockPortletDataHandlerSections,
-};
-
 describe('NewExport', () => {
 	beforeEach(() => {
 		fetch.resetMocks();
-		fetch.mockResponse(JSON.stringify(mockExportPreviewWithDeletions));
+		fetch.mockResponse(JSON.stringify(mockExportPreview));
 	});
 
 	it('renders the export form', async () => {
@@ -178,7 +172,7 @@ describe('NewExport', () => {
 		fetch.resetMocks();
 		fetch.mockResponse(
 			JSON.stringify({
-				...mockExportPreviewWithDeletions,
+				...mockExportPreview,
 				deletionCount: 0,
 			})
 		);
@@ -192,23 +186,14 @@ describe('NewExport', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('renders the deletions checkbox unchecked when the preview has deletions', async () => {
+	it('shows the deletions checkbox unchecked and toggles it when the preview has deletions', async () => {
 		renderComponent();
 
 		const deletionsCheckbox = await screen.findByLabelText(
 			'export-individual-deletions'
 		);
 
-		expect(deletionsCheckbox).toBeInTheDocument();
 		expect(deletionsCheckbox).not.toBeChecked();
-	});
-
-	it('toggles the deletions checkbox when clicked', async () => {
-		renderComponent();
-
-		const deletionsCheckbox = await screen.findByLabelText(
-			'export-individual-deletions'
-		);
 
 		await userEvent.click(deletionsCheckbox);
 

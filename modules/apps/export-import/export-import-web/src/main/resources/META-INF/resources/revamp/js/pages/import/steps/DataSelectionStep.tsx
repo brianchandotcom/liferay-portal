@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useField} from 'formik';
 import React from 'react';
 
 import CheckboxSheet from '../../../components/forms/CheckboxSheet';
@@ -16,10 +15,6 @@ export default function DataSelectionStep({
 }: {
 	importPreview?: ImportPreview;
 }) {
-	const [{value: replicateDeletions}] = useField<boolean | undefined>(
-		'replicateDeletions'
-	);
-
 	if (!importPreview) {
 		return null;
 	}
@@ -32,7 +27,7 @@ export default function DataSelectionStep({
 				<CheckboxSheet
 					description={Liferay.Language.get('deletions-help')}
 					label={Liferay.Language.get('replicate-selected-deletions')}
-					name="replicateDeletions"
+					name="deletions"
 					title={Liferay.Language.get('deletions')}
 				/>
 			)}
@@ -49,7 +44,6 @@ export default function DataSelectionStep({
 			<FormikFieldContentSelector
 				name="contentSelection"
 				sections={importPreview.portletDataHandlerSections}
-				showDeletions={!!replicateDeletions}
 			/>
 		</>
 	);

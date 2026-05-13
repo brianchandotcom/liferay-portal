@@ -5,7 +5,6 @@
 
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useField} from 'formik';
 import React from 'react';
 
 import DateFilter, {DateFilterValues} from '../../../components/date_filter';
@@ -16,7 +15,7 @@ import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
 const LABEL_ID = 'dataSelection-label';
 
 export default function DataSelection({
-	deletionCount,
+	deletionCount = 0,
 	itemsCount,
 	loading = false,
 	onApplyFilter,
@@ -28,10 +27,6 @@ export default function DataSelection({
 	onApplyFilter: (filterValues: DateFilterValues) => void;
 	sections: PortletDataHandlerSection[];
 }) {
-	const [{value: exportDeletions}] = useField<boolean | undefined>(
-		'exportDeletions'
-	);
-
 	return (
 		<>
 			<header className="mb-1 mt-5 sheet-header">
@@ -53,11 +48,11 @@ export default function DataSelection({
 				/>
 			</ClayLayout.Sheet>
 
-			{!!deletionCount && (
+			{deletionCount > 0 && (
 				<CheckboxSheet
 					description={Liferay.Language.get('deletions-help-export')}
 					label={Liferay.Language.get('export-individual-deletions')}
-					name="exportDeletions"
+					name="deletions"
 					title={Liferay.Language.get('deletions')}
 				/>
 			)}
@@ -76,7 +71,6 @@ export default function DataSelection({
 						aria-labelledby={LABEL_ID}
 						name="contentSelection"
 						sections={sections}
-						showDeletions={!!exportDeletions}
 					/>
 				)}
 			</div>

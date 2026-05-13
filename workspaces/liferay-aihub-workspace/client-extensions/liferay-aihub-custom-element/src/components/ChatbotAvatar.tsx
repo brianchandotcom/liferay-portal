@@ -19,7 +19,11 @@ export default function ChatbotAvatar({
 	title,
 }: ChatbotAvatarProps) {
 	if (companyLogo) {
-		return <img alt={title} className={className} src={companyLogo} />;
+		return (
+			<div className={className}>
+				<img alt={title} src={companyLogo} />
+			</div>
+		);
 	}
 
 	return <>{fallback}</>;

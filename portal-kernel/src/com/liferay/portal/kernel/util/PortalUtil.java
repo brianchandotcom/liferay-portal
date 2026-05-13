@@ -773,6 +773,12 @@ public class PortalUtil {
 		return _portal.getDefaultCompanyId();
 	}
 
+	public static String getDefaultVirtualHostname(
+		boolean companyFallback, LayoutSet layoutSet) {
+
+		return _portal.getDefaultVirtualHostname(companyFallback, layoutSet);
+	}
+
 	public static String getEmailFromAddress(
 		PortletPreferences portletPreferences, long companyId,
 		String defaultValue) {

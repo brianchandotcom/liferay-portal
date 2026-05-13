@@ -571,6 +571,9 @@ public interface Portal {
 
 	public long getDefaultCompanyId();
 
+	public String getDefaultVirtualHostname(
+		boolean companyFallback, LayoutSet layoutSet);
+
 	public String getEmailFromAddress(
 		PortletPreferences portletPreferences, long companyId,
 		String defaultValue);

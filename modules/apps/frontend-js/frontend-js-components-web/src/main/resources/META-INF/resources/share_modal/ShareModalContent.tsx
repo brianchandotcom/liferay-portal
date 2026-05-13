@@ -16,28 +16,26 @@ import {sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import openToast from '../toast/openToast';
-import CollaboratorService, {CollaboratorPayload} from './CollaboratorService';
+import CollaboratorService from './CollaboratorService';
 import ExpirationDateSelector, {
 	formatDateForView,
 	formatDateToISO,
 } from './ExpirationDateSelector';
 import PermissionSelector from './PermissionSelector';
 import {
+	AutocompleteItem,
 	COLLABORATOR_TYPE,
 	Collaborator,
+	CollaboratorBadgeProps,
+	CollaboratorIconProps,
 	CollaboratorType,
 	PermissionOption,
-	ShareModalCreator,
+	ShareModalContentProps,
 	ShareModalUserAccount,
 	ShareModalUserGroup,
 } from './types';
 
 import './ShareModalContent.scss';
-
-type AutocompleteItem = {
-	type: CollaboratorType;
-	user: ShareModalUserAccount | ShareModalUserGroup;
-};
 
 const _identityTransformSourceItems = (
 	items: AutocompleteItem[],
@@ -64,13 +62,7 @@ const _defaultTransformSubmitPayload = ({
 	type,
 });
 
-function CollaboratorStickerIcon({
-	type,
-	user,
-}: {
-	type: CollaboratorType;
-	user: ShareModalUserAccount | ShareModalUserGroup;
-}) {
+function CollaboratorStickerIcon({type, user}: CollaboratorIconProps) {
 	if (type === COLLABORATOR_TYPE.USER_GROUP) {
 		return <ClayIcon symbol="users" />;
 	}
@@ -88,21 +80,16 @@ function CollaboratorStickerIcon({
 	return <ClayIcon symbol="user" />;
 }
 
-const _defaultRenderCollaboratorStickerIcon = ({
+const _defaultCollaboratorStickerIcon = ({
 	type,
 	user,
-}: {
-	type: CollaboratorType;
-	user: ShareModalUserAccount | ShareModalUserGroup;
-}) => <CollaboratorStickerIcon type={type} user={user} />;
+}: CollaboratorIconProps) => (
+	<CollaboratorStickerIcon type={type} user={user} />
+);
 
-const _defaultRenderCollaboratorBadge = ({
+const _defaultCollaboratorBadge = ({
 	toBeShared,
-}: {
-	toBeShared?: boolean;
-	type: CollaboratorType;
-	user: ShareModalUserAccount | ShareModalUserGroup;
-}) =>
+}: CollaboratorBadgeProps) =>
 	toBeShared ? (
 		<span className="inline-item inline-item-after label label-inverse-light">
 			<span className="label-item label-item-expand text-nowrap">
@@ -111,13 +98,10 @@ const _defaultRenderCollaboratorBadge = ({
 		</span>
 	) : null;
 
-const _defaultRenderAutocompleteItem = ({
+const _defaultAutocompleteItem = ({
 	type,
 	user,
-}: {
-	type: CollaboratorType;
-	user: ShareModalUserAccount | ShareModalUserGroup;
-}) => (
+}: CollaboratorIconProps) => (
 	<div className="autofit-row autofit-row-center">
 		<div className="autofit-col c-mr-1">
 			<ClaySticker className="sticker-user-icon" size="sm">
@@ -153,13 +137,13 @@ function CollaboratorListItem({
 	actionIds,
 	alwaysShowPermissionSelector = false,
 	canManageCollaborators = true,
+	collaboratorBadge,
+	collaboratorStickerIcon,
 	dateExpired,
 	error,
 	onChangeUser,
 	onRemoveUser,
 	permissionOptions,
-	renderCollaboratorBadge,
-	renderCollaboratorStickerIcon,
 	share,
 	showAllowResharing = true,
 	showExpirationDate = true,
@@ -170,6 +154,8 @@ function CollaboratorListItem({
 	actionIds: string;
 	alwaysShowPermissionSelector?: boolean;
 	canManageCollaborators?: boolean;
+	collaboratorBadge: (props: CollaboratorBadgeProps) => React.ReactNode;
+	collaboratorStickerIcon: (props: CollaboratorIconProps) => React.ReactNode;
 	dateExpired?: string;
 	error?: string;
 	onChangeUser: (
@@ -178,15 +164,6 @@ function CollaboratorListItem({
 	) => void;
 	onRemoveUser: (user: ShareModalUserAccount | ShareModalUserGroup) => void;
 	permissionOptions: PermissionOption[];
-	renderCollaboratorBadge: (props: {
-		toBeShared?: boolean;
-		type: CollaboratorType;
-		user: ShareModalUserAccount | ShareModalUserGroup;
-	}) => React.ReactNode;
-	renderCollaboratorStickerIcon: (props: {
-		type: CollaboratorType;
-		user: ShareModalUserAccount | ShareModalUserGroup;
-	}) => React.ReactNode;
 	share: boolean;
 	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
@@ -205,7 +182,7 @@ function CollaboratorListItem({
 		>
 			<div className="autofit-col pl-0">
 				<ClaySticker displayType="secondary" shape="circle" size="sm">
-					{renderCollaboratorStickerIcon({type, user})}
+					{collaboratorStickerIcon({type, user})}
 				</ClaySticker>
 			</div>
 
@@ -216,7 +193,7 @@ function CollaboratorListItem({
 							{user.name}
 						</span>
 
-						{renderCollaboratorBadge({toBeShared, type, user})}
+						{collaboratorBadge({toBeShared, type, user})}
 					</div>
 
 					{alwaysShowPermissionSelector ||
@@ -345,12 +322,15 @@ function CollaboratorListItem({
 }
 
 export default function ShareModalContent({
-	autocompleteHelpText,
-	autocompleteLabel = Liferay.Language.get('add-people-to-collaborate'),
 	alwaysShowPermissionSelector = false,
+	autocompleteHelpText,
+	autocompleteItem = _defaultAutocompleteItem,
+	autocompleteLabel = Liferay.Language.get('add-people-to-collaborate'),
 	autocompleteURL = '',
 	canManageCollaborators = true,
 	closeModal,
+	collaboratorBadge = _defaultCollaboratorBadge,
+	collaboratorStickerIcon = _defaultCollaboratorStickerIcon,
 	collaboratorURL = '',
 	collaboratorsListTitle = Liferay.Language.get('who-has-access'),
 	creator,
@@ -359,55 +339,12 @@ export default function ShareModalContent({
 	itemId,
 	onAutocompleteChange = noop,
 	permissionOptions,
-	renderAutocompleteItem = _defaultRenderAutocompleteItem,
-	renderCollaboratorBadge = _defaultRenderCollaboratorBadge,
-	renderCollaboratorStickerIcon = _defaultRenderCollaboratorStickerIcon,
 	showAllowResharing = true,
 	showExpirationDate = true,
 	title = '',
 	transformSourceItems = _identityTransformSourceItems,
 	transformSubmitPayload = _defaultTransformSubmitPayload,
-}: {
-	alwaysShowPermissionSelector?: boolean;
-	autocompleteHelpText?: string;
-	autocompleteLabel?: string;
-	autocompleteURL: string;
-	canManageCollaborators?: boolean;
-	closeModal: () => void;
-	collaboratorURL: string;
-	collaboratorsListTitle?: string;
-	creator: ShareModalCreator;
-	filterCollaborators?: (collaborator: Collaborator) => boolean;
-	initialCollaborators: Collaborator[];
-	itemId: number;
-	onAutocompleteChange?: (item: AutocompleteItem | undefined) => void;
-	permissionOptions:
-		| PermissionOption[]
-		| ((collaborator: Collaborator) => PermissionOption[]);
-	renderAutocompleteItem?: (props: {
-		type: CollaboratorType;
-		user: ShareModalUserAccount | ShareModalUserGroup;
-	}) => React.ReactNode;
-	renderCollaboratorBadge?: (props: {
-		toBeShared?: boolean;
-		type: CollaboratorType;
-		user: ShareModalUserAccount | ShareModalUserGroup;
-	}) => React.ReactNode;
-	renderCollaboratorStickerIcon?: (props: {
-		type: CollaboratorType;
-		user: ShareModalUserAccount | ShareModalUserGroup;
-	}) => React.ReactNode;
-	showAllowResharing?: boolean;
-	showExpirationDate?: boolean;
-	title: string;
-	transformSourceItems?: (
-		items: AutocompleteItem[],
-		query: string
-	) => AutocompleteItem[];
-	transformSubmitPayload?: (
-		collaborator: Collaborator
-	) => CollaboratorPayload;
-}) {
+}: ShareModalContentProps) {
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
 		useState(4);
@@ -632,7 +569,7 @@ export default function ShareModalContent({
 										}
 										textValue={user.name}
 									>
-										{renderAutocompleteItem({type, user})}
+										{autocompleteItem({type, user})}
 									</ClayMultiSelect.Item>
 								)}
 							</ClayMultiSelect>
@@ -668,6 +605,10 @@ export default function ShareModalContent({
 										canManageCollaborators={
 											canManageCollaborators
 										}
+										collaboratorBadge={collaboratorBadge}
+										collaboratorStickerIcon={
+											collaboratorStickerIcon
+										}
 										key={`listItem-${item.type}-${item.user.id}`}
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}
@@ -676,12 +617,6 @@ export default function ShareModalContent({
 											'function'
 												? permissionOptions(item)
 												: permissionOptions
-										}
-										renderCollaboratorBadge={
-											renderCollaboratorBadge
-										}
-										renderCollaboratorStickerIcon={
-											renderCollaboratorStickerIcon
 										}
 										showAllowResharing={showAllowResharing}
 										showExpirationDate={showExpirationDate}

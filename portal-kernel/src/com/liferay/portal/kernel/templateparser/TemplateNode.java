@@ -347,6 +347,22 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		return (String)get("data");
 	}
 
+	private Locale _getDataLocale() {
+		Map<String, String> attributes = getAttributes();
+
+		if (attributes == null) {
+			return _locale;
+		}
+
+		String dataLanguageId = attributes.get("language-id");
+
+		if (Validator.isNull(dataLanguageId)) {
+			return _locale;
+		}
+
+		return LocaleUtil.fromLanguageId(dataLanguageId);
+	}
+
 	private String _getDDMJournalArticleFriendlyURL() {
 		if (_themeDisplay == null) {
 			return StringPool.BLANK;
@@ -548,7 +564,16 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 		decimalFormat.setParseBigDecimal(true);
 
-		return decimalFormat.format(GetterUtil.getDouble(data, _locale));
+		double doubleValue;
+
+		try {
+			doubleValue = Double.parseDouble(data);
+		}
+		catch (NumberFormatException numberFormatException) {
+			doubleValue = GetterUtil.getDouble(data, _getDataLocale());
+		}
+
+		return decimalFormat.format(doubleValue);
 	}
 
 	private static final String _RANDOM_ID = StringUtil.randomId();

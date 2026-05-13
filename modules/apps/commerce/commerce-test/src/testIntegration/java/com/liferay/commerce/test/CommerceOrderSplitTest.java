@@ -514,10 +514,10 @@ public class CommerceOrderSplitTest {
 				commerceOrder.getCommerceOrderId());
 
 			Country country = CommerceInventoryTestUtil.addCountry(
-				_serviceContext);
+				null, _serviceContext);
 
 			Region region = CommerceInventoryTestUtil.addRegion(
-				country.getCountryId(), _serviceContext);
+				null, country.getCountryId(), _serviceContext);
 
 			Address address = _addressLocalService.addAddress(
 				RandomTestUtil.randomString(), user.getUserId(),

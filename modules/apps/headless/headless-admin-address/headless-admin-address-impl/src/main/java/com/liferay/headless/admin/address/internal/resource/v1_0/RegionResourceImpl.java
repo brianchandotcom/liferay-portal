@@ -120,7 +120,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
 			_regionService.addRegion(
-				countryId, GetterUtil.get(region.getActive(), true),
+				null, countryId, GetterUtil.get(region.getActive(), true),
 				region.getName(), GetterUtil.getDouble(region.getPosition()),
 				region.getRegionCode(),
 				ServiceContextFactory.getInstance(
@@ -138,7 +138,7 @@ public class RegionResourceImpl extends BaseRegionResourceImpl {
 
 		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
 			_regionService.updateRegion(
-				regionId, GetterUtil.get(region.getActive(), true),
+				null, regionId, GetterUtil.get(region.getActive(), true),
 				region.getName(), GetterUtil.getDouble(region.getPosition()),
 				region.getRegionCode());
 

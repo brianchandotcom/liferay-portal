@@ -61,7 +61,7 @@ public class CompanyCountriesUtil {
 			serviceContext.setUserId(guestUser.getUserId());
 
 			Country country = countryLocalService.addCountry(
-				countryJSONObject.getString("a2"),
+				null, countryJSONObject.getString("a2"),
 				countryJSONObject.getString("a3"), true, true,
 				countryJSONObject.getString("idd"),
 				countryJSONObject.getString("name"),

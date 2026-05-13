@@ -110,7 +110,7 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 	public Country postCountry(Country country) throws Exception {
 		com.liferay.portal.kernel.model.Country serviceBuilderCountry =
 			_countryService.addCountry(
-				country.getA2(), country.getA3(),
+				null, country.getA2(), country.getA3(),
 				GetterUtil.getBoolean(country.getActive(), true),
 				GetterUtil.getBoolean(country.getBillingAllowed(), true),
 				String.valueOf(country.getIdd()), country.getName(),
@@ -147,7 +147,7 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 
 		com.liferay.portal.kernel.model.Country serviceBuilderCountry =
 			_countryService.updateCountry(
-				countryId, country.getA2(), country.getA3(),
+				null, countryId, country.getA2(), country.getA3(),
 				GetterUtil.getBoolean(country.getActive(), true),
 				GetterUtil.getBoolean(country.getBillingAllowed(), true),
 				String.valueOf(country.getIdd()), country.getName(),

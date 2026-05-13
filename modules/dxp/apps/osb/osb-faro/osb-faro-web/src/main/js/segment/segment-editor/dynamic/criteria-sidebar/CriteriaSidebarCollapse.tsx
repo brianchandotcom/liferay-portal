@@ -158,16 +158,8 @@ const getDefaultValue = (property: Property): any => {
 			]);
 		case PropertyTypes.Vocabulary:
 			return createCustomValueMap([
-				{
-					key: 'criterionGroup',
-					value: [
-						{
-							operatorName: RelationalOperators.EQ,
-							propertyName: name,
-							value: ''
-						}
-					]
-				}
+				{key: 'operator', value: RelationalOperators.GE},
+				{key: 'value', value: 1}
 			]);
 		case PropertyTypes.OrganizationBoolean:
 			return createCustomValueMap([

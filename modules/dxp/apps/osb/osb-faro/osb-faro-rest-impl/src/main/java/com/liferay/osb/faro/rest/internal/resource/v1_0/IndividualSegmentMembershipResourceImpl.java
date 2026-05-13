@@ -5,9 +5,20 @@
 
 package com.liferay.osb.faro.rest.internal.resource.v1_0;
 
+import com.liferay.osb.faro.engine.client.ContactsEngineClient;
+import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.rest.dto.v1_0.IndividualSegmentMembership;
+import com.liferay.osb.faro.rest.internal.dto.v1_0.converter.FaroDTOConverterContext;
+import com.liferay.osb.faro.rest.internal.dto.v1_0.util.FaroPaginationUtil;
 import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResource;
+import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -20,5 +31,51 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class IndividualSegmentMembershipResourceImpl
 	extends BaseIndividualSegmentMembershipResourceImpl {
+
+	@Override
+	public Page<IndividualSegmentMembership>
+			getWorkspaceGroupIndividualSegmentMembershipsPage(
+				Long groupId, String individualSegmentId, Pagination pagination,
+				Sort[] sorts)
+		throws Exception {
+
+		Results
+			<com.liferay.osb.faro.engine.client.model.
+				IndividualSegmentMembership> results =
+					_contactsEngineClient.getIndividualSegmentMemberships(
+						_faroProjectLocalService.getFaroProjectByGroupId(
+							groupId),
+						individualSegmentId,
+						FaroPaginationUtil.getCur(pagination),
+						FaroPaginationUtil.getDelta(pagination),
+						FaroPaginationUtil.toOrderByFields(sorts));
+
+		return Page.of(
+			transform(
+				results.getItems(),
+				individualSegmentMembership ->
+					_individualSegmentMembershipDTOConverter.toDTO(
+						new FaroDTOConverterContext(
+							contextAcceptLanguage.isAcceptAllLanguages(),
+							individualSegmentMembership.getIndividualId(),
+							contextAcceptLanguage.getPreferredLocale()),
+						individualSegmentMembership)),
+			pagination, results.getTotal());
+	}
+
+	@Reference
+	private ContactsEngineClient _contactsEngineClient;
+
+	@Reference
+	private FaroProjectLocalService _faroProjectLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.osb.faro.rest.internal.dto.v1_0.converter.IndividualSegmentMembershipDTOConverter)"
+	)
+	private DTOConverter
+		<com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership,
+		 IndividualSegmentMembership> _individualSegmentMembershipDTOConverter;
+
 }
+
 // LIFERAY-REST-BUILDER-HASH:1196346268

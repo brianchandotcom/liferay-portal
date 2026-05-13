@@ -7,6 +7,7 @@ package com.liferay.portal.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.RenderPortletAction;
 import com.liferay.portal.kernel.model.Group;
@@ -36,12 +37,16 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import jakarta.portlet.HeaderRequest;
 import jakarta.portlet.HeaderResponse;
 import jakarta.portlet.Portlet;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -67,6 +72,199 @@ public class RenderPortletActionTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testOptionalRenderParameters() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(RenderPortletActionTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String portletId = RandomTestUtil.randomString();
+
+		ServiceRegistration<Portlet> serviceRegistration =
+			bundleContext.registerService(
+				Portlet.class,
+				new MVCPortlet() {
+
+					@Override
+					public void render(
+							RenderRequest renderRequest,
+							RenderResponse renderResponse)
+						throws IOException {
+
+						PrintWriter printWriter = renderResponse.getWriter();
+
+						printWriter.write(
+							String.valueOf(
+								Arrays.asList(
+									renderRequest.getAttribute(
+										WebKeys.PORTLET_DECORATE),
+									renderRequest.getAttribute(
+										WebKeys.RENDER_PATH),
+									renderRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_BOUNDARY),
+									renderRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_COLUMN_COUNT),
+									renderRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_COLUMN_ID),
+									renderRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_COLUMN_POS))));
+					}
+
+					@Override
+					public void renderHeaders(
+							HeaderRequest headerRequest,
+							HeaderResponse headerResponse)
+						throws IOException {
+
+						PrintWriter printWriter = headerResponse.getWriter();
+
+						printWriter.write(
+							StringBundler.concat(
+								"<link rel=\"stylesheet\" href=\"",
+								Arrays.asList(
+									headerRequest.getAttribute(
+										WebKeys.PORTLET_DECORATE),
+									headerRequest.getAttribute(
+										WebKeys.RENDER_PATH),
+									headerRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_BOUNDARY),
+									headerRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_COLUMN_COUNT),
+									headerRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_COLUMN_ID),
+									headerRequest.getAttribute(
+										WebKeys.RENDER_PORTLET_COLUMN_POS)),
+								".css\">"));
+					}
+
+				},
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.deploy.parallel", "false"
+				).put(
+					"com.liferay.portlet.use-default-template", "false"
+				).put(
+					"jakarta.portlet.init-param.valid-paths", "/"
+				).put(
+					"jakarta.portlet.init-param.view-template", "/"
+				).put(
+					"jakarta.portlet.name", portletId
+				).put(
+					"jakarta.portlet.version", "3.0"
+				).build());
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		RenderPortletAction renderPortletAction = new RenderPortletAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
+
+				@Override
+				public RequestDispatcher getRequestDispatcher(String path) {
+					ServletContext servletContext = ServletContextPool.get(
+						StringPool.BLANK);
+
+					return servletContext.getRequestDispatcher(path);
+				}
+
+			};
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://localhost:8080");
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.RENDER_PORTLET,
+			_portletLocalService.getPortletById(
+				TestPropsValues.getCompanyId(), portletId));
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLayout(layout);
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		themeDisplay.setLayoutSet(layoutSet);
+
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		String portletDecorate = String.valueOf(RandomTestUtil.randomBoolean());
+		String renderPortletBoundary = String.valueOf(
+			RandomTestUtil.randomBoolean());
+		String renderPortletColumnCount = String.valueOf(
+			RandomTestUtil.randomInt());
+		String renderPortletColumnId = RandomTestUtil.randomString();
+		String renderPortletColumnPos = String.valueOf(
+			RandomTestUtil.randomInt());
+
+		mockHttpServletRequest.setParameter(
+			"p_p_boundary", renderPortletBoundary);
+		mockHttpServletRequest.setParameter(
+			"p_p_col_count", renderPortletColumnCount);
+		mockHttpServletRequest.setParameter(
+			"p_p_col_id", renderPortletColumnId);
+		mockHttpServletRequest.setParameter(
+			"p_p_col_pos", renderPortletColumnPos);
+		mockHttpServletRequest.setParameter("p_p_decorate", portletDecorate);
+		mockHttpServletRequest.setParameter(
+			"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		renderPortletAction.execute(
+			null, mockHttpServletRequest, mockHttpServletResponse);
+
+		OutputData outputData = (OutputData)mockHttpServletRequest.getAttribute(
+			WebKeys.OUTPUT_DATA);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"\n<link rel=\"stylesheet\" href=\"",
+				Arrays.asList(
+					portletDecorate, null, renderPortletBoundary,
+					renderPortletColumnCount, renderPortletColumnId,
+					renderPortletColumnPos),
+				".css\">"),
+			String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content,
+			content.contains(
+				String.valueOf(
+					Arrays.asList(
+						null, null, renderPortletBoundary,
+						renderPortletColumnCount, renderPortletColumnId,
+						renderPortletColumnPos))));
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		serviceRegistration.unregister();
+	}
 
 	@Test
 	public void testRenderHeaders() throws Exception {

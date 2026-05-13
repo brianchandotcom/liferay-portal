@@ -166,92 +166,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	public void testPatchAssetLibrary() throws Exception {
 		super.testPatchAssetLibrary();
 
-		String[] availableLanguageIds = _getAvailableLanguageIds(
-			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
-		String defaultLanguageId = _language.getLanguageId(LocaleUtil.US);
-		String logoColor = RandomTestUtil.randomString();
-		MimeTypeLimit[] mimeTypeLimits = {
-			new MimeTypeLimit() {
-				{
-					maximumSize = 1234;
-					mimeType = "application/pdf";
-				}
-			}
-		};
-		boolean sharingEnabled = true;
-		boolean trashEnabled = true;
-		int trashEntriesMaxAge = RandomTestUtil.randomInt();
-		boolean useCustomLanguages = true;
-
-		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
-			true, availableLanguageIds, defaultLanguageId, logoColor,
-			mimeTypeLimits, sharingEnabled, trashEnabled, trashEntriesMaxAge,
-			useCustomLanguages);
-
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.USER);
-
-		assetLibrary.setPermissions(
-			new Permission[] {
-				new Permission() {
-					{
-						setActionIds(
-							new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
-						setRoleExternalReferenceCode(
-							role.getExternalReferenceCode());
-						setRoleName(role.getName());
-						setRoleType(role.getTypeLabel());
-					}
-				}
-			});
-
-		assetLibrary = assetLibraryResource.patchAssetLibrary(
-			assetLibrary.getExternalReferenceCode(), assetLibrary);
-
-		ResourcePermission resourcePermission =
-			_resourcePermissionLocalService.getResourcePermission(
-				TestPropsValues.getCompanyId(), DepotEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(assetLibrary.getId()), role.getRoleId());
-
-		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
-		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
-
-		_assertGroupDepotEntryType(assetLibrary);
-
-		boolean autoTaggingEnabled = false;
-
-		Settings settings = new Settings();
-
-		settings.setAutoTaggingEnabled(autoTaggingEnabled);
-		settings.setTrashEnabled(trashEnabled);
-		settings.setTrashEntriesMaxAge(trashEntriesMaxAge);
-
-		assetLibrary.setSettings(settings);
-
-		assetLibrary = assetLibraryResource.patchAssetLibrary(
-			assetLibrary.getExternalReferenceCode(), assetLibrary);
-
-		_assertSettings(
-			assetLibrary, autoTaggingEnabled, availableLanguageIds,
-			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
-			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
-
-		settings = new Settings();
-
-		settings.setMimeTypeLimits(new MimeTypeLimit[0]);
-
-		assetLibrary.setSettings(settings);
-
-		assetLibrary = assetLibraryResource.patchAssetLibrary(
-			assetLibrary.getExternalReferenceCode(), assetLibrary);
-
-		_assertSettings(
-			assetLibrary, autoTaggingEnabled, availableLanguageIds,
-			defaultLanguageId, logoColor, new MimeTypeLimit[0], sharingEnabled,
-			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
-
+		_testPatchAssetLibraryPermissions();
+		_testPatchAssetLibrarySettings();
 		_testPatchAssetLibraryFriendlyURL();
 		_testPatchAssetLibraryFriendlyURLValidation();
 	}
@@ -694,6 +610,112 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		_assertFriendlyURLValidationFailure(
 			existingFriendlyURL, "FRIENDLY_URL_DUPLICATE");
+	}
+
+	private void _testPatchAssetLibraryPermissions() throws Exception {
+		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
+			true,
+			_getAvailableLanguageIds(
+				LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY),
+			_language.getLanguageId(LocaleUtil.US),
+			RandomTestUtil.randomString(),
+			new MimeTypeLimit[] {
+				new MimeTypeLimit() {
+					{
+						maximumSize = 1234;
+						mimeType = "application/pdf";
+					}
+				}
+			},
+			true, true, RandomTestUtil.randomInt(), true);
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		assetLibrary.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(
+							new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+						setRoleExternalReferenceCode(
+							role.getExternalReferenceCode());
+						setRoleName(role.getName());
+						setRoleType(role.getTypeLabel());
+					}
+				}
+			});
+
+		assetLibrary = assetLibraryResource.patchAssetLibrary(
+			assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				TestPropsValues.getCompanyId(), DepotEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(assetLibrary.getId()), role.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		_assertGroupDepotEntryType(assetLibrary);
+	}
+
+	private void _testPatchAssetLibrarySettings() throws Exception {
+		String[] availableLanguageIds = _getAvailableLanguageIds(
+			LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY);
+		String defaultLanguageId = _language.getLanguageId(LocaleUtil.US);
+		String logoColor = RandomTestUtil.randomString();
+		MimeTypeLimit[] mimeTypeLimits = {
+			new MimeTypeLimit() {
+				{
+					maximumSize = 1234;
+					mimeType = "application/pdf";
+				}
+			}
+		};
+		boolean sharingEnabled = true;
+		boolean trashEnabled = true;
+		int trashEntriesMaxAge = RandomTestUtil.randomInt();
+		boolean useCustomLanguages = true;
+
+		AssetLibrary assetLibrary = _postAssetLibraryWithSettings(
+			true, availableLanguageIds, defaultLanguageId, logoColor,
+			mimeTypeLimits, sharingEnabled, trashEnabled, trashEntriesMaxAge,
+			useCustomLanguages);
+
+		boolean autoTaggingEnabled = false;
+
+		Settings settings = new Settings();
+
+		settings.setAutoTaggingEnabled(autoTaggingEnabled);
+		settings.setTrashEnabled(trashEnabled);
+		settings.setTrashEntriesMaxAge(trashEntriesMaxAge);
+
+		assetLibrary.setSettings(settings);
+
+		assetLibrary = assetLibraryResource.patchAssetLibrary(
+			assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+		_assertSettings(
+			assetLibrary, autoTaggingEnabled, availableLanguageIds,
+			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
+			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
+
+		settings = new Settings();
+
+		settings.setMimeTypeLimits(new MimeTypeLimit[0]);
+
+		assetLibrary.setSettings(settings);
+
+		assetLibrary = assetLibraryResource.patchAssetLibrary(
+			assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+		_assertSettings(
+			assetLibrary, autoTaggingEnabled, availableLanguageIds,
+			defaultLanguageId, logoColor, new MimeTypeLimit[0], sharingEnabled,
+			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
 	}
 
 	private void _testPostAssetLibrary(MimeTypeLimit[] mimeTypeLimits)

@@ -675,3 +675,44 @@ test(
 		});
 	}
 );
+
+test(
+	'Can republish a structure after changing its ERC',
+	{tag: '@LPD-89564'},
+	async ({apiHelpers, structureBuilderPage}) => {
+
+		// Create and publish a structure with an initial ERC
+
+		const label = `Structure${getRandomInt()}`;
+		const initialERC = getRandomString();
+
+		const structureId = await structureBuilderPage.createStructureFromData({
+			erc: initialERC,
+			label,
+			name: label,
+			page: structureBuilderPage,
+		});
+
+		// Change the ERC and republish
+
+		const updatedERC = getRandomString();
+
+		await structureBuilderPage.changeStructureSettings({erc: updatedERC});
+
+		const republishedId = await structureBuilderPage.publishStructure();
+
+		// Republishing must update the existing structure, not create a new one
+
+		expect(republishedId).toBe(structureId);
+
+		// The persisted ERC should match the updated value
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinition(structureId);
+
+		expect(objectDefinition.externalReferenceCode).toBe(updatedERC);
+	}
+);

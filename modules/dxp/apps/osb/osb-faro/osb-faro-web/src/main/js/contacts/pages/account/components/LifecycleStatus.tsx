@@ -149,37 +149,59 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 						</MultiStepNav>
 					)}
 				</div>
-				{activeStage && (
+				{(activeStage || atRiskStage) && (
 					<div className='d-sm-none lifecycle-status-summary'>
-						<div className='align-items-baseline d-flex justify-content-between'>
-							<Text color='primary' size={3} weight='semi-bold'>
-								{getStageLabel(activeStage)}
-							</Text>
-							<Text color='secondary' size={3}>
-								{sub(Liferay.Language.get('step-x-of-x'), [
-									String(activeIndex + 1),
-									String(progressionStages.length)
-								])}
-							</Text>
-						</div>
-						{activeStage.startDate && (
-							<Text color='secondary' size={3}>
-								{formatUTCDate(
-									activeStage.startDate,
-									CUSTOM_DATE_FORMAT
+						{activeStage && (
+							<>
+								<div className='align-items-baseline d-flex justify-content-between'>
+									<Text
+										color='primary'
+										size={3}
+										weight='semi-bold'
+									>
+										{getStageLabel(activeStage)}
+									</Text>
+									<Text color='secondary' size={3}>
+										{sub(
+											Liferay.Language.get('step-x-of-x'),
+											[
+												String(activeIndex + 1),
+												String(progressionStages.length)
+											]
+										)}
+									</Text>
+								</div>
+								{activeStage.startDate && (
+									<Text color='secondary' size={3}>
+										{formatUTCDate(
+											activeStage.startDate,
+											CUSTOM_DATE_FORMAT
+										)}
+									</Text>
 								)}
-							</Text>
+							</>
 						)}
-						<div className='align-items-baseline d-flex justify-content-between mt-3'>
-							<Text color='secondary' size={3} weight='semi-bold'>
-								{Liferay.Language.get('at-risk')}
-							</Text>
-							<Text color='secondary' size={3}>
-								{isAtRisk
-									? Liferay.Language.get('yes')
-									: Liferay.Language.get('no')}
-							</Text>
-						</div>
+						{atRiskStage && (
+							<div
+								className={classNames(
+									'align-items-baseline d-flex justify-content-between',
+									{'mt-3': activeStage}
+								)}
+							>
+								<Text
+									color='secondary'
+									size={3}
+									weight='semi-bold'
+								>
+									{Liferay.Language.get('at-risk')}
+								</Text>
+								<Text color='secondary' size={3}>
+									{isAtRisk
+										? Liferay.Language.get('yes')
+										: Liferay.Language.get('no')}
+								</Text>
+							</div>
+						)}
 					</div>
 				)}
 			</Card.Body>

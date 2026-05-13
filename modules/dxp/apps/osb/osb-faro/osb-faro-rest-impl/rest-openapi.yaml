@@ -469,6 +469,21 @@ components:
                     readOnly: true
                     type: number
             type: object
+        SearchTerm:
+            description:
+                "Search term metrics. Use `getSearchTerms` to list these metrics for a workspace."
+            properties:
+                count:
+                    description:
+                        "Number of times the term has been searched."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        "Value of the term that was searched."
+                    readOnly: true
+                    type: string
 info:
     description:
         "Read-only headless REST API for Liferay Analytics Cloud. Exposes events, pages, and asset-summary metrics for
@@ -751,6 +766,79 @@ paths:
                                     $ref: "#/components/schemas/Event"
                                 type: array
             tags: ["Event"]
+    "/workspace/{groupId}/channels/{channelId}/search-terms":
+        get:
+            description:
+                "List search terms used on pages tracked by the Analytics Cloud workspace for a date range in a single
+                channel (also known as property). Results are ordered in descending order of number of times terms have
+                been searched. Use this for 'most searched words' style queries."
+            operationId: getWorkspaceGroupChannelSearchTermsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Identifier of the channel whose search terms should be listed."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (Starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeStart as a rangeKey
+                        alternative."
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
+                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
+                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
+                        are ignored."
+                    name: rangeKey
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
+                        alternative."
+                    name: rangeStart
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchTerm"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SearchTerm"
+                                type: array
+            tags: ["SearchTerm"]
     "/workspace/{groupId}/individual-segments":
         get:
             description:

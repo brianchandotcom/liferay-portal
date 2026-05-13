@@ -5,15 +5,22 @@
 
 package com.liferay.layout.internal.osgi.commands;
 
+import com.liferay.layout.friendly.url.verifier.LayoutFriendlyURLPublicMappingConflict;
+import com.liferay.layout.friendly.url.verifier.LayoutFriendlyURLPublicMappingVerifier;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.List;
 
 import org.apache.felix.service.command.Descriptor;
 
@@ -25,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"osgi.command.function=exportAsJSON", "osgi.command.scope=layout"
+		"osgi.command.function=exportAsJSON",
+		"osgi.command.function=verifyPublicMapping", "osgi.command.scope=layout"
 	},
 	service = OSGiCommands.class
 )
@@ -59,6 +67,69 @@ public class LayoutOSGiCommands implements OSGiCommands {
 			layout, layoutStructure.getMainItemId(), false, false,
 			defaultSegmentsExperienceId);
 	}
+
+	@Descriptor(
+		"Report default-site layouts whose friendly URL would collide if layout.friendly.url.public.servlet.mapping.enabled=false"
+	)
+	public String verifyPublicMapping() {
+		StringBundler sb = new StringBundler(1);
+
+		_companyLocalService.forEachCompany(
+			company -> sb.append(_verifyPublicMapping(company.getCompanyId())));
+
+		return sb.toString();
+	}
+
+	@Descriptor(
+		"Report default-site layouts whose friendly URL would collide if layout.friendly.url.public.servlet.mapping.enabled=false"
+	)
+	public String verifyPublicMapping(long companyId) {
+		return _verifyPublicMapping(companyId);
+	}
+
+	private String _verifyPublicMapping(long companyId) {
+		List<LayoutFriendlyURLPublicMappingConflict> conflicts =
+			_layoutFriendlyURLPublicMappingVerifier.getConflicts(companyId);
+
+		if (conflicts.isEmpty()) {
+			return StringBundler.concat(
+				"No friendly URL conflicts were found for company ", companyId,
+				StringPool.PERIOD, StringPool.NEW_LINE);
+		}
+
+		StringBundler sb = new StringBundler(conflicts.size() + 1);
+
+		sb.append(
+			StringBundler.concat(
+				"Friendly URL conflicts were found for company ", companyId,
+				StringPool.COLON, StringPool.NEW_LINE));
+
+		for (LayoutFriendlyURLPublicMappingConflict conflict : conflicts) {
+			sb.append(
+				StringBundler.concat(
+					conflict.getType(), StringPool.PIPE, conflict.getPageURL(),
+					StringPool.PIPE, conflict.getLayoutName(), " (plid ",
+					conflict.getLayoutPlid(), ")"));
+
+			if (conflict.getConflictingGroupId() != null) {
+				sb.append(
+					StringBundler.concat(
+						StringPool.PIPE, conflict.getConflictingGroupName(),
+						" (", conflict.getConflictingGroupId(), ")"));
+			}
+
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return sb.toString();
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private LayoutFriendlyURLPublicMappingVerifier
+		_layoutFriendlyURLPublicMappingVerifier;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

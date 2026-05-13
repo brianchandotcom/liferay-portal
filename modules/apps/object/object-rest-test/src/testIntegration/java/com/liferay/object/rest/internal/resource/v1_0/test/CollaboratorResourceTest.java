@@ -91,7 +91,7 @@ public class CollaboratorResourceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry();
 
-		User user = _getUser();
+		User user = _addUser();
 
 		_assertDeleteObjectEntryCollaborator(
 			StringBundler.concat(
@@ -107,7 +107,7 @@ public class CollaboratorResourceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry();
 
-		User user = _getUser();
+		User user = _addUser();
 
 		_assertDeleteObjectEntryCollaborator(
 			StringBundler.concat(
@@ -124,7 +124,7 @@ public class CollaboratorResourceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry();
 
-		User user = _getUser();
+		User user = _addUser();
 
 		_assertGetObjectEntryCollaborator(
 			StringBundler.concat(
@@ -171,7 +171,7 @@ public class CollaboratorResourceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry();
 
-		User user = _getUser();
+		User user = _addUser();
 
 		_assertGetObjectEntryCollaborator(
 			StringBundler.concat(
@@ -274,7 +274,7 @@ public class CollaboratorResourceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry();
 
-		UserGroup userGroup = _getUserGroup();
+		UserGroup userGroup = _addUserGroup();
 
 		_assertPutObjectEntryCollaborator(
 			StringBundler.concat(
@@ -291,7 +291,7 @@ public class CollaboratorResourceTest {
 
 		ObjectEntry objectEntry = _addObjectEntry();
 
-		UserGroup userGroup = _getUserGroup();
+		UserGroup userGroup = _addUserGroup();
 
 		_assertPutObjectEntryCollaborator(
 			StringBundler.concat(
@@ -332,6 +332,22 @@ public class CollaboratorResourceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private User _addUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		return user;
+	}
+
+	private UserGroup _addUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroups.add(userGroup);
+
+		return userGroup;
 	}
 
 	private void _assertDeleteObjectEntryCollaborator(
@@ -465,16 +481,8 @@ public class CollaboratorResourceTest {
 		return true;
 	}
 
-	private User _getUser() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		_users.add(user);
-
-		return user;
-	}
-
 	private JSONObject _getUserCollaboratorJSONObject() throws Exception {
-		return _getUserCollaboratorJSONObject(_getUser());
+		return _getUserCollaboratorJSONObject(_addUser());
 	}
 
 	private JSONObject _getUserCollaboratorJSONObject(User user)
@@ -495,16 +503,8 @@ public class CollaboratorResourceTest {
 		);
 	}
 
-	private UserGroup _getUserGroup() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroups.add(userGroup);
-
-		return userGroup;
-	}
-
 	private JSONObject _getUserGroupCollaboratorJSONObject() throws Exception {
-		return _getUserGroupCollaboratorJSONObject(_getUserGroup());
+		return _getUserGroupCollaboratorJSONObject(_addUserGroup());
 	}
 
 	private JSONObject _getUserGroupCollaboratorJSONObject(UserGroup userGroup)

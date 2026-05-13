@@ -413,11 +413,19 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			RandomTestUtil.randomString(), new ServiceContext());
 	}
 
+	private User _addUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		return user;
+	}
+
 	private Collaborator _addUserCollaborator(
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		User user = _getUser();
+		User user = _addUser();
 
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
@@ -431,11 +439,19 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 	}
 
+	private UserGroup _addUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroups.add(userGroup);
+
+		return userGroup;
+	}
+
 	private Collaborator _addUserGroupCollaborator(
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		UserGroup userGroup = _getUserGroup();
+		UserGroup userGroup = _addUserGroup();
 
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
@@ -463,16 +479,8 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		}
 	}
 
-	private User _getUser() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		_users.add(user);
-
-		return user;
-	}
-
 	private Collaborator _getUserCollaborator() throws Exception {
-		User user = _getUser();
+		User user = _addUser();
 
 		return new Collaborator() {
 			{
@@ -489,16 +497,8 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		};
 	}
 
-	private UserGroup _getUserGroup() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroups.add(userGroup);
-
-		return userGroup;
-	}
-
 	private Collaborator _getUserGroupCollaborator() throws Exception {
-		UserGroup userGroup = _getUserGroup();
+		UserGroup userGroup = _addUserGroup();
 
 		return new Collaborator() {
 			{

@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -39,7 +38,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.NavigableMap;
 
 /**
  * @author Sarai Díaz
@@ -195,17 +193,10 @@ public class ExperimentUtil {
 			}
 		}
 
-		String virtualHostname = null;
+		String virtualHostname = portal.getDefaultVirtualHostname(
+			false, layout.getLayoutSet());
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		NavigableMap<String, String> virtualHostnames =
-			layoutSet.getVirtualHostnames();
-
-		if (!virtualHostnames.isEmpty()) {
-			virtualHostname = virtualHostnames.firstKey();
-		}
-		else {
+		if (Validator.isNull(virtualHostname)) {
 			Company company = companyLocalService.getCompany(
 				layout.getCompanyId());
 

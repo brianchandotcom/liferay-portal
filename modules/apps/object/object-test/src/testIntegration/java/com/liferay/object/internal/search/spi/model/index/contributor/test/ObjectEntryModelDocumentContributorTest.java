@@ -239,7 +239,7 @@ public class ObjectEntryModelDocumentContributorTest {
 
 		Assert.assertTrue(
 			value,
-			userValue.contains(
+			value.contains(
 				StringBundler.concat(
 					objectFieldName, ": ", userClassNameId, "_", userClassPK)));
 		Assert.assertTrue(

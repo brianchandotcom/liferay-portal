@@ -28,22 +28,22 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 		expect(result).toBe('');
 	});
 
-	it('generates a "ge" filter with timezone offset when only "from" is provided', () => {
+	it('generates a "ge" filter in UTC when only "from" is provided', () => {
 		const result = getOdataString({
 			id: 'testField',
 			selectedData: {from: fromDateTime},
 		} as any);
 
-		expect(result).toBe('testField ge 2026-05-11T15:30:00+00:00');
+		expect(result).toBe('testField ge 2026-05-11T15:30:00Z');
 	});
 
-	it('generates an "le" filter with timezone offset when only "to" is provided', () => {
+	it('generates an "le" filter in UTC when only "to" is provided', () => {
 		const result = getOdataString({
 			id: 'testField',
 			selectedData: {to: toDateTime},
 		} as any);
 
-		expect(result).toBe('testField le 2026-05-11T17:45:00+00:00');
+		expect(result).toBe('testField le 2026-05-11T17:45:00Z');
 	});
 
 	it('generates a "ge" and "le" filter when both ends are provided', () => {
@@ -53,12 +53,12 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 		} as any);
 
 		expect(result).toBe(
-			'testField ge 2026-05-11T15:30:00+00:00) and (testField le 2026-05-11T17:45:00+00:00'
+			'testField ge 2026-05-11T15:30:00Z) and (testField le 2026-05-11T17:45:00Z'
 		);
 	});
 
 	describe('honors the user configured timezone (not the browser TZ)', () => {
-		it('uses a negative offset for America/Los_Angeles (PDT)', () => {
+		it('converts wall-clock to UTC for America/Los_Angeles (PDT, -07:00)', () => {
 			setTimeZone('America/Los_Angeles');
 
 			const result = getOdataString({
@@ -66,10 +66,10 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 				selectedData: {from: fromDateTime},
 			} as any);
 
-			expect(result).toBe('testField ge 2026-05-11T15:30:00-07:00');
+			expect(result).toBe('testField ge 2026-05-11T22:30:00Z');
 		});
 
-		it('uses a positive offset for Asia/Tokyo', () => {
+		it('converts wall-clock to UTC for Asia/Tokyo (+09:00)', () => {
 			setTimeZone('Asia/Tokyo');
 
 			const result = getOdataString({
@@ -77,7 +77,7 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 				selectedData: {from: fromDateTime},
 			} as any);
 
-			expect(result).toBe('testField ge 2026-05-11T15:30:00+09:00');
+			expect(result).toBe('testField ge 2026-05-11T06:30:00Z');
 		});
 
 		it('honors DST for Europe/London in summer (BST, +01:00)', () => {
@@ -88,10 +88,10 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 				selectedData: {from: fromDateTime},
 			} as any);
 
-			expect(result).toBe('testField ge 2026-05-11T15:30:00+01:00');
+			expect(result).toBe('testField ge 2026-05-11T14:30:00Z');
 		});
 
-		it('falls back to +00:00 for an invalid timezone', () => {
+		it('falls back to UTC for an invalid timezone', () => {
 			setTimeZone('Not/A_Real_Zone');
 
 			const result = getOdataString({
@@ -99,7 +99,7 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 				selectedData: {from: fromDateTime},
 			} as any);
 
-			expect(result).toBe('testField ge 2026-05-11T15:30:00+00:00');
+			expect(result).toBe('testField ge 2026-05-11T15:30:00Z');
 		});
 	});
 });

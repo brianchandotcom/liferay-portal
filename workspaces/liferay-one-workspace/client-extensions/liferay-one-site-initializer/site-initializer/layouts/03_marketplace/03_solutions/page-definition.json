@@ -92,6 +92,9 @@
 									},
 									{
 										"definition": {
+											"fragmentStyle": {
+												"hidden": true
+											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"boost": "",
@@ -99,6 +102,7 @@
 													"disabled": "false",
 													"displayStyle": "default",
 													"displayStyleGroupId": "[$GROUP_ID$]",
+													"displayStyleGroupKey": "[$GROUP_ID$]",
 													"federatedSearchKey": "",
 													"filterField": "assetCategoryIds",
 													"filterQueryType": "match",
@@ -126,8 +130,9 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_SOLUTIONS-VOCABULARY-FACETS",
+													"displayStyle": "ddmTemplate_LO_SOLUTIONS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
+													"displayStyleGroupKey": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
 													"maxTerms": "20",
@@ -150,8 +155,9 @@
 											},
 											"widgetInstance": {
 												"widgetConfig": {
-													"displayStyle": "ddmTemplate_SOLUTIONS-VOCABULARY-FACETS",
+													"displayStyle": "ddmTemplate_LO_SOLUTIONS_VOCABULARY_FACETS",
 													"displayStyleGroupId": "[$GROUP_ID$]",
+													"displayStyleGroupKey": "[$GROUP_ID$]",
 													"frequenciesVisible": "true",
 													"frequencyThreshold": "1",
 													"maxTerms": "100",
@@ -192,48 +198,135 @@
 								"pageElements": [
 									{
 										"definition": {
-											"fragmentStyle": {
-												"hidden": true
-											},
-											"widgetInstance": {
-												"widgetConfig": {
-													"cpContentListRendererKey": "list-default",
-													"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-													"displayStyle": "ddmTemplate_SOLUTIONS-SEARCH-RESULTS",
-													"displayStyleGroupId": "[$GROUP_ID$]",
-													"grouped--cpTypeListEntryRendererKey": "list-entry-default",
-													"paginate": "true",
-													"paginationDelta": "15",
-													"selectionStyle": "adt",
-													"simple--cpTypeListEntryRendererKey": "list-entry-default",
-													"virtual--cpTypeListEntryRendererKey": "list-entry-default"
-												},
-												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+											"indexed": true,
+											"layout": {
+												"contentDisplay": "FlexColumn",
+												"paddingBottom": 4,
+												"paddingTop": 4
 											}
 										},
-										"type": "Widget"
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"paddingBottom": "3"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+														},
+														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Solutions"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "33px",
+														"fontWeight": "600",
+														"textColor": "#282934"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"text": {
+																	"value_i18n": {
+																		"en_US": "<p>Browse curated solutions designed to address specific business challenges on the Liferay platform.</p>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontSize": "18px",
+														"textColor": "#82828C"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
 									},
 									{
 										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"displayInDocumentForm": "false",
-													"displayStyle": "ddmTemplate_SOLUTIONS-SEARCH-RESULTS",
-													"displayStyleGroupId": "[$GROUP_ID$]",
-													"federatedSearchKey": "",
-													"fieldsToDisplay": "",
-													"highlightEnabled": "true",
-													"paginationDelta": "15",
-													"paginationDeltaParameterName": "delta",
-													"paginationStartParameterName": "start",
-													"showEmptyResultMessage": "true",
-													"showPagination": "true",
-													"viewInContext": "true"
-												},
-												"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+											"indexed": true,
+											"layout": {
+												"contentDisplay": "FlexColumn"
 											}
 										},
-										"type": "Widget"
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"hidden": true
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"destination": "",
+															"federatedSearchKey": "",
+															"scope": "everything"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"cpContentListRendererKey": "list-default",
+															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
+															"displayStyle": "ddmTemplate_LO_SOLUTIONS_SEARCH_RESULTS",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_ID$]",
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"lfrAppShowShareWithFriendsLink": "false",
+															"lfrFacebookApiKey": "",
+															"lfrFacebookCanvasPageUrl": "",
+															"lfrFacebookShowAddAppLink": "false",
+															"lfrIgoogleShowAddAppLink": "false",
+															"lfrNetvibesShowAddAppLink": "false",
+															"lfrWidgetShowAddAppLink": "false",
+															"paginate": "false",
+															"paginationDelta": "15",
+															"selectionStyle": "adt",
+															"simple--cpTypeListEntryRendererKey": "list-entry-default",
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Section"
 									},
 									{
 										"definition": {
@@ -244,7 +337,8 @@
 												"widgetConfig": {
 													"displayStyle": "default",
 													"displayStyleGroupId": "[$GROUP_ID$]",
-													"fields": "[{\"field\": \"\", \"label\": \"relevance\"}, {\"field\": \"createDate-\", \"label\": \"created\"}]"
+													"displayStyleGroupKey": "[$GROUP_ID$]",
+													"fields": "[{\"field\": \"createDate-\", \"label\": \"created\"}]"
 												},
 												"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 											}

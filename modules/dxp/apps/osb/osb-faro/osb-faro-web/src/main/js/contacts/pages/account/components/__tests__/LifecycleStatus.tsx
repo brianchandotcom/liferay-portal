@@ -136,4 +136,42 @@ describe('LifecycleStatus', () => {
 			).toBeInTheDocument();
 		});
 	});
+
+	describe('summary view', () => {
+		it('should render the active stage label and step counter', () => {
+			const {container} = render(<LifecycleStatus />);
+
+			const summary = container.querySelector(
+				'.lifecycle-status-summary'
+			) as HTMLElement;
+
+			expect(within(summary).getByText('Engaged')).toBeInTheDocument();
+			expect(
+				within(summary).getByText('Step 2 of 5')
+			).toBeInTheDocument();
+		});
+
+		it('should render the active stage start date', () => {
+			const {container} = render(<LifecycleStatus />);
+
+			const summary = container.querySelector(
+				'.lifecycle-status-summary'
+			) as HTMLElement;
+
+			expect(
+				within(summary).getByText('Jan 16, 2026')
+			).toBeInTheDocument();
+		});
+
+		it('should render the at-risk row as No when the account is not at risk', () => {
+			const {container} = render(<LifecycleStatus />);
+
+			const summary = container.querySelector(
+				'.lifecycle-status-summary'
+			) as HTMLElement;
+
+			expect(within(summary).getByText('At Risk')).toBeInTheDocument();
+			expect(within(summary).getByText('No')).toBeInTheDocument();
+		});
+	});
 });

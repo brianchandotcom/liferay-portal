@@ -9,6 +9,7 @@ import {
 	LifecycleStages,
 	lifecycleStagesLabelMap
 } from 'contacts/pages/account/utils/constants';
+import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 
 interface LifecycleStatusProps {
@@ -96,11 +97,14 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 	const activeIndex = progressionStages.findIndex(
 		stage => stage.startDate && !stage.endDate
 	);
+	const activeStage =
+		activeIndex >= 0 ? progressionStages[activeIndex] : undefined;
+	const isAtRisk = Boolean(atRiskStage?.startDate && !atRiskStage.endDate);
 
 	return (
 		<Card className={classNames(className, 'p-3')}>
 			<Card.Title>
-				<Text size={4} weight='semi-bold'>
+				<Text weight='semi-bold'>
 					{Liferay.Language.get('lifecycle-status').toUpperCase()}
 				</Text>
 				<p>
@@ -112,7 +116,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 				</p>
 			</Card.Title>
 			<Card.Body className='justify-content-around p-0'>
-				<div className='align-items-end d-flex flex-row lifecycle-status-multistep'>
+				<div className='align-items-end d-none d-sm-flex flex-row lifecycle-status-multistep'>
 					<MultiStepNav center className='flex-fill pb-0'>
 						{progressionStages.map((stage, i) => (
 							<MultiStepNav.Item
@@ -159,6 +163,41 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 						</MultiStepNav>
 					)}
 				</div>
+				{activeStage && (
+					<div className='d-sm-none lifecycle-status-summary'>
+						<div className='align-items-baseline d-flex justify-content-between'>
+							<Text color='primary' size={3} weight='semi-bold'>
+								{getStageLabel(activeStage)}
+							</Text>
+							<Text color='secondary' size={3}>
+								{sub(Liferay.Language.get('step-x-of-x'), [
+									String(activeIndex + 1),
+									String(progressionStages.length)
+								])}
+							</Text>
+						</div>
+						{activeStage.startDate && (
+							<Text color='secondary' size={3}>
+								{formatUTCDate(
+									activeStage.startDate,
+									STAGE_DATE_FORMAT
+								)}
+							</Text>
+						)}
+						<div className='align-items-baseline d-flex justify-content-between mt-3'>
+							<Text color='secondary' size={3} weight='semi-bold'>
+								{Liferay.Language.get('at-risk')}
+							</Text>
+							<Text color='secondary' size={3}>
+								{Liferay.Language.get(
+									isAtRisk
+										? Liferay.Language.get('yes')
+										: Liferay.Language.get('no')
+								)}
+							</Text>
+						</div>
+					</div>
+				)}
 			</Card.Body>
 		</Card>
 	);

@@ -14,13 +14,9 @@ const Profile: React.FC<IProfileProps> = ({account}) => (
 			icon='plus-squares'
 			title={Liferay.Language.get('account-details')}
 		/>
-		<div className='row'>
-			<div className='col-6'>
-				<LifecycleStatus className='h-100' />
-			</div>
-			<div className='col-6'>
-				<AccountInfo account={account} className='h-100' />
-			</div>
+		<div className='account-profile-cards'>
+			<LifecycleStatus className='h-100' />
+			<AccountInfo account={account} className='h-100' />
 		</div>
 		<AccountIndividuals />
 	</>

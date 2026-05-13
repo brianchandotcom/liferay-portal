@@ -14,14 +14,6 @@ import {LiferayEditorConfig} from '../utils/types';
 const ITEM_SELECTOR_FOLDER_ID_PARAM =
 	'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
 
-let lastFolderId: number | string | null = null;
-
-function rememberFolder(folderId: number | string | undefined) {
-	if (folderId !== null && folderId !== undefined && folderId !== '') {
-		lastFolderId = folderId;
-	}
-}
-
 function withFolderId(url: string, folderId: number | string | null) {
 	if (folderId === null || folderId === '') {
 		return url;
@@ -42,6 +34,26 @@ function withFolderId(url: string, folderId: number | string | null) {
 	}
 }
 
+function createFolderMemory() {
+	let lastFolderId: number | string | null = null;
+
+	return {
+		applyTo(url: string): string {
+			return withFolderId(url, lastFolderId);
+		},
+
+		remember(folderId: number | string | undefined) {
+			if (
+				folderId !== null &&
+				folderId !== undefined &&
+				folderId !== ''
+			) {
+				lastFolderId = folderId;
+			}
+		},
+	};
+}
+
 class ItemSelector extends Plugin {
 	init() {
 		const editor = this.editor;
@@ -54,7 +66,11 @@ class ItemSelector extends Plugin {
 
 		const config: Config<LiferayEditorConfig> = editor.config;
 
-		const maintainState = Boolean(config.get('itemSelectorMaintainState'));
+		const folderMemory = createFolderMemory();
+
+		const rememberSelectionFolder = Boolean(
+			config.get('itemSelectorRememberSelectionFolder')
+		);
 
 		const filebrowserImageBrowseUrl = config.get(
 			'filebrowserImageBrowseUrl'
@@ -81,8 +97,8 @@ class ItemSelector extends Plugin {
 							folderId?: number | string;
 							value: string;
 						}) => {
-							if (maintainState) {
-								rememberFolder(folderId);
+							if (rememberSelectionFolder) {
+								folderMemory.remember(folderId);
 							}
 
 							let url;
@@ -109,11 +125,8 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: maintainState
-							? withFolderId(
-									filebrowserImageBrowseUrl,
-									lastFolderId
-								)
+						url: rememberSelectionFolder
+							? folderMemory.applyTo(filebrowserImageBrowseUrl)
 							: filebrowserImageBrowseUrl,
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
@@ -148,8 +161,8 @@ class ItemSelector extends Plugin {
 							folderId?: number | string;
 							value: any;
 						}) => {
-							if (maintainState) {
-								rememberFolder(folderId);
+							if (rememberSelectionFolder) {
+								folderMemory.remember(folderId);
 							}
 
 							let url: string;
@@ -176,11 +189,8 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: maintainState
-							? withFolderId(
-									filebrowserVideoBrowseUrl,
-									lastFolderId
-								)
+						url: rememberSelectionFolder
+							? folderMemory.applyTo(filebrowserVideoBrowseUrl)
 							: filebrowserVideoBrowseUrl,
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});

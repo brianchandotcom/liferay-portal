@@ -31,7 +31,7 @@ export interface LiferayEditorConfig extends EditorConfig {
 	filebrowserImageBrowseUrl?: string;
 	filebrowserVideoBrowseUrl?: string;
 	itemSelectorEventName?: string;
-	itemSelectorMaintainState?: boolean;
+	itemSelectorRememberSelectionFolder?: boolean;
 	preset?: EEditorConfigPreset;
 }
 

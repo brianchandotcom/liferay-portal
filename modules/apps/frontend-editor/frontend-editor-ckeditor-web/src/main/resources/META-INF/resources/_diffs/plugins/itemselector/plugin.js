@@ -13,8 +13,6 @@
 	const ITEM_SELECTOR_FOLDER_ID_PARAM =
 		'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
 
-	let lastFolderId = null;
-
 	const TPL_AUDIO_SCRIPT =
 		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
 
@@ -28,12 +26,6 @@
 
 	const defaultVideoHeight = 300;
 	const defaultVideoWidth = 400;
-
-	function rememberFolder(folderId) {
-		if (folderId !== null && folderId !== undefined && folderId !== '') {
-			lastFolderId = folderId;
-		}
-	}
 
 	function withFolderId(url, folderId) {
 		if (folderId === null || folderId === undefined || folderId === '') {
@@ -53,6 +45,26 @@
 		catch (error) {
 			return url;
 		}
+	}
+
+	function createFolderMemory() {
+		let lastFolderId = null;
+
+		return {
+			applyTo(url) {
+				return withFolderId(url, lastFolderId);
+			},
+
+			remember(folderId) {
+				if (
+					folderId !== null &&
+					folderId !== undefined &&
+					folderId !== ''
+				) {
+					lastFolderId = folderId;
+				}
+			},
+		};
 	}
 
 	CKEDITOR.plugins.add('itemselector', {
@@ -396,27 +408,31 @@
 		},
 
 		_openSelectionModal(editor, url, callback) {
-			const maintainState = Boolean(
-				editor.config.itemSelectorMaintainState
+			const folderMemory = editor._lfrFolderMemory;
+
+			const rememberSelectionFolder = Boolean(
+				editor.config.itemSelectorRememberSelectionFolder
 			);
 
 			Liferay.Util.openSelectionModal({
 				onSelect: (selectedItem) => {
-					if (maintainState && selectedItem) {
-						rememberFolder(selectedItem.folderId);
+					if (rememberSelectionFolder && selectedItem) {
+						folderMemory.remember(selectedItem.folderId);
 					}
 
 					callback(selectedItem);
 				},
 				selectEventName: editor.name + 'selectItem',
 				title: Liferay.Language.get('select-item'),
-				url: maintainState ? withFolderId(url, lastFolderId) : url,
+				url: rememberSelectionFolder ? folderMemory.applyTo(url) : url,
 				zIndex: CKEDITOR.getNextZIndex(),
 			});
 		},
 
 		init(editor) {
 			const instance = this;
+
+			editor._lfrFolderMemory = createFolderMemory();
 
 			instance._audioTPL = new CKEDITOR.template(TPL_AUDIO_SCRIPT);
 			instance._videoTPL = new CKEDITOR.template(TPL_VIDEO_SCRIPT);

@@ -151,6 +151,10 @@ public class TestrayServer {
 		String testrayCaseTypeName) {
 
 		synchronized (_testrayCaseTypesID) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(testrayCaseTypeName)) {
+				return null;
+			}
+
 			TestrayCaseType testrayCaseType = _testrayCaseTypesName.get(
 				testrayCaseTypeName);
 

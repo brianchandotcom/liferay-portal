@@ -91,6 +91,14 @@ cd <WORKTREE_DIR> && ant setup-profile-dxp && ant all
 
 If `ant all` fails, stop and surface the full error to the user — do not continue to port configuration.
 
+Whenever `ant all` does not run in this worktree (bundle reused, bundle already present, or user opted out), still run `ant setup-sdk`:
+
+```bash
+cd <WORKTREE_DIR> && ant setup-sdk
+```
+
+`ant setup-sdk` populates `tools` with the patched Gradle distribution, `com.liferay.source.formatter`, `com.liferay.portal.tools.*`, and the rest of the SDK toolchain. `ant all` invokes it transitively, so the gap only surfaces on the skip path. Without it, every `gradlew` task in the worktree aborts at startup with a `FileNotFoundException` on `tools/gradle-*-bin.zip`.
+
 ### 4. Configure Ports
 
 #### 4a. Determine the Offset

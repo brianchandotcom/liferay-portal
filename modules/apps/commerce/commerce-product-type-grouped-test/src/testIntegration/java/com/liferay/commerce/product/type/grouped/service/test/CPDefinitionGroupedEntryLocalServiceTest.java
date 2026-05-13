@@ -18,13 +18,11 @@ import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -59,15 +57,41 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			company.getGroupId(), TestPropsValues.getUserId());
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.US.getDisplayLanguage(), _serviceContext);
 	}
 
 	@Test
-	public void testDeleteEntryCProductCPDefinitionGroupedEntries()
+	public void testCProductModelListenerDeletesGroupedEntries()
+		throws Exception {
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), GroupedCPTypeConstants.NAME, true,
+			true);
+
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
+		_cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
+			cpDefinition1.getCPDefinitionId(), cpDefinition2.getCProductId(), 0,
+			1, _serviceContext);
+
+		_cpDefinitionLocalService.deleteCPDefinition(
+			cpDefinition2.getCPDefinitionId());
+
+		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
+			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
+				cpDefinition1.getCPDefinitionId());
+
+		Assert.assertEquals(
+			cpDefinitionGroupedEntries.toString(), 0,
+			cpDefinitionGroupedEntries.size());
+	}
+
+	@Test
+	public void testDeleteCPDefinitionGroupedEntriesByEntryCProductId()
 		throws Exception {
 
 		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
@@ -87,17 +111,18 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 				cpDefinition1.getCPDefinitionId());
 
 		Assert.assertEquals(
-			cpDefinition2.getCPDefinitionId(),
-			cpDefinitionGroupedEntries.get(
-				0
-			).getEntryCPDefinitionId());
-
-		Assert.assertEquals(
 			cpDefinitionGroupedEntries.toString(), 1,
 			cpDefinitionGroupedEntries.size());
 
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
+			cpDefinitionGroupedEntries.get(0);
+
+		Assert.assertEquals(
+			cpDefinition2.getCPDefinitionId(),
+			cpDefinitionGroupedEntry.getEntryCPDefinitionId());
+
 		_cpDefinitionGroupedEntryLocalService.
-			deleteEntryCProductCPDefinitionGroupedEntries(
+			deleteCPDefinitionGroupedEntriesByEntryCProductId(
 				cpDefinition2.getCProductId());
 
 		cpDefinitionGroupedEntries =
@@ -120,9 +145,6 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

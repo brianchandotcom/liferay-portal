@@ -4,7 +4,7 @@ import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import {createVocabularyProperty} from '../utils/utils';
+import {createTagProperty, createVocabularyProperty} from '../utils/utils';
 import {CustomFunctionOperators, NotOperators} from '../utils/constants';
 import {List} from 'immutable';
 import {Option, Picker} from '@clayui/core';
@@ -14,36 +14,42 @@ import {ReferencedObjectsContext} from '../context/referencedObjects';
 import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from '../utils/odata';
 
-const VOCABULARY_OPERATORS = new Set([
+const REMOTE_OPERATORS = new Set([
 	CustomFunctionOperators.VocabulariesFilter,
-	NotOperators.NotVocabulariesFilter
+	NotOperators.NotVocabulariesFilter,
+	CustomFunctionOperators.TagsFilter,
+	NotOperators.NotTagsFilter
 ]);
 
-function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
+function extractRemoteCriteria(
+	criteria: any
+): Array<{id: string; isTag: boolean; name: string}> {
 	if (!criteria) return [];
 
 	if (criteria.items) {
-		return criteria.items.flatMap(extractVocabularies);
+		return criteria.items.flatMap(extractRemoteCriteria);
 	}
 
-	if (
-		criteria.propertyName &&
-		VOCABULARY_OPERATORS.has(criteria.operatorName)
-	) {
+	if (criteria.propertyName && REMOTE_OPERATORS.has(criteria.operatorName)) {
 		const id = criteria.propertyName;
+		const isTag =
+			criteria.operatorName === CustomFunctionOperators.TagsFilter ||
+			criteria.operatorName === NotOperators.NotTagsFilter;
 		const items = criteria.value?.getIn?.(['criterionGroup', 'items']);
 		const nameItem = items?.find?.(
-			(item: any) => item.get?.('propertyName') === 'vocabularies/name'
+			(item: any) =>
+				item.get?.('propertyName') === 'vocabularies/name' ||
+				item.get?.('propertyName') === 'tags/name'
 		);
 		const name = (nameItem?.get?.('value') as string) ?? id;
 
-		return [{id, name}];
+		return [{id, isTag, name}];
 	}
 
 	return [];
 }
 
-const VOCABULARY_PAGE_SIZE = 12;
+const REMOTE_PAGE_SIZE = 12;
 
 const PROPERTY_KEY_TO_GROUP: Record<string, string> = {
 	account: 'attributes',
@@ -51,6 +57,7 @@ const PROPERTY_KEY_TO_GROUP: Record<string, string> = {
 	interest: 'page-topics',
 	organization: 'attributes',
 	session: 'attributes',
+	tag: 'asset-categorization',
 	vocabulary: 'asset-categorization',
 	web: 'behavioral'
 };
@@ -94,98 +101,122 @@ export default function CriteriaSidebar({
 		string | null
 	>(() => propertyGroupsIList.first()?.propertyKey ?? null);
 
-	const [vocabularyQuery, setVocabularyQuery] = useState<{
+	const [remoteQuery, setRemoteQuery] = useState<{
 		keywords: string;
 		page: number;
 	}>({keywords: '', page: 1});
-	const [vocabularyItems, setVocabularyItems] = useState<List<Property>>(
-		List()
-	);
-	const [vocabularyTotalCount, setVocabularyTotalCount] = useState(0);
+	const [remoteItems, setRemoteItems] = useState<List<Property>>(List());
+
+	const [remoteTotalCount, setRemoteTotalCount] = useState(0);
 
 	const {addProperty} = useContext(ReferencedObjectsContext);
+
+	const isVocabularySection = selectedPropertyKey === 'vocabulary';
+	const isTagsSection = selectedPropertyKey === 'tag';
+	const isRemoteSection = isVocabularySection || isTagsSection;
+	const remoteKeywords = isRemoteSection ? searchValue : '';
 
 	useEffect(() => {
 		if (type !== SegmentTypes.Batch || !criteriaString || !addProperty) {
 			return;
 		}
 
-		const vocabularies = extractVocabularies(
+		const remoteCriteria = extractRemoteCriteria(
 			translateQueryToCriteria(criteriaString)
 		);
 
-		if (!vocabularies.length) return;
+		if (!remoteCriteria.length) return;
 
-		vocabularies.forEach(({id, name}) => {
-			addProperty(createVocabularyProperty({id, name}));
+		remoteCriteria.forEach(({id, isTag, name}) => {
+			if (isTag) {
+				addProperty(createTagProperty({id, name}));
+			} else {
+				addProperty(createVocabularyProperty({id, name}));
+			}
 		});
 	}, []);
 
-	const isVocabularySection = selectedPropertyKey === 'vocabulary';
-	const vocabularyKeywords = isVocabularySection ? searchValue : '';
-
 	useEffect(() => {
-		setVocabularyQuery(q =>
-			q.keywords === vocabularyKeywords
+		setRemoteQuery(q =>
+			q.keywords === remoteKeywords
 				? q
-				: {keywords: vocabularyKeywords, page: 1}
+				: {keywords: remoteKeywords, page: 1}
 		);
-	}, [vocabularyKeywords]);
+	}, [remoteKeywords]);
 
 	useEffect(() => {
-		if (
-			type !== SegmentTypes.Batch ||
-			selectedPropertyKey !== 'vocabulary'
-		) {
+		setRemoteItems(List());
+		setRemoteTotalCount(0);
+		setRemoteQuery(q => (q.page === 1 ? q : {...q, page: 1}));
+	}, [selectedPropertyKey]);
+
+	useEffect(() => {
+		if (type !== SegmentTypes.Batch || !isRemoteSection) {
 			return;
 		}
 
-		API.vocabularies
-			.search({
-				channelId,
-				groupId,
-				keywords: vocabularyQuery.keywords,
-				page: vocabularyQuery.page,
-				pageSize: VOCABULARY_PAGE_SIZE
-			})
-			.then(
-				(result: {
-					items: Array<{id: string; name: string}>;
-					totalCount: number;
-				}) => {
-					const properties: List<Property> = List(
-						(result.items ?? []).map(createVocabularyProperty)
+		const apiMethod = isTagsSection
+			? API.tags.search
+			: API.vocabularies.search;
+
+		const factoryMethod = isTagsSection
+			? createTagProperty
+			: createVocabularyProperty;
+
+		apiMethod({
+			channelId,
+			groupId,
+			keywords: remoteQuery.keywords,
+			page: remoteQuery.page,
+			pageSize: REMOTE_PAGE_SIZE
+		}).then(
+			(result: {
+				items: Array<{id: string; name: string}>;
+				totalCount: number;
+			}) => {
+				const properties: List<Property> = List(
+					(result.items ?? []).map(factoryMethod)
+				);
+
+				setRemoteItems(properties);
+				setRemoteTotalCount(result.totalCount ?? 0);
+
+				if (addProperty) {
+					properties.forEach(
+						property => property && addProperty(property)
 					);
-
-					setVocabularyItems(properties);
-					setVocabularyTotalCount(result.totalCount ?? 0);
-
-					if (addProperty) {
-						properties.forEach(
-							property => property && addProperty(property)
-						);
-					}
 				}
-			);
-	}, [channelId, groupId, type, selectedPropertyKey, vocabularyQuery]);
+			}
+		);
+	}, [
+		channelId,
+		groupId,
+		type,
+		selectedPropertyKey,
+		remoteQuery,
+		isRemoteSection,
+		isTagsSection
+	]);
 
 	const effectivePropertyGroupsIList = useMemo(
 		() =>
 			propertyGroupsIList
 				.map(group => {
-					if (!group || group.propertyKey !== 'vocabulary') {
+					if (
+						!group ||
+						(group.propertyKey !== 'vocabulary' &&
+							group.propertyKey !== 'tag')
+					) {
 						return group as PropertyGroup;
 					}
 
 					return group.set(
 						'propertySubgroups',
-						List([
-							new PropertySubgroup({properties: vocabularyItems})
-						])
+						List([new PropertySubgroup({properties: remoteItems})])
 					) as PropertyGroup;
 				})
 				.toList(),
-		[propertyGroupsIList, vocabularyItems]
+		[propertyGroupsIList, remoteItems]
 	);
 
 	const groupedBySection = propertyGroupsIList
@@ -251,18 +282,18 @@ export default function CriteriaSidebar({
 				<CriteriaSidebarCollapse
 					propertyGroupsIList={effectivePropertyGroupsIList}
 					propertyKey={selectedPropertyKey ?? ''}
-					searchValue={isVocabularySection ? '' : searchValue}
+					searchValue={isRemoteSection ? '' : searchValue}
 				/>
 
-				{isVocabularySection && vocabularyTotalCount > 0 && (
+				{isRemoteSection && remoteTotalCount > 0 && (
 					<PaginationBar className='justify-content-center sidebar-pagination mt-2'>
 						<ClayPaginationWithBasicItems
-							active={vocabularyQuery.page}
+							active={remoteQuery.page}
 							onActiveChange={page =>
-								setVocabularyQuery(q => ({...q, page}))
+								setRemoteQuery(q => ({...q, page}))
 							}
 							totalPages={Math.ceil(
-								vocabularyTotalCount / VOCABULARY_PAGE_SIZE
+								remoteTotalCount / REMOTE_PAGE_SIZE
 							)}
 						/>
 					</PaginationBar>

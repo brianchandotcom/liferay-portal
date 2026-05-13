@@ -117,6 +117,7 @@ test.describe('Event creation pop-up', () => {
 
 		await expect(eventTitle).toHaveAttribute('aria-haspopup', 'dialog');
 		await expect(eventTitle).toHaveAttribute('aria-expanded', 'false');
+		await expect(eventTitle).toHaveAttribute('role', 'button');
 
 		await eventTitle.click();
 
@@ -126,6 +127,7 @@ test.describe('Event creation pop-up', () => {
 		);
 		await expect(eventTitle).toHaveAttribute('aria-haspopup', 'dialog');
 		await expect(eventTitle).toHaveAttribute('aria-expanded', 'true');
+		await expect(eventTitle).toHaveAttribute('role', 'button');
 	});
 
 	test('returns focus to event popover when it is closed through tab navigation', async ({
@@ -147,6 +149,15 @@ test.describe('Event creation pop-up', () => {
 		await page.keyboard.press('Enter');
 
 		await expect(eventTitle).toBeFocused();
+	});
+
+	test('title input in the recorder popover has an accessible label', async ({
+		calendarWidgetPage,
+		page,
+	}) => {
+		await calendarWidgetPage.addEventOnGrid();
+
+		await expect(page.getByLabel('Title')).toBeVisible();
 	});
 });
 
@@ -201,6 +212,15 @@ test.describe('Accessibility check', () => {
 			bestPractices: true,
 			page,
 			selectors: ['.calendar-portlet-calendar-list-container'],
+		});
+	});
+
+	test('Check accessibility of calendar widget', async ({page}) => {
+		await checkAccessibility({
+			bestPractices: true,
+			page,
+			selectors: ['.calendar-portlet-wrapper'],
+			selectorsToExclude: ['.scheduler-event'],
 		});
 	});
 });

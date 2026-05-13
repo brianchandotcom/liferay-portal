@@ -158,18 +158,19 @@ async function handleBulkDeletion({
 		someEntriesHaveTrashEnabled = trashEnabled;
 	}
 
-	const bulkDeleteMessage =
-		getCustomBulkDeleteMessage ?? getBulkDeleteMessage;
-
-	const {confirmationMessage, title} = bulkDeleteMessage(
-		selectedData,
-		someEntriesHaveTrashEnabled
-	);
 	if (
 		showConfirmationModal ||
 		!allEntriesHaveTrashEnabled ||
 		isFromRecycleBin(selectedData)
 	) {
+		const bulkDeleteMessage =
+			getCustomBulkDeleteMessage ?? getBulkDeleteMessage;
+
+		const {confirmationMessage, title} = bulkDeleteMessage(
+			selectedData,
+			someEntriesHaveTrashEnabled
+		);
+
 		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
 	}
 	else {

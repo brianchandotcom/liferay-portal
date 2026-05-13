@@ -594,28 +594,28 @@ export default function ChatbotForm({
 												)}
 											</Button>
 
-											{formData.companyLogo &&
-												formData.companyLogoFileName && (
-													<>
-														<span>
-															{
-																formData.companyLogoFileName
-															}
-														</span>
-
-														<Button
-															displayType="danger"
-															onClick={
-																handleClearCompanyLogo
-															}
-															small
-														>
-															{Liferay.Language.get(
-																'clear'
+											{formData.companyLogo && (
+												<>
+													<span>
+														{formData.companyLogoFileName ||
+															Liferay.Language.get(
+																'current-file'
 															)}
-														</Button>
-													</>
-												)}
+													</span>
+
+													<Button
+														displayType="danger"
+														onClick={
+															handleClearCompanyLogo
+														}
+														small
+													>
+														{Liferay.Language.get(
+															'clear'
+														)}
+													</Button>
+												</>
+											)}
 
 											<input
 												accept={companyLogoAcceptedFileExtensions

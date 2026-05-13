@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.entries.display.context;
 
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -351,6 +352,25 @@ public class ObjectEntryDisplayContextImpl
 				return edge.getObjectRelationshipId();
 			}
 		).buildString();
+	}
+
+	@Override
+	public long[] getGroupIds() throws PortalException {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
+		long groupId = _getGroupId();
+
+		if (groupId <= 0) {
+			groupId = _themeDisplay.getCompanyGroupId();
+		}
+
+		_groupIds =
+			SiteConnectedGroupGroupProviderUtil.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId);
+
+		return _groupIds;
 	}
 
 	@Override
@@ -1768,6 +1788,7 @@ public class ObjectEntryDisplayContextImpl
 
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMFormRenderer _ddmFormRenderer;
+	private long[] _groupIds;
 	private final ItemSelector _itemSelector;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private ObjectEntry _objectEntry;

@@ -28,6 +28,8 @@ public interface ObjectEntryDisplayContext {
 
 	public String getBackURL() throws PortalException;
 
+	public long[] getGroupIds() throws PortalException;
+
 	public String getMethod() throws PortalException;
 
 	public ObjectDefinition getObjectDefinition1();

@@ -1,5 +1,5 @@
 resource "kubernetes_manifest" "argocd_sso_saml_external_secret" {
-	count=var.argocd_sso_config.enable_sso ? 1 : 0
+	count=var.argocd_sso_config.enable_saml_sso ? 1 : 0
 	depends_on=[
 		kubernetes_manifest.secret_store,
 	]

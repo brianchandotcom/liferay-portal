@@ -148,7 +148,7 @@ resource "helm_release" "argocd" {
 					}
 				}
 			})],
-		var.argocd_sso_config.enable_sso ? [
+		var.argocd_sso_config.enable_saml_sso ? [
 			yamlencode({
 				configs={
 					cm={

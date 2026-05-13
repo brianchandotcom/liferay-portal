@@ -44,9 +44,11 @@ public class JavaExpandoBridgeAttributesCallOrderCheck
 				continue;
 			}
 
-			int index = followingCode.indexOf(variableName + ".set");
+			pattern = Pattern.compile("\\b" + variableName + "\\.set\\w+\\(");
 
-			if ((index == -1) || (index >= matcher2.start())) {
+			Matcher matcher3 = pattern.matcher(followingCode);
+
+			if (!matcher3.find() || (matcher3.start() >= matcher2.start())) {
 				continue;
 			}
 

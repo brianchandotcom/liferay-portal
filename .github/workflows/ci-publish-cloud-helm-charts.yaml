@@ -126,7 +126,9 @@ jobs:
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
         needs: publish-default
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_LIFERAY}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_LIFERAY}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-aws
@@ -137,7 +139,9 @@ jobs:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-aws-infrastructure
@@ -148,7 +152,9 @@ jobs:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-aws-infrastructure-provider
@@ -250,7 +256,9 @@ jobs:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_LIFERAY}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_LIFERAY}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-default
@@ -262,7 +270,9 @@ jobs:
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
         needs: publish-default
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_LIFERAY}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_LIFERAY}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-gcp
@@ -273,7 +283,9 @@ jobs:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-gcp-infrastructure
@@ -284,7 +296,9 @@ jobs:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
             (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
-        secrets: inherit
+        secrets:
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
         uses: ./.github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
         with:
             chart_name: liferay-gcp-infrastructure-provider

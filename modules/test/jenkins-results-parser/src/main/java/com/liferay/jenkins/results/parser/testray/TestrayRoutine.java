@@ -142,6 +142,10 @@ public class TestrayRoutine {
 	public TestrayBuild getTestrayBuildByName(
 		String buildName, String... names) {
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(buildName)) {
+			return null;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("name eq '");

@@ -3,9 +3,6 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
 import React, {useEffect, useState} from 'react';
-import SelectCategoryFromModal, {
-	CategoryItem
-} from './components/SelectCategoryFromModal';
 import {
 	ALL_APPLICATION_IDS,
 	ALL_EVENT_IDS,
@@ -81,26 +78,25 @@ export function buildValue(
 	occurrenceOperator: React.Key,
 	occurrenceCount: number | string,
 	conjunctionCriterion: Criterion & {touched: boolean; valid: boolean},
-	vocabularyId: string,
-	vocabularyName: string,
-	categories: CategoryItem[]
+	tagId: string,
+	tagName: string
 ): CustomValue {
 	const isAnyAsset = assetType === 'any';
 
 	const criterionItems: (Criterion & {touched: boolean; valid: boolean})[] = [
 		{
 			operatorName: RelationalOperators.EQ as any,
-			propertyName: 'vocabularies/id',
+			propertyName: 'tags/id',
 			touched: false,
 			valid: true,
-			value: vocabularyId
+			value: tagId
 		} as Criterion & {touched: boolean; valid: boolean},
 		{
 			operatorName: RelationalOperators.EQ as any,
-			propertyName: 'vocabularies/name',
+			propertyName: 'tags/name',
 			touched: false,
 			valid: true,
-			value: vocabularyName
+			value: tagName
 		} as Criterion & {touched: boolean; valid: boolean}
 	];
 
@@ -160,16 +156,6 @@ export function buildValue(
 		valid: true,
 		value: eventIds
 	} as Criterion & {touched: boolean; valid: boolean});
-
-	if (categories.length > 0) {
-		criterionItems.push({
-			operatorName: RelationalOperators.In as any,
-			propertyName: 'categories',
-			touched: false,
-			valid: true,
-			value: categories
-		} as Criterion & {touched: boolean; valid: boolean});
-	}
 
 	criterionItems.push(conjunctionCriterion);
 
@@ -247,83 +233,8 @@ export function getConjunctionCriterionFromValue(
 	);
 }
 
-export function getCategoriesFromValue(
-	value: CustomValue | undefined
-): CategoryItem[] {
-	if (!value) return [];
-
-	const catIndex = getIndexFromPropertyName(value, 'categories');
-
-	if (catIndex >= 0) {
-		const catValue = value.getIn([
-			'criterionGroup',
-			'items',
-			catIndex,
-			'value'
-		]) as any;
-
-		return catValue
-			? ((catValue.toJS?.() ?? catValue) as CategoryItem[])
-			: [];
-	}
-
-	const items = value.getIn(['criterionGroup', 'items']) as any;
-
-	if (!items) return [];
-
-	const orGroup = items.find(
-		(item: any) => item.get?.('conjunctionName') === 'or'
-	);
-
-	if (orGroup) {
-		const categories: CategoryItem[] = [];
-
-		orGroup.get?.('items')?.forEach((andGroup: any) => {
-			const andItems = andGroup.get?.('items');
-
-			if (!andItems) return;
-
-			const idItem = andItems.find(
-				(i: any) => i.get?.('propertyName') === 'categories/id'
-			);
-			const nameItem = andItems.find(
-				(i: any) => i.get?.('propertyName') === 'categories/name'
-			);
-
-			if (idItem && nameItem) {
-				categories.push({
-					id: (idItem.get?.('value') as string) ?? '',
-					name: (nameItem.get?.('value') as string) ?? ''
-				});
-			}
-		});
-
-		return categories;
-	}
-
-	const catIdItem = items.find(
-		(i: any) => i.get?.('propertyName') === 'categories/id'
-	);
-	const catNameItem = items.find(
-		(i: any) => i.get?.('propertyName') === 'categories/name'
-	);
-
-	if (catIdItem && catNameItem) {
-		return [
-			{
-				id: (catIdItem.get?.('value') as string) ?? '',
-				name: (catNameItem.get?.('value') as string) ?? ''
-			}
-		];
-	}
-
-	return [];
-}
-
-export default function VocabularyInput({
-	channelId = '',
+export default function TagInput({
 	displayValue,
-	groupId = '',
 	onChange,
 	operatorRenderer: OperatorDropdown,
 	property,
@@ -348,12 +259,9 @@ export default function VocabularyInput({
 	const [conjunctionCriterion, setConjunctionCriterion] = useState<
 		Criterion & {touched: boolean; valid: boolean}
 	>(getConjunctionCriterionFromValue(value));
-	const [categories, setCategories] = useState<CategoryItem[]>(
-		getCategoriesFromValue(value)
-	);
 
 	useEffect(() => {
-		if (!value || getIndexFromPropertyName(value, 'vocabularies/id') < 0) {
+		if (!value || getIndexFromPropertyName(value, 'tags/id') < 0) {
 			onChange({
 				touched: false,
 				valid: true,
@@ -364,8 +272,7 @@ export default function VocabularyInput({
 					occurrenceCount,
 					conjunctionCriterion,
 					property.name,
-					displayValue ?? '',
-					categories
+					displayValue ?? ''
 				)
 			});
 		}
@@ -375,25 +282,6 @@ export default function VocabularyInput({
 		operator: React.Key,
 		count: number | string
 	): boolean => isValidOccurrenceCount(count);
-
-	const handleCategoriesChange = (newCategories: CategoryItem[]) => {
-		setCategories(newCategories);
-
-		onChange({
-			touched: occurrenceTouched,
-			valid: isOccurrenceValid(occurrenceOperator, occurrenceCount),
-			value: buildValue(
-				eventType,
-				assetType,
-				occurrenceOperator,
-				occurrenceCount,
-				conjunctionCriterion,
-				property.name,
-				displayValue ?? '',
-				newCategories
-			)
-		});
-	};
 
 	const handleDateFilterChange = (criterion: Criterion | null) => {
 		const newCriterion = criterion
@@ -412,8 +300,7 @@ export default function VocabularyInput({
 				occurrenceCount,
 				newCriterion,
 				property.name,
-				displayValue ?? '',
-				categories
+				displayValue ?? ''
 			)
 		});
 	};
@@ -457,8 +344,7 @@ export default function VocabularyInput({
 									occurrenceCount,
 									conjunctionCriterion,
 									property.name,
-									displayValue ?? '',
-									categories
+									displayValue ?? ''
 								)
 							});
 						}}
@@ -472,26 +358,12 @@ export default function VocabularyInput({
 				</Form.GroupItem>
 
 				<Form.GroupItem className='entity-name' label shrink>
-					{Liferay.Language.get('on-the-vocabulary').toLowerCase()}
+					{Liferay.Language.get('on-the-tag').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem className='display-value' label shrink>
 					<b>{displayValue}</b>
 				</Form.GroupItem>
-			</Form.Group>
-
-			<Form.Group autoFit>
-				<Form.GroupItem className='entity-name' label shrink>
-					{Liferay.Language.get('on-the-categories').toLowerCase()}
-				</Form.GroupItem>
-
-				<SelectCategoryFromModal
-					channelId={channelId}
-					groupId={groupId}
-					onCategoriesChange={handleCategoriesChange}
-					selectedCategories={categories}
-					vocabularyId={property.name}
-				/>
 			</Form.Group>
 
 			<Form.Group autoFit>
@@ -534,8 +406,7 @@ export default function VocabularyInput({
 									occurrenceCount,
 									conjunctionCriterion,
 									property.name,
-									displayValue ?? '',
-									categories
+									displayValue ?? ''
 								)
 							});
 						}}
@@ -573,8 +444,7 @@ export default function VocabularyInput({
 									occurrenceCount,
 									conjunctionCriterion,
 									property.name,
-									displayValue ?? '',
-									categories
+									displayValue ?? ''
 								)
 							});
 						}}
@@ -613,8 +483,7 @@ export default function VocabularyInput({
 									inputVal,
 									conjunctionCriterion,
 									property.name,
-									displayValue ?? '',
-									categories
+									displayValue ?? ''
 								)
 							});
 						}}
@@ -643,8 +512,7 @@ export default function VocabularyInput({
 									numberVal,
 									conjunctionCriterion,
 									property.name,
-									displayValue ?? '',
-									categories
+									displayValue ?? ''
 								)
 							});
 						}}

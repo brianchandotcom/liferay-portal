@@ -94,7 +94,11 @@ const formatData = (data: IRoomStatistics): IRoomStatisticsItem[] => {
 	];
 };
 
-function RoomStatistics() {
+const RoomStatistics = ({
+	isAnalyticsCloudConfigured,
+}: {
+	isAnalyticsCloudConfigured: boolean;
+}) => {
 	const [data, setData] = useState<IRoomStatisticsItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
@@ -120,6 +124,7 @@ function RoomStatistics() {
 				},
 			],
 		},
+		settings: {isAnalyticsCloudConfigured},
 		variables: {
 			rangeKey: 7,
 		},
@@ -136,60 +141,74 @@ function RoomStatistics() {
 	return (
 		<AnalyticsFrame>
 			<div className="room-statistics-container" ref={setElement}>
-				{isLoading ? (
-					<Loader />
-				) : !data?.length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
+				{isAnalyticsCloudConfigured ? (
+					isLoading ? (
+						<Loader />
+					) : !data?.length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						<div className="p-4">
+							<ClayLayout.Row className="align-items-center justify-content-between">
+								{data.map(
+									(
+										roomStatisticsItem: IRoomStatisticsItem,
+										index: number
+									) => {
+										return (
+											<ClayLayout.Col
+												className={`${index !== 0 ? 'border-left' : ''} col-auto pl-5`}
+												key={roomStatisticsItem.id}
+											>
+												<div>
+													<span className="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary">
+														{
+															roomStatisticsItem.label
+														}
+													</span>
+
+													<ClayIcon
+														className="text-secondary"
+														symbol="question-circle"
+													/>
+												</div>
+
+												<div>
+													<ClayIcon
+														className={
+															roomStatisticsItem.className
+														}
+														symbol={
+															roomStatisticsItem.icon
+														}
+													/>
+
+													<span className="font-weight-semi-bold ml-2 room-statistics-text">
+														{
+															roomStatisticsItem.value
+														}
+													</span>
+												</div>
+											</ClayLayout.Col>
+										);
+									}
+								)}
+							</ClayLayout.Row>
+						</div>
+					)
 				) : (
-					<div className="p-4">
-						<ClayLayout.Row className="align-items-center justify-content-between">
-							{data.map(
-								(
-									roomStatisticsItem: IRoomStatisticsItem,
-									index: number
-								) => {
-									return (
-										<ClayLayout.Col
-											className={`${index !== 0 ? 'border-left' : ''} col-auto pl-5`}
-											key={roomStatisticsItem.id}
-										>
-											<div>
-												<span className="font-weight-semi-bold mb-0 mr-2 room-statistics-label text-secondary">
-													{roomStatisticsItem.label}
-												</span>
-
-												<ClayIcon
-													className="text-secondary"
-													symbol="question-circle"
-												/>
-											</div>
-
-											<div>
-												<ClayIcon
-													className={
-														roomStatisticsItem.className
-													}
-													symbol={
-														roomStatisticsItem.icon
-													}
-												/>
-
-												<span className="font-weight-semi-bold ml-2 room-statistics-text">
-													{roomStatisticsItem.value}
-												</span>
-											</div>
-										</ClayLayout.Col>
-									);
-								}
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
 							)}
-						</ClayLayout.Row>
+						</p>
 					</div>
 				)}
 			</div>
 		</AnalyticsFrame>
 	);
-}
+};
 
 export default RoomStatistics;

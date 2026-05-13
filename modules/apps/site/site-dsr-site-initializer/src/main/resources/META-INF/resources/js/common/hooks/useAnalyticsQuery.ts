@@ -47,13 +47,17 @@ type TAnalyticsQueryPath = {
 export default function useAnalyticsQuery({
 	element,
 	query,
-	settings = {checkViewportVisibility: true},
+	settings = {
+		checkViewportVisibility: true,
+		isAnalyticsCloudConfigured: false,
+	},
 	variables,
 }: {
 	element: HTMLElement | null;
 	query: {paths: TAnalyticsQueryPath[]};
 	settings?: {
-		checkViewportVisibility: boolean;
+		checkViewportVisibility?: boolean;
+		isAnalyticsCloudConfigured?: boolean;
 	};
 	variables: Record<string, unknown>;
 }) {
@@ -78,7 +82,10 @@ export default function useAnalyticsQuery({
 		async (activeFilters: TAnalyticsFilter) => {
 			const currentSettings = settingsRef.current;
 
-			if (currentSettings.checkViewportVisibility && !isVisible) {
+			if (
+				(currentSettings.checkViewportVisibility && !isVisible) ||
+				!currentSettings.isAnalyticsCloudConfigured
+			) {
 				return;
 			}
 

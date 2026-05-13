@@ -14,7 +14,13 @@ import {TVisitor} from '../../../common/utils/types';
 import AnalyticsFrame from './AnalyticsFrame';
 import Loader from './Loader';
 
-const MostActiveVisitors = ({namespace}: {namespace: string}) => {
+const MostActiveVisitors = ({
+	isAnalyticsCloudConfigured,
+	namespace,
+}: {
+	isAnalyticsCloudConfigured: boolean;
+	namespace: string;
+}) => {
 	const [data, setData] = useState<TVisitor[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
@@ -23,6 +29,7 @@ const MostActiveVisitors = ({namespace}: {namespace: string}) => {
 		query: {
 			paths: [{key: 'mostActiveVisitors', path: '/most-active-visitors'}],
 		},
+		settings: {isAnalyticsCloudConfigured},
 		variables: {
 			rangeKey: 7,
 			size: 10,
@@ -42,49 +49,59 @@ const MostActiveVisitors = ({namespace}: {namespace: string}) => {
 			title={Liferay.Language.get('most-active-visitors')}
 		>
 			<div className="most-active-visitors-container" ref={setElement}>
-				{isLoading ? (
-					<Loader />
-				) : !data?.length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
-				) : (
-					<div className="most-active-visitors-fds">
-						<FrontendDataSet
-							customRenderers={{
-								tableCell: [
+				{isAnalyticsCloudConfigured ? (
+					isLoading ? (
+						<Loader />
+					) : !data?.length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						<div className="most-active-visitors-fds">
+							<FrontendDataSet
+								customRenderers={{
+									tableCell: [
+										{
+											component: VisitorStickerRenderer,
+											name: 'visitorSticker',
+											type: 'internal',
+										},
+									],
+								}}
+								id={namespace}
+								items={data}
+								showManagementBar={false}
+								showPagination={false}
+								showSearch={false}
+								showSelectAll={false}
+								views={[
 									{
-										component: VisitorStickerRenderer,
-										name: 'visitorSticker',
-										type: 'internal',
+										contentRenderer: 'table',
+										label: Liferay.Language.get('table'),
+										name: 'table',
+										schema: {
+											fields: [
+												{
+													contentRenderer:
+														'visitorSticker',
+													fieldName: 'title',
+													label: '',
+												},
+											],
+										},
+										thumbnail: 'table',
 									},
-								],
-							}}
-							id={namespace}
-							items={data}
-							showManagementBar={false}
-							showPagination={false}
-							showSearch={false}
-							showSelectAll={false}
-							views={[
-								{
-									contentRenderer: 'table',
-									label: Liferay.Language.get('table'),
-									name: 'table',
-									schema: {
-										fields: [
-											{
-												contentRenderer:
-													'visitorSticker',
-												fieldName: 'title',
-												label: '',
-											},
-										],
-									},
-									thumbnail: 'table',
-								},
-							]}
-						/>
+								]}
+							/>
+						</div>
+					)
+				) : (
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
+							)}
+						</p>
 					</div>
 				)}
 			</div>

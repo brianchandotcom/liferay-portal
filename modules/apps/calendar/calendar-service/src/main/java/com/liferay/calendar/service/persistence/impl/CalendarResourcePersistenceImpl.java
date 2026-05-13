@@ -1034,7 +1034,7 @@ public class CalendarResourcePersistenceImpl
 		OrderByComparator<CalendarResource> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C.filterFind(
-			finderCache, new Object[] {groupId, code}, start, end,
+			finderCache, new Object[] {new long[] {groupId}, code}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -1232,7 +1232,7 @@ public class CalendarResourcePersistenceImpl
 	@Override
 	public int filterCountByG_C(long groupId, String code) {
 		return _collectionPersistenceFinderByG_C.filterCount(
-			finderCache, new Object[] {groupId, code}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, code}, groupId);
 	}
 
 	/**
@@ -2427,4 +2427,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-482540277
+// LIFERAY-SERVICE-BUILDER-HASH:-1667597699

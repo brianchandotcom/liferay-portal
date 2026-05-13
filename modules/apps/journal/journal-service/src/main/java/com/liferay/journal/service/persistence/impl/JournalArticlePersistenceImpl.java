@@ -2687,8 +2687,8 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_F.filterFind(
-			finderCache, new Object[] {groupId, folderId}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new long[] {folderId}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2887,7 +2887,8 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public int filterCountByG_F(long groupId, long folderId) {
 		return _collectionPersistenceFinderByG_F.filterCount(
-			finderCache, new Object[] {groupId, folderId}, groupId);
+			finderCache, new Object[] {groupId, new long[] {folderId}},
+			groupId);
 	}
 
 	/**
@@ -5800,7 +5801,8 @@ public class JournalArticlePersistenceImpl
 		int end, OrderByComparator<JournalArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_ERC_ST.filterFind(
-			finderCache, new Object[] {groupId, externalReferenceCode, status},
+			finderCache,
+			new Object[] {groupId, externalReferenceCode, new int[] {status}},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -6036,7 +6038,8 @@ public class JournalArticlePersistenceImpl
 		long groupId, String externalReferenceCode, int status) {
 
 		return _collectionPersistenceFinderByG_ERC_ST.filterCount(
-			finderCache, new Object[] {groupId, externalReferenceCode, status},
+			finderCache,
+			new Object[] {groupId, externalReferenceCode, new int[] {status}},
 			groupId);
 	}
 
@@ -6274,8 +6277,8 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_F_ST.filterFind(
-			finderCache, new Object[] {groupId, folderId, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, folderId, new int[] {status}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -6490,7 +6493,8 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public int filterCountByG_F_ST(long groupId, long folderId, int status) {
 		return _collectionPersistenceFinderByG_F_ST.filterCount(
-			finderCache, new Object[] {groupId, folderId, status}, groupId);
+			finderCache, new Object[] {groupId, folderId, new int[] {status}},
+			groupId);
 	}
 
 	/**
@@ -7598,8 +7602,9 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_NotL.filterFind(
-			finderCache, new Object[] {groupId, classNameId, layoutUuid}, start,
-			end, orderByComparator, groupId);
+			finderCache,
+			new Object[] {groupId, classNameId, new String[] {layoutUuid}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -7834,7 +7839,8 @@ public class JournalArticlePersistenceImpl
 		long groupId, long classNameId, String layoutUuid) {
 
 		return _collectionPersistenceFinderByG_C_NotL.filterCount(
-			finderCache, new Object[] {groupId, classNameId, layoutUuid},
+			finderCache,
+			new Object[] {groupId, classNameId, new String[] {layoutUuid}},
 			groupId);
 	}
 
@@ -8176,8 +8182,8 @@ public class JournalArticlePersistenceImpl
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_A_ST.filterFind(
-			finderCache, new Object[] {groupId, articleId, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, articleId, new int[] {status}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -8394,7 +8400,8 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public int filterCountByG_A_ST(long groupId, String articleId, int status) {
 		return _collectionPersistenceFinderByG_A_ST.filterCount(
-			finderCache, new Object[] {groupId, articleId, status}, groupId);
+			finderCache, new Object[] {groupId, articleId, new int[] {status}},
+			groupId);
 	}
 
 	/**
@@ -11384,4 +11391,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:990559627
+// LIFERAY-SERVICE-BUILDER-HASH:1964290725

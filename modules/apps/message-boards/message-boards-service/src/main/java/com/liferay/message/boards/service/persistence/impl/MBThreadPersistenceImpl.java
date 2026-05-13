@@ -972,8 +972,8 @@ public class MBThreadPersistenceImpl
 		OrderByComparator<MBThread> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C.filterFind(
-			finderCache, new Object[] {groupId, categoryId}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new long[] {categoryId}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1169,7 +1169,8 @@ public class MBThreadPersistenceImpl
 	@Override
 	public int filterCountByG_C(long groupId, long categoryId) {
 		return _collectionPersistenceFinderByG_C.filterCount(
-			finderCache, new Object[] {groupId, categoryId}, groupId);
+			finderCache, new Object[] {groupId, new long[] {categoryId}},
+			groupId);
 	}
 
 	/**
@@ -2420,7 +2421,8 @@ public class MBThreadPersistenceImpl
 		OrderByComparator<MBThread> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_S.filterFind(
-			finderCache, new Object[] {groupId, categoryId, status}, start, end,
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -2639,7 +2641,8 @@ public class MBThreadPersistenceImpl
 	@Override
 	public int filterCountByG_C_S(long groupId, long categoryId, int status) {
 		return _collectionPersistenceFinderByG_C_S.filterCount(
-			finderCache, new Object[] {groupId, categoryId, status}, groupId);
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, groupId);
 	}
 
 	/**
@@ -2875,7 +2878,8 @@ public class MBThreadPersistenceImpl
 		OrderByComparator<MBThread> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_NotS.filterFind(
-			finderCache, new Object[] {groupId, categoryId, status}, start, end,
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -3096,7 +3100,8 @@ public class MBThreadPersistenceImpl
 		long groupId, long categoryId, int status) {
 
 		return _collectionPersistenceFinderByG_C_NotS.filterCount(
-			finderCache, new Object[] {groupId, categoryId, status}, groupId);
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, groupId);
 	}
 
 	/**
@@ -4562,4 +4567,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1044718063
+// LIFERAY-SERVICE-BUILDER-HASH:1573485955

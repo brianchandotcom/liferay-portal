@@ -3397,8 +3397,8 @@ public class ObjectDefinitionPersistenceImpl
 		return _collectionPersistenceFinderByC_OFI_A_E_S_S.filterFind(
 			finderCache,
 			new Object[] {
-				companyId, objectFolderId, active, enableObjectEntryDraft,
-				scope, status
+				companyId, new long[] {objectFolderId}, active,
+				enableObjectEntryDraft, scope, status
 			},
 			start, end, orderByComparator, companyId, 0);
 	}
@@ -3692,8 +3692,8 @@ public class ObjectDefinitionPersistenceImpl
 		return _collectionPersistenceFinderByC_OFI_A_E_S_S.filterCount(
 			finderCache,
 			new Object[] {
-				companyId, objectFolderId, active, enableObjectEntryDraft,
-				scope, status
+				companyId, new long[] {objectFolderId}, active,
+				enableObjectEntryDraft, scope, status
 			},
 			companyId, 0);
 	}
@@ -4897,4 +4897,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1951359097
+// LIFERAY-SERVICE-BUILDER-HASH:5644871

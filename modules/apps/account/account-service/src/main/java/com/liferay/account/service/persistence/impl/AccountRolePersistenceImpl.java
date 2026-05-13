@@ -481,7 +481,7 @@ public class AccountRolePersistenceImpl
 		OrderByComparator<AccountRole> orderByComparator) {
 
 		return _collectionPersistenceFinderByAccountEntryId.filterFind(
-			finderCache, new Object[] {accountEntryId}, start, end,
+			finderCache, new Object[] {new long[] {accountEntryId}}, start, end,
 			orderByComparator);
 	}
 
@@ -668,7 +668,7 @@ public class AccountRolePersistenceImpl
 	@Override
 	public int filterCountByAccountEntryId(long accountEntryId) {
 		return _collectionPersistenceFinderByAccountEntryId.filterCount(
-			finderCache, new Object[] {accountEntryId});
+			finderCache, new Object[] {new long[] {accountEntryId}});
 	}
 
 	/**
@@ -963,8 +963,8 @@ public class AccountRolePersistenceImpl
 		OrderByComparator<AccountRole> orderByComparator) {
 
 		return _collectionPersistenceFinderByC_A.filterFind(
-			finderCache, new Object[] {companyId, accountEntryId}, start, end,
-			orderByComparator, companyId, 0);
+			finderCache, new Object[] {companyId, new long[] {accountEntryId}},
+			start, end, orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1165,8 +1165,8 @@ public class AccountRolePersistenceImpl
 	@Override
 	public int filterCountByC_A(long companyId, long accountEntryId) {
 		return _collectionPersistenceFinderByC_A.filterCount(
-			finderCache, new Object[] {companyId, accountEntryId}, companyId,
-			0);
+			finderCache, new Object[] {companyId, new long[] {accountEntryId}},
+			companyId, 0);
 	}
 
 	/**
@@ -1750,4 +1750,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:184733505
+// LIFERAY-SERVICE-BUILDER-HASH:1763395837

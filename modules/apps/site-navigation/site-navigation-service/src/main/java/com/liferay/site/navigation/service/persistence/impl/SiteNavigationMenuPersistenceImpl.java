@@ -675,8 +675,8 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			finderCache, new Object[] {groupId}, start, end, orderByComparator,
-			groupId);
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -860,7 +860,7 @@ public class SiteNavigationMenuPersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			finderCache, new Object[] {groupId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -1312,7 +1312,7 @@ public class SiteNavigationMenuPersistenceImpl
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeN.filterFind(
-			finderCache, new Object[] {groupId, name}, start, end,
+			finderCache, new Object[] {new long[] {groupId}, name}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -1513,7 +1513,7 @@ public class SiteNavigationMenuPersistenceImpl
 	@Override
 	public int filterCountByG_LikeN(long groupId, String name) {
 		return _collectionPersistenceFinderByG_LikeN.filterCount(
-			finderCache, new Object[] {groupId, name}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, name}, groupId);
 	}
 
 	/**
@@ -2867,4 +2867,4 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:510903218
+// LIFERAY-SERVICE-BUILDER-HASH:1254733700

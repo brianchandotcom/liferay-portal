@@ -1808,7 +1808,8 @@ public class PatcherFixPersistenceImpl
 		int end, OrderByComparator<PatcherFix> orderByComparator) {
 
 		return _collectionPersistenceFinderByLtM_N_T_S.filterFind(
-			finderCache, new Object[] {modifiedDate, notified, type, status},
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {type}, status},
 			start, end, orderByComparator);
 	}
 
@@ -2055,7 +2056,8 @@ public class PatcherFixPersistenceImpl
 		Date modifiedDate, boolean notified, int type, int status) {
 
 		return _collectionPersistenceFinderByLtM_N_T_S.filterCount(
-			finderCache, new Object[] {modifiedDate, notified, type, status});
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {type}, status});
 	}
 
 	/**
@@ -4047,4 +4049,4 @@ public class PatcherFixPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-320299622
+// LIFERAY-SERVICE-BUILDER-HASH:1059128008

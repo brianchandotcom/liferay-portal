@@ -1435,8 +1435,8 @@ public class AssetCategoryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_V.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, vocabularyId}, start, end, orderByComparator,
-			groupId);
+			new Object[] {new long[] {groupId}, new long[] {vocabularyId}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1650,7 +1650,8 @@ public class AssetCategoryPersistenceImpl
 	public int filterCountByG_V(long groupId, long vocabularyId) {
 		return _collectionPersistenceFinderByG_V.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, vocabularyId}, groupId);
+			new Object[] {new long[] {groupId}, new long[] {vocabularyId}},
+			groupId);
 	}
 
 	/**
@@ -2903,8 +2904,10 @@ public class AssetCategoryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_LikeN_V.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, name, vocabularyId}, start, end,
-			orderByComparator, groupId);
+			new Object[] {
+				new long[] {groupId}, name, new long[] {vocabularyId}
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3144,7 +3147,10 @@ public class AssetCategoryPersistenceImpl
 
 		return _collectionPersistenceFinderByG_LikeN_V.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, name, vocabularyId}, groupId);
+			new Object[] {
+				new long[] {groupId}, name, new long[] {vocabularyId}
+			},
+			groupId);
 	}
 
 	/**
@@ -4332,4 +4338,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:629795006
+// LIFERAY-SERVICE-BUILDER-HASH:-26279152

@@ -659,8 +659,8 @@ public class DDLRecordSetPersistenceImpl
 		OrderByComparator<DDLRecordSet> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			finderCache, new Object[] {groupId}, start, end, orderByComparator,
-			groupId);
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -844,7 +844,7 @@ public class DDLRecordSetPersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			finderCache, new Object[] {groupId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -1763,4 +1763,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:708100042
+// LIFERAY-SERVICE-BUILDER-HASH:-684150412

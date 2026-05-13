@@ -1720,7 +1720,8 @@ public class DispatchTriggerPersistenceImpl
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
 		return _collectionPersistenceFinderByA_DTCM.filterFind(
-			finderCache, new Object[] {active, dispatchTaskClusterMode}, start,
+			finderCache,
+			new Object[] {active, new int[] {dispatchTaskClusterMode}}, start,
 			end, orderByComparator);
 	}
 
@@ -1936,7 +1937,8 @@ public class DispatchTriggerPersistenceImpl
 		boolean active, int dispatchTaskClusterMode) {
 
 		return _collectionPersistenceFinderByA_DTCM.filterCount(
-			finderCache, new Object[] {active, dispatchTaskClusterMode});
+			finderCache,
+			new Object[] {active, new int[] {dispatchTaskClusterMode}});
 	}
 
 	/**
@@ -2769,4 +2771,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1963031645
+// LIFERAY-SERVICE-BUILDER-HASH:-1740835499

@@ -711,7 +711,7 @@ public class AccountGroupPersistenceImpl
 		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return _collectionPersistenceFinderByAccountGroupId.filterFind(
-			finderCache, new Object[] {accountGroupId}, start, end,
+			finderCache, new Object[] {new long[] {accountGroupId}}, start, end,
 			orderByComparator);
 	}
 
@@ -898,7 +898,7 @@ public class AccountGroupPersistenceImpl
 	@Override
 	public int filterCountByAccountGroupId(long accountGroupId) {
 		return _collectionPersistenceFinderByAccountGroupId.filterCount(
-			finderCache, new Object[] {accountGroupId});
+			finderCache, new Object[] {new long[] {accountGroupId}});
 	}
 
 	/**
@@ -2585,4 +2585,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-147099595
+// LIFERAY-SERVICE-BUILDER-HASH:1355143711

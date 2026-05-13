@@ -1639,8 +1639,9 @@ public class RolePersistenceImpl
 		OrderByComparator<Role> orderByComparator) {
 
 		return _collectionPersistenceFinderByC_T.filterFind(
-			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
-			start, end, orderByComparator, companyId, 0);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, new int[] {type}}, start, end,
+			orderByComparator, companyId, 0);
 	}
 
 	/**
@@ -1837,8 +1838,8 @@ public class RolePersistenceImpl
 	@Override
 	public int filterCountByC_T(long companyId, int type) {
 		return _collectionPersistenceFinderByC_T.filterCount(
-			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
-			companyId, 0);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, new int[] {type}}, companyId, 0);
 	}
 
 	/**
@@ -2323,7 +2324,8 @@ public class RolePersistenceImpl
 
 		return _collectionPersistenceFinderByC_C_C.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {companyId, classNameId, classPK}, companyId, 0);
+			new Object[] {companyId, classNameId, new long[] {classPK}},
+			companyId, 0);
 	}
 
 	/**
@@ -2615,7 +2617,8 @@ public class RolePersistenceImpl
 
 		return _collectionPersistenceFinderByC_C_C_T.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {companyId, classNameId, classPK, type}, companyId, 0);
+			new Object[] {companyId, classNameId, new long[] {classPK}, type},
+			companyId, 0);
 	}
 
 	/**
@@ -4306,4 +4309,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1692519468
+// LIFERAY-SERVICE-BUILDER-HASH:-534513239

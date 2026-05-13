@@ -995,8 +995,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T.filterFind(
-			finderCache, new Object[] {groupId, type}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new String[] {type}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1193,7 +1193,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T(long groupId, String type) {
 		return _collectionPersistenceFinderByG_T.filterCount(
-			finderCache, new Object[] {groupId, type}, groupId);
+			finderCache, new Object[] {groupId, new String[] {type}}, groupId);
 	}
 
 	/**
@@ -1791,8 +1791,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeN_T.filterFind(
-			finderCache, new Object[] {groupId, name, type}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, name, new String[] {type}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2004,7 +2004,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	@Override
 	public int filterCountByG_LikeN_T(long groupId, String name, String type) {
 		return _collectionPersistenceFinderByG_LikeN_T.filterCount(
-			finderCache, new Object[] {groupId, name, type}, groupId);
+			finderCache, new Object[] {groupId, name, new String[] {type}},
+			groupId);
 	}
 
 	/**
@@ -2942,4 +2943,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:590822477
+// LIFERAY-SERVICE-BUILDER-HASH:-705773159

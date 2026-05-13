@@ -1045,8 +1045,8 @@ public class MBCategoryPersistenceImpl
 		OrderByComparator<MBCategory> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P.filterFind(
-			finderCache, new Object[] {groupId, parentCategoryId}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new long[] {parentCategoryId}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1247,7 +1247,8 @@ public class MBCategoryPersistenceImpl
 	@Override
 	public int filterCountByG_P(long groupId, long parentCategoryId) {
 		return _collectionPersistenceFinderByG_P.filterCount(
-			finderCache, new Object[] {groupId, parentCategoryId}, groupId);
+			finderCache, new Object[] {groupId, new long[] {parentCategoryId}},
+			groupId);
 	}
 
 	/**
@@ -1962,7 +1963,10 @@ public class MBCategoryPersistenceImpl
 		int end, OrderByComparator<MBCategory> orderByComparator) {
 
 		return _collectionPersistenceFinderByNotC_G_P.filterFind(
-			finderCache, new Object[] {categoryId, groupId, parentCategoryId},
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId}
+			},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -2205,7 +2209,10 @@ public class MBCategoryPersistenceImpl
 		long categoryId, long groupId, long parentCategoryId) {
 
 		return _collectionPersistenceFinderByNotC_G_P.filterCount(
-			finderCache, new Object[] {categoryId, groupId, parentCategoryId},
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId}
+			},
 			groupId);
 	}
 
@@ -2448,7 +2455,8 @@ public class MBCategoryPersistenceImpl
 		OrderByComparator<MBCategory> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_S.filterFind(
-			finderCache, new Object[] {groupId, parentCategoryId, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -2680,7 +2688,8 @@ public class MBCategoryPersistenceImpl
 		long groupId, long parentCategoryId, int status) {
 
 		return _collectionPersistenceFinderByG_P_S.filterCount(
-			finderCache, new Object[] {groupId, parentCategoryId, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
 			groupId);
 	}
 
@@ -2922,7 +2931,8 @@ public class MBCategoryPersistenceImpl
 		OrderByComparator<MBCategory> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_NotS.filterFind(
-			finderCache, new Object[] {groupId, parentCategoryId, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -3158,7 +3168,8 @@ public class MBCategoryPersistenceImpl
 		long groupId, long parentCategoryId, int status) {
 
 		return _collectionPersistenceFinderByG_P_NotS.filterCount(
-			finderCache, new Object[] {groupId, parentCategoryId, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
 			groupId);
 	}
 
@@ -3421,8 +3432,11 @@ public class MBCategoryPersistenceImpl
 
 		return _collectionPersistenceFinderByNotC_G_P_S.filterFind(
 			finderCache,
-			new Object[] {categoryId, groupId, parentCategoryId, status}, start,
-			end, orderByComparator, groupId);
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId},
+				status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3681,7 +3695,10 @@ public class MBCategoryPersistenceImpl
 
 		return _collectionPersistenceFinderByNotC_G_P_S.filterCount(
 			finderCache,
-			new Object[] {categoryId, groupId, parentCategoryId, status},
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId},
+				status
+			},
 			groupId);
 	}
 
@@ -4739,4 +4756,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2080213946
+// LIFERAY-SERVICE-BUILDER-HASH:-1073083082

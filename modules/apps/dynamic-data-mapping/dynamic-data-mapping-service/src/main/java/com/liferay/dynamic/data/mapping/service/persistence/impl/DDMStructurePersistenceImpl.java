@@ -667,8 +667,8 @@ public class DDMStructurePersistenceImpl
 		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			finderCache, new Object[] {groupId}, start, end, orderByComparator,
-			groupId);
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, groupId);
 	}
 
 	/**
@@ -852,7 +852,7 @@ public class DDMStructurePersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			finderCache, new Object[] {groupId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -1598,8 +1598,8 @@ public class DDMStructurePersistenceImpl
 		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C.filterFind(
-			finderCache, new Object[] {groupId, classNameId}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {new long[] {groupId}, classNameId},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1799,7 +1799,8 @@ public class DDMStructurePersistenceImpl
 	@Override
 	public int filterCountByG_C(long groupId, long classNameId) {
 		return _collectionPersistenceFinderByG_C.filterCount(
-			finderCache, new Object[] {groupId, classNameId}, groupId);
+			finderCache, new Object[] {new long[] {groupId}, classNameId},
+			groupId);
 	}
 
 	/**
@@ -2673,7 +2674,8 @@ public class DDMStructurePersistenceImpl
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_N_D.filterFind(
-			finderCache, new Object[] {groupId, classNameId, name, description},
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, name, description},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -2924,7 +2926,8 @@ public class DDMStructurePersistenceImpl
 		long groupId, long classNameId, String name, String description) {
 
 		return _collectionPersistenceFinderByG_C_N_D.filterCount(
-			finderCache, new Object[] {groupId, classNameId, name, description},
+			finderCache,
+			new Object[] {new long[] {groupId}, classNameId, name, description},
 			groupId);
 	}
 
@@ -3839,4 +3842,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1831860640
+// LIFERAY-SERVICE-BUILDER-HASH:1897382224

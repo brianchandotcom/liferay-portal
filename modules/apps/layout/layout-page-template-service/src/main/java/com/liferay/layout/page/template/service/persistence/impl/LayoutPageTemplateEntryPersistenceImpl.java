@@ -1719,7 +1719,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T.filterFind(
-			finderCache, new Object[] {groupId, type}, start, end,
+			finderCache, new Object[] {groupId, new int[] {type}}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -1915,7 +1915,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T(long groupId, int type) {
 		return _collectionPersistenceFinderByG_T.filterCount(
-			finderCache, new Object[] {groupId, type}, groupId);
+			finderCache, new Object[] {groupId, new int[] {type}}, groupId);
 	}
 
 	/**
@@ -3418,8 +3418,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_LikeN.filterFind(
-			finderCache, new Object[] {groupId, name, type}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3631,7 +3631,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T_LikeN(long groupId, String name, int type) {
 		return _collectionPersistenceFinderByG_T_LikeN.filterCount(
-			finderCache, new Object[] {groupId, name, type}, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}},
+			groupId);
 	}
 
 	/**
@@ -3862,8 +3863,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_S.filterFind(
-			finderCache, new Object[] {groupId, type, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new int[] {type}, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -4075,7 +4076,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T_S(long groupId, int type, int status) {
 		return _collectionPersistenceFinderByG_T_S.filterCount(
-			finderCache, new Object[] {groupId, type, status}, groupId);
+			finderCache, new Object[] {groupId, new int[] {type}, status},
+			groupId);
 	}
 
 	/**
@@ -5596,8 +5598,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_LikeN_S.filterFind(
-			finderCache, new Object[] {groupId, name, type, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -5838,7 +5840,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		long groupId, String name, int type, int status) {
 
 		return _collectionPersistenceFinderByG_T_LikeN_S.filterCount(
-			finderCache, new Object[] {groupId, name, type, status}, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}, status},
+			groupId);
 	}
 
 	/**
@@ -9441,4 +9444,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-495689804
+// LIFERAY-SERVICE-BUILDER-HASH:-770041984

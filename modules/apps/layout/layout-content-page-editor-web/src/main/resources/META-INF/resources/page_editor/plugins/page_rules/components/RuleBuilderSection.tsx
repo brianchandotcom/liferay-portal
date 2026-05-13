@@ -258,6 +258,16 @@ export function RuleBuilderConditionSection({
 		[mappingFields]
 	);
 
+	const fieldTypes = useMemo(() => {
+		const types: Record<string, string> = {};
+
+		for (const field of mappingFieldItems) {
+			types[field.value] = field.type;
+		}
+
+		return types;
+	}, [mappingFieldItems]);
+
 	const tooltipId = useId();
 
 	return (
@@ -303,7 +313,8 @@ export function RuleBuilderConditionSection({
 												script: conditions?.length
 													? translateConditionsToScript(
 															conditions,
-															conditionType
+															conditionType,
+															fieldTypes
 														)
 													: '',
 											}

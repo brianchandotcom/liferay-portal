@@ -61,13 +61,18 @@ const formatData = (
 	}));
 };
 
-function FrequencyChart() {
+function FrequencyChart({
+	isAnalyticsCloudConfigured,
+}: {
+	isAnalyticsCloudConfigured: boolean;
+}) {
 	const [data, setData] = useState<IFrequencyChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
 		query: {paths: [{key: 'visitFrequency', path: '/visit-frequency'}]},
+		settings: {isAnalyticsCloudConfigured},
 		variables: {
 			rangeKey: 30,
 		},
@@ -87,59 +92,71 @@ function FrequencyChart() {
 			title={Liferay.Language.get('visits-frequency')}
 		>
 			<div ref={setElement}>
-				{isLoading ? (
-					<Loader />
-				) : !data?.length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
-				) : (
-					<ResponsiveContainer aspect={1.4028} width="100%">
-						<BarChart data={data} margin={margin}>
-							{data.map(
-								(
-									frequencyChartItem: IFrequencyChartItem,
-									index: number
-								) => {
-									return (
-										<ReferenceLine
-											key={`bg-strip-${index}`}
-											stroke="#E5F1FF"
-											strokeOpacity={0.3}
-											strokeWidth={60}
-											x={frequencyChartItem.frequencyType}
-										/>
-									);
-								}
-							)}
-
-							<CartesianGrid
-								stroke="#ccc"
-								strokeDasharray="5 5"
-								vertical={(props: any) => (
-									<line
-										key={props.key}
-										stroke="none"
-										x1={props.x1}
-										x2={props.x2}
-										y1={props.y1}
-										y2={props.y2}
-									/>
+				{isAnalyticsCloudConfigured ? (
+					isLoading ? (
+						<Loader />
+					) : !data?.length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						<ResponsiveContainer aspect={1.4028} width="100%">
+							<BarChart data={data} margin={margin}>
+								{data.map(
+									(
+										frequencyChartItem: IFrequencyChartItem,
+										index: number
+									) => {
+										return (
+											<ReferenceLine
+												key={`bg-strip-${index}`}
+												stroke="#E5F1FF"
+												strokeOpacity={0.3}
+												strokeWidth={60}
+												x={
+													frequencyChartItem.frequencyType
+												}
+											/>
+										);
+									}
 								)}
-							/>
 
-							<Bar
-								barSize={60}
-								dataKey="visitCount"
-								fill="#97C5FF"
-								radius={[4, 4, 0, 0]}
-							/>
+								<CartesianGrid
+									stroke="#ccc"
+									strokeDasharray="5 5"
+									vertical={(props: any) => (
+										<line
+											key={props.key}
+											stroke="none"
+											x1={props.x1}
+											x2={props.x2}
+											y1={props.y1}
+											y2={props.y2}
+										/>
+									)}
+								/>
 
-							<XAxis dataKey="frequencyType" />
+								<Bar
+									barSize={60}
+									dataKey="visitCount"
+									fill="#97C5FF"
+									radius={[4, 4, 0, 0]}
+								/>
 
-							<YAxis />
-						</BarChart>
-					</ResponsiveContainer>
+								<XAxis dataKey="frequencyType" />
+
+								<YAxis />
+							</BarChart>
+						</ResponsiveContainer>
+					)
+				) : (
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
+							)}
+						</p>
+					</div>
 				)}
 			</div>
 		</AnalyticsFrame>

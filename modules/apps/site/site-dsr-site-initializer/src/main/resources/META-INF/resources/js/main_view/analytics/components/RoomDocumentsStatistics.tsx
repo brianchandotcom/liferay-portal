@@ -15,13 +15,20 @@ import useAnalyticsQuery from '../../../common/hooks/useAnalyticsQuery';
 import AnalyticsFrame from './AnalyticsFrame';
 import Loader from './Loader';
 
-const RoomDocumentsStatistics = ({namespace}: {namespace: string}) => {
+const RoomDocumentsStatistics = ({
+	isAnalyticsCloudConfigured,
+	namespace,
+}: {
+	isAnalyticsCloudConfigured: boolean;
+	namespace: string;
+}) => {
 	const [data, setData] = useState<TRoomDocumentsStatistics[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
-		query: {paths: [{key: 'documents', path: '/document-metrics'}]},
+		query: {paths: [{key: 'documents', path: '/documents-metric'}]},
+		settings: {isAnalyticsCloudConfigured},
 		variables: {
 			keywords: '',
 			rangeEnd: null,
@@ -76,73 +83,84 @@ const RoomDocumentsStatistics = ({namespace}: {namespace: string}) => {
 				className="room-documents-statistics-container"
 				ref={setElement}
 			>
-				{isLoading ? (
-					<Loader />
-				) : !data?.length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
-				) : (
-					<div className="room-document-statistics-fds">
-						<FrontendDataSet
-							customDataRenderers={{
-								documentNameDataRenderer:
-									DocumentTitleDataRenderer,
-								lastViewedDataRenderer: LastViewedDataRenderer,
-							}}
-							id={namespace}
-							items={data}
-							showManagementBar={false}
-							showPagination={false}
-							showSearch={false}
-							showSelectAll={false}
-							views={[
-								{
-									contentRenderer: 'table',
-									label: Liferay.Language.get('table'),
-									name: 'table',
-									schema: {
-										fields: [
-											{
-												contentRenderer:
-													'documentNameDataRenderer',
-												fieldName: 'title',
-												label: Liferay.Language.get(
-													'title'
-												),
-											},
-											{
-												fieldName: 'totalViews',
-												label: Liferay.Language.get(
-													'total-views'
-												),
-											},
-											{
-												contentRenderer:
-													'lastViewedDataRenderer',
-												fieldName: 'lastViewed',
-												label: Liferay.Language.get(
-													'last-viewed'
-												),
-											},
-											{
-												fieldName: 'download',
-												label: Liferay.Language.get(
-													'download'
-												),
-											},
-											{
-												fieldName: 'userInvolved',
-												label: Liferay.Language.get(
-													'user-involved'
-												),
-											},
-										],
+				{isAnalyticsCloudConfigured ? (
+					isLoading ? (
+						<Loader />
+					) : !data?.length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						<div className="room-document-statistics-fds">
+							<FrontendDataSet
+								customDataRenderers={{
+									documentNameDataRenderer:
+										DocumentTitleDataRenderer,
+									lastViewedDataRenderer:
+										LastViewedDataRenderer,
+								}}
+								id={namespace}
+								items={data}
+								showManagementBar={false}
+								showPagination={false}
+								showSearch={false}
+								showSelectAll={false}
+								views={[
+									{
+										contentRenderer: 'table',
+										label: Liferay.Language.get('table'),
+										name: 'table',
+										schema: {
+											fields: [
+												{
+													contentRenderer:
+														'documentNameDataRenderer',
+													fieldName: 'title',
+													label: Liferay.Language.get(
+														'title'
+													),
+												},
+												{
+													fieldName: 'totalViews',
+													label: Liferay.Language.get(
+														'total-views'
+													),
+												},
+												{
+													contentRenderer:
+														'lastViewedDataRenderer',
+													fieldName: 'lastViewed',
+													label: Liferay.Language.get(
+														'last-viewed'
+													),
+												},
+												{
+													fieldName: 'download',
+													label: Liferay.Language.get(
+														'download'
+													),
+												},
+												{
+													fieldName: 'userInvolved',
+													label: Liferay.Language.get(
+														'user-involved'
+													),
+												},
+											],
+										},
+										thumbnail: 'table',
 									},
-									thumbnail: 'table',
-								},
-							]}
-						/>
+								]}
+							/>
+						</div>
+					)
+				) : (
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
+							)}
+						</p>
 					</div>
 				)}
 			</div>

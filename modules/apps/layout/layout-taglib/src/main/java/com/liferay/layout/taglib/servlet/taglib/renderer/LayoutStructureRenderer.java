@@ -1336,6 +1336,8 @@ public class LayoutStructureRenderer {
 
 		JspWriter jspWriter = _pageContext.getOut();
 
+		jspWriter.write("<form action=\"");
+
 		String editInfoItemActionURL =
 			_renderLayoutStructureDisplayContext.getEditInfoItemActionURL();
 
@@ -1349,8 +1351,8 @@ public class LayoutStructureRenderer {
 			SegmentsExperienceUtil.getSegmentsExperienceId(
 				_httpServletRequest));
 
-		jspWriter.write("<form action=\"");
 		jspWriter.write(editInfoItemActionURL);
+
 		jspWriter.write("\" class=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);

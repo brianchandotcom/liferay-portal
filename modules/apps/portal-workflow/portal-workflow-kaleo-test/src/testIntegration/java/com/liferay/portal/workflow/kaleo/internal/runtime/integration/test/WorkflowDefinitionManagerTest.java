@@ -70,22 +70,54 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 
 	@Test
 	public void testDeployGroovyWorkflowDefinition() throws Exception {
-		String content = StringUtil.read(
-			getResourceInputStream(
-				"single-approver-site-member-workflow-definition.xml"));
-
 		try (Closeable closeable =
 				ScriptManagementConfigurationTestUtil.saveWithCloseable(
 					false)) {
 
-			AssertUtils.assertFailure(
-				KaleoDefinitionValidationException.NotAllowedScriptLanguage.
-					class,
-				"Groovy is not allowed",
-				() -> _workflowDefinitionManager.deployWorkflowDefinition(
-					content.getBytes(), TestPropsValues.getCompanyId(), null,
-					WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
-					StringPool.BLANK, TestPropsValues.getUserId()));
+			String content = StringUtil.read(
+				getResourceInputStream(
+					"single-approver-site-member-workflow-definition.xml"));
+
+			_assertDeployRejects(content, "Groovy");
+
+			content = StringUtil.replace(
+				content, "<script-language>groovy</script-language>",
+				"<script-language><![CDATA[groovy]]></script-language>");
+
+			_assertDeployRejects(content, "Groovy");
+
+			content = StringUtil.replace(
+				StringUtil.read(
+					getResourceInputStream(
+						"multiple-timer-workflow-definition.xml")),
+				"<script-language>groovy</script-language>\n\t\t\t\t" +
+					"<execution-type>",
+				"<script-language>drl</script-language>\n\t\t\t\t" +
+					"<execution-type>");
+
+			Assert.assertEquals(
+				2,
+				StringUtil.count(
+					content, "<script-language>groovy</script-language>"));
+
+			_assertDeployRejects(content, "Groovy");
+		}
+	}
+
+	@Test
+	public void testDeployJavaWorkflowDefinition() throws Exception {
+		try (Closeable closeable =
+				ScriptManagementConfigurationTestUtil.saveWithCloseable(
+					false)) {
+
+			String content = StringUtil.replace(
+				StringUtil.read(
+					getResourceInputStream(
+						"single-approver-site-member-workflow-definition.xml")),
+				"<script-language>groovy</script-language>",
+				"<script-language>java</script-language>");
+
+			_assertDeployRejects(content, "Java");
 		}
 	}
 
@@ -680,6 +712,18 @@ public class WorkflowDefinitionManagerTest extends BaseWorkflowManagerTestCase {
 			"valid-workflow-definition.xml");
 
 		_assertValid(inputStream);
+	}
+
+	private void _assertDeployRejects(
+		String content, String scriptLanguageLabel) {
+
+		AssertUtils.assertFailure(
+			KaleoDefinitionValidationException.NotAllowedScriptLanguage.class,
+			scriptLanguageLabel + " is not allowed",
+			() -> _workflowDefinitionManager.deployWorkflowDefinition(
+				content.getBytes(), TestPropsValues.getCompanyId(), null,
+				WorkflowDefinitionConstants.NAME_SINGLE_APPROVER,
+				StringPool.BLANK, TestPropsValues.getUserId()));
 	}
 
 	private void _assertEquals(

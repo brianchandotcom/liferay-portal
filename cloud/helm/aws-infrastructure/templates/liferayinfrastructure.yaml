@@ -21,6 +21,7 @@ spec:
     projectId: {{ .Values.projectId }}
     region: {{ .Values.region }}
     search:
+        elasticsearch: {{ .Values.search.elasticsearch | toYaml | nindent 12 }}
         opensearch: {{ .Values.search.opensearch | toYaml | nindent 12 }}
     storage: {{ .Values.storage | toYaml | nindent 8 }}
 {{- end -}}

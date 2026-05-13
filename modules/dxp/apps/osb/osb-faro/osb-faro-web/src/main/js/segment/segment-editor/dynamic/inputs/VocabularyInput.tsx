@@ -180,7 +180,9 @@ export function buildValue(
 	]);
 }
 
-export function getAssetTypeFromValue(value: CustomValue | undefined): React.Key {
+export function getAssetTypeFromValue(
+	value: CustomValue | undefined
+): React.Key {
 	if (!value) return 'any';
 
 	const appIdIndex = getIndexFromPropertyName(value, 'applicationId');
@@ -203,7 +205,9 @@ export function getAssetTypeFromValue(value: CustomValue | undefined): React.Key
 	return 'any';
 }
 
-export function getEventTypeFromValue(value: CustomValue | undefined): React.Key {
+export function getEventTypeFromValue(
+	value: CustomValue | undefined
+): React.Key {
 	if (!value) return 'all';
 
 	const eventIdIndex = getIndexFromPropertyName(value, 'eventId');

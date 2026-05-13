@@ -1,5 +1,7 @@
 import * as data from 'test/data';
-import CriteriaSidebarCollapse, {getDefaultValue} from '../CriteriaSidebarCollapse';
+import CriteriaSidebarCollapse, {
+	getDefaultValue
+} from '../CriteriaSidebarCollapse';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
 import {DndProvider} from 'react-dnd';
@@ -315,9 +317,9 @@ describe('getDefaultValue', () => {
 		expect(
 			getIndexFromPropertyName(result, 'activityKey')
 		).toBeGreaterThanOrEqual(0);
-		expect(
-			getIndexFromPropertyName(result, 'day')
-		).toBeGreaterThanOrEqual(0);
+		expect(getIndexFromPropertyName(result, 'day')).toBeGreaterThanOrEqual(
+			0
+		);
 		expect(result.get('operator')).toBeTruthy();
 		expect(result.get('value')).toBe(1);
 	});
@@ -332,9 +334,9 @@ describe('getDefaultValue', () => {
 		expect(
 			result.getIn(['criterionGroup', 'items', eventIdx, 'value'])
 		).toBe('myEvent');
-		expect(
-			getIndexFromPropertyName(result, 'day')
-		).toBeGreaterThanOrEqual(0);
+		expect(getIndexFromPropertyName(result, 'day')).toBeGreaterThanOrEqual(
+			0
+		);
 	});
 
 	it('should return CustomValueMap with property name as propertyName and empty value for PropertyTypes.AccountText', () => {
@@ -344,9 +346,9 @@ describe('getDefaultValue', () => {
 		const idx = getIndexFromPropertyName(result, 'myAccount');
 
 		expect(idx).toBeGreaterThanOrEqual(0);
-		expect(
-			result.getIn(['criterionGroup', 'items', idx, 'value'])
-		).toBe('');
+		expect(result.getIn(['criterionGroup', 'items', idx, 'value'])).toBe(
+			''
+		);
 	});
 
 	it('should return empty string for an unrecognized property type', () => {

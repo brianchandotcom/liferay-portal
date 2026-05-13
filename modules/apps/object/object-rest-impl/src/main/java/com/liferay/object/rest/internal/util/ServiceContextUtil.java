@@ -130,6 +130,19 @@ public class ServiceContextUtil {
 		return serviceContext;
 	}
 
+	private static long[] _getAllowedGroupIds(long companyId, long groupId)
+		throws PortalException {
+
+		if (groupId <= 0) {
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+			groupId = company.getGroupId();
+		}
+
+		return SiteConnectedGroupGroupProviderUtil.
+			getCurrentAndAncestorSiteAndDepotGroupIds(groupId);
+	}
+
 	private static long _getGroupId(
 		long companyId, long groupId, String externalReferenceCode,
 		TaxonomyCategoryBrief taxonomyCategoryBrief) {
@@ -181,7 +194,8 @@ public class ServiceContextUtil {
 	}
 
 	private static void _setObjectEntryTaxonomyCategoryIds(
-		long companyId, long groupId, ObjectEntry objectEntry) {
+			long companyId, long groupId, ObjectEntry objectEntry)
+		throws PortalException {
 
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			objectEntry.getTaxonomyCategoryBriefs();
@@ -192,7 +206,11 @@ public class ServiceContextUtil {
 
 		if (ArrayUtil.isEmpty(taxonomyCategoryBriefs)) {
 			objectEntry.setTaxonomyCategoryIds(() -> new Long[0]);
+
+			return;
 		}
+
+		long[] groupIds = _getAllowedGroupIds(companyId, groupId);
 
 		Set<Long> assetCategoryIds = new HashSet<>();
 
@@ -206,6 +224,11 @@ public class ServiceContextUtil {
 			groupId = _getGroupId(
 				companyId, groupId, externalReferenceCode,
 				taxonomyCategoryBrief);
+
+			if (!ArrayUtil.contains(groupIds, groupId)) {
+				throw new ObjectEntryGroupIdException.
+					InvalidGroupIdForAssetCategoryBrief(externalReferenceCode);
+			}
 
 			try {
 				String parentTaxonomyCategoryExternalReferenceCode = null;
@@ -261,17 +284,7 @@ public class ServiceContextUtil {
 			return;
 		}
 
-		long resolvedGroupId = groupId;
-
-		if (resolvedGroupId <= 0) {
-			Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-			resolvedGroupId = company.getGroupId();
-		}
-
-		long[] groupIds =
-			SiteConnectedGroupGroupProviderUtil.
-				getCurrentAndAncestorSiteAndDepotGroupIds(resolvedGroupId);
+		long[] groupIds = _getAllowedGroupIds(companyId, groupId);
 
 		for (long assetCategoryId : assetCategoryIds) {
 			AssetCategory assetCategory =

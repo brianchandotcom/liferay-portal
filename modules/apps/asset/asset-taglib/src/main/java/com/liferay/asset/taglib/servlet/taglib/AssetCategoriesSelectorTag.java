@@ -422,8 +422,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			httpServletRequest.setAttribute(
 				"liferay-asset:asset-categories-selector:data",
 				HashMapBuilder.<String, Object>put(
-					"eventName", "selectCategory"
-				).put(
 					"groupIds", ListUtil.fromArray(getGroupIds())
 				).put(
 					"id", _getNamespace() + _getId() + "assetCategoriesSelector"
@@ -447,8 +445,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 							"url", learnMessage.getURL()
 						);
 					}
-				).put(
-					"portletURL", String.valueOf(getPortletURL())
 				).put(
 					"showLabel", isShowLabel()
 				).put(

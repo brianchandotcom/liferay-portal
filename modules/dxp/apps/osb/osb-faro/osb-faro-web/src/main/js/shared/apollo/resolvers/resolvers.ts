@@ -7,6 +7,7 @@ import CustomAssetsListResolver from './CustomAssetsListResolver';
 import DocumentsAndMediaListResolver from './DocumentsAndMediaListResolver';
 import DocumentsAndMediaMetricsResolver from './DocumentsAndMediaMetricsResolver';
 import EventAnalysisListResolver from './EventAnalysisListResolver';
+import EventsByUserSessionsResolver from './EventsByUserSessionsResolver';
 import ExperimentResolver from './ExperimentResolver';
 import IndividualSiteMetricsResolver from './individualSiteMetricsResolver';
 import InterestsResolver from './InterestsResolver';
@@ -31,6 +32,7 @@ export const resolvers = {
 	document: DocumentsAndMediaMetricsResolver,
 	documents: DocumentsAndMediaListResolver,
 	eventAnalysisList: EventAnalysisListResolver,
+	eventsByUserSessions: EventsByUserSessionsResolver,
 	experiment: ExperimentResolver,
 	individualInterests: InterestsResolver,
 	orderAccountAverageCurrencyValues: CommerceAverageRevenuePerAccountResolver,

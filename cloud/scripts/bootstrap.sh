@@ -10,7 +10,9 @@ function main {
 		return
 	fi
 
-	_check_utils curl jq tar
+	_check_utils curl jq tar terraform
+
+	_check_terraform_version "1.5.0"
 
 	local config_file
 
@@ -29,6 +31,26 @@ function main {
 	extracted_dir=$(_download_and_extract_files "${provider}" "${version}")
 
 	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}" "${extracted_dir}/cloud/scripts/versions_${provider}.tfvars"
+}
+
+function _check_terraform_version {
+	local required="${1}"
+
+	local found
+
+	found=$(terraform --version | head -n 1 | awk '{print $2}')
+	found="${found#v}"
+
+	local lowest
+
+	lowest=$(printf "%s\n%s\n" "${required}" "${found}" | sort --version-sort | head -n 1)
+
+	if [ "${lowest}" != "${required}" ]
+	then
+		echo "Terraform ${required} or higher is required, found ${found}." >&2
+
+		exit 1
+	fi
 }
 
 function _check_utils {

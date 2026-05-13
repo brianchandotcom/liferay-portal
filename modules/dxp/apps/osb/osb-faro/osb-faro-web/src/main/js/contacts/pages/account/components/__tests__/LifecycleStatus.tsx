@@ -1,8 +1,81 @@
 import LifecycleStatus from '../LifecycleStatus';
 import React from 'react';
 import {cleanup, render, screen, within} from '@testing-library/react';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
+import {useRequest} from 'shared/hooks/useRequest';
 
 jest.unmock('react-dom');
+
+jest.mock('shared/api', () => ({
+	lifecycle: {
+		fetchAccountLifecycleStatus: jest.fn(),
+		fetchAccountLifecycles: jest.fn()
+	}
+}));
+
+jest.mock('shared/hooks/useRequest', () => ({
+	useRequest: jest.fn()
+}));
+
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({groupId: '23', id: 'acc-1'})
+}));
+
+const mockedUseRequest = useRequest as jest.Mock;
+
+const DEFAULT_STATUS = {
+	id: 'al-1',
+	name: 'Default Lifecycle',
+	stages: [
+		{
+			displayOrder: 0,
+			endDate: '2026-01-16T00:00:00.000Z',
+			id: 'als-aware',
+			stageType: LifecycleStages.AWARE,
+			startDate: '2026-01-04T00:00:00.000Z'
+		},
+		{
+			displayOrder: 1,
+			id: 'als-engaged',
+			stageType: LifecycleStages.ENGAGED,
+			startDate: '2026-01-16T00:00:00.000Z'
+		},
+		{
+			displayOrder: 2,
+			id: 'als-pipeline',
+			stageType: LifecycleStages.PIPELINE
+		},
+		{
+			displayOrder: 3,
+			id: 'als-onboarding',
+			stageType: LifecycleStages.ONBOARDING
+		},
+		{
+			displayOrder: 4,
+			id: 'als-established',
+			stageType: LifecycleStages.ESTABLISHED
+		},
+		{
+			displayOrder: 5,
+			id: 'als-at-risk',
+			stageType: LifecycleStages.AT_RISK
+		}
+	]
+};
+
+const useRequestImpl =
+	({
+		lifecyclesData,
+		statusData
+	}: {
+		lifecyclesData?: Array<{accountId: string; id: string}>;
+		statusData?: unknown;
+	}) =>
+	({variables}: {variables: {[key: string]: any}}) =>
+		variables.accountLifecycleId !== undefined
+			? {data: statusData}
+			: {data: lifecyclesData};
 
 jest.mock('@clayui/multi-step-nav', () => {
 	const MultiStepNav = ({
@@ -50,6 +123,16 @@ jest.mock('@clayui/multi-step-nav', () => {
 });
 
 describe('LifecycleStatus', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+		mockedUseRequest.mockImplementation(
+			useRequestImpl({
+				lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
+				statusData: DEFAULT_STATUS
+			})
+		);
+	});
+
 	afterEach(cleanup);
 
 	describe('rendering', () => {
@@ -172,6 +255,87 @@ describe('LifecycleStatus', () => {
 
 			expect(within(summary).getByText('At Risk')).toBeInTheDocument();
 			expect(within(summary).getByText('No')).toBeInTheDocument();
+		});
+	});
+
+	describe('request', () => {
+		it('should render the fetched status when the backend returns data', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
+					statusData: {
+						id: 'al-1',
+						name: 'Default Lifecycle',
+						stages: [
+							{
+								displayOrder: 0,
+								endDate: '2026-03-01T00:00:00.000Z',
+								id: 'als-aware',
+								stageType: LifecycleStages.AWARE,
+								startDate: '2026-02-01T00:00:00.000Z'
+							},
+							{
+								displayOrder: 1,
+								id: 'als-engaged',
+								stageType: LifecycleStages.ENGAGED,
+								startDate: '2026-03-01T00:00:00.000Z'
+							},
+							{
+								displayOrder: 2,
+								id: 'als-pipeline',
+								stageType: LifecycleStages.PIPELINE
+							},
+							{
+								displayOrder: 3,
+								id: 'als-onboarding',
+								stageType: LifecycleStages.ONBOARDING
+							},
+							{
+								displayOrder: 4,
+								id: 'als-established',
+								stageType: LifecycleStages.ESTABLISHED
+							},
+							{
+								displayOrder: 5,
+								id: 'als-at-risk',
+								stageType: LifecycleStages.AT_RISK
+							}
+						]
+					}
+				})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			const multistep = container.querySelector(
+				'.lifecycle-status-multistep'
+			) as HTMLElement;
+
+			expect(
+				within(multistep).getByText('Feb 1, 2026')
+			).toBeInTheDocument();
+			expect(
+				within(multistep).getByText('Mar 1, 2026')
+			).toBeInTheDocument();
+		});
+
+		it('should render an empty body when no lifecycle matches the account', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'other-account', id: 'al-1'}]
+				})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			const multistep = container.querySelector(
+				'.lifecycle-status-multistep'
+			) as HTMLElement;
+
+			expect(within(multistep).queryByText('Aware')).toBeNull();
+			expect(
+				container.querySelector('.lifecycle-status-summary')
+			).toBeNull();
 		});
 	});
 });

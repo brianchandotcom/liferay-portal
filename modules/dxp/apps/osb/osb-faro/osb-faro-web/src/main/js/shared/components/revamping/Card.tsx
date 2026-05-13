@@ -32,13 +32,13 @@ interface ISubHeaderProps {
 }
 
 export const SubHeader: React.FC<ISubHeaderProps> = ({title}) => (
-	<>
+	<div className='mb-4'>
 		<Text color='secondary' size={3} weight='semi-bold'>
 			{title.toUpperCase()}
 		</Text>
 
 		<hr className='my-2' />
-	</>
+	</div>
 );
 
 Card.SubHeader = SubHeader;

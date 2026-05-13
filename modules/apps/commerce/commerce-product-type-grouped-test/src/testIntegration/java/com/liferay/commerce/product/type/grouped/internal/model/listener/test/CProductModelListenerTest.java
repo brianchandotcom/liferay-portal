@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.product.type.grouped.service.test;
+package com.liferay.commerce.product.type.grouped.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
@@ -39,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Brian I. Kim
  */
 @RunWith(Arquillian.class)
-public class CPDefinitionGroupedEntryLocalServiceTest {
+public class CProductModelListenerTest {
 
 	@ClassRule
 	@Rule
@@ -62,9 +63,7 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteCPDefinitionGroupedEntriesByEntryCProductId()
-		throws Exception {
-
+	public void testOnBeforeRemove() throws Exception {
 		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), GroupedCPTypeConstants.NAME, true,
 			true);
@@ -77,26 +76,9 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 			cpDefinition1.getCPDefinitionId(), cpDefinition2.getCProductId(), 0,
 			1, _serviceContext);
 
+		_cProductLocalService.deleteCProduct(cpDefinition2.getCProductId());
+
 		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
-			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
-				cpDefinition1.getCPDefinitionId());
-
-		Assert.assertEquals(
-			cpDefinitionGroupedEntries.toString(), 1,
-			cpDefinitionGroupedEntries.size());
-
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			cpDefinitionGroupedEntries.get(0);
-
-		Assert.assertEquals(
-			cpDefinition2.getCPDefinitionId(),
-			cpDefinitionGroupedEntry.getEntryCPDefinitionId());
-
-		_cpDefinitionGroupedEntryLocalService.
-			deleteCPDefinitionGroupedEntriesByEntryCProductId(
-				cpDefinition2.getCProductId());
-
-		cpDefinitionGroupedEntries =
 			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
 				cpDefinition1.getCPDefinitionId());
 
@@ -113,6 +95,9 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 	@Inject
 	private CPDefinitionGroupedEntryLocalService
 		_cpDefinitionGroupedEntryLocalService;
+
+	@Inject
+	private CProductLocalService _cProductLocalService;
 
 	private ServiceContext _serviceContext;
 

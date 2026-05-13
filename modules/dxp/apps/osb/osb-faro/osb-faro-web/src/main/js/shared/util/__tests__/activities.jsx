@@ -37,13 +37,14 @@ describe('activities', () => {
 	});
 
 	describe('formatEvents', () => {
-		it('should decode canonicalUrl, referrer and url params', () => {
+		it('should decode canonicalUrl into subtitle for DXP events', () => {
 			const result = formatEvents([
 				{
 					applicationId: 'Page',
 					assetTitle: 'this is a page title',
 					canonicalUrl:
 						'http://localhost:7400/%e6%96%b0%e3%81%97%e3%81%84%e3%82%b5%e3%82%a4%e3%83%88',
+					eventId: 'pageViewed',
 					name: 'eventName',
 					pageDescription: 'this is a page description',
 					pageTitle: 'this is a page title',
@@ -56,17 +57,71 @@ describe('activities', () => {
 			expect(result).toMatchObject([
 				{
 					attributes: {
-						canonicalUrl: 'http://localhost:7400/新しいサイト',
-						header: 'Event Attributes',
-						pageTitle: 'this is a page title',
-						referrer: 'http://localhost:7400/新しいサイト',
-						url: 'http://localhost:7400/新しいサイト'
+						applicationId: 'Page',
+						eventId: 'pageViewed'
 					},
 					description: 'this is a page title',
 					subtitle: 'http://localhost:7400/新しいサイト',
 					title: 'eventName'
 				}
 			]);
+		});
+
+		it('should not set subtitle for HubSpot events', () => {
+			const result = formatEvents([
+				{
+					applicationId: 'HubSpot',
+					assetTitle: null,
+					canonicalUrl: 'https://hubspot.com',
+					eventId: 'emailView',
+					name: 'emailView'
+				}
+			]);
+
+			expect(result[0].subtitle).toBeUndefined();
+		});
+
+		it('should transform properties array into an object in attributes', () => {
+			const result = formatEvents([
+				{
+					applicationId: 'HubSpot',
+					eventId: 'formSubmit',
+					name: 'formSubmit',
+					properties: [
+						{name: 'formId', value: 'abc123'},
+						{name: 'pageUrl', value: 'https://hubspot.com/landing'}
+					]
+				}
+			]);
+
+			expect(result[0].attributes.properties).toEqual({
+				formId: 'abc123',
+				pageUrl: 'https://hubspot.com/landing'
+			});
+		});
+
+		it('should include eventDate in attributes only when present', () => {
+			const withDate = formatEvents([
+				{
+					applicationId: 'Page',
+					eventDate: '2026-05-07T19:57:21.000Z',
+					eventId: 'pageViewed',
+					name: 'pageViewed'
+				}
+			]);
+
+			const withoutDate = formatEvents([
+				{
+					applicationId: 'Page',
+					eventId: 'pageViewed',
+					name: 'pageViewed'
+				}
+			]);
+
+			expect(withDate[0].attributes.eventDate).toBe(
+				'2026-05-07T19:57:21.000Z'
+			);
+			expect(withoutDate[0].attributes).not.toHaveProperty('eventDate');
 		});
 	});
 

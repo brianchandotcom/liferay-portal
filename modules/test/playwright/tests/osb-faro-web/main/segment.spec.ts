@@ -12,6 +12,7 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLogout,
@@ -1545,3 +1546,53 @@ test.skip(
 		});
 	}
 );
+
+test('Segment criteria card lists every criterion when the segment has many', async ({
+	analyticsChannel: channel,
+	page,
+	project,
+}) => {
+	const duplicateCount = 20;
+
+	await navigateToACPageViaURL({
+		acPage: ACPage.segmentPage,
+		channelID: channel.id,
+		page,
+		projectID: project.groupId,
+	});
+
+	await createBatchSegment(page);
+
+	// Add a date of birth criterion and duplicate it twenty times
+
+	await addSegmentField({
+		criterionName: 'Date of Birth',
+		criterionType: 'Individual Attributes',
+		page,
+	});
+
+	for (let i = 0; i < duplicateCount; i++) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Duplicate'}),
+			trigger: page
+				.locator('.criterion')
+				.filter({hasText: 'Date of Birth'})
+				.first()
+				.locator('button.dropdown-toggle'),
+		});
+	}
+
+	await setSegmentName({
+		page,
+		segmentName: 'Dynamic Segment Test',
+	});
+
+	await saveSegment(page);
+
+	// Verify every criterion is listed in the saved segment
+
+	await expect(
+		page.locator('.criteria-row').filter({hasText: 'Date of Birth'})
+	).toHaveCount(duplicateCount + 1);
+});

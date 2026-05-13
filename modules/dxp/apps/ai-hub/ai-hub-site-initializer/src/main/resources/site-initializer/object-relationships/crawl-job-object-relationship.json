@@ -1,0 +1,13 @@
+{
+	"deletionType": "cascade",
+	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS",
+	"label": {
+		"en_US": "Account to Crawl Jobs"
+	},
+	"name": "accountToAIHubCrawlJobs",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubCrawlJob$]",
+	"objectDefinitionName2": "AIHubCrawlJob",
+	"system": true,
+	"type": "oneToMany"
+}

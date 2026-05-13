@@ -7,8 +7,11 @@ package com.liferay.server.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.layout.friendly.url.verifier.LayoutFriendlyURLPublicMappingConflict;
+import com.liferay.layout.friendly.url.verifier.LayoutFriendlyURLPublicMappingVerifier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,11 +27,29 @@ import java.util.List;
  */
 public class ServerDisplayContext {
 
+	public static final String VERIFY_RAN_PARAM = "verifyRan";
+
 	public ServerDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public List<LayoutFriendlyURLPublicMappingConflict>
+		getLayoutFriendlyURLPublicMappingConflicts() {
+
+		if (!ParamUtil.getBoolean(_renderRequest, VERIFY_RAN_PARAM)) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LayoutFriendlyURLPublicMappingVerifier verifier =
+			_layoutFriendlyURLPublicMappingVerifierSnapshot.get();
+
+		return verifier.getConflicts(themeDisplay.getCompanyId());
 	}
 
 	public List<NavigationItem> getServerNavigationItems() {
@@ -89,8 +110,13 @@ public class ServerDisplayContext {
 
 	private static final String[] _TABS1_NAMES = {
 		"resources", "log-levels", "properties", "data-migration",
-		"external-services", "script", "shutdown"
+		"external-services", "friendly-urls", "script", "shutdown"
 	};
+
+	private static final Snapshot<LayoutFriendlyURLPublicMappingVerifier>
+		_layoutFriendlyURLPublicMappingVerifierSnapshot = new Snapshot<>(
+			ServerDisplayContext.class,
+			LayoutFriendlyURLPublicMappingVerifier.class);
 
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

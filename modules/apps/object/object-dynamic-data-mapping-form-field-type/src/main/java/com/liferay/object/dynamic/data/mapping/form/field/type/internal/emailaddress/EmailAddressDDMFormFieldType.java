@@ -25,7 +25,8 @@ public class EmailAddressDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getESModule() {
-		return "{EmailAddress} from object-dynamic-data-mapping-form-field-type";
+		return "{EmailAddress} from " +
+			"object-dynamic-data-mapping-form-field-type";
 	}
 
 	@Override

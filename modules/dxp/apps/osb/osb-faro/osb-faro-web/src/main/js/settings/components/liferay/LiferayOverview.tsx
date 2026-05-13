@@ -159,9 +159,7 @@ const LiferayOverview: React.FC<ILiferayeOverviewProps> = ({
 	}, [dataSourceActive]);
 
 	const {data: channelsMetric} = useRequest({
-		dataSourceFn: fetchChannelsMetric as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: fetchChannelsMetric,
 		variables: {groupId, id}
 	});
 

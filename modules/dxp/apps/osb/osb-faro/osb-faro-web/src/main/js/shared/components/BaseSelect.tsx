@@ -143,7 +143,7 @@ const BaseSelect: React.FC<IBaseSelectProps> = ({
 		};
 	} else {
 		response = useRequest({
-			dataSourceFn: (({value}: any) => dataSourceFn?.(value)) as any,
+			dataSourceFn: ({value}) => dataSourceFn?.(value),
 			debounceDelay: DEBOUNCE_DELAY,
 			initialState: {
 				data: [],

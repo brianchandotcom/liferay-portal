@@ -21,12 +21,10 @@ const LifecycleOverview = () => {
 	const {groupId} = useParams();
 
 	const {data: overviewData, loading: overviewLoading} = useRequest({
-		dataSourceFn: API.lifecycle.fetchOverviewMetrics as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.lifecycle.fetchOverviewMetrics,
 		variables: {
 			country: filters.countryFilter,
-			groupId,
+			groupId: groupId!,
 			industry: filters.industryFilter,
 			lifecycleId: API.lifecycle.DEFAULT_LIFECYCLE_ID
 		}

@@ -61,9 +61,7 @@ const UserList: React.FC<IUserListProps> = ({
 	});
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.user.fetchMany as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.user.fetchMany,
 		variables: {
 			delta,
 			groupId,

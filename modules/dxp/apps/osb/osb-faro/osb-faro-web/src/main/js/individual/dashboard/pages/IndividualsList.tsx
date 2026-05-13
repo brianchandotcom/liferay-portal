@@ -90,9 +90,7 @@ const IndividualsList = () => {
 	});
 
 	const {data: countriesData, loading: countriesLoading} = useRequest({
-		dataSourceFn: API.individuals.fetchFieldValues as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.individuals.fetchFieldValues,
 		variables: {
 			channelId,
 			fieldMappingFieldName: 'country',

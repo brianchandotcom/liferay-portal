@@ -8,6 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import {RowBuilder} from '@liferay/layout-js-components-web';
 import React, {useCallback, useMemo} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 import './ConditionBuilder.scss';
 import ValueInput from './ValueInput';
@@ -21,10 +22,6 @@ import type {
 	FilterProperty,
 	FilterPropertyGroup,
 } from './types';
-
-export function getRandomID() {
-	return crypto.randomUUID();
-}
 
 export const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (
@@ -87,19 +84,23 @@ function ConditionRow({
 	);
 
 	const selectedProperty = flatProperties.find(
-		(p) =>
-			p.name === condition.propertyName &&
-			p.classNameId === condition.classNameId &&
-			p.classTypeId === condition.classTypeId
+		({classNameId, classTypeId, name}) =>
+			name === condition.propertyName &&
+			classNameId === condition.classNameId &&
+			classTypeId === condition.classTypeId
 	);
 
 	const operators = selectedProperty
 		? getCollectionOperators(selectedProperty)
 		: [];
-
 	const quantifierOptions = selectedProperty
 		? getCollectionQuantifierOptions(selectedProperty)
 		: null;
+
+	const getPropertyKey = (
+		property: Pick<FilterProperty, 'classNameId' | 'classTypeId' | 'name'>
+	) =>
+		`${property.classNameId ?? ''}|${property.classTypeId ?? ''}|${property.name}`;
 
 	const handleValueChange = useCallback(
 		(value: string | Array<string | object>) => {
@@ -107,10 +108,6 @@ function ConditionRow({
 		},
 		[condition, onChange]
 	);
-
-	const getPropertyKey = (
-		p: Pick<FilterProperty, 'classNameId' | 'classTypeId' | 'name'>
-	) => `${p.classNameId ?? ''}|${p.classTypeId ?? ''}|${p.name}`;
 
 	return (
 		<>
@@ -121,7 +118,7 @@ function ConditionRow({
 					items={properties}
 					onSelectionChange={(key) => {
 						const newProperty = flatProperties.find(
-							(p) => getPropertyKey(p) === key
+							(property) => getPropertyKey(property) === key
 						);
 
 						const operators = newProperty
@@ -171,9 +168,9 @@ function ConditionRow({
 						aria-label={Liferay.Language.get('operator')}
 						as={TriggerLabel}
 						disabled={!selectedProperty}
-						items={operators.map((op) => ({
-							label: op.label,
-							value: op.value,
+						items={operators.map(({label, value}) => ({
+							label,
+							value,
 						}))}
 						onSelectionChange={(key) =>
 							onChange({
@@ -192,15 +189,15 @@ function ConditionRow({
 				</div>
 			)}
 
-			{!!quantifierOptions?.length && (
+			{!!quantifierOptions?.length && condition.operatorName && (
 				<div className="condition-builder__select form-group mb-0">
 					<Picker
 						aria-label={Liferay.Language.get('quantifier')}
 						as={TriggerLabel}
 						disabled={!selectedProperty}
-						items={quantifierOptions.map((op) => ({
-							label: op.label,
-							value: op.value,
+						items={quantifierOptions.map(({label, value}) => ({
+							label,
+							value,
 						}))}
 						onSelectionChange={(key) =>
 							onChange({
@@ -219,7 +216,9 @@ function ConditionRow({
 			)}
 
 			<div className="c-gap-2 condition-builder__value-input d-flex flex-grow-1">
-				{selectedProperty && condition.operatorName ? (
+				{selectedProperty &&
+				condition.operatorName &&
+				(!quantifierOptions?.length || condition.quantifier) ? (
 					<ValueInput
 						categorySelectorURL={categorySelectorURL}
 						groupIds={groupIds}
@@ -256,16 +255,16 @@ export function ConditionBuilder({
 					_index: number,
 					items: FilterCondition[]
 				) => items.length > 1 || !!condition.propertyName}
-				createItem={() => ({id: getRandomID()})}
+				createItem={() => ({id: uuidv4()})}
 				itemClassName="condition-builder__row"
 				items={conditions}
 				labels={{
 					add: Liferay.Language.get('add-filter'),
 					addedAnnouncement: Liferay.Language.get('condition-added'),
-					delete: Liferay.Language.get('delete-condition'),
+					delete: Liferay.Language.get('delete-filter'),
 					deletedAnnouncement:
 						Liferay.Language.get('condition-deleted'),
-					list: Liferay.Language.get('conditions'),
+					list: Liferay.Language.get('filters'),
 				}}
 				renderItem={({
 					index,

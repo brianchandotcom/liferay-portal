@@ -38,6 +38,7 @@ public class CountryWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("countryId", getCountryId());
 		attributes.put("companyId", getCompanyId());
@@ -58,6 +59,7 @@ public class CountryWrapper
 		attributes.put("subjectToVAT", isSubjectToVAT());
 		attributes.put("zipRequired", isZipRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -80,6 +82,13 @@ public class CountryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
@@ -202,6 +211,12 @@ public class CountryWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	@Override
@@ -302,6 +317,16 @@ public class CountryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the external reference code of this country.
+	 *
+	 * @return the external reference code of this country
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -422,6 +447,16 @@ public class CountryWrapper
 	@Override
 	public boolean getShippingAllowed() {
 		return model.getShippingAllowed();
+	}
+
+	/**
+	 * Returns the status of this country.
+	 *
+	 * @return the status of this country
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -665,6 +700,16 @@ public class CountryWrapper
 	}
 
 	/**
+	 * Sets the external reference code of this country.
+	 *
+	 * @param externalReferenceCode the external reference code of this country
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
 	 * Sets whether this country is group filter enabled.
 	 *
 	 * @param groupFilterEnabled the group filter enabled of this country
@@ -770,6 +815,16 @@ public class CountryWrapper
 	}
 
 	/**
+	 * Sets the status of this country.
+	 *
+	 * @param status the status of this country
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
+	/**
 	 * Sets whether this country is subject to vat.
 	 *
 	 * @param subjectToVAT the subject to vat of this country
@@ -859,4 +914,4 @@ public class CountryWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-896929104
+// LIFERAY-SERVICE-BUILDER-HASH:1067638628

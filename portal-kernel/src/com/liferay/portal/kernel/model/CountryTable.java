@@ -29,6 +29,10 @@ public class CountryTable extends BaseTable<CountryTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CountryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CountryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CountryTable, String> defaultLanguageId = createColumn(
 		"defaultLanguageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, Long> countryId = createColumn(
@@ -71,10 +75,12 @@ public class CountryTable extends BaseTable<CountryTable> {
 		"zipRequired", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CountryTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CountryTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private CountryTable() {
 		super("Country", CountryTable::new);
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2031535673
+// LIFERAY-SERVICE-BUILDER-HASH:-1845267428

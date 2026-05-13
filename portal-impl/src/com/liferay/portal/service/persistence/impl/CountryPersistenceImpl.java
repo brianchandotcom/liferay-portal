@@ -14,12 +14,18 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateCountryExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryTable;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence;
@@ -31,6 +37,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -51,6 +59,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2974,6 +2983,98 @@ public class CountryPersistenceImpl
 			});
 	}
 
+	private FinderPath _finderPathFetchByERC_C;
+	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByERC_C;
+
+	/**
+	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	@Override
+	public Country findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchCountryException {
+
+		Country country = fetchByERC_C(externalReferenceCode, companyId);
+
+		if (country == null) {
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message);
+			}
+
+			throw new NoSuchCountryException(message);
+		}
+
+		return country;
+	}
+
+	/**
+	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByERC_C(String externalReferenceCode, long companyId) {
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	@Override
+	public Country fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		return _uniquePersistenceFinderByERC_C.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId}, useFinderCache);
+	}
+
+	/**
+	 * Removes the country where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the country that was removed
+	 */
+	@Override
+	public Country removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchCountryException {
+
+		Country country = findByERC_C(externalReferenceCode, companyId);
+
+		return remove(country);
+	}
+
+	/**
+	 * Returns the number of countries where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching countries
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		return _uniquePersistenceFinderByERC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
+	}
+
 	public CountryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -3087,6 +3188,66 @@ public class CountryPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			country.setUuid(uuid);
+		}
+
+		if (Validator.isNull(country.getExternalReferenceCode())) {
+			country.setExternalReferenceCode(country.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					countryModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					country.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = country.getCompanyId();
+
+					long groupId = 0;
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = country.getPrimaryKey();
+					}
+
+					try {
+						country.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								Country.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								country.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			Country ercCountry = fetchByERC_C(
+				country.getExternalReferenceCode(), country.getCompanyId());
+
+			if (isNew) {
+				if (ercCountry != null) {
+					throw new DuplicateCountryExternalReferenceCodeException(
+						"Duplicate country with external reference code " +
+							country.getExternalReferenceCode() +
+								" and company " + country.getCompanyId());
+				}
+			}
+			else {
+				if ((ercCountry != null) &&
+					(country.getCountryId() != ercCountry.getCountryId())) {
+
+					throw new DuplicateCountryExternalReferenceCodeException(
+						"Duplicate country with external reference code " +
+							country.getExternalReferenceCode() +
+								" and company " + country.getCompanyId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -3242,6 +3403,7 @@ public class CountryPersistenceImpl
 		ctControlColumnNames.add("mvccVersion");
 		ctControlColumnNames.add("ctCollectionId");
 		ctStrictColumnNames.add("uuid_");
+		ctStrictColumnNames.add("externalReferenceCode");
 		ctStrictColumnNames.add("defaultLanguageId");
 		ctStrictColumnNames.add("companyId");
 		ctStrictColumnNames.add("userId");
@@ -3261,6 +3423,7 @@ public class CountryPersistenceImpl
 		ctMergeColumnNames.add("subjectToVAT");
 		ctMergeColumnNames.add("zipRequired");
 		ctMergeColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("status");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
@@ -3279,6 +3442,9 @@ public class CountryPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"companyId", "name"});
 
 		_uniqueIndexColumnNames.add(new String[] {"companyId", "number_"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"externalReferenceCode", "companyId"});
 	}
 
 	/**
@@ -3844,6 +4010,22 @@ public class CountryPersistenceImpl
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
 
+		_finderPathFetchByERC_C = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
+			convertNullFunction(Country::getExternalReferenceCode),
+			Country::getCompanyId);
+
+		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C, _SQL_SELECT_COUNTRY_WHERE, "",
+			new FinderColumn<>(
+				"country.", "externalReferenceCode", FinderColumn.Type.STRING,
+				"=", true, true, Country::getExternalReferenceCode),
+			new FinderColumn<>(
+				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
+				true, Country::getCompanyId));
+
 		CountryUtil.setPersistence(this);
 	}
 
@@ -3904,4 +4086,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1661732717
+// LIFERAY-SERVICE-BUILDER-HASH:671075268

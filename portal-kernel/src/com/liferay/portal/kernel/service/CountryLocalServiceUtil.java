@@ -52,15 +52,16 @@ public class CountryLocalServiceUtil {
 	}
 
 	public static Country addCountry(
-			String a2, String a3, boolean active, boolean billingAllowed,
-			String idd, String name, String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			boolean zipRequired, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCountry(
-			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, zipRequired, serviceContext);
+			externalReferenceCode, a2, a3, active, billingAllowed, idd, name,
+			number, position, shippingAllowed, subjectToVAT, zipRequired,
+			serviceContext);
 	}
 
 	/**
@@ -228,6 +229,13 @@ public class CountryLocalServiceUtil {
 		return getService().fetchCountryByA3(companyId, a3);
 	}
 
+	public static Country fetchCountryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchCountryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static Country fetchCountryByName(long companyId, String name) {
 		return getService().fetchCountryByName(companyId, name);
 	}
@@ -342,6 +350,14 @@ public class CountryLocalServiceUtil {
 		return getService().getCountryByA3(companyId, a3);
 	}
 
+	public static Country getCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCountryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static Country getCountryByName(long companyId, String name)
 		throws PortalException {
 
@@ -397,6 +413,15 @@ public class CountryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static Country getOrAddEmptyCountry(
+			String externalReferenceCode, String a2, String a3, long companyId,
+			String name, long userId)
+		throws PortalException {
+
+		return getService().getOrAddEmptyCountry(
+			externalReferenceCode, a2, a3, companyId, name, userId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -446,14 +471,15 @@ public class CountryLocalServiceUtil {
 	}
 
 	public static Country updateCountry(
-			long countryId, String a2, String a3, boolean active,
-			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT)
+			String externalReferenceCode, long countryId, String a2, String a3,
+			boolean active, boolean billingAllowed, String idd, String name,
+			String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT)
 		throws PortalException {
 
 		return getService().updateCountry(
-			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT);
+			externalReferenceCode, countryId, a2, a3, active, billingAllowed,
+			idd, name, number, position, shippingAllowed, subjectToVAT);
 	}
 
 	public static com.liferay.portal.kernel.model.CountryLocalization
@@ -492,4 +518,4 @@ public class CountryLocalServiceUtil {
 	private static volatile CountryLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1683633214
+// LIFERAY-SERVICE-BUILDER-HASH:429553285

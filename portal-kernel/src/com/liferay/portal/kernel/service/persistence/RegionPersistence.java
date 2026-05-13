@@ -608,6 +608,56 @@ public interface RegionPersistence
 	public int countByC_R(long countryId, String regionCode);
 
 	/**
+	 * Returns the region where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchRegionException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching region
+	 * @throws NoSuchRegionException if a matching region could not be found
+	 */
+	public Region findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchRegionException;
+
+	/**
+	 * Returns the region where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 */
+	public Region fetchByERC_C(String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the region where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching region, or <code>null</code> if a matching region could not be found
+	 */
+	public Region fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the region where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the region that was removed
+	 */
+	public Region removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchRegionException;
+
+	/**
+	 * Returns the number of regions where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching regions
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
+
+	/**
 	 * Creates a new region with the primary key. Does not add the region to the database.
 	 *
 	 * @param regionId the primary key for the new region
@@ -644,4 +694,4 @@ public interface RegionPersistence
 	public Region fetchByPrimaryKey(long regionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:854117353
+// LIFERAY-SERVICE-BUILDER-HASH:1244785405

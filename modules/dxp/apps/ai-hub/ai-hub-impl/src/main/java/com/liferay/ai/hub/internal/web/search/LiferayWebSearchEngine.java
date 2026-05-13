@@ -67,7 +67,7 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 
 		if (_oAuth2ApplicationId == 0L) {
 			throw new IllegalArgumentException(
-				"OAuth2 application ID is required");
+				"OAuth 2 application ID is required");
 		}
 
 		Http.Options options = new Http.Options();

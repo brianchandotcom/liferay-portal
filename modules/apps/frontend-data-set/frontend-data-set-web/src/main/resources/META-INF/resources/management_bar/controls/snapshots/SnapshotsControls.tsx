@@ -17,11 +17,11 @@ import {
 import {fetch, sub} from 'frontend-js-web';
 import React, {Ref, useContext, useState} from 'react';
 
-import FrontendDataSetContext from '../../FrontendDataSetContext';
-import {DEFAULT_FETCH_HEADERS} from '../../constants';
-import getRandomId from '../../utils/getRandomId';
-import ViewsContext, {ISnapshot, ISnapshots} from '../../views/ViewsContext';
-import {EViewsActionTypes} from '../../views/viewsReducer';
+import FrontendDataSetContext from '../../../FrontendDataSetContext';
+import {DEFAULT_FETCH_HEADERS} from '../../../constants';
+import getRandomId from '../../../utils/getRandomId';
+import ViewsContext, {ISnapshot, ISnapshots} from '../../../views/ViewsContext';
+import {EViewsActionTypes} from '../../../views/viewsReducer';
 import shareSnapshotAction from './shareSnapshotAction';
 
 const DEFAULT_VIEW_ID = 'DEFAULT_VIEW';

@@ -11,7 +11,7 @@ import NavBar from '../../../src/main/resources/META-INF/resources/management_ba
 import ViewsContext from '../../../src/main/resources/META-INF/resources/views/ViewsContext';
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/management_bar/controls/SnapshotsControls',
+	'../../../src/main/resources/META-INF/resources/management_bar/controls/snapshots/SnapshotsControls',
 	() => () => <div data-testid="snapshots-controls-mock" />
 );
 

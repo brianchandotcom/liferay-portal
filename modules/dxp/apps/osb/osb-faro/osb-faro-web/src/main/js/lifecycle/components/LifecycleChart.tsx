@@ -195,11 +195,7 @@ interface ILifecycleChartProps {
 	stages?: ILifecycleStage[];
 }
 
-const LifecycleChart = ({
-	error,
-	loading,
-	stages
-}: ILifecycleChartProps) => {
+const LifecycleChart = ({error, loading, stages}: ILifecycleChartProps) => {
 	const {updateFilters} = useLifecycle();
 
 	const isEmpty = error || !stages?.length;
@@ -225,7 +221,7 @@ const LifecycleChart = ({
 					<div className='mt-1'>
 						<Text color='secondary' size={3}>
 							{Liferay.Language.get(
-								'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe.'
+								'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe'
 							)}
 						</Text>
 						{loading ? (

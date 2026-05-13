@@ -58,7 +58,7 @@ const LifecycleStagesSection = () => {
 
 	return (
 		<LifecycleChart
-			error={stagesError}
+			error={!!stagesError}
 			loading={stagesLoading}
 			stages={stagesData}
 		/>

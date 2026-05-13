@@ -54,8 +54,6 @@ baseTest(
 	async ({documentLibraryPage, journalEditArticlePage, page, site}) => {
 		const folderName = getRandomString();
 
-		const iframe = page.frameLocator('iframe[title="Select Item"]');
-
 		await baseTest.step(
 			'Create a folder in Documents and Media',
 			async () => {
@@ -67,6 +65,8 @@ baseTest(
 				await page.getByRole('button', {name: 'Save'}).click();
 			}
 		);
+
+		const iframe = page.frameLocator('iframe[title="Select Item"]');
 
 		await baseTest.step(
 			'Select an image from inside the folder',

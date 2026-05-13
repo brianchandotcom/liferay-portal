@@ -1,9 +1,3 @@
-module "argocd_sso" {
-	argocd_sso_config={
-		enable_sso=var.argocd_sso_config.enable_sso
-	}
-	source="./modules/argocd-sso"
-}
 resource "helm_release" "argocd" {
 	chart="argo-cd"
 	create_namespace=false
@@ -154,7 +148,46 @@ resource "helm_release" "argocd" {
 					}
 				}
 			})],
-		var.argocd_sso_config.enable_sso ? module.argocd_sso.auth_sso_values : [],
+		var.argocd_sso_config.enable_sso ? [
+			yamlencode({
+				configs={
+					cm={
+						"dex.config"=yamlencode({
+							connectors=[{
+								config={
+									caData="$customer-idp-saml:caData"
+									emailAttr="email"
+									entityIssuer="$customer-idp-saml:entityIssuer"
+									groupsAttr="groups"
+									redirectURI="$customer-idp-saml:redirectURI"
+									ssoURL="$customer-idp-saml:ssoURL"
+									usernameAttr="name"
+								}
+								id="customer-idp"
+								name="SAML"
+								type="saml"
+							}]
+						})
+					}
+					rbac={
+						"policy.csv"=join("\n", [
+							"g, customer-idp:liferay-argocd-role-admin, role:liferay-admin",
+							"g, customer-idp:liferay-argocd-role-guest, role:liferay-guest",
+							"p, role:liferay-admin, accounts, *, *, allow",
+							"p, role:liferay-admin, applications, *, */*, allow",
+							"p, role:liferay-admin, clusters, *, *, allow",
+							"p, role:liferay-admin, projects, *, *, allow",
+							"p, role:liferay-admin, repositories, *, *, allow",
+							"p, role:liferay-guest, applications, get, */*, allow",
+							"p, role:liferay-guest, clusters, get, *, allow",
+							"p, role:liferay-guest, projects, get, *, allow",
+							"p, role:liferay-guest, repositories, get, *, allow",
+						])
+						"policy.default"="role:liferay-guest"
+					}
+				}
+			})
+		] : [],
 	)
 	version=var.argocd_helm_chart_version
 	wait=true

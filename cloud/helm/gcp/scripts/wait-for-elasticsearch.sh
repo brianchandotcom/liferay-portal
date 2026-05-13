@@ -3,27 +3,29 @@
 set -o errexit
 set -o nounset
 
-main() {
+function main {
 	_log_json "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
 
-	_protocol="http"
+	local protocol="http"
 
 	case "${ELASTICSEARCH_URL}" in
-		https://*) _protocol="https" ;;
+		https://*) protocol="https" ;;
 	esac
 
-	_auth_header_value=$(printf '%s:%s' "${ELASTICSEARCH_USERNAME}" "${ELASTICSEARCH_PASSWORD}" | base64 | tr -d '\n')
+	local auth_header_value
 
-	_health_url="${_protocol}://${ELASTICSEARCH_URL#*//}/_cluster/health"
+	auth_header_value=$(printf '%s:%s' "${ELASTICSEARCH_USERNAME}" "${ELASTICSEARCH_PASSWORD}" | base64 | tr -d '\n')
 
-	_wget_args=""
+	local health_url="${protocol}://${ELASTICSEARCH_URL#*//}/_cluster/health"
 
-	if [ "${_protocol}" = "https" ] && [ "${ELASTICSEARCH_TLS_INSECURE:-false}" = "true" ]
+	local wget_args=""
+
+	if [ "${protocol}" = "https" ] && [ "${ELASTICSEARCH_TLS_INSECURE:-false}" = "true" ]
 	then
-		_wget_args="--no-check-certificate"
+		wget_args="--no-check-certificate"
 	fi
 
-	until wget --header="Authorization: Basic ${_auth_header_value}" ${_wget_args} -qO- "${_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
+	until wget --header="Authorization: Basic ${auth_header_value}" ${wget_args} -qO- "${health_url}" | grep -qE "\"status\":\"(green|yellow)\""
 	do
 		_log_json "Waiting for Elasticsearch (current status: \"red\" or \"unreachable\")."
 
@@ -33,16 +35,22 @@ main() {
 	_log_json "Elasticsearch is ready."
 }
 
-_log_json() {
-	_escaped_message=$(printf '%s' "${1}" | sed 's/\\/\\\\/g; s/"/\\"/g')
+function _log_json {
+	local escaped_message
 
-	_script_name=$(basename "${0}")
+	escaped_message=$(printf '%s' "${1}" | sed 's/\\/\\\\/g; s/"/\\"/g')
 
-	_severity="${2:-INFO}"
+	local script_name
 
-	_timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+	script_name=$(basename "${0}")
 
-	printf '{"message": "%s", "script": "%s", "severity": "%s", "timestamp": "%s"}\n' "${_escaped_message}" "${_script_name}" "${_severity}" "${_timestamp}"
+	local severity="${2:-INFO}"
+
+	local timestamp
+
+	timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+	printf '{"message": "%s", "script": "%s", "severity": "%s", "timestamp": "%s"}\n' "${escaped_message}" "${script_name}" "${severity}" "${timestamp}"
 }
 
 main

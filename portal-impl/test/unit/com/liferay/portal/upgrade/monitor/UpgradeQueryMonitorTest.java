@@ -184,7 +184,7 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(4, logEntries.size());
+		Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
 
 		LogEntry logEntry1 = logEntries.get(1);
 
@@ -250,7 +250,7 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(1, logEntries.size());
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
 
 		LogEntry logEntry = logEntries.get(0);
 
@@ -281,7 +281,7 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(5, logEntries.size());
+		Assert.assertEquals(logEntries.toString(), 5, logEntries.size());
 
 		LogEntry logEntry = logEntries.get(4);
 

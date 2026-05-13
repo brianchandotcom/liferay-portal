@@ -59,7 +59,7 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 			).put(
 				"filebrowserImageBrowseUrl", itemSelectorURL.toString()
 			).put(
-				"itemSelectorMaintainState", true
+				"itemSelectorRememberSelectionFolder", true
 			);
 		}
 	}

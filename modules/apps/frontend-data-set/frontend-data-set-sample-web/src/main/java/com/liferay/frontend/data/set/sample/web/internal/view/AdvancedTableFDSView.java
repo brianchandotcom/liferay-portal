@@ -12,6 +12,7 @@ import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
+import com.liferay.frontend.data.set.view.table.DateFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
@@ -70,6 +71,8 @@ public class AdvancedTableFDSView extends BaseTableFDSView {
 				"customAuthorTableCellRenderer")
 		).add(
 			"description", "description"
+		).add(
+			_addDateFDSTableSchemaField()
 		).add(
 			_addDateTimeFDSTableSchemaField()
 		).add(
@@ -169,22 +172,37 @@ public class AdvancedTableFDSView extends BaseTableFDSView {
 		return true;
 	}
 
-	private DateTimeFDSTableSchemaField _addDateTimeFDSTableSchemaField() {
-		DateTimeFDSTableSchemaField dateFDSTableSchemaField =
-			new DateTimeFDSTableSchemaField();
+	private DateFDSTableSchemaField _addDateFDSTableSchemaField() {
+		DateFDSTableSchemaField dateFDSTableSchemaField =
+			new DateFDSTableSchemaField();
 
 		dateFDSTableSchemaField.setContentRenderer(
-			"dateTime"
+			"date"
 		).setFieldName(
 			"date"
 		).setLabel(
 			"date"
 		);
 
-		dateFDSTableSchemaField.setTimeZoneBehavior(
+		return dateFDSTableSchemaField;
+	}
+
+	private DateTimeFDSTableSchemaField _addDateTimeFDSTableSchemaField() {
+		DateTimeFDSTableSchemaField dateTimeFDSTableSchemaField =
+			new DateTimeFDSTableSchemaField();
+
+		dateTimeFDSTableSchemaField.setContentRenderer(
+			"dateTime"
+		).setFieldName(
+			"dateTime"
+		).setLabel(
+			"date-time"
+		);
+
+		dateTimeFDSTableSchemaField.setTimeZoneBehavior(
 			FDSTimeZoneBehaviorConstants.APPLY_THEME_DISPLAY_TIME_ZONE);
 
-		return dateFDSTableSchemaField;
+		return dateTimeFDSTableSchemaField;
 	}
 
 	@Reference

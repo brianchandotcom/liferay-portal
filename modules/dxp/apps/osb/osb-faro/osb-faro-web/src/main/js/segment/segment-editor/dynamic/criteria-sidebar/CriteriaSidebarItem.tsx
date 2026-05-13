@@ -28,7 +28,9 @@ const TYPE_ICON_MAP = {
 	[PropertyTypes.SessionDateTime]: 'date',
 	[PropertyTypes.SessionNumber]: 'integer',
 	[PropertyTypes.SessionText]: 'text',
+	[PropertyTypes.Vocabulary]: 'text',
 	[PropertyTypes.Interest]: 'check',
+	[PropertyTypes.Tag]: 'text',
 	[PropertyTypes.Text]: 'text'
 };
 

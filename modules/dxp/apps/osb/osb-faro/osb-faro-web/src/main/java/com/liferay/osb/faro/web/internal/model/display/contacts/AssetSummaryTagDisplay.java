@@ -22,6 +22,7 @@ public class AssetSummaryTagDisplay {
 	@JsonProperty("id")
 	private final String _id;
 
+	@JsonProperty("name")
 	private final String _name;
 
 }

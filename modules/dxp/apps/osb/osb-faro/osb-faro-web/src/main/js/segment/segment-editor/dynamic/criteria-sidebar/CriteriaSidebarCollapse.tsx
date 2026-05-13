@@ -156,6 +156,7 @@ export const getDefaultValue = (property: Property): any => {
 				{key: 'operator', value: RelationalOperators.GE},
 				{key: 'value', value: 1}
 			]);
+		case PropertyTypes.Tag:
 		case PropertyTypes.Vocabulary:
 			return createCustomValueMap([
 				{key: 'operator', value: RelationalOperators.GE},

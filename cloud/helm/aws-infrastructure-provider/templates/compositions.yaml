@@ -1527,8 +1527,8 @@ spec:
                             managementPolicies: {{ $managementPolicies }}
                         {{- end -}}
 
-                        {{- $elasticsearchSpec := $xr.spec.search.elasticsearch }}
-                        {{- if $elasticsearchSpec.enabled }}
+                        {{- $elasticsearchSpec := $xr.spec.search.elasticsearch -}}
+                        {{- if $elasticsearchSpec.enabled -}}
                         {{- $elasticsearchName := printf "%s-es" $xr.metadata.name -}}
                         {{- $elasticsearchSecretName := printf "%s-es-elastic-user" $elasticsearchName -}}
                         ---
@@ -1563,12 +1563,11 @@ spec:
                                         name: {{ $elasticsearchSecretName }}
                                         namespace: {{ $namespace }}
                             managementPolicies: ["Observe"]
-                        {{- if .observed.resources }}
-                        {{- $elasticsearchObserver := default dict (index .observed.resources "elasticsearch-observer") }}
-                        {{- $elasticsearchSecretObserver := default dict (index .observed.resources "elasticsearch-secret-observer") }}
+                        {{- if .observed.resources -}}
+                        {{- $elasticsearchObserver := default dict (index .observed.resources "elasticsearch-observer") -}}
+                        {{- $elasticsearchSecretObserver := default dict (index .observed.resources "elasticsearch-secret-observer") -}}
                         {{- $elasticsearchHealth := dig "resource" "status" "atProvider" "manifest" "status" "health" "" $elasticsearchObserver -}}
                         {{- $isElasticsearchReady := or (eq $elasticsearchHealth "green") (eq $elasticsearchHealth "yellow") -}}
-
                         {{- $elasticsearchPassword := dig "resource" "status" "atProvider" "manifest" "data" "elastic" "" $elasticsearchSecretObserver -}}
 
                         {{- if and $isElasticsearchReady $elasticsearchPassword }}

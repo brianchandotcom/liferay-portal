@@ -492,6 +492,25 @@ public abstract class BaseJob implements Job {
 	}
 
 	@Override
+	public Properties getJobProperties() {
+		Properties jobProperties = new Properties();
+
+		try {
+			jobProperties.putAll(JenkinsResultsParserUtil.getBuildProperties());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		for (File propertiesFile : getJobPropertiesFiles()) {
+			jobProperties.putAll(
+				JenkinsResultsParserUtil.getProperties(propertiesFile));
+		}
+
+		return jobProperties;
+	}
+
+	@Override
 	public List<File> getJobPropertiesFiles() {
 		return jobPropertiesFiles;
 	}

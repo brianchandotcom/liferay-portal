@@ -31,7 +31,7 @@ public class AssetSummaryCategoryController extends BaseFaroController {
 
 	@GET
 	public FaroFDSResultsDisplay<AssetSummaryCategory>
-			getAssetSummaryCategories(
+			getAssetSummaryCategoriesFaroFDSResultsDisplay(
 				@PathParam("groupId") long groupId,
 				@QueryParam("channelId") long channelId,
 				@QueryParam("keywords") String keywords,

@@ -29,14 +29,15 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryMimeTypeController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay<AssetSummaryMimeType> getAssetSummaryMimeTypes(
-			@PathParam("groupId") long groupId,
-			@QueryParam("channelId") long channelId,
-			@QueryParam("page") int page,
-			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
-			@QueryParam("rangeEnd") String rangeEnd,
-			@DefaultValue("30") @QueryParam("rangeKey") int rangeKey,
-			@QueryParam("rangeStart") String rangeStart)
+	public FaroFDSResultsDisplay<AssetSummaryMimeType>
+			getAssetSummaryMimeTypesFaroFDSResultsDisplay(
+				@PathParam("groupId") long groupId,
+				@QueryParam("channelId") long channelId,
+				@QueryParam("page") int page,
+				@DefaultValue("20") @QueryParam("pageSize") int pageSize,
+				@QueryParam("rangeEnd") String rangeEnd,
+				@DefaultValue("30") @QueryParam("rangeKey") int rangeKey,
+				@QueryParam("rangeStart") String rangeStart)
 		throws Exception {
 
 		return new FaroFDSResultsDisplay<>(

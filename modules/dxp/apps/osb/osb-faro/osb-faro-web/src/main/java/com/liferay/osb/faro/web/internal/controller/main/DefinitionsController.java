@@ -38,7 +38,7 @@ public class DefinitionsController extends BaseFaroController {
 	@GET
 	@Path("/individual_attributes")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay get(
+	public FaroResultsDisplay getIndividualAttributesFaroResultsDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("displayName") String displayName)
 		throws PortalException {

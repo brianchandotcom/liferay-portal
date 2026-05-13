@@ -13,12 +13,6 @@ ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObj
 
 	<%
 	long classPK = (objectEntry == null) ? 0 : objectEntry.getObjectEntryId();
-
-	long[] categorySelectorGroupIds = null;
-
-	if ((objectEntry != null) && (objectEntry.getGroupId() > 0)) {
-		categorySelectorGroupIds = new long[] {objectEntry.getGroupId()};
-	}
 	%>
 
 	<div class="lfr-form-content" id="<portlet:namespace />categorization">
@@ -47,7 +41,7 @@ ObjectLayoutBox categorizationObjectLayoutBox = objectEntryDisplayContext.getObj
 							<liferay-asset:asset-categories-selector
 								className="<%= objectDefinition.getClassName() %>"
 								classPK="<%= classPK %>"
-								groupIds="<%= categorySelectorGroupIds %>"
+								groupIds="<%= objectEntryDisplayContext.getGroupIds() %>"
 								visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 							/>
 

@@ -257,6 +257,93 @@ components:
                     readOnly: true
                     type: string
             type: object
+        IndividualSegment:
+            description:
+                "A saved audience definition that selects individuals matching a filter expression."
+            properties:
+                activeIndividualCount:
+                    description:
+                        "Number of individuals currently in the segment who have been active."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                anonymousIndividualCount:
+                    description:
+                        "Number of anonymous individuals in this segment."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                channelId:
+                    description:
+                        "Identifier of the channel this segment is scoped to."
+                    readOnly: true
+                    type: string
+                dateCreated:
+                    description:
+                        "When the segment was created."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        "Last time the segment definition was modified."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                filter:
+                    description:
+                        "OData-style filter expression that defines segment membership."
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        "Segment id. Use this with `getIndividualSegment` to fetch a single segment."
+                    readOnly: true
+                    type: string
+                includeAnonymousUsers:
+                    description:
+                        "True if anonymous individuals are eligible for membership in this segment."
+                    readOnly: true
+                    type: boolean
+                individualCount:
+                    description:
+                        "Total individuals in the segment."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                knownIndividualCount:
+                    description:
+                        "Number of known individuals in this segment."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                lastActivityDate:
+                    description:
+                        "Most recent activity by any individual currently in the segment."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Display name of the segment."
+                    readOnly: true
+                    type: string
+                segmentType:
+                    description:
+                        "Segment type. Either 'BATCH' or 'REAL_TIME'."
+                    readOnly: true
+                    type: string
+                state:
+                    description:
+                        "State of the segment: 'READY', 'IN_PROGRESS', or 'DISABLED'."
+                    readOnly: true
+                    type: string
+                status:
+                    description:
+                        "Status of the segment: 'ACTIVE' or 'INACTIVE'."
+                    readOnly: true
+                    type: string
+            type: object
         PageMetric:
             description:
                 "Analytics metrics for a single tracked page over the selected date range. Use `getSitePagesPage` to
@@ -630,6 +717,103 @@ paths:
                                     $ref: "#/components/schemas/Event"
                                 type: array
             tags: ["Event"]
+    "/workspace/{groupId}/individual-segments":
+        get:
+            description:
+                "List individual segments within an Analytics Cloud workspace. Optionally narrowed to a channel (also
+                known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`."
+            operationId: getWorkspaceGroupIndividualSegmentsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    description:
+                        "Optional channel id to scope results to a single channel."
+                    name: channelId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Optional segment name to match exactly."
+                    name: name
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number. Starts at 1."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Free-text search across segment name and related fields."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Filter by segment lifecycle status: 'ACTIVE' or 'INACTIVE'."
+                    name: status
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/IndividualSegment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/IndividualSegment"
+                                type: array
+            tags: ["IndividualSegment"]
+    "/workspace/{groupId}/individual-segments/{individualSegmentId}":
+        get:
+            description:
+                "Fetch a single individual segment by id from an Analytics Cloud workspace. To list segments, use
+                `getWorkspaceGroupIndividualSegmentsPage`."
+            operationId: getWorkspaceGroupIndividualSegment
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Individual segment id."
+                    name: individualSegmentId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/IndividualSegment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/IndividualSegment"
+            tags: ["IndividualSegment"]
     "/workspace/{groupId}/individuals":
         get:
             description:

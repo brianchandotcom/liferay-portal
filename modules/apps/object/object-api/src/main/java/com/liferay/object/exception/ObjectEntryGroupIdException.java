@@ -17,19 +17,6 @@ public class ObjectEntryGroupIdException extends PortalException {
 		return _messageKey;
 	}
 
-	public static class InvalidGroupIdForDomain
-		extends ObjectEntryGroupIdException {
-
-		public InvalidGroupIdForDomain(long groupId, String domain) {
-			super(
-				StringBundler.concat(
-					"Group ID ", groupId, " is not valid for domain \"", domain,
-					"\""),
-				"group-id-x-is-not-valid-for-domain-x");
-		}
-
-	}
-
 	public static class InvalidGroupIdForAssetCategory
 		extends ObjectEntryGroupIdException {
 
@@ -40,6 +27,36 @@ public class ObjectEntryGroupIdException extends PortalException {
 						"scope",
 					assetCategoryId),
 				"asset-category-x-does-not-belong-to-the-object-entrys-scope");
+		}
+
+	}
+
+	public static class InvalidGroupIdForAssetCategoryBrief
+		extends ObjectEntryGroupIdException {
+
+		public InvalidGroupIdForAssetCategoryBrief(
+			String externalReferenceCode) {
+
+			super(
+				String.format(
+					"Asset category with external reference code \"%s\" does " +
+						"not belong to the object entry's scope",
+					externalReferenceCode),
+				"asset-category-with-external-reference-code-x-does-not-" +
+					"belong-to-the-object-entrys-scope");
+		}
+
+	}
+
+	public static class InvalidGroupIdForDomain
+		extends ObjectEntryGroupIdException {
+
+		public InvalidGroupIdForDomain(long groupId, String domain) {
+			super(
+				StringBundler.concat(
+					"Group ID ", groupId, " is not valid for domain \"", domain,
+					"\""),
+				"group-id-x-is-not-valid-for-domain-x");
 		}
 
 	}

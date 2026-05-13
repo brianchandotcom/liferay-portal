@@ -11,7 +11,11 @@ import AnalyticsFrame from './AnalyticsFrame';
 import EngagementChart from './EngagementChart';
 import Loader from './Loader';
 
-function TimelineEngagementChart() {
+const TimelineEngagementChart = ({
+	isAnalyticsCloudConfigured,
+}: {
+	isAnalyticsCloudConfigured: boolean;
+}) => {
 	const [data, setData] = useState<IEngagementChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
@@ -22,6 +26,7 @@ function TimelineEngagementChart() {
 				{key: 'siteSessions', path: '/sessions-site-histogram-metric'},
 			],
 		},
+		settings: {isAnalyticsCloudConfigured},
 		variables: {
 			devices: 'Any',
 			emailAddresses: [],
@@ -54,18 +59,28 @@ function TimelineEngagementChart() {
 			title={Liferay.Language.get('engagement-timeline')}
 		>
 			<div ref={setElement}>
-				{isLoading ? (
-					<Loader />
-				) : !data?.length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
+				{isAnalyticsCloudConfigured ? (
+					isLoading ? (
+						<Loader />
+					) : !data?.length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						<EngagementChart data={data} />
+					)
 				) : (
-					<EngagementChart data={data} />
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
+							)}
+						</p>
+					</div>
 				)}
 			</div>
 		</AnalyticsFrame>
 	);
-}
+};
 
 export default TimelineEngagementChart;

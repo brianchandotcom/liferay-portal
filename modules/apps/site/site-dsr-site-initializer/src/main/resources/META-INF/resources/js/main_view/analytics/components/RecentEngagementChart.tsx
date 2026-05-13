@@ -12,7 +12,11 @@ import AnalyticsFrame from './AnalyticsFrame';
 import EngagementChart from './EngagementChart';
 import Loader from './Loader';
 
-function RecentEngagementChart() {
+const RecentEngagementChart = ({
+	isAnalyticsCloudConfigured,
+}: {
+	isAnalyticsCloudConfigured: boolean;
+}) => {
 	const [data, setData] = useState<IEngagementChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 
@@ -23,6 +27,7 @@ function RecentEngagementChart() {
 				{key: 'siteVisitors', path: '/visitors-site-histogram-metric'},
 			],
 		},
+		settings: {isAnalyticsCloudConfigured},
 		variables: {
 			devices: 'Any',
 			interval: 'D',
@@ -57,18 +62,28 @@ function RecentEngagementChart() {
 			url={`${BASE_URL}/view-timeline`}
 		>
 			<div ref={setElement}>
-				{isLoading ? (
-					<Loader />
-				) : !data?.length ? (
-					<p className="mt-3 text-center text-muted">
-						{Liferay.Language.get('no-data-available')}
-					</p>
+				{isAnalyticsCloudConfigured ? (
+					isLoading ? (
+						<Loader />
+					) : !data?.length ? (
+						<p className="mt-3 text-center text-muted">
+							{Liferay.Language.get('no-data-available')}
+						</p>
+					) : (
+						<EngagementChart data={data} />
+					)
 				) : (
-					<EngagementChart data={data} />
+					<div className="dsr-analytics-empty-message">
+						<p className="mb-0 text-center text-muted">
+							{Liferay.Language.get(
+								'analytics-cloud-is-not-configured'
+							)}
+						</p>
+					</div>
 				)}
 			</div>
 		</AnalyticsFrame>
 	);
-}
+};
 
 export default RecentEngagementChart;

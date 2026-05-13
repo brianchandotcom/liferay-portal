@@ -1,26 +1,3 @@
-<style ${nonceAttribute}>
-	.vocab-facet {
-		border-radius: 10px;
-	}
-
-	.vocab-facet .panel a {
-		padding: 1rem;
-	}
-
-	.vocab-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
-	.vocab-facet .collapse-icon .collapse-icon-open .lexicon-icon {
-		margin-top: 0.3rem;
-	}
-
-	.vocab-facet .panel-body {
-		padding: 0.5rem 1rem 1rem;
-	}
-
-	.vocab-facet .list-unstyled {
-		margin-bottom: 0;
-	}
-</style>
-
 <@liferay_ui["panel-container"]
 	cssClass="vocab-facet bg-white border-radius-xlarge my-2"
 	extended=true

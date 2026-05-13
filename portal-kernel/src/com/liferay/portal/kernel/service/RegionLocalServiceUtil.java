@@ -36,14 +36,6 @@ public class RegionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static Region addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addRegion(
-			countryId, active, name, position, regionCode, serviceContext);
-	}
 
 	/**
 	 * Adds the region to the database. Also notifies the appropriate model listeners.
@@ -57,6 +49,17 @@ public class RegionLocalServiceUtil {
 	 */
 	public static Region addRegion(Region region) {
 		return getService().addRegion(region);
+	}
+
+	public static Region addRegion(
+			String externalReferenceCode, long countryId, boolean active,
+			String name, double position, String regionCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addRegion(
+			externalReferenceCode, countryId, active, name, position,
+			regionCode, serviceContext);
 	}
 
 	/**
@@ -215,6 +218,13 @@ public class RegionLocalServiceUtil {
 		return getService().fetchRegion(countryId, regionCode);
 	}
 
+	public static Region fetchRegionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the region with the matching UUID and company.
 	 *
@@ -255,6 +265,16 @@ public class RegionLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static Region getOrAddEmptyRegion(
+			String externalReferenceCode, long companyId, long userId,
+			long countryId, String regionCode, String name)
+		throws PortalException {
+
+		return getService().getOrAddEmptyRegion(
+			externalReferenceCode, companyId, userId, countryId, regionCode,
+			name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -288,6 +308,14 @@ public class RegionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getRegion(countryId, regionCode);
+	}
+
+	public static Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -396,15 +424,6 @@ public class RegionLocalServiceUtil {
 		return getService().updateActive(regionId, active);
 	}
 
-	public static Region updateRegion(
-			long regionId, boolean active, String name, double position,
-			String regionCode)
-		throws PortalException {
-
-		return getService().updateRegion(
-			regionId, active, name, position, regionCode);
-	}
-
 	/**
 	 * Updates the region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -417,6 +436,16 @@ public class RegionLocalServiceUtil {
 	 */
 	public static Region updateRegion(Region region) {
 		return getService().updateRegion(region);
+	}
+
+	public static Region updateRegion(
+			String externalReferenceCode, long regionId, boolean active,
+			String name, double position, String regionCode)
+		throws PortalException {
+
+		return getService().updateRegion(
+			externalReferenceCode, regionId, active, name, position,
+			regionCode);
 	}
 
 	public static com.liferay.portal.kernel.model.RegionLocalization
@@ -446,4 +475,4 @@ public class RegionLocalServiceUtil {
 	private static volatile RegionLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:25106432
+// LIFERAY-SERVICE-BUILDER-HASH:-710628756

@@ -67,7 +67,7 @@ public class CountryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -75,6 +75,8 @@ public class CountryCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", defaultLanguageId=");
 		sb.append(defaultLanguageId);
 		sb.append(", countryId=");
@@ -115,6 +117,8 @@ public class CountryCacheModel
 		sb.append(zipRequired);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -132,6 +136,13 @@ public class CountryCacheModel
 		}
 		else {
 			countryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			countryImpl.setExternalReferenceCode("");
+		}
+		else {
+			countryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		if (defaultLanguageId == null) {
@@ -217,6 +228,8 @@ public class CountryCacheModel
 			countryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		countryImpl.setStatus(status);
+
 		countryImpl.resetOriginalValues();
 
 		return countryImpl;
@@ -228,6 +241,7 @@ public class CountryCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 
 		countryId = objectInput.readLong();
@@ -258,6 +272,8 @@ public class CountryCacheModel
 
 		zipRequired = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -271,6 +287,13 @@ public class CountryCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		if (defaultLanguageId == null) {
@@ -345,11 +368,14 @@ public class CountryCacheModel
 
 		objectOutput.writeBoolean(zipRequired);
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public String defaultLanguageId;
 	public long countryId;
 	public long companyId;
@@ -370,6 +396,7 @@ public class CountryCacheModel
 	public boolean subjectToVAT;
 	public boolean zipRequired;
 	public long lastPublishDate;
+	public int status;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1445353593
+// LIFERAY-SERVICE-BUILDER-HASH:-1545650651

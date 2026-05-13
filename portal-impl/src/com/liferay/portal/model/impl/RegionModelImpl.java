@@ -69,13 +69,14 @@ public class RegionModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
-		{"regionId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"countryId", Types.BIGINT}, {"active_", Types.BOOLEAN},
-		{"name", Types.VARCHAR}, {"position", Types.DOUBLE},
-		{"regionCode", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"defaultLanguageId", Types.VARCHAR}, {"regionId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"countryId", Types.BIGINT},
+		{"active_", Types.BOOLEAN}, {"name", Types.VARCHAR},
+		{"position", Types.DOUBLE}, {"regionCode", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,6 +86,7 @@ public class RegionModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("regionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -98,10 +100,11 @@ public class RegionModelImpl
 		TABLE_COLUMNS_MAP.put("position", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("regionCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Region (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,regionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,active_ BOOLEAN,name VARCHAR(75) null,position DOUBLE,regionCode VARCHAR(75) null,lastPublishDate DATE null,primary key (regionId, ctCollectionId))";
+		"create table Region (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,regionId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,countryId LONG,active_ BOOLEAN,name VARCHAR(75) null,position DOUBLE,regionCode VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,primary key (regionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Region";
 
@@ -159,27 +162,33 @@ public class RegionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long REGIONCODE_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long REGIONCODE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long POSITION_COLUMN_BITMASK = 64L;
+	public static final long POSITION_COLUMN_BITMASK = 128L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.kernel.util.PropsUtil.get(
@@ -280,6 +289,8 @@ public class RegionModelImpl
 				"ctCollectionId", Region::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Region::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode", Region::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"defaultLanguageId", Region::getDefaultLanguageId);
 			attributeGetterFunctions.put("regionId", Region::getRegionId);
 			attributeGetterFunctions.put("companyId", Region::getCompanyId);
@@ -295,6 +306,7 @@ public class RegionModelImpl
 			attributeGetterFunctions.put("regionCode", Region::getRegionCode);
 			attributeGetterFunctions.put(
 				"lastPublishDate", Region::getLastPublishDate);
+			attributeGetterFunctions.put("status", Region::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -319,6 +331,9 @@ public class RegionModelImpl
 				(BiConsumer<Region, Long>)Region::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Region, String>)Region::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<Region, String>)Region::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"defaultLanguageId",
 				(BiConsumer<Region, String>)Region::setDefaultLanguageId);
@@ -349,6 +364,8 @@ public class RegionModelImpl
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<Region, Date>)Region::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<Region, Integer>)Region::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -492,6 +509,35 @@ public class RegionModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -776,6 +822,21 @@ public class RegionModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -841,6 +902,7 @@ public class RegionModelImpl
 		regionImpl.setMvccVersion(getMvccVersion());
 		regionImpl.setCtCollectionId(getCtCollectionId());
 		regionImpl.setUuid(getUuid());
+		regionImpl.setExternalReferenceCode(getExternalReferenceCode());
 		regionImpl.setDefaultLanguageId(getDefaultLanguageId());
 		regionImpl.setRegionId(getRegionId());
 		regionImpl.setCompanyId(getCompanyId());
@@ -854,6 +916,7 @@ public class RegionModelImpl
 		regionImpl.setPosition(getPosition());
 		regionImpl.setRegionCode(getRegionCode());
 		regionImpl.setLastPublishDate(getLastPublishDate());
+		regionImpl.setStatus(getStatus());
 
 		regionImpl.resetOriginalValues();
 
@@ -869,6 +932,8 @@ public class RegionModelImpl
 		regionImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		regionImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		regionImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		regionImpl.setDefaultLanguageId(
 			this.<String>getColumnOriginalValue("defaultLanguageId"));
 		regionImpl.setRegionId(this.<Long>getColumnOriginalValue("regionId"));
@@ -887,6 +952,7 @@ public class RegionModelImpl
 			this.<String>getColumnOriginalValue("regionCode"));
 		regionImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		regionImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
 
 		return regionImpl;
 	}
@@ -988,6 +1054,16 @@ public class RegionModelImpl
 			regionCacheModel.uuid = null;
 		}
 
+		regionCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = regionCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			regionCacheModel.externalReferenceCode = null;
+		}
+
 		regionCacheModel.defaultLanguageId = getDefaultLanguageId();
 
 		String defaultLanguageId = regionCacheModel.defaultLanguageId;
@@ -1059,6 +1135,8 @@ public class RegionModelImpl
 			regionCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		regionCacheModel.status = getStatus();
+
 		return regionCacheModel;
 	}
 
@@ -1122,6 +1200,7 @@ public class RegionModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private String _defaultLanguageId;
 	private long _regionId;
 	private long _companyId;
@@ -1136,6 +1215,7 @@ public class RegionModelImpl
 	private double _position;
 	private String _regionCode;
 	private Date _lastPublishDate;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1170,6 +1250,8 @@ public class RegionModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("regionId", _regionId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1183,6 +1265,7 @@ public class RegionModelImpl
 		_columnOriginalValues.put("position", _position);
 		_columnOriginalValues.put("regionCode", _regionCode);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1213,31 +1296,35 @@ public class RegionModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("defaultLanguageId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("regionId", 16L);
+		columnBitmasks.put("defaultLanguageId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("regionId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("countryId", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("active_", 2048L);
+		columnBitmasks.put("countryId", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("active_", 4096L);
 
-		columnBitmasks.put("position", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("regionCode", 16384L);
+		columnBitmasks.put("position", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("regionCode", 32768L);
+
+		columnBitmasks.put("lastPublishDate", 65536L);
+
+		columnBitmasks.put("status", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -1246,4 +1333,4 @@ public class RegionModelImpl
 	private Region _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1678608119
+// LIFERAY-SERVICE-BUILDER-HASH:-760964556

@@ -69,17 +69,18 @@ public class CountryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
-		{"countryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"a2", Types.VARCHAR}, {"a3", Types.VARCHAR},
-		{"active_", Types.BOOLEAN}, {"billingAllowed", Types.BOOLEAN},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"defaultLanguageId", Types.VARCHAR}, {"countryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"a2", Types.VARCHAR},
+		{"a3", Types.VARCHAR}, {"active_", Types.BOOLEAN},
+		{"billingAllowed", Types.BOOLEAN},
 		{"groupFilterEnabled", Types.BOOLEAN}, {"idd_", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"number_", Types.VARCHAR},
 		{"position", Types.DOUBLE}, {"shippingAllowed", Types.BOOLEAN},
 		{"subjectToVAT", Types.BOOLEAN}, {"zipRequired", Types.BOOLEAN},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,6 +90,7 @@ public class CountryModelImpl
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("countryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,10 +111,11 @@ public class CountryModelImpl
 		TABLE_COLUMNS_MAP.put("subjectToVAT", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("zipRequired", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Country (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,active_ BOOLEAN,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null,primary key (countryId, ctCollectionId))";
+		"create table Country (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,countryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,a2 VARCHAR(75) null,a3 VARCHAR(75) null,active_ BOOLEAN,billingAllowed BOOLEAN,groupFilterEnabled BOOLEAN,idd_ VARCHAR(75) null,name VARCHAR(75) null,number_ VARCHAR(75) null,position DOUBLE,shippingAllowed BOOLEAN,subjectToVAT BOOLEAN,zipRequired BOOLEAN,lastPublishDate DATE null,status INTEGER,primary key (countryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Country";
 
@@ -189,31 +192,37 @@ public class CountryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPFILTERENABLED_COLUMN_BITMASK = 64L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 128L;
+	public static final long GROUPFILTERENABLED_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NUMBER_COLUMN_BITMASK = 256L;
+	public static final long NAME_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SHIPPINGALLOWED_COLUMN_BITMASK = 512L;
+	public static final long NUMBER_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long SHIPPINGALLOWED_COLUMN_BITMASK = 1024L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.kernel.util.PropsUtil.get(
@@ -318,6 +327,8 @@ public class CountryModelImpl
 				"ctCollectionId", Country::getCtCollectionId);
 			attributeGetterFunctions.put("uuid", Country::getUuid);
 			attributeGetterFunctions.put(
+				"externalReferenceCode", Country::getExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"defaultLanguageId", Country::getDefaultLanguageId);
 			attributeGetterFunctions.put("countryId", Country::getCountryId);
 			attributeGetterFunctions.put("companyId", Country::getCompanyId);
@@ -345,6 +356,7 @@ public class CountryModelImpl
 				"zipRequired", Country::getZipRequired);
 			attributeGetterFunctions.put(
 				"lastPublishDate", Country::getLastPublishDate);
+			attributeGetterFunctions.put("status", Country::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -369,6 +381,9 @@ public class CountryModelImpl
 				(BiConsumer<Country, Long>)Country::setCtCollectionId);
 			attributeSetterBiConsumers.put(
 				"uuid", (BiConsumer<Country, String>)Country::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<Country, String>)Country::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"defaultLanguageId",
 				(BiConsumer<Country, String>)Country::setDefaultLanguageId);
@@ -418,6 +433,8 @@ public class CountryModelImpl
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<Country, Date>)Country::setLastPublishDate);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<Country, Integer>)Country::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -562,6 +579,35 @@ public class CountryModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1053,6 +1099,21 @@ public class CountryModelImpl
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1118,6 +1179,7 @@ public class CountryModelImpl
 		countryImpl.setMvccVersion(getMvccVersion());
 		countryImpl.setCtCollectionId(getCtCollectionId());
 		countryImpl.setUuid(getUuid());
+		countryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		countryImpl.setDefaultLanguageId(getDefaultLanguageId());
 		countryImpl.setCountryId(getCountryId());
 		countryImpl.setCompanyId(getCompanyId());
@@ -1138,6 +1200,7 @@ public class CountryModelImpl
 		countryImpl.setSubjectToVAT(isSubjectToVAT());
 		countryImpl.setZipRequired(isZipRequired());
 		countryImpl.setLastPublishDate(getLastPublishDate());
+		countryImpl.setStatus(getStatus());
 
 		countryImpl.resetOriginalValues();
 
@@ -1153,6 +1216,8 @@ public class CountryModelImpl
 		countryImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		countryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		countryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		countryImpl.setDefaultLanguageId(
 			this.<String>getColumnOriginalValue("defaultLanguageId"));
 		countryImpl.setCountryId(
@@ -1186,6 +1251,7 @@ public class CountryModelImpl
 			this.<Boolean>getColumnOriginalValue("zipRequired"));
 		countryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
+		countryImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
 
 		return countryImpl;
 	}
@@ -1271,6 +1337,16 @@ public class CountryModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			countryCacheModel.uuid = null;
+		}
+
+		countryCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = countryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			countryCacheModel.externalReferenceCode = null;
 		}
 
 		countryCacheModel.defaultLanguageId = getDefaultLanguageId();
@@ -1376,6 +1452,8 @@ public class CountryModelImpl
 			countryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		countryCacheModel.status = getStatus();
+
 		return countryCacheModel;
 	}
 
@@ -1440,6 +1518,7 @@ public class CountryModelImpl
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private String _defaultLanguageId;
 	private long _countryId;
 	private long _companyId;
@@ -1461,6 +1540,7 @@ public class CountryModelImpl
 	private boolean _subjectToVAT;
 	private boolean _zipRequired;
 	private Date _lastPublishDate;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1495,6 +1575,8 @@ public class CountryModelImpl
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("countryId", _countryId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1515,6 +1597,7 @@ public class CountryModelImpl
 		_columnOriginalValues.put("subjectToVAT", _subjectToVAT);
 		_columnOriginalValues.put("zipRequired", _zipRequired);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1547,45 +1630,49 @@ public class CountryModelImpl
 
 		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("defaultLanguageId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("countryId", 16L);
+		columnBitmasks.put("defaultLanguageId", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("countryId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("a2", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("a3", 2048L);
+		columnBitmasks.put("a2", 2048L);
 
-		columnBitmasks.put("active_", 4096L);
+		columnBitmasks.put("a3", 4096L);
 
-		columnBitmasks.put("billingAllowed", 8192L);
+		columnBitmasks.put("active_", 8192L);
 
-		columnBitmasks.put("groupFilterEnabled", 16384L);
+		columnBitmasks.put("billingAllowed", 16384L);
 
-		columnBitmasks.put("idd_", 32768L);
+		columnBitmasks.put("groupFilterEnabled", 32768L);
 
-		columnBitmasks.put("name", 65536L);
+		columnBitmasks.put("idd_", 65536L);
 
-		columnBitmasks.put("number_", 131072L);
+		columnBitmasks.put("name", 131072L);
 
-		columnBitmasks.put("position", 262144L);
+		columnBitmasks.put("number_", 262144L);
 
-		columnBitmasks.put("shippingAllowed", 524288L);
+		columnBitmasks.put("position", 524288L);
 
-		columnBitmasks.put("subjectToVAT", 1048576L);
+		columnBitmasks.put("shippingAllowed", 1048576L);
 
-		columnBitmasks.put("zipRequired", 2097152L);
+		columnBitmasks.put("subjectToVAT", 2097152L);
 
-		columnBitmasks.put("lastPublishDate", 4194304L);
+		columnBitmasks.put("zipRequired", 4194304L);
+
+		columnBitmasks.put("lastPublishDate", 8388608L);
+
+		columnBitmasks.put("status", 16777216L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
@@ -1594,4 +1681,4 @@ public class CountryModelImpl
 	private Country _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1307386572
+// LIFERAY-SERVICE-BUILDER-HASH:1748171385

@@ -28,16 +28,6 @@ public class RegionLocalServiceWrapper
 		_regionLocalService = regionLocalService;
 	}
 
-	@Override
-	public Region addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _regionLocalService.addRegion(
-			countryId, active, name, position, regionCode, serviceContext);
-	}
-
 	/**
 	 * Adds the region to the database. Also notifies the appropriate model listeners.
 	 *
@@ -51,6 +41,18 @@ public class RegionLocalServiceWrapper
 	@Override
 	public Region addRegion(Region region) {
 		return _regionLocalService.addRegion(region);
+	}
+
+	@Override
+	public Region addRegion(
+			String externalReferenceCode, long countryId, boolean active,
+			String name, double position, String regionCode,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.addRegion(
+			externalReferenceCode, countryId, active, name, position,
+			regionCode, serviceContext);
 	}
 
 	/**
@@ -235,6 +237,14 @@ public class RegionLocalServiceWrapper
 		return _regionLocalService.fetchRegion(countryId, regionCode);
 	}
 
+	@Override
+	public Region fetchRegionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _regionLocalService.fetchRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the region with the matching UUID and company.
 	 *
@@ -280,6 +290,17 @@ public class RegionLocalServiceWrapper
 		return _regionLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public Region getOrAddEmptyRegion(
+			String externalReferenceCode, long companyId, long userId,
+			long countryId, String regionCode, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.getOrAddEmptyRegion(
+			externalReferenceCode, companyId, userId, countryId, regionCode,
+			name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -320,6 +341,15 @@ public class RegionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _regionLocalService.getRegion(countryId, regionCode);
+	}
+
+	@Override
+	public Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.getRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -444,16 +474,6 @@ public class RegionLocalServiceWrapper
 		return _regionLocalService.updateActive(regionId, active);
 	}
 
-	@Override
-	public Region updateRegion(
-			long regionId, boolean active, String name, double position,
-			String regionCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _regionLocalService.updateRegion(
-			regionId, active, name, position, regionCode);
-	}
-
 	/**
 	 * Updates the region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -467,6 +487,17 @@ public class RegionLocalServiceWrapper
 	@Override
 	public Region updateRegion(Region region) {
 		return _regionLocalService.updateRegion(region);
+	}
+
+	@Override
+	public Region updateRegion(
+			String externalReferenceCode, long regionId, boolean active,
+			String name, double position, String regionCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionLocalService.updateRegion(
+			externalReferenceCode, regionId, active, name, position,
+			regionCode);
 	}
 
 	@Override
@@ -525,4 +556,4 @@ public class RegionLocalServiceWrapper
 	private RegionLocalService _regionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:76894914
+// LIFERAY-SERVICE-BUILDER-HASH:185711684

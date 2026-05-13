@@ -2010,6 +2010,56 @@ public interface CountryPersistence
 		boolean groupFilterEnabled, boolean shippingAllowed);
 
 	/**
+	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching country
+	 * @throws NoSuchCountryException if a matching country could not be found
+	 */
+	public Country findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByERC_C(String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the country where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching country, or <code>null</code> if a matching country could not be found
+	 */
+	public Country fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the country where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the country that was removed
+	 */
+	public Country removeByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchCountryException;
+
+	/**
+	 * Returns the number of countries where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching countries
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
+
+	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *
 	 * @param countryId the primary key for the new country
@@ -2047,4 +2097,4 @@ public interface CountryPersistence
 	public Country fetchByPrimaryKey(long countryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:137574531
+// LIFERAY-SERVICE-BUILDER-HASH:-67827427

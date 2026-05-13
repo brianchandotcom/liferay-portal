@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateRegionExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.RegionLocalServiceUtil;
@@ -121,6 +122,8 @@ public class RegionPersistenceTest {
 
 		newRegion.setUuid(RandomTestUtil.randomString());
 
+		newRegion.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newRegion.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		newRegion.setCompanyId(RandomTestUtil.nextLong());
@@ -145,6 +148,8 @@ public class RegionPersistenceTest {
 
 		newRegion.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newRegion.setStatus(RandomTestUtil.nextInt());
+
 		_regions.add(_persistence.update(newRegion));
 
 		Region existingRegion = _persistence.findByPrimaryKey(
@@ -155,6 +160,9 @@ public class RegionPersistenceTest {
 		Assert.assertEquals(
 			existingRegion.getCtCollectionId(), newRegion.getCtCollectionId());
 		Assert.assertEquals(existingRegion.getUuid(), newRegion.getUuid());
+		Assert.assertEquals(
+			existingRegion.getExternalReferenceCode(),
+			newRegion.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingRegion.getDefaultLanguageId(),
 			newRegion.getDefaultLanguageId());
@@ -182,6 +190,26 @@ public class RegionPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingRegion.getLastPublishDate()),
 			Time.getShortTimestamp(newRegion.getLastPublishDate()));
+		Assert.assertEquals(existingRegion.getStatus(), newRegion.getStatus());
+	}
+
+	@Test(expected = DuplicateRegionExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		Region region = addRegion();
+
+		Region newRegion = addRegion();
+
+		newRegion.setCompanyId(region.getCompanyId());
+
+		newRegion = _persistence.update(newRegion);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newRegion);
+
+		newRegion.setExternalReferenceCode(region.getExternalReferenceCode());
+
+		_persistence.update(newRegion);
 	}
 
 	@Test
@@ -234,6 +262,15 @@ public class RegionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Region newRegion = addRegion();
 
@@ -259,11 +296,11 @@ public class RegionPersistenceTest {
 	protected OrderByComparator<Region> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"Region", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
-			"defaultLanguageId", true, "regionId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "countryId", true, "active", true, "name",
-			true, "position", true, "regionCode", true, "lastPublishDate",
-			true);
+			"externalReferenceCode", true, "defaultLanguageId", true,
+			"regionId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "countryId", true,
+			"active", true, "name", true, "position", true, "regionCode", true,
+			"lastPublishDate", true, "status", true);
 	}
 
 	@Test
@@ -525,6 +562,17 @@ public class RegionPersistenceTest {
 			ReflectionTestUtil.invoke(
 				region, "getColumnOriginalValue", new Class<?>[] {String.class},
 				"regionCode"));
+
+		Assert.assertEquals(
+			region.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				region, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(region.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				region, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 	}
 
 	protected Region addRegion() throws Exception {
@@ -537,6 +585,8 @@ public class RegionPersistenceTest {
 		region.setCtCollectionId(RandomTestUtil.nextLong());
 
 		region.setUuid(RandomTestUtil.randomString());
+
+		region.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		region.setDefaultLanguageId(RandomTestUtil.randomString());
 
@@ -562,6 +612,8 @@ public class RegionPersistenceTest {
 
 		region.setLastPublishDate(RandomTestUtil.nextDate());
 
+		region.setStatus(RandomTestUtil.nextInt());
+
 		_regions.add(_persistence.update(region));
 
 		return region;
@@ -572,4 +624,4 @@ public class RegionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1000230186
+// LIFERAY-SERVICE-BUILDER-HASH:-1941573259

@@ -31,12 +31,14 @@ public class RegionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Region addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
+			String externalReferenceCode, long countryId, boolean active,
+			String name, double position, String regionCode,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addRegion(
-			countryId, active, name, position, regionCode, serviceContext);
+			externalReferenceCode, countryId, active, name, position,
+			regionCode, serviceContext);
 	}
 
 	public static void deleteRegion(long regionId) throws PortalException {
@@ -49,6 +51,14 @@ public class RegionServiceUtil {
 
 	public static Region fetchRegion(long countryId, String regionCode) {
 		return getService().fetchRegion(countryId, regionCode);
+	}
+
+	public static Region fetchRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -68,6 +78,14 @@ public class RegionServiceUtil {
 		throws PortalException {
 
 		return getService().getRegion(countryId, regionCode);
+	}
+
+	public static Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<Region> getRegions() {
@@ -135,12 +153,13 @@ public class RegionServiceUtil {
 	}
 
 	public static Region updateRegion(
-			long regionId, boolean active, String name, double position,
-			String regionCode)
+			String externalReferenceCode, long regionId, boolean active,
+			String name, double position, String regionCode)
 		throws PortalException {
 
 		return getService().updateRegion(
-			regionId, active, name, position, regionCode);
+			externalReferenceCode, regionId, active, name, position,
+			regionCode);
 	}
 
 	public static RegionService getService() {
@@ -154,4 +173,4 @@ public class RegionServiceUtil {
 	private static volatile RegionService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:102498410
+// LIFERAY-SERVICE-BUILDER-HASH:-502938480

@@ -29,6 +29,10 @@ public class RegionTable extends BaseTable<RegionTable> {
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<RegionTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<RegionTable, String> defaultLanguageId = createColumn(
 		"defaultLanguageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Long> regionId = createColumn(
@@ -55,10 +59,12 @@ public class RegionTable extends BaseTable<RegionTable> {
 		"regionCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<RegionTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<RegionTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private RegionTable() {
 		super("Region", RegionTable::new);
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883526518
+// LIFERAY-SERVICE-BUILDER-HASH:-1598015693

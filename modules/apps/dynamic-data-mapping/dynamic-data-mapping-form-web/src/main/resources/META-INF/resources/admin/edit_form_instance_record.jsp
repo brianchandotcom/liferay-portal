@@ -38,6 +38,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 		<aui:input name="formInstanceRecordId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceRecordId() %>" />
 		<aui:input name="formInstanceId" type="hidden" value="<%= ddmFormInstanceRecordVersion.getFormInstanceId() %>" />
 
+		<liferay-ui:error exception="<%= CaptchaException.class %>" message="captcha-verification-failed" />
+		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
+
 		<%
 		DDMFormValues ddmFormValues = ddmFormInstanceRecordVersion.getDDMFormValues();
 		%>

@@ -19,9 +19,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -112,9 +114,19 @@ public class MercanetServlet extends HttpServlet {
 						httpServletRequest.getSession());
 				}
 
+				CommerceOrder commerceOrder =
+					_commercePaymentHttpHelper.getCommerceOrder(
+						httpServletRequest);
+
+				User currentUser = _portal.getUser(httpServletRequest);
+
+				if ((currentUser == null) && (commerceOrder != null)) {
+					currentUser = _userLocalService.fetchUser(
+						commerceOrder.getUserId());
+				}
+
 				PermissionThreadLocal.setPermissionChecker(
-					PermissionCheckerFactoryUtil.create(
-						_portal.getUser(httpServletRequest)));
+					PermissionCheckerFactoryUtil.create(currentUser));
 
 				URL portalURL = new URL(
 					_portal.getPortalURL(httpServletRequest));
@@ -133,9 +145,8 @@ public class MercanetServlet extends HttpServlet {
 
 					long commerceOrderId = GetterUtil.getLong(orderId);
 
-					CommerceOrder commerceOrder =
-						_commerceOrderLocalService.getCommerceOrder(
-							commerceOrderId);
+					commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+						commerceOrderId);
 
 					if (!Objects.equals(
 							commerceOrder.getCommercePaymentMethodKey(),
@@ -275,5 +286,8 @@ public class MercanetServlet extends HttpServlet {
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.mercanet)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

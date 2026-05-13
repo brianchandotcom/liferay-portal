@@ -344,6 +344,40 @@ components:
                     readOnly: true
                     type: string
             type: object
+        IndividualSegmentMembership:
+            description:
+                "A single individual's membership in an individual segment. Captures when the Individual entered the
+                segment and (if applicable) when they exited."
+            properties:
+                dateCreated:
+                    description:
+                        "When the individual entered the segment."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateRemoved:
+                    description:
+                        "When the individual exited the segment. Null if membership is still active."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                individualId:
+                    description:
+                        "Identifier of the individual whose membership this record describes. Use with `getIndividual`
+                        to fetch the individual."
+                    readOnly: true
+                    type: string
+                individualSegmentId:
+                    description:
+                        "Identifier of the segment this membership belongs to."
+                    readOnly: true
+                    type: string
+                status:
+                    description:
+                        "Either 'ACTIVE' (currently a member) or 'INACTIVE' (formerly a member)."
+                    readOnly: true
+                    type: string
+            type: object
         PageMetric:
             description:
                 "Analytics metrics for a single tracked page over the selected date range. Use `getSitePagesPage` to
@@ -721,7 +755,8 @@ paths:
         get:
             description:
                 "List individual segments within an Analytics Cloud workspace. Optionally narrowed to a channel (also
-                known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`."
+                known as a property). To fetch a single segment by id, use `getWorkspaceGroupIndividualSegment`. To list
+                members of a segment, use `getWorkspaceGroupIndividualSegmentMembershipsPage`."
             operationId: getWorkspaceGroupIndividualSegmentsPage
             parameters:
                 -   in: path
@@ -786,7 +821,8 @@ paths:
         get:
             description:
                 "Fetch a single individual segment by id from an Analytics Cloud workspace. To list segments, use
-                `getWorkspaceGroupIndividualSegmentsPage`."
+                `getWorkspaceGroupIndividualSegmentsPage`. To list members of a segment, use
+                `getWorkspaceGroupIndividualSegmentMembershipsPage`."
             operationId: getWorkspaceGroupIndividualSegment
             parameters:
                 -   in: path
@@ -814,6 +850,63 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/IndividualSegment"
             tags: ["IndividualSegment"]
+    "/workspace/{groupId}/individual-segments/{individualSegmentId}/memberships":
+        get:
+            description:
+                "List individuals currently or formerly in an individual segment. Each entry links one individual to the
+                individual segment and records when the individual entered (and, if applicable, exited). Use the
+                resulting `individualId` values with `getWorkspaceGroupIndividual` to retrieve the full individual
+                record."
+            operationId: getWorkspaceGroupIndividualSegmentMembershipsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "ID of the individual segment whose memberships should be listed."
+                    name: individualSegmentId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`."
+                    example: dateCreated:desc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/IndividualSegmentMembership"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/IndividualSegmentMembership"
+                                type: array
+            tags: ["IndividualSegmentMembership"]
     "/workspace/{groupId}/individuals":
         get:
             description:

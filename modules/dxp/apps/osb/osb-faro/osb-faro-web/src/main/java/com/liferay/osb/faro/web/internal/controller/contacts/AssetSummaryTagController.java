@@ -6,8 +6,6 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.AssetSummaryTag;
-import com.liferay.osb.faro.engine.client.model.Results;
-import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryTagDisplay;
@@ -21,8 +19,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-import java.util.function.Function;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -34,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryTagController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay getAssetSummaryTags(
+	public FaroFDSResultsDisplay<AssetSummaryTag> getAssetSummaryTags(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("keywords") String keywords,
@@ -47,18 +43,12 @@ public class AssetSummaryTagController extends BaseFaroController {
 				sortString)
 		throws Exception {
 
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		Results<AssetSummaryTag> results =
+		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAssetSummaryTags(
-				faroProject, channelId, keywords, rangeEnd, rangeKey,
-				rangeStart, sortString, page, pageSize);
-
-		Function<AssetSummaryTag, AssetSummaryTagDisplay> function =
-			AssetSummaryTagDisplay::new;
-
-		return new FaroFDSResultsDisplay(results, function, page, pageSize);
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				channelId, keywords, rangeEnd, rangeKey, rangeStart, sortString,
+				page, pageSize),
+			AssetSummaryTagDisplay::new, page, pageSize);
 	}
 
 }

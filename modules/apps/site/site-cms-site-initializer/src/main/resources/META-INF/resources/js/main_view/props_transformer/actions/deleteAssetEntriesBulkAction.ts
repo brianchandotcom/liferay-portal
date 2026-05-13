@@ -9,7 +9,6 @@ import SpaceService from '../../../common/services/SpaceService';
 import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
 import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
 import {openCMSModal} from '../../../common/utils/openCMSModal';
-import {isFromRecycleBin} from '../utils/isFromRecycleBin';
 import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
 /**
@@ -42,12 +41,12 @@ export function executeBulkDeleteAction(
  */
 function getBulkDeleteMessage(
 	selectedData: any,
-	someEntriesHaveTrashEnabled: boolean
+	isMixedDeleteStrategy: boolean
 ): {
 	confirmationMessage: string;
 	title: string;
 } {
-	if (someEntriesHaveTrashEnabled) {
+	if (isMixedDeleteStrategy) {
 		return {
 			confirmationMessage: getBodyHTML([
 				Liferay.Language.get(
@@ -139,36 +138,36 @@ async function handleBulkDeletion({
 	showConfirmationModal?: boolean;
 	trashEnabled?: boolean;
 }): Promise<void> {
-	let allEntriesHaveTrashEnabled: boolean;
-	let someEntriesHaveTrashEnabled: boolean;
+	const spaces = await getEntriesSpaces(selectedData?.items || []);
 
-	if (trashEnabled === null || trashEnabled === undefined) {
-		const spaces = await getEntriesSpaces(selectedData?.items || []);
+	const allEntriesHaveTrashEnabled =
+		trashEnabled === true ||
+		(!!spaces.length &&
+			spaces.every((space) => space.settings.trashEnabled));
 
-		allEntriesHaveTrashEnabled =
-			!!spaces.length &&
-			spaces.every((space) => space.settings.trashEnabled);
-
-		someEntriesHaveTrashEnabled =
-			!spaces.length ||
-			spaces.some((space) => space.settings.trashEnabled);
-	}
-	else {
-		allEntriesHaveTrashEnabled = trashEnabled;
-		someEntriesHaveTrashEnabled = trashEnabled;
-	}
+	const isRecycleBinView =
+		dataSetId === 'com.liferay.site.cms.site.initializer-recycleBinSection';
 
 	if (
 		showConfirmationModal ||
 		!allEntriesHaveTrashEnabled ||
-		isFromRecycleBin(selectedData)
+		isRecycleBinView
 	) {
 		const bulkDeleteMessage =
 			getCustomBulkDeleteMessage ?? getBulkDeleteMessage;
 
+		const isMultipleSpacesView =
+			trashEnabled === null || trashEnabled === undefined;
+
+		const someEntriesHaveTrashEnabled = spaces.some(
+			(space) => space.settings.trashEnabled
+		);
+
 		const {confirmationMessage, title} = bulkDeleteMessage(
 			selectedData,
-			someEntriesHaveTrashEnabled
+			!isRecycleBinView &&
+				isMultipleSpacesView &&
+				(selectedData.selectAll || someEntriesHaveTrashEnabled)
 		);
 
 		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);

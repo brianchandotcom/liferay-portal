@@ -8,7 +8,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import {dateUtils} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {EEntityFieldType} from '../utils/types';
 
@@ -291,44 +291,30 @@ const DateTimeRangeFilter = ({
 	const resolvedMin = resolveBound(min);
 	const resolvedMax = resolveBound(max);
 
-	const [isValidRange, setIsValidRange] = useState(true);
-	const [isWithinBounds, setIsWithinBounds] = useState(true);
+	const isValidRange =
+		!fromParts ||
+		!toParts ||
+		partsToInstantMs(fromParts) <= partsToInstantMs(toParts);
 
-	useEffect(() => {
-		let valid = true;
-
-		if (fromParts && toParts) {
-			valid = partsToInstantMs(fromParts) <= partsToInstantMs(toParts);
+	const isInBounds = (parts: DateTime | null) => {
+		if (!parts) {
+			return true;
 		}
 
-		setIsValidRange(valid);
-	}, [fromParts, toParts]);
+		const partsMs = partsToInstantMs(parts);
 
-	useEffect(() => {
-		let valid = true;
+		if (resolvedMin && partsMs < partsToInstantMs(resolvedMin)) {
+			return false;
+		}
 
-		const checkInBounds = (parts: DateTime | null) => {
-			if (!parts) {
-				return true;
-			}
+		if (resolvedMax && partsMs > partsToInstantMs(resolvedMax)) {
+			return false;
+		}
 
-			const partsMs = partsToInstantMs(parts);
+		return true;
+	};
 
-			if (resolvedMin && partsMs < partsToInstantMs(resolvedMin)) {
-				return false;
-			}
-
-			if (resolvedMax && partsMs > partsToInstantMs(resolvedMax)) {
-				return false;
-			}
-
-			return true;
-		};
-
-		valid = checkInBounds(fromParts) && checkInBounds(toParts);
-
-		setIsWithinBounds(valid);
-	}, [fromParts, toParts, resolvedMin, resolvedMax]);
+	const isWithinBounds = isInBounds(fromParts) && isInBounds(toParts);
 
 	let actionType = 'edit';
 
@@ -407,14 +393,18 @@ const DateTimeRangeFilter = ({
 						/>
 					</ClayForm.Group>
 
-					{!isValidRange && (
+					{(!isValidRange || !isWithinBounds) && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{Liferay.Language.get(
-									'date-range-is-invalid.-from-must-be-before-to'
-								)}
+								{!isValidRange
+									? Liferay.Language.get(
+											'date-range-is-invalid.-from-must-be-before-to'
+										)
+									: Liferay.Language.get(
+											'date-is-out-of-range'
+										)}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}

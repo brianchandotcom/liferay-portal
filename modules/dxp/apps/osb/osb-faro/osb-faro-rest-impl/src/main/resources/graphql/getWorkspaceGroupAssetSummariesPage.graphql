@@ -23,28 +23,28 @@ query getWorkspaceGroupAssetSummariesPage(
             assetTitle
             assetType
             downloadsMetric {
-                value
                 trend {
                     percentage
                 }
+                value
             }
             impressionsMetric {
-                value
                 trend {
                     percentage
                 }
+                value
             }
             readsMetric {
-                value
                 trend {
                     percentage
                 }
+                value
             }
             viewsMetric {
-                value
                 trend {
                     percentage
                 }
+                value
             }
         }
         total

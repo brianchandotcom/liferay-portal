@@ -465,8 +465,16 @@ public class LayoutStructureRulesHelperImpl
 				return _isGreaterThan(fieldType, fieldValue, value);
 			}
 
+			if (Objects.equals(optionsType, "greater-than-or-equals")) {
+				return _isGreaterThanOrEqual(fieldType, fieldValue, value);
+			}
+
 			if (Objects.equals(optionsType, "less-than")) {
 				return _isLessThan(fieldType, fieldValue, value);
+			}
+
+			if (Objects.equals(optionsType, "less-than-or-equals")) {
+				return _isLessThanOrEqual(fieldType, fieldValue, value);
 			}
 
 			if (Objects.equals(optionsType, "not-equal")) {
@@ -500,6 +508,25 @@ public class LayoutStructureRulesHelperImpl
 				return false;
 			}
 
+			return fieldLocalDateTime.isAfter(valueLocalDateTime);
+		}
+
+		return false;
+	}
+
+	private boolean _isGreaterThanOrEqual(
+		String fieldType, Object fieldValue, Object value) {
+
+		if (Objects.equals(fieldType, "date") ||
+			Objects.equals(fieldType, "date-time")) {
+
+			LocalDateTime fieldLocalDateTime = _toLocalDateTime(fieldValue);
+			LocalDateTime valueLocalDateTime = _toLocalDateTime(value);
+
+			if ((fieldLocalDateTime == null) || (valueLocalDateTime == null)) {
+				return false;
+			}
+
 			return !fieldLocalDateTime.isBefore(valueLocalDateTime);
 		}
 
@@ -507,6 +534,25 @@ public class LayoutStructureRulesHelperImpl
 	}
 
 	private boolean _isLessThan(
+		String fieldType, Object fieldValue, Object value) {
+
+		if (Objects.equals(fieldType, "date") ||
+			Objects.equals(fieldType, "date-time")) {
+
+			LocalDateTime fieldLocalDateTime = _toLocalDateTime(fieldValue);
+			LocalDateTime valueLocalDateTime = _toLocalDateTime(value);
+
+			if ((fieldLocalDateTime == null) || (valueLocalDateTime == null)) {
+				return false;
+			}
+
+			return fieldLocalDateTime.isBefore(valueLocalDateTime);
+		}
+
+		return false;
+	}
+
+	private boolean _isLessThanOrEqual(
 		String fieldType, Object fieldValue, Object value) {
 
 		if (Objects.equals(fieldType, "date") ||

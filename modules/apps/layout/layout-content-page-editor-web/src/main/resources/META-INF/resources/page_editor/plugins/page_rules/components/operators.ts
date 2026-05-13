@@ -12,9 +12,17 @@ const OPERATORS = {
 		label: Liferay.Language.get('is-greater-than'),
 		value: 'greater-than',
 	},
+	GREATER_THAN_OR_EQUALS: {
+		label: Liferay.Language.get('is-greater-than-or-equal-to'),
+		value: 'greater-than-or-equals',
+	},
 	LESS_THAN: {
 		label: Liferay.Language.get('is-less-than'),
 		value: 'less-than',
+	},
+	LESS_THAN_OR_EQUALS: {
+		label: Liferay.Language.get('is-less-than-or-equal-to'),
+		value: 'less-than-or-equals',
 	},
 	NOT_EQUAL: {
 		label: Liferay.Language.get('is-not-equal-to'),

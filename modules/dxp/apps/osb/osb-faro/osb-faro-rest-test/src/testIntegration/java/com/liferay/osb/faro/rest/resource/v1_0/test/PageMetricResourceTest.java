@@ -17,5 +17,3 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class PageMetricResourceTest extends BasePageMetricResourceTestCase {
 }
-
-// LIFERAY-REST-BUILDER-HASH:-1147136959

@@ -18,5 +18,3 @@ import org.junit.runner.RunWith;
 public class AssetSummaryMetricResourceTest
 	extends BaseAssetSummaryMetricResourceTestCase {
 }
-
-// LIFERAY-REST-BUILDER-HASH:96956129

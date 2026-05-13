@@ -221,9 +221,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 
 	const {data: invalidDataSources, loading: invalidDataSourcesLoading} =
 		useRequest({
-			dataSourceFn: API.dataSource.search as (params: {
-				[key: string]: any;
-			}) => Promise<any>,
+			dataSourceFn: API.dataSource.search,
 			variables: {
 				delta: 1,
 				groupId,
@@ -254,9 +252,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 	}, [invalidDataSourcesLoading]);
 
 	const {data, error, loading} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta,
 			groupId,

@@ -54,7 +54,7 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 	const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
 	const {data, loading} = useRequest({
-		dataSourceFn: API.individualSegment.search as any,
+		dataSourceFn: API.individualSegment.search,
 		variables: {
 			channelId,
 			delta,

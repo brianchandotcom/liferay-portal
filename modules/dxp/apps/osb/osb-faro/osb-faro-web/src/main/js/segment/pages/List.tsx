@@ -192,9 +192,7 @@ export const List: React.FC<IListProps> = ({
 	const selectedSegmentTypes = filterBy?.get(SEGMENT_TYPE)?.toArray() || [];
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.individualSegment.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.individualSegment.search,
 		variables: {
 			channelId,
 			delta,
@@ -213,9 +211,7 @@ export const List: React.FC<IListProps> = ({
 		loading: usageLoading,
 		refetch: refetchUsage
 	} = useRequest({
-		dataSourceFn: API.projects.fetchFeatureUsages as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.projects.fetchFeatureUsages,
 		variables: {groupId}
 	});
 

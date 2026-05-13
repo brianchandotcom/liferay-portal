@@ -63,9 +63,7 @@ const FieldValueFilter = ({
 	const {channelId, groupId} = useParams();
 
 	const {data, loading} = useRequest({
-		dataSourceFn: API.accounts.fetchFieldValues as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.accounts.fetchFieldValues,
 		variables: {
 			channelId,
 			fieldMappingFieldName,

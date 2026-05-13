@@ -36,9 +36,7 @@ export const useDataSource: (
 		error,
 		loading
 	} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			groupId,
 			...queryParams

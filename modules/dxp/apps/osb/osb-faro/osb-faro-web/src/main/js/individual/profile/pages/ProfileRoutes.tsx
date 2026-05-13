@@ -95,9 +95,7 @@ export const IndividualProfileRoutes = ({
 	const entityName = individual.name || Liferay.Language.get('unknown');
 
 	const {data: dataSourceData} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
 			groupId

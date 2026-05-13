@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 public interface SharingEntryInvitationEmailConfiguration {
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/sharing/dependencies/sharing_entry_invitation_email_body.tmpl}",
+		deflt = "${resource:com/liferay/sharing/configuration/dependencies/sharing_entry_invitation_email_body.tmpl}",
 		description = "invitation-email-body-description",
 		name = "invitation-email-body", required = false
 	)
@@ -44,7 +44,7 @@ public interface SharingEntryInvitationEmailConfiguration {
 	public String invitationEmailSenderName();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/sharing/dependencies/sharing_entry_invitation_email_subject.tmpl}",
+		deflt = "${resource:com/liferay/sharing/configuration/dependencies/sharing_entry_invitation_email_subject.tmpl}",
 		description = "invitation-email-subject-description",
 		name = "invitation-email-subject", required = false
 	)

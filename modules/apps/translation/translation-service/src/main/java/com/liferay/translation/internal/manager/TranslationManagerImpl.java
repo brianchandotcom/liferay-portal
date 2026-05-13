@@ -79,6 +79,16 @@ public class TranslationManagerImpl implements TranslationManager {
 			String sourceLanguageId, String targetLanguageId)
 		throws IOException, PortalException {
 
+		if (!_language.isAvailableLocale(sourceLanguageId)) {
+			throw new XLIFFFileException.MustBeSupportedLanguage(
+				sourceLanguageId);
+		}
+
+		if (!_language.isAvailableLocale(targetLanguageId)) {
+			throw new XLIFFFileException.MustBeSupportedLanguage(
+				targetLanguageId);
+		}
+
 		String fileName = _getXLIFFFileName(
 			className, classPK, locale, sourceLanguageId, targetLanguageId);
 
@@ -100,6 +110,18 @@ public class TranslationManagerImpl implements TranslationManager {
 			String className, long[] classPKs, String xliffMimeType,
 			Locale locale, String sourceLanguageId, String[] targetLanguageIds)
 		throws IOException, PortalException {
+
+		if (!_language.isAvailableLocale(sourceLanguageId)) {
+			throw new XLIFFFileException.MustBeSupportedLanguage(
+				sourceLanguageId);
+		}
+
+		for (String targetLanguageId : targetLanguageIds) {
+			if (!_language.isAvailableLocale(targetLanguageId)) {
+				throw new XLIFFFileException.MustBeSupportedLanguage(
+					targetLanguageId);
+			}
+		}
 
 		String fileName = StringBundler.concat(
 			StringUtil.removeSubstrings(

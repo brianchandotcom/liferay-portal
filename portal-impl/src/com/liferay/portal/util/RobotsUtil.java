@@ -5,7 +5,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -17,8 +16,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
-
-import java.util.NavigableMap;
 
 /**
  * @author David Truong
@@ -45,14 +42,8 @@ public class RobotsUtil {
 
 		int portalServerPort = PortalUtil.getPortalServerPort(secure);
 
-		NavigableMap<String, String> virtualHostnames =
-			PortalUtil.getVirtualHostnames(layoutSet);
-
-		String virtualHostname = StringPool.BLANK;
-
-		if (!virtualHostnames.isEmpty()) {
-			virtualHostname = virtualHostnames.firstKey();
-		}
+		String virtualHostname = GetterUtil.getString(
+			PortalUtil.getDefaultVirtualHostname(true, layoutSet));
 
 		String robotsTxt = null;
 

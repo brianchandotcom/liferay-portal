@@ -1680,14 +1680,8 @@ public class LayoutsAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String virtualHostname = null;
-
-		NavigableMap<String, String> virtualHostnames =
-			PortalUtil.getVirtualHostnames(layoutSet);
-
-		if (!virtualHostnames.isEmpty()) {
-			virtualHostname = virtualHostnames.firstKey();
-		}
+		String virtualHostname = PortalUtil.getDefaultVirtualHostname(
+			true, layoutSet);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -1700,14 +1694,8 @@ public class LayoutsAdminDisplayContext {
 				liveGroupLayoutSet = liveGroup.getPrivateLayoutSet();
 			}
 
-			virtualHostname = null;
-
-			virtualHostnames = PortalUtil.getVirtualHostnames(
-				liveGroupLayoutSet);
-
-			if (!virtualHostnames.isEmpty()) {
-				virtualHostname = virtualHostnames.firstKey();
-			}
+			virtualHostname = PortalUtil.getDefaultVirtualHostname(
+				true, liveGroupLayoutSet);
 		}
 
 		return virtualHostname;

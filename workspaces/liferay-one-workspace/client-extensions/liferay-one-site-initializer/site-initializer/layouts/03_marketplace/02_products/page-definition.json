@@ -138,6 +138,22 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
+															"destination": "",
+															"federatedSearchKey": "",
+															"scope": "everything"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"hidden": true
+													},
+													"widgetInstance": {
+														"widgetConfig": {
 															"allowEmptySearches": "true",
 															"basicFacetSelection": "false",
 															"federatedSearchKey": ""
@@ -182,7 +198,7 @@
 														"widgetConfig": {
 															"cpContentListRendererKey": "list-default",
 															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
-															"displayStyle": "ddmTemplate_LIFERAY-PRODUCTS-SEARCH-RESULTS",
+															"displayStyle": "ddmTemplate_LO_PRODUCTS_SEARCH_RESULTS",
 															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "[$GROUP_ID$]",
 															"grouped--cpTypeListEntryRendererKey": "list-entry-default",

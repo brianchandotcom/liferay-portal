@@ -2,11 +2,11 @@
 
 Follow these rules before committing any change to the repository. These rules apply to all commits.
 
-## 1. Format Source
+## Format Source
 
 Before composing the commit, always invoke the `format-source` skill to ensure all changes follow Liferay's coding standards. After it completes, any edits the formatter applied are part of what gets committed.
 
-## 3. Extract the Jira Ticket
+## Extract the Jira Ticket
 
 The ticket ID follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and similar forms (uppercase letters, hyphen, digits). Resolve the ticket in this order:
 
@@ -18,7 +18,7 @@ The ticket ID follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and sim
 
 1. **Fallback** — when no ticket surfaces, prompt the user for one.
 
-## 4. Compose the Commit Message
+## Compose the Commit Message
 
 Read the diff, understand the actual behavior change, then compose the message.
 

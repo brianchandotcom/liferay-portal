@@ -20,6 +20,7 @@ export interface IAccount {
 	}>;
 	industry?: string;
 	numberOfEmployees?: number;
+	website?: string;
 }
 
 interface IAccountInfoProps {
@@ -28,7 +29,6 @@ interface IAccountInfoProps {
 }
 
 const infoDataLabels = {
-	accountName: Liferay.Language.get('account-name'),
 	accountType: Liferay.Language.get('account-type'),
 	annualRevenue: Liferay.Language.get('annual-revenue'),
 	industry: Liferay.Language.get('industry'),
@@ -74,10 +74,6 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 				? toThousands(account.numberOfEmployees)
 				: undefined;
 		}
-		if (key === 'website') {
-			return account.fields?.find(field => field.name === 'website')
-				?.value;
-		}
 		return account[key];
 	};
 
@@ -93,7 +89,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 						</span>
 					</Text>
 				</Card.Title>
-				<Card.Body className='px-0 pb-0'>
+				<Card.Body className='justify-content-end p-0'>
 					{(
 						Object.keys(infoDataLabels) as Array<
 							keyof typeof infoDataLabels

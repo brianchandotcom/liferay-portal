@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -72,7 +73,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		String data = HtmlUtil.buildData(
-			HashMapBuilder.<String, Object>put(
+			TreeMapBuilder.<String, Object>put(
 				"analytics-asset-id",
 				layoutDisplayPageObjectProvider.getClassPK()
 			).put(
@@ -87,7 +88,7 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 					layoutDisplayPageObjectProvider.getDisplayObject())
 			).build());
 
-		printWriter.print("<div " + data + ">");
+		printWriter.print("<div " + data.strip() + ">");
 	}
 
 	@Override

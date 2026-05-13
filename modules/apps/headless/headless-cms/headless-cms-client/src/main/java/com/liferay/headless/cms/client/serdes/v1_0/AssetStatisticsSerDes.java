@@ -86,6 +86,16 @@ public class AssetStatisticsSerDes {
 			sb.append(assetStatistics.getReviewDateOverdueCount());
 		}
 
+		if (assetStatistics.getTotalCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalCount\": ");
+
+			sb.append(assetStatistics.getTotalCount());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -141,6 +151,14 @@ public class AssetStatisticsSerDes {
 				String.valueOf(assetStatistics.getReviewDateOverdueCount()));
 		}
 
+		if (assetStatistics.getTotalCount() == null) {
+			map.put("totalCount", null);
+		}
+		else {
+			map.put(
+				"totalCount", String.valueOf(assetStatistics.getTotalCount()));
+		}
+
 		return map;
 	}
 
@@ -171,6 +189,9 @@ public class AssetStatisticsSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "reviewDateOverdueCount")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalCount")) {
 				return false;
 			}
 
@@ -205,6 +226,12 @@ public class AssetStatisticsSerDes {
 
 				if (jsonParserFieldValue != null) {
 					assetStatistics.setReviewDateOverdueCount(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "totalCount")) {
+				if (jsonParserFieldValue != null) {
+					assetStatistics.setTotalCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -289,4 +316,4 @@ public class AssetStatisticsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:77042244
+// LIFERAY-REST-BUILDER-HASH:-1208800704

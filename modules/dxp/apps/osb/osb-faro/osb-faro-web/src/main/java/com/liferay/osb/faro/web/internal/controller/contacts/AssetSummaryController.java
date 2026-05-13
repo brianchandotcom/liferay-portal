@@ -6,8 +6,6 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.AssetSummary;
-import com.liferay.osb.faro.engine.client.model.Results;
-import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryDisplay;
@@ -21,8 +19,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-import java.util.function.Function;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -34,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay getAssetSummary(
+	public FaroFDSResultsDisplay<AssetSummary> getAssetSummary(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("filter") String filterString,
@@ -46,17 +42,12 @@ public class AssetSummaryController extends BaseFaroController {
 				sortString)
 		throws Exception {
 
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		Results<AssetSummary> results = contactsEngineClient.getAssetSummaries(
-			faroProject, channelId, filterString, search, rangeKey, page,
-			pageSize, sortString);
-
-		Function<AssetSummary, AssetSummaryDisplay> function =
-			AssetSummaryDisplay::new;
-
-		return new FaroFDSResultsDisplay(results, function, page, pageSize);
+		return new FaroFDSResultsDisplay<>(
+			contactsEngineClient.getAssetSummaries(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				channelId, filterString, search, rangeKey, page, pageSize,
+				sortString),
+			AssetSummaryDisplay::new, page, pageSize);
 	}
 
 }

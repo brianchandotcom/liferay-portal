@@ -6,8 +6,6 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.AssetSummaryMimeType;
-import com.liferay.osb.faro.engine.client.model.Results;
-import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryMimeTypeDisplay;
@@ -20,8 +18,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-import java.util.function.Function;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -33,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryMimeTypeController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay getAssetSummaryMimeTypes(
+	public FaroFDSResultsDisplay<AssetSummaryMimeType> getAssetSummaryMimeTypes(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("page") int page,
@@ -43,18 +39,11 @@ public class AssetSummaryMimeTypeController extends BaseFaroController {
 			@QueryParam("rangeStart") String rangeStart)
 		throws Exception {
 
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		Results<AssetSummaryMimeType> results =
+		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAssetSummaryMimeTypes(
-				faroProject, channelId, rangeEnd, rangeKey, rangeStart, page,
-				pageSize);
-
-		Function<AssetSummaryMimeType, AssetSummaryMimeTypeDisplay> function =
-			AssetSummaryMimeTypeDisplay::new;
-
-		return new FaroFDSResultsDisplay(results, function, page, pageSize);
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				channelId, rangeEnd, rangeKey, rangeStart, page, pageSize),
+			AssetSummaryMimeTypeDisplay::new, page, pageSize);
 	}
 
 }

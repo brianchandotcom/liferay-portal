@@ -88,26 +88,31 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS",
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS", "L_ACCOUNT",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS",
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS", "L_ACCOUNT",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS",
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS", "L_ACCOUNT",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS",
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS", "L_ACCOUNT",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_AI_HUB_AGENT_DEFINITION",
-			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
+			"L_AI_HUB_AGENT_DEFINITION",
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWL_JOBS",
+			"L_AI_HUB_CONTENT_RETRIEVER",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
@@ -162,19 +167,20 @@ public class AIHubSiteInitializerTest {
 	}
 
 	private void _assertObjectRelationshipExists(
-			String objectDefinitionERC, String objectRelationshipERC,
-			String deletionType, String type)
+			String deletionType, String externalReferenceCode,
+			String objectDefinitionExternalReferenceCode, String type)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					objectDefinitionERC, TestPropsValues.getCompanyId());
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByExternalReferenceCode(
-					objectRelationshipERC,
+					externalReferenceCode,
 					objectDefinition.getObjectDefinitionId());
 
 		Assert.assertEquals(deletionType, objectRelationship.getDeletionType());

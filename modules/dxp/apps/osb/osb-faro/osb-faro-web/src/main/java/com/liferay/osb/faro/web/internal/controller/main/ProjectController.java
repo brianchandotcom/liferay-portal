@@ -384,7 +384,19 @@ public class ProjectController extends BaseFaroController {
 				corpProjectUuid);
 
 		if (faroProject != null) {
-			return new ProjectDisplay(faroProject);
+			ProjectDisplay projectDisplay = new ProjectDisplay(faroProject);
+
+			if (Objects.equals(
+					faroProject.getState(),
+					FaroProjectConstants.STATE_NOT_READY)) {
+
+				projectDisplay.setDataSourceAccessToken(
+					_dataSourceController.generateDataSourceAccessToken(
+						faroProject.getGroupId(),
+						faroProject.getFaroProjectId()));
+			}
+
+			return projectDisplay;
 		}
 
 		return _createUnprovisioned(

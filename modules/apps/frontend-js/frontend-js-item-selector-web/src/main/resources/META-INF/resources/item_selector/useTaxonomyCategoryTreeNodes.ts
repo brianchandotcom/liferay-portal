@@ -44,7 +44,10 @@ interface IPage<T> {
 	totalCount?: number;
 }
 
-async function fetchAllPages<T>(baseURL: string): Promise<T[]> {
+async function fetchAllPages<T>(
+	baseURL: string,
+	signal: AbortSignal
+): Promise<T[]> {
 	const items: T[] = [];
 
 	let page = 1;
@@ -58,6 +61,7 @@ async function fetchAllPages<T>(baseURL: string): Promise<T[]> {
 
 		const response = await fetch(url.toString(), {
 			headers: DEFAULT_FETCH_HEADERS,
+			signal,
 		});
 
 		if (!response.ok) {
@@ -130,7 +134,8 @@ function buildTree(
 }
 
 async function loadVocabularyTree(
-	vocabularyId: string
+	vocabularyId: string,
+	signal: AbortSignal
 ): Promise<ITaxonomyCategoryTreeNode[]> {
 	const url = new URL(
 		`${HEADLESS_TAXONOMY_BASE}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
@@ -139,7 +144,10 @@ async function loadVocabularyTree(
 
 	url.searchParams.set('flatten', 'true');
 
-	const categories = await fetchAllPages<ITaxonomyCategory>(url.toString());
+	const categories = await fetchAllPages<ITaxonomyCategory>(
+		url.toString(),
+		signal
+	);
 
 	return buildTree(categories, vocabularyId);
 }
@@ -166,7 +174,7 @@ export default function useTaxonomyCategoryTreeNodes(
 	}, [vocabularyIds]);
 
 	useEffect(() => {
-		let cancelled = false;
+		const controller = new AbortController();
 
 		setLoading(true);
 		setError(null);
@@ -175,17 +183,17 @@ export default function useTaxonomyCategoryTreeNodes(
 			idsKey
 				.split(',')
 				.filter(Boolean)
-				.map((id) => loadVocabularyTree(id))
+				.map((id) => loadVocabularyTree(id, controller.signal))
 		)
 			.then((trees) => {
-				if (cancelled) {
+				if (controller.signal.aborted) {
 					return;
 				}
 
 				setNodes(trees.flat());
 			})
 			.catch((reason: unknown) => {
-				if (cancelled) {
+				if (controller.signal.aborted) {
 					return;
 				}
 
@@ -194,13 +202,13 @@ export default function useTaxonomyCategoryTreeNodes(
 				);
 			})
 			.finally(() => {
-				if (!cancelled) {
+				if (!controller.signal.aborted) {
 					setLoading(false);
 				}
 			});
 
 		return () => {
-			cancelled = true;
+			controller.abort();
 		};
 	}, [idsKey]);
 

@@ -1,5 +1,54 @@
 components:
     schemas:
+        Account:
+            description:
+                "An account synced to Analytics Cloud. Accounts aggregate individuals (or contacts) employed by or
+                associated with a single organization."
+            properties:
+                accountName:
+                    description:
+                        "Name of the account."
+                    readOnly: true
+                    type: string
+                annualRevenue:
+                    description:
+                        "Annual revenue of the account."
+                    format: double
+                    readOnly: true
+                    type: number
+                country:
+                    description:
+                        "Country name where the account is headquartered."
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        "Last time the account record was modified within Analytics Cloud."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        "Account ID. Use this with `getAccount` to fetch the account directly."
+                    readOnly: true
+                    type: string
+                industry:
+                    description:
+                        "Industry classification of the account (e.g. 'Software', 'Manufacturing')."
+                    readOnly: true
+                    type: string
+                lastActivityDate:
+                    description:
+                        "Date of most recent activity from any individual associated with this account."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                lifecycleStage:
+                    description:
+                        "Sales/marketing lifecycle stage of the account (e.g. 'Prospect', 'Customer')."
+                    readOnly: true
+                    type: string
+            type: object
         AssetSummaryMetric:
             description:
                 "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal,
@@ -13,12 +62,12 @@ components:
                     type: string
                 assetTitle:
                     description:
-                        "Display title of the asset, e.g. the page title or blog post title."
+                        "Display title of the asset (e.g. the page title or blog post title)."
                     readOnly: true
                     type: string
                 assetType:
                     description:
-                        "Asset category, e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE'."
+                        "Asset category (e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE')."
                     readOnly: true
                     type: string
                 downloads:
@@ -245,6 +294,101 @@ info:
     x-class-name: FaroRest
 openapi: 3.0.1
 paths:
+    "/workspace/{groupId}/accounts":
+        get:
+            description:
+                "List or search accounts synced to an Analytics Cloud workspace. Optionally narrow results to a single
+                channel (also known as property). Use this to browse or search accounts by name. To fetch a single
+                account by id, use `getAccount`."
+            operationId: getWorkspaceGroupAccountsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    description:
+                        "Optional channel id to scope results to a single channel."
+                    name: channelId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Free-text keyword search across account name and related fields. Empty or null returns all
+                        matching assets."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`. Defaults to `accountName:asc` when omitted. Separate with
+                        commas for multiple column sort."
+                    example: accountName:asc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Account"
+                                type: array
+            tags: ["Account"]
+    "/workspace/{groupId}/accounts/{accountId}":
+        get:
+            description:
+                "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an
+                account id. To search accounts by name or filter, use `getAccountsPage`."
+            operationId: getWorkspaceGroupAccount
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "ID of the account to fetch."
+                    name: accountId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+            tags: ["Account"]
     "/workspace/{groupId}/asset-summaries":
         get:
             description:

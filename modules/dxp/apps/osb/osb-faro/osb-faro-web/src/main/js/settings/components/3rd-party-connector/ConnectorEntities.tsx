@@ -18,56 +18,51 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 	entities,
 	syncedCounts
 }) => (
-	<div className='pt-1'>
-		<ClayList className='mb-0'>
-			{entities.map(({entity}) => {
-				const {icon, label} = getEntityDisplay(entity);
-				const count = syncedCounts[entity];
-				const configured =
-					connectorStatus !== ConnectorStatus.Disconnected &&
-					typeof count === 'number' &&
-					count > 0;
+	<ClayList className='mb-0'>
+		{entities.map(({entity}) => {
+			const {icon, label} = getEntityDisplay(entity);
+			const count = syncedCounts[entity];
+			const configured =
+				connectorStatus !== ConnectorStatus.Disconnected &&
+				typeof count === 'number' &&
+				count > 0;
 
-				return (
-					<ClayList.Item flex key={entity}>
-						<ClayList.ItemField>
-							<ClaySticker displayType='unstyled'>
-								<ClayIcon
-									className='text-secondary'
-									symbol={icon}
-								/>
-							</ClaySticker>
-						</ClayList.ItemField>
+			return (
+				<ClayList.Item flex key={entity}>
+					<ClayList.ItemField>
+						<ClaySticker displayType='unstyled'>
+							<ClayIcon
+								className='text-secondary'
+								symbol={icon}
+							/>
+						</ClaySticker>
+					</ClayList.ItemField>
 
-						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
+					<ClayList.ItemField expand>
+						<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
 
-							{typeof count === 'number' && count >= 0 && (
-								<ClayList.ItemText>
-									{sub(
-										Liferay.Language.get('x-items-synced'),
-										[count]
-									)}
-								</ClayList.ItemText>
+						{typeof count === 'number' && count >= 0 && (
+							<ClayList.ItemText>
+								{sub(Liferay.Language.get('x-items-synced'), [
+									count
+								])}
+							</ClayList.ItemText>
+						)}
+					</ClayList.ItemField>
+
+					<ClayList.ItemField className='justify-content-center'>
+						<Label
+							displayType={configured ? 'success' : 'secondary'}
+						>
+							{Liferay.Language.get(
+								configured ? 'configured' : 'unconfigured'
 							)}
-						</ClayList.ItemField>
-
-						<ClayList.ItemField className='justify-content-center'>
-							<Label
-								displayType={
-									configured ? 'success' : 'secondary'
-								}
-							>
-								{Liferay.Language.get(
-									configured ? 'configured' : 'unconfigured'
-								)}
-							</Label>
-						</ClayList.ItemField>
-					</ClayList.Item>
-				);
-			})}
-		</ClayList>
-	</div>
+						</Label>
+					</ClayList.ItemField>
+				</ClayList.Item>
+			);
+		})}
+	</ClayList>
 );
 
 export default ConnectorEntities;

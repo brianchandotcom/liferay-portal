@@ -446,7 +446,10 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 					title={Liferay.Language.get('connection-status')}
 				/>
 
-				<ClayAlert displayType={connectionStatusAlert.displayType}>
+				<ClayAlert
+					className='mt-3'
+					displayType={connectionStatusAlert.displayType}
+				>
 					{connectionStatusAlert.message}
 				</ClayAlert>
 			</div>

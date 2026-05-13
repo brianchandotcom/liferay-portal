@@ -106,7 +106,9 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 				OPERATORS.EQUAL,
 				OPERATORS.NOT_EQUAL,
 				OPERATORS.GREATER_THAN,
+				OPERATORS.GREATER_THAN_OR_EQUALS,
 				OPERATORS.LESS_THAN,
+				OPERATORS.LESS_THAN_OR_EQUALS,
 			];
 
 		default:

@@ -66,10 +66,18 @@ function _toFieldComparison(
 	value: string
 ) {
 	if (type === 'greater-than') {
+		return `(futureDates(${field}, "${value}") AND ${field} != "${value}")`;
+	}
+
+	if (type === 'greater-than-or-equals') {
 		return `futureDates(${field}, "${value}")`;
 	}
 
 	if (type === 'less-than') {
+		return `(pastDates(${field}, "${value}") AND ${field} != "${value}")`;
+	}
+
+	if (type === 'less-than-or-equals') {
 		return `pastDates(${field}, "${value}")`;
 	}
 

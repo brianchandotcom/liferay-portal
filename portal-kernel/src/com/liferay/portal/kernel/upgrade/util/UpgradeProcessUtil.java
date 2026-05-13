@@ -133,10 +133,18 @@ public class UpgradeProcessUtil {
 		return false;
 	}
 
+	public static boolean isUpgradeClient() {
+		return _upgradeClient;
+	}
+
 	public static void setCreateIGImageDocumentType(
 		boolean createIGImageDocumentType) {
 
 		_createIGImageDocumentType = createIGImageDocumentType;
+	}
+
+	public static void setUpgradeClient(boolean upgradeClient) {
+		_upgradeClient = upgradeClient;
 	}
 
 	public static boolean upgradeProcess(
@@ -195,5 +203,6 @@ public class UpgradeProcessUtil {
 
 	private static boolean _createIGImageDocumentType;
 	private static final Map<Long, String> _languageIds = new HashMap<>();
+	private static boolean _upgradeClient;
 
 }

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
@@ -473,6 +474,10 @@ public class DataSourceFactoryUtil {
 		}
 
 		if (url.startsWith("jdbc:sqlserver://")) {
+			if (!UpgradeProcessUtil.isUpgradeClient()) {
+				return url;
+			}
+
 			try {
 				Driver driver = DriverManager.getDriver(url);
 
@@ -503,6 +508,8 @@ public class DataSourceFactoryUtil {
 
 			return _rewriteJDBCURL(
 				HashMapBuilder.put(
+					"bulkCopyForBatchInsertTableLock", "true"
+				).put(
 					"useBulkCopyForBatchInsert", "true"
 				).build(),
 				CharPool.SEMICOLON, url, CharPool.SEMICOLON);

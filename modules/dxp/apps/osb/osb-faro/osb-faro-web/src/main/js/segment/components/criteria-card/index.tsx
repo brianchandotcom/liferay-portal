@@ -2,7 +2,10 @@ import CriteriaView from './CriteriaView';
 import Label from 'shared/components/Label';
 import Panel from '@clayui/panel';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {createVocabularyProperty} from 'segment/segment-editor/dynamic/utils/utils';
+import {
+	createTagProperty,
+	createVocabularyProperty
+} from 'segment/segment-editor/dynamic/utils/utils';
 import {
 	CustomFunctionOperators,
 	NotOperators
@@ -16,6 +19,11 @@ import {useDownloadReportContext} from 'shared/components/download-report/Downlo
 const VOCABULARY_OPERATORS = new Set([
 	CustomFunctionOperators.VocabulariesFilter,
 	NotOperators.NotVocabulariesFilter
+]);
+
+const TAG_OPERATORS = new Set([
+	CustomFunctionOperators.TagsFilter,
+	NotOperators.NotTagsFilter
 ]);
 
 function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
@@ -34,7 +42,34 @@ function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
 		const nameItem = items?.find?.(
 			(item: any) => item.get?.('propertyName') === 'vocabularies/name'
 		);
-		const name = (nameItem?.get?.('value') as string) ?? id;
+		const name =
+			(nameItem?.get?.('value') as string) ??
+			(criteria.value?.get?.('_name') as string) ??
+			id;
+
+		return [{id, name}];
+	}
+
+	return [];
+}
+
+function extractTags(criteria: any): Array<{id: string; name: string}> {
+	if (!criteria) return [];
+
+	if (criteria.items) {
+		return criteria.items.flatMap(extractTags);
+	}
+
+	if (criteria.propertyName && TAG_OPERATORS.has(criteria.operatorName)) {
+		const id = criteria.propertyName;
+		const items = criteria.value?.getIn?.(['criterionGroup', 'items']);
+		const nameItem = items?.find?.(
+			(item: any) => item.get?.('propertyName') === 'tags/name'
+		);
+		const name =
+			(nameItem?.get?.('value') as string) ??
+			(criteria.value?.get?.('_name') as string) ??
+			id;
 
 		return [{id, name}];
 	}
@@ -84,11 +119,19 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 
 		const vocabularies = extractVocabularies(criteria);
 
-		if (!vocabularies.length) return;
+		if (vocabularies.length) {
+			vocabularies.forEach(({id, name}) => {
+				addProperty(createVocabularyProperty({id, name}));
+			});
+		}
 
-		vocabularies.forEach(({id, name}) => {
-			addProperty(createVocabularyProperty({id, name}));
-		});
+		const tags = extractTags(criteria);
+
+		if (tags.length) {
+			tags.forEach(({id, name}) => {
+				addProperty(createTagProperty({id, name}));
+			});
+		}
 	}, [channelId, groupId, criteria]);
 
 	return (
@@ -116,13 +159,15 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 					</Label>
 				)}
 
-				<CriteriaView
-					criteria={criteria}
-					ref={_criteriaViewRef}
-					segmentType={segmentType}
-					sequential={sequential}
-					timeZoneId={timeZoneId}
-				/>
+				{criteria && (
+					<CriteriaView
+						criteria={criteria}
+						ref={_criteriaViewRef}
+						segmentType={segmentType}
+						sequential={sequential}
+						timeZoneId={timeZoneId}
+					/>
+				)}
 			</Panel.Body>
 		</Panel>
 	);

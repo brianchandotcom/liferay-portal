@@ -80,6 +80,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Supplier;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.felix.cm.PersistenceManager;
@@ -115,7 +116,13 @@ public class UpgradeReport {
 
 		_executionDateString = _getExecutionDateString();
 		_executionTimeString = _getExecutionTimeString();
+
 		_rootDir = _getRootDir();
+
+		if (_dlSizeSupplier == null) {
+			_dlSizeSupplier = () -> FileUtils.sizeOfDirectory(
+				new File(_rootDir));
+		}
 
 		Map<String, Object> reportData = _getReportData(upgradeRecorder);
 
@@ -390,8 +397,21 @@ public class UpgradeReport {
 							"\"rootDir\" was not set";
 					}
 
+					File rootDirFile = new File(_rootDir);
+
+					if (!rootDirFile.isDirectory()) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Unable to determine the document library " +
+									"size. Directory does not exist: " +
+										_rootDir);
+						}
+
+						return "Unable to determine";
+					}
+
 					FutureTask<Long> dlSizeFutureTask = new FutureTask<>(
-						() -> FileUtils.sizeOfDirectory(new File(_rootDir)));
+						_dlSizeSupplier::get);
 
 					try {
 						Thread dlSizeThread = new Thread(
@@ -1100,6 +1120,7 @@ public class UpgradeReport {
 	private static final Snapshot<ReleaseManager> _releaseManagerSnapshot =
 		new Snapshot<>(UpgradeReport.class, ReleaseManager.class);
 
+	private Supplier<Long> _dlSizeSupplier;
 	private String _executionDateString;
 	private String _executionTimeString;
 	private final int _initialBuildNumber;

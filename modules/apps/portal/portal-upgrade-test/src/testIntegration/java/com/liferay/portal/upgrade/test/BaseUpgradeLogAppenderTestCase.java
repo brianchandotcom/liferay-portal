@@ -81,6 +81,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -380,19 +381,18 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_appender, "_upgradeReport");
 
 			ReflectionTestUtil.setFieldValue(
-				upgradeReport, "_dlSizeThread",
-				new Thread() {
+				upgradeReport, "_dlSizeSupplier",
+				(Supplier<Long>)() -> {
+					try {
+						Thread.sleep(5 * Time.SECOND);
+					}
+					catch (InterruptedException interruptedException) {
+						Thread currentThread = Thread.currentThread();
 
-					@Override
-					public void run() {
-						try {
-							sleep(5 * Time.SECOND);
-						}
-						catch (InterruptedException interruptedException) {
-							throw new RuntimeException(interruptedException);
-						}
+						currentThread.interrupt();
 					}
 
+					return 0L;
 				});
 
 			_appender.stop();
@@ -431,16 +431,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender, "_upgradeReport");
 
 		ReflectionTestUtil.setFieldValue(
-			upgradeReport, "_dlSizeThread",
-			new Thread() {
-
-				@Override
-				public void run() {
-					ReflectionTestUtil.setFieldValue(
-						upgradeReport, "_dlSize", 1073742000);
-				}
-
-			});
+			upgradeReport, "_dlSizeSupplier",
+			(Supplier<Long>)() -> 1073742000L);
 
 		_appender.stop();
 
@@ -458,16 +450,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender, "_upgradeReport");
 
 		ReflectionTestUtil.setFieldValue(
-			upgradeReport, "_dlSizeThread",
-			new Thread() {
-
-				@Override
-				public void run() {
-					ReflectionTestUtil.setFieldValue(
-						upgradeReport, "_dlSize", 1048576);
-				}
-
-			});
+			upgradeReport, "_dlSizeSupplier", (Supplier<Long>)() -> 1048576L);
 
 		_appender.stop();
 

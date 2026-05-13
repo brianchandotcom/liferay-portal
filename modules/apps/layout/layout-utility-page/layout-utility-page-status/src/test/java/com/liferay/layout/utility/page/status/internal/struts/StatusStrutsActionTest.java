@@ -121,11 +121,11 @@ public class StatusStrutsActionTest {
 
 		_testExecute(
 			StringBundler.concat(
-				htmlStart, "\n  <div id=\"content\">\n   ", _STATUS_PAGE_CONTENT,
-				"\n  </div>", htmlEnd),
+				htmlStart, "\n  <div id=\"content\">\n   ",
+				_STATUS_PAGE_CONTENT, "\n  </div>", htmlEnd),
 			StringBundler.concat(
-				htmlStart, "<div id=\"content\">", RandomTestUtil.randomString(),
-				"</div>", htmlEnd));
+				htmlStart, "<div id=\"content\">",
+				RandomTestUtil.randomString(), "</div>", htmlEnd));
 	}
 
 	@Test

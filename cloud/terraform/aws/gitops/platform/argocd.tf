@@ -1,8 +1,6 @@
 module "argocd_sso" {
 	argocd_sso_config={
-		dex_config=var.argocd_sso_config.dex_config
 		enable_sso=var.argocd_sso_config.enable_sso
-		rbac=var.argocd_sso_config.rbac
 	}
 	source="./modules/argocd-sso"
 }

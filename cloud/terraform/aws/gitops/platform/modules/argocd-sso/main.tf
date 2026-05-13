@@ -1,5 +1,5 @@
 output "auth_sso_values" {
-	value=compact([
+	value=[
 		yamlencode({
 			configs={
 				cm={
@@ -37,22 +37,6 @@ output "auth_sso_values" {
 					"policy.default"="role:liferay-guest"
 				}
 			}
-		}),
-		var.argocd_sso_config.dex_config != null ? yamlencode({
-			configs={
-				cm={
-					"dex.config"=yamlencode(var.argocd_sso_config.dex_config)
-				}
-			}
-		}) : null,
-		var.argocd_sso_config.rbac != null ? yamlencode({
-			configs={
-				rbac={
-					"policy.csv"=base64decode(var.argocd_sso_config.rbac["policy.csv"])
-					"policy.default"=var.argocd_sso_config.rbac["policy.default"]
-					scopes=var.argocd_sso_config.rbac.scopes
-				}
-			}
-		}) : null,
-	])
+		})
+	]
 }

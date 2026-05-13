@@ -7,12 +7,24 @@ package com.liferay.osb.faro.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.osb.faro.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.osb.faro.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.AccountResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.AssetSummaryMetricResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.ChannelResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.EventResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualSegmentMembershipResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualSegmentResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.PageMetricResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.SearchTermResourceImpl;
+import com.liferay.osb.faro.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.faro.rest.resource.v1_0.AssetSummaryMetricResource;
+import com.liferay.osb.faro.rest.resource.v1_0.ChannelResource;
 import com.liferay.osb.faro.rest.resource.v1_0.EventResource;
+import com.liferay.osb.faro.rest.resource.v1_0.IndividualResource;
+import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResource;
+import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentResource;
 import com.liferay.osb.faro.rest.resource.v1_0.PageMetricResource;
+import com.liferay.osb.faro.rest.resource.v1_0.SearchTermResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -38,12 +50,24 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Query.setAccountResourceComponentServiceObjects(
+			_accountResourceComponentServiceObjects);
 		Query.setAssetSummaryMetricResourceComponentServiceObjects(
 			_assetSummaryMetricResourceComponentServiceObjects);
+		Query.setChannelResourceComponentServiceObjects(
+			_channelResourceComponentServiceObjects);
 		Query.setEventResourceComponentServiceObjects(
 			_eventResourceComponentServiceObjects);
+		Query.setIndividualResourceComponentServiceObjects(
+			_individualResourceComponentServiceObjects);
+		Query.setIndividualSegmentResourceComponentServiceObjects(
+			_individualSegmentResourceComponentServiceObjects);
+		Query.setIndividualSegmentMembershipResourceComponentServiceObjects(
+			_individualSegmentMembershipResourceComponentServiceObjects);
 		Query.setPageMetricResourceComponentServiceObjects(
 			_pageMetricResourceComponentServiceObjects);
+		Query.setSearchTermResourceComponentServiceObjects(
+			_searchTermResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -81,34 +105,108 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"query#workspaceGroupAccount",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getWorkspaceGroupAccount"));
+					put(
+						"query#workspaceGroupAccounts",
+						new ObjectValuePair<>(
+							AccountResourceImpl.class,
+							"getWorkspaceGroupAccountsPage"));
+					put(
 						"query#workspaceGroupAssetSummaries",
 						new ObjectValuePair<>(
 							AssetSummaryMetricResourceImpl.class,
 							"getWorkspaceGroupAssetSummariesPage"));
+					put(
+						"query#workspaceGroupChannel",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"getWorkspaceGroupChannel"));
+					put(
+						"query#workspaceGroupChannels",
+						new ObjectValuePair<>(
+							ChannelResourceImpl.class,
+							"getWorkspaceGroupChannelsPage"));
 					put(
 						"query#workspaceGroupChannelEvents",
 						new ObjectValuePair<>(
 							EventResourceImpl.class,
 							"getWorkspaceGroupChannelEventsPage"));
 					put(
+						"query#workspaceGroupIndividual",
+						new ObjectValuePair<>(
+							IndividualResourceImpl.class,
+							"getWorkspaceGroupIndividual"));
+					put(
+						"query#workspaceGroupIndividuals",
+						new ObjectValuePair<>(
+							IndividualResourceImpl.class,
+							"getWorkspaceGroupIndividualsPage"));
+					put(
+						"query#workspaceGroupIndividualSegment",
+						new ObjectValuePair<>(
+							IndividualSegmentResourceImpl.class,
+							"getWorkspaceGroupIndividualSegment"));
+					put(
+						"query#workspaceGroupIndividualSegments",
+						new ObjectValuePair<>(
+							IndividualSegmentResourceImpl.class,
+							"getWorkspaceGroupIndividualSegmentsPage"));
+					put(
+						"query#workspaceGroupIndividualSegmentMemberships",
+						new ObjectValuePair<>(
+							IndividualSegmentMembershipResourceImpl.class,
+							"getWorkspaceGroupIndividualSegmentMembershipsPage"));
+					put(
 						"query#workspaceGroupPages",
 						new ObjectValuePair<>(
 							PageMetricResourceImpl.class,
 							"getWorkspaceGroupPagesPage"));
+					put(
+						"query#workspaceGroupChannelSearchTerms",
+						new ObjectValuePair<>(
+							SearchTermResourceImpl.class,
+							"getWorkspaceGroupChannelSearchTermsPage"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AccountResource>
+		_accountResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<AssetSummaryMetricResource>
 		_assetSummaryMetricResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ChannelResource>
+		_channelResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<EventResource>
 		_eventResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<IndividualResource>
+		_individualResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<IndividualSegmentResource>
+		_individualSegmentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<IndividualSegmentMembershipResource>
+		_individualSegmentMembershipResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PageMetricResource>
 		_pageMetricResourceComponentServiceObjects;
 
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SearchTermResource>
+		_searchTermResourceComponentServiceObjects;
+
 }
-// LIFERAY-REST-BUILDER-HASH:-2109415230
+// LIFERAY-REST-BUILDER-HASH:-517157000

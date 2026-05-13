@@ -16,14 +16,17 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,7 +48,96 @@ public class QuotaUtil {
 			return;
 		}
 
-		long tokensCount = 0L;
+		long tokensCount = _countTokens(companyId, text);
+
+		_updateUsage(
+			objectEntry.getObjectEntryId(),
+			() -> {
+				ObjectEntry currentObjectEntry =
+					ObjectEntryLocalServiceUtil.getObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				Map<String, Serializable> values =
+					currentObjectEntry.getValues();
+
+				long currentUsage = GetterUtil.getLong(values.get("usage"));
+
+				long limit = GetterUtil.getLong(values.get("limit"));
+
+				if ((currentUsage + tokensCount) > limit) {
+					throw new UnsupportedOperationException(
+						"You have exceeded your token quota");
+				}
+
+				_persistUsage(
+					companyId, currentObjectEntry, currentUsage + tokensCount,
+					userId);
+			});
+	}
+
+	public static void updateUsage(
+			long companyId, long tokensCount, long userId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = _fetchQuotaObjectEntry(companyId, userId);
+
+		if (objectEntry == null) {
+			return;
+		}
+
+		_updateUsage(
+			objectEntry.getObjectEntryId(),
+			() -> {
+				ObjectEntry currentObjectEntry =
+					ObjectEntryLocalServiceUtil.getObjectEntry(
+						objectEntry.getObjectEntryId());
+
+				long currentUsage = GetterUtil.getLong(
+					currentObjectEntry.getValues(
+					).get(
+						"usage"
+					));
+
+				_persistUsage(
+					companyId, currentObjectEntry, currentUsage + tokensCount,
+					userId);
+			});
+	}
+
+	private static void _acquireLock(String className, String key, String owner)
+		throws PortalException {
+
+		long deadline =
+			System.currentTimeMillis() + _LOCK_ACQUIRE_TIMEOUT_MILLIS;
+
+		while (true) {
+			Lock lock = LockManagerUtil.lock(className, key, null, owner);
+
+			if (Objects.equals(lock.getOwner(), owner)) {
+				return;
+			}
+
+			if (System.currentTimeMillis() >= deadline) {
+				throw new PortalException("Timed out acquiring quota lock");
+			}
+
+			try {
+				Thread.sleep(_LOCK_RETRY_INTERVAL_MILLIS);
+			}
+			catch (InterruptedException interruptedException) {
+				Thread currentThread = Thread.currentThread();
+
+				currentThread.interrupt();
+
+				throw new PortalException(
+					"Interrupted while waiting for quota lock",
+					interruptedException);
+			}
+		}
+	}
+
+	private static long _countTokens(long companyId, String text)
+		throws PortalException {
 
 		VertexAIConfiguration vertexAIConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
@@ -68,51 +160,11 @@ public class QuotaUtil {
 			CountTokensResponse countTokensResponse =
 				generativeModel.countTokens(text);
 
-			tokensCount = countTokensResponse.getTotalTokens();
+			return countTokensResponse.getTotalTokens();
 		}
 		catch (IOException ioException) {
 			throw new PortalException(ioException);
 		}
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		if ((GetterUtil.getLong(values.get("usage")) + tokensCount) >
-				GetterUtil.getLong(values.get("limit"))) {
-
-			throw new UnsupportedOperationException(
-				"You have exceeded your token quota");
-		}
-
-		updateUsage(companyId, tokensCount, userId);
-	}
-
-	public static void updateUsage(
-			long companyId, long tokensCount, long userId)
-		throws PortalException {
-
-		ObjectEntry objectEntry = _fetchQuotaObjectEntry(companyId, userId);
-
-		if (objectEntry == null) {
-			return;
-		}
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setUserId(userId);
-
-		ObjectEntryLocalServiceUtil.partialUpdateObjectEntry(
-			userId, objectEntry.getObjectEntryId(), 0,
-			HashMapBuilder.<String, Serializable>put(
-				"usage",
-				() -> {
-					long usage = MapUtil.getLong(
-						objectEntry.getValues(), "usage");
-
-					return usage + tokensCount;
-				}
-			).build(),
-			serviceContext);
 	}
 
 	private static ObjectEntry _fetchQuotaObjectEntry(
@@ -148,5 +200,48 @@ public class QuotaUtil {
 		return ObjectEntryLocalServiceUtil.fetchObjectEntry(
 			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
 	}
+
+	private static String _getLockKey(long objectEntryId) {
+		return "ai-hub-quota-" + objectEntryId;
+	}
+
+	private static void _persistUsage(
+			long companyId, ObjectEntry objectEntry, long newUsage, long userId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
+
+		ObjectEntryLocalServiceUtil.partialUpdateObjectEntry(
+			userId, objectEntry.getObjectEntryId(), 0,
+			HashMapBuilder.<String, Serializable>put(
+				"usage", newUsage
+			).build(),
+			serviceContext);
+	}
+
+	private static void _updateUsage(
+			long objectEntryId, UnsafeRunnable<PortalException> unsafeRunnable)
+		throws PortalException {
+
+		String className = QuotaUtil.class.getName();
+		String key = _getLockKey(objectEntryId);
+		String owner = PortalUUIDUtil.generate();
+
+		_acquireLock(className, key, owner);
+
+		try {
+			unsafeRunnable.run();
+		}
+		finally {
+			LockManagerUtil.unlock(className, key, owner);
+		}
+	}
+
+	private static final long _LOCK_ACQUIRE_TIMEOUT_MILLIS = 10_000L;
+
+	private static final long _LOCK_RETRY_INTERVAL_MILLIS = 50L;
 
 }

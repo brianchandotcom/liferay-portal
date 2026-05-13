@@ -1,0 +1,57 @@
+[
+	{
+		"categories": [
+			{
+				"externalReferenceCode": "MARKETPLACE_PRODUCT_TYPE_LIFERAY_PRODUCT",
+				"title": "Liferay Product"
+			}
+		],
+		"externalReferenceCode": "LO_PRODUCT_AIHUB",
+		"name": "Liferay AI Hub",
+		"sku": "LO_PRODUCT_AIHUB"
+	},
+	{
+		"categories": [
+			{
+				"externalReferenceCode": "MARKETPLACE_PRODUCT_TYPE_LIFERAY_PRODUCT",
+				"title": "Liferay Product"
+			}
+		],
+		"externalReferenceCode": "LO_PRODUCT_ANALYTICS_CLOUD",
+		"name": "Liferay Analytics Cloud",
+		"sku": "LO_PRODUCT_ANALYTICS_CLOUD"
+	},
+	{
+		"categories": [
+			{
+				"externalReferenceCode": "MARKETPLACE_PRODUCT_TYPE_LIFERAY_PRODUCT",
+				"title": "Liferay Product"
+			}
+		],
+		"externalReferenceCode": "LO_PRODUCT_CMP",
+		"name": "Liferay Customer Management Platform",
+		"sku": "LO_PRODUCT_CMP"
+	},
+	{
+		"categories": [
+			{
+				"externalReferenceCode": "MARKETPLACE_PRODUCT_TYPE_LIFERAY_PRODUCT",
+				"title": "Liferay Product"
+			}
+		],
+		"externalReferenceCode": "LO_PRODUCT_COMMERCE",
+		"name": "Liferay Commerce",
+		"sku": "LO_PRODUCT_COMMERCE"
+	},
+	{
+		"categories": [
+			{
+				"externalReferenceCode": "MARKETPLACE_PRODUCT_TYPE_LIFERAY_PRODUCT",
+				"title": "Liferay Product"
+			}
+		],
+		"externalReferenceCode": "LO_PRODUCT_DXP",
+		"name": "Liferay DXP",
+		"sku": "LO_PRODUCT_DXP"
+	}
+]

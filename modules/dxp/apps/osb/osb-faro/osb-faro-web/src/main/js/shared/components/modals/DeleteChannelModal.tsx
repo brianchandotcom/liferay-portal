@@ -42,9 +42,7 @@ const DeleteChannelModal: React.FC<IDeleteChannelModalProps> = ({
 	onSubmit
 }) => {
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.dataSource.fetchChannels as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.fetchChannels,
 		variables: {
 			channelIds,
 			groupId

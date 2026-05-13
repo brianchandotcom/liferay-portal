@@ -1,3 +1,4 @@
+import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import ClayButton from '@clayui/button';
@@ -8,7 +9,6 @@ import React from 'react';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {FeatureName, useLimitReached} from 'shared/hooks/useLimitReached';
-import {fetchFeatureUsages} from 'shared/api/projects';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
@@ -32,9 +32,7 @@ const List = () => {
 		loading: usageLoading,
 		refetch
 	} = useRequest({
-		dataSourceFn: fetchFeatureUsages as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.projects.fetchFeatureUsages,
 		variables: {groupId}
 	});
 

@@ -49,9 +49,7 @@ export const ViewContainer: React.FC<Omit<IViewProps, 'channel'>> = ({
 	...otherProps
 }) => {
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.channels.fetch as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.channels.fetch,
 		variables: {
 			channelId: id,
 			groupId

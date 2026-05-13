@@ -99,9 +99,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 		loading,
 		refetch: refetchChannels
 	} = useRequest({
-		dataSourceFn: API.channels.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.channels.search,
 		variables: {
 			cur: page,
 			delta,

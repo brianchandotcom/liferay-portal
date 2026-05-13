@@ -41,6 +41,7 @@ page import="com.liferay.portal.kernel.captcha.CaptchaException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

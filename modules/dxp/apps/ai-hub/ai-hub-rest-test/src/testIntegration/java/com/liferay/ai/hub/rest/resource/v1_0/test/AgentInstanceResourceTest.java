@@ -69,6 +69,8 @@ import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -84,6 +86,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -254,6 +257,8 @@ public class AgentInstanceResourceTest
 		_addAgentDefinitionObjectEntry(
 			"L_WORKFLOW_DEFINITION", "text", "workflow-definition.json",
 			"Workflow Definition");
+
+		SseUtil.closeAll();
 	}
 
 	@AfterClass
@@ -292,6 +297,7 @@ public class AgentInstanceResourceTest
 	@Test
 	public void testPostAgentInstance() throws Exception {
 		_testPostAgentInstance();
+		_testPostAgentInstanceWithConcurrentQuotaUpdates();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeAIDecisionNodeWorkflowDefinition();
 		_testPostAgentInstanceWithTypeFixSpellingAndGrammarWithInstruction();
@@ -508,6 +514,126 @@ public class AgentInstanceResourceTest
 			jsonObject.getLong("externalReferenceCode"));
 
 		Assert.assertEquals(2, workflowInstance.getWorkflowDefinitionVersion());
+	}
+
+	private void _testPostAgentInstanceWithConcurrentQuotaUpdates()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_QUOTA", TestPropsValues.getCompanyId());
+
+		_objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode",
+				"quota-" + _accountEntry.getAccountEntryId()
+			).put(
+				"limit", 0
+			).put(
+				"r_accountToAIHubQuotas_accountEntryId",
+				_accountEntry.getAccountEntryId()
+			).put(
+				"usage", 0
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		int concurrentCalls = 4;
+
+		List<Map<String, String>> headersList = new ArrayList<>();
+
+		for (int i = 0; i < concurrentCalls; i++) {
+			JSONObject tokenJSONObject = TokenTestUtil.postToken();
+
+			headersList.add(
+				HashMapBuilder.put(
+					"Authorization",
+					"Bearer " + tokenJSONObject.getString("accessToken")
+				).put(
+					"Liferay-AI-Hub-Cell-On-Behalf-Of",
+					tokenJSONObject.getString("userToken")
+				).build());
+		}
+
+		CountDownLatch countDownLatch = new CountDownLatch(10);
+
+		List<String> lines = Collections.synchronizedList(new ArrayList<>());
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch), lines, "agent-instances/subscribe");
+
+		CountDownLatch startCountDownLatch = new CountDownLatch(1);
+		CountDownLatch doneCountDownLatch = new CountDownLatch(concurrentCalls);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.engine.jdbc.spi.SqlExceptionHelper",
+				LoggerTestUtil.FATAL)) {
+
+			for (int i = 0; i < concurrentCalls; i++) {
+				Map<String, String> headers = headersList.get(i);
+
+				Thread thread = new Thread(
+					() -> {
+						try {
+							startCountDownLatch.await();
+
+							HTTPTestUtil.invokeToJSONObject(
+								JSONUtil.put(
+									"agentDefinitionExternalReferenceCode",
+									"L_MAKE_SHORTER"
+								).put(
+									"context",
+									JSONUtil.put("text", "This is a long text.")
+								).put(
+									"sseEventSinkKey", sseEventSinkKey
+								).toString(),
+								"ai-hub/v1.0/agent-instances", headers,
+								Http.Method.POST);
+						}
+						catch (Exception exception) {
+						}
+						finally {
+							doneCountDownLatch.countDown();
+						}
+					});
+
+				thread.start();
+			}
+
+			startCountDownLatch.countDown();
+
+			Assert.assertTrue(doneCountDownLatch.await(60, TimeUnit.SECONDS));
+			Assert.assertTrue(countDownLatch.await(30, TimeUnit.SECONDS));
+		}
+
+		String message = lines.get(3);
+
+		Assert.assertTrue(
+			lines.toString(),
+			message.contains("You have exceeded your token quota"));
+
+		message = lines.get(5);
+
+		Assert.assertTrue(
+			lines.toString(),
+			message.contains("You have exceeded your token quota"));
+
+		message = lines.get(7);
+
+		Assert.assertTrue(
+			lines.toString(),
+			message.contains("You have exceeded your token quota"));
+
+		message = lines.get(9);
+
+		Assert.assertTrue(
+			lines.toString(),
+			message.contains("You have exceeded your token quota"));
+
+		SseUtil.closeAll();
 	}
 
 	private void _testPostAgentInstanceWithTypeAIDecisionNodeWithToolWorkflowDefinition()

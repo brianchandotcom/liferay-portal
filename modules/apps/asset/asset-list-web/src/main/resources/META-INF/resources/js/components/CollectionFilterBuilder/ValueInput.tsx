@@ -14,6 +14,7 @@ import {
 import React from 'react';
 
 import {TriggerLabel} from './ConditionBuilder';
+import {config} from './config';
 
 import type {FilterProperty} from './types';
 
@@ -29,30 +30,28 @@ function _handlePreventEnterSubmit(event: React.KeyboardEvent) {
 }
 
 interface ValueInputProps {
-	categorySelectorURL?: string;
-	groupIds?: string[];
 	index: number;
-	namespace: string;
 	onChange: (value: string | Array<string | object>) => void;
 	operator: string;
 	property: FilterProperty;
-	tagSelectorURL?: string;
 	value: string | Array<string | object> | undefined;
-	vocabularyIds?: string[];
 }
 
 export default function ValueInput({
-	categorySelectorURL,
-	groupIds,
 	index,
-	namespace,
 	onChange,
 	operator,
 	property,
-	tagSelectorURL,
 	value,
-	vocabularyIds,
 }: ValueInputProps) {
+	const {
+		categorySelectorURL,
+		groupIds,
+		namespace,
+		tagSelectorURL,
+		vocabularyIds,
+	} = config;
+
 	const {options, type} = property;
 
 	if (type === 'asset-tags') {

@@ -8,6 +8,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 import {ConditionBuilder} from './ConditionBuilder';
+import {Config, initializeConfig} from './config';
 
 import type {
 	FilterCondition,
@@ -47,16 +48,10 @@ function serializeValue(
 	return typeof value === 'string' ? normalizeDateTime(value) : value;
 }
 
-interface CollectionFilterBuilderProps {
-	categorySelectorURL?: string;
-	groupIds?: string[];
+interface CollectionFilterBuilderProps extends Config {
 	initialConditions?: Array<Omit<FilterCondition, 'id'>>;
-	namespace: string;
 	onChange?: (state: FilterCondition[]) => void;
 	properties: FilterProperty[];
-	propertiesURL?: string;
-	tagSelectorURL?: string;
-	vocabularyIds?: string[];
 }
 
 /**
@@ -74,6 +69,15 @@ export default function CollectionFilterBuilder({
 	tagSelectorURL,
 	vocabularyIds,
 }: CollectionFilterBuilderProps) {
+	initializeConfig({
+		categorySelectorURL,
+		groupIds,
+		namespace,
+		propertiesURL,
+		tagSelectorURL,
+		vocabularyIds,
+	});
+
 	const [conditions, setConditions] = useState<FilterCondition[]>(
 		initialConditions?.length
 			? initialConditions.map((condition) => ({
@@ -156,8 +160,9 @@ export default function CollectionFilterBuilder({
 		}
 
 		// Refetches the filterable properties whenever the user changes the
-		// collection's asset source (type / subtype selectors). The available
-		// fields depend on the selected class names + class types.
+		// collection's asset source (type / subtype selectors), fired in
+		// event sourceChange. The available fields depend on the selected
+		// class names + class types.
 
 		const assetTypeListenerHandler = () => {
 
@@ -261,14 +266,9 @@ export default function CollectionFilterBuilder({
 	return (
 		<>
 			<ConditionBuilder
-				categorySelectorURL={categorySelectorURL}
 				conditions={conditions}
-				groupIds={groupIds}
-				namespace={namespace}
 				onChange={handleChange}
 				properties={propertiesWithAssetFields}
-				tagSelectorURL={tagSelectorURL}
-				vocabularyIds={vocabularyIds}
 			/>
 
 			<input

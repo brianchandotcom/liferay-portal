@@ -39,14 +39,9 @@ export const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 );
 
 interface ConditionBuilderProps {
-	categorySelectorURL?: string;
 	conditions: FilterCondition[];
-	groupIds?: string[];
-	namespace: string;
 	onChange: (conditions: FilterCondition[]) => void;
 	properties: Array<FilterProperty | FilterPropertyGroup>;
-	tagSelectorURL?: string;
-	vocabularyIds?: string[];
 }
 
 type ConditionRowProps = Omit<
@@ -65,15 +60,10 @@ function isPropertyGroup(
 }
 
 function ConditionRow({
-	categorySelectorURL,
 	condition,
-	groupIds,
 	index,
-	namespace,
 	onChange,
 	properties,
-	tagSelectorURL,
-	vocabularyIds,
 }: ConditionRowProps) {
 	const flatProperties = useMemo(
 		() =>
@@ -220,16 +210,11 @@ function ConditionRow({
 				condition.operatorName &&
 				(!quantifierOptions?.length || condition.quantifier) ? (
 					<ValueInput
-						categorySelectorURL={categorySelectorURL}
-						groupIds={groupIds}
 						index={index}
-						namespace={namespace}
 						onChange={handleValueChange}
 						operator={condition.operatorName}
 						property={selectedProperty}
-						tagSelectorURL={tagSelectorURL}
 						value={condition.value}
-						vocabularyIds={vocabularyIds}
 					/>
 				) : null}
 			</div>
@@ -238,14 +223,9 @@ function ConditionRow({
 }
 
 export function ConditionBuilder({
-	categorySelectorURL,
 	conditions,
-	groupIds,
-	namespace,
 	onChange,
 	properties,
-	tagSelectorURL,
-	vocabularyIds,
 }: ConditionBuilderProps) {
 	return (
 		<div className="condition-builder">
@@ -276,15 +256,10 @@ export function ConditionBuilder({
 					onChange: (condition: FilterCondition) => void;
 				}) => (
 					<ConditionRow
-						categorySelectorURL={categorySelectorURL}
 						condition={item}
-						groupIds={groupIds}
 						index={index}
-						namespace={namespace}
 						onChange={onItemChange}
 						properties={properties}
-						tagSelectorURL={tagSelectorURL}
-						vocabularyIds={vocabularyIds}
 					/>
 				)}
 				setItems={onChange}

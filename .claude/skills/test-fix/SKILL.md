@@ -123,7 +123,7 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 
 ## Workflow
 
-### 1. Claim the Failure
+### Claim the Failure
 
 1. Check Jira for an LPD ticket whose summary contains `<test-name>`, is labeled `claude-test-fix`, and was **created on or after `<failureDate>`**. A ticket matching those criteria already covers this failure (in progress when still open, already shipped when resolved), so skip it; if there are other candidates, retry with the next one.
 
@@ -131,33 +131,33 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 
 1. Invoke the `start-work` skill on the new Task.
 
-### 2. Reproduce Locally
+### Reproduce Locally
 
 This step runs **before** any range or commit analysis. The test may already pass locally — when it does, the run ends here without any further investigation.
 
-#### 2.1. Set Feature Flags
+#### Set Feature Flags
 
 Inspect the test source to discover which feature flags it depends on. Mirror the CI setup before reproducing. Otherwise, the test path differs.
 
-- **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then, strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in step 5. Bounce Tomcat for the new flag values to take effect.
+- **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then, strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in **Restore the Portal**. Bounce Tomcat for the new flag values to take effect.
 
 - **Playwright tests** declare flags through the `featureFlagsTest` fixture under `modules/test/playwright/fixtures`. The fixture toggles them per test — no portal change is needed.
 
-#### 2.2. Run the Test
+#### Run the Test
 
 Run the test, deploying first when the type requires it. For `Java Semantic Versioning`, the "test" is `<gradlew> baseline` from the failing module — strictly an API contract check, not a behavioral test. Then compare the local outcome with **errorTrace**:
 
-- **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip step 3 (diagnosis) and step 4 (iteration). Run the cleanup in step 5 and exit.
-- **Same failure** → continue to step 3.
+- **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip **Identify Suspect Commits** and **Iterate Through Suspects**. Run the cleanup in **Restore the Portal** and exit.
+- **Same failure** → continue to **Identify Suspect Commits**.
 - **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarizing both traces (the one returned by the Testray fetch and the one observed locally) and exit.
 
-### 3. Identify Suspect Commits
+### Identify Suspect Commits
 
 The breaking change lies between `${LAST_PASS_SHA}` and `${FIRST_FAIL_SHA}`. List candidates from the diff between those two commits, then narrow by tracing the line history of the file owning the line nearest the failing assertion or the topmost frame in **errorTrace**.
 
 When that does not point to a single commit, rank candidates: files in the test's own module first, then modules whose packages the test imports, then `*-api` / `portal-kernel` / shared `frontend-js-*`, then `portal-impl` / `petra-*` / shared infrastructure.
 
-### 4. Iterate Through Suspects
+### Iterate Through Suspects
 
 Apply candidate fixes as uncommitted changes; the `commit` skill picks them up later in **Pull Request**. For each suspect in ranked order:
 
@@ -175,14 +175,14 @@ Apply candidate fixes as uncommitted changes; the `commit` skill picks them up l
 
 When the test turns green, do **not** lock in the verdict immediately — keep reading the remaining suspects to confirm none of them is a stronger explanation. Settling on the first green fix is how a wrong fix gets shipped; only commit once no better candidate surfaces.
 
-When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analyzed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 5 and exit.
+When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analyzed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in **Restore the Portal** and exit.
 
 Once the verdict is locked in (only ever after a green local run — never commit or open a PR otherwise), record the offending commit (short SHA + subject) and one sentence explaining how it broke the test — reused in the PR body's Root Cause section (see **Pull Request**).
 
-### 5. Restore the Portal
+### Restore the Portal
 
 This step is idempotent: the portal must end the run in the same state it started — Tomcat running with the original `portal-ext.properties` loaded.
 
-When step 2.1 changed `<bundles>/portal-ext.properties`, restore the snapshot and bounce Tomcat to pick the original properties back up.
+When **Set Feature Flags** changed `<bundles>/portal-ext.properties`, restore the snapshot and bounce Tomcat to pick the original properties back up.
 
-When step 2.1 was skipped because the test does not need flag changes, Tomcat keeps running untouched and there is nothing to do.
+When **Set Feature Flags** was skipped because the test does not need flag changes, Tomcat keeps running untouched and there is nothing to do.

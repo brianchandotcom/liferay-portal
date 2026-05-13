@@ -56,7 +56,7 @@ Rule: strip `liferay-portal-` prefix, lowercase, replace nonalphanumeric with `_
 
 ## Full Setup
 
-### 1. Locate or Create the Worktree
+### Locate or Create the Worktree
 
 If the current working directory matches `*/liferay-portal-<name>`, the worktree already exists (either created by `claude --worktree <name>` through the **WorktreeCreate** hook, or by a previous manual run). Use the current cwd as `<WORKTREE_DIR>` and the directory name as `<DIR_NAME>`, then continue.
 
@@ -70,7 +70,7 @@ If this fails because the branch already exists, offer the user two options:
 - **Reuse** the existing branch: `git worktree add ../<DIR_NAME> <BRANCH>`
 - **New branch** with a suggested alternative name (e.g., append `-v2`, `-wt`, or a short descriptor)
 
-### 2. Configure Bundle Directory
+### Configure Bundle Directory
 
 Create `app.server.<username>.properties` in the worktree root:
 
@@ -78,7 +78,7 @@ Create `app.server.<username>.properties` in the worktree root:
 app.server.parent.dir=${project.dir}/bundle
 ```
 
-### 3. Build
+### Build
 
 Check whether a bundle already exists by looking for `<tomcat>` inside `<bundles>`.
 
@@ -91,9 +91,9 @@ cd <WORKTREE_DIR> && ant setup-profile-dxp && ant all
 
 If `ant all` fails, stop and surface the full error to the user — do not continue to port configuration.
 
-### 4. Configure Ports
+### Configure Ports
 
-#### 4a. Determine the Offset
+#### Determine the Offset
 
 1. If user specified an offset, use it (reject 0)
 
@@ -103,7 +103,7 @@ If `ant all` fails, stop and surface the full error to the user — do not conti
 
 1. Save the chosen offset to `<bundles>/.worktree-port-offset`
 
-#### 4b. Patch server.xml
+#### Patch server.xml
 
 File: `<tomcat>/conf/server.xml`
 
@@ -134,7 +134,7 @@ Use `"${SED_INPLACE[@]}"` in place of `sed -i` for all subsequent calls:
 
 Skip if target HTTP port is already present (idempotent).
 
-#### 4c. Patch setenv.sh
+#### Patch setenv.sh
 
 File: `<tomcat>/bin/setenv.sh`
 
@@ -146,7 +146,7 @@ Replace the JPDA debug port (this file gets **wiped on rebuild**):
 
 Skip if the target value is already present.
 
-#### 4d. Patch portal-developer.properties
+#### Patch portal-developer.properties
 
 File: `<tomcat>/webapps/ROOT/WEB-INF/classes/portal-developer.properties`
 
@@ -158,7 +158,7 @@ module.framework.properties.osgi.console=<11311+N>
 
 Use `"${SED_INPLACE[@]}" 's/osgi\.console=[0-9]*/osgi.console=<TARGET>/'` to handle any current value.
 
-#### 4e. Create OSGi Config Files
+#### Create OSGi Config Files
 
 These get **wiped on rebuild** — always overwrite.
 
@@ -188,7 +188,7 @@ port="<32763+N>"
 port="<42763+N>"
 ```
 
-#### 4f. Patch glowroot/admin.json
+#### Patch glowroot/admin.json
 
 File: `<bundles>/glowroot/admin.json`
 
@@ -198,7 +198,7 @@ Use `jq` to set `.web.port` to `4000+N`. Skip if already correct (survives rebui
 jq '.web.port = <TARGET>' admin.json > admin.json.tmp && mv admin.json.tmp admin.json
 ```
 
-#### 4g. Patch portal-ext.properties
+#### Patch portal-ext.properties
 
 File: `<bundles>/portal-ext.properties`
 
@@ -216,7 +216,7 @@ users.reminder.queries.enabled=false
 
 **Important:** The property is `portal.instance.inet.socket.address` (with `inet`), NOT `portal.instance.http.socket.address`. Also remove any old `portal.instance.http.socket.address` lines.
 
-#### 4h. Configure MySQL Database
+#### Configure MySQL Database
 
 Derive the DB name from the worktree directory (see Database Naming above).
 
@@ -239,11 +239,11 @@ mysql --execute 'CREATE DATABASE IF NOT EXISTS <DB_NAME> CHARACTER SET utf8mb4 C
 
 If `mysql` CLI is unavailable or fails, print the command for the user to run manually. Show errors — never swallow them with `2>/dev/null`.
 
-#### 4i. Print Summary
+#### Print Summary
 
 Print a table of all assigned ports, the DB name, the Liferay URL, and the Glowroot URL.
 
-### 5. Start
+### Start
 
 Start Tomcat with the JPDA debugger attached. `jpda run` is a foreground command, so run it in the background so that the call does not block:
 

@@ -5,6 +5,8 @@
 
 package com.liferay.object.service.test;
 
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
@@ -3685,6 +3687,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testUpdateRootDescendantObjectDefinition() throws Exception {
+
+		// Company scope
+
 		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 		ObjectDefinition objectDefinitionAA =
@@ -3695,43 +3700,22 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinitionAA.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
 
-		String panelCategoryKey = RandomTestUtil.randomString();
+		_testUpdateRootDescendantObjectDefinition(0, objectDefinitionAA);
 
-		objectDefinitionAA =
-			_objectDefinitionLocalService.updateCustomObjectDefinition(
-				objectDefinitionAA.getExternalReferenceCode(),
-				objectDefinitionAA.getObjectDefinitionId(),
-				objectDefinitionAA.getAccountEntryRestrictedObjectFieldId(),
-				objectDefinitionAA.getDescriptionObjectFieldId(),
-				objectDefinitionAA.getObjectFolderId(),
-				objectDefinitionAA.getTitleObjectFieldId(),
-				objectDefinitionAA.isAccountEntryRestricted(),
-				objectDefinitionAA.isActive(),
-				objectDefinitionAA.getClassName(),
-				objectDefinitionAA.isEnableCategorization(),
-				objectDefinitionAA.isEnableComments(),
-				objectDefinitionAA.isEnableFormContainer(),
-				objectDefinitionAA.isEnableFriendlyURLCustomization(),
-				objectDefinitionAA.isEnableIndexSearch(),
-				objectDefinitionAA.isEnableObjectEntryDraft(),
-				objectDefinitionAA.isEnableObjectEntryHistory(),
-				objectDefinitionAA.isEnableObjectEntrySchedule(),
-				objectDefinitionAA.isEnableObjectEntrySubscription(),
-				objectDefinitionAA.isEnableObjectEntryVersioning(),
-				objectDefinitionAA.getFriendlyURLSeparator(),
-				objectDefinitionAA.getLabelMap(), objectDefinitionAA.getName(),
-				objectDefinitionAA.getPanelAppOrder(), panelCategoryKey,
-				objectDefinitionAA.isPortlet(),
-				objectDefinitionAA.getPluralLabelMap(),
-				objectDefinitionAA.getScope(), objectDefinitionAA.getStatus(),
-				Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList(), new ServiceContext());
+		// Site scope
 
-		Assert.assertEquals(
-			panelCategoryKey, objectDefinitionAA.getPanelCategoryKey());
+		objectDefinitionA = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.emptyList(), ObjectDefinitionConstants.SCOPE_SITE);
+		objectDefinitionAA = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.emptyList(), ObjectDefinitionConstants.SCOPE_SITE);
 
-		_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
-			objectDefinitionAA);
+		TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_testUpdateRootDescendantObjectDefinition(
+			TestPropsValues.getGroupId(), objectDefinitionAA);
 	}
 
 	@Test
@@ -4330,6 +4314,21 @@ public class ObjectDefinitionLocalServiceTest {
 
 			return dbInspector.hasTable(tableName);
 		}
+	}
+
+	private boolean _isPanelAppRegistered(ObjectDefinition objectDefinition) {
+		for (PanelApp panelApp :
+				_panelAppRegistry.getPanelApps(
+					objectDefinition.getPanelCategoryKey())) {
+
+			if (Objects.equals(
+					panelApp.getPortletId(), objectDefinition.getPortletId())) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private ObjectDefinition _publishCustomObjectDefinition() throws Exception {
@@ -4975,13 +4974,52 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-	private void
-			_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
-				ObjectDefinition objectDefinition)
+	private void _testUpdateRootDescendantObjectDefinition(
+			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
+		String panelCategoryKey = RandomTestUtil.randomString();
+
+		objectDefinition.setPanelCategoryKey(panelCategoryKey);
+
+		objectDefinition = _updateCustomObjectDefinition(
+			objectDefinition.getClassName(), objectDefinition);
+
+		Assert.assertEquals(
+			panelCategoryKey, objectDefinition.getPanelCategoryKey());
+
+		// Panel app is hidden when standalone object entry is not allowed
+
+		objectDefinition = _updateCustomObjectDefinition(
+			objectDefinition.getClassName(), objectDefinition,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.
+						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+				).value(
+					StringPool.FALSE
+				).build()));
+
+		Assert.assertFalse(_isPanelAppRegistered(objectDefinition));
+
+		objectDefinition = _updateCustomObjectDefinition(
+			objectDefinition.getClassName(), objectDefinition,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.
+						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+				).value(
+					StringPool.TRUE
+				).build()));
+
+		Assert.assertTrue(_isPanelAppRegistered(objectDefinition));
+
+		// Transition to false requires no existing standalone object entry
+
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
+			groupId, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null, Collections.emptyMap(),
@@ -5008,18 +5046,18 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry);
 
-		Assert.assertFalse(
-			_updateCustomObjectDefinition(
-				finalObjectDefinition.getClassName(), finalObjectDefinition,
-				Collections.singletonList(
-					new ObjectDefinitionSettingBuilder(
-					).name(
-						ObjectDefinitionSettingConstants.
-							NAME_ALLOW_STANDALONE_OBJECT_ENTRY
-					).value(
-						StringPool.FALSE
-					).build())
-			).isAllowStandaloneObjectEntry());
+		objectDefinition = _updateCustomObjectDefinition(
+			finalObjectDefinition.getClassName(), finalObjectDefinition,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.
+						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+				).value(
+					StringPool.FALSE
+				).build()));
+
+		Assert.assertFalse(objectDefinition.isAllowStandaloneObjectEntry());
 	}
 
 	private ObjectDefinition _updateCustomObjectDefinition(
@@ -5144,6 +5182,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private PanelAppRegistry _panelAppRegistry;
 
 	@Inject
 	private PLOEntryLocalService _ploEntryLocalService;

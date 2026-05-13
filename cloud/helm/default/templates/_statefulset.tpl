@@ -147,7 +147,7 @@ spec:
             schedulingGates:
                 {{- toYaml . | nindent 16 }}
             {{- end }}
-            {{- with .statefulset.podSecurityContext }}
+            {{- with .statefulset.podSecurityContext}}
             securityContext:
                 {{- toYaml . | nindent 16 }}
             {{- end }}

@@ -189,6 +189,12 @@ liferay-default:
                             cidr: 0.0.0.0/0
                             except:
                                 -   169.254.169.254/32
+    podSecurityContext:
+        fsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
     portalBundleDenyList:
         -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
         -   com.liferay.portal.search.elasticsearch.monitoring.web
@@ -205,6 +211,15 @@ liferay-default:
             memory: 4Gi
     search:
         opensearch2DownloadBaseURL: https://releases.liferay.com/opensearch2
+    securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+            drop:
+                -   ALL
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+            type: RuntimeDefault
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

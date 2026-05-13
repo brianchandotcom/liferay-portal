@@ -7,6 +7,10 @@ import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
 import {fetch} from 'frontend-js-web';
 import {useEffect, useMemo, useState} from 'react';
 
+// The vocabulary-scoped endpoint is used (not /sites/{id}/taxonomy-categories)
+// because the site path filters out categories of global vocabularies, while
+// this path returns the full set regardless of the requesting site.
+
 const HEADLESS_TAXONOMY_BASE = '/o/headless-admin-taxonomy/v1.0';
 
 const PAGE_SIZE = 100;
@@ -87,50 +91,49 @@ function buildTree(
 	categories: ITaxonomyCategory[],
 	vocabularyId: string
 ): ITaxonomyCategoryTreeNode[] {
-	const nodesById = new Map<string, ITaxonomyCategoryTreeNode>();
+	const childrenByParent = new Map<string | null, ITaxonomyCategory[]>();
 
 	categories.forEach((category) => {
-		nodesById.set(String(category.id), {
+		const parentId =
+			category.parentTaxonomyCategory?.id !== undefined
+				? String(category.parentTaxonomyCategory.id)
+				: null;
+
+		const siblings = childrenByParent.get(parentId) ?? [];
+
+		siblings.push(category);
+		childrenByParent.set(parentId, siblings);
+	});
+
+	const buildNode = (
+		category: ITaxonomyCategory
+	): ITaxonomyCategoryTreeNode => {
+		const children = childrenByParent
+			.get(String(category.id))
+			?.map(buildNode);
+
+		return {
 			hasChildren: (category.numberOfTaxonomyCategories ?? 0) > 0,
 			id: String(category.id),
 			name: category.name,
 			raw: category,
 			vocabularyId,
-		});
-	});
+			...(children?.length && {children}),
+		};
+	};
 
-	const roots: ITaxonomyCategoryTreeNode[] = [];
+	// Defensive: orphans (parent missing from response, e.g. permission filter)
+	// are kept by treating any unknown parent as a root.
 
-	categories.forEach((category) => {
-		const node = nodesById.get(String(category.id));
+	const knownIds = new Set(categories.map((category) => String(category.id)));
 
-		if (!node) {
-			return;
-		}
-
+	const rootCategories = categories.filter((category) => {
 		const parentId = category.parentTaxonomyCategory?.id;
 
-		if (parentId === undefined) {
-			roots.push(node);
-
-			return;
-		}
-
-		const parent = nodesById.get(String(parentId));
-
-		if (parent) {
-			(parent.children ??= []).push(node);
-		}
-		else {
-
-			// Defensive: parent missing from page (e.g. permission filter).
-			// Surface the orphan as a root so it stays selectable.
-
-			roots.push(node);
-		}
+		return parentId === undefined || !knownIds.has(String(parentId));
 	});
 
-	return roots;
+	return rootCategories.map(buildNode);
 }
 
 async function loadVocabularyTree(

@@ -420,12 +420,11 @@ public class CacheReplicatorEntryTest implements Serializable {
 	}
 
 	private void _populateCaches(long companyId, String name) {
-		CacheReplicatorEntryLocalServiceUtil.fetchCacheReplicatorEntry(
-			name);
-		CacheReplicatorEntryLocalServiceUtil.
-			getCacheReplicatorEntries(companyId);
-		CacheReplicatorEntryLocalServiceUtil.
-			getCacheReplicatorEntries(companyId, 0, 10);
+		CacheReplicatorEntryLocalServiceUtil.fetchCacheReplicatorEntry(name);
+		CacheReplicatorEntryLocalServiceUtil.getCacheReplicatorEntries(
+			companyId);
+		CacheReplicatorEntryLocalServiceUtil.getCacheReplicatorEntries(
+			companyId, 0, 10);
 		CacheReplicatorEntryLocalServiceUtil.
 			getCacheReplicatorEntriesCountByCompanyId(companyId);
 

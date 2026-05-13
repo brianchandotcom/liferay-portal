@@ -59,9 +59,7 @@ const InterestTopics: React.FC<IInterestTopicsProps> = ({
 	});
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.blockedKeywords.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.blockedKeywords.search,
 		variables: {
 			delta,
 			groupId,

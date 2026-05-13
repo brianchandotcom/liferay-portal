@@ -51,9 +51,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
 			groupId

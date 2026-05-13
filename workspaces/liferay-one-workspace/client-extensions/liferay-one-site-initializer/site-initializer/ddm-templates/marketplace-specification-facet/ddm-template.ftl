@@ -1,44 +1,3 @@
-<style ${nonceAttribute}>
-	.facet-specification-panel {
-		border-radius: 10px;
-	}
-
-	.facet-specification-panel .panel a {
-		padding: 1.5rem;
-		padding-bottom: 0;
-	}
-
-	.facet-specification-panel .collapse-icon .collapse-icon-closed .lexicon-icon,
-	.facet-specification-panel .collapse-icon .collapse-icon-open .lexicon-icon {
-		margin-top: 0.3rem;
-	}
-
-	.facet-specification-panel .panel-body {
-		padding: 0 1.5rem;
-	}
-
-	.facet-specification-panel .list-unstyled {
-		margin-bottom: 0;
-	}
-
-	.facet-specification-panel .options-btn {
-		color: #2B3A4B;
-		font-size: 14px;
-		font-weight: 400;
-	}
-
-	.facet-specification-panel .separator {
-		margin: 1rem auto 0;
-		width: 90%;
-	}
-
-	.facet-specification-panel .view-all-btn {
-		color: #2B3A4B;
-		font-size: 14px;
-		font-weight: 400;
-	}
-</style>
-
 <#assign
 	filteredCount = 0
 	title = cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')
@@ -57,7 +16,7 @@
 <#if cpSpecificationOptionsSearchFacetDisplayContext.getParameterName() != 'developer-name'>
 
 	<@liferay_ui["panel-container"]
-		cssClass="bg-white border-radius-xlarge facet-specification-panel"
+		cssClass="bg-white border-radius-xlarge facet-panel"
 		extended=true
 		id="${namespace + 'facetPriceModelPanelContainer'}"
 		markupView="lexicon"
@@ -72,7 +31,7 @@
 			persistState=true
 			title="${title}">
 
-			<button class="btn-unstyled options-btn mb-4" id="${namespace + 'facetAssetSelectAll'}" onClick="${namespace}selectAll(event, `${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}`)">
+			<button class="btn-unstyled mb-4" id="${namespace + 'facetAssetSelectAll'}" onClick="${namespace}selectAll(event, `${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}`)">
 				${languageUtil.get(locale, "select-all")}
 			</button>
 
@@ -80,7 +39,7 @@
 				${languageUtil.get(locale, "clear")}
 			</button>
 
-			<ul class="list-unstyled">
+			<ul class="list-unstyled mb-0">
 				<#assign
 					currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
 					isExpanded = currentURL?contains("${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()}Expanded")

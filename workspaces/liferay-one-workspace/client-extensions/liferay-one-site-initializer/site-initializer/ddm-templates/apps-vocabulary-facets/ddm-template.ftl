@@ -1,44 +1,3 @@
-<style ${nonceAttribute}>
-	.facet-vocabulary-panel {
-		border-radius: 10px;
-	}
-
-	.facet-vocabulary-panel .clear-btn {
-		color: #2B3A4B;
-		font-size: 14px;
-		font-weight: 400;
-	}
-
-	.facet-vocabulary-panel .collapse-icon .collapse-icon-closed .lexicon-icon,
-	.facet-vocabulary-panel .collapse-icon .collapse-icon-open .lexicon-icon {
-		margin-top: 0.3rem;
-	}
-
-	.facet-vocabulary-panel .list-unstyled {
-		margin-bottom: 0;
-	}
-
-	.facet-vocabulary-panel .panel a {
-		padding: 1.5rem;
-		padding-bottom: 0;
-	}
-
-	.facet-vocabulary-panel .panel-body {
-		padding: 0 1.5rem;
-	}
-
-	.facet-vocabulary-panel .separator {
-		margin: 1rem auto 0;
-		width: 90%;
-	}
-
-	.facet-vocabulary-panel .view-all-btn {
-		color: #2B3A4B;
-		font-size: 14px;
-		font-weight: 400;
-	}
-</style>
-
 <#assign
 	filteredCount = 0
 	title = assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case
@@ -55,7 +14,7 @@
 </#if>
 
 <@liferay_ui["panel-container"]
-	cssClass="bg-white border-radius-xlarge facet-vocabulary-panel"
+	cssClass="bg-white border-radius-xlarge facet-panel"
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
 	markupView="lexicon"
@@ -70,7 +29,7 @@
 		persistState=true
 		title="${title}"
 	>
-		<button class="btn-unstyled clear-btn mb-4" id="${namespace + 'facetAssetCategoriesSelectAll'}" onClick="${namespace}selectAll(event)">
+		<button class="btn-unstyled mb-4" id="${namespace + 'facetAssetCategoriesSelectAll'}" onClick="${namespace}selectAll(event)">
 			${languageUtil.get(locale, "select-all")}
 		</button>
 
@@ -78,7 +37,7 @@
 			${languageUtil.get(locale, "clear")}
 	  	</button>
 
-		<ul class="list-unstyled">
+		<ul class="list-unstyled mb-0">
 			<#assign
 				currentURL = themeDisplay.getURLCurrent()?replace("%20", " ")
 				isExpanded = currentURL?contains("${assetCategoriesSearchFacetDisplayContext.getParameterName()}Expanded")

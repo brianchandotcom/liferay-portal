@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext",
-	"ddmTemplateKey": "MARKETPLACE-SPECIFICATIONS-FACET",
+	"ddmTemplateKey": "LO_MARKETPLACE_SPECIFICATIONS_FACET",
 	"name": "Marketplace Specifications Facet",
 	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
 }

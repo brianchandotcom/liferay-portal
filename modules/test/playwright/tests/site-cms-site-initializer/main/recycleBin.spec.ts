@@ -12,7 +12,7 @@ import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi, {
-	performUserSwitch,
+	performUserSwitchViaApi,
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -230,7 +230,7 @@ test(
 		await test.step('Login as CMS Administrator', async () => {
 			const user = await addCMSAdministrator(apiHelpers);
 
-			await performUserSwitch(page, user.alternateName);
+			await performUserSwitchViaApi(page, user.alternateName);
 		});
 
 		await test.step('Delete the contents so they can go into the Recycle Bin', async () => {
@@ -961,80 +961,6 @@ test(
 );
 
 test(
-	'Space member without delete permission does not see trashed content nor the Empty Recycle Bin action',
-	{tag: '@LPD-83226'},
-	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
-		const contentName = `Content ${getRandomString()}`;
-		const spaceName = `Space ${getRandomString()}`;
-
-		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-			name: spaceName,
-			settings: {trashEnabled: true},
-			type: 'Space',
-		});
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{
-				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-				title: contentName,
-			},
-			'cms/basic-web-contents',
-			spaceName
-		);
-
-		await test.step('As the default user, trash the content', async () => {
-			await contentsPage.goto();
-
-			await contentsPage.deleteContent(contentName);
-		});
-
-		const user = await apiHelpers.headlessAdminUser.postUserAccount();
-
-		userData[user.alternateName] = {
-			name: user.givenName,
-			password: 'test',
-			surname: user.familyName,
-		};
-
-		await test.step('Create a user and add as space member', async () => {
-			await apiHelpers.jsonWebServicesUser.agreeToTermsOfUse(user.id);
-
-			await apiHelpers.jsonWebServicesUser.answerReminderQuery(user.id);
-
-			await apiHelpers.jsonWebServicesUser.addGroupUsers(space.siteId, [
-				user.id,
-			]);
-		});
-
-		await test.step('Log in as the space member', async () => {
-			await performUserSwitch(page, user.alternateName);
-		});
-
-		await test.step('The space member does not see the trashed content', async () => {
-			await recycleBinPage.goto();
-
-			await expect(
-				page.getByRole('row', {name: contentName})
-			).toBeHidden();
-		});
-
-		await test.step('The Empty Recycle Bin action is not rendered', async () => {
-			await expect(page.getByLabel('More Actions')).toBeHidden();
-		});
-
-		await test.step('The default user still sees the trashed content', async () => {
-			await performUserSwitch(page, 'test');
-
-			await recycleBinPage.goto();
-
-			await expect(
-				page.getByRole('row', {name: contentName})
-			).toBeVisible();
-		});
-	}
-);
-
-test(
 	'Space member with delete permission sees trashed content and can empty the Recycle Bin',
 	{tag: '@LPD-83226'},
 	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
@@ -1105,7 +1031,7 @@ test(
 		});
 
 		await test.step('Log in as the space member', async () => {
-			await performUserSwitch(page, user.alternateName);
+			await performUserSwitchViaApi(page, user.alternateName);
 		});
 
 		await test.step('The space member sees the trashed content', async () => {
@@ -1136,6 +1062,87 @@ test(
 					page.getByRole('row', {name: contentName})
 				).toBeHidden();
 			}).toPass();
+		});
+	}
+);
+
+test(
+	'Space member sees assets trashed by another user in their Space',
+	{tag: '@LPD-89591'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const contentName = `Content ${getRandomString()}`;
+		const folderName = `Folder ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {trashEnabled: true},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			'cms/basic-web-contents',
+			spaceName
+		);
+
+		await apiHelpers.objectFolder.createObjectEntryFolder({
+			parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+			scopeKey: spaceName,
+			title: folderName,
+		});
+
+		await test.step('As the default user, trash the content', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName);
+		});
+
+		await test.step('As the default user, trash the folder', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteFolder(folderName);
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await test.step('Create a user and add as space member', async () => {
+			await apiHelpers.jsonWebServicesUser.agreeToTermsOfUse(user.id);
+
+			await apiHelpers.jsonWebServicesUser.answerReminderQuery(user.id);
+
+			await apiHelpers.jsonWebServicesUser.addGroupUsers(space.siteId, [
+				user.id,
+			]);
+		});
+
+		await test.step('Log in as the space member', async () => {
+			await performUserSwitchViaApi(page, user.alternateName);
+		});
+
+		await test.step('The space member sees the trashed content', async () => {
+			await recycleBinPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('The space member sees the trashed folder', async () => {
+			await recycleBinPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: folderName})
+			).toBeVisible();
 		});
 	}
 );

@@ -73,11 +73,31 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
 			true);
 
+		CPDefinition cpDefinition3 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
 		_cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
 			cpDefinition1.getCPDefinitionId(), cpDefinition2.getCProductId(), 0,
 			1, _serviceContext);
 
+		_cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
+			cpDefinition1.getCPDefinitionId(), cpDefinition3.getCProductId(), 0,
+			1, _serviceContext);
+
 		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries =
+			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
+				cpDefinition1.getCPDefinitionId());
+
+		Assert.assertEquals(
+			cpDefinitionGroupedEntries.toString(), 2,
+			cpDefinitionGroupedEntries.size());
+
+		_cpDefinitionGroupedEntryLocalService.
+			deleteCPDefinitionGroupedEntriesByEntryCProductId(
+				cpDefinition2.getCProductId());
+
+		cpDefinitionGroupedEntries =
 			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
 				cpDefinition1.getCPDefinitionId());
 
@@ -89,20 +109,8 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 			cpDefinitionGroupedEntries.get(0);
 
 		Assert.assertEquals(
-			cpDefinition2.getCPDefinitionId(),
+			cpDefinition3.getCPDefinitionId(),
 			cpDefinitionGroupedEntry.getEntryCPDefinitionId());
-
-		_cpDefinitionGroupedEntryLocalService.
-			deleteCPDefinitionGroupedEntriesByEntryCProductId(
-				cpDefinition2.getCProductId());
-
-		cpDefinitionGroupedEntries =
-			_cpDefinitionGroupedEntryLocalService.getCPDefinitionGroupedEntries(
-				cpDefinition1.getCPDefinitionId());
-
-		Assert.assertEquals(
-			cpDefinitionGroupedEntries.toString(), 0,
-			cpDefinitionGroupedEntries.size());
 	}
 
 	private CommerceCatalog _commerceCatalog;

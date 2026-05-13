@@ -15,7 +15,9 @@
 		<field localized="true" name="name" type="String" />
 		<field name="version" type="int" />
 		<field name="specSchemaVersion" type="String" />
-		<field name="data" type="String" />
+		<field name="data" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="dataHash" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

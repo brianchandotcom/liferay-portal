@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.manager.Translation;
 import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.test.util.TranslationTestUtil;
@@ -108,6 +109,54 @@ public class TranslationManagerTest {
 
 		_testGetXLIFFFile("test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
 		_testGetXLIFFFile("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFFileFailsWithInvalidSourceLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, _INVALID_LANGUAGE_ID, _TARGET_LANGUAGE_IDS[0]);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFFileFailsWithInvalidTargetLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_INVALID_LANGUAGE_ID);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFZipFileFailsWithInvalidSourceLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {_journalArticle.getResourcePrimKey()},
+			_MIMETYPE_XLIFF_1_2, LocaleUtil.US, _INVALID_LANGUAGE_ID,
+			_TARGET_LANGUAGE_IDS);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFZipFileFailsWithInvalidTargetLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {_journalArticle.getResourcePrimKey()},
+			_MIMETYPE_XLIFF_1_2, LocaleUtil.US,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
+			new String[] {_INVALID_LANGUAGE_ID});
 	}
 
 	@Test
@@ -370,6 +419,8 @@ public class TranslationManagerTest {
 
 		_assertProcessXLIFFTranslationSuccess(failureMessages, successMessages);
 	}
+
+	private static final String _INVALID_LANGUAGE_ID = "xx_XX";
 
 	private static final String _MIMETYPE_XLIFF_1_2 = "application/x-xliff+xml";
 

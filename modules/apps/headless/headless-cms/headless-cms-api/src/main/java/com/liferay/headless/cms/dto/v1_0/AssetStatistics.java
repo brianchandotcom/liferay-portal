@@ -210,6 +210,47 @@ public class AssetStatistics implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _reviewDateOverdueCountSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getTotalCount() {
+		if (_totalCountSupplier != null) {
+			totalCount = _totalCountSupplier.get();
+
+			_totalCountSupplier = null;
+		}
+
+		return totalCount;
+	}
+
+	public void setTotalCount(Long totalCount) {
+		this.totalCount = totalCount;
+
+		_totalCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTotalCount(
+		UnsafeSupplier<Long, Exception> totalCountUnsafeSupplier) {
+
+		_totalCountSupplier = () -> {
+			try {
+				return totalCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long totalCount;
+
+	@JsonIgnore
+	private Supplier<Long> _totalCountSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -283,6 +324,18 @@ public class AssetStatistics implements Serializable {
 			sb.append("\"reviewDateOverdueCount\": ");
 
 			sb.append(reviewDateOverdueCount);
+		}
+
+		Long totalCount = getTotalCount();
+
+		if (totalCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalCount\": ");
+
+			sb.append(totalCount);
 		}
 
 		sb.append("}");
@@ -386,4 +439,4 @@ public class AssetStatistics implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-861931329
+// LIFERAY-REST-BUILDER-HASH:-498195932

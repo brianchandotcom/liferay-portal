@@ -307,6 +307,14 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("totalCount", additionalAssertFieldName)) {
+				if (assetStatistics.getTotalCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -474,6 +482,17 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("totalCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetStatistics1.getTotalCount(),
+						assetStatistics2.getTotalCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -602,6 +621,11 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("totalCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -653,6 +677,7 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 				expiringSoonCount = RandomTestUtil.randomLong();
 				inDraftCount = RandomTestUtil.randomLong();
 				reviewDateOverdueCount = RandomTestUtil.randomLong();
+				totalCount = RandomTestUtil.randomLong();
 			}
 		};
 	}
@@ -880,4 +905,4 @@ public abstract class BaseAssetStatisticsResourceTestCase {
 		_assetStatisticsResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1454020451
+// LIFERAY-REST-BUILDER-HASH:329498158

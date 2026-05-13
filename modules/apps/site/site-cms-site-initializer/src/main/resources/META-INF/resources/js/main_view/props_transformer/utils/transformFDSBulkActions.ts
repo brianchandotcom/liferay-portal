@@ -21,6 +21,7 @@ const BULK_ACTION_PERMISSION_KEYS: Record<string, string> = {
 	'move-to': 'update',
 	'permissions': 'permissions',
 	'reset-to-default-permissions': 'permissions',
+	'restore': 'restore',
 };
 
 export default function transformFDSBulkActions(

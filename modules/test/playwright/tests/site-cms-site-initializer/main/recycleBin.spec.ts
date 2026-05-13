@@ -1144,5 +1144,15 @@ test(
 				page.getByRole('row', {name: folderName})
 			).toBeVisible();
 		});
+
+		await test.step('The bulk actions toolbar is not available without delete permission', async () => {
+			await recycleBinPage.selectItems([contentName]);
+
+			await expect(
+				page
+					.getByTestId('visualization-mode-table')
+					.getByLabel('Actions')
+			).toBeHidden();
+		});
 	}
 );

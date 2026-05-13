@@ -81,8 +81,11 @@ export default function ContentSection({
 
 						<SectionTags
 							additionCount={section.additionCount}
-							deletionCount={section.deletionCount}
-							showDeletions={showDeletions}
+							deletionCount={
+								showDeletions
+									? section.deletionCount
+									: undefined
+							}
 						/>
 					</div>
 				</ClayLayout.ContentCol>

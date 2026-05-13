@@ -34,12 +34,10 @@ export default function ContentSelector({
 	const currentValue = value || {};
 	const errorId = errorMessage ? `${name}-error-message` : undefined;
 
-	const visibleSections = sections.filter((section) => {
-		const hasOnlyDeletions =
-			!section.additionCount && !!section.deletionCount;
-
-		return showDeletions || !hasOnlyDeletions;
-	});
+	const visibleSections = sections.filter(
+		(section) =>
+			showDeletions || !!section.additionCount || !section.deletionCount
+	);
 
 	return (
 		<div

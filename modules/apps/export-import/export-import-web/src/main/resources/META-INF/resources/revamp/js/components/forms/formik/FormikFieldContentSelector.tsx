@@ -15,16 +15,15 @@ interface FormikFieldContentSelectorProps {
 	'aria-labelledby'?: string;
 	'name': string;
 	'sections': PortletDataHandlerSection[];
-	'showDeletions'?: boolean;
 }
 
 export function FormikFieldContentSelector({
 	'aria-labelledby': ariaLabelledby,
 	name,
 	sections,
-	showDeletions,
 }: FormikFieldContentSelectorProps) {
 	const [field, meta, helpers] = useField<ContentSelection | undefined>(name);
+	const [{value: deletions}] = useField<boolean | undefined>('deletions');
 	const {setFieldTouched} = useFormikContext();
 
 	return (
@@ -37,7 +36,7 @@ export function FormikFieldContentSelector({
 				setFieldTouched(name, true, false);
 			}}
 			sections={sections}
-			showDeletions={showDeletions}
+			showDeletions={!!deletions}
 			value={field.value}
 		/>
 	);

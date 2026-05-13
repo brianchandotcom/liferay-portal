@@ -10,14 +10,12 @@ import React from 'react';
 export default function SectionTags({
 	additionCount,
 	deletionCount,
-	showDeletions = true,
 }: {
 	additionCount?: number;
 	deletionCount?: number;
-	showDeletions?: boolean;
 }) {
 	const hasItems = !!additionCount;
-	const hasDeletions = showDeletions && !!deletionCount;
+	const hasDeletions = !!deletionCount;
 
 	if (!hasItems && !hasDeletions) {
 		return null;
@@ -25,17 +23,17 @@ export default function SectionTags({
 
 	return (
 		<div className="align-items-center c-gap-2 d-inline-flex ml-2">
-			{hasItems ? (
+			{hasItems && (
 				<ClayLabel displayType="secondary">
 					{sub(Liferay.Language.get('x-items'), additionCount)}
 				</ClayLabel>
-			) : null}
+			)}
 
-			{hasDeletions ? (
+			{hasDeletions && (
 				<ClayLabel displayType="warning">
 					{sub(Liferay.Language.get('x-deletions'), deletionCount)}
 				</ClayLabel>
-			) : null}
+			)}
 		</div>
 	);
 }

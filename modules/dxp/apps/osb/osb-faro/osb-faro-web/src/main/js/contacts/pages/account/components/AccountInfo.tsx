@@ -4,7 +4,6 @@ import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayLink from '@clayui/link';
 import React, {useState} from 'react';
-import {SectionHeader} from 'shared/components/SectionHeader';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {useParams} from 'react-router-dom';
@@ -84,10 +83,6 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 
 	return (
 		<>
-			<SectionHeader
-				icon='plus-squares'
-				title={Liferay.Language.get('account-details')}
-			/>
 			<Card className={classNames(className, 'p-3')}>
 				<Card.Title>
 					<Text size={4} weight='semi-bold'>

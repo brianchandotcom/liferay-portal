@@ -34,10 +34,9 @@ describe('AccountInfo', () => {
 	afterEach(cleanup);
 
 	describe('rendering', () => {
-		it('should render the section header and card title', () => {
+		it('should render the card title', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			expect(screen.getByText('ACCOUNT DETAILS')).toBeInTheDocument();
 			expect(
 				screen.getByText('General Account Information')
 			).toBeInTheDocument();

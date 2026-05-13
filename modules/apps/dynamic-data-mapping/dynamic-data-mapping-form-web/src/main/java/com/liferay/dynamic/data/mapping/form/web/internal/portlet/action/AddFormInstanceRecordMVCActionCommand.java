@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLoca
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
@@ -110,7 +111,39 @@ public class AddFormInstanceRecordMVCActionCommand
 
 		_validatePublishStatus(actionRequest, ddmFormInstance);
 
-		_validateCaptcha(actionRequest, ddmFormInstance);
+		try {
+			_validateCaptcha(actionRequest, ddmFormInstance);
+		}
+		catch (CaptchaException captchaException) {
+			SessionErrors.add(
+				actionRequest, captchaException.getClass(), captchaException);
+
+			hideDefaultErrorMessage(actionRequest);
+
+			long ddmFormInstanceRecordId = ParamUtil.getLong(
+				actionRequest, "formInstanceRecordId");
+
+			if (ddmFormInstanceRecordId != 0) {
+				String mvcPath = "/display/edit_form_instance_record.jsp";
+
+				if (Objects.equals(
+						_portal.getPortletId(actionRequest),
+						DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN)) {
+
+					mvcPath = "/admin/edit_form_instance_record.jsp";
+				}
+
+				actionResponse.setRenderParameter("mvcPath", mvcPath);
+				actionResponse.setRenderParameter(
+					"formInstanceRecordId",
+					String.valueOf(ddmFormInstanceRecordId));
+				actionResponse.setRenderParameter(
+					"redirect",
+					ParamUtil.getString(actionRequest, "redirect"));
+			}
+
+			return;
+		}
 
 		DDMForm ddmForm = getDDMForm(ddmFormInstance);
 

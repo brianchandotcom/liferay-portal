@@ -35,7 +35,7 @@ const AccountProfileRoutes = () => {
 
 	const {channelId, groupId, id} = useParams();
 
-	const {data} = useRequest({
+	const {data, loading} = useRequest({
 		dataSourceFn: API.accounts.fetch,
 		variables: {accountId: id!, channelId: channelId!, groupId: groupId!}
 	});
@@ -79,7 +79,7 @@ const AccountProfileRoutes = () => {
 				<Suspense fallback={<Loading />}>
 					<Switch>
 						<BundleRouter
-							componentProps={{account: data}}
+							componentProps={{account: data, loading}}
 							data={Profile}
 							exact
 							path={Routes.CONTACTS_ACCOUNT_PROFILE}

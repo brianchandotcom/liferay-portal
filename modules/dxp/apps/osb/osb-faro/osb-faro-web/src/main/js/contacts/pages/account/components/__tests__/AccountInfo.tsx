@@ -82,6 +82,24 @@ describe('AccountInfo', () => {
 		});
 	});
 
+	describe('loading', () => {
+		it('should render the loading indicator and hide the content when loading is true', () => {
+			const {container} = render(
+				<AccountInfo account={mockAccount} loading />
+			);
+
+			expect(
+				container.querySelector('.loading-root')
+			).toBeInTheDocument();
+			expect(
+				screen.queryByText('General Account Information')
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('button', {name: 'View All'})
+			).not.toBeInTheDocument();
+		});
+	});
+
 	describe('details modal', () => {
 		it('should not render the modal until the View All button is clicked', () => {
 			render(<AccountInfo account={mockAccount} />);

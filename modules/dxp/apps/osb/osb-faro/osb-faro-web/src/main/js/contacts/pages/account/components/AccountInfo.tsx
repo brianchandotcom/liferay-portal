@@ -3,6 +3,7 @@ import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayLink from '@clayui/link';
+import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
@@ -26,6 +27,7 @@ export interface IAccount {
 interface IAccountInfoProps {
 	account?: IAccount;
 	className?: string;
+	loading?: boolean;
 }
 
 const infoDataLabels = {
@@ -56,9 +58,23 @@ const infoItem = (label: string, value?: string, link?: boolean) => (
 	</div>
 );
 
-const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
+const AccountInfo: React.FC<IAccountInfoProps> = ({
+	account,
+	className,
+	loading
+}) => {
 	const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 	const {id: accountId} = useParams<{id: string}>();
+
+	if (loading) {
+		return (
+			<Card className={classNames(className, 'p-3')}>
+				<Card.Body>
+					<Loading />
+				</Card.Body>
+			</Card>
+		);
+	}
 
 	const getValue = (key: keyof typeof infoDataLabels): string | undefined => {
 		if (!account) {

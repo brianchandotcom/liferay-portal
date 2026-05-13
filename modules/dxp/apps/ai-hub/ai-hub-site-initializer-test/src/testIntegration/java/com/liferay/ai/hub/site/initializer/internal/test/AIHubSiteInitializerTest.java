@@ -73,9 +73,11 @@ public class AIHubSiteInitializerTest {
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
 		_assertListTypeDefinitionExists(
-			"L_AI_HUB_CRAWL_JOB_STATUSES", "queued");
+			"L_AI_HUB_CRAWL_JOB_STATUSES", "abandoned", "dispatched", "failed",
+			"queued", "running", "succeeded");
 		_assertListTypeDefinitionExists(
-			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES", "clickToChat");
+			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES", "clickToChat", "cms",
+			"everywhere");
 
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
@@ -118,7 +120,7 @@ public class AIHubSiteInitializerTest {
 	}
 
 	private void _assertListTypeDefinitionExists(
-			String externalReferenceCode, String listTypeEntryKey)
+			String externalReferenceCode, String... listTypeEntryKeys)
 		throws Exception {
 
 		ListTypeDefinition listTypeDefinition =
@@ -126,11 +128,14 @@ public class AIHubSiteInitializerTest {
 				fetchListTypeDefinitionByExternalReferenceCode(
 					externalReferenceCode, TestPropsValues.getCompanyId());
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), listTypeEntryKey);
+		for (String listTypeEntryKey : listTypeEntryKeys) {
+			ListTypeEntry listTypeEntry =
+				_listTypeEntryLocalService.getListTypeEntry(
+					listTypeDefinition.getListTypeDefinitionId(),
+					listTypeEntryKey);
 
-		Assert.assertTrue(listTypeEntry.isSystem());
+			Assert.assertTrue(listTypeEntry.isSystem());
+		}
 	}
 
 	private void _assertObjectDefinitionExists(String externalReferenceCode)

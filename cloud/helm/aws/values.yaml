@@ -195,6 +195,14 @@ liferay-default:
                             cidr: 0.0.0.0/0
                             except:
                                 -   169.254.169.254/32
+            -   ports:
+                    -   port: 9200
+                        protocol: TCP
+                to:
+                    -   ipBlock:
+                            cidr: 0.0.0.0/0
+                            except:
+                                -   169.254.169.254/32
     portalBundleDenyList: []
     resources:
         limits:

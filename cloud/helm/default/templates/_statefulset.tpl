@@ -17,7 +17,7 @@ metadata:
     name: {{ include "liferay.name" .root }}{{ $suffix }}
     namespace: {{ include "liferay.namespace" .root }}
 spec:
-    {{- $statefulset := merge .statefulset (dict "liferayname" (include "liferay.name" .root)) }}
+    {{- $statefulset := merge (dict "liferayname" (include "liferay.name" .root)) .statefulset }}
     {{- if not .statefulset.autoscaling.enabled }}
     replicas: {{ .statefulset.replicaCount }}
     {{- end }}

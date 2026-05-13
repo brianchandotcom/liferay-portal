@@ -14,6 +14,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import isSPAEnabled from '../../../utils/isSPAEnabled';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	loginTest(),
@@ -60,15 +61,17 @@ test(
 
 			await widgetPagePage.addPortlet('Web Content Display');
 
-			await page
+			const addButton = page
 				.locator(
 					'[id^="_com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_"]'
 				)
-				.and(page.getByRole('button'))
-				.click();
+				.and(page.getByRole('button'));
+
+			await addButton.hover();
+			await addButton.click();
 
 			await page
-				.getByRole('menuitem', {name: 'Basic Web Content'})
+				.getByRole('menuitem',  {exact: true, name: 'Basic Web Content'})
 				.click();
 
 			const title = getRandomString();
@@ -77,24 +80,30 @@ test(
 
 			await page.getByLabel('Source', {exact: true}).click();
 
-			await page.locator('.CodeMirror-scroll').click();
-
 			const content =
-				'<form action="" method="post"><input type="submit" value="Button A" /> <input type="submit" value="Button B" /></form><p><span id="capturedFormButtonElement"></span></p><script>Liferay.once("beforeNavigate", function(){buttonValue = Liferay.SPA.__capturedFormButtonElement__.value});Liferay.once("endNavigate", function(){document.getElementById("capturedFormButtonElement").textContent = buttonValue;})</script>';
+				'<form action="" method="post"><input type="submit" value="Button A" /> <input type="submit" value="Button B" /></form>';
 
 			await page
-				.getByLabel('Content', {exact: true})
+				.locator('.ck-source-editing-area')
 				.getByRole('textbox')
 				.fill(content);
 
-			await journalEditArticlePage.publishArticle();
+			await page.getByLabel('Source', {exact: true}).click();
+
+			await journalEditArticlePage.publishArticle(true);
+
+			await waitForAlert(page, `Success:Your request completed successfully.`);
+
 		});
 
 		await test.step('Set Safari as the browser and check submit buttons in form', async () => {
 			const browser = await webkit.launch();
 
+			const baseURL = new URL(page.url()).origin;
+
 			const context = await browser.newContext({
 				...safari,
+				baseURL,
 			});
 
 			const incognitoPage = await context.newPage();
@@ -103,13 +112,27 @@ test(
 				`/web${site.friendlyUrlPath}${layout.friendlyURL}`
 			);
 
+			await incognitoPage.evaluate(() => {
+				(window as any).__capturedButtonValue = null;
+
+				(window as any).Liferay.once('beforeNavigate', function () {
+					(window as any).__capturedButtonValue =
+						(window as any).Liferay.SPA
+							.__capturedFormButtonElement__?.value ?? null;
+				});
+			});
+
 			await incognitoPage.getByRole('button', {name: 'Button B'}).click();
 
-			const capturedFormButtonElement = incognitoPage.locator(
-				'#capturedFormButtonElement'
+			await incognitoPage.waitForFunction(
+				() => (window as any).__capturedButtonValue !== null
 			);
 
-			await expect(capturedFormButtonElement).toHaveText('Button B');
+			const capturedValue = await incognitoPage.evaluate(
+				() => (window as any).__capturedButtonValue
+			);
+
+			expect(capturedValue).toBe('Button B');
 
 			// Dispose context once it's no longer needed.
 

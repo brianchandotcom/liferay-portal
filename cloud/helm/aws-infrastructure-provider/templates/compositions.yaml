@@ -1564,10 +1564,12 @@ spec:
                                         namespace: {{ $namespace }}
                             managementPolicies: ["Observe"]
                         {{- if .observed.resources }}
-                        {{- $elasticsearchHealth := dig "resource" "status" "atProvider" "manifest" "status" "health" "" (index .observed.resources "elasticsearch-observer") -}}
+                        {{- $elasticsearchObserver := default dict (index .observed.resources "elasticsearch-observer") }}
+                        {{- $elasticsearchSecretObserver := default dict (index .observed.resources "elasticsearch-secret-observer") }}
+                        {{- $elasticsearchHealth := dig "resource" "status" "atProvider" "manifest" "status" "health" "" $elasticsearchObserver -}}
                         {{- $isElasticsearchReady := or (eq $elasticsearchHealth "green") (eq $elasticsearchHealth "yellow") -}}
 
-                        {{- $elasticsearchPassword := dig "resource" "status" "atProvider" "manifest" "data" "elastic" "" (index .observed.resources "elasticsearch-secret-observer") -}}
+                        {{- $elasticsearchPassword := dig "resource" "status" "atProvider" "manifest" "data" "elastic" "" $elasticsearchSecretObserver -}}
 
                         {{- if and $isElasticsearchReady $elasticsearchPassword }}
                         ---

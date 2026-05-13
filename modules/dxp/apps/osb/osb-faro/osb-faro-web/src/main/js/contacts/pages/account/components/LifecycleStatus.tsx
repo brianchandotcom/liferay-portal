@@ -1,3 +1,4 @@
+import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
@@ -11,6 +12,8 @@ import {
 } from 'contacts/pages/account/utils/constants';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
+import {useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
 
 interface LifecycleStatusProps {
 	className?: string;
@@ -40,50 +43,37 @@ const getStageLabel = (stage: IAccountLifecycleStageStatus) => {
 	return entry?.label ?? stage.description ?? stage.stageType;
 };
 
-// TODO: replace with real data once the AccountLifecycleStatus endpoint is wired.
-const MOCK_LIFECYCLE_STATUS: IAccountLifecycleStatus = {
-	id: 'mock-status',
-	name: 'Default Lifecycle',
-	stages: [
-		{
-			displayOrder: 0,
-			endDate: '2026-01-16T00:00:00.000Z',
-			id: 'mock-stage-aware',
-			stageType: LifecycleStages.AWARE,
-			startDate: '2026-01-04T00:00:00.000Z'
-		},
-		{
-			displayOrder: 1,
-			id: 'mock-stage-engaged',
-			stageType: LifecycleStages.ENGAGED,
-			startDate: '2026-01-16T00:00:00.000Z'
-		},
-		{
-			displayOrder: 2,
-			id: 'mock-stage-pipeline',
-			stageType: LifecycleStages.PIPELINE
-		},
-		{
-			displayOrder: 3,
-			id: 'mock-stage-onboarding',
-			stageType: LifecycleStages.ONBOARDING
-		},
-		{
-			displayOrder: 4,
-			id: 'mock-stage-established',
-			stageType: LifecycleStages.ESTABLISHED
-		},
-		{
-			displayOrder: 5,
-			id: 'mock-stage-at-risk',
-			stageType: LifecycleStages.AT_RISK
-		}
-	]
-};
-
 const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
-	const lifecycle = MOCK_LIFECYCLE_STATUS;
-	const stages = (lifecycle.stages ?? [])
+	const {groupId, id: accountId} = useParams<{
+		groupId: string;
+		id: string;
+	}>();
+
+	const {data: lifecyclesData} = useRequest({
+		dataSourceFn: API.lifecycle.fetchAccountLifecycles as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
+		variables: {groupId}
+	});
+
+	const matchingLifecycle = (lifecyclesData ?? []).find(
+		(item: {accountId?: string}) => item.accountId === accountId
+	);
+
+	const {data: statusData} = useRequest({
+		dataSourceFn: API.lifecycle.fetchAccountLifecycleStatus as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
+		skipRequest: !matchingLifecycle?.id,
+		variables: {
+			accountId,
+			accountLifecycleId: matchingLifecycle?.id ?? '',
+			groupId
+		}
+	});
+
+	const lifecycle: IAccountLifecycleStatus | undefined = statusData;
+	const stages = (lifecycle?.stages ?? [])
 		.slice()
 		.sort((a, b) => a.displayOrder - b.displayOrder);
 
@@ -189,11 +179,9 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 								{Liferay.Language.get('at-risk')}
 							</Text>
 							<Text color='secondary' size={3}>
-								{Liferay.Language.get(
-									isAtRisk
-										? Liferay.Language.get('yes')
-										: Liferay.Language.get('no')
-								)}
+								{isAtRisk
+									? Liferay.Language.get('yes')
+									: Liferay.Language.get('no')}
 							</Text>
 						</div>
 					</div>

@@ -47,3 +47,29 @@ export async function fetchLifecycleStages({
 		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/stages`
 	});
 }
+
+export async function fetchAccountLifecycles({
+	groupId
+}: {
+	groupId: string;
+}): Promise<any> {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/account-lifecycle`
+	});
+}
+
+export async function fetchAccountLifecycleStatus({
+	accountId,
+	accountLifecycleId,
+	groupId
+}: {
+	accountId: string;
+	accountLifecycleId: string;
+	groupId: string;
+}): Promise<any> {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/account/${accountId}/account-lifecycles/${accountLifecycleId}`
+	});
+}

@@ -34,12 +34,12 @@ function main {
 }
 
 function _check_terraform_version {
-	local required="${1}"
-
 	local found
 
 	found=$(terraform --version | awk '/^Terraform v/ {print $2; exit}')
 	found="${found#v}"
+
+	local required="${1}"
 
 	local lowest
 

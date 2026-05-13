@@ -48,7 +48,7 @@ public class AccountController extends BaseFaroController {
 	@GET
 	@Path("/{id}/details")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroFDSResultsDisplay getAccountDetailsDisplay(
+	public FaroFDSResultsDisplay getAccountDetailsFaroFDSResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize)
 		throws Exception {

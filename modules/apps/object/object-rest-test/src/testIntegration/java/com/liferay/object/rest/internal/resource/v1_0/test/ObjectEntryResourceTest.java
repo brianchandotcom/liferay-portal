@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -11351,60 +11353,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostObjectEntryWithCrossSiteTaxonomyCategories()
-		throws Exception {
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), new ServiceContext());
-
-		TaxonomyCategory taxonomyCategory =
-			_postTaxonomyVocabularyTaxonomyCategory(
-				_group.getGroupId(), assetVocabulary.getVocabularyId());
-
-		// taxonomyCategoryBriefs
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"taxonomyCategoryBriefs",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"scope",
-							JSONUtil.put(
-								"externalReferenceCode",
-								_group.getExternalReferenceCode()
-							).put(
-								"type", "Site"
-							)
-						).put(
-							"taxonomyCategoryExternalReferenceCode",
-							taxonomyCategory.getExternalReferenceCode()
-						))
-				).toString(),
-				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
-				Http.Method.POST));
-
-		// taxonomyCategoryIds
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
-				).put(
-					"taxonomyCategoryIds",
-					JSONUtil.putAll(taxonomyCategory.getId())
-				).toString(),
-				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
-				Http.Method.POST));
-	}
-
-	@Test
 	public void testPostObjectEntryWithKeywordsAndTaxonomyCategoryIdsWhenCategorizationDisabled()
 		throws Exception {
 
@@ -11576,6 +11524,8 @@ public class ObjectEntryResourceTest {
 				jsonObject.getLong("id")));
 
 		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+
+		_testPostObjectEntryWithCrossSiteTaxonomyCategories();
 	}
 
 	@Test
@@ -20784,6 +20734,164 @@ public class ObjectEntryResourceTest {
 			JSONCompareMode.LENIENT);
 	}
 
+	private void _testPostObjectEntryWithCrossSiteTaxonomyCategories()
+		throws Exception {
+
+		// Accept a category from a connected depot
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntry.getDepotEntryId(), _testGroupId);
+
+		AssetVocabulary depotAssetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), depotEntry.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		TaxonomyCategory depotTaxonomyCategory =
+			_postTaxonomyVocabularyTaxonomyCategory(
+				depotEntry.getGroupId(),
+				depotAssetVocabulary.getVocabularyId());
+
+		Assert.assertNotNull(
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(depotTaxonomyCategory.getId())
+				).toString(),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+				Http.Method.POST
+			).get(
+				"id"
+			));
+
+		_depotEntryGroupRelLocalService.deleteDepotEntryGroupRel(
+			depotEntryGroupRel.getDepotEntryGroupRelId());
+
+		// Accept a category from a parent site
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), new ServiceContext());
+
+		TaxonomyCategory taxonomyCategory =
+			_postTaxonomyVocabularyTaxonomyCategory(
+				_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		Group childGroup = GroupTestUtil.addGroup(_group.getGroupId());
+
+		Assert.assertNotNull(
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(taxonomyCategory.getId())
+				).toString(),
+				_getEndpoint(
+					_siteScopedObjectDefinition1, childGroup.getGroupId()),
+				Http.Method.POST
+			).get(
+				"id"
+			));
+
+		_groupLocalService.deleteGroup(childGroup);
+
+		// Reject a category for a company-scoped entry
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(taxonomyCategory.getId())
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST));
+
+		// Reject a category from a foreign site
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(taxonomyCategory.getId())
+				).toString(),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+				Http.Method.POST));
+
+		// Reject a category via UPSERT
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryIds",
+					JSONUtil.put(taxonomyCategory.getId())
+				).toString(),
+				StringBundler.concat(
+					_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+					"/by-external-reference-code/",
+					RandomTestUtil.randomString()),
+				Http.Method.PUT));
+
+		// Reject a category without leaking an empty asset category
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Assert.assertNull(
+			AssetCategoryLocalServiceUtil.
+				fetchAssetCategoryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+				).put(
+					"taxonomyCategoryBriefs",
+					JSONUtil.put(
+						JSONUtil.put(
+							"scope",
+							JSONUtil.put(
+								"externalReferenceCode",
+								_group.getExternalReferenceCode()
+							).put(
+								"type", "Site"
+							)
+						).put(
+							"taxonomyCategoryExternalReferenceCode",
+							externalReferenceCode
+						))
+				).toString(),
+				_getEndpoint(_siteScopedObjectDefinition1, _testGroupId),
+				Http.Method.POST));
+
+		Assert.assertNull(
+			AssetCategoryLocalServiceUtil.
+				fetchAssetCategoryByExternalReferenceCode(
+					externalReferenceCode, _group.getGroupId()));
+
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+		_assetVocabularyLocalService.deleteVocabulary(depotAssetVocabulary);
+	}
+
 	private void _testPostScopeScopeKey(Object scopeKey1, Object scopeKey2)
 		throws Exception {
 
@@ -22175,6 +22283,9 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

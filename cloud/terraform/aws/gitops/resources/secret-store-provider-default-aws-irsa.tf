@@ -11,11 +11,9 @@ resource "aws_iam_policy" "secret_store_policy" {
 					]
 					Effect="Allow"
 					Resource=concat(
-						var.argocd_sso_config.enable_sso ? [
-							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${var.argocd_sso_config.credentials_secret_name}*",
-						] : [],
 						[
 							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.certificates}*",
+							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.credentials}*",
 							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.licenses}*",
 						],
 						[

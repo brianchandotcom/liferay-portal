@@ -55,7 +55,9 @@ describe('RecentEngagementChart component', () => {
 	let container: HTMLElement;
 
 	beforeEach(() => {
-		const view = render(<RecentEngagementChart />);
+		const view = render(
+			<RecentEngagementChart isAnalyticsCloudConfigured={true} />
+		);
 
 		container = view.container;
 	});

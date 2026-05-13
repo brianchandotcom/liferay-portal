@@ -55,7 +55,7 @@ describe('VisitFrequencyChart component', () => {
 	let container: HTMLElement;
 
 	beforeEach(() => {
-		const view = render(<FrequencyChart />);
+		const view = render(<FrequencyChart isAnalyticsCloudConfigured={true} />);
 
 		container = view.container;
 	});

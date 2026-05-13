@@ -200,6 +200,10 @@ public class TestrayProject {
 
 	public TestrayComponent getTestrayComponentByName(String componentName) {
 		synchronized (_testrayComponentsID) {
+			if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
+				return null;
+			}
+
 			TestrayComponent testrayComponent = _testrayComponentsName.get(
 				componentName);
 

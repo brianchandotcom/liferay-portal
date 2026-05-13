@@ -77,22 +77,9 @@ public class AccountController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/metrics")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public List<AccountMetric> getAccountMetrics(
-			@PathParam("groupId") long groupId,
-			@QueryParam("channelId") long channelId)
-		throws Exception {
-
-		return contactsEngineClient.getAccountMetrics(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
-			channelId);
-	}
-
-	@GET
 	@Path("/distribution")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getDistribution(
+	public FaroResultsDisplay getAccountDistributionFaroResultsDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") String channelId,
 			@QueryParam("fieldMappingFieldName") String fieldMappingFieldName,
@@ -110,6 +97,19 @@ public class AccountController extends BaseFaroController {
 				channelId, fieldMappingFieldName, filterString,
 				individualSegmentId, count, numberOfBins,
 				orderByFieldsFaroParam.getValue()));
+	}
+
+	@GET
+	@Path("/metrics")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public List<AccountMetric> getAccountMetrics(
+			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") long channelId)
+		throws Exception {
+
+		return contactsEngineClient.getAccountMetrics(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			channelId);
 	}
 
 	@Override

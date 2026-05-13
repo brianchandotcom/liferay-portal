@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryCategoryController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay getAssetSummaryCategories(
+	public FaroFDSResultsDisplay getAssetSummaryCategoriesFaroFDSResultsDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("keywords") String keywords,

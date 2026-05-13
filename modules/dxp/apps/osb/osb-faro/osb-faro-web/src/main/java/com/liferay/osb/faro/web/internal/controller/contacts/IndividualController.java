@@ -86,31 +86,10 @@ public class IndividualController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/distribution")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getDistribution(
-			@PathParam("groupId") long groupId,
-			@QueryParam("channelId") String channelId,
-			@QueryParam("fieldMappingFieldName") String fieldMappingFieldName,
-			@QueryParam("individualSegmentId") String individualSegmentId,
-			@QueryParam("count") int count,
-			@QueryParam("numberOfBins") int numberOfBins,
-			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
-				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
-		throws Exception {
-
-		return new FaroResultsDisplay(
-			contactsEngineClient.getIndividualsDistribution(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, fieldMappingFieldName, individualSegmentId, count,
-				numberOfBins, orderByFieldsFaroParam.getValue()));
-	}
-
-	@GET
 	@Path("/enriched_profiles_count")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	@SuppressWarnings("unchecked")
-	public FaroResultsDisplay getEnrichedProfilesCount(
+	public FaroResultsDisplay getEnrichedProfilesCountFaroResultsDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId)
 		throws Exception {
@@ -141,6 +120,27 @@ public class IndividualController extends BaseFaroController {
 			contactsEngineClient.getIndividual(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
 				channelId));
+	}
+
+	@GET
+	@Path("/distribution")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public FaroResultsDisplay getIndividualDistributionFaroResultsDisplay(
+			@PathParam("groupId") long groupId,
+			@QueryParam("channelId") String channelId,
+			@QueryParam("fieldMappingFieldName") String fieldMappingFieldName,
+			@QueryParam("individualSegmentId") String individualSegmentId,
+			@QueryParam("count") int count,
+			@QueryParam("numberOfBins") int numberOfBins,
+			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
+				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
+		throws Exception {
+
+		return new FaroResultsDisplay(
+			contactsEngineClient.getIndividualsDistribution(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				channelId, fieldMappingFieldName, individualSegmentId, count,
+				numberOfBins, orderByFieldsFaroParam.getValue()));
 	}
 
 	@Override

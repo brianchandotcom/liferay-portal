@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryMimeTypeController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay getAssetSummaryMimeTypes(
+	public FaroFDSResultsDisplay getAssetSummaryMimeTypesFaroFDSResultsDisplay(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("page") int page,

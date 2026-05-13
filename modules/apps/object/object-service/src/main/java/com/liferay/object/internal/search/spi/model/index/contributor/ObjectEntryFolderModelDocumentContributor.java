@@ -11,10 +11,8 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,12 +43,6 @@ public class ObjectEntryFolderModelDocumentContributor
 			objectEntryFolder.getTreePath(), CharPool.SLASH);
 
 		document.addKeyword(Field.TREE_PATH, parts);
-
-		if (objectEntryFolder.getStatus() ==
-				WorkflowConstants.STATUS_IN_TRASH) {
-
-			document.addKeyword(Field.VIEW_ACTION_ID, ActionKeys.DELETE);
-		}
 
 		String cmsSection = _getCMSSection(parts);
 

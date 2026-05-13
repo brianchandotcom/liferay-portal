@@ -102,7 +102,11 @@ describe('referencedObjects', () => {
 			);
 
 			expect(
-				referencedProperties.getIn(['account', 'organization', 'revenue'])
+				referencedProperties.getIn([
+					'account',
+					'organization',
+					'revenue'
+				])
 			).toBeTruthy();
 		});
 

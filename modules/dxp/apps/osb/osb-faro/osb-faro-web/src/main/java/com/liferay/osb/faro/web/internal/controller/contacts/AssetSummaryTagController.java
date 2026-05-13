@@ -30,17 +30,18 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryTagController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay<AssetSummaryTag> getAssetSummaryTags(
-			@PathParam("groupId") long groupId,
-			@QueryParam("channelId") long channelId,
-			@QueryParam("keywords") String keywords,
-			@QueryParam("page") int page,
-			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
-			@QueryParam("rangeEnd") String rangeEnd,
-			@QueryParam("rangeKey") int rangeKey,
-			@QueryParam("rangeStart") String rangeStart,
-			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
-				sortString)
+	public FaroFDSResultsDisplay<AssetSummaryTag>
+			getAssetSummaryTagsFaroFDSResultsDisplay(
+				@PathParam("groupId") long groupId,
+				@QueryParam("channelId") long channelId,
+				@QueryParam("keywords") String keywords,
+				@QueryParam("page") int page,
+				@DefaultValue("20") @QueryParam("pageSize") int pageSize,
+				@QueryParam("rangeEnd") String rangeEnd,
+				@QueryParam("rangeKey") int rangeKey,
+				@QueryParam("rangeStart") String rangeStart,
+				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
+					sortString)
 		throws Exception {
 
 		return new FaroFDSResultsDisplay<>(

@@ -31,7 +31,7 @@ public class AssetSummaryVocabularyController extends BaseFaroController {
 
 	@GET
 	public FaroFDSResultsDisplay<AssetSummaryVocabulary>
-			getAssetSummaryVocabularies(
+			getAssetSummaryVocabulariesFaroFDSResultsDisplay(
 				@PathParam("groupId") long groupId,
 				@QueryParam("channelId") long channelId,
 				@QueryParam("keywords") String keywords,

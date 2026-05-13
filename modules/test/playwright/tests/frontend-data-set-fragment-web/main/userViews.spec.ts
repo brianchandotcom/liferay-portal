@@ -14,6 +14,7 @@ import {createRecipientWithDataSetViewerRole} from '../../../helpers/DataSetMana
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {NotificationsPage} from '../../notifications-web/main/pages/NotificationsPage';
 import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 export const test = mergeTests(
@@ -746,6 +747,97 @@ test(
 					name: sharedSnapshotName,
 				})
 			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Recipient receives a notification when a user view is shared with them',
+	{tag: '@LPD-87024'},
+	async ({
+		apiHelpers,
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+	}) => {
+		const sharedSnapshotName = `Shared Snapshot ${getRandomString().slice(
+			0,
+			8
+		)}`;
+
+		let snapshotId: number;
+		let user: {
+			alternateName: string;
+			id: number | string;
+			name: string;
+		};
+
+		await test.step('Enable User Views (snapshots)', async () => {
+			await dataSetManagerApiHelpers.updateDataSet({
+				erc: dataSetERC,
+				snapshotsEnabled: true,
+			});
+		});
+
+		await test.step('Configure Data Set fragment on the page', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Create a snapshot as the current user', async () => {
+			const snapshot =
+				(await dataSetManagerApiHelpers.createDataSetSnapshot({
+					dataSetERC,
+					snapshotName: sharedSnapshotName,
+				})) as {id: number};
+
+			snapshotId = snapshot.id;
+		});
+
+		await test.step('Create a recipient user with VIEW permission on Data Sets and snapshots', async () => {
+			user = await createRecipientWithDataSetViewerRole({
+				apiHelpers,
+				page,
+			});
+		});
+
+		await test.step('Share the snapshot with the recipient', async () => {
+			await apiHelpers.objectEntry.postObjectEntryCollaborators(
+				[
+					{
+						actionIds: ['VIEW'],
+						id: user.id,
+						share: false,
+						type: 'User',
+					},
+				],
+				'data-set-admin/snapshots',
+				snapshotId
+			);
+		});
+
+		await test.step('Switch to the recipient user', async () => {
+			await performUserSwitch(page, user.alternateName);
+		});
+
+		await test.step('Recipient sees the share notification', async () => {
+			const notificationsPage = new NotificationsPage(page);
+
+			await notificationsPage.goto(user.name);
+
+			await expect(
+				notificationsPage.sharingNotificationMessage(
+					'Test Test',
+					sharedSnapshotName
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Switch back to the admin user so afterEach cleanup runs with delete permissions', async () => {
+			await performUserSwitch(page, 'test');
 		});
 	}
 );

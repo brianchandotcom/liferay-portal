@@ -605,5 +605,6 @@ export async function createRecipientWithDataSetViewerRole({
 	return {
 		alternateName: recipient.alternateName,
 		id: recipient.id,
+		name: recipient.name,
 	};
 }

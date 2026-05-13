@@ -36,7 +36,7 @@ public class JavaExpandoBridgeAttributesCallOrderCheck
 			String variableName = matcher1.group(1);
 
 			Pattern pattern = Pattern.compile(
-				"\\w+Persistence\\.update\\(\\s*" + variableName + "\\s*\\)");
+				"\\w+Persistence\\.update\\(\\s*" + variableName + "\\b");
 
 			Matcher matcher2 = pattern.matcher(followingCode);
 

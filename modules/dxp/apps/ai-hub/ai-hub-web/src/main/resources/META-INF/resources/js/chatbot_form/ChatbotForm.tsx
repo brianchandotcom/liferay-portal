@@ -98,22 +98,6 @@ function readFileAsBase64(file: File): Promise<string> {
 	});
 }
 
-const availableAgentDefinitions = await (async () => {
-	try {
-		const response = await getAgentDefinitions();
-
-		return (
-			(response.items || []).map((item: AgentDefinitionOption) => ({
-				externalReferenceCode: item.externalReferenceCode,
-				title: item.title,
-			})) || []
-		);
-	}
-	catch (error) {
-		console.error(error);
-	}
-})();
-
 export default function ChatbotForm({
 	accountEntryExternalReferenceCode,
 	backURL,
@@ -133,6 +117,9 @@ export default function ChatbotForm({
 	externalReferenceCode: string;
 	portalURL: string;
 }) {
+	const [availableAgentDefinitions, setAvailableAgentDefinitions] = useState<
+		AgentDefinitionOption[]
+	>([]);
 	const [formData, setFormData] = useState<Chatbot>({} as Chatbot);
 	const [
 		existingChatbotExternalReferenceCode,
@@ -148,6 +135,23 @@ export default function ChatbotForm({
 	const [companyLogoChanged, setCompanyLogoChanged] = useState(false);
 	const [companyLogoLoading, setCompanyLogoLoading] = useState(false);
 	const companyLogoInputRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		getAgentDefinitions()
+			.then((response) => {
+				setAvailableAgentDefinitions(
+					(response.items || []).map(
+						(item: AgentDefinitionOption) => ({
+							externalReferenceCode: item.externalReferenceCode,
+							title: item.title,
+						})
+					)
+				);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
 
 	const handleInputChange = (
 		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

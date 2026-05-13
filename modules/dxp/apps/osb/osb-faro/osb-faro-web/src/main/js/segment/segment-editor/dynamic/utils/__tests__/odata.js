@@ -657,7 +657,7 @@ describe('odata', () => {
 
 		function buildVocabQuery(filterStr, operator = 'ge', count = 1) {
 			return `(activities.filterByCount(filter='${encodeFilter(
-				filterStr
+				`(${filterStr})`
 			)}',operator='${operator}',value=${count}))`;
 		}
 

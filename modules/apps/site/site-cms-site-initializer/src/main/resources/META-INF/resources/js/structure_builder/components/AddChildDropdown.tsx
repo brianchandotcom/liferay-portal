@@ -5,7 +5,6 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {useCache} from '../contexts/CacheContext';

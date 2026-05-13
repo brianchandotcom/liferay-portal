@@ -23,7 +23,6 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 				href="<%= viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL() %>"
 				label='<%= LanguageUtil.get(request, "view-all") %>'
 				small="<%= true %>"
-				title='<%= LanguageUtil.get(request, "view-all") %>'
 			/>
 		</div>
 

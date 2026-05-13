@@ -370,7 +370,7 @@ function SidePanel(props: SidePanelProps) {
 							ref={panel === item.title ? buttonRef : null}
 							symbol={item.icon}
 							title={item.title}
-						></ClayButtonWithIcon>
+						/>
 					</VerticalBar.Item>
 				)}
 			</VerticalBar.Bar>

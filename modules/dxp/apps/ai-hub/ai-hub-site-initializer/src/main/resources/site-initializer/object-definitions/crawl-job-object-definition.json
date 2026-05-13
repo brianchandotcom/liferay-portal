@@ -103,19 +103,6 @@
 		{
 			"DBType": "String",
 			"businessType": "Text",
-			"externalReferenceCode": "INDEX_NAME",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Index Name"
-			},
-			"name": "indexName",
-			"system": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
 			"externalReferenceCode": "EXECUTION_ID",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
@@ -123,19 +110,6 @@
 				"en_US": "Execution ID"
 			},
 			"name": "executionId",
-			"system": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"externalReferenceCode": "SEED_URL",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Seed URL"
-			},
-			"name": "seedURL",
 			"system": true,
 			"type": "String"
 		},

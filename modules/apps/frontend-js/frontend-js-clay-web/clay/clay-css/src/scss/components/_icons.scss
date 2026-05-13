@@ -15,21 +15,28 @@
 }
 
 .lexicon-icon-arrows-all {
+	background-color: hsl(from #{$white} h s l / 0.6);
+	border: 1px solid $border-color;
+	border-radius: 0.1413em; // 6.5/46
 	height: 0.73913em; // 34/46 aspect ratio
 	margin-top: 0;
 	width: 1em;
+
+	.lx-arrows-all-chevron {
+		fill: $white;
+	}
 }
 
-.arrows-state-horizontal {
-	.arrows-keycap-down,
-	.arrows-keycap-up {
+.clay-keyboard-arrows-horizontal {
+	.lx-arrows-all-keycap-down,
+	.lx-arrows-all-keycap-up {
 		fill: $gray-300;
 	}
 }
 
-.arrows-state-vertical {
-	.arrows-keycap-left,
-	.arrows-keycap-right {
+.clay-keyboard-arrows-vertical {
+	.lx-arrows-all-keycap-left,
+	.lx-arrows-all-keycap-right {
 		fill: $gray-300;
 	}
 }

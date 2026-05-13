@@ -33,7 +33,7 @@ describe('KeyboardArrowsIndicator', () => {
 
 			expect(
 				container.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveClass(`arrows-state-${direction}`);
+			).toHaveClass(`clay-keyboard-arrows-${direction}`);
 		}
 	);
 

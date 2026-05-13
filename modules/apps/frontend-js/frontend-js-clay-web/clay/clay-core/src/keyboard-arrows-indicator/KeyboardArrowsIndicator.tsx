@@ -18,9 +18,10 @@ export type Props = {
 
 	/**
 	 * Which arrow keys are active for navigation. Selects the matching
-	 * state class (`arrows-state-all`, `arrows-state-horizontal`, or
-	 * `arrows-state-vertical`) on the wrapper, which CSS uses to mute the
-	 * inactive keycap paths inside the single `arrows-all` icon.
+	 * state class (`clay-keyboard-arrows-all`,
+	 * `clay-keyboard-arrows-horizontal`, or `clay-keyboard-arrows-vertical`)
+	 * on the wrapper, which CSS uses to mute the inactive keycap paths
+	 * inside the single `arrows-all` icon.
 	 */
 	direction: Direction;
 
@@ -57,7 +58,7 @@ export function KeyboardArrowsIndicator({
 			aria-label={label ?? DEFAULT_LABELS[direction]}
 			className={classNames(
 				'clay-keyboard-arrows-indicator',
-				`arrows-state-${direction}`,
+				`clay-keyboard-arrows-${direction}`,
 				className
 			)}
 			role="img"

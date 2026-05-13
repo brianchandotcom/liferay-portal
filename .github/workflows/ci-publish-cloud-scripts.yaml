@@ -13,12 +13,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             -   env:
                     BUCKET: liferay-cloud-native-bootstrap-nonprd
                     PROVIDER: ${{matrix.provider}}
@@ -64,12 +64,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             -   name: Set up variables
                 run: |
                     function main {
@@ -153,12 +153,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             -   name: Set up variables
                 run: |
                     function main {

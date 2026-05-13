@@ -131,8 +131,10 @@ jobs:
         with:
             chart_name: liferay-aws
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_LIFERAY}}
             registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
             working_directory: ./cloud/helm/aws
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_LIFERAY}}
     publish-aws-infrastructure:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
@@ -142,8 +144,10 @@ jobs:
         with:
             chart_name: liferay-aws-infrastructure
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
             working_directory: ./cloud/helm/aws-infrastructure
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
     publish-aws-infrastructure-provider:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
@@ -153,8 +157,10 @@ jobs:
         with:
             chart_name: liferay-aws-infrastructure-provider
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
             working_directory: ./cloud/helm/aws-infrastructure-provider
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
     publish-aws-marketplace:
         env:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com
@@ -255,8 +261,10 @@ jobs:
         with:
             chart_name: liferay-default
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_LIFERAY}}
             registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
             working_directory: ./cloud/helm/default
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_LIFERAY}}
     publish-gcp:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
@@ -267,8 +275,10 @@ jobs:
         with:
             chart_name: liferay-gcp
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_LIFERAY}}
             registry: us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart
             working_directory: ./cloud/helm/gcp
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_LIFERAY}}
     publish-gcp-infrastructure:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
@@ -278,8 +288,10 @@ jobs:
         with:
             chart_name: liferay-gcp-infrastructure
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
             working_directory: ./cloud/helm/gcp-infrastructure
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
     publish-gcp-infrastructure-provider:
         if: |
             (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
@@ -289,8 +301,10 @@ jobs:
         with:
             chart_name: liferay-gcp-infrastructure-provider
             pr_number: ${{github.event.pull_request.number}}
+            project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             registry: us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart
             working_directory: ./cloud/helm/gcp-infrastructure-provider
+            workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
     release-helm-charts:
         env:
             CR_TOKEN: ${{secrets.GITHUB_TOKEN}}

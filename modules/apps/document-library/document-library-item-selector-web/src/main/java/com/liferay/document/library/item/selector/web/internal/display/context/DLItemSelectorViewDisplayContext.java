@@ -421,9 +421,20 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		throws PortalException {
 
 		if (httpServletRequest.getParameter("folderId") != null) {
-			return ParamUtil.getLong(
+			long folderId = ParamUtil.getLong(
 				httpServletRequest, "folderId",
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			if (folderId > 0) {
+				DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
+					folderId);
+
+				if ((dlFolder == null) || dlFolder.isInTrash()) {
+					folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				}
+			}
+
+			return folderId;
 		}
 
 		long selectedFileEntryId = ParamUtil.getLong(

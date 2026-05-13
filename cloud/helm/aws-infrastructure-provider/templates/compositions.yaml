@@ -1528,9 +1528,9 @@ spec:
                         {{- end -}}
 
                         {{- $elasticsearchSpec := $xr.spec.search.elasticsearch -}}
-                        {{- if $elasticsearchSpec.enabled -}}
+                        {{- if $elasticsearchSpec.enabled }}
                         {{- $elasticsearchName := printf "%s-es" $xr.metadata.name -}}
-                        {{- $elasticsearchSecretName := printf "%s-es-elastic-user" $elasticsearchName -}}
+                        {{- $elasticsearchSecretName := printf "%s-es-elastic-user" $elasticsearchName }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object

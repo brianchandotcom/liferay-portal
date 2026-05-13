@@ -43,9 +43,7 @@ const LifecycleStagesSection = () => {
 		error: stagesError,
 		loading: stagesLoading
 	} = useRequest({
-		dataSourceFn: API.lifecycle.fetchLifecycleStages as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.lifecycle.fetchLifecycleStages,
 		variables: {
 			country: filters.countryFilter,
 			groupId,
@@ -69,7 +67,7 @@ const LifecycleAccounts = () => {
 	const {channelId, groupId} = useParams();
 
 	return (
-		<>
+		<section>
 			<SectionHeader
 				icon='box-container'
 				title={Liferay.Language.get('accounts')}
@@ -82,7 +80,7 @@ const LifecycleAccounts = () => {
 				industryFilter={filters.industryFilter}
 				lifecycleStageFilter={filters.lifecycleStageFilter}
 			/>
-		</>
+		</section>
 	);
 };
 

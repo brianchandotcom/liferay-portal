@@ -3,9 +3,14 @@ import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import Loading from 'shared/components/Loading';
 import MultiStepNav from '@clayui/multi-step-nav';
 import React from 'react';
-import {formatUTCDate} from 'shared/util/date';
+import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
+import {
+	IAccountLifecycleStageStatus,
+	IAccountLifecycleStatus
+} from 'shared/api/lifecycle';
 import {
 	LifecycleStages,
 	lifecycleStagesLabelMap
@@ -19,24 +24,6 @@ interface LifecycleStatusProps {
 	className?: string;
 }
 
-interface IAccountLifecycleStageStatus {
-	description?: string;
-	displayOrder: number;
-	endDate?: string;
-	id: string;
-	maxDuration?: number;
-	stageType: string;
-	startDate?: string;
-}
-
-interface IAccountLifecycleStatus {
-	id: string;
-	name: string;
-	stages?: IAccountLifecycleStageStatus[];
-}
-
-const STAGE_DATE_FORMAT = 'MMM D, YYYY';
-
 const getStageLabel = (stage: IAccountLifecycleStageStatus) => {
 	const entry = lifecycleStagesLabelMap[stage.stageType as LifecycleStages];
 
@@ -49,21 +36,17 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		id: string;
 	}>();
 
-	const {data: lifecyclesData} = useRequest({
-		dataSourceFn: API.lifecycle.fetchAccountLifecycles as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+	const {data: lifecyclesData, loading: lifecyclesLoading} = useRequest({
+		dataSourceFn: API.lifecycle.fetchAccountLifecycles,
 		variables: {groupId}
 	});
 
-	const matchingLifecycle = (lifecyclesData ?? []).find(
-		(item: {accountId?: string}) => item.accountId === accountId
+	const matchingLifecycle = lifecyclesData?.find(
+		item => item.accountId === accountId
 	);
 
-	const {data: statusData} = useRequest({
-		dataSourceFn: API.lifecycle.fetchAccountLifecycleStatus as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+	const {data: statusData, loading: statusLoading} = useRequest({
+		dataSourceFn: API.accounts.fetchLifecycleStatus,
 		skipRequest: !matchingLifecycle?.id,
 		variables: {
 			accountId,
@@ -71,6 +54,19 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 			groupId
 		}
 	});
+
+	const isLoading =
+		lifecyclesLoading || (Boolean(matchingLifecycle?.id) && statusLoading);
+
+	if (isLoading) {
+		return (
+			<Card className={classNames(className, 'p-3')}>
+				<Card.Body>
+					<Loading />
+				</Card.Body>
+			</Card>
+		);
+	}
 
 	const lifecycle: IAccountLifecycleStatus | undefined = statusData;
 	const stages = (lifecycle?.stages ?? [])
@@ -125,7 +121,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 										stage.startDate
 											? formatUTCDate(
 													stage.startDate,
-													STAGE_DATE_FORMAT
+													CUSTOM_DATE_FORMAT
 											  )
 											: undefined
 									}
@@ -170,7 +166,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 							<Text color='secondary' size={3}>
 								{formatUTCDate(
 									activeStage.startDate,
-									STAGE_DATE_FORMAT
+									CUSTOM_DATE_FORMAT
 								)}
 							</Text>
 						)}

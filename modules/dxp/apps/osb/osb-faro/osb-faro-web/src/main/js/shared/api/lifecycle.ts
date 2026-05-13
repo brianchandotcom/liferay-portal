@@ -2,9 +2,30 @@ import sendRequest from 'shared/util/request';
 
 export const DEFAULT_LIFECYCLE_ID = '1';
 
+export interface IAccountLifecycle {
+	accountId?: string;
+	id: string;
+}
+
+export interface IAccountLifecycleStageStatus {
+	description?: string;
+	displayOrder: number;
+	endDate?: string;
+	id: string;
+	maxDuration?: number;
+	stageType: string;
+	startDate?: string;
+}
+
+export interface IAccountLifecycleStatus {
+	id: string;
+	name: string;
+	stages?: IAccountLifecycleStageStatus[];
+}
+
 interface IFetchOverviewMetrics {
 	country?: string;
-	groupId: string;
+	groupId?: string;
 	industry?: string;
 	lifecycleId: string;
 }
@@ -27,7 +48,7 @@ export async function fetchOverviewMetrics({
 
 interface IFetchLifecycleStages {
 	country?: string;
-	groupId: string;
+	groupId?: string;
 	industry?: string;
 	lifecycleId: string;
 }
@@ -52,24 +73,9 @@ export async function fetchAccountLifecycles({
 	groupId
 }: {
 	groupId: string;
-}): Promise<any> {
+}): Promise<IAccountLifecycle[]> {
 	return sendRequest({
 		method: 'GET',
 		path: `contacts/${groupId}/account-lifecycle`
-	});
-}
-
-export async function fetchAccountLifecycleStatus({
-	accountId,
-	accountLifecycleId,
-	groupId
-}: {
-	accountId: string;
-	accountLifecycleId: string;
-	groupId: string;
-}): Promise<any> {
-	return sendRequest({
-		method: 'GET',
-		path: `contacts/${groupId}/account/${accountId}/account-lifecycles/${accountLifecycleId}`
 	});
 }

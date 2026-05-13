@@ -7,8 +7,10 @@ import {useRequest} from 'shared/hooks/useRequest';
 jest.unmock('react-dom');
 
 jest.mock('shared/api', () => ({
+	accounts: {
+		fetchLifecycleStatus: jest.fn()
+	},
 	lifecycle: {
-		fetchAccountLifecycleStatus: jest.fn(),
 		fetchAccountLifecycles: jest.fn()
 	}
 }));
@@ -67,15 +69,19 @@ const DEFAULT_STATUS = {
 const useRequestImpl =
 	({
 		lifecyclesData,
-		statusData
+		lifecyclesLoading = false,
+		statusData,
+		statusLoading = false
 	}: {
 		lifecyclesData?: Array<{accountId: string; id: string}>;
+		lifecyclesLoading?: boolean;
 		statusData?: unknown;
+		statusLoading?: boolean;
 	}) =>
 	({variables}: {variables: {[key: string]: any}}) =>
 		variables.accountLifecycleId !== undefined
-			? {data: statusData}
-			: {data: lifecyclesData};
+			? {data: statusData, loading: statusLoading}
+			: {data: lifecyclesData, loading: lifecyclesLoading};
 
 jest.mock('@clayui/multi-step-nav', () => {
 	const MultiStepNav = ({
@@ -154,9 +160,7 @@ describe('LifecycleStatus', () => {
 
 			expect(within(multistep).getByText('Aware')).toBeInTheDocument();
 			expect(within(multistep).getByText('Engaged')).toBeInTheDocument();
-			expect(
-				within(multistep).getByText('Pipeline')
-			).toBeInTheDocument();
+			expect(within(multistep).getByText('Pipeline')).toBeInTheDocument();
 			expect(
 				within(multistep).getByText('Onboarding')
 			).toBeInTheDocument();
@@ -185,7 +189,7 @@ describe('LifecycleStatus', () => {
 			) as HTMLElement;
 
 			expect(
-				within(multistep).getByText('Jan 4, 2026')
+				within(multistep).getByText('Jan 04, 2026')
 			).toBeInTheDocument();
 			expect(
 				within(multistep).getByText('Jan 16, 2026')
@@ -312,10 +316,10 @@ describe('LifecycleStatus', () => {
 			) as HTMLElement;
 
 			expect(
-				within(multistep).getByText('Feb 1, 2026')
+				within(multistep).getByText('Feb 01, 2026')
 			).toBeInTheDocument();
 			expect(
-				within(multistep).getByText('Mar 1, 2026')
+				within(multistep).getByText('Mar 01, 2026')
 			).toBeInTheDocument();
 		});
 
@@ -336,6 +340,54 @@ describe('LifecycleStatus', () => {
 			expect(
 				container.querySelector('.lifecycle-status-summary')
 			).toBeNull();
+		});
+	});
+
+	describe('loading', () => {
+		it('should render the loading indicator while the lifecycles list is loading', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({lifecyclesLoading: true})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			expect(
+				container.querySelector('.loading-root')
+			).toBeInTheDocument();
+			expect(
+				container.querySelector('.lifecycle-status-multistep')
+			).toBeNull();
+		});
+
+		it('should render the loading indicator while the matching status is loading', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
+					statusLoading: true
+				})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			expect(
+				container.querySelector('.loading-root')
+			).toBeInTheDocument();
+			expect(
+				container.querySelector('.lifecycle-status-multistep')
+			).toBeNull();
+		});
+
+		it('should not render the loading indicator when no lifecycle matches the account', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'other-account', id: 'al-1'}],
+					statusLoading: true
+				})
+			);
+
+			const {container} = render(<LifecycleStatus />);
+
+			expect(container.querySelector('.loading-root')).toBeNull();
 		});
 	});
 });

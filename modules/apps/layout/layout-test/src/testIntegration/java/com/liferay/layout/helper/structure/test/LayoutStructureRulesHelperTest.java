@@ -236,7 +236,13 @@ public class LayoutStructureRulesHelperTest {
 		_testWithFieldCondition(
 			infoItemFieldValues, fieldName, "greater-than", "2026-05-10");
 		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "greater-than-or-equals",
+			"2026-05-11");
+		_testWithFieldCondition(
 			infoItemFieldValues, fieldName, "less-than", "2026-05-12");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "less-than-or-equals",
+			"2026-05-11");
 	}
 
 	@Test
@@ -266,7 +272,13 @@ public class LayoutStructureRulesHelperTest {
 		_testWithFieldCondition(
 			infoItemFieldValues, fieldName, "greater-than", "2026-05-11 12:29");
 		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "greater-than-or-equals",
+			"2026-05-11 12:30");
+		_testWithFieldCondition(
 			infoItemFieldValues, fieldName, "less-than", "2026-05-11 12:31");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "less-than-or-equals",
+			"2026-05-11 12:30");
 	}
 
 	@Test

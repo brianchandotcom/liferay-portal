@@ -11,10 +11,10 @@ package com.liferay.analytics.settings.rest.constants;
 public class FieldOrderConstants {
 
 	public static final String[] FIELD_ORDER_EXAMPLES = {
-		"30130", "30130", "2017-07-21", "USD", "key1=value1, key2=value2, ...",
-		"AB-34098-789-N", "30130", "2017-08-21", "2017-07-21",
-		"[item, item,...]", "0", "AB-34098-789-N", "30130", "paypal", "0", "0",
-		"113", "12345"
+		"AB-34098-789-N", "30130", "30130", "2017-07-21", "USD",
+		"key1=value1, key2=value2, ...", "AB-34098-789-N", "30130",
+		"2017-08-21", "2017-07-21", "[item, item,...]", "0", "AB-34098-789-N",
+		"30130", "paypal", "0", "0", "113", "12345"
 	};
 
 	public static final String[] FIELD_ORDER_ITEM_EXAMPLES = {

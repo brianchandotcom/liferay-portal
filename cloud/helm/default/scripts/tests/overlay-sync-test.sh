@@ -7,7 +7,9 @@ set -o pipefail
 function main {
 	local fail=0
 	local pass=0
-	local script=$(cd "$(dirname "${0}")/.." && pwd)/overlay-sync.sh
+	local script
+
+	script=$(cd "$(dirname "${0}")/.." && pwd)/overlay-sync.sh
 
 	export -f rclone
 
@@ -78,7 +80,9 @@ function _test_exits_with_error_when_no_bucket_env_var_is_set {
 function _test_passes_plain_path_to_rclone_without_include {
 	local script="${1}"
 
-	local output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs source/path dest/path 2>&1)
+	local output
+
+	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs source/path dest/path 2>&1)
 
 	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" != *"--include"* ]]
 	then
@@ -91,7 +95,9 @@ function _test_passes_plain_path_to_rclone_without_include {
 function _test_splits_glob_pattern_into_path_and_include_filter {
 	local script="${1}"
 
-	local output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs "source/path/*.jar" dest/path 2>&1)
+	local output
+
+	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs "source/path/*.jar" dest/path 2>&1)
 
 	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *.jar"* ]]
 	then
@@ -104,7 +110,9 @@ function _test_splits_glob_pattern_into_path_and_include_filter {
 function _test_strips_wildcard_and_passes_include_for_wildcard_path {
 	local script="${1}"
 
-	local output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs "source/path/*" dest/path 2>&1)
+	local output
+
+	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs "source/path/*" dest/path 2>&1)
 
 	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *"* ]]
 	then

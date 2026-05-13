@@ -5,9 +5,11 @@ set -o nounset
 set -o pipefail
 
 function main {
-	local chart_directory=$(cd "$(dirname "${0}")/.." && pwd)
+	local chart_directory
 	local fail=0
 	local pass=0
+
+	chart_directory=$(cd "$(dirname "${0}")/.." && pwd)
 
 	_run_test _test_init_container_absent_when_overlay_is_disabled
 	_run_test _test_init_container_present_when_overlay_is_enabled
@@ -65,7 +67,9 @@ function _test_init_container_present_when_overlay_is_enabled {
 }
 
 function _test_multiple_copy_blocks_each_generate_a_sync_command {
-	local output=$(helm template test "${chart_directory}" \
+	local output
+
+	output=$(helm template test "${chart_directory}" \
 		--set 'overlay.copy[0].from=overlay-build-1/osgi/*' \
 		--set 'overlay.copy[0].into=osgi/' \
 		--set 'overlay.copy[1].from=overlay-build-1/configs/*.config' \

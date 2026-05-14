@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentFolde
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -161,7 +162,11 @@ public class Main {
 			lastestHashFileName, liferayDataDefinitionKey,
 			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_ID"),
 			System.getenv("LIFERAY_LEARN_ETC_CRON_LIFERAY_OAUTH_CLIENT_SECRET"),
-			liferaySiteFriendlyUrlPath, new URL(liferayUrl), baseDirFile,
+			liferaySiteFriendlyUrlPath,
+			_getLiferayTaxonomyVocabularyIds(
+				System.getenv(
+					"LIFERAY_LEARN_ETC_CRON_LIFERAY_TAXONOMY_VOCABULARY_IDS")),
+			new URL(liferayUrl), baseDirFile,
 			GetterUtil.getBoolean(
 				System.getenv("LIFERAY_LEARN_ETC_CRON_OFFLINE")),
 			GetterUtil.getBoolean(
@@ -234,12 +239,14 @@ public class Main {
 	public Main(
 			String latestHashFileName, String liferayDataDefinitionKey,
 			String liferayOAuthClientId, String liferayOAuthClientSecret,
-			String liferaySiteFriendlyUrlPath, URL liferayURL, File baseDir,
+			String liferaySiteFriendlyUrlPath,
+			long[] liferayTaxonomyVocabularyIds, URL liferayURL, File baseDir,
 			boolean offline, boolean skipDiffCheck, boolean skipJapaneseContent)
 		throws Exception {
 
 		_liferayOAuthClientId = liferayOAuthClientId;
 		_liferayOAuthClientSecret = liferayOAuthClientSecret;
+		_liferayTaxonomyVocabularyIds = liferayTaxonomyVocabularyIds;
 		_liferayURL = liferayURL;
 		_offline = offline;
 		_skipDiffCheck = skipDiffCheck;
@@ -554,6 +561,31 @@ public class Main {
 
 			throw new Exception(_errorMessages.size() + " error messages");
 		}
+	}
+
+	private static long[] _getLiferayTaxonomyVocabularyIds(
+		String liferayTaxonomyVocabularyIdsString) {
+
+		List<Long> liferayTaxonomyVocabularyIds = new ArrayList<>();
+
+		for (String part :
+				StringUtil.split(liferayTaxonomyVocabularyIdsString)) {
+
+			part = part.trim();
+
+			if (!Validator.isNumber(part)) {
+				if (!part.isEmpty()) {
+					System.out.println(
+						"Ignoring invalid taxonomy vocabulary ID: " + part);
+				}
+
+				continue;
+			}
+
+			liferayTaxonomyVocabularyIds.add(GetterUtil.getLong(part));
+		}
+
+		return ArrayUtil.toLongArray(liferayTaxonomyVocabularyIds);
 	}
 
 	private void _addFileNames(String fileName) {
@@ -1428,52 +1460,10 @@ public class Main {
 		Map<String, String> existingTaxonomyCategories = new HashMap<>();
 		Map<String, Long> existingTaxonomyVocabularies = new HashMap<>();
 
-		com.liferay.headless.admin.taxonomy.client.pagination.Page
-			<TaxonomyVocabulary> taxonomyVocabulariesPage =
-				_taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					_globalSiteId, null, null, null,
-					com.liferay.headless.admin.taxonomy.client.pagination.
-						Pagination.of(-1, -1),
-					null);
-
-		for (TaxonomyVocabulary taxonomyVocabulary :
-				taxonomyVocabulariesPage.getItems()) {
-
-			if (StringUtil.equals(
-					taxonomyVocabulary.getExternalReferenceCode(),
-					"RESOURCE_TYPE")) {
-
-				TaxonomyCategory taxonomyCategory =
-					_taxonomyCategoryResource.
-						getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
-							taxonomyVocabulary.getId(),
-							"OFFICIAL_DOCUMENTATION");
-
-				_taxonomyCategoriesJSONObject.put(
-					taxonomyCategory.getExternalReferenceCode(),
-					taxonomyCategory.getId());
-
-				continue;
-			}
-
-			existingTaxonomyVocabularies.put(
-				taxonomyVocabulary.getName(), taxonomyVocabulary.getId());
-
-			com.liferay.headless.admin.taxonomy.client.pagination.Page
-				<TaxonomyCategory> taxonomyCategoriesPage =
-					_taxonomyCategoryResource.
-						getTaxonomyVocabularyTaxonomyCategoriesPage(
-							taxonomyVocabulary.getId(), true, null, null, null,
-							com.liferay.headless.admin.taxonomy.client.
-								pagination.Pagination.of(-1, -1),
-							null);
-
-			for (TaxonomyCategory taxonomyCategory :
-					taxonomyCategoriesPage.getItems()) {
-
-				existingTaxonomyCategories.put(
-					taxonomyCategory.getName(), taxonomyCategory.getId());
-			}
+		for (long taxonomyVocabularyId : _liferayTaxonomyVocabularyIds) {
+			_loadTaxonomyVocabulary(
+				existingTaxonomyCategories, existingTaxonomyVocabularies,
+				taxonomyVocabularyId);
 		}
 
 		JSONArray jsonArray = taxonomyVocabulariesJSONObject.getJSONArray(
@@ -1488,21 +1478,58 @@ public class Main {
 			Long taxonomyVocabularyId = existingTaxonomyVocabularies.get(name);
 
 			if (taxonomyVocabularyId == null) {
-				TaxonomyVocabulary taxonomyVocabulary =
-					new TaxonomyVocabulary();
-
-				taxonomyVocabulary.setName(() -> name);
-
-				taxonomyVocabulary =
-					_taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-						_globalSiteId, taxonomyVocabulary);
-
-				taxonomyVocabularyId = taxonomyVocabulary.getId();
+				continue;
 			}
 
 			_loadTaxonomyCategories(
 				existingTaxonomyCategories, taxonomyVocabularyJSONObject, null,
 				taxonomyVocabularyId);
+		}
+	}
+
+	private void _loadTaxonomyVocabulary(
+			Map<String, String> existingTaxonomyCategories,
+			Map<String, Long> existingTaxonomyVocabularies,
+			long taxonomyVocabularyId)
+		throws Exception {
+
+		TaxonomyVocabulary taxonomyVocabulary =
+			_taxonomyVocabularyResource.getTaxonomyVocabulary(
+				taxonomyVocabularyId);
+
+		if (StringUtil.equals(
+				taxonomyVocabulary.getExternalReferenceCode(),
+				"RESOURCE_TYPE")) {
+
+			TaxonomyCategory taxonomyCategory =
+				_taxonomyCategoryResource.
+					getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+						taxonomyVocabulary.getId(), "OFFICIAL_DOCUMENTATION");
+
+			_taxonomyCategoriesJSONObject.put(
+				taxonomyCategory.getExternalReferenceCode(),
+				taxonomyCategory.getId());
+
+			return;
+		}
+
+		existingTaxonomyVocabularies.put(
+			taxonomyVocabulary.getName(), taxonomyVocabulary.getId());
+
+		com.liferay.headless.admin.taxonomy.client.pagination.Page
+			<TaxonomyCategory> taxonomyCategoriesPage =
+				_taxonomyCategoryResource.
+					getTaxonomyVocabularyTaxonomyCategoriesPage(
+						taxonomyVocabulary.getId(), true, null, null, null,
+						com.liferay.headless.admin.taxonomy.client.pagination.
+							Pagination.of(-1, -1),
+						null);
+
+		for (TaxonomyCategory taxonomyCategory :
+				taxonomyCategoriesPage.getItems()) {
+
+			existingTaxonomyCategories.put(
+				taxonomyCategory.getName(), taxonomyCategory.getId());
 		}
 	}
 
@@ -1842,6 +1869,7 @@ public class Main {
 	private final String _liferayOAuthClientId;
 	private final String _liferayOAuthClientSecret;
 	private final long _liferaySiteId;
+	private final long[] _liferayTaxonomyVocabularyIds;
 	private final URL _liferayURL;
 	private String _newHash = StringPool.BLANK;
 	private long _oauthExpirationMillis;

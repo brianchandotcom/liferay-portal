@@ -344,6 +344,120 @@ describe('utils', () => {
 
 			expect(property).toBe(mockProperty);
 		});
+
+		it('should return a Vocabulary Property whose label uses the name extracted from the criterion group when not in the cache', () => {
+			const criterion = data.generateCriterion({
+				operatorName: CustomFunctionOperators.VocabulariesFilter,
+				propertyName: 'vocab-id',
+				value: fromJS({
+					criterionGroup: {
+						conjunctionName: And,
+						criteriaGroupId: 'group_0',
+						items: [
+							{
+								operatorName: EQ,
+								propertyName: 'vocabularies/id',
+								value: 'vocab-id'
+							},
+							{
+								operatorName: EQ,
+								propertyName: 'vocabularies/name',
+								value: 'My Vocabulary'
+							}
+						]
+					}
+				})
+			});
+
+			const property = utils.findPropertyByCriterion(criterion, Map());
+
+			expect(property).toBeInstanceOf(Property);
+			expect(property.name).toBe('vocab-id');
+			expect(property.label).toBe('My Vocabulary');
+			expect(property.propertyKey).toBe('vocabulary');
+		});
+
+		it('should return the cached Vocabulary Property when present in referencedPropertiesIMap', () => {
+			const criterion = data.generateCriterion({
+				operatorName: CustomFunctionOperators.VocabulariesFilter,
+				propertyName: 'vocab-id',
+				value: fromJS({criterionGroup: {items: []}})
+			});
+
+			const cachedProperty = new Property({
+				label: 'Cached Vocabulary',
+				name: 'vocab-id',
+				propertyKey: 'vocabulary'
+			});
+
+			const referencedPropertiesIMap = fromJS({
+				vocabulary: {'vocab-id': cachedProperty}
+			});
+
+			const property = utils.findPropertyByCriterion(
+				criterion,
+				referencedPropertiesIMap
+			);
+
+			expect(property).toBe(cachedProperty);
+		});
+
+		it('should return a Tag Property whose label uses the name extracted from the criterion group when not in the cache', () => {
+			const criterion = data.generateCriterion({
+				operatorName: CustomFunctionOperators.TagsFilter,
+				propertyName: 'tag-id',
+				value: fromJS({
+					criterionGroup: {
+						conjunctionName: And,
+						criteriaGroupId: 'group_0',
+						items: [
+							{
+								operatorName: EQ,
+								propertyName: 'tags/id',
+								value: 'tag-id'
+							},
+							{
+								operatorName: EQ,
+								propertyName: 'tags/name',
+								value: 'My Tag'
+							}
+						]
+					}
+				})
+			});
+
+			const property = utils.findPropertyByCriterion(criterion, Map());
+
+			expect(property).toBeInstanceOf(Property);
+			expect(property.name).toBe('tag-id');
+			expect(property.label).toBe('My Tag');
+			expect(property.propertyKey).toBe('tag');
+		});
+
+		it('should return the cached Tag Property when present in referencedPropertiesIMap', () => {
+			const criterion = data.generateCriterion({
+				operatorName: CustomFunctionOperators.TagsFilter,
+				propertyName: 'tag-id',
+				value: fromJS({criterionGroup: {items: []}})
+			});
+
+			const cachedProperty = new Property({
+				label: 'Cached Tag',
+				name: 'tag-id',
+				propertyKey: 'tag'
+			});
+
+			const referencedPropertiesIMap = fromJS({
+				tag: {'tag-id': cachedProperty}
+			});
+
+			const property = utils.findPropertyByCriterion(
+				criterion,
+				referencedPropertiesIMap
+			);
+
+			expect(property).toBe(cachedProperty);
+		});
 	});
 
 	describe('isValid', () => {

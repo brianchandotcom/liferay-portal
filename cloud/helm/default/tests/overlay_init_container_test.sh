@@ -30,8 +30,9 @@ function main {
 }
 
 function _run_test {
-	local description="${1#_test_}"
-	description="${description//_/ }"
+	local description
+
+	description=$(echo "${1}" | sed "s/^_test_//; s/_/ /g")
 
 	if "${1}"
 	then

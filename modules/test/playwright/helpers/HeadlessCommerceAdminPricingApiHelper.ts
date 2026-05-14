@@ -180,6 +180,12 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
+	async getPriceModifierProducts(priceModifierId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-modifiers/${priceModifierId}/price-modifier-products`
+		);
+	}
+
 	async postDiscount(discount?: TDiscount) {
 		discount = {
 			active: true,

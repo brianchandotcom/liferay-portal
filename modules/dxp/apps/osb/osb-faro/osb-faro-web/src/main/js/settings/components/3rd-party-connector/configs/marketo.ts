@@ -9,7 +9,7 @@ const displayName = Liferay.Language.get('marketo');
 
 const marketoConfig: ConnectorConfig = {
 	displayName,
-	endpointPath: '/api/marketo_events',
+	endpointPath: '/api/marketo_webhooks',
 	entities: [
 		{
 			entity: Entity.Events,

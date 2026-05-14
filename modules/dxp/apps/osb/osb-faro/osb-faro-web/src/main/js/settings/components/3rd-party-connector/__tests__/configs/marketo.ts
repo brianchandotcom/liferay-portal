@@ -20,8 +20,8 @@ describe('marketo config', () => {
 		expect(marketoConfig.type).toBe(DataSourceTypes.Marketo);
 	});
 
-	it('targets the marketo accounts endpoint', () => {
-		expect(marketoConfig.endpointPath).toBe('/api/marketo_accounts');
+	it('targets the marketo webhooks endpoint', () => {
+		expect(marketoConfig.endpointPath).toBe('/api/marketo_webhooks');
 	});
 
 	it('is flagged as singleton', () => {

@@ -113,7 +113,7 @@ public class AssetListTypePropertiesUtil {
 			businessType.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
-			return "double";
+			return "decimal";
 		}
 
 		if (businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
@@ -136,7 +136,7 @@ public class AssetListTypePropertiesUtil {
 			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT) ||
 			businessType.equals(ObjectFieldConstants.BUSINESS_TYPE_TEXT)) {
 
-			return "string";
+			return "text";
 		}
 
 		return null;

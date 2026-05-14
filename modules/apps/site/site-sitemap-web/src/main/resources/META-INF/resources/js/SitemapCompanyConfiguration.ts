@@ -43,8 +43,8 @@ export default function ({
 		`${namespace}selectSiteLink`
 	) as HTMLButtonElement;
 
-	const xmlSitemapGroupingModeSelect = document.getElementById(
-		`${namespace}xmlSitemapGroupingMode`
+	const xmlSitemapIndexModeSelect = document.getElementById(
+		`${namespace}xmlSitemapIndexMode`
 	) as HTMLSelectElement;
 
 	const xmlSitemapIndexEnabledCheckbox = document.getElementById(
@@ -52,7 +52,7 @@ export default function ({
 	) as HTMLInputElement;
 
 	const onXmlSitemapIndexEnabledChange = () => {
-		xmlSitemapGroupingModeSelect.disabled =
+		xmlSitemapIndexModeSelect.disabled =
 			!xmlSitemapIndexEnabledCheckbox.checked;
 	};
 

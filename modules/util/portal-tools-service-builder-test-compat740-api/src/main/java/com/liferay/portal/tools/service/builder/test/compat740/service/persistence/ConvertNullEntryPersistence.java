@@ -43,14 +43,6 @@ public interface ConvertNullEntryPersistence
 		throws NoSuchConvertNullEntryException;
 
 	/**
-	 * Returns the convert null entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching convert null entry, or <code>null</code> if a matching convert null entry could not be found
-	 */
-	public ConvertNullEntry fetchByName(String name);
-
-	/**
 	 * Returns the convert null entry where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -114,5 +106,15 @@ public interface ConvertNullEntryPersistence
 	 */
 	public ConvertNullEntry fetchByPrimaryKey(long convertNullEntryId);
 
+	/**
+	 * Returns the convert null entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching convert null entry, or <code>null</code> if a matching convert null entry could not be found
+	 */
+	public default ConvertNullEntry fetchByName(String name) {
+		return fetchByName(name, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1750281929
+// LIFERAY-SERVICE-BUILDER-HASH:-1563578228

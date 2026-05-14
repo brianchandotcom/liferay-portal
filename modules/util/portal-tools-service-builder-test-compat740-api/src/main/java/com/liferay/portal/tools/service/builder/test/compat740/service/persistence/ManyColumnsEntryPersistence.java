@@ -71,4 +71,4 @@ public interface ManyColumnsEntryPersistence
 	public ManyColumnsEntry fetchByPrimaryKey(long manyColumnsEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1605621661
+// LIFERAY-SERVICE-BUILDER-HASH:1109046877

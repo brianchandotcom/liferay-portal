@@ -70,4 +70,4 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	public TrashEntry fetchByPrimaryKey(long trashEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-412913161
+// LIFERAY-SERVICE-BUILDER-HASH:-1672666569

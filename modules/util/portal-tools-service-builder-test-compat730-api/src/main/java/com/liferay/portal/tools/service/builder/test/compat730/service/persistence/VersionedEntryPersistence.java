@@ -495,4 +495,4 @@ public interface VersionedEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1376637591
+// LIFERAY-SERVICE-BUILDER-HASH:273904199

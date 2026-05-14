@@ -2083,4 +2083,4 @@ public class BasicEntryPersistenceImpl
 		BasicEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1752207006
+// LIFERAY-SERVICE-BUILDER-HASH:-274961045

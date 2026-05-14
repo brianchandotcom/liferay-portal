@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,28 +58,38 @@ public class IndexEntryTest {
 			List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
 				connection, "IndexEntry", null, false);
 
+			Field paginatedFindPathField = ReflectionUtil.getDeclaredField(
+				CollectionPersistenceFinder.class, "_paginatedFindPath");
+			Field fetchPathField = ReflectionUtil.getDeclaredField(
+				UniquePersistenceFinder.class, "_fetchPath");
+
 			for (Field field :
 					ReflectionUtil.getDeclaredFields(
 						_indexEntryPersistence.getClass())) {
 
 				String fieldName = field.getName();
 
+				FinderPath finderPath = null;
 				String finderName = null;
 				boolean unique = false;
 
-				if (fieldName.startsWith("_finderPathWithPaginationFindBy")) {
-					finderName = fieldName.substring(31);
+				if (fieldName.startsWith("_collectionPersistenceFinderBy")) {
+					finderName = fieldName.substring(30);
+
+					finderPath = (FinderPath)paginatedFindPathField.get(
+						field.get(_indexEntryPersistence));
 				}
-				else if (fieldName.startsWith("_finderPathFetchBy")) {
-					finderName = fieldName.substring(18);
+				else if (fieldName.startsWith("_uniquePersistenceFinderBy")) {
+					finderName = fieldName.substring(26);
 					unique = true;
+
+					finderPath = (FinderPath)fetchPathField.get(
+						field.get(_indexEntryPersistence));
 				}
 
-				if ((finderName != null) &&
+				if ((finderPath != null) &&
 					!_hasIndex(
-						databaseMetaData,
-						(FinderPath)field.get(_indexEntryPersistence),
-						indexMetadatas, unique)) {
+						databaseMetaData, finderPath, indexMetadatas, unique)) {
 
 					missingIndexForFinderNames.add(finderName);
 				}

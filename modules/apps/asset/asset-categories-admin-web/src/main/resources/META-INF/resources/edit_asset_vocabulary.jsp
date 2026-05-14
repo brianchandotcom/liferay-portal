@@ -53,7 +53,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 		>
 			<aui:input label="name" name="title" placeholder="name" />
 
-			<aui:input disabled='<%= (vocabulary != null) && !FeatureFlagManagerUtil.isEnabled("LPD-31228") %>' label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
+			<aui:input label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
 
 			<aui:input name="description" placeholder="description" />
 

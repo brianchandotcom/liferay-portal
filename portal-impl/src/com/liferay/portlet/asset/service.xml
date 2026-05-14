@@ -358,6 +358,7 @@
 		<exception>AssetTagGroupRelGroupId</exception>
 		<exception>AssetTagName</exception>
 		<exception>AssetVocabularyGroupRelGroupId</exception>
+		<exception>CategoryExternalReferenceCode</exception>
 		<exception>CategoryName</exception>
 		<exception>CategoryPropertyKey</exception>
 		<exception>CategoryPropertyValue</exception>

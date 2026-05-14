@@ -190,28 +190,27 @@ public class SitemapCompanyConfigurationDisplayContext {
 		return _selectObjectDefinitionEventName;
 	}
 
-	public List<SelectOption> getSitemapGroupingModeSelectOptions()
+	public List<SelectOption> getSitemapIndexModeSelectOptions()
 		throws ConfigurationException {
 
 		List<SelectOption> selectOptions = new ArrayList<>();
 
-		String[] sitemapGroupingModes = {
-			SitemapConstants.GROUPING_MODE_ASSET_TYPE,
-			SitemapConstants.GROUPING_MODE_PAGE_LAYOUT
+		String[] sitemapIndexModes = {
+			SitemapConstants.INDEX_MODE_ASSET_TYPE,
+			SitemapConstants.INDEX_MODE_PAGE_LAYOUT
 		};
 
-		for (String sitemapGroupingMode : sitemapGroupingModes) {
-			String groupingModeName = LanguageUtil.get(
-				_themeDisplay.getLocale(), sitemapGroupingMode);
+		for (String sitemapIndexMode : sitemapIndexModes) {
+			String indexModeName = LanguageUtil.get(
+				_themeDisplay.getLocale(), sitemapIndexMode);
 
 			selectOptions.add(
 				new SelectOption(
 					LanguageUtil.format(
-						_themeDisplay.getLocale(), "group-by-x",
-						groupingModeName),
-					sitemapGroupingMode,
+						_themeDisplay.getLocale(), "group-by-x", indexModeName),
+					sitemapIndexMode,
 					StringUtil.equals(
-						sitemapGroupingMode, xmlSitemapGroupingMode())));
+						sitemapIndexMode, xmlSitemapIndexMode())));
 		}
 
 		return selectOptions;
@@ -244,13 +243,13 @@ public class SitemapCompanyConfigurationDisplayContext {
 			_themeDisplay.getCompanyId());
 	}
 
-	public String xmlSitemapGroupingMode() throws ConfigurationException {
-		return _sitemapConfigurationManager.xmlSitemapGroupingMode(
+	public boolean xmlSitemapIndexEnabled() throws ConfigurationException {
+		return _sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
 			_themeDisplay.getCompanyId());
 	}
 
-	public boolean xmlSitemapIndexEnabled() throws ConfigurationException {
-		return _sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
+	public String xmlSitemapIndexMode() throws ConfigurationException {
+		return _sitemapConfigurationManager.xmlSitemapIndexMode(
 			_themeDisplay.getCompanyId());
 	}
 

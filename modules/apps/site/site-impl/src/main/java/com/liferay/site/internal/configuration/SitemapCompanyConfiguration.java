@@ -51,14 +51,13 @@ public interface SitemapCompanyConfiguration {
 	public boolean includeWebContent();
 
 	@Meta.AD(
-		deflt = "page-layout", name = "xml-sitemap-grouping-mode",
-		required = false
-	)
-	public String xmlSitemapGroupingMode();
-
-	@Meta.AD(
 		deflt = "true", name = "xml-sitemap-index-enabled", required = false
 	)
 	public boolean xmlSitemapIndexEnabled();
+
+	@Meta.AD(
+		deflt = "page-layout", name = "xml-sitemap-index-mode", required = false
+	)
+	public String xmlSitemapIndexMode();
 
 }

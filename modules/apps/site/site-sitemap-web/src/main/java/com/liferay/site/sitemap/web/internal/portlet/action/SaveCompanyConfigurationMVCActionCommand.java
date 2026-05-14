@@ -62,12 +62,12 @@ public class SaveCompanyConfigurationMVCActionCommand
 			throw new PortletException(principalException);
 		}
 
-		String xmlSitemapGroupingMode = ParamUtil.getString(
-			actionRequest, "xmlSitemapGroupingMode");
+		String xmlSitemapIndexMode = ParamUtil.getString(
+			actionRequest, "xmlSitemapIndexMode");
 
-		if (Validator.isNull(xmlSitemapGroupingMode)) {
-			xmlSitemapGroupingMode =
-				_sitemapConfigurationManager.xmlSitemapGroupingMode(
+		if (Validator.isNull(xmlSitemapIndexMode)) {
+			xmlSitemapIndexMode =
+				_sitemapConfigurationManager.xmlSitemapIndexMode(
 					themeDisplay.getCompanyId());
 		}
 
@@ -108,8 +108,8 @@ public class SaveCompanyConfigurationMVCActionCommand
 			ParamUtil.getBoolean(actionRequest, "includeCategories"),
 			ParamUtil.getBoolean(actionRequest, "includePages"),
 			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
-			xmlSitemapGroupingMode,
-			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"));
+			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"),
+			xmlSitemapIndexMode);
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",

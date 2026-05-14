@@ -55,6 +55,54 @@ components:
                     readOnly: true
                     type: number
             type: object
+        AssetEntry:
+            description:
+                Represents an asset entry returned by the unified asset search endpoint.
+            properties:
+                assetEntryId:
+                    description:
+                        The asset entry's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                assetType:
+                    description:
+                        The localized asset type name (e.g., "Web Content Article" or "Blogs Entry").
+                    readOnly: true
+                    type: string
+                className:
+                    description:
+                        The fully qualified class name of the underlying asset.
+                    readOnly: true
+                    type: string
+                classNameId:
+                    description:
+                        The class name ID of the underlying asset.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                classPK:
+                    description:
+                        The primary key of the underlying asset.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                description:
+                    description:
+                        The asset entry's description in the requesting locale.
+                    readOnly: true
+                    type: string
+                groupDescriptiveName:
+                    description:
+                        The localized descriptive name of the group where the asset entry lives.
+                    readOnly: true
+                    type: string
+                title:
+                    description:
+                        The asset entry's title in the requesting locale.
+                    readOnly: true
+                    type: string
+            type: object
         BlogPosting:
             description:
                 Represents a blog post. See [BlogPosting](https://www.schema.org/BlogPosting) for more information.
@@ -6231,6 +6279,65 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/asset-entries":
+        get:
+            description:
+                Retrieves the asset entries in the given groups, across one or more class names, mirroring the legacy
+                asset browser item selector search. Results can be paginated, filtered, searched, and sorted.
+            operationId: getAssetEntriesPage
+            parameters:
+                -   in: query
+                    name: filter
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        Scopes the search to the union of the given groups. When omitted, the search runs across every
+                        group the user has read permission to.
+                    name: groupIds
+                    schema:
+                        items:
+                            format: int64
+                            type: integer
+                        type: array
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    name: showNonindexable
+                    schema:
+                        type: boolean
+                -   in: query
+                    name: sort
+                    schema:
+                        type: string
+                -   in: header
+                    name: Accept-Language
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetEntry"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetEntry"
+                                type: array
+            tags: ["AssetEntry"]
     "/asset-libraries/{assetLibraryId}/content-elements":
         get:
             operationId: getAssetLibraryContentElementsPage

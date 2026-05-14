@@ -13,9 +13,9 @@ import EngagementChart from './EngagementChart';
 import Loader from './Loader';
 
 const RecentEngagementChart = ({
-	isAnalyticsCloudConfigured,
+	isAnalyticsEnabled,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsEnabled: boolean;
 }) => {
 	const [data, setData] = useState<IEngagementChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
@@ -27,7 +27,7 @@ const RecentEngagementChart = ({
 				{key: 'siteVisitors', path: '/visitors-site-histogram-metric'},
 			],
 		},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsEnabled},
 		variables: {
 			devices: 'Any',
 			interval: 'D',
@@ -59,10 +59,14 @@ const RecentEngagementChart = ({
 		<AnalyticsFrame
 			icon="analytics"
 			title={Liferay.Language.get('recent-engagement')}
-			url={`${BASE_URL}/view-timeline`}
+			url={
+				isAnalyticsEnabled
+					? `${BASE_URL}/view-timeline`
+					: undefined
+			}
 		>
 			<div ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

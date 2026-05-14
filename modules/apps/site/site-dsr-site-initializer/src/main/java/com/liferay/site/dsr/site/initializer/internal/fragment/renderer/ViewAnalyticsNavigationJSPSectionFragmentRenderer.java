@@ -73,6 +73,7 @@ public class ViewAnalyticsNavigationJSPSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return new ViewAnalyticsNavigationAnalyticsSectionDisplayContext(
+			analyticsSettingsManager,
 			getConfigurationJSONObject(fragmentRendererContext),
 			_fragmentEntryConfigurationParser,
 			fragmentRendererContext.getFragmentEntryLink(), httpServletRequest,

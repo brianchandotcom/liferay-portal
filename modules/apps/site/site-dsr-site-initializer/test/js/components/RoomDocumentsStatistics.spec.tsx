@@ -90,7 +90,10 @@ describe('RoomDocumentsStatistics', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<DocumentsStatistics isAnalyticsCloudConfigured={true} namespace="test-namespace" />
+			<DocumentsStatistics
+				isAnalyticsCloudEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
@@ -101,7 +104,12 @@ describe('RoomDocumentsStatistics', () => {
 	});
 
 	it('renders the user involved count from userInvolvedMetric', () => {
-		render(<DocumentsStatistics isAnalyticsCloudConfigured={true} namespace="test-namespace" />);
+		render(
+			<DocumentsStatistics
+				isAnalyticsCloudEnabled={true}
+				namespace="test-namespace"
+			/>
+		);
 
 		expect(screen.getAllByText('4').length).toBe(3);
 		expect(screen.getAllByText('3').length).toBe(2);

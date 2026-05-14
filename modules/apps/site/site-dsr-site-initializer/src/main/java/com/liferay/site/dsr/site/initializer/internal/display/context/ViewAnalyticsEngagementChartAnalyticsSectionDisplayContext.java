@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.object.model.ObjectDefinition;
@@ -24,6 +25,7 @@ public class ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext
 	extends BaseAnalyticsSectionDisplayContext {
 
 	public ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext(
+		AnalyticsSettingsManager analyticsSettingsManager,
 		JSONObject configurationJSONObject,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentEntryLink fragmentEntryLink,
@@ -31,8 +33,9 @@ public class ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext
 		ObjectDefinition objectDefinition) {
 
 		super(
-			configurationJSONObject, fragmentEntryConfigurationParser,
-			fragmentEntryLink, httpServletRequest, objectDefinition);
+			analyticsSettingsManager, configurationJSONObject,
+			fragmentEntryConfigurationParser, fragmentEntryLink,
+			httpServletRequest, objectDefinition);
 	}
 
 	@Override

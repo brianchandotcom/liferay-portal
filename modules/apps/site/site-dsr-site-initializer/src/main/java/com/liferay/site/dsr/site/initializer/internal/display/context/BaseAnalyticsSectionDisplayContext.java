@@ -5,11 +5,14 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -27,12 +30,14 @@ import java.util.Map;
 public abstract class BaseAnalyticsSectionDisplayContext {
 
 	public BaseAnalyticsSectionDisplayContext(
+		AnalyticsSettingsManager analyticsSettingsManager,
 		JSONObject configurationJSONObject,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
 
+		this.analyticsSettingsManager = analyticsSettingsManager;
 		this.configurationJSONObject = configurationJSONObject;
 		this.fragmentEntryConfigurationParser =
 			fragmentEntryConfigurationParser;
@@ -73,10 +78,11 @@ public abstract class BaseAnalyticsSectionDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"isAnalyticsCloudConfigured", false
+			"isAnalyticsEnabled", _isAnalyticsEnabled()
 		).build();
 	}
 
+	protected final AnalyticsSettingsManager analyticsSettingsManager;
 	protected final JSONObject configurationJSONObject;
 	protected final FragmentEntryConfigurationParser
 		fragmentEntryConfigurationParser;
@@ -84,5 +90,22 @@ public abstract class BaseAnalyticsSectionDisplayContext {
 	protected final HttpServletRequest httpServletRequest;
 	protected final ObjectDefinition objectDefinition;
 	protected final ThemeDisplay themeDisplay;
+
+	private boolean _isAnalyticsEnabled() {
+		try {
+			return analyticsSettingsManager.isAnalyticsEnabled(
+				themeDisplay.getCompanyId());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseAnalyticsSectionDisplayContext.class);
 
 }

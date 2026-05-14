@@ -1,27 +1,27 @@
 {
 	"accountEntryRestricted": true,
-	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubCrawlJobs_accountEntryId",
+	"accountEntryRestrictedObjectFieldName": "r_accountToAIHubCrawlerJobs_accountEntryId",
 	"className": "com.liferay.object.model.ObjectDefinition#C8J3",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
-	"externalReferenceCode": "L_AI_HUB_CRAWL_JOB",
+	"externalReferenceCode": "L_AI_HUB_CRAWLER_JOB",
 	"friendlyURLSeparator": "l",
 	"label": {
-		"en_US": "Crawl Job"
+		"en_US": "Crawler Job"
 	},
 	"modifiable": true,
-	"name": "AIHubCrawlJob",
+	"name": "AIHubCrawlerJob",
 	"objectFields": [
 		{
 			"DBType": "Long",
 			"businessType": "Relationship",
-			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CRAWL_JOBS",
+			"externalReferenceCode": "ACCOUNT_TO_AI_HUB_CRAWLER_JOBS",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Account to Crawl Jobs"
+				"en_US": "Account to Crawler Jobs"
 			},
-			"name": "r_accountToAIHubCrawlJobs_accountEntryId",
+			"name": "r_accountToAIHubCrawlerJobs_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
 			"objectFieldSettings": [
 				{
@@ -30,10 +30,10 @@
 				},
 				{
 					"name": "objectRelationshipERCObjectFieldName",
-					"value": "r_accountToAIHubCrawlJobs_accountEntryERC"
+					"value": "r_accountToAIHubCrawlerJobs_accountEntryERC"
 				}
 			],
-			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWL_JOBS",
+			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CRAWLER_JOBS",
 			"readOnly": "false",
 			"relationshipType": "oneToMany",
 			"required": true,
@@ -43,14 +43,14 @@
 		{
 			"DBType": "String",
 			"businessType": "Picklist",
-			"externalReferenceCode": "CRAWL_JOB_STATUS",
+			"externalReferenceCode": "CRAWLER_JOB_STATUS",
 			"indexed": true,
 			"indexedLanguageId": "en_US",
 			"label": {
-				"en_US": "Crawl Job Status"
+				"en_US": "Crawler Job Status"
 			},
-			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_CRAWL_JOB_STATUSES",
-			"name": "crawlJobStatus",
+			"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_CRAWLER_JOB_STATUSES",
+			"name": "crawlerJobStatus",
 			"required": true,
 			"system": true,
 			"type": "String"
@@ -135,7 +135,7 @@
 	"objectFolderExternalReferenceCode": "default",
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Crawl Jobs"
+		"en_US": "Crawler Jobs"
 	},
 	"portlet": true,
 	"scope": "company",

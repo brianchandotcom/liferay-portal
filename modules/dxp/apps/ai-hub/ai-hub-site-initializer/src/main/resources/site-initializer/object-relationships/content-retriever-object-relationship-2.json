@@ -1,13 +1,13 @@
 {
 	"deletionType": "cascade",
-	"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWL_JOBS",
+	"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
 	"label": {
-		"en_US": "Content Retriever to Crawl Jobs"
+		"en_US": "Content Retriever to Crawler Jobs"
 	},
-	"name": "contentRetrieverToCrawlJobs",
+	"name": "contentRetrieverToCrawlerJobs",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AIHubContentRetriever$]",
-	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubCrawlJob$]",
-	"objectDefinitionName2": "AIHubCrawlJob",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubCrawlerJob$]",
+	"objectDefinitionName2": "AIHubCrawlerJob",
 	"system": true,
 	"type": "oneToMany"
 }

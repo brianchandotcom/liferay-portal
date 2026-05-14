@@ -59,9 +59,19 @@ public interface TicketLocalService
 		long companyId, String className, long classPK, int type,
 		String extraInfo, Date expirationDate, ServiceContext serviceContext);
 
+	public Ticket addDistinctTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext);
+
 	public Ticket addTicket(
 		long companyId, String className, long classPK, int type,
 		String extraInfo, Date expirationDate, ServiceContext serviceContext);
+
+	public Ticket addTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext);
 
 	/**
 	 * Adds the ticket to the database. Also notifies the appropriate model listeners.
@@ -294,4 +304,4 @@ public interface TicketLocalService
 	public Ticket updateTicket(Ticket ticket);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:351293955
+// LIFERAY-SERVICE-BUILDER-HASH:1909903501

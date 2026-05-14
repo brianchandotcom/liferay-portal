@@ -432,8 +432,9 @@ create index IX_93AB8545 on Team (companyId);
 create unique index IX_D424D1E4 on Team (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_1AAF62D7 on Team (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create index IX_DAD135B4 on Ticket (classNameId, classPK, companyId, type_);
 create index IX_1E8DFB2E on Ticket (classNameId, classPK, type_);
+create index IX_8BACD0AA on Ticket (companyId, classNameId, classPK, type_);
+create index IX_3AFCAA8B on Ticket (companyId, type_, emailAddress[$COLUMN_LENGTH:254$]);
 create unique index IX_B2468446 on Ticket (key_[$COLUMN_LENGTH:255$]);
 
 create unique index IX_544FAE0D on UserGroup (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);

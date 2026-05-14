@@ -20,6 +20,7 @@ import performLogin, {
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import {faroConfig} from './faro.config';
 import {switchChannel} from './utils/channel';
 import {
 	addBreakdownByAttribute,
@@ -27,7 +28,11 @@ import {
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {changeEventDisplayName} from './utils/event-definitions';
-import {createIndividuals, generateIndividual} from './utils/individuals';
+import {
+	Individual,
+	createIndividuals,
+	generateIndividual,
+} from './utils/individuals';
 import {waitForLoading} from './utils/loading';
 import {Nanites, runNanites} from './utils/nanites';
 import {
@@ -2066,6 +2071,121 @@ test(
 		await viewSegmentCriteriaCard({
 			criteriaRowIndex: 1,
 			criteriaRowValue: 'Individual Job Title contains "lawyer"',
+			page,
+		});
+	}
+);
+
+test(
+	'Batch segment preview reflects criteria changes in real time',
+	{
+		tag: '@LRAC-8475',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const name = getRandomString();
+		const firstFullName = `userfn${name} Smith`;
+		const secondFullName = `user1${name} Smith`;
+
+		const individuals: Individual[] = [
+			generateIndividual({name: `userfn${name}`}),
+			generateIndividual({name: `user1${name}`}),
+		];
+
+		await createIndividuals({apiHelpers, individuals});
+
+		const date = new Date();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+			individuals.map((individual) => ({
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		// Add an email criterion scoped to this run to match both individuals
+
+		await addSegmentField({
+			criterionName: 'Email Address',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: `${name}@liferay.com`,
+			page,
+		});
+
+		// The preview lists both individuals
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Known Segment Members'),
+			trigger: page.getByTitle('View Members'),
+		});
+
+		await viewNameOnTableList({
+			itemNames: [firstFullName, secondFullName],
+			page,
+		});
+
+		await page.getByRole('button', {name: 'Done'}).click();
+
+		// Add a first name criterion narrowing the segment to the second individual
+
+		await addSegmentField({
+			criterionName: 'First Name',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			index: 1,
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: `user1${name}`,
+			index: 1,
+			page,
+		});
+
+		// The preview now lists only the second individual
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Known Segment Members'),
+			trigger: page.getByTitle('View Members'),
+		});
+
+		await viewNameOnTableList({
+			itemNames: secondFullName,
+			page,
+		});
+
+		await viewNameNotPresentOnTableList({
+			itemNames: firstFullName,
 			page,
 		});
 	}

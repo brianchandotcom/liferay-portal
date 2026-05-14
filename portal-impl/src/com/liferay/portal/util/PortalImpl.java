@@ -2920,8 +2920,8 @@ public class PortalImpl implements Portal {
 			String portalDomain = portalURL.substring(index + 3);
 
 			String virtualHostname = getCanonicalDomain(
-				virtualHostnames, portalDomain, defaultVirtualHostname,
-				layoutSet);
+				defaultVirtualHostname, layoutSet, portalDomain,
+				virtualHostnames);
 
 			virtualHostname = getPortalURL(
 				virtualHostname, portalPort, secureConnection);
@@ -6804,8 +6804,8 @@ public class PortalImpl implements Portal {
 	}
 
 	protected String getCanonicalDomain(
-		NavigableMap<String, String> virtualHostnames, String portalDomain,
-		String defaultVirtualHostname, LayoutSet layoutSet) {
+		String defaultVirtualHostname, LayoutSet layoutSet, String portalDomain,
+		NavigableMap<String, String> virtualHostnames) {
 
 		if (Validator.isBlank(portalDomain) ||
 			StringUtil.equalsIgnoreCase(portalDomain, defaultVirtualHostname) ||
@@ -7672,8 +7672,8 @@ public class PortalImpl implements Portal {
 						!virtualHostnames.containsKey(defaultVirtualHostname)) {
 
 						String virtualHostname = getCanonicalDomain(
-							virtualHostnames, portalDomain,
-							defaultVirtualHostname, layoutSet);
+							defaultVirtualHostname, layoutSet, portalDomain,
+							virtualHostnames);
 
 						portalURL = getPortalURL(
 							virtualHostname, themeDisplay.getServerPort(),

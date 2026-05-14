@@ -41,6 +41,34 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Long",
+			"businessType": "Relationship",
+			"externalReferenceCode": "AI_HUB_CONTENT_RETRIEVER_TO_AI_HUB_CRAWLER_JOBS",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Content Retriever to Crawler Jobs"
+			},
+			"name": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
+			"objectDefinitionExternalReferenceCode1": "L_AI_HUB_CONTENT_RETRIEVER",
+			"objectFieldSettings": [
+				{
+					"name": "objectDefinition1ShortName",
+					"value": "AIHubContentRetriever"
+				},
+				{
+					"name": "objectRelationshipERCObjectFieldName",
+					"value": "r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverERC"
+				}
+			],
+			"objectRelationshipExternalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
+			"readOnly": false,
+			"relationshipType": "oneToMany",
+			"required": true,
+			"system": true,
+			"type": "Long"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Picklist",
 			"externalReferenceCode": "CRAWLER_JOB_STATUS",

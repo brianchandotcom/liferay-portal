@@ -26,19 +26,41 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		long companyId, String className, long classPK, int type,
 		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
 
+		return ticketLocalService.addDistinctTicket(
+			companyId, className, classPK, type, null, extraInfo,
+			expirationDate, serviceContext);
+	}
+
+	@Override
+	public Ticket addDistinctTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext) {
+
 		ticketPersistence.removeByC_C_C_T(
 			companyId, _classNameLocalService.getClassNameId(className),
 			classPK, type);
 
-		return addTicket(
-			companyId, className, classPK, type, extraInfo, expirationDate,
-			serviceContext);
+		return ticketLocalService.addTicket(
+			companyId, className, classPK, type, emailAddress, extraInfo,
+			expirationDate, serviceContext);
 	}
 
 	@Override
 	public Ticket addTicket(
 		long companyId, String className, long classPK, int type,
 		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
+
+		return ticketLocalService.addTicket(
+			companyId, className, classPK, type, null, extraInfo,
+			expirationDate, serviceContext);
+	}
+
+	@Override
+	public Ticket addTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, Date expirationDate,
+		ServiceContext serviceContext) {
 
 		long ticketId = counterLocalService.increment();
 
@@ -50,6 +72,7 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		ticket.setClassPK(classPK);
 		ticket.setKey(PortalUUIDUtil.generate());
 		ticket.setType(type);
+		ticket.setEmailAddress(emailAddress);
 		ticket.setExtraInfo(extraInfo);
 		ticket.setExpirationDate(expirationDate);
 

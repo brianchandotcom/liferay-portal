@@ -34,20 +34,20 @@ function main {
 }
 
 function _check_terraform_version {
-	local found
+	local found_version
 
-	found=$(terraform --version | awk '/^Terraform v/ {print $2; exit}')
-	found="${found#v}"
+	found_version=$(terraform --version | awk '/^Terraform v/ {print $2; exit}')
+	found_version="${found#v}"
 
-	local required="${1}"
+	local required_version="${1}"
 
-	local lowest
+	local lowest_version
 
-	lowest=$(printf "%s\n%s\n" "${required}" "${found}" | sort --version-sort | head -n 1)
+	lowest_version=$(printf "%s\n%s\n" "${required_version}" "${found_version}" | sort --version-sort | head -n 1)
 
-	if [ "${lowest}" != "${required}" ]
+	if [ "${lowest_version}" != "${required_version}" ]
 	then
-		echo "The installed Terraform version ${found} is older than the required ${required}." >&2
+		echo "The installed Terraform version ${found_version} is older than ${required_version}." >&2
 
 		exit 1
 	fi

@@ -18,6 +18,7 @@ type Props = {
 const LastRangeFields = ({handleUpdateFilter, value}: Props) => (
 	<ClayLayout.ContentCol>
 		<FieldSelectWithOption
+			formGroupProps={{className: 'mb-0'}}
 			id="last"
 			label={Liferay.Language.get('modified-last')}
 			name="last"

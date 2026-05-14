@@ -91,6 +91,7 @@ export default function DateFilter({
 			<ClayLayout.ContentRow className="flex-column flex-lg-row" padded>
 				<ClayLayout.ContentCol>
 					<FieldSelectWithOption
+						formGroupProps={{className: 'mb-0'}}
 						id="range"
 						label={Liferay.Language.get('filter-content-by')}
 						name="range"
@@ -142,7 +143,7 @@ export default function DateFilter({
 			</ClayLayout.ContentRow>
 
 			{appliedValue.range !== Range.All && (
-				<ClayLayout.ContentRow padded>
+				<ClayLayout.ContentRow className="mt-4" padded>
 					<ClayLayout.ContentCol expand>
 						<ClayAlert
 							actions={

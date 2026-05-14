@@ -83,7 +83,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {country(countryId: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {country(countryId: ___){a2, a3, active, billingAllowed, creator, externalReferenceCode, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Country country(@GraphQLName("countryId") Long countryId)
@@ -98,7 +98,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByA2(a2: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByA2(a2: ___){a2, a3, active, billingAllowed, creator, externalReferenceCode, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Country countryByA2(@GraphQLName("a2") String a2) throws Exception {
@@ -111,7 +111,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByA3(a3: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByA3(a3: ___){a2, a3, active, billingAllowed, creator, externalReferenceCode, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Country countryByA3(@GraphQLName("a3") String a3) throws Exception {
@@ -124,7 +124,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByName(name: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByExternalReferenceCode(externalReferenceCode: ___){a2, a3, active, billingAllowed, creator, externalReferenceCode, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Country countryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource ->
+				countryResource.getCountryByExternalReferenceCode(
+					externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByName(name: ___){a2, a3, active, billingAllowed, creator, externalReferenceCode, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Country countryByName(@GraphQLName("name") String name)
@@ -139,7 +157,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByNumber(number: ___){a2, a3, active, billingAllowed, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryByNumber(number: ___){a2, a3, active, billingAllowed, creator, externalReferenceCode, groupFilterEnabled, id, idd, name, number, position, regions, shippingAllowed, subjectToVAT, title_i18n, zipRequired}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Country countryByNumber(@GraphQLName("number") Integer number)
@@ -154,7 +172,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryRegionByRegionCode(countryId: ___, regionCode: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {countryRegionByRegionCode(countryId: ___, regionCode: ___){active, countryId, creator, externalReferenceCode, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Region countryRegionByRegionCode(
@@ -196,7 +214,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {region(regionId: ___){active, countryId, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {region(regionId: ___){active, countryId, creator, externalReferenceCode, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Region region(@GraphQLName("regionId") Long regionId)
@@ -206,6 +224,23 @@ public class Query {
 			_regionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			regionResource -> regionResource.getRegion(regionId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {regionByExternalReferenceCode(externalReferenceCode: ___){active, countryId, creator, externalReferenceCode, id, name, position, regionCode, title_i18n}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Region regionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.getRegionByExternalReferenceCode(
+				externalReferenceCode));
 	}
 
 	/**
@@ -248,6 +283,48 @@ public class Query {
 		}
 
 		private Region _region;
+
+	}
+
+	@GraphQLTypeExtension(Region.class)
+	public class GetCountryByExternalReferenceCodeTypeExtension {
+
+		public GetCountryByExternalReferenceCodeTypeExtension(Region region) {
+			_region = region;
+		}
+
+		@GraphQLField
+		public Country countryByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_countryResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				countryResource ->
+					countryResource.getCountryByExternalReferenceCode(
+						_region.getExternalReferenceCode()));
+		}
+
+		private Region _region;
+
+	}
+
+	@GraphQLTypeExtension(Country.class)
+	public class GetRegionByExternalReferenceCodeTypeExtension {
+
+		public GetRegionByExternalReferenceCodeTypeExtension(Country country) {
+			_country = country;
+		}
+
+		@GraphQLField
+		public Region regionByExternalReferenceCode() throws Exception {
+			return _applyComponentServiceObjects(
+				_regionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				regionResource ->
+					regionResource.getRegionByExternalReferenceCode(
+						_country.getExternalReferenceCode()));
+		}
+
+		private Country _country;
 
 	}
 
@@ -415,4 +492,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-764749691
+// LIFERAY-REST-BUILDER-HASH:-1279395345

@@ -51,6 +51,10 @@ public interface CountryResource {
 	public Response deleteCountryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteCountryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Page<Country> getCountriesPage(
 			Boolean active, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -62,11 +66,19 @@ public interface CountryResource {
 
 	public Country getCountryByA3(String a3) throws Exception;
 
+	public Country getCountryByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Country getCountryByName(String name) throws Exception;
 
 	public Country getCountryByNumber(Integer number) throws Exception;
 
 	public Country patchCountry(Long countryId, Country country)
+		throws Exception;
+
+	public Country patchCountryByExternalReferenceCode(
+			String externalReferenceCode, Country country)
 		throws Exception;
 
 	public Response postCountriesPageExportBatch(
@@ -83,6 +95,10 @@ public interface CountryResource {
 	public Country putCountry(Long countryId, Country country) throws Exception;
 
 	public Response putCountryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Country putCountryByExternalReferenceCode(
+			String externalReferenceCode, Country country)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -181,4 +197,4 @@ public interface CountryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:311155199
+// LIFERAY-REST-BUILDER-HASH:-741736543

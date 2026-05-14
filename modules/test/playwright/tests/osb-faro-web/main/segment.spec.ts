@@ -1878,3 +1878,104 @@ test(
 		});
 	}
 );
+
+test(
+	'Create a batch segment that includes anonymous individuals',
+	{
+		tag: '@LRAC-7962',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const anonymousIdentityIDs = [
+			getRandomString(),
+			getRandomString(),
+			getRandomString(),
+		];
+		const date = new Date();
+
+		// Create three anonymous identities with a pageViewed event on a per-run unique page and a session each
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities(
+			anonymousIdentityIDs.map((id) => ({
+				createDate: date.toISOString(),
+				id,
+			}))
+		);
+
+		const pageTitle = getRandomString();
+		const pageURL = `https://www.liferay.com/${pageTitle}`;
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents(
+			anonymousIdentityIDs.map((id) => ({
+				applicationId: 'Page',
+				assetId: pageURL,
+				assetTitle: pageTitle,
+				canonicalUrl: pageURL,
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: pageTitle,
+				userId: id,
+			}))
+		);
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+			anonymousIdentityIDs.map((id) => ({
+				channelId: channel.id,
+				id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: id,
+			}))
+		);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Create a batch segment that narrows to anonymous individuals who viewed the per-run page, with include-anonymous on
+
+		await createBatchSegment(page);
+
+		await setSegmentName({page, segmentName: getRandomString()});
+
+		await addSegmentField({
+			criterionName: 'First Name',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			operator: 'is unknown',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await addSegmentField({
+			criterionName: 'Viewed Page',
+			criterionType: 'Events',
+			page,
+		});
+
+		await selectAsset({assetName: pageTitle, page});
+
+		await includeAnonymousToggle({enable: true, page});
+
+		await saveSegment(page);
+
+		// The saved segment shows the includes anonymous individuals label
+
+		await expect(
+			page.getByText('Includes Anonymous Individuals')
+		).toBeVisible();
+
+		// Reopen the editor and verify the preview reflects the three anonymous individuals seeded for this run
+
+		await editSegment(page);
+
+		await expect(page.locator('.total-members-count')).toHaveText('3');
+	}
+);

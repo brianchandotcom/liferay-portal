@@ -68,18 +68,17 @@ public class CPDefinitionGroupedEntryLocalServiceTest {
 		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), GroupedCPTypeConstants.NAME, true,
 			true);
-
 		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
-			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
-			true);
-
-		CPDefinition cpDefinition3 = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
 			true);
 
 		_cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
 			cpDefinition1.getCPDefinitionId(), cpDefinition2.getCProductId(), 0,
 			1, _serviceContext);
+
+		CPDefinition cpDefinition3 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
 
 		_cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(
 			cpDefinition1.getCPDefinitionId(), cpDefinition3.getCProductId(), 0,

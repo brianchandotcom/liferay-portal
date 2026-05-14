@@ -69,7 +69,7 @@ export default function ContentEditorToolbar({
 	);
 	const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
 
-	const localizationLanguageId = useLocalizationLanguageId();
+	const localizationLanguageId = useLocalizationLanguageId(defaultLanguageId);
 	const previewButtonRef = useRef<HTMLButtonElement>(null);
 
 	const optionsTitle = hasWorkflow

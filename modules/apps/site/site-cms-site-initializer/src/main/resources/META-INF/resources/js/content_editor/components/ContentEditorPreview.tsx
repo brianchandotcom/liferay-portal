@@ -55,7 +55,8 @@ export default function ContentEditorPreview({
 	const previewRef = useRef<HTMLDivElement>(null);
 	const sidePanelBarRef = useRef<HTMLElement | null>(null);
 
-	const localizationLanguageId = useLocalizationLanguageId();
+	const localizationLanguageId = useLocalizationLanguageId(defaultLanguageId);
+
 	const previewWidthMax = useObservedMaxWidth(previewRef);
 	const previewWidth = Math.min(previewWidthMax, resizeWidth!);
 	const titleId = useId();

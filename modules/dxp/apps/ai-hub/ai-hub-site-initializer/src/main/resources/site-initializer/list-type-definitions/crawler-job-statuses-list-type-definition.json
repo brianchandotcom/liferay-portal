@@ -1,5 +1,5 @@
 {
-	"externalReferenceCode": "L_AI_HUB_CRAWL_JOB_STATUSES",
+	"externalReferenceCode": "L_AI_HUB_CRAWLER_JOB_STATUSES",
 	"listTypeEntries": [
 		{
 			"externalReferenceCode": "ABANDONED",
@@ -38,6 +38,6 @@
 			"system": true
 		}
 	],
-	"name": "AI Hub Crawl Job Statuses",
+	"name": "AI Hub Crawler Job Statuses",
 	"system": true
 }

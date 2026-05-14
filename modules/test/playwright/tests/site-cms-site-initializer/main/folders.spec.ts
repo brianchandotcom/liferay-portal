@@ -173,6 +173,78 @@ test(
 );
 
 test(
+	'Info panel location shows Files for a folder in the Files section',
+	{tag: '@LPD-90001'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderName = `Folder ${getRandomString()}`;
+
+		const folder = await apiHelpers.objectFolder.createObjectEntryFolder({
+			parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+			scopeKey: 'Default',
+			title: folderName,
+		});
+
+		try {
+			await assetsPage.gotoFiles();
+
+			await assetsPage.changeVisualizationMode('Table');
+
+			await page
+				.getByRole('row', {name: folderName})
+				.getByRole('checkbox')
+				.check();
+
+			await page.getByRole('button', {name: 'Show Info Panel'}).click();
+
+			await expect(
+				page
+					.getByRole('navigation', {name: 'Breadcrumb'})
+					.getByText('Files', {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
+		}
+	}
+);
+
+test(
+	'Info panel location shows Contents for a folder in the Contents section',
+	{tag: '@LPD-90001'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderName = `Folder ${getRandomString()}`;
+
+		const folder = await apiHelpers.objectFolder.createObjectEntryFolder({
+			parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+			scopeKey: 'Default',
+			title: folderName,
+		});
+
+		try {
+			await assetsPage.gotoContents();
+
+			await assetsPage.changeVisualizationMode('Table');
+
+			await page
+				.getByRole('row', {name: folderName})
+				.getByRole('checkbox')
+				.check();
+
+			await page.getByRole('button', {name: 'Show Info Panel'}).click();
+
+			await expect(
+				page
+					.getByRole('navigation', {name: 'Breadcrumb'})
+					.getByText('Contents', {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
+		}
+	}
+);
+
+test(
 	'Duplicating a folder creates a copy in the same parent',
 	{tag: '@LPD-88657'},
 	async ({apiHelpers, assetsPage, page}) => {

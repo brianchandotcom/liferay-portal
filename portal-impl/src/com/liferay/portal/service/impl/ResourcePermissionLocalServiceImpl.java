@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
@@ -542,12 +543,18 @@ public class ResourcePermissionLocalServiceImpl
 		super.afterPropertiesSet();
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				ResourcePermissionPersistenceImpl.class,
-				"_finderPathWithoutPaginationFindByC_N_S_P");
+			Field collectionPersistenceFinderField =
+				ReflectionUtil.getDeclaredField(
+					ResourcePermissionPersistenceImpl.class,
+					"_collectionPersistenceFinderByC_N_S_P");
 
-			_finderPathWithoutPaginationFindByC_N_S_P = (FinderPath)field.get(
-				resourcePermissionPersistence);
+			Field finderPathField = ReflectionUtil.getDeclaredField(
+				CollectionPersistenceFinder.class, "_unpaginatedFindPath");
+
+			_finderPathWithoutPaginationFindByC_N_S_P =
+				(FinderPath)finderPathField.get(
+					collectionPersistenceFinderField.get(
+						resourcePermissionPersistence));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

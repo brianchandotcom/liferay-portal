@@ -6,13 +6,18 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -91,6 +96,20 @@ public class UniquePersistenceFinder<T extends BaseModel<T>>
 						}
 					}
 					else {
+						if (list.size() > 1) {
+							Collections.sort(list, Collections.reverseOrder());
+
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Unique finder on ",
+										basePersistenceImpl.getModelClass(),
+										" returned more than one result for ",
+										"values (", StringUtil.merge(values),
+										")"));
+							}
+						}
+
 						T entity = list.get(0);
 
 						result = entity;
@@ -113,6 +132,9 @@ public class UniquePersistenceFinder<T extends BaseModel<T>>
 			return (T)result;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UniquePersistenceFinder.class);
 
 	private final FinderPath _fetchPath;
 

@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {
+	ObjectActionAPI,
+	ObjectDefinitionAPI,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
@@ -13,6 +17,7 @@ import getRandomString from '../../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performUserSwitch,
+	userData,
 } from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {createAccountWithSupplierUser, miniumSetUp} from '../../utils/commerce';
@@ -63,6 +68,8 @@ test(
 			apiHelpers,
 			site.id
 		);
+
+		expect(account.type).toBe('supplier');
 
 		await performUserSwitch(page, supplierUser.alternateName);
 
@@ -655,6 +662,30 @@ test(
 
 			await waitForAlert(page);
 		});
+
+		await test.step('Admin unlinks the supplier and supplier sees no channels', async () => {
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await commerceAdminChannelsPage.goto();
+			await commerceAdminChannelsPage
+				.channelLink(linkedChannelName)
+				.click();
+
+			await commerceAdminChannelDetailsPage.linkSupplierSelect.selectOption(
+				''
+			);
+			await commerceAdminChannelDetailsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			await commerceAdminChannelsPage.goto();
+
+			await expect(
+				commerceAdminChannelsPage.channelLink(linkedChannelName)
+			).toHaveCount(0);
+		});
 	}
 );
 
@@ -985,7 +1016,7 @@ test(
 );
 
 test(
-	'Supplier user sees only the orders placed on the channel linked to their account',
+	'Supplier user sees only the split sub-order routed to their linked channel',
 	{tag: ['@COMMERCE-11779', '@LPD-88485']},
 	async ({apiHelpers, commerceAdminOrdersPage, page}) => {
 		const randomSuffix = getRandomString().slice(0, 8);
@@ -1010,13 +1041,13 @@ test(
 			supplierChannel
 		);
 
-		const otherChannel =
+		const customerChannel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({
-				name: `Other Channel ${randomSuffix}`,
+				name: `Customer Channel ${randomSuffix}`,
 				siteGroupId: 0,
 			});
 
-		const product =
+		const supplierProduct =
 			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 				active: true,
 				catalogId: supplierCatalog.id,
@@ -1031,6 +1062,56 @@ test(
 					},
 				],
 			});
+
+		const otherCatalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: `Other Catalog ${randomSuffix}`,
+			});
+
+		const otherProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				active: true,
+				catalogId: otherCatalog.id,
+				name: {en_US: `Other Product ${randomSuffix}`},
+				skus: [
+					{
+						cost: 0,
+						price: 20,
+						published: true,
+						purchasable: true,
+						sku: `OTHSKU-${randomSuffix}`,
+					},
+				],
+			});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: commerceOrderDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				'L_COMMERCE_ORDER'
+			);
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				'L_COMMERCE_ORDER',
+				{
+					active: true,
+					conditionExpression: 'orderStatus = 10',
+					label: {en_US: 'Split order by catalog'},
+					name: `SplitOrderByCatalog${randomSuffix}`,
+					objectActionExecutorKey: 'split-commerce-order-by-catalog',
+					objectActionTriggerKey: 'liferay/commerce_order_status',
+					parameters: {
+						objectDefinitionId: commerceOrderDefinition.id,
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
 
 		const buyerAccount = await apiHelpers.headlessAdminUser.postAccount({
 			name: `Buyer Account ${randomSuffix}`,
@@ -1052,39 +1133,51 @@ test(
 				}
 			);
 
-		const supplierOrder =
+		const customerOrder =
 			await apiHelpers.headlessCommerceAdminOrder.postOrder({
 				accountId: buyerAccount.id,
 				billingAddressId: address.id,
-				channelId: supplierChannel.id,
-				orderItems: [{quantity: 1, skuId: String(product.skus[0].id)}],
+				channelId: customerChannel.id,
+				orderItems: [
+					{quantity: 1, skuId: String(supplierProduct.skus[0].id)},
+					{quantity: 1, skuId: String(otherProduct.skus[0].id)},
+				],
 				orderStatus: '1',
 				paymentMethod: 'money-order',
 				paymentStatus: '2',
 				shippingAddressId: address.id,
 			});
 
-		const otherOrder =
-			await apiHelpers.headlessCommerceAdminOrder.postOrder({
-				accountId: buyerAccount.id,
-				billingAddressId: address.id,
-				channelId: otherChannel.id,
-				orderItems: [{quantity: 1, skuId: String(product.skus[0].id)}],
-				orderStatus: '1',
-				paymentMethod: 'money-order',
-				paymentStatus: '2',
-				shippingAddressId: address.id,
-			});
+		await apiHelpers.headlessCommerceAdminOrder.patchOrder(
+			customerOrder.id,
+			{orderStatus: '10'}
+		);
+
+		let supplierSubOrderId: number;
+
+		await expect(async () => {
+			const ordersAfterSplit =
+				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+			const supplierSubOrder = (ordersAfterSplit.items ?? []).find(
+				(o: {channelId: number; id: number}) =>
+					o.channelId === supplierChannel.id
+			);
+
+			expect(supplierSubOrder).toBeDefined();
+
+			supplierSubOrderId = supplierSubOrder.id;
+		}).toPass({timeout: 15000});
 
 		await performUserSwitch(page, supplierUser.alternateName);
 
 		await commerceAdminOrdersPage.goto();
 
 		await expect(
-			commerceAdminOrdersPage.tableRowOrderIdLink(supplierOrder.id)
+			commerceAdminOrdersPage.tableRowOrderIdLink(supplierSubOrderId)
 		).toBeVisible();
 		await expect(
-			commerceAdminOrdersPage.tableRowOrderIdLink(otherOrder.id)
+			commerceAdminOrdersPage.tableRowOrderIdLink(customerOrder.id)
 		).toHaveCount(0);
 	}
 );
@@ -1372,11 +1465,42 @@ for (const variant of [
 					entry.id
 				);
 
-			expect(
-				(modifiers.items ?? []).map(
-					(modifier: {title: string}) => modifier.title
-				)
-			).toContain(modifierName);
+			const createdModifier = (modifiers.items ?? []).find(
+				(modifier: {title: string}) => modifier.title === modifierName
+			);
+
+			expect(createdModifier).toBeDefined();
+
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					active: true,
+					catalogId: linkedCatalog.id,
+					name: {en_US: `Modifier Product ${randomSuffix}`},
+					skus: [
+						{
+							cost: 0,
+							price: 10,
+							published: true,
+							purchasable: true,
+							sku: `MODSKU-${randomSuffix}`,
+						},
+					],
+				});
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceModifierProduct(
+				createdModifier.id,
+				product.productId
+			);
+
+			const linkedProducts =
+				await apiHelpers.headlessCommerceAdminPricing.getPriceModifierProducts(
+					createdModifier.id
+				);
+
+			expect(linkedProducts.items).toHaveLength(1);
+			expect(linkedProducts.items[0].productId).toBe(product.productId);
 		}
 	);
 }
@@ -1407,6 +1531,71 @@ test(
 				commerceAdminPriceListsPage.sidebarMenuItem(restrictedPortlet)
 			).toHaveCount(0);
 		}
+	}
+);
+
+test(
+	'A buyer user in a supplier account cannot access the Channels admin',
+	{tag: ['@COMMERCE-11820', '@LPD-88485']},
+	async ({apiHelpers, page}) => {
+		const randomSuffix = getRandomString().slice(0, 8);
+
+		const supplierAccount = await apiHelpers.headlessAdminUser.postAccount({
+			name: `Supplier Account ${randomSuffix}`,
+			type: 'supplier',
+		});
+
+		const buyerUser = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `buyer${randomSuffix}`,
+			emailAddress: `buyer${randomSuffix}@liferay.com`,
+			familyName: 'User',
+			givenName: `Buyer${randomSuffix}`,
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			supplierAccount.id,
+			[buyerUser.emailAddress]
+		);
+
+		const accountRoles = await apiHelpers.headlessAdminUser.getAccountRoles(
+			supplierAccount.id
+		);
+		const buyerRole = accountRoles?.items?.find(
+			(role: {name: string}) => role.name === 'Buyer'
+		);
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			supplierAccount.externalReferenceCode,
+			buyerRole.id,
+			buyerUser.emailAddress
+		);
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			buyerUser.id
+		);
+
+		userData[buyerUser.alternateName] = {
+			name: buyerUser.givenName,
+			password: 'test',
+			surname: buyerUser.familyName,
+		};
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(
+			'/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet&p_p_lifecycle=0&p_p_state=maximized'
+		);
+
+		await expect(
+			page.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+		).toBeVisible();
 	}
 );
 

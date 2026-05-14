@@ -258,7 +258,7 @@ public class CommerceOrderIndexerTest {
 		Country country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
 		Region region = CommerceInventoryTestUtil.addRegion(
-			null, country.getCountryId(), _serviceContext);
+			country.getCountryId(), _serviceContext);
 
 		return _addressLocalService.addAddress(
 			RandomTestUtil.randomString(), _user.getUserId(),

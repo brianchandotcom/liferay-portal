@@ -126,7 +126,7 @@ public class CommerceOrderGeneratorTest {
 		_country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
 		_region = CommerceInventoryTestUtil.addRegion(
-			null, _country.getCountryId(), _serviceContext);
+			_country.getCountryId(), _serviceContext);
 	}
 
 	@Test

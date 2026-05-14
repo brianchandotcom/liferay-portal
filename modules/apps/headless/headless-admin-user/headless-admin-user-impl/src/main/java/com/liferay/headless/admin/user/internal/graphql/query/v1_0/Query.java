@@ -1259,7 +1259,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddress(postalAddressId: ___){addressCountry, addressCountry_i18n, addressLocality, addressRegion, addressSubtype, addressType, externalReferenceCode, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddress(postalAddressId: ___){addressCountry, addressCountryExternalReferenceCode, addressCountry_i18n, addressLocality, addressRegion, addressRegionExternalReferenceCode, addressSubtype, addressType, externalReferenceCode, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the postal address.")
 	public PostalAddress postalAddress(
@@ -1276,7 +1276,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddressByExternalReferenceCode(externalReferenceCode: ___){addressCountry, addressCountry_i18n, addressLocality, addressRegion, addressSubtype, addressType, externalReferenceCode, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {postalAddressByExternalReferenceCode(externalReferenceCode: ___){addressCountry, addressCountryExternalReferenceCode, addressCountry_i18n, addressLocality, addressRegion, addressRegionExternalReferenceCode, addressSubtype, addressType, externalReferenceCode, id, name, phoneNumber, postalCode, primary, streetAddressLine1, streetAddressLine2, streetAddressLine3}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the postal address using external reference code."
@@ -5114,4 +5114,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1424077868
+// LIFERAY-REST-BUILDER-HASH:-1431085412

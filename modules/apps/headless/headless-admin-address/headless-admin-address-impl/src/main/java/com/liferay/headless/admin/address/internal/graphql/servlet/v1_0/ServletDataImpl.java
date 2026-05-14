@@ -90,9 +90,19 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CountryResourceImpl.class, "deleteCountryBatch"));
 					put(
+						"mutation#deleteCountryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CountryResourceImpl.class,
+							"deleteCountryByExternalReferenceCode"));
+					put(
 						"mutation#patchCountry",
 						new ObjectValuePair<>(
 							CountryResourceImpl.class, "patchCountry"));
+					put(
+						"mutation#patchCountryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CountryResourceImpl.class,
+							"patchCountryByExternalReferenceCode"));
 					put(
 						"mutation#createCountriesPageExportBatch",
 						new ObjectValuePair<>(
@@ -115,6 +125,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CountryResourceImpl.class, "putCountryBatch"));
 					put(
+						"mutation#updateCountryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CountryResourceImpl.class,
+							"putCountryByExternalReferenceCode"));
+					put(
 						"mutation#deleteRegion",
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "deleteRegion"));
@@ -123,9 +138,19 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "deleteRegionBatch"));
 					put(
+						"mutation#deleteRegionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"deleteRegionByExternalReferenceCode"));
+					put(
 						"mutation#patchRegion",
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "patchRegion"));
+					put(
+						"mutation#patchRegionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"patchRegionByExternalReferenceCode"));
 					put(
 						"mutation#createCountryRegion",
 						new ObjectValuePair<>(
@@ -153,6 +178,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#updateRegionBatch",
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "putRegionBatch"));
+					put(
+						"mutation#updateRegionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"putRegionByExternalReferenceCode"));
 
 					put(
 						"query#countries",
@@ -170,6 +200,11 @@ public class ServletDataImpl implements ServletData {
 						"query#countryByA3",
 						new ObjectValuePair<>(
 							CountryResourceImpl.class, "getCountryByA3"));
+					put(
+						"query#countryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CountryResourceImpl.class,
+							"getCountryByExternalReferenceCode"));
 					put(
 						"query#countryByName",
 						new ObjectValuePair<>(
@@ -192,6 +227,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "getRegion"));
 					put(
+						"query#regionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"getRegionByExternalReferenceCode"));
+					put(
 						"query#regions",
 						new ObjectValuePair<>(
 							RegionResourceImpl.class, "getRegionsPage"));
@@ -200,6 +240,16 @@ public class ServletDataImpl implements ServletData {
 						"query#Region.country",
 						new ObjectValuePair<>(
 							CountryResourceImpl.class, "getCountry"));
+					put(
+						"query#Region.countryByExternalReferenceCode",
+						new ObjectValuePair<>(
+							CountryResourceImpl.class,
+							"getCountryByExternalReferenceCode"));
+					put(
+						"query#Country.regionByExternalReferenceCode",
+						new ObjectValuePair<>(
+							RegionResourceImpl.class,
+							"getRegionByExternalReferenceCode"));
 					put(
 						"query#Country.regionByRegionCode",
 						new ObjectValuePair<>(
@@ -217,4 +267,4 @@ public class ServletDataImpl implements ServletData {
 		_regionResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1187330716
+// LIFERAY-REST-BUILDER-HASH:1086961274

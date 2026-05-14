@@ -51,6 +51,10 @@ public interface RegionResource {
 	public Response deleteRegionBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteRegionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
 	public Region getCountryRegionByRegionCode(
 			Long countryId, String regionCode)
 		throws Exception;
@@ -63,12 +67,19 @@ public interface RegionResource {
 
 	public Region getRegion(Long regionId) throws Exception;
 
+	public Region getRegionByExternalReferenceCode(String externalReferenceCode)
+		throws Exception;
+
 	public Page<Region> getRegionsPage(
 			Boolean active, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Region patchRegion(Long regionId, Region region) throws Exception;
+
+	public Region patchRegionByExternalReferenceCode(
+			String externalReferenceCode, Region region)
+		throws Exception;
 
 	public Region postCountryRegion(Long countryId, Region region)
 		throws Exception;
@@ -92,6 +103,10 @@ public interface RegionResource {
 	public Region putRegion(Long regionId, Region region) throws Exception;
 
 	public Response putRegionBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Region putRegionByExternalReferenceCode(
+			String externalReferenceCode, Region region)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -190,4 +205,4 @@ public interface RegionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2021664308
+// LIFERAY-REST-BUILDER-HASH:-2016130918

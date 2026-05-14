@@ -68,6 +68,32 @@ public class Location implements Cloneable, Serializable {
 
 	protected String addressCountryCode;
 
+	public String getAddressCountryExternalReferenceCode() {
+		return addressCountryExternalReferenceCode;
+	}
+
+	public void setAddressCountryExternalReferenceCode(
+		String addressCountryExternalReferenceCode) {
+
+		this.addressCountryExternalReferenceCode =
+			addressCountryExternalReferenceCode;
+	}
+
+	public void setAddressCountryExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			addressCountryExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			addressCountryExternalReferenceCode =
+				addressCountryExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String addressCountryExternalReferenceCode;
+
 	public Map<String, String> getAddressCountry_i18n() {
 		return addressCountry_i18n;
 	}
@@ -134,6 +160,32 @@ public class Location implements Cloneable, Serializable {
 
 	protected String addressRegionCode;
 
+	public String getAddressRegionExternalReferenceCode() {
+		return addressRegionExternalReferenceCode;
+	}
+
+	public void setAddressRegionExternalReferenceCode(
+		String addressRegionExternalReferenceCode) {
+
+		this.addressRegionExternalReferenceCode =
+			addressRegionExternalReferenceCode;
+	}
+
+	public void setAddressRegionExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			addressRegionExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			addressRegionExternalReferenceCode =
+				addressRegionExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String addressRegionExternalReferenceCode;
+
 	public Long getId() {
 		return id;
 	}
@@ -185,4 +237,4 @@ public class Location implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-540936218
+// LIFERAY-REST-BUILDER-HASH:-210445096

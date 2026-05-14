@@ -93,6 +93,30 @@ public class CountrySerDes {
 			sb.append(country.getBillingAllowed());
 		}
 
+		if (country.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(country.getCreator()));
+		}
+
+		if (country.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(country.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (country.getGroupFilterEnabled() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -264,6 +288,22 @@ public class CountrySerDes {
 				"billingAllowed", String.valueOf(country.getBillingAllowed()));
 		}
 
+		if (country.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(country.getCreator()));
+		}
+
+		if (country.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(country.getExternalReferenceCode()));
+		}
+
 		if (country.getGroupFilterEnabled() == null) {
 			map.put("groupFilterEnabled", null);
 		}
@@ -374,6 +414,14 @@ public class CountrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "billingAllowed")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "groupFilterEnabled")) {
 
@@ -436,6 +484,20 @@ public class CountrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "billingAllowed")) {
 				if (jsonParserFieldValue != null) {
 					country.setBillingAllowed((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					country.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					country.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(
@@ -592,4 +654,4 @@ public class CountrySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-959447688
+// LIFERAY-REST-BUILDER-HASH:139584141

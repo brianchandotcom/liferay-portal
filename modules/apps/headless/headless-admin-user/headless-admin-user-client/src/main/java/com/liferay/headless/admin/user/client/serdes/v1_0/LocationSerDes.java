@@ -72,6 +72,21 @@ public class LocationSerDes {
 			sb.append("\"");
 		}
 
+		if (location.getAddressCountryExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressCountryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(location.getAddressCountryExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (location.getAddressCountry_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -106,6 +121,21 @@ public class LocationSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(location.getAddressRegionCode()));
+
+			sb.append("\"");
+		}
+
+		if (location.getAddressRegionExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressRegionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(location.getAddressRegionExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -155,6 +185,16 @@ public class LocationSerDes {
 				String.valueOf(location.getAddressCountryCode()));
 		}
 
+		if (location.getAddressCountryExternalReferenceCode() == null) {
+			map.put("addressCountryExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"addressCountryExternalReferenceCode",
+				String.valueOf(
+					location.getAddressCountryExternalReferenceCode()));
+		}
+
 		if (location.getAddressCountry_i18n() == null) {
 			map.put("addressCountry_i18n", null);
 		}
@@ -179,6 +219,16 @@ public class LocationSerDes {
 			map.put(
 				"addressRegionCode",
 				String.valueOf(location.getAddressRegionCode()));
+		}
+
+		if (location.getAddressRegionExternalReferenceCode() == null) {
+			map.put("addressRegionExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"addressRegionExternalReferenceCode",
+				String.valueOf(
+					location.getAddressRegionExternalReferenceCode()));
 		}
 
 		if (location.getId() == null) {
@@ -214,6 +264,12 @@ public class LocationSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressCountryExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "addressCountry_i18n")) {
 
 				return true;
@@ -222,6 +278,12 @@ public class LocationSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "addressRegionCode")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressRegionExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -250,6 +312,15 @@ public class LocationSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressCountryExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					location.setAddressCountryExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "addressCountry_i18n")) {
 
 				if (jsonParserFieldValue != null) {
@@ -265,6 +336,15 @@ public class LocationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "addressRegionCode")) {
 				if (jsonParserFieldValue != null) {
 					location.setAddressRegionCode((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressRegionExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					location.setAddressRegionExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -353,4 +433,4 @@ public class LocationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1888862098
+// LIFERAY-REST-BUILDER-HASH:1861898648

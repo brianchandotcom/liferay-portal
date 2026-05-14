@@ -60,6 +60,22 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 		}
 
+		if (postalAddress.getAddressCountryExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressCountryExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					postalAddress.getAddressCountryExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (postalAddress.getAddressCountry_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -94,6 +110,21 @@ public class PostalAddressSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(postalAddress.getAddressRegion()));
+
+			sb.append("\"");
+		}
+
+		if (postalAddress.getAddressRegionExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"addressRegionExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(postalAddress.getAddressRegionExternalReferenceCode()));
 
 			sb.append("\"");
 		}
@@ -272,6 +303,16 @@ public class PostalAddressSerDes {
 				String.valueOf(postalAddress.getAddressCountry()));
 		}
 
+		if (postalAddress.getAddressCountryExternalReferenceCode() == null) {
+			map.put("addressCountryExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"addressCountryExternalReferenceCode",
+				String.valueOf(
+					postalAddress.getAddressCountryExternalReferenceCode()));
+		}
+
 		if (postalAddress.getAddressCountry_i18n() == null) {
 			map.put("addressCountry_i18n", null);
 		}
@@ -297,6 +338,16 @@ public class PostalAddressSerDes {
 			map.put(
 				"addressRegion",
 				String.valueOf(postalAddress.getAddressRegion()));
+		}
+
+		if (postalAddress.getAddressRegionExternalReferenceCode() == null) {
+			map.put("addressRegionExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"addressRegionExternalReferenceCode",
+				String.valueOf(
+					postalAddress.getAddressRegionExternalReferenceCode()));
 		}
 
 		if (postalAddress.getAddressSubtype() == null) {
@@ -411,6 +462,12 @@ public class PostalAddressSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressCountryExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "addressCountry_i18n")) {
 
 				return true;
@@ -419,6 +476,12 @@ public class PostalAddressSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "addressRegion")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressRegionExternalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "addressSubtype")) {
@@ -478,6 +541,15 @@ public class PostalAddressSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressCountryExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					postalAddress.setAddressCountryExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "addressCountry_i18n")) {
 
 				if (jsonParserFieldValue != null) {
@@ -494,6 +566,15 @@ public class PostalAddressSerDes {
 			else if (Objects.equals(jsonParserFieldName, "addressRegion")) {
 				if (jsonParserFieldValue != null) {
 					postalAddress.setAddressRegion(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"addressRegionExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					postalAddress.setAddressRegionExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -647,4 +728,4 @@ public class PostalAddressSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2035805742
+// LIFERAY-REST-BUILDER-HASH:-2052584534

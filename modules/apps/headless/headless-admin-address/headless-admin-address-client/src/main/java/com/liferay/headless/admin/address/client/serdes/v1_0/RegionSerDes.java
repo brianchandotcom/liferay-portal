@@ -64,6 +64,30 @@ public class RegionSerDes {
 			sb.append(region.getCountryId());
 		}
 
+		if (region.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(region.getCreator()));
+		}
+
+		if (region.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(region.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (region.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -154,6 +178,22 @@ public class RegionSerDes {
 			map.put("countryId", String.valueOf(region.getCountryId()));
 		}
 
+		if (region.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(region.getCreator()));
+		}
+
+		if (region.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(region.getExternalReferenceCode()));
+		}
+
 		if (region.getId() == null) {
 			map.put("id", null);
 		}
@@ -212,6 +252,14 @@ public class RegionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "countryId")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -245,6 +293,20 @@ public class RegionSerDes {
 				if (jsonParserFieldValue != null) {
 					region.setCountryId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					region.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					region.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -355,4 +417,4 @@ public class RegionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1365699989
+// LIFERAY-REST-BUILDER-HASH:-728214400

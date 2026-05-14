@@ -79,6 +79,21 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField(description = "Deletes a country.")
+	public boolean deleteCountryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource ->
+				countryResource.deleteCountryByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
 	@GraphQLField
 	public Country patchCountry(
 			@GraphQLName("countryId") Long countryId,
@@ -90,6 +105,22 @@ public class Mutation {
 			this::_populateResourceContext,
 			countryResource -> countryResource.patchCountry(
 				countryId, country));
+	}
+
+	@GraphQLField(
+		description = "Updates the country with information sent in the request body. Only the provided fields are updated."
+	)
+	public Country patchCountryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("country") Country country)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource ->
+				countryResource.patchCountryByExternalReferenceCode(
+					externalReferenceCode, country));
 	}
 
 	@GraphQLField
@@ -159,6 +190,22 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Replaces the country with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public Country updateCountryByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("country") Country country)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_countryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			countryResource ->
+				countryResource.putCountryByExternalReferenceCode(
+					externalReferenceCode, country));
+	}
+
 	@GraphQLField
 	public boolean deleteRegion(@GraphQLName("regionId") Long regionId)
 		throws Exception {
@@ -184,6 +231,21 @@ public class Mutation {
 				callbackURL, object));
 	}
 
+	@GraphQLField(description = "Deletes a region.")
+	public boolean deleteRegionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource ->
+				regionResource.deleteRegionByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
 	@GraphQLField
 	public Region patchRegion(
 			@GraphQLName("regionId") Long regionId,
@@ -194,6 +256,21 @@ public class Mutation {
 			_regionResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			regionResource -> regionResource.patchRegion(regionId, region));
+	}
+
+	@GraphQLField(
+		description = "Updates the region with information sent in the request body. Only the provided fields are updated."
+	)
+	public Region patchRegionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("region") Region region)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.patchRegionByExternalReferenceCode(
+				externalReferenceCode, region));
 	}
 
 	@GraphQLField
@@ -285,6 +362,21 @@ public class Mutation {
 			this::_populateResourceContext,
 			regionResource -> regionResource.putRegionBatch(
 				callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Replaces the region with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	public Region updateRegionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("region") Region region)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_regionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			regionResource -> regionResource.putRegionByExternalReferenceCode(
+				externalReferenceCode, region));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -384,4 +476,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1848831826
+// LIFERAY-REST-BUILDER-HASH:817528846

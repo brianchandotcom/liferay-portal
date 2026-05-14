@@ -57,4 +57,17 @@ describe('Account Membership', () => {
 		const dashes = getAllByText('-');
 		expect(dashes.length).toBeGreaterThan(0);
 	});
+
+	it('should render annualRevenue without throwing when currencyCode is null', () => {
+		expect(() =>
+			render(
+				<AccountMembership
+					accountData={fromJS({
+						...mockData,
+						currencyCode: null
+					})}
+				/>
+			)
+		).not.toThrow();
+	});
 });

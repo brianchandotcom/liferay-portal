@@ -70,7 +70,6 @@ public class AIHubCellRequestAuthVerifierTest {
 			_testGetUserId(
 				company, "Invalid JWT signature",
 				token.substring(0, token.length() - 5) + "abcde");
-
 			_testGetUserId(
 				company, "Unable to parse and verify the JWT token",
 				RandomTestUtil.randomString());

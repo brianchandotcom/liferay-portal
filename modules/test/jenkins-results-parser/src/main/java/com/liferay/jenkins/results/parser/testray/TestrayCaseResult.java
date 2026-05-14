@@ -139,6 +139,12 @@ public class TestrayCaseResult {
 		return testrayCase.getName();
 	}
 
+	public String getPortalSHA() {
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		return testrayBuild.getPortalSHA();
+	}
+
 	public int getPriority() {
 		TestrayCase testrayCase = getTestrayCase();
 
@@ -241,6 +247,8 @@ public class TestrayCaseResult {
 						testrayServer, entityJSONObject);
 
 				if (!Objects.equals(
+						testrayCaseResult.getPortalSHA(), getPortalSHA()) &&
+					!Objects.equals(
 						testrayCaseResult.getPullRequestSenderUsername(),
 						getPullRequestSenderUsername())) {
 

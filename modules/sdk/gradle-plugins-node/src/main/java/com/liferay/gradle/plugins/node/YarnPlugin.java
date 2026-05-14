@@ -48,9 +48,9 @@ public class YarnPlugin implements Plugin<Project> {
 					yarnInstallTask.setDescription(
 						"Installs Node packages from package.json.");
 					yarnInstallTask.setFrozenLockFile(
-						Boolean.parseBoolean(
-							System.getProperty(
-								"frozen.lockfile", Boolean.TRUE.toString())));
+						GradleUtil.getProperty(
+							yarnInstallTask.getProject(),
+							"nodejs.yarn.install.frozen.lockfile", true));
 				}
 
 			});

@@ -6,7 +6,7 @@
 package com.liferay.content.site.generator.web.internal.portlet;
 
 import com.liferay.content.site.generator.web.internal.constants.ContentSiteGeneratorPortletKeys;
-import com.liferay.content.site.generator.web.internal.display.context.ViewContentSitesDisplayContext;
+import com.liferay.content.site.generator.web.internal.display.context.ViewGenerationsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -51,8 +51,8 @@ public class ContentSiteGeneratorPortlet extends MVCPortlet {
 			renderRequest);
 
 		renderRequest.setAttribute(
-			ViewContentSitesDisplayContext.class.getName(),
-			new ViewContentSitesDisplayContext(
+			ViewGenerationsDisplayContext.class.getName(),
+			new ViewGenerationsDisplayContext(
 				httpServletRequest,
 				_portal.getLiferayPortletResponse(renderResponse)));
 

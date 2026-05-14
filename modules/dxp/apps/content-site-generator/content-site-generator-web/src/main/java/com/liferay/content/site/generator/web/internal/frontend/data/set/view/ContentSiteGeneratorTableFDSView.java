@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mylena Monte
  */
 @Component(
-	property = "frontend.data.set.name=" + ContentSiteGeneratorFDSNames.CONTENT_SITE_GENERATOR,
+	property = "frontend.data.set.name=" + ContentSiteGeneratorFDSNames.CONTENT_SITE_GENERATOR_GENERATIONS,
 	service = FDSView.class
 )
 public class ContentSiteGeneratorTableFDSView extends BaseTableFDSView {
@@ -34,20 +34,20 @@ public class ContentSiteGeneratorTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "name",
+			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"view"
 			).setContentRenderer(
 				"actionLink"
 			)
 		).add(
-			"runStatus.name", "status",
+			"prompt", "prompt",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"label")
 		).add(
 			_dateTimeField("dateCreated", "created")
 		).add(
-			_dateTimeField("committedAt", "committed")
+			_dateTimeField("commitDate", "committed")
 		).build();
 	}
 

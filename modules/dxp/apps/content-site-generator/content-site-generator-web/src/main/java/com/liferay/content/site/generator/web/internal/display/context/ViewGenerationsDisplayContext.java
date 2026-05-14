@@ -12,7 +12,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -25,9 +24,9 @@ import java.util.Map;
 /**
  * @author Mylena Monte
  */
-public class ViewContentSitesDisplayContext {
+public class ViewGenerationsDisplayContext {
 
-	public ViewContentSitesDisplayContext(
+	public ViewGenerationsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -36,7 +35,7 @@ public class ViewContentSitesDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/content-site-generator/runs";
+		return "/o/content-site-generator/generations";
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() throws Exception {
@@ -50,10 +49,10 @@ public class ViewContentSitesDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref(_getNewRunURL());
+				dropdownItem.setHref(_getViewIdeateStepRenderURL());
 				dropdownItem.setIcon("stars");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "new-generator"));
+					LanguageUtil.get(_httpServletRequest, "new-generation"));
 			}
 		).build();
 	}
@@ -62,10 +61,9 @@ public class ViewContentSitesDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"description",
 			LanguageUtil.get(
-				_httpServletRequest, "create-a-new-generator-to-get-started")
+				_httpServletRequest, "create-a-new-generation-to-get-started")
 		).put(
-			"title",
-			LanguageUtil.get(_httpServletRequest, "no-content-sites-yet")
+			"title", LanguageUtil.get(_httpServletRequest, "no-generations-yet")
 		).build();
 	}
 
@@ -74,7 +72,7 @@ public class ViewContentSitesDisplayContext {
 
 		return List.of(
 			new FDSActionDropdownItem(
-				_getViewRunURL(), "view", "view",
+				_getViewRefineStepRenderURL(), "view", "view",
 				LanguageUtil.get(_httpServletRequest, "view"), "get", null,
 				null),
 			new FDSActionDropdownItem(
@@ -83,36 +81,34 @@ public class ViewContentSitesDisplayContext {
 				"delete", "async"));
 	}
 
-	public long getRunId() {
-		long runId = ParamUtil.getLong(_httpServletRequest, "runId");
+	public long getGenerationId() {
+		long generationId = ParamUtil.getLong(
+			_httpServletRequest, "generationId");
 
-		if (runId > 0) {
-			return runId;
+		if (generationId > 0) {
+			return generationId;
 		}
 
-		return GetterUtil.getLong(
-			PortalUtil.getOriginalServletRequest(
-				_httpServletRequest
-			).getParameter(
-				"runId"
-			));
+		return ParamUtil.getLong(
+			PortalUtil.getOriginalServletRequest(_httpServletRequest),
+			"generationId");
 	}
 
-	private String _getNewRunURL() {
+	private String _getViewIdeateStepRenderURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
-			"/view_content_site_generator.jsp"
+			"/view_ideate_step.jsp"
 		).buildString();
 	}
 
-	private String _getViewRunURL() {
+	private String _getViewRefineStepRenderURL() {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCPath(
 			"/view_refine_step.jsp"
 		).setParameter(
-			"runId", "{id}"
+			"generationId", "{id}"
 		).buildString();
 	}
 

@@ -60,6 +60,10 @@ public interface AccountGroupRelService extends BaseService {
 			long accountGroupId, String className, long classPK)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroupRel getAccountGroupRel(long accountGroupRelId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -68,4 +72,4 @@ public interface AccountGroupRelService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1241666712
+// LIFERAY-SERVICE-BUILDER-HASH:1841387539

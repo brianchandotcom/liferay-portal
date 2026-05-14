@@ -78,7 +78,7 @@ public abstract class BaseAnalyticsSectionDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"isAnalyticsCloudEnabled", isAnalyticsCloudEnabled()
+			"isAnalyticsCloudEnabled", _isAnalyticsCloudEnabled()
 		).build();
 	}
 
@@ -91,7 +91,7 @@ public abstract class BaseAnalyticsSectionDisplayContext {
 	protected final ObjectDefinition objectDefinition;
 	protected final ThemeDisplay themeDisplay;
 
-	private boolean isAnalyticsCloudEnabled() {
+	private boolean _isAnalyticsCloudEnabled() {
 		try {
 			return analyticsSettingsManager.isAnalyticsEnabled(
 				themeDisplay.getCompanyId());

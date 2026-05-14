@@ -146,4 +146,14 @@ describe('RoomStatistics', () => {
 		expect(getByText('10')).toBeInTheDocument();
 		expect(getByText('5')).toBeInTheDocument();
 	});
+
+	it('renders the not-configured message when analytics cloud is disabled', () => {
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsCloudEnabled={false} />
+		);
+
+		expect(
+			getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
+	});
 });

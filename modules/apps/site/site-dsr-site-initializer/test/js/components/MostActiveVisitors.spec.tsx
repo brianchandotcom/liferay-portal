@@ -74,4 +74,17 @@ describe('MostActiveVisitors', () => {
 		expect(screen.getByText('actions')).toBeInTheDocument();
 		expect(screen.getByText('john.doe@liferay.com')).toBeInTheDocument();
 	});
+
+	it('renders the not-configured message when analytics cloud is disabled', () => {
+		render(
+			<MostActiveVisitors
+				isAnalyticsCloudEnabled={false}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
+	});
 });

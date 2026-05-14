@@ -104,4 +104,17 @@ describe('LatestActivity', () => {
 
 		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
 	});
+
+	it('renders the not-configured message when analytics cloud is disabled', () => {
+		render(
+			<LatestActivity
+				isAnalyticsCloudEnabled={false}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
+	});
 });

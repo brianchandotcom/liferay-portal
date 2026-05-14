@@ -17,22 +17,23 @@ import analyticsOAuth2 from '../../../../../services/oauth/Analytics';
 import {copyToClipboard} from '../../../../../utils/browser';
 import {safeJSONParse} from '../../../../../utils/util';
 
-import './DSRTokens.scss';
+import './DSRWorkspace.scss';
+import { DetailedCard } from '../../../../../components/DetailedCard/DetailedCard';
+import QATable from '../../../../../components/QATable';
 
 type OutletContext = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
 >;
 
-const DSRTokens = () => {
+const DSRWorkspace = () => {
 	const {placedOrder} = useOutletContext<OutletContext>();
 
-	const orderMetadata = safeJSONParse(
+	const orderMetadata = safeJSONParse<any>(
 		placedOrder.customFields[OrderCustomFields.ORDER_METADATA],
-		{analyticsProject: {groupId: ''}}
+		{analyticsForm: {groupId: ''}}
 	);
-
-	const groupId = orderMetadata?.analyticsProject?.groupId
-		? String(orderMetadata.analyticsProject.groupId)
+	const groupId = orderMetadata?.analyticsForm?.groupId
+		? String(orderMetadata.analyticsForm.groupId)
 		: '';
 
 	const {data: token = '', isLoading} = useSWR(
@@ -41,39 +42,39 @@ const DSRTokens = () => {
 	);
 
 	return (
-		<div className="dsr-tokens mt-5">
-			<div className="dsr-token-card">
-				<div className="dsr-token-card-header">
-					<div className="dsr-token-card-icon">
-						<ClayIcon symbol="diagram" />
-					</div>
-
-					<h3 className="dsr-token-card-title m-0">
+		<div className="dsr-workspace d-flex gap-4 mt-5">
+			<div className="dsr-workspace-card">
+				<div className="dsr-workspace-card-header">
+					<h3 className="dsr-workspace-card-title m-0">
 						{i18n.translate('connect-your-liferay-dsr')}
 					</h3>
+
+					<div className="dsr-workspace-card-icon">
+						<ClayIcon symbol="diagram" />
+					</div>
 				</div>
 
-				<span className="dsr-token-label">
+				<span className="dsr-workspace-label">
 					{i18n.translate(
 						'copy-this-token-to-your-liferay-dxp-instance'
 					)}
 
-					<span className="dsr-token-required">*</span>
+					<span className="dsr-workspace-required">*</span>
 				</span>
 
 				{isLoading ? (
 					<ClayLoadingIndicator />
 				) : (
-					<div className="d-flex">
+					<div className="dsr-workspace-field">
 						<ClayInput
-							className="dsr-token-input"
+							className="dsr-workspace-input"
 							readOnly
 							value={token}
 						/>
 
 						<button
 							aria-label={i18n.translate('copy')}
-							className="dsr-token-copy"
+							className="dsr-workspace-copy"
 							onClick={() => {
 								copyToClipboard(token);
 
@@ -91,8 +92,35 @@ const DSRTokens = () => {
 					</div>
 				)}
 			</div>
+
+			<DetailedCard
+				cardIconAltText="Summary Icon"
+				cardTitle={i18n.translate('workspace-info')}
+				className="dsr-workspace-info-card"
+				clayIcon="document"
+			>
+				<QATable
+					items={[
+						{
+							title: i18n.translate('workspace-name'),
+							value: orderMetadata?.analyticsForm
+								?.corpProjectName,
+						},
+						{
+							title: i18n.translate('workspace-owner-email'),
+							value: orderMetadata?.analyticsForm
+								?.ownerEmailAddress,
+						},
+						{
+							title: i18n.translate('data-center-location'),
+							value: orderMetadata?.analyticsForm
+								?.serverLocation,
+						},
+					]}
+				/>
+			</DetailedCard>
 		</div>
 	);
 };
 
-export default DSRTokens;
+export default DSRWorkspace;

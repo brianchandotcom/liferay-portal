@@ -1,0 +1,146 @@
+.dsr-workspace {
+	display: flex;
+	gap: 24px;
+	width: 100%;
+
+	.dsr-workspace-card {
+		background: #fff;
+		border: 1px solid #e2e2e4;
+		border-radius: 10px;
+		flex: 1;
+		padding: 24px;
+	}
+
+	.dsr-workspace-card-header {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 24px;
+	}
+
+	.dsr-workspace-card-icon {
+		align-items: center;
+		background: #e7efff;
+		border-radius: 50%;
+		color: #377cff;
+		display: flex;
+		height: 40px;
+		justify-content: center;
+		width: 40px;
+	}
+
+	.dsr-workspace-card-title {
+		color: #282934;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 20px;
+		margin: 0;
+	}
+
+	.detailed-card-container {
+		background: #fff;
+		border: 1px solid #e2e2e4;
+		border-radius: 10px;
+		flex: 1;
+		padding: 24px;
+	}
+
+	.detailed-card-header {
+		margin-bottom: 16px;
+
+		h2 {
+			color: #282934;
+			font-size: 18px !important;
+			font-weight: 600;
+			line-height: 20px;
+			margin: 0;
+		}
+
+		.detailed-card-header-icon-container {
+			background: #e7efff;
+			color: #377cff;
+		}
+	}
+
+	.dsr-workspace-label {
+		color: #282934;
+		display: block;
+		font-size: 16px;
+		font-weight: 600;
+		margin-bottom: 8px;
+	}
+
+	.dsr-workspace-required {
+		color: #da1414;
+		margin-left: 4px;
+		opacity: 0.8;
+	}
+
+	.dsr-workspace-field {
+		align-items: center;
+		background: #fff;
+		border: 1px solid #b1b2b9;
+		border-radius: 8px;
+		display: flex;
+		gap: 8px;
+		padding: 12px 16px;
+	}
+
+	.dsr-workspace-input {
+		border: 0;
+		color: #282934;
+		flex: 1;
+		font-size: 16px;
+		line-height: 24px;
+		min-width: 0;
+		opacity: 0.6;
+		outline: none;
+		overflow: hidden;
+		padding: 0;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	.dsr-workspace-copy {
+		align-items: center;
+		background: transparent;
+		border: 0;
+		color: #999aa3;
+		cursor: pointer;
+		display: flex;
+		flex-shrink: 0;
+		padding: 0;
+
+		&:hover {
+			color: #6c6c75;
+		}
+	}
+
+	.qa-table {
+		border-spacing: 0 16px !important;
+
+		tr {
+			td,
+			th {
+				padding: 0;
+			}
+		}
+
+		.tr-qa-table__header {
+			color: #282934 !important;
+			font-size: 14px !important;
+			font-weight: 600 !important;
+			text-transform: none !important;
+			width: 200px !important;
+		}
+
+		td {
+			color: #6c6c75 !important;
+			font-size: 14px !important;
+		}
+	}
+}

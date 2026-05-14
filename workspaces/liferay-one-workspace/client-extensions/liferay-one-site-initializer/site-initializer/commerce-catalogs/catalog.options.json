@@ -1,0 +1,27 @@
+[
+	{
+		"ddmFormFieldTypeName": "radio",
+		"description": "Apps that are not DXP or Cloud can be licensed using this base type.",
+		"externalReferenceCode": "ONE-OPTION-BASE-LICENSE-USAGE",
+		"facetable": false,
+		"fieldType": "radio",
+		"key": "base-license-usage-type",
+		"name": "Base License Usage Type",
+		"required": true,
+		"skuContributor": true,
+		"values": [
+			{
+				"externalReferenceCode": "STANDARD",
+				"key": "standard",
+				"name": "Standard",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "DEVELOPER",
+				"key": "developer",
+				"name": "Developer",
+				"priority": 1
+			}
+		]
+	}
+]

@@ -490,7 +490,7 @@ definition {
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 
-			AssertLocation(value1 = "${portalURL}/web/minium/catalog?dimensions=7%22%20x%205.6%22%20x%202%22");
+			AssertLocation(value1 = "${portalURL}/web/minium/catalog?dimensions=7%22+x+5.6%22+x+2%22");
 		}
 	}
 

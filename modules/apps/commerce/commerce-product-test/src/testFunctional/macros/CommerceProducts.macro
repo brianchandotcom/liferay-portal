@@ -161,7 +161,7 @@ definition {
 
 			var row = ${value};
 
-			AppBuilderAdmin.searchByItem(itemName = ${productName});
+			CommerceNavigator.searchEntry(entryName = ${productName});
 
 			if (${row} == "") {
 				Click(

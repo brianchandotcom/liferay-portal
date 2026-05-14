@@ -11,6 +11,18 @@ const CHATBOT_BASE_URI = '/o/ai-hub/chatbots';
 
 const CHATBOT_BY_ERC_URI = `${CHATBOT_BASE_URI}/by-external-reference-code/`;
 
+async function getChatbots() {
+	const response = await fetch(CHATBOT_BASE_URI, {
+		method: 'GET',
+	});
+
+	if (!response.ok) {
+		throw new Error('Failed to fetch chatbots');
+	}
+
+	return response.json();
+}
+
 async function getChatbot(externalReferenceCode: string) {
 	const response = await fetch(
 		`${CHATBOT_BY_ERC_URI}${externalReferenceCode}?nestedFields=agentDefinitionsToChatbots`,
@@ -87,6 +99,7 @@ async function putChatbotAgentDefinitionRelationship(
 export {
 	deleteChatbotAgentDefinitionRelationship,
 	getChatbot,
+	getChatbots,
 	postChatbot,
 	putChatbot,
 	putChatbotAgentDefinitionRelationship,

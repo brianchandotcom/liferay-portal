@@ -91,7 +91,7 @@ describe('RoomDocumentsStatistics', () => {
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
 			<DocumentsStatistics
-				isAnalyticsCloudEnabled={true}
+				isAnalyticsEnabled={true}
 				namespace="test-namespace"
 			/>
 		);
@@ -106,7 +106,7 @@ describe('RoomDocumentsStatistics', () => {
 	it('renders the user involved count from userInvolvedMetric', () => {
 		render(
 			<DocumentsStatistics
-				isAnalyticsCloudEnabled={true}
+				isAnalyticsEnabled={true}
 				namespace="test-namespace"
 			/>
 		);
@@ -114,5 +114,18 @@ describe('RoomDocumentsStatistics', () => {
 		expect(screen.getAllByText('4').length).toBe(3);
 		expect(screen.getAllByText('3').length).toBe(2);
 		expect(screen.getByText('2')).toBeInTheDocument();
+	});
+
+	it('renders the not-configured message when analytics cloud is disabled', () => {
+		render(
+			<DocumentsStatistics
+				isAnalyticsEnabled={false}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
 	});
 });

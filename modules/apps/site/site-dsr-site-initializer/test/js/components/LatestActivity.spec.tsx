@@ -83,7 +83,7 @@ describe('LatestActivity', () => {
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
 			<LatestActivity
-				isAnalyticsCloudEnabled={true}
+				isAnalyticsEnabled={true}
 				namespace="test-namespace"
 			/>
 		);
@@ -97,11 +97,24 @@ describe('LatestActivity', () => {
 	it('renders the correct timestamp representation from moment', () => {
 		render(
 			<LatestActivity
-				isAnalyticsCloudEnabled={true}
+				isAnalyticsEnabled={true}
 				namespace="test-namespace"
 			/>
 		);
 
 		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
+	});
+
+	it('renders the not-configured message when analytics cloud is disabled', () => {
+		render(
+			<LatestActivity
+				isAnalyticsEnabled={false}
+				namespace="test-namespace"
+			/>
+		);
+
+		expect(
+			screen.getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
 	});
 });

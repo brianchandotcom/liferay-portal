@@ -129,7 +129,7 @@ describe('RoomStatistics', () => {
 
 	it('matches snapshot', () => {
 		const {container} = render(
-			<RoomStatistics isAnalyticsCloudEnabled={true} />
+			<RoomStatistics isAnalyticsEnabled={true} />
 		);
 
 		expect(container).toMatchSnapshot();
@@ -137,7 +137,7 @@ describe('RoomStatistics', () => {
 
 	it('renders with provided data', () => {
 		const {getByText} = render(
-			<RoomStatistics isAnalyticsCloudEnabled={true} />
+			<RoomStatistics isAnalyticsEnabled={true} />
 		);
 
 		expect(getByText('0-hours 45-minutes')).toBeInTheDocument();
@@ -145,5 +145,15 @@ describe('RoomStatistics', () => {
 		expect(getByText('20')).toBeInTheDocument();
 		expect(getByText('10')).toBeInTheDocument();
 		expect(getByText('5')).toBeInTheDocument();
+	});
+
+	it('renders the not-configured message when analytics cloud is disabled', () => {
+		const {getByText} = render(
+			<RoomStatistics isAnalyticsEnabled={false} />
+		);
+
+		expect(
+			getByText('analytics-cloud-is-not-configured')
+		).toBeInTheDocument();
 	});
 });

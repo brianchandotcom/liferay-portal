@@ -9,14 +9,6 @@ import POM from '../../../utils/POM';
 import {EEditorType, waitForEditor} from '../../../utils/waitFor';
 import {AlloyPage} from './ckeditor4/AlloyPage';
 import {ClassicPage as CKEditor4ClassicPage} from './ckeditor4/ClassicPage';
-import {BalloonPage} from './ckeditor5/BalloonPage';
-import {ClassicPage} from './ckeditor5/ClassicPage';
-import {InputLocalizedPage} from './ckeditor5/InputLocalizedPage';
-
-export enum TabName {
-	CK_EDITOR_4 = 'CKEditor 4',
-	CK_EDITOR_5 = 'CKEditor 5',
-}
 
 export enum SubTabName {
 	ADVANCED_CLASSIC = 'Advanced Classic',
@@ -38,85 +30,47 @@ export class CKEditorSamplePage extends POM {
 	}
 
 	async gotoTab<T extends CKEditorSamplePageTab>(
-		tabName: TabName,
 		subTabName: SubTabName
 	): Promise<T | null> {
 		const navLink = this.page
 			.locator(
 				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(1) .navbar'
 			)
-			.getByRole('link', {exact: true, name: tabName});
+			.getByRole('link', {exact: true, name: subTabName});
 
 		await navLink.click();
 
 		await expect(navLink).toHaveClass(/active/);
 
-		let editorType = EEditorType.CKEDITOR5;
-
-		if (tabName === TabName.CK_EDITOR_4) {
-			editorType = EEditorType.CKEDITOR4;
-		}
-
-		await waitForEditor({editorType, page: this.page});
-
-		const subNavLink = this.page
-			.locator(
-				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(2) .navbar'
-			)
-			.getByRole('link', {exact: true, name: subTabName});
-
-		await subNavLink.click();
-
-		await expect(subNavLink).toHaveClass(/active/);
-
-		if (subTabName === SubTabName.ALLOY) {
-			editorType = EEditorType.ALLOYEDITOR;
-		}
+		const editorType =
+			subTabName === SubTabName.ALLOY
+				? EEditorType.ALLOYEDITOR
+				: EEditorType.CKEDITOR4;
 
 		await waitForEditor({editorType, page: this.page});
 
 		let visitedPage = null;
 
-		if (tabName === TabName.CK_EDITOR_5) {
-			switch (subTabName) {
-				case SubTabName.ADVANCED_CLASSIC:
-				case SubTabName.BASIC_CLASSIC:
-				case SubTabName.REACT:
-				case SubTabName.REACT_PLUS_CET:
-					visitedPage = new ClassicPage(this.page);
-					break;
+		switch (subTabName) {
+			case SubTabName.ALLOY:
+				visitedPage = new AlloyPage(this.page);
+				break;
 
-				case SubTabName.BALLOON:
-					visitedPage = new BalloonPage(this.page);
-					break;
+			case SubTabName.CLASSIC:
+				visitedPage = new CKEditor4ClassicPage(this.page);
+				break;
 
-				case SubTabName.INPUT_LOCALIZED:
-					visitedPage = new InputLocalizedPage(this.page);
-					break;
-
-				default:
-					break;
-			}
-		}
-		else if (tabName === TabName.CK_EDITOR_4) {
-			switch (subTabName) {
-				case SubTabName.ALLOY:
-					visitedPage = new AlloyPage(this.page);
-					break;
-
-				case SubTabName.CLASSIC:
-					visitedPage = new CKEditor4ClassicPage(this.page);
-					break;
-
-				default:
-					break;
-			}
+			default:
+				break;
 		}
 
 		return visitedPage as unknown as T;
 	}
 
 	override async waitFor() {
-		await waitForEditor({page: this.page});
+		await waitForEditor({
+			editorType: EEditorType.CKEDITOR4,
+			page: this.page,
+		});
 	}
 }

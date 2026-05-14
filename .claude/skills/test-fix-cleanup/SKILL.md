@@ -89,7 +89,7 @@ curl \
 	--url "https://testray.liferay.com/o/c/caseresults/<caseResultId>"
 ```
 
-Read `r_caseToCaseResult_c_caseId` as `<caseId>`. When the fetch fails or the field is absent, log `SKIP <ticket> — cannot resolve case from case result <caseResultId>` and move on.
+Read `r_caseToCaseResult_c_caseId` as `<caseId>`. When the fetch fails or the field is absent, log a warning and set `TESTRAY_PASS=false`; continue to **Check for Fix Commits on Master**.
 
 **Fall back to name lookup** when no case result ID is found in the description. Use the ticket summary as the test name and query the cases endpoint filtered to the canonical master project (ID `35392`):
 
@@ -104,7 +104,7 @@ curl \
 	--url "https://testray.liferay.com/o/c/cases"
 ```
 
-When the response contains zero items or more than one item, log `SKIP <ticket> — case not uniquely found in Testray` and move on.
+When the response contains zero items or more than one item, log a warning and set `TESTRAY_PASS=false`; continue to **Check for Fix Commits on Master**.
 
 ### Fetch Case History
 
@@ -123,13 +123,15 @@ curl \
 
 The response is a paginated object; entries are under `.items`. Walk `.items` newest-first and skip any entry whose `status` is `UNTESTED`. The first non-`UNTESTED` entry is the latest meaningful result.
 
-- When no non-`UNTESTED` entry exists: log `SKIP <ticket> — no history found` and move on.
-- When the first non-`UNTESTED` entry's `status` is not `PASSED`: log `SKIP <ticket> — latest result is <status>` and move on.
-- When the entry's `executionDate` is earlier than or equal to the Jira ticket's `created` date: log `SKIP <ticket> — PASSED result predates ticket creation (<executionDate> ≤ <ticketCreated>)` and move on. A pass that predates the ticket means the test was already failing again when the ticket was opened.
+- When no non-`UNTESTED` entry exists: log a warning and set `TESTRAY_PASS=false`; continue to **Check for Fix Commits on Master**.
+- When the first non-`UNTESTED` entry's `status` is not `PASSED`: set `TESTRAY_PASS=false`; continue to **Check for Fix Commits on Master**.
+- When the entry's `executionDate` is earlier than or equal to the Jira ticket's `created` date: set `TESTRAY_PASS=false`; continue to **Check for Fix Commits on Master**. A pass that predates the ticket means the test was already failing again when the ticket was opened.
 
 Record the passing entry's `gitHash`, `testrayRoutineId`, `testrayBuildId`, and `testrayCaseResultId` — all are present directly on each history item.
 
 ### Check Whether the Passing SHA Is on Master
+
+Only runs when **Fetch Case History** produced a passing entry.
 
 ```bash
 git merge-base --is-ancestor <gitHash> origin/master
@@ -142,6 +144,8 @@ https://testray.liferay.com/#/project/35392/routines/<testrayRoutineId>/build/<t
 ```
 
 ### Check for Fix Commits on Master
+
+Always runs, regardless of the Testray outcome above.
 
 Fetch the ticket's subtasks:
 

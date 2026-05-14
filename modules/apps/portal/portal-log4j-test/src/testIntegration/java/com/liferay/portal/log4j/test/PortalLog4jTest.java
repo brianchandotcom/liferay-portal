@@ -148,7 +148,7 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContext() {
+	public void testLogOutputWithLogContext() throws Exception {
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
@@ -171,7 +171,9 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextAndExternalContext() {
+	public void testLogOutputWithLogContextAndExternalContext()
+		throws Exception {
+
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
@@ -204,7 +206,9 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextWithEmptyContextName() {
+	public void testLogOutputWithLogContextWithEmptyContextName()
+		throws Exception {
+
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
@@ -224,7 +228,9 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextWithEmptyLogContext() {
+	public void testLogOutputWithLogContextWithEmptyLogContext()
+		throws Exception {
+
 		_testLogOutputWithLogContext(
 			Collections.emptyMap(),
 			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE,
@@ -679,8 +685,9 @@ public class PortalLog4jTest {
 	}
 
 	private void _testLogOutputWithLogContext(
-		Map<String, String> contexts, String logContextMessage,
-		String logContextName) {
+			Map<String, String> contexts, String logContextMessage,
+			String logContextName)
+		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(PortalLog4jTest.class);
 
@@ -706,7 +713,8 @@ public class PortalLog4jTest {
 
 		PatternLayout.Builder builder = PatternLayout.newBuilder();
 
-		builder.withPattern("%level - %m%n %X");
+		builder.withPattern(
+			"%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n %X");
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -738,6 +746,15 @@ public class PortalLog4jTest {
 			serviceRegistration.unregister();
 
 			logger.removeAppender(logContextWriterAppender);
+
+			_unsyncStringWriter.reset();
+
+			Files.write(
+				_textLogFilePath, new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(
+				_xmlLogFilePath, new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 	}
 
@@ -745,20 +762,13 @@ public class PortalLog4jTest {
 		String level, String logContextMessage,
 		UnsyncStringWriter unsyncStringWriter) {
 
-		_outputLog(level, level + " message", null);
+		String message = level + " message";
 
-		String[] outputLines = StringUtil.splitLines(
+		_outputLog(level, message, null);
+
+		_assertTextLog(
+			level, message, null, logContextMessage,
 			unsyncStringWriter.toString());
-
-		Assert.assertTrue(
-			"The log output should have at least 1 line",
-			outputLines.length > 0);
-
-		Assert.assertEquals(
-			StringBundler.concat(level, " - ", level, " message"),
-			outputLines[0]);
-
-		Assert.assertEquals(logContextMessage, outputLines[1].trim());
 
 		unsyncStringWriter.reset();
 	}

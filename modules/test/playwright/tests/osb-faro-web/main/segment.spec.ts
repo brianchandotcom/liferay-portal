@@ -1979,3 +1979,94 @@ test(
 		await expect(page.locator('.total-members-count')).toHaveText('3');
 	}
 );
+
+test(
+	'Duplicate a criterion in the batch segment editor and save with distinct values',
+	{
+		tag: '@LRAC-8474',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		// Add a job title criterion and duplicate it
+
+		await addSegmentField({
+			criterionName: 'Job Title',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Duplicate'}),
+			trigger: page
+				.locator('.criterion')
+				.filter({hasText: 'Job Title'})
+				.first()
+				.locator('button.dropdown-toggle'),
+		});
+
+		await expect(
+			page.locator('.criterion').filter({hasText: 'Job Title'})
+		).toHaveCount(2);
+
+		// Fill the first criterion: contains "web developer"
+
+		await selectOperator({
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: 'web developer',
+			page,
+		});
+
+		// Fill the second criterion: contains "lawyer"
+
+		await selectOperator({
+			index: 1,
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: 'lawyer',
+			index: 1,
+			page,
+		});
+
+		// Dismiss the value autocomplete before submitting
+
+		await page.keyboard.press('Escape');
+
+		await saveSegment(page);
+
+		// Both criteria appear in the saved Segment Criteria card
+
+		await viewSegmentCriteriaCard({
+			criteriaRowIndex: 0,
+			criteriaRowValue: 'Individual Job Title contains "web developer"',
+			page,
+		});
+
+		await viewSegmentCriteriaCard({
+			criteriaRowIndex: 1,
+			criteriaRowValue: 'Individual Job Title contains "lawyer"',
+			page,
+		});
+	}
+);

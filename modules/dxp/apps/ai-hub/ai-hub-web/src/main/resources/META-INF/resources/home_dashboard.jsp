@@ -9,11 +9,23 @@
 
 <%
 HomeDashboardDisplayContext homeDashboardDisplayContext = (HomeDashboardDisplayContext)request.getAttribute(HomeDashboardDisplayContext.class.getName());
+
+if (themeDisplay.isSignedIn()) {
 %>
 
-<div>
-	<react:component
-		module="{HomeDashboard} from ai-hub-web"
-		props="<%= homeDashboardDisplayContext.getReactData() %>"
-	/>
-</div>
+	<style>
+		.bg-gradient--blue-white {
+			display: none;
+		}
+	</style>
+
+	<div>
+		<react:component
+			module="{HomeDashboard} from ai-hub-web"
+			props="<%= homeDashboardDisplayContext.getReactData() %>"
+		/>
+	</div>
+
+<%
+}
+%>

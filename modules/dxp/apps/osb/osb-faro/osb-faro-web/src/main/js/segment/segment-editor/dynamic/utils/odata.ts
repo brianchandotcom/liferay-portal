@@ -862,6 +862,135 @@ const parseRemoteFilterByCount = (
 };
 
 /**
+ * Splits an OData filter string at top-level conjunction operators (and/or),
+ * respecting parentheses nesting and single-quoted strings (including escaped
+ * '' sequences). Returns the detected conjunction and the individual parts.
+ */
+const splitTopLevelConjunction = (
+	queryString: string
+): {conjunction: string; parts: string[]} => {
+	const stripped =
+		queryString.startsWith('(') && queryString.endsWith(')')
+			? queryString.slice(1, -1).trim()
+			: queryString.trim();
+
+	const parts: string[] = [];
+	let conjunction = Conjunctions.And;
+	let current = '';
+	let depth = 0;
+	let inString = false;
+	let i = 0;
+
+	while (i < stripped.length) {
+		const char = stripped[i];
+
+		if (inString) {
+			if (char === "'" && stripped[i + 1] === "'") {
+				current += "''";
+				i += 2;
+				continue;
+			} else if (char === "'") {
+				inString = false;
+			}
+
+			current += char;
+		} else if (char === "'") {
+			inString = true;
+			current += char;
+		} else if (char === '(') {
+			depth++;
+			current += char;
+		} else if (char === ')') {
+			depth--;
+			current += char;
+		} else if (depth === 0) {
+			const remaining = stripped.slice(i);
+
+			if (/^ and /i.test(remaining)) {
+				parts.push(current.trim());
+				conjunction = Conjunctions.And;
+				current = '';
+				i += 5;
+				continue;
+			} else if (/^ or /i.test(remaining)) {
+				parts.push(current.trim());
+				conjunction = Conjunctions.Or;
+				current = '';
+				i += 4;
+				continue;
+			} else {
+				current += char;
+			}
+		} else {
+			current += char;
+		}
+
+		i++;
+	}
+
+	if (current.trim()) {
+		parts.push(current.trim());
+	}
+
+	return {conjunction, parts};
+};
+
+/**
+ * Parses a query string that may contain multiple top-level criteria joined by
+ * and/or, where some parts are filterByCount calls and others are standard
+ * OData expressions. Returns a CriterionGroup combining all parsed criteria.
+ */
+const parseMultipleCriteria = (queryString: string): CriterionGroup | null => {
+	const {conjunction, parts} = splitTopLevelConjunction(queryString);
+
+	const criteriaItems: Criteria[] = [];
+
+	for (const part of parts) {
+		if (part.startsWith('activities.filterByCount(')) {
+			const result = parseRemoteFilterByCount(part);
+
+			if (result?.items?.length) {
+				criteriaItems.push(...result.items);
+			}
+		} else {
+			try {
+				const encodedQuotes = encodeDoubleQuotesToOdataQuotes(part);
+				const trimSpaces = trimSpacesBeforeParams(encodedQuotes);
+				const encodedSpecialCharacters =
+					encodeSpecialCharacters(trimSpaces);
+				const substrings = convertBetweenToSubstring(
+					encodedSpecialCharacters
+				);
+				const token = oDataFilterFn(substrings);
+				const stringified = JSON.stringify(token);
+				const decodedSpecialCharacters =
+					decodeSpecialCharacters(stringified);
+				const oDataASTNode = JSON.parse(decodedSpecialCharacters);
+				const criteriaArray = toCriteria({oDataASTNode});
+				const parsed = isCriterionGroup(criteriaArray[0])
+					? criteriaArray[0]
+					: wrapInCriteriaGroup(criteriaArray);
+				const decoded = decodeValueFromCriteria(parsed);
+
+				criteriaItems.push(...decoded.items);
+			} catch {
+				// skip unparseable parts
+			}
+		}
+	}
+
+	if (!criteriaItems.length) {
+		return null;
+	}
+
+	return {
+		conjunctionName: conjunction,
+		criteriaGroupId: generateGroupId(),
+		items: criteriaItems
+	};
+};
+
+/**
  * Converts an OData filter query string to an object that can be used by the
  * criteria builder
  */
@@ -891,11 +1020,11 @@ const translateQueryToCriteria = (queryString: string): Criteria => {
 		criteria = decodeValueFromCriteria(criteria);
 	} catch (e) {
 		try {
-			criteria = parseRemoteFilterByCount(queryString);
+			criteria = parseMultipleCriteria(queryString);
 		} catch (innerError) {
 			// eslint-disable-next-line no-console
 			console.error(
-				'Faro: parseRemoteFilterByCount fallback failed for queryString',
+				'Faro: parseMultipleCriteria fallback failed for queryString',
 				queryString,
 				innerError
 			);

@@ -222,21 +222,21 @@ export default function CriteriaSidebar({
 					propertyKey={selectedPropertyKey ?? ''}
 					searchValue={isRemoteSection ? '' : searchValue}
 				/>
-
-				{isRemoteSection && remoteTotalCount > 0 && (
-					<PaginationBar className='justify-content-center sidebar-pagination mt-2'>
-						<ClayPaginationWithBasicItems
-							active={remoteQuery.page}
-							onActiveChange={page =>
-								setRemoteQuery(q => ({...q, page}))
-							}
-							totalPages={Math.ceil(
-								remoteTotalCount / REMOTE_PAGE_SIZE
-							)}
-						/>
-					</PaginationBar>
-				)}
 			</div>
+
+			{isRemoteSection && remoteTotalCount > 0 && (
+				<PaginationBar className='justify-content-center sidebar-pagination'>
+					<ClayPaginationWithBasicItems
+						active={remoteQuery.page}
+						onActiveChange={page =>
+							setRemoteQuery(q => ({...q, page}))
+						}
+						totalPages={Math.ceil(
+							remoteTotalCount / REMOTE_PAGE_SIZE
+						)}
+					/>
+				</PaginationBar>
+			)}
 		</div>
 	);
 }

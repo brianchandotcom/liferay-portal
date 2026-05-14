@@ -119,6 +119,22 @@ components:
                     readOnly: true
                     type: number
             type: object
+        Channel:
+            description:
+                "A logical grouping of data coming from configured data sources (e.g. a website, a CRM connection) under
+                which asset metrics, events, individuals, and segments are scoped. Also known as property."
+            properties:
+                id:
+                    description:
+                        "Channel id."
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Display name of the channel."
+                    readOnly: true
+                    type: string
+            type: object
         Event:
             description:
                 "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each
@@ -681,6 +697,79 @@ paths:
                                     $ref: "#/components/schemas/AssetSummaryMetric"
                                 type: array
             tags: ["AssetSummaryMetric"]
+    "/workspace/{groupId}/channels":
+        get:
+            description:
+                "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use
+                `getWorkspaceGroupChannel`."
+            operationId: getWorkspaceGroupChannelsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Channel"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Channel"
+                                type: array
+            tags: ["Channel"]
+    "/workspace/{groupId}/channels/{channelId}":
+        get:
+            description:
+                "Fetch a single channel (also known as property) from an Analytics Cloud workspace. To list available
+                channels in the workspace use `getWorkspaceGroupChannelsPage`."
+            operationId: getWorkspaceGroupChannel
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Channel id."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+            tags: ["Channel"]
     "/workspace/{groupId}/channels/{channelId}/events":
         get:
             description:

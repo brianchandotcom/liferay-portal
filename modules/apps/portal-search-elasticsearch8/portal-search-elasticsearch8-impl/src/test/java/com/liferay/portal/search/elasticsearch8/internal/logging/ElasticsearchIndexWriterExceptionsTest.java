@@ -93,6 +93,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			try {
 				indexWriter.addDocuments(createSearchContext(), documents);
+
+				Assert.fail();
 			}
 			catch (SystemException systemException) {
 				Assert.assertEquals(
@@ -180,6 +182,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			try {
 				indexWriter.deleteDocuments(searchContext, uids);
+
+				Assert.fail();
 			}
 			catch (SystemException systemException) {
 				Assert.assertEquals(
@@ -260,6 +264,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			try {
 				indexWriter.updateDocument(createSearchContext(), document);
+
+				Assert.fail();
 			}
 			catch (SystemException systemException) {
 				Assert.assertEquals(
@@ -297,6 +303,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			try {
 				indexWriter.updateDocuments(createSearchContext(), documents);
+
+				Assert.fail();
 			}
 			catch (SystemException systemException) {
 				Assert.assertEquals(

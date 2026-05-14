@@ -76,9 +76,6 @@ public class BatchPlannerMappingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByBatchPlannerPlanId;
-	private FinderPath _finderPathWithoutPaginationFindByBatchPlannerPlanId;
-	private FinderPath _finderPathCountByBatchPlannerPlanId;
 	private CollectionPersistenceFinder<BatchPlannerMapping>
 		_collectionPersistenceFinderByBatchPlannerPlanId;
 
@@ -230,7 +227,6 @@ public class BatchPlannerMappingPersistenceImpl
 			finderCache, new Object[] {batchPlannerPlanId});
 	}
 
-	private FinderPath _finderPathFetchByBPPI_EFN_IFN;
 	private UniquePersistenceFinder<BatchPlannerMapping>
 		_uniquePersistenceFinderByBPPI_EFN_IFN;
 
@@ -555,29 +551,28 @@ public class BatchPlannerMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByBatchPlannerPlanId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBatchPlannerPlanId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"batchPlannerPlanId"}, true);
-
-		_finderPathWithoutPaginationFindByBatchPlannerPlanId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByBatchPlannerPlanId", new String[] {Long.class.getName()},
-			new String[] {"batchPlannerPlanId"}, true);
-
-		_finderPathCountByBatchPlannerPlanId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByBatchPlannerPlanId", new String[] {Long.class.getName()},
-			new String[] {"batchPlannerPlanId"}, false);
-
 		_collectionPersistenceFinderByBatchPlannerPlanId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByBatchPlannerPlanId,
-				_finderPathWithoutPaginationFindByBatchPlannerPlanId,
-				_finderPathCountByBatchPlannerPlanId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByBatchPlannerPlanId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"batchPlannerPlanId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByBatchPlannerPlanId",
+					new String[] {Long.class.getName()},
+					new String[] {"batchPlannerPlanId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByBatchPlannerPlanId",
+					new String[] {Long.class.getName()},
+					new String[] {"batchPlannerPlanId"}, false),
 				_SQL_SELECT_BATCHPLANNERMAPPING_WHERE,
 				_SQL_COUNT_BATCHPLANNERMAPPING_WHERE,
 				BatchPlannerMappingModelImpl.ORDER_BY_JPQL,
@@ -587,21 +582,21 @@ public class BatchPlannerMappingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					BatchPlannerMapping::getBatchPlannerPlanId));
 
-		_finderPathFetchByBPPI_EFN_IFN = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_EFN_IFN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
-			},
-			0, 6, false, BatchPlannerMapping::getBatchPlannerPlanId,
-			convertNullFunction(BatchPlannerMapping::getExternalFieldName),
-			convertNullFunction(BatchPlannerMapping::getInternalFieldName));
-
 		_uniquePersistenceFinderByBPPI_EFN_IFN = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByBPPI_EFN_IFN,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_EFN_IFN",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"batchPlannerPlanId", "externalFieldName",
+					"internalFieldName"
+				},
+				0, 6, false, BatchPlannerMapping::getBatchPlannerPlanId,
+				convertNullFunction(BatchPlannerMapping::getExternalFieldName),
+				convertNullFunction(BatchPlannerMapping::getInternalFieldName)),
 			_SQL_SELECT_BATCHPLANNERMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"batchPlannerMapping.", "batchPlannerPlanId",
@@ -682,4 +677,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-813649756
+// LIFERAY-SERVICE-BUILDER-HASH:1895475932

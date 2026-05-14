@@ -73,9 +73,6 @@ public class ViewCountEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_CN;
-	private FinderPath _finderPathWithoutPaginationFindByC_CN;
-	private FinderPath _finderPathCountByC_CN;
 	private CollectionPersistenceFinder<ViewCountEntry>
 		_collectionPersistenceFinderByC_CN;
 
@@ -413,28 +410,24 @@ public class ViewCountEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByC_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CN",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathCountByC_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByC_CN = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_CN,
-			_finderPathWithoutPaginationFindByC_CN, _finderPathCountByC_CN,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CN",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_VIEWCOUNTENTRY_WHERE, _SQL_COUNT_VIEWCOUNTENTRY_WHERE,
 			ViewCountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -510,4 +503,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-211904062
+// LIFERAY-SERVICE-BUILDER-HASH:-1357625120

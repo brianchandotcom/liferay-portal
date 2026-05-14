@@ -79,9 +79,6 @@ public class CommerceTaxMethodPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<CommerceTaxMethod>
 		_collectionPersistenceFinderByGroupId;
 
@@ -226,7 +223,6 @@ public class CommerceTaxMethodPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathFetchByG_E;
 	private UniquePersistenceFinder<CommerceTaxMethod>
 		_uniquePersistenceFinderByG_E;
 
@@ -317,9 +313,6 @@ public class CommerceTaxMethodPersistenceImpl
 			finderCache, new Object[] {groupId, engineKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_A;
-	private FinderPath _finderPathCountByG_A;
 	private CollectionPersistenceFinder<CommerceTaxMethod>
 		_collectionPersistenceFinderByG_A;
 
@@ -688,29 +681,26 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_COMMERCETAXMETHOD_WHERE,
 				_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
 				CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -718,16 +708,15 @@ public class CommerceTaxMethodPersistenceImpl
 					"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTaxMethod::getGroupId));
 
-		_finderPathFetchByG_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, 0, 2, false,
-			CommerceTaxMethod::getGroupId,
-			convertNullFunction(CommerceTaxMethod::getEngineKey));
-
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_E, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "engineKey"}, 0, 2, false,
+				CommerceTaxMethod::getGroupId,
+				convertNullFunction(CommerceTaxMethod::getEngineKey)),
+			_SQL_SELECT_COMMERCETAXMETHOD_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceTaxMethod::getGroupId),
@@ -735,28 +724,24 @@ public class CommerceTaxMethodPersistenceImpl
 				"commerceTaxMethod.", "engineKey", FinderColumn.Type.STRING,
 				"=", true, true, CommerceTaxMethod::getEngineKey));
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, false);
-
 		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_A,
-			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "active_"}, false),
 			_SQL_SELECT_COMMERCETAXMETHOD_WHERE,
 			_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
 			CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -836,4 +821,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:167924191
+// LIFERAY-SERVICE-BUILDER-HASH:-1617755139

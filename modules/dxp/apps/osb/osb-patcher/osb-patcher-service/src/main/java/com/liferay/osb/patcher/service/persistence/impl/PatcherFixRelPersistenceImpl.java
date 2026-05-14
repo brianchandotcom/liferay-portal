@@ -70,9 +70,6 @@ public class PatcherFixRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByChildPatcherFixId;
-	private FinderPath _finderPathWithoutPaginationFindByChildPatcherFixId;
-	private FinderPath _finderPathCountByChildPatcherFixId;
 	private CollectionPersistenceFinder<PatcherFixRel>
 		_collectionPersistenceFinderByChildPatcherFixId;
 
@@ -221,9 +218,6 @@ public class PatcherFixRelPersistenceImpl
 			finderCache, new Object[] {childPatcherFixId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParentPatcherFixId;
-	private FinderPath _finderPathWithoutPaginationFindByParentPatcherFixId;
-	private FinderPath _finderPathCountByParentPatcherFixId;
 	private CollectionPersistenceFinder<PatcherFixRel>
 		_collectionPersistenceFinderByParentPatcherFixId;
 
@@ -549,29 +543,28 @@ public class PatcherFixRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByChildPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByChildPatcherFixId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"childPatcherFixId"}, true);
-
-		_finderPathWithoutPaginationFindByChildPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByChildPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"childPatcherFixId"}, true);
-
-		_finderPathCountByChildPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByChildPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"childPatcherFixId"}, false);
-
 		_collectionPersistenceFinderByChildPatcherFixId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByChildPatcherFixId,
-				_finderPathWithoutPaginationFindByChildPatcherFixId,
-				_finderPathCountByChildPatcherFixId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByChildPatcherFixId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"childPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByChildPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"childPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByChildPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"childPatcherFixId"}, false),
 				_SQL_SELECT_PATCHERFIXREL_WHERE, _SQL_COUNT_PATCHERFIXREL_WHERE,
 				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -579,29 +572,28 @@ public class PatcherFixRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFixRel::getChildPatcherFixId));
 
-		_finderPathWithPaginationFindByParentPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentPatcherFixId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentPatcherFixId"}, true);
-
-		_finderPathWithoutPaginationFindByParentPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByParentPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"parentPatcherFixId"}, true);
-
-		_finderPathCountByParentPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"parentPatcherFixId"}, false);
-
 		_collectionPersistenceFinderByParentPatcherFixId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParentPatcherFixId,
-				_finderPathWithoutPaginationFindByParentPatcherFixId,
-				_finderPathCountByParentPatcherFixId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentPatcherFixId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentPatcherFixId"}, false),
 				_SQL_SELECT_PATCHERFIXREL_WHERE, _SQL_COUNT_PATCHERFIXREL_WHERE,
 				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -672,4 +664,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-516384111
+// LIFERAY-SERVICE-BUILDER-HASH:-1440858129

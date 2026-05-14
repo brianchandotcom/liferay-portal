@@ -86,9 +86,6 @@ public class DDLRecordSetVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByRecordSetId;
-	private FinderPath _finderPathWithoutPaginationFindByRecordSetId;
-	private FinderPath _finderPathCountByRecordSetId;
 	private CollectionPersistenceFinder<DDLRecordSetVersion>
 		_collectionPersistenceFinderByRecordSetId;
 
@@ -235,7 +232,6 @@ public class DDLRecordSetVersionPersistenceImpl
 			finderCache, new Object[] {recordSetId});
 	}
 
-	private FinderPath _finderPathFetchByRS_V;
 	private UniquePersistenceFinder<DDLRecordSetVersion>
 		_uniquePersistenceFinderByRS_V;
 
@@ -328,9 +324,6 @@ public class DDLRecordSetVersionPersistenceImpl
 			finderCache, new Object[] {recordSetId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRS_S;
-	private FinderPath _finderPathWithoutPaginationFindByRS_S;
-	private FinderPath _finderPathCountByRS_S;
 	private CollectionPersistenceFinder<DDLRecordSetVersion>
 		_collectionPersistenceFinderByRS_S;
 
@@ -771,29 +764,25 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByRecordSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRecordSetId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"recordSetId"}, true);
-
-		_finderPathWithoutPaginationFindByRecordSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRecordSetId",
-			new String[] {Long.class.getName()}, new String[] {"recordSetId"},
-			true);
-
-		_finderPathCountByRecordSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRecordSetId",
-			new String[] {Long.class.getName()}, new String[] {"recordSetId"},
-			false);
-
 		_collectionPersistenceFinderByRecordSetId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRecordSetId,
-				_finderPathWithoutPaginationFindByRecordSetId,
-				_finderPathCountByRecordSetId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRecordSetId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"recordSetId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByRecordSetId", new String[] {Long.class.getName()},
+					new String[] {"recordSetId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByRecordSetId", new String[] {Long.class.getName()},
+					new String[] {"recordSetId"}, false),
 				_SQL_SELECT_DDLRECORDSETVERSION_WHERE,
 				_SQL_COUNT_DDLRECORDSETVERSION_WHERE,
 				DDLRecordSetVersionModelImpl.ORDER_BY_JPQL,
@@ -803,16 +792,15 @@ public class DDLRecordSetVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDLRecordSetVersion::getRecordSetId));
 
-		_finderPathFetchByRS_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByRS_V",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "version"}, 0, 2, false,
-			DDLRecordSetVersion::getRecordSetId,
-			convertNullFunction(DDLRecordSetVersion::getVersion));
-
 		_uniquePersistenceFinderByRS_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByRS_V, _SQL_SELECT_DDLRECORDSETVERSION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByRS_V",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"recordSetId", "version"}, 0, 2, false,
+				DDLRecordSetVersion::getRecordSetId,
+				convertNullFunction(DDLRecordSetVersion::getVersion)),
+			_SQL_SELECT_DDLRECORDSETVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddlRecordSetVersion.", "recordSetId", FinderColumn.Type.LONG,
 				"=", true, true, DDLRecordSetVersion::getRecordSetId),
@@ -820,28 +808,24 @@ public class DDLRecordSetVersionPersistenceImpl
 				"ddlRecordSetVersion.", "version", FinderColumn.Type.STRING,
 				"=", true, true, DDLRecordSetVersion::getVersion));
 
-		_finderPathWithPaginationFindByRS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRS_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"recordSetId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByRS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRS_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"recordSetId", "status"}, true);
-
-		_finderPathCountByRS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRS_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"recordSetId", "status"}, false);
-
 		_collectionPersistenceFinderByRS_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByRS_S,
-			_finderPathWithoutPaginationFindByRS_S, _finderPathCountByRS_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRS_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"recordSetId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRS_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"recordSetId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRS_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"recordSetId", "status"}, false),
 			_SQL_SELECT_DDLRECORDSETVERSION_WHERE,
 			_SQL_COUNT_DDLRECORDSETVERSION_WHERE,
 			DDLRecordSetVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -925,4 +909,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-160795737
+// LIFERAY-SERVICE-BUILDER-HASH:884183180

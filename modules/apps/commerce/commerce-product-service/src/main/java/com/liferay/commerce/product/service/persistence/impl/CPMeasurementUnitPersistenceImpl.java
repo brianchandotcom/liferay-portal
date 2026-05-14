@@ -97,9 +97,6 @@ public class CPMeasurementUnitPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPMeasurementUnit>
 		_collectionPersistenceFinderByUuid;
 
@@ -240,7 +237,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CPMeasurementUnit>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -330,9 +326,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPMeasurementUnit>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -487,9 +480,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<CPMeasurementUnit>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -635,7 +625,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByC_K;
 	private UniquePersistenceFinder<CPMeasurementUnit>
 		_uniquePersistenceFinderByC_K;
 
@@ -725,9 +714,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId, key});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
 	private CollectionPersistenceFinder<CPMeasurementUnit>
 		_collectionPersistenceFinderByC_T;
 
@@ -881,9 +867,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_P_T;
-	private FinderPath _finderPathCountByC_P_T;
 	private CollectionPersistenceFinder<CPMeasurementUnit>
 		_collectionPersistenceFinderByC_P_T;
 
@@ -1051,7 +1034,6 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId, primary, type});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CPMeasurementUnit>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1530,27 +1512,23 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1558,16 +1536,15 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPMeasurementUnit::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CPMeasurementUnit::getUuid),
-			CPMeasurementUnit::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CPMeasurementUnit::getUuid),
+				CPMeasurementUnit::getGroupId),
+			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE, "",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPMeasurementUnit::getUuid),
@@ -1575,30 +1552,26 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPMeasurementUnit::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 				_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 				CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1609,29 +1582,25 @@ public class CPMeasurementUnitPersistenceImpl
 					"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPMeasurementUnit::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 				_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 				CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1640,16 +1609,15 @@ public class CPMeasurementUnitPersistenceImpl
 					"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPMeasurementUnit::getCompanyId));
 
-		_finderPathFetchByC_K = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, 2, 2, false,
-			CPMeasurementUnit::getCompanyId,
-			convertCaseFunction(CPMeasurementUnit::getKey));
-
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_K, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "key_"}, 2, 2, false,
+				CPMeasurementUnit::getCompanyId,
+				convertCaseFunction(CPMeasurementUnit::getKey)),
+			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE, "",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CPMeasurementUnit::getCompanyId),
@@ -1657,28 +1625,24 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "key", FinderColumn.Type.STRING, "=",
 				false, true, CPMeasurementUnit::getKey));
 
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, false);
-
 		_collectionPersistenceFinderByC_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_T,
-			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "type_"}, false),
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1689,34 +1653,30 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, CPMeasurementUnit::getType));
 
-		_finderPathWithPaginationFindByC_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "primary_", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "primary_", "type_"}, true);
-
-		_finderPathCountByC_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "primary_", "type_"}, false);
-
 		_collectionPersistenceFinderByC_P_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P_T,
-			_finderPathWithoutPaginationFindByC_P_T, _finderPathCountByC_P_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "primary_", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"companyId", "primary_", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"companyId", "primary_", "type_"}, false),
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1730,16 +1690,17 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, CPMeasurementUnit::getType));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CPMeasurementUnit::getExternalReferenceCode),
-			CPMeasurementUnit::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CPMeasurementUnit::getExternalReferenceCode),
+				CPMeasurementUnit::getCompanyId),
+			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE, "",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1820,4 +1781,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1064051453
+// LIFERAY-SERVICE-BUILDER-HASH:-775280041

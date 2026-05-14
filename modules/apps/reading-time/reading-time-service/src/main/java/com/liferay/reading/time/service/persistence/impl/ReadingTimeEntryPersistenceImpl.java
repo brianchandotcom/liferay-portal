@@ -87,9 +87,6 @@ public class ReadingTimeEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ReadingTimeEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -230,7 +227,6 @@ public class ReadingTimeEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<ReadingTimeEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -320,9 +316,6 @@ public class ReadingTimeEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ReadingTimeEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -477,7 +470,6 @@ public class ReadingTimeEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByG_C_C;
 	private UniquePersistenceFinder<ReadingTimeEntry>
 		_uniquePersistenceFinderByG_C_C;
 
@@ -881,27 +873,23 @@ public class ReadingTimeEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_READINGTIMEENTRY_WHERE,
 			_SQL_COUNT_READINGTIMEENTRY_WHERE,
 			ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -909,16 +897,15 @@ public class ReadingTimeEntryPersistenceImpl
 				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ReadingTimeEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(ReadingTimeEntry::getUuid),
-			ReadingTimeEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_READINGTIMEENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(ReadingTimeEntry::getUuid),
+				ReadingTimeEntry::getGroupId),
+			_SQL_SELECT_READINGTIMEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ReadingTimeEntry::getUuid),
@@ -926,30 +913,26 @@ public class ReadingTimeEntryPersistenceImpl
 				"readingTimeEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ReadingTimeEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_READINGTIMEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_READINGTIMEENTRY_WHERE,
 				_SQL_COUNT_READINGTIMEENTRY_WHERE,
 				ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -960,18 +943,18 @@ public class ReadingTimeEntryPersistenceImpl
 					"readingTimeEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ReadingTimeEntry::getCompanyId));
 
-		_finderPathFetchByG_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, 0, 0, false,
-			ReadingTimeEntry::getGroupId, ReadingTimeEntry::getClassNameId,
-			ReadingTimeEntry::getClassPK);
-
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_C, _SQL_SELECT_READINGTIMEENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "classPK"}, 0, 0, false,
+				ReadingTimeEntry::getGroupId, ReadingTimeEntry::getClassNameId,
+				ReadingTimeEntry::getClassPK),
+			_SQL_SELECT_READINGTIMEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"readingTimeEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ReadingTimeEntry::getGroupId),
@@ -1054,4 +1037,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1551797659
+// LIFERAY-SERVICE-BUILDER-HASH:-555342044

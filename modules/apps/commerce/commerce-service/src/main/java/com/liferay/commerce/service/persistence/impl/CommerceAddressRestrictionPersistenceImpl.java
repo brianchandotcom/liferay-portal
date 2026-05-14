@@ -77,9 +77,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCountryId;
-	private FinderPath _finderPathWithoutPaginationFindByCountryId;
-	private FinderPath _finderPathCountByCountryId;
 	private CollectionPersistenceFinder<CommerceAddressRestriction>
 		_collectionPersistenceFinderByCountryId;
 
@@ -225,9 +222,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 			finderCache, new Object[] {countryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CommerceAddressRestriction>
 		_collectionPersistenceFinderByC_C;
 
@@ -385,7 +379,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByC_C_C;
 	private UniquePersistenceFinder<CommerceAddressRestriction>
 		_uniquePersistenceFinderByC_C_C;
 
@@ -707,29 +700,25 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"countryId"}, true);
-
-		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			true);
-
-		_finderPathCountByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			false);
-
 		_collectionPersistenceFinderByCountryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCountryId,
-				_finderPathWithoutPaginationFindByCountryId,
-				_finderPathCountByCountryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, false),
 				_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
 				_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
 				CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
@@ -739,28 +728,24 @@ public class CommerceAddressRestrictionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceAddressRestriction::getCountryId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
 			_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
 			CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
@@ -774,18 +759,18 @@ public class CommerceAddressRestrictionPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceAddressRestriction::getClassPK));
 
-		_finderPathFetchByC_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "countryId"}, 0, 0, false,
-			CommerceAddressRestriction::getClassNameId,
-			CommerceAddressRestriction::getClassPK,
-			CommerceAddressRestriction::getCountryId);
-
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "countryId"}, 0, 0,
+				false, CommerceAddressRestriction::getClassNameId,
+				CommerceAddressRestriction::getClassPK,
+				CommerceAddressRestriction::getCountryId),
 			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE, "",
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "classNameId",
@@ -866,4 +851,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1712813446
+// LIFERAY-SERVICE-BUILDER-HASH:64954193

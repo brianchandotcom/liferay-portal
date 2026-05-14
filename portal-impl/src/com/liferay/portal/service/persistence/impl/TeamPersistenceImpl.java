@@ -87,9 +87,6 @@ public class TeamPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<Team>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,7 +226,6 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<Team> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -319,9 +315,6 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<Team>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -475,9 +468,6 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<Team>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -618,9 +608,6 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<Team>
 		_collectionPersistenceFinderByGroupId;
 
@@ -825,7 +812,6 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_N;
 	private UniquePersistenceFinder<Team> _uniquePersistenceFinderByG_N;
 
 	/**
@@ -1865,41 +1851,37 @@ public class TeamPersistenceImpl
 			"UserGroups_Teams", "companyId", "teamId", "userGroupId", this,
 			userGroupPersistence);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
 			TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Team::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(Team::getUuid), Team::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_TEAM_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(Team::getUuid), Team::getGroupId),
+			_SQL_SELECT_TEAM_WHERE, "",
 			new FinderColumn<>(
 				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Team::getUuid),
@@ -1907,32 +1889,27 @@ public class TeamPersistenceImpl
 				"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Team::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_TEAM_WHERE,
-				_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
+				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 					Team::getUuid),
@@ -1940,80 +1917,72 @@ public class TeamPersistenceImpl
 					"team.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Team::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_TEAM_WHERE,
-				_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
+				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"team.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Team::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_TEAM_WHERE,
-				_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
+				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					TeamImpl.class, Team.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_TEAM_WHERE,
-					_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_SQL,
+					TeamImpl.class, Team.class, "team", "Team", "team.teamId",
+					"SELECT DISTINCT {team.*} FROM Team team WHERE ",
+					"SELECT {Team.*} FROM (SELECT DISTINCT team.teamId FROM Team team WHERE ",
+					") TEMP_TABLE INNER JOIN Team ON TEMP_TABLE.teamId = Team.teamId",
+					"SELECT COUNT(DISTINCT team.teamId) AS COUNT_VALUE FROM Team team WHERE ",
+					TeamModelImpl.ORDER_BY_SQL,
 					TeamModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 					Team::getGroupId));
 
-		_finderPathFetchByG_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, Team::getGroupId,
-			convertNullFunction(Team::getName));
-
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N, _SQL_SELECT_TEAM_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, false, Team::getGroupId,
+				convertNullFunction(Team::getName)),
+			_SQL_SELECT_TEAM_WHERE, "",
 			new FinderColumn<>(
 				"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Team::getGroupId),
@@ -2056,27 +2025,6 @@ public class TeamPersistenceImpl
 	private static final String _SQL_COUNT_TEAM_WHERE =
 		"SELECT COUNT(team) FROM Team team WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"team.teamId";
-
-	private static final String _FILTER_SQL_SELECT_TEAM_WHERE =
-		"SELECT DISTINCT {team.*} FROM Team team WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {Team.*} FROM (SELECT DISTINCT team.teamId FROM Team team WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_TEAM_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN Team ON TEMP_TABLE.teamId = Team.teamId";
-
-	private static final String _FILTER_SQL_COUNT_TEAM_WHERE =
-		"SELECT COUNT(DISTINCT team.teamId) AS COUNT_VALUE FROM Team team WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "team";
-
-	private static final String _FILTER_ENTITY_TABLE = "Team";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Team exists with the key {";
 
@@ -2092,4 +2040,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:176426449
+// LIFERAY-SERVICE-BUILDER-HASH:275507117

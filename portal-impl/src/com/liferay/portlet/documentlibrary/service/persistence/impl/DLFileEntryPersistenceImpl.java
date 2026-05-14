@@ -92,9 +92,6 @@ public class DLFileEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -235,7 +232,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DLFileEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -326,9 +322,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -484,9 +477,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -695,9 +685,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -842,9 +829,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRepositoryId;
-	private FinderPath _finderPathWithoutPaginationFindByRepositoryId;
-	private FinderPath _finderPathCountByRepositoryId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByRepositoryId;
 
@@ -990,9 +974,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByMimeType;
-	private FinderPath _finderPathWithoutPaginationFindByMimeType;
-	private FinderPath _finderPathCountByMimeType;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByMimeType;
 
@@ -1137,9 +1118,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {mimeType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFileEntryTypeId;
-	private FinderPath _finderPathWithoutPaginationFindByFileEntryTypeId;
-	private FinderPath _finderPathCountByFileEntryTypeId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByFileEntryTypeId;
 
@@ -1287,9 +1265,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryTypeId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySmallImageId;
-	private FinderPath _finderPathWithoutPaginationFindBySmallImageId;
-	private FinderPath _finderPathCountBySmallImageId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderBySmallImageId;
 
@@ -1435,9 +1410,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {smallImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLargeImageId;
-	private FinderPath _finderPathWithoutPaginationFindByLargeImageId;
-	private FinderPath _finderPathCountByLargeImageId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByLargeImageId;
 
@@ -1583,9 +1555,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {largeImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCustom1ImageId;
-	private FinderPath _finderPathWithoutPaginationFindByCustom1ImageId;
-	private FinderPath _finderPathCountByCustom1ImageId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByCustom1ImageId;
 
@@ -1732,9 +1701,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {custom1ImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCustom2ImageId;
-	private FinderPath _finderPathWithoutPaginationFindByCustom2ImageId;
-	private FinderPath _finderPathCountByCustom2ImageId;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByCustom2ImageId;
 
@@ -1881,9 +1847,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {custom2ImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_U;
-	private FinderPath _finderPathCountByG_U;
 	private FilterCollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByG_U;
 
@@ -2109,9 +2072,6 @@ public class DLFileEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_F;
-	private FinderPath _finderPathCountByG_F;
 	private FilterCollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByG_F;
 
@@ -2525,9 +2485,6 @@ public class DLFileEntryPersistenceImpl
 			new Object[] {groupId, ArrayUtil.sortedUnique(folderIds)}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_F;
-	private FinderPath _finderPathWithoutPaginationFindByR_F;
-	private FinderPath _finderPathCountByR_F;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByR_F;
 
@@ -2687,9 +2644,6 @@ public class DLFileEntryPersistenceImpl
 			new Object[] {repositoryId, folderId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByF_N;
-	private FinderPath _finderPathWithoutPaginationFindByF_N;
-	private FinderPath _finderPathCountByF_N;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByF_N;
 
@@ -2844,9 +2798,6 @@ public class DLFileEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {folderId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_U_F;
-	private FinderPath _finderPathCountByG_U_F;
 	private FilterCollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByG_U_F;
 
@@ -3298,7 +3249,6 @@ public class DLFileEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_F_N;
 	private UniquePersistenceFinder<DLFileEntry>
 		_uniquePersistenceFinderByG_F_N;
 
@@ -3396,7 +3346,6 @@ public class DLFileEntryPersistenceImpl
 			new Object[] {groupId, folderId, name});
 	}
 
-	private FinderPath _finderPathFetchByG_F_FN;
 	private UniquePersistenceFinder<DLFileEntry>
 		_uniquePersistenceFinderByG_F_FN;
 
@@ -3498,7 +3447,6 @@ public class DLFileEntryPersistenceImpl
 			new Object[] {groupId, folderId, fileName});
 	}
 
-	private FinderPath _finderPathFetchByG_F_T;
 	private UniquePersistenceFinder<DLFileEntry>
 		_uniquePersistenceFinderByG_F_T;
 
@@ -3596,9 +3544,6 @@ public class DLFileEntryPersistenceImpl
 			new Object[] {groupId, folderId, title});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_F_F;
-	private FinderPath _finderPathCountByG_F_F;
 	private FilterCollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByG_F_F;
 
@@ -4075,9 +4020,6 @@ public class DLFileEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByC_C_C;
 
@@ -4249,9 +4191,6 @@ public class DLFileEntryPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_L_C1_C2;
-	private FinderPath _finderPathWithoutPaginationFindByS_L_C1_C2;
-	private FinderPath _finderPathCountByS_L_C1_C2;
 	private CollectionPersistenceFinder<DLFileEntry>
 		_collectionPersistenceFinderByS_L_C1_C2;
 
@@ -4456,7 +4395,6 @@ public class DLFileEntryPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<DLFileEntry>
 		_uniquePersistenceFinderByERC_G;
 
@@ -4941,41 +4879,38 @@ public class DLFileEntryPersistenceImpl
 	 * Initializes the document library file entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DLFileEntry::getUuid), DLFileEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILEENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DLFileEntry::getUuid),
+				DLFileEntry::getGroupId),
+			_SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getUuid),
@@ -4983,31 +4918,26 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -5016,310 +4946,278 @@ public class DLFileEntryPersistenceImpl
 					"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILEENTRY_WHERE,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILEENTRY_WHERE,
+					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
+					"DLFileEntry", "dlFileEntry.fileEntryId",
+					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
+					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
+					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
 					DLFileEntryModelImpl.ORDER_BY_SQL,
 					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByRepositoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRepositoryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"repositoryId"}, true);
-
-		_finderPathWithoutPaginationFindByRepositoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRepositoryId",
-			new String[] {Long.class.getName()}, new String[] {"repositoryId"},
-			true);
-
-		_finderPathCountByRepositoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRepositoryId",
-			new String[] {Long.class.getName()}, new String[] {"repositoryId"},
-			false);
-
 		_collectionPersistenceFinderByRepositoryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRepositoryId,
-				_finderPathWithoutPaginationFindByRepositoryId,
-				_finderPathCountByRepositoryId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByRepositoryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"repositoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByRepositoryId", new String[] {Long.class.getName()},
+					new String[] {"repositoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByRepositoryId", new String[] {Long.class.getName()},
+					new String[] {"repositoryId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getRepositoryId));
 
-		_finderPathWithPaginationFindByMimeType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByMimeType",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"mimeType"}, true);
-
-		_finderPathWithoutPaginationFindByMimeType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByMimeType",
-			new String[] {String.class.getName()}, new String[] {"mimeType"}, 0,
-			1, true, null);
-
-		_finderPathCountByMimeType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMimeType",
-			new String[] {String.class.getName()}, new String[] {"mimeType"}, 0,
-			1, false, null);
-
 		_collectionPersistenceFinderByMimeType =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByMimeType,
-				_finderPathWithoutPaginationFindByMimeType,
-				_finderPathCountByMimeType, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByMimeType",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"mimeType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByMimeType",
+					new String[] {String.class.getName()},
+					new String[] {"mimeType"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByMimeType", new String[] {String.class.getName()},
+					new String[] {"mimeType"}, 0, 1, false, null),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "mimeType", FinderColumn.Type.STRING, "=",
 					true, true, DLFileEntry::getMimeType));
 
-		_finderPathWithPaginationFindByFileEntryTypeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryTypeId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"fileEntryTypeId"}, true);
-
-		_finderPathWithoutPaginationFindByFileEntryTypeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryTypeId",
-			new String[] {Long.class.getName()},
-			new String[] {"fileEntryTypeId"}, true);
-
-		_finderPathCountByFileEntryTypeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryTypeId",
-			new String[] {Long.class.getName()},
-			new String[] {"fileEntryTypeId"}, false);
-
 		_collectionPersistenceFinderByFileEntryTypeId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFileEntryTypeId,
-				_finderPathWithoutPaginationFindByFileEntryTypeId,
-				_finderPathCountByFileEntryTypeId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFileEntryTypeId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fileEntryTypeId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFileEntryTypeId",
+					new String[] {Long.class.getName()},
+					new String[] {"fileEntryTypeId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFileEntryTypeId",
+					new String[] {Long.class.getName()},
+					new String[] {"fileEntryTypeId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "fileEntryTypeId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getFileEntryTypeId));
 
-		_finderPathWithPaginationFindBySmallImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySmallImageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"smallImageId"}, true);
-
-		_finderPathWithoutPaginationFindBySmallImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySmallImageId",
-			new String[] {Long.class.getName()}, new String[] {"smallImageId"},
-			true);
-
-		_finderPathCountBySmallImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySmallImageId",
-			new String[] {Long.class.getName()}, new String[] {"smallImageId"},
-			false);
-
 		_collectionPersistenceFinderBySmallImageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySmallImageId,
-				_finderPathWithoutPaginationFindBySmallImageId,
-				_finderPathCountBySmallImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySmallImageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"smallImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySmallImageId", new String[] {Long.class.getName()},
+					new String[] {"smallImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySmallImageId", new String[] {Long.class.getName()},
+					new String[] {"smallImageId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "smallImageId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getSmallImageId));
 
-		_finderPathWithPaginationFindByLargeImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLargeImageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"largeImageId"}, true);
-
-		_finderPathWithoutPaginationFindByLargeImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLargeImageId",
-			new String[] {Long.class.getName()}, new String[] {"largeImageId"},
-			true);
-
-		_finderPathCountByLargeImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLargeImageId",
-			new String[] {Long.class.getName()}, new String[] {"largeImageId"},
-			false);
-
 		_collectionPersistenceFinderByLargeImageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLargeImageId,
-				_finderPathWithoutPaginationFindByLargeImageId,
-				_finderPathCountByLargeImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLargeImageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"largeImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLargeImageId", new String[] {Long.class.getName()},
+					new String[] {"largeImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLargeImageId", new String[] {Long.class.getName()},
+					new String[] {"largeImageId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "largeImageId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getLargeImageId));
 
-		_finderPathWithPaginationFindByCustom1ImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCustom1ImageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"custom1ImageId"}, true);
-
-		_finderPathWithoutPaginationFindByCustom1ImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCustom1ImageId",
-			new String[] {Long.class.getName()},
-			new String[] {"custom1ImageId"}, true);
-
-		_finderPathCountByCustom1ImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCustom1ImageId",
-			new String[] {Long.class.getName()},
-			new String[] {"custom1ImageId"}, false);
-
 		_collectionPersistenceFinderByCustom1ImageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCustom1ImageId,
-				_finderPathWithoutPaginationFindByCustom1ImageId,
-				_finderPathCountByCustom1ImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCustom1ImageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"custom1ImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCustom1ImageId", new String[] {Long.class.getName()},
+					new String[] {"custom1ImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCustom1ImageId",
+					new String[] {Long.class.getName()},
+					new String[] {"custom1ImageId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "custom1ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom1ImageId));
 
-		_finderPathWithPaginationFindByCustom2ImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCustom2ImageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"custom2ImageId"}, true);
-
-		_finderPathWithoutPaginationFindByCustom2ImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCustom2ImageId",
-			new String[] {Long.class.getName()},
-			new String[] {"custom2ImageId"}, true);
-
-		_finderPathCountByCustom2ImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCustom2ImageId",
-			new String[] {Long.class.getName()},
-			new String[] {"custom2ImageId"}, false);
-
 		_collectionPersistenceFinderByCustom2ImageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCustom2ImageId,
-				_finderPathWithoutPaginationFindByCustom2ImageId,
-				_finderPathCountByCustom2ImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCustom2ImageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"custom2ImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCustom2ImageId", new String[] {Long.class.getName()},
+					new String[] {"custom2ImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCustom2ImageId",
+					new String[] {Long.class.getName()},
+					new String[] {"custom2ImageId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "custom2ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom2ImageId));
 
-		_finderPathWithPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
-
 		_collectionPersistenceFinderByG_U =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U,
-				_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "userId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILEENTRY_WHERE,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILEENTRY_WHERE,
+					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
+					"DLFileEntry", "dlFileEntry.fileEntryId",
+					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
+					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
+					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
 					DLFileEntryModelImpl.ORDER_BY_SQL,
 					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -5329,39 +5227,34 @@ public class DLFileEntryPersistenceImpl
 					"dlFileEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, DLFileEntry::getUserId));
 
-		_finderPathWithPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathCountByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, false);
-
 		_collectionPersistenceFinderByG_F =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F,
-				_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, false),
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILEENTRY_WHERE,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILEENTRY_WHERE,
+					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
+					"DLFileEntry", "dlFileEntry.fileEntryId",
+					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
+					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
+					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
 					DLFileEntryModelImpl.ORDER_BY_SQL,
 					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -5371,28 +5264,24 @@ public class DLFileEntryPersistenceImpl
 					"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=",
 					false, true, true, DLFileEntry::getFolderId));
 
-		_finderPathWithPaginationFindByR_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"repositoryId", "folderId"}, true);
-
-		_finderPathWithoutPaginationFindByR_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"repositoryId", "folderId"}, true);
-
-		_finderPathCountByR_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"repositoryId", "folderId"}, false);
-
 		_collectionPersistenceFinderByR_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_F,
-			_finderPathWithoutPaginationFindByR_F, _finderPathCountByR_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"repositoryId", "folderId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_F",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"repositoryId", "folderId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_F",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"repositoryId", "folderId"}, false),
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -5402,28 +5291,24 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getFolderId));
 
-		_finderPathWithPaginationFindByF_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"folderId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByF_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"folderId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByF_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"folderId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByF_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByF_N,
-			_finderPathWithoutPaginationFindByF_N, _finderPathCountByF_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"folderId", "name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"folderId", "name"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"folderId", "name"}, 0, 2, false, null),
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -5433,44 +5318,41 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "name", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getName));
 
-		_finderPathWithPaginationFindByG_U_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "folderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "userId", "folderId"}, true);
-
-		_finderPathCountByG_U_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "userId", "folderId"}, false);
-
 		_collectionPersistenceFinderByG_U_F =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U_F,
-				_finderPathWithoutPaginationFindByG_U_F,
-				_finderPathCountByG_U_F, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "userId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "userId", "folderId"}, false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILEENTRY_WHERE,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILEENTRY_WHERE,
+					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
+					"DLFileEntry", "dlFileEntry.fileEntryId",
+					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
+					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
+					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
 					DLFileEntryModelImpl.ORDER_BY_SQL,
 					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -5483,18 +5365,18 @@ public class DLFileEntryPersistenceImpl
 					"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=",
 					false, true, true, DLFileEntry::getFolderId));
 
-		_finderPathFetchByG_F_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_F_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "folderId", "name"}, 0, 4, false,
-			DLFileEntry::getGroupId, DLFileEntry::getFolderId,
-			convertNullFunction(DLFileEntry::getName));
-
 		_uniquePersistenceFinderByG_F_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F_N, _SQL_SELECT_DLFILEENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_F_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "folderId", "name"}, 0, 4, false,
+				DLFileEntry::getGroupId, DLFileEntry::getFolderId,
+				convertNullFunction(DLFileEntry::getName)),
+			_SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getGroupId),
@@ -5505,18 +5387,18 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "name", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getName));
 
-		_finderPathFetchByG_F_FN = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_F_FN",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "folderId", "fileName"}, 0, 4, false,
-			DLFileEntry::getGroupId, DLFileEntry::getFolderId,
-			convertNullFunction(DLFileEntry::getFileName));
-
 		_uniquePersistenceFinderByG_F_FN = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F_FN, _SQL_SELECT_DLFILEENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_F_FN",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "folderId", "fileName"}, 0, 4, false,
+				DLFileEntry::getGroupId, DLFileEntry::getFolderId,
+				convertNullFunction(DLFileEntry::getFileName)),
+			_SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getGroupId),
@@ -5527,18 +5409,18 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "fileName", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getFileName));
 
-		_finderPathFetchByG_F_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_F_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "folderId", "title"}, 0, 4, false,
-			DLFileEntry::getGroupId, DLFileEntry::getFolderId,
-			convertNullFunction(DLFileEntry::getTitle));
-
 		_uniquePersistenceFinderByG_F_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F_T, _SQL_SELECT_DLFILEENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_F_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "folderId", "title"}, 0, 4, false,
+				DLFileEntry::getGroupId, DLFileEntry::getFolderId,
+				convertNullFunction(DLFileEntry::getTitle)),
+			_SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getGroupId),
@@ -5549,44 +5431,44 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "title", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getTitle));
 
-		_finderPathWithPaginationFindByG_F_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "fileEntryTypeId"}, true);
-
-		_finderPathWithoutPaginationFindByG_F_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "folderId", "fileEntryTypeId"}, true);
-
-		_finderPathCountByG_F_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "folderId", "fileEntryTypeId"}, false);
-
 		_collectionPersistenceFinderByG_F_F =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_F,
-				_finderPathWithoutPaginationFindByG_F_F,
-				_finderPathCountByG_F_F, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId", "fileEntryTypeId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "folderId", "fileEntryTypeId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "folderId", "fileEntryTypeId"},
+					false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DLFileEntryImpl.class, DLFileEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILEENTRY_WHERE,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILEENTRY_WHERE,
+					DLFileEntryImpl.class, DLFileEntry.class, "dlFileEntry",
+					"DLFileEntry", "dlFileEntry.fileEntryId",
+					"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ",
+					"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId",
+					"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ",
 					DLFileEntryModelImpl.ORDER_BY_SQL,
 					DLFileEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -5599,32 +5481,30 @@ public class DLFileEntryPersistenceImpl
 					"dlFileEntry.", "fileEntryTypeId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getFileEntryTypeId));
 
-		_finderPathWithPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_C,
-			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -5637,50 +5517,47 @@ public class DLFileEntryPersistenceImpl
 				"dlFileEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getClassPK));
 
-		_finderPathWithPaginationFindByS_L_C1_C2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_L_C1_C2",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"smallImageId", "largeImageId", "custom1ImageId",
-				"custom2ImageId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_L_C1_C2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_L_C1_C2",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"smallImageId", "largeImageId", "custom1ImageId",
-				"custom2ImageId"
-			},
-			true);
-
-		_finderPathCountByS_L_C1_C2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_L_C1_C2",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"smallImageId", "largeImageId", "custom1ImageId",
-				"custom2ImageId"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_L_C1_C2 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByS_L_C1_C2,
-				_finderPathWithoutPaginationFindByS_L_C1_C2,
-				_finderPathCountByS_L_C1_C2, _SQL_SELECT_DLFILEENTRY_WHERE,
-				_SQL_COUNT_DLFILEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_L_C1_C2",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"smallImageId", "largeImageId", "custom1ImageId",
+						"custom2ImageId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByS_L_C1_C2",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"smallImageId", "largeImageId", "custom1ImageId",
+						"custom2ImageId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByS_L_C1_C2",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"smallImageId", "largeImageId", "custom1ImageId",
+						"custom2ImageId"
+					},
+					false),
+				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
 				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "smallImageId", FinderColumn.Type.LONG, "=",
@@ -5695,15 +5572,15 @@ public class DLFileEntryPersistenceImpl
 					"dlFileEntry.", "custom2ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom2ImageId));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(DLFileEntry::getExternalReferenceCode),
-			DLFileEntry::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILEENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(DLFileEntry::getExternalReferenceCode),
+				DLFileEntry::getGroupId),
+			_SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -5733,27 +5610,6 @@ public class DLFileEntryPersistenceImpl
 	private static final String _SQL_COUNT_DLFILEENTRY_WHERE =
 		"SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"dlFileEntry.fileEntryId";
-
-	private static final String _FILTER_SQL_SELECT_DLFILEENTRY_WHERE =
-		"SELECT DISTINCT {dlFileEntry.*} FROM DLFileEntry dlFileEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {DLFileEntry.*} FROM (SELECT DISTINCT dlFileEntry.fileEntryId FROM DLFileEntry dlFileEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DLFILEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId";
-
-	private static final String _FILTER_SQL_COUNT_DLFILEENTRY_WHERE =
-		"SELECT COUNT(DISTINCT dlFileEntry.fileEntryId) AS COUNT_VALUE FROM DLFileEntry dlFileEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "dlFileEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "DLFileEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileEntry exists with the key {";
 
@@ -5769,4 +5625,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-457444456
+// LIFERAY-SERVICE-BUILDER-HASH:1982142744

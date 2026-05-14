@@ -99,9 +99,6 @@ public class KBArticlePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
-	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
-	private FinderPath _finderPathCountByResourcePrimKey;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByResourcePrimKey;
 
@@ -247,9 +244,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByUuid;
 
@@ -389,7 +383,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -478,9 +471,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -635,9 +625,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G;
-	private FinderPath _finderPathWithoutPaginationFindByR_G;
-	private FinderPath _finderPathCountByR_G;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G;
 
@@ -866,7 +853,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByR_V;
 	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByR_V;
 
 	/**
@@ -957,9 +943,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_L;
-	private FinderPath _finderPathWithoutPaginationFindByR_L;
-	private FinderPath _finderPathCountByR_L;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_L;
 
@@ -1228,9 +1211,6 @@ public class KBArticlePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(resourcePrimKeys), latest});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_M;
-	private FinderPath _finderPathWithoutPaginationFindByR_M;
-	private FinderPath _finderPathCountByR_M;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_M;
 
@@ -1497,9 +1477,6 @@ public class KBArticlePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(resourcePrimKeys), main});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_S;
-	private FinderPath _finderPathWithoutPaginationFindByR_S;
-	private FinderPath _finderPathCountByR_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_S;
 
@@ -1778,9 +1755,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ERC;
-	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_ERC;
 
@@ -2016,9 +1990,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_L;
-	private FinderPath _finderPathCountByG_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_L;
 
@@ -2242,9 +2213,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, latest}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_M;
-	private FinderPath _finderPathWithoutPaginationFindByG_M;
-	private FinderPath _finderPathCountByG_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_M;
 
@@ -2468,9 +2436,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, main}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_S;
 
@@ -2694,9 +2659,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_L;
-	private FinderPath _finderPathWithoutPaginationFindByC_L;
-	private FinderPath _finderPathCountByC_L;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_L;
 
@@ -2851,9 +2813,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, latest});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_M;
-	private FinderPath _finderPathWithoutPaginationFindByC_M;
-	private FinderPath _finderPathCountByC_M;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_M;
 
@@ -3007,9 +2966,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, main});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_S;
-	private FinderPath _finderPathCountByC_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_S;
 
@@ -3164,9 +3120,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_L;
-	private FinderPath _finderPathWithoutPaginationFindByP_L;
-	private FinderPath _finderPathCountByP_L;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_L;
 
@@ -3448,9 +3401,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_M;
-	private FinderPath _finderPathWithoutPaginationFindByP_M;
-	private FinderPath _finderPathCountByP_M;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_M;
 
@@ -3727,9 +3677,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_S;
-	private FinderPath _finderPathWithoutPaginationFindByP_S;
-	private FinderPath _finderPathCountByP_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_S;
 
@@ -4009,8 +3956,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtD_S;
-	private FinderPath _finderPathWithPaginationCountByLtD_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByLtD_S;
 
@@ -4165,7 +4110,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FinderPath _finderPathFetchByR_G_V;
 	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByR_G_V;
 
 	/**
@@ -4266,9 +4210,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, groupId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_L;
-	private FinderPath _finderPathWithoutPaginationFindByR_G_L;
-	private FinderPath _finderPathCountByR_G_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_L;
 
@@ -4747,9 +4688,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_M;
-	private FinderPath _finderPathWithoutPaginationFindByR_G_M;
-	private FinderPath _finderPathCountByR_G_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_M;
 
@@ -5224,9 +5162,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_S;
-	private FinderPath _finderPathWithoutPaginationFindByR_G_S;
-	private FinderPath _finderPathCountByR_G_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_S;
 
@@ -5695,8 +5630,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_G_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_NotS;
 
@@ -5949,8 +5882,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_L_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_L_NotS;
 
@@ -6258,8 +6189,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_M_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_M_NotS;
 
@@ -6561,7 +6490,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByG_ERC_V;
 	private UniquePersistenceFinder<KBArticle>
 		_uniquePersistenceFinderByG_ERC_V;
 
@@ -6668,9 +6596,6 @@ public class KBArticlePersistenceImpl
 			new Object[] {groupId, externalReferenceCode, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ERC_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_ERC_S;
-	private FinderPath _finderPathCountByG_ERC_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_ERC_S;
 
@@ -6927,9 +6852,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_L;
-	private FinderPath _finderPathCountByG_P_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_L;
 
@@ -7410,9 +7332,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_M;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_M;
-	private FinderPath _finderPathCountByG_P_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_M;
 
@@ -7893,9 +7812,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
-	private FinderPath _finderPathCountByG_P_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_S;
 
@@ -8376,9 +8292,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_UT;
-	private FinderPath _finderPathCountByG_KBFI_UT;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_UT;
 
@@ -8630,9 +8543,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, urlTitle}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_L;
-	private FinderPath _finderPathCountByG_KBFI_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_L;
 
@@ -8882,9 +8792,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, latest}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_S;
-	private FinderPath _finderPathCountByG_KBFI_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_S;
 
@@ -9132,8 +9039,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_L;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_L;
 
@@ -9595,8 +9500,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_M;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_M;
 
@@ -10050,8 +9953,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_S;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_S;
 
@@ -10509,8 +10410,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_L_NotS;
 
@@ -10755,8 +10654,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, latest, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_M_NotS;
 
@@ -10999,8 +10896,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, main, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByC_L_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_L_NotS;
 
@@ -11168,8 +11063,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, latest, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByC_M_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_M_NotS;
 
@@ -11337,8 +11230,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, main, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByP_L_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_L_NotS;
 
@@ -11647,8 +11538,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByP_M_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_M_NotS;
 
@@ -11957,8 +11846,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_G_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_L_NotS;
 
@@ -12479,8 +12366,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_G_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_M_NotS;
 
@@ -12985,9 +12870,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_L_S;
-	private FinderPath _finderPathCountByG_P_L_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_L_S;
 
@@ -13512,8 +13394,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_P_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_L_NotS;
 
@@ -14038,9 +13918,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_M_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_M_S;
-	private FinderPath _finderPathCountByG_P_M_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_M_S;
 
@@ -14561,8 +14438,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_P_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_M_NotS;
 
@@ -15083,9 +14958,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_UT_S;
-	private FinderPath _finderPathCountByG_KBFI_UT_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_UT_S;
 
@@ -15590,8 +15462,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_KBFI_UT_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_UT_NotS;
 
@@ -15860,8 +15730,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_KBFI_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_L_NotS;
 
@@ -16130,8 +15998,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_L_NotS;
 
@@ -16636,8 +16502,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_M_NotS;
 
@@ -17525,70 +17389,65 @@ public class KBArticlePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey"}, true);
-
-		_finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourcePrimKey",
-			new String[] {Long.class.getName()},
-			new String[] {"resourcePrimKey"}, true);
-
-		_finderPathCountByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByResourcePrimKey",
-			new String[] {Long.class.getName()},
-			new String[] {"resourcePrimKey"}, false);
-
 		_collectionPersistenceFinderByResourcePrimKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByResourcePrimKey,
-				_finderPathWithoutPaginationFindByResourcePrimKey,
-				_finderPathCountByResourcePrimKey, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByResourcePrimKey",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByResourcePrimKey",
+					new String[] {Long.class.getName()},
+					new String[] {"resourcePrimKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByResourcePrimKey",
+					new String[] {Long.class.getName()},
+					new String[] {"resourcePrimKey"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(KBArticle::getUuid), KBArticle::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(KBArticle::getUuid), KBArticle::getGroupId),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid),
@@ -17596,32 +17455,27 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, KBArticle::getUuid),
@@ -17629,38 +17483,34 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBArticle::getCompanyId));
 
-		_finderPathWithPaginationFindByR_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByR_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"resourcePrimKey", "groupId"}, true);
-
-		_finderPathCountByR_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_G",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"resourcePrimKey", "groupId"}, false);
-
 		_collectionPersistenceFinderByR_G =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G,
-				_finderPathWithoutPaginationFindByR_G, _finderPathCountByR_G,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"resourcePrimKey", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_G",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"resourcePrimKey", "groupId"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17670,14 +17520,14 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId));
 
-		_finderPathFetchByR_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "version"}, 0, 0, false,
-			KBArticle::getResourcePrimKey, KBArticle::getVersion);
-
 		_uniquePersistenceFinderByR_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_V, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "version"}, 0, 0, false,
+				KBArticle::getResourcePrimKey, KBArticle::getVersion),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, true, KBArticle::getResourcePrimKey),
@@ -17685,28 +17535,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
 
-		_finderPathWithPaginationFindByR_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByR_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "latest"}, true);
-
-		_finderPathCountByR_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "latest"}, false);
-
 		_collectionPersistenceFinderByR_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_L,
-			_finderPathWithoutPaginationFindByR_L, _finderPathCountByR_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -17716,28 +17562,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByR_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "main"}, true);
-
-		_finderPathWithoutPaginationFindByR_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "main"}, true);
-
-		_finderPathCountByR_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "main"}, false);
-
 		_collectionPersistenceFinderByR_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_M,
-			_finderPathWithoutPaginationFindByR_M, _finderPathCountByR_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -17747,28 +17589,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "status"}, true);
-
-		_finderPathCountByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByR_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_S,
-			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -17778,41 +17616,36 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", false,
 				true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode"}, true);
-
-		_finderPathWithoutPaginationFindByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, 0, 2, true,
-			null);
-
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByG_ERC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ERC,
-				_finderPathWithoutPaginationFindByG_ERC,
-				_finderPathCountByG_ERC, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "externalReferenceCode"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "externalReferenceCode"}, 0, 2,
+					false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17823,38 +17656,38 @@ public class KBArticlePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					KBArticle::getExternalReferenceCode));
 
-		_finderPathWithPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "latest"}, true);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "latest"}, false);
-
 		_collectionPersistenceFinderByG_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L,
-				_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17864,38 +17697,38 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "main"}, true);
-
-		_finderPathWithoutPaginationFindByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "main"}, true);
-
-		_finderPathCountByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "main"}, false);
-
 		_collectionPersistenceFinderByG_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_M,
-				_finderPathWithoutPaginationFindByG_M, _finderPathCountByG_M,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17905,38 +17738,38 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17946,28 +17779,24 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "latest"}, true);
-
-		_finderPathCountByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "latest"}, false);
-
 		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_L,
-			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -17976,29 +17805,25 @@ public class KBArticlePersistenceImpl
 			new FinderColumn<>(
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
-
-		_finderPathWithPaginationFindByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "main"}, true);
-
-		_finderPathWithoutPaginationFindByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "main"}, true);
-
-		_finderPathCountByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "main"}, false);
 
 		_collectionPersistenceFinderByC_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_M,
-			_finderPathWithoutPaginationFindByC_M, _finderPathCountByC_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -18008,28 +17833,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathCountByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S,
-			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -18039,28 +17860,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "latest"}, true);
-
-		_finderPathCountByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "latest"}, false);
-
 		_collectionPersistenceFinderByP_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_L,
-			_finderPathWithoutPaginationFindByP_L, _finderPathCountByP_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentResourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -18070,28 +17887,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByP_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "main"}, true);
-
-		_finderPathWithoutPaginationFindByP_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "main"}, true);
-
-		_finderPathCountByP_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "main"}, false);
-
 		_collectionPersistenceFinderByP_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_M,
-			_finderPathWithoutPaginationFindByP_M, _finderPathCountByP_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentResourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -18101,28 +17914,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"parentResourcePrimKey", "status"}, true);
-
-		_finderPathCountByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"parentResourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByP_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_S,
-			_finderPathWithoutPaginationFindByP_S, _finderPathCountByP_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentResourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"parentResourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"parentResourcePrimKey", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -18132,25 +17941,23 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"displayDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"displayDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtD_S, null,
-			_finderPathWithPaginationCountByLtD_S, _SQL_SELECT_KBARTICLE_WHERE,
-			_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"displayDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"displayDate", "status"}, false),
+			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "displayDate", FinderColumn.Type.DATE, "<", true,
 				true, KBArticle::getDisplayDate),
@@ -18158,18 +17965,18 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathFetchByR_G_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByR_G_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "version"}, 0, 0, false,
-			KBArticle::getResourcePrimKey, KBArticle::getGroupId,
-			KBArticle::getVersion);
-
 		_uniquePersistenceFinderByR_G_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_G_V, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByR_G_V",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"resourcePrimKey", "groupId", "version"}, 0, 0,
+				false, KBArticle::getResourcePrimKey, KBArticle::getGroupId,
+				KBArticle::getVersion),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, true, KBArticle::getResourcePrimKey),
@@ -18180,45 +17987,44 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
 
-		_finderPathWithPaginationFindByR_G_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByR_G_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest"}, true);
-
-		_finderPathCountByR_G_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest"}, false);
-
 		_collectionPersistenceFinderByR_G_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_L,
-				_finderPathWithoutPaginationFindByR_G_L,
-				_finderPathCountByR_G_L, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "latest"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -18231,45 +18037,41 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByR_G_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main"}, true);
-
-		_finderPathWithoutPaginationFindByR_G_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main"}, true);
-
-		_finderPathCountByR_G_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main"}, false);
-
 		_collectionPersistenceFinderByR_G_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_M,
-				_finderPathWithoutPaginationFindByR_G_M,
-				_finderPathCountByR_G_M, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "main"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -18282,45 +18084,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByR_G_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_G_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, true);
-
-		_finderPathCountByR_G_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, false);
-
 		_collectionPersistenceFinderByR_G_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_S,
-				_finderPathWithoutPaginationFindByR_G_S,
-				_finderPathCountByR_G_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -18333,36 +18134,37 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_G_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, true);
-
-		_finderPathWithPaginationCountByR_G_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, false);
-
 		_collectionPersistenceFinderByR_G_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_NotS, null,
-				_finderPathWithPaginationCountByR_G_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18375,27 +18177,27 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByR_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByR_L_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_L_NotS, null,
-				_finderPathWithPaginationCountByR_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "latest", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -18408,27 +18210,26 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByR_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "main", "status"}, false);
-
 		_collectionPersistenceFinderByR_M_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_M_NotS, null,
-				_finderPathWithPaginationCountByR_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "main", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -18441,19 +18242,19 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathFetchByG_ERC_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "version"}, 0, 2,
-			false, KBArticle::getGroupId,
-			convertNullFunction(KBArticle::getExternalReferenceCode),
-			KBArticle::getVersion);
-
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"groupId", "externalReferenceCode", "version"}, 0,
+				2, false, KBArticle::getGroupId,
+				convertNullFunction(KBArticle::getExternalReferenceCode),
+				KBArticle::getVersion),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId),
@@ -18464,47 +18265,44 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
 
-		_finderPathWithPaginationFindByG_ERC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_ERC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, 0, 2,
-			true, null);
-
-		_finderPathCountByG_ERC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, 0, 2,
-			false, null);
-
 		_collectionPersistenceFinderByG_ERC_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ERC_S,
-				_finderPathWithoutPaginationFindByG_ERC_S,
-				_finderPathCountByG_ERC_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					0, 2, false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18518,45 +18316,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "latest"}, true);
-
-		_finderPathCountByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "latest"}, false);
-
 		_collectionPersistenceFinderByG_P_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L,
-				_finderPathWithoutPaginationFindByG_P_L,
-				_finderPathCountByG_P_L, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "latest"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18570,45 +18367,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_P_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main"}, true);
-
-		_finderPathCountByG_P_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main"}, false);
-
 		_collectionPersistenceFinderByG_P_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_M,
-				_finderPathWithoutPaginationFindByG_P_M,
-				_finderPathCountByG_P_M, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "main"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "main"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "main"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18622,45 +18418,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "status"}, true);
-
-		_finderPathCountByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByG_P_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_S,
-				_finderPathWithoutPaginationFindByG_P_S,
-				_finderPathCountByG_P_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "status"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18674,47 +18469,45 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4, true,
-			null);
-
-		_finderPathCountByG_KBFI_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_KBFI_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByG_KBFI_UT =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_UT,
-				_finderPathWithoutPaginationFindByG_KBFI_UT,
-				_finderPathCountByG_KBFI_UT, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "urlTitle"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_KBFI_UT",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_KBFI_UT",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4,
+					false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18727,45 +18520,42 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "urlTitle", FinderColumn.Type.STRING, "=",
 					true, true, KBArticle::getUrlTitle));
 
-		_finderPathWithPaginationFindByG_KBFI_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest"}, true);
-
-		_finderPathCountByG_KBFI_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_KBFI_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest"}, false);
-
 		_collectionPersistenceFinderByG_KBFI_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_L,
-				_finderPathWithoutPaginationFindByG_KBFI_L,
-				_finderPathCountByG_KBFI_L, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_KBFI_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18778,45 +18568,42 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_KBFI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "status"}, true);
-
-		_finderPathCountByG_KBFI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_KBFI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_KBFI_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_S,
-				_finderPathWithoutPaginationFindByG_KBFI_S,
-				_finderPathCountByG_KBFI_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_KBFI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "status"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18829,36 +18616,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_LikeS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_L, null,
-				_finderPathWithPaginationCountByG_LikeS_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_L",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_L",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18871,36 +18657,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_LikeS_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_M",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "main"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_M",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "sections", "main"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_M, null,
-				_finderPathWithPaginationCountByG_LikeS_M,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_M",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "main"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_M",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "sections", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18913,36 +18698,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByG_LikeS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "status"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "sections", "status"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_S, null,
-				_finderPathWithPaginationCountByG_LikeS_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "sections", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18955,36 +18739,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByG_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByG_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L_NotS, null,
-				_finderPathWithPaginationCountByG_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "latest", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "latest", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18996,37 +18779,36 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByG_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByG_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "main", "status"}, false);
 
 		_collectionPersistenceFinderByG_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_M_NotS, null,
-				_finderPathWithPaginationCountByG_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "main", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19038,28 +18820,27 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByC_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByC_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "latest", "status"}, false);
 
 		_collectionPersistenceFinderByC_L_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_L_NotS, null,
-				_finderPathWithPaginationCountByC_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "latest", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "latest", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -19071,28 +18852,27 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByC_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByC_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "main", "status"}, false);
 
 		_collectionPersistenceFinderByC_M_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_M_NotS, null,
-				_finderPathWithPaginationCountByC_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "main", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -19105,27 +18885,28 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByP_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByP_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByP_L_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_L_NotS, null,
-				_finderPathWithPaginationCountByP_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "latest", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -19138,28 +18919,29 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByP_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByP_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "main", "status"}, false);
 
 		_collectionPersistenceFinderByP_M_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_M_NotS, null,
-				_finderPathWithPaginationCountByP_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "main", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "main", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -19172,40 +18954,42 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByR_G_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest", "status"},
-			true);
-
-		_finderPathWithPaginationCountByR_G_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest", "status"},
-			false);
 
 		_collectionPersistenceFinderByR_G_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_L_NotS, null,
-				_finderPathWithPaginationCountByR_G_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "latest", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "latest", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -19220,40 +19004,42 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByR_G_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main", "status"},
-			true);
-
-		_finderPathWithPaginationCountByR_G_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main", "status"},
-			false);
 
 		_collectionPersistenceFinderByR_G_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_M_NotS, null,
-				_finderPathWithPaginationCountByR_G_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "main", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "main", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -19269,55 +19055,50 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_P_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			true);
-
-		_finderPathCountByG_P_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_P_L_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L_S,
-				_finderPathWithoutPaginationFindByG_P_L_S,
-				_finderPathCountByG_P_L_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19333,44 +19114,42 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByG_P_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_P_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			false);
 
 		_collectionPersistenceFinderByG_P_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L_NotS, null,
-				_finderPathWithPaginationCountByG_P_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19387,49 +19166,50 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_P_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			true);
-
-		_finderPathCountByG_P_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_P_M_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_M_S,
-				_finderPathWithoutPaginationFindByG_P_M_S,
-				_finderPathCountByG_P_M_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19446,39 +19226,41 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			true);
-
-		_finderPathWithPaginationCountByG_P_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_P_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_M_NotS, null,
-				_finderPathWithPaginationCountByG_P_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19495,48 +19277,52 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_UT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_UT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_UT_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_KBFI_UT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_KBFI_UT_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_KBFI_UT_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_UT_S,
-				_finderPathWithoutPaginationFindByG_KBFI_UT_S,
-				_finderPathCountByG_KBFI_UT_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_KBFI_UT_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_KBFI_UT_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					0, 4, false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19552,38 +19338,43 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					false, true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_UT_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, true);
-
-		_finderPathWithPaginationCountByG_KBFI_UT_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_KBFI_UT_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_KBFI_UT_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_UT_NotS, null,
-				_finderPathWithPaginationCountByG_KBFI_UT_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_KBFI_UT_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_KBFI_UT_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19599,37 +19390,39 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByG_KBFI_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_KBFI_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByG_KBFI_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_L_NotS, null,
-				_finderPathWithPaginationCountByG_KBFI_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_KBFI_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_KBFI_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19645,37 +19438,39 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_LikeS_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_L_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_L_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_L_NotS, null,
-				_finderPathWithPaginationCountByG_LikeS_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_LikeS_L_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_LikeS_L_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19691,37 +19486,39 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_LikeS_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_M_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_M_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "sections", "main", "status"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_M_NotS, null,
-				_finderPathWithPaginationCountByG_LikeS_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_LikeS_M_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "main", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_LikeS_M_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "sections", "main", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19794,27 +19591,6 @@ public class KBArticlePersistenceImpl
 	private static final String _SQL_COUNT_KBARTICLE_WHERE =
 		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"kbArticle.resourcePrimKey";
-
-	private static final String _FILTER_SQL_SELECT_KBARTICLE_WHERE =
-		"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId";
-
-	private static final String _FILTER_SQL_COUNT_KBARTICLE_WHERE =
-		"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "kbArticle";
-
-	private static final String _FILTER_ENTITY_TABLE = "KBArticle";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBArticle exists with the key {";
 
@@ -19830,4 +19606,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2016322410
+// LIFERAY-SERVICE-BUILDER-HASH:-608787987

@@ -76,9 +76,6 @@ public class COREntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCOREntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCOREntryId;
-	private FinderPath _finderPathCountByCOREntryId;
 	private CollectionPersistenceFinder<COREntryRel>
 		_collectionPersistenceFinderByCOREntryId;
 
@@ -223,9 +220,6 @@ public class COREntryRelPersistenceImpl
 			finderCache, new Object[] {COREntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<COREntryRel>
 		_collectionPersistenceFinderByC_C;
 
@@ -383,7 +377,6 @@ public class COREntryRelPersistenceImpl
 			finderCache, new Object[] {classNameId, COREntryId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_C;
 	private UniquePersistenceFinder<COREntryRel>
 		_uniquePersistenceFinderByC_C_C;
 
@@ -684,57 +677,49 @@ public class COREntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCOREntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCOREntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"COREntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCOREntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCOREntryId",
-			new String[] {Long.class.getName()}, new String[] {"COREntryId"},
-			true);
-
-		_finderPathCountByCOREntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCOREntryId",
-			new String[] {Long.class.getName()}, new String[] {"COREntryId"},
-			false);
-
 		_collectionPersistenceFinderByCOREntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCOREntryId,
-				_finderPathWithoutPaginationFindByCOREntryId,
-				_finderPathCountByCOREntryId, _SQL_SELECT_CORENTRYREL_WHERE,
-				_SQL_COUNT_CORENTRYREL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCOREntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"COREntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCOREntryId", new String[] {Long.class.getName()},
+					new String[] {"COREntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCOREntryId", new String[] {Long.class.getName()},
+					new String[] {"COREntryId"}, false),
+				_SQL_SELECT_CORENTRYREL_WHERE, _SQL_COUNT_CORENTRYREL_WHERE,
 				COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=",
 					true, true, COREntryRel::getCOREntryId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "COREntryId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "COREntryId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "COREntryId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "COREntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "COREntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "COREntryId"}, false),
 			_SQL_SELECT_CORENTRYREL_WHERE, _SQL_COUNT_CORENTRYREL_WHERE,
 			COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -744,17 +729,18 @@ public class COREntryRelPersistenceImpl
 				"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=", true,
 				true, COREntryRel::getCOREntryId));
 
-		_finderPathFetchByC_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "COREntryId"}, 0, 0, false,
-			COREntryRel::getClassNameId, COREntryRel::getClassPK,
-			COREntryRel::getCOREntryId);
-
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C, _SQL_SELECT_CORENTRYREL_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "COREntryId"}, 0, 0,
+				false, COREntryRel::getClassNameId, COREntryRel::getClassPK,
+				COREntryRel::getCOREntryId),
+			_SQL_SELECT_CORENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"corEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, COREntryRel::getClassNameId),
@@ -831,4 +817,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:886235033
+// LIFERAY-SERVICE-BUILDER-HASH:822302768

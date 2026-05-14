@@ -70,9 +70,6 @@ public class CTMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
-	private FinderPath _finderPathCountByCtCollectionId;
 	private CollectionPersistenceFinder<CTMessage>
 		_collectionPersistenceFinderByCtCollectionId;
 
@@ -388,31 +385,29 @@ public class CTMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false);
-
 		_collectionPersistenceFinderByCtCollectionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtCollectionId,
-				_finderPathWithoutPaginationFindByCtCollectionId,
-				_finderPathCountByCtCollectionId, _SQL_SELECT_CTMESSAGE_WHERE,
-				_SQL_COUNT_CTMESSAGE_WHERE, CTMessageModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtCollectionId", new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, false),
+				_SQL_SELECT_CTMESSAGE_WHERE, _SQL_COUNT_CTMESSAGE_WHERE,
+				CTMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctMessage.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTMessage::getCtCollectionId));
@@ -480,4 +475,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2053655089
+// LIFERAY-SERVICE-BUILDER-HASH:-245290929

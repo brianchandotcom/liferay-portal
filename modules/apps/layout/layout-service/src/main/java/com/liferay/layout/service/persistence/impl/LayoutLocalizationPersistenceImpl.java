@@ -88,9 +88,6 @@ public class LayoutLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LayoutLocalization>
 		_collectionPersistenceFinderByUuid;
 
@@ -234,7 +231,6 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<LayoutLocalization>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -324,9 +320,6 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LayoutLocalization>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -481,9 +474,6 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPlid;
-	private FinderPath _finderPathWithoutPaginationFindByPlid;
-	private FinderPath _finderPathCountByPlid;
 	private CollectionPersistenceFinder<LayoutLocalization>
 		_collectionPersistenceFinderByPlid;
 
@@ -624,7 +614,6 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FinderPath _finderPathFetchByL_P;
 	private UniquePersistenceFinder<LayoutLocalization>
 		_uniquePersistenceFinderByL_P;
 
@@ -714,7 +703,6 @@ public class LayoutLocalizationPersistenceImpl
 			finderCache, new Object[] {languageId, plid});
 	}
 
-	private FinderPath _finderPathFetchByG_L_P;
 	private UniquePersistenceFinder<LayoutLocalization>
 		_uniquePersistenceFinderByG_L_P;
 
@@ -1125,27 +1113,23 @@ public class LayoutLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
 			_SQL_COUNT_LAYOUTLOCALIZATION_WHERE,
 			LayoutLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1153,15 +1137,14 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, LayoutLocalization::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(LayoutLocalization::getUuid),
-			LayoutLocalization::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(LayoutLocalization::getUuid),
+				LayoutLocalization::getGroupId),
 			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"layoutLocalization.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1170,30 +1153,26 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
 				_SQL_COUNT_LAYOUTLOCALIZATION_WHERE,
 				LayoutLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1204,25 +1183,23 @@ public class LayoutLocalizationPersistenceImpl
 					"layoutLocalization.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutLocalization::getCompanyId));
 
-		_finderPathWithPaginationFindByPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"plid"}, true);
-
-		_finderPathWithoutPaginationFindByPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, true);
-
-		_finderPathCountByPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, false);
-
 		_collectionPersistenceFinderByPlid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByPlid,
-			_finderPathWithoutPaginationFindByPlid, _finderPathCountByPlid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"},
+				false),
 			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
 			_SQL_COUNT_LAYOUTLOCALIZATION_WHERE,
 			LayoutLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1230,16 +1207,15 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getPlid));
 
-		_finderPathFetchByL_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByL_P",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"languageId", "plid"}, 0, 1, false,
-			convertNullFunction(LayoutLocalization::getLanguageId),
-			LayoutLocalization::getPlid);
-
 		_uniquePersistenceFinderByL_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByL_P, _SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByL_P",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"languageId", "plid"}, 0, 1, false,
+				convertNullFunction(LayoutLocalization::getLanguageId),
+				LayoutLocalization::getPlid),
+			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"layoutLocalization.", "languageId", FinderColumn.Type.STRING,
 				"=", true, true, LayoutLocalization::getLanguageId),
@@ -1247,20 +1223,19 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getPlid));
 
-		_finderPathFetchByG_L_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_L_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "languageId", "plid"}, 0, 2, false,
-			LayoutLocalization::getGroupId,
-			convertNullFunction(LayoutLocalization::getLanguageId),
-			LayoutLocalization::getPlid);
-
 		_uniquePersistenceFinderByG_L_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_L_P, _SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_L_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "languageId", "plid"}, 0, 2, false,
+				LayoutLocalization::getGroupId,
+				convertNullFunction(LayoutLocalization::getLanguageId),
+				LayoutLocalization::getPlid),
+			_SQL_SELECT_LAYOUTLOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"layoutLocalization.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getGroupId),
@@ -1343,4 +1318,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:505383459
+// LIFERAY-SERVICE-BUILDER-HASH:-1374659771

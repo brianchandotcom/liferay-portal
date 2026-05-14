@@ -89,9 +89,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LayoutPageTemplateStructureRel>
 		_collectionPersistenceFinderByUuid;
 
@@ -236,7 +233,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<LayoutPageTemplateStructureRel>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -332,9 +328,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LayoutPageTemplateStructureRel>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -491,11 +484,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByLayoutPageTemplateStructureId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByLayoutPageTemplateStructureId;
-	private FinderPath _finderPathCountByLayoutPageTemplateStructureId;
 	private CollectionPersistenceFinder<LayoutPageTemplateStructureRel>
 		_collectionPersistenceFinderByLayoutPageTemplateStructureId;
 
@@ -664,9 +652,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			count(finderCache, new Object[] {layoutPageTemplateStructureId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySegmentsExperienceId;
-	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperienceId;
-	private FinderPath _finderPathCountBySegmentsExperienceId;
 	private CollectionPersistenceFinder<LayoutPageTemplateStructureRel>
 		_collectionPersistenceFinderBySegmentsExperienceId;
 
@@ -820,7 +805,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			finderCache, new Object[] {segmentsExperienceId});
 	}
 
-	private FinderPath _finderPathFetchByL_S;
 	private UniquePersistenceFinder<LayoutPageTemplateStructureRel>
 		_uniquePersistenceFinderByL_S;
 
@@ -1261,27 +1245,23 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 			LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
@@ -1291,15 +1271,14 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateStructureRel::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(LayoutPageTemplateStructureRel::getUuid),
-			LayoutPageTemplateStructureRel::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(LayoutPageTemplateStructureRel::getUuid),
+				LayoutPageTemplateStructureRel::getGroupId),
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRel.", "uuid",
@@ -1310,30 +1289,25 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				LayoutPageTemplateStructureRel::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
@@ -1347,35 +1321,28 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateStructureRel::getCompanyId));
 
-		_finderPathWithPaginationFindByLayoutPageTemplateStructureId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByLayoutPageTemplateStructureId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"layoutPageTemplateStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByLayoutPageTemplateStructureId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByLayoutPageTemplateStructureId",
-				new String[] {Long.class.getName()},
-				new String[] {"layoutPageTemplateStructureId"}, true);
-
-		_finderPathCountByLayoutPageTemplateStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutPageTemplateStructureId",
-			new String[] {Long.class.getName()},
-			new String[] {"layoutPageTemplateStructureId"}, false);
-
 		_collectionPersistenceFinderByLayoutPageTemplateStructureId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByLayoutPageTemplateStructureId,
-				_finderPathWithoutPaginationFindByLayoutPageTemplateStructureId,
-				_finderPathCountByLayoutPageTemplateStructureId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLayoutPageTemplateStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"layoutPageTemplateStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLayoutPageTemplateStructureId",
+					new String[] {Long.class.getName()},
+					new String[] {"layoutPageTemplateStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLayoutPageTemplateStructureId",
+					new String[] {Long.class.getName()},
+					new String[] {"layoutPageTemplateStructureId"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
@@ -1387,30 +1354,28 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 					LayoutPageTemplateStructureRel::
 						getLayoutPageTemplateStructureId));
 
-		_finderPathWithPaginationFindBySegmentsExperienceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySegmentsExperienceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"segmentsExperienceId"}, true);
-
-		_finderPathWithoutPaginationFindBySegmentsExperienceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySegmentsExperienceId", new String[] {Long.class.getName()},
-			new String[] {"segmentsExperienceId"}, true);
-
-		_finderPathCountBySegmentsExperienceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySegmentsExperienceId", new String[] {Long.class.getName()},
-			new String[] {"segmentsExperienceId"}, false);
-
 		_collectionPersistenceFinderBySegmentsExperienceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySegmentsExperienceId,
-				_finderPathWithoutPaginationFindBySegmentsExperienceId,
-				_finderPathCountBySegmentsExperienceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySegmentsExperienceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"segmentsExperienceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySegmentsExperienceId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsExperienceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySegmentsExperienceId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsExperienceId"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE,
 				LayoutPageTemplateStructureRelModelImpl.ORDER_BY_JPQL,
@@ -1420,18 +1385,18 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateStructureRel::getSegmentsExperienceId));
 
-		_finderPathFetchByL_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByL_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"layoutPageTemplateStructureId", "segmentsExperienceId"
-			},
-			0, 0, false,
-			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureId,
-			LayoutPageTemplateStructureRel::getSegmentsExperienceId);
-
 		_uniquePersistenceFinderByL_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByL_S,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByL_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"layoutPageTemplateStructureId", "segmentsExperienceId"
+				},
+				0, 0, false,
+				LayoutPageTemplateStructureRel::
+					getLayoutPageTemplateStructureId,
+				LayoutPageTemplateStructureRel::getSegmentsExperienceId),
 			_SQL_SELECT_LAYOUTPAGETEMPLATESTRUCTUREREL_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateStructureRel.",
@@ -1519,4 +1484,4 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-94232368
+// LIFERAY-SERVICE-BUILDER-HASH:730875122

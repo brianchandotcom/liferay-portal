@@ -99,9 +99,6 @@ public class JournalArticlePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
-	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
-	private FinderPath _finderPathCountByResourcePrimKey;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByResourcePrimKey;
 
@@ -248,9 +245,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByUuid;
 
@@ -391,7 +385,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<JournalArticle>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -481,9 +474,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -638,9 +628,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByGroupId;
 
@@ -850,9 +837,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -996,9 +980,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
-	private FinderPath _finderPathCountByDDMStructureId;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByDDMStructureId;
 
@@ -1145,9 +1126,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {DDMStructureId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDDMTemplateKey;
-	private FinderPath _finderPathWithoutPaginationFindByDDMTemplateKey;
-	private FinderPath _finderPathCountByDDMTemplateKey;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByDDMTemplateKey;
 
@@ -1294,9 +1272,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {DDMTemplateKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLayoutUuid;
-	private FinderPath _finderPathWithoutPaginationFindByLayoutUuid;
-	private FinderPath _finderPathCountByLayoutUuid;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByLayoutUuid;
 
@@ -1443,9 +1418,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {layoutUuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySmallImageId;
-	private FinderPath _finderPathWithoutPaginationFindBySmallImageId;
-	private FinderPath _finderPathCountBySmallImageId;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderBySmallImageId;
 
@@ -1592,9 +1564,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {smallImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_I;
-	private FinderPath _finderPathWithoutPaginationFindByR_I;
-	private FinderPath _finderPathCountByR_I;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByR_I;
 
@@ -1754,9 +1723,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, indexable});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_ST;
-	private FinderPath _finderPathWithoutPaginationFindByR_ST;
-	private FinderPath _finderPathCountByR_ST;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByR_ST;
 
@@ -2027,9 +1993,6 @@ public class JournalArticlePersistenceImpl
 			new Object[] {resourcePrimKey, ArrayUtil.sortedUnique(statuses)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_U;
-	private FinderPath _finderPathCountByG_U;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_U;
 
@@ -2253,9 +2216,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, userId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ERC;
-	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_ERC;
 
@@ -2491,9 +2451,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_F;
-	private FinderPath _finderPathCountByG_F;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_F;
 
@@ -2905,9 +2862,6 @@ public class JournalArticlePersistenceImpl
 			new Object[] {groupId, ArrayUtil.sortedUnique(folderIds)}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_A;
-	private FinderPath _finderPathCountByG_A;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_A;
 
@@ -3134,9 +3088,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, articleId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_UT;
-	private FinderPath _finderPathWithoutPaginationFindByG_UT;
-	private FinderPath _finderPathCountByG_UT;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_UT;
 
@@ -3363,9 +3314,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, urlTitle}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_DDMSI;
-	private FinderPath _finderPathWithoutPaginationFindByG_DDMSI;
-	private FinderPath _finderPathCountByG_DDMSI;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_DDMSI;
 
@@ -3598,9 +3546,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, DDMStructureId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_DDMTK;
-	private FinderPath _finderPathWithoutPaginationFindByG_DDMTK;
-	private FinderPath _finderPathCountByG_DDMTK;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_DDMTK;
 
@@ -3833,9 +3778,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, DDMTemplateKey}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_L;
-	private FinderPath _finderPathCountByG_L;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_L;
 
@@ -4062,9 +4004,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, layoutUuid}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ST;
-	private FinderPath _finderPathWithoutPaginationFindByG_ST;
-	private FinderPath _finderPathCountByG_ST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_ST;
 
@@ -4288,9 +4227,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_V;
-	private FinderPath _finderPathWithoutPaginationFindByC_V;
-	private FinderPath _finderPathCountByC_V;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByC_V;
 
@@ -4445,9 +4381,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_ST;
-	private FinderPath _finderPathWithoutPaginationFindByC_ST;
-	private FinderPath _finderPathCountByC_ST;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByC_ST;
 
@@ -4602,8 +4535,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_NotST;
-	private FinderPath _finderPathWithPaginationCountByC_NotST;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByC_NotST;
 
@@ -4758,8 +4689,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtD_S;
-	private FinderPath _finderPathWithPaginationCountByLtD_S;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByLtD_S;
 
@@ -4914,9 +4843,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_I_S;
-	private FinderPath _finderPathWithoutPaginationFindByR_I_S;
-	private FinderPath _finderPathCountByR_I_S;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByR_I_S;
 
@@ -5225,9 +5151,6 @@ public class JournalArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_U_C;
-	private FinderPath _finderPathCountByG_U_C;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_U_C;
 
@@ -5473,7 +5396,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, userId, classNameId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_ERC_V;
 	private UniquePersistenceFinder<JournalArticle>
 		_uniquePersistenceFinderByG_ERC_V;
 
@@ -5580,9 +5502,6 @@ public class JournalArticlePersistenceImpl
 			new Object[] {groupId, externalReferenceCode, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ERC_ST;
-	private FinderPath _finderPathWithoutPaginationFindByG_ERC_ST;
-	private FinderPath _finderPathCountByG_ERC_ST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_ERC_ST;
 
@@ -6063,9 +5982,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_ST;
-	private FinderPath _finderPathWithoutPaginationFindByG_F_ST;
-	private FinderPath _finderPathCountByG_F_ST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_F_ST;
 
@@ -6515,9 +6431,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
-	private FinderPath _finderPathCountByG_C_C;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_C_C;
 
@@ -6765,7 +6678,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, classPK}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_C_DDMSI;
 	private UniquePersistenceFinder<JournalArticle>
 		_uniquePersistenceFinderByG_C_DDMSI;
 
@@ -6871,9 +6783,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, DDMStructureId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_DDMTK;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_DDMTK;
-	private FinderPath _finderPathCountByG_C_DDMTK;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_C_DDMTK;
 
@@ -7130,9 +7039,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_L;
-	private FinderPath _finderPathCountByG_C_L;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_C_L;
 
@@ -7384,8 +7290,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_NotL;
-	private FinderPath _finderPathWithPaginationCountByG_C_NotL;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_C_NotL;
 
@@ -7864,7 +7768,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_A_V;
 	private UniquePersistenceFinder<JournalArticle>
 		_uniquePersistenceFinderByG_A_V;
 
@@ -7968,9 +7871,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, articleId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A_ST;
-	private FinderPath _finderPathWithoutPaginationFindByG_A_ST;
-	private FinderPath _finderPathCountByG_A_ST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_A_ST;
 
@@ -8422,8 +8322,6 @@ public class JournalArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A_NotST;
-	private FinderPath _finderPathWithPaginationCountByG_A_NotST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_A_NotST;
 
@@ -8671,9 +8569,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, articleId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_UT_ST;
-	private FinderPath _finderPathWithoutPaginationFindByG_UT_ST;
-	private FinderPath _finderPathCountByG_UT_ST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_UT_ST;
 
@@ -8918,9 +8813,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {groupId, urlTitle, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_V_ST;
-	private FinderPath _finderPathWithoutPaginationFindByC_V_ST;
-	private FinderPath _finderPathCountByC_V_ST;
 	private CollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByC_V_ST;
 
@@ -9088,8 +8980,6 @@ public class JournalArticlePersistenceImpl
 			finderCache, new Object[] {companyId, version, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_C_NotST;
-	private FinderPath _finderPathWithPaginationCountByG_F_C_NotST;
 	private FilterCollectionPersistenceFinder<JournalArticle>
 		_collectionPersistenceFinderByG_F_C_NotST;
 
@@ -9723,29 +9613,28 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey"}, true);
-
-		_finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourcePrimKey",
-			new String[] {Long.class.getName()},
-			new String[] {"resourcePrimKey"}, true);
-
-		_finderPathCountByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByResourcePrimKey",
-			new String[] {Long.class.getName()},
-			new String[] {"resourcePrimKey"}, false);
-
 		_collectionPersistenceFinderByResourcePrimKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByResourcePrimKey,
-				_finderPathWithoutPaginationFindByResourcePrimKey,
-				_finderPathCountByResourcePrimKey,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByResourcePrimKey",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByResourcePrimKey",
+					new String[] {Long.class.getName()},
+					new String[] {"resourcePrimKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByResourcePrimKey",
+					new String[] {Long.class.getName()},
+					new String[] {"resourcePrimKey"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -9754,43 +9643,38 @@ public class JournalArticlePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					JournalArticle::getResourcePrimKey));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"journalArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalArticle::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(JournalArticle::getUuid),
-			JournalArticle::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALARTICLE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(JournalArticle::getUuid),
+				JournalArticle::getGroupId),
+			_SQL_SELECT_JOURNALARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"journalArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalArticle::getUuid),
@@ -9798,30 +9682,26 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalArticle::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -9831,97 +9711,89 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalArticle.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getCompanyId));
 
-		_finderPathWithPaginationFindByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"DDMStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMStructureId",
-			new String[] {Long.class.getName()},
-			new String[] {"DDMStructureId"}, true);
-
-		_finderPathCountByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
-			new String[] {Long.class.getName()},
-			new String[] {"DDMStructureId"}, false);
-
 		_collectionPersistenceFinderByDDMStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDDMStructureId,
-				_finderPathWithoutPaginationFindByDDMStructureId,
-				_finderPathCountByDDMStructureId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDDMStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"DDMStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDDMStructureId", new String[] {Long.class.getName()},
+					new String[] {"DDMStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDDMStructureId",
+					new String[] {Long.class.getName()},
+					new String[] {"DDMStructureId"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -9929,29 +9801,28 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "DDMStructureId", FinderColumn.Type.LONG,
 					"=", true, true, JournalArticle::getDDMStructureId));
 
-		_finderPathWithPaginationFindByDDMTemplateKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMTemplateKey",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"DDMTemplateKey"}, true);
-
-		_finderPathWithoutPaginationFindByDDMTemplateKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMTemplateKey",
-			new String[] {String.class.getName()},
-			new String[] {"DDMTemplateKey"}, 0, 1, true, null);
-
-		_finderPathCountByDDMTemplateKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMTemplateKey",
-			new String[] {String.class.getName()},
-			new String[] {"DDMTemplateKey"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByDDMTemplateKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDDMTemplateKey,
-				_finderPathWithoutPaginationFindByDDMTemplateKey,
-				_finderPathCountByDDMTemplateKey,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDDMTemplateKey",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"DDMTemplateKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDDMTemplateKey",
+					new String[] {String.class.getName()},
+					new String[] {"DDMTemplateKey"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDDMTemplateKey",
+					new String[] {String.class.getName()},
+					new String[] {"DDMTemplateKey"}, 0, 1, false, null),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -9960,58 +9831,52 @@ public class JournalArticlePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalArticle::getDDMTemplateKey));
 
-		_finderPathWithPaginationFindByLayoutUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"layoutUuid"}, true);
-
-		_finderPathWithoutPaginationFindByLayoutUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLayoutUuid",
-			new String[] {String.class.getName()}, new String[] {"layoutUuid"},
-			0, 1, true, null);
-
-		_finderPathCountByLayoutUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLayoutUuid",
-			new String[] {String.class.getName()}, new String[] {"layoutUuid"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByLayoutUuid =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLayoutUuid,
-				_finderPathWithoutPaginationFindByLayoutUuid,
-				_finderPathCountByLayoutUuid, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"layoutUuid"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLayoutUuid", new String[] {String.class.getName()},
+					new String[] {"layoutUuid"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLayoutUuid", new String[] {String.class.getName()},
+					new String[] {"layoutUuid"}, 0, 1, false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalArticle.", "layoutUuid", FinderColumn.Type.STRING,
 					"=", true, true, JournalArticle::getLayoutUuid));
 
-		_finderPathWithPaginationFindBySmallImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySmallImageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"smallImageId"}, true);
-
-		_finderPathWithoutPaginationFindBySmallImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySmallImageId",
-			new String[] {Long.class.getName()}, new String[] {"smallImageId"},
-			true);
-
-		_finderPathCountBySmallImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySmallImageId",
-			new String[] {Long.class.getName()}, new String[] {"smallImageId"},
-			false);
-
 		_collectionPersistenceFinderBySmallImageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySmallImageId,
-				_finderPathWithoutPaginationFindBySmallImageId,
-				_finderPathCountBySmallImageId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySmallImageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"smallImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySmallImageId", new String[] {Long.class.getName()},
+					new String[] {"smallImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySmallImageId", new String[] {Long.class.getName()},
+					new String[] {"smallImageId"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -10019,28 +9884,24 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "smallImageId", FinderColumn.Type.LONG,
 					"=", true, true, JournalArticle::getSmallImageId));
 
-		_finderPathWithPaginationFindByR_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_I",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "indexable"}, true);
-
-		_finderPathWithoutPaginationFindByR_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_I",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "indexable"}, true);
-
-		_finderPathCountByR_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_I",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "indexable"}, false);
-
 		_collectionPersistenceFinderByR_I = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_I,
-			_finderPathWithoutPaginationFindByR_I, _finderPathCountByR_I,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_I",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "indexable"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_I",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "indexable"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_I",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "indexable"}, false),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -10050,28 +9911,24 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "indexable", FinderColumn.Type.BOOLEAN, "=",
 				true, true, JournalArticle::isIndexable));
 
-		_finderPathWithPaginationFindByR_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_ST",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_ST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "status"}, true);
-
-		_finderPathCountByR_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_ST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByR_ST = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_ST,
-			_finderPathWithoutPaginationFindByR_ST, _finderPathCountByR_ST,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_ST",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_ST",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_ST",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "status"}, false),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -10081,40 +9938,36 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 				false, true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
-
 		_collectionPersistenceFinderByG_U =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U,
-				_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "userId"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10124,42 +9977,38 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getUserId));
 
-		_finderPathWithPaginationFindByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode"}, true);
-
-		_finderPathWithoutPaginationFindByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, 0, 2, true,
-			null);
-
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByG_ERC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ERC,
-				_finderPathWithoutPaginationFindByG_ERC,
-				_finderPathCountByG_ERC, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "externalReferenceCode"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "externalReferenceCode"}, 0, 2,
+					false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10170,40 +10019,36 @@ public class JournalArticlePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalArticle::getExternalReferenceCode));
 
-		_finderPathWithPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathCountByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, false);
-
 		_collectionPersistenceFinderByG_F =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F,
-				_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10213,40 +10058,36 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "folderId", FinderColumn.Type.LONG, "=",
 					false, true, true, JournalArticle::getFolderId));
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "articleId"}, true);
-
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, 0, 2, true, null);
-
-		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_A,
-				_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "articleId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "articleId"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "articleId"}, 0, 2, false, null),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10256,40 +10097,36 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "articleId", FinderColumn.Type.STRING,
 					"=", true, true, JournalArticle::getArticleId));
 
-		_finderPathWithPaginationFindByG_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UT",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "urlTitle"}, true);
-
-		_finderPathWithoutPaginationFindByG_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UT",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "urlTitle"}, 0, 2, true, null);
-
-		_finderPathCountByG_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UT",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "urlTitle"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_UT =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_UT,
-				_finderPathWithoutPaginationFindByG_UT, _finderPathCountByG_UT,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UT",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "urlTitle"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UT",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "urlTitle"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UT",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "urlTitle"}, 0, 2, false, null),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10299,40 +10136,36 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "urlTitle", FinderColumn.Type.STRING,
 					"=", true, true, JournalArticle::getUrlTitle));
 
-		_finderPathWithPaginationFindByG_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_DDMSI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "DDMStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByG_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_DDMSI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "DDMStructureId"}, true);
-
-		_finderPathCountByG_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_DDMSI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "DDMStructureId"}, false);
-
 		_collectionPersistenceFinderByG_DDMSI =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_DDMSI,
-				_finderPathWithoutPaginationFindByG_DDMSI,
-				_finderPathCountByG_DDMSI, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_DDMSI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "DDMStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_DDMSI",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "DDMStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_DDMSI",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "DDMStructureId"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10342,40 +10175,38 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "DDMStructureId", FinderColumn.Type.LONG,
 					"=", true, true, JournalArticle::getDDMStructureId));
 
-		_finderPathWithPaginationFindByG_DDMTK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_DDMTK",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "DDMTemplateKey"}, true);
-
-		_finderPathWithoutPaginationFindByG_DDMTK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_DDMTK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "DDMTemplateKey"}, 0, 2, true, null);
-
-		_finderPathCountByG_DDMTK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_DDMTK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "DDMTemplateKey"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_DDMTK =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_DDMTK,
-				_finderPathWithoutPaginationFindByG_DDMTK,
-				_finderPathCountByG_DDMTK, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_DDMTK",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "DDMTemplateKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_DDMTK",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "DDMTemplateKey"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_DDMTK",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "DDMTemplateKey"}, 0, 2, false,
+					null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10386,40 +10217,36 @@ public class JournalArticlePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalArticle::getDDMTemplateKey));
 
-		_finderPathWithPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutUuid"}, true);
-
-		_finderPathWithoutPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutUuid"}, 0, 2, true, null);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutUuid"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L,
-				_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "layoutUuid"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "layoutUuid"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "layoutUuid"}, 0, 2, false, null),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10429,40 +10256,40 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "layoutUuid", FinderColumn.Type.STRING,
 					"=", true, true, JournalArticle::getLayoutUuid));
 
-		_finderPathWithPaginationFindByG_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ST",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_ST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ST,
-				_finderPathWithoutPaginationFindByG_ST, _finderPathCountByG_ST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ST",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ST",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ST",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10472,28 +10299,24 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_V",
-			new String[] {
-				Long.class.getName(), Double.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_V",
-			new String[] {Long.class.getName(), Double.class.getName()},
-			new String[] {"companyId", "version"}, true);
-
-		_finderPathCountByC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V",
-			new String[] {Long.class.getName(), Double.class.getName()},
-			new String[] {"companyId", "version"}, false);
-
 		_collectionPersistenceFinderByC_V = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_V,
-			_finderPathWithoutPaginationFindByC_V, _finderPathCountByC_V,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_V",
+				new String[] {
+					Long.class.getName(), Double.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "version"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_V",
+				new String[] {Long.class.getName(), Double.class.getName()},
+				new String[] {"companyId", "version"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V",
+				new String[] {Long.class.getName(), Double.class.getName()},
+				new String[] {"companyId", "version"}, false),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -10503,28 +10326,24 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "version", FinderColumn.Type.DOUBLE, "=",
 				true, true, JournalArticle::getVersion));
 
-		_finderPathWithPaginationFindByC_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_ST",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_ST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathCountByC_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_ST = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_ST,
-			_finderPathWithoutPaginationFindByC_ST, _finderPathCountByC_ST,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_ST",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_ST",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ST",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -10534,24 +10353,24 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByC_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotST",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithPaginationCountByC_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotST",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_NotST =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_NotST, null,
-				_finderPathWithPaginationCountByC_NotST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotST",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotST",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -10562,23 +10381,21 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"displayDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"displayDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtD_S, null,
-			_finderPathWithPaginationCountByLtD_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"displayDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -10588,34 +10405,30 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_I_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_I_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "indexable", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_I_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_I_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "indexable", "status"}, true);
-
-		_finderPathCountByR_I_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_I_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "indexable", "status"}, false);
-
 		_collectionPersistenceFinderByR_I_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_I_S,
-			_finderPathWithoutPaginationFindByR_I_S, _finderPathCountByR_I_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_I_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "indexable", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_I_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"resourcePrimKey", "indexable", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_I_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"resourcePrimKey", "indexable", "status"}, false),
 			_SQL_SELECT_JOURNALARTICLE_WHERE, _SQL_COUNT_JOURNALARTICLE_WHERE,
 			JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -10628,44 +10441,43 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 				false, true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_U_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "userId", "classNameId"}, true);
-
-		_finderPathCountByG_U_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "userId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByG_U_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U_C,
-				_finderPathWithoutPaginationFindByG_U_C,
-				_finderPathCountByG_U_C, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId", "classNameId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "userId", "classNameId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "userId", "classNameId"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10678,20 +10490,19 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, JournalArticle::getClassNameId));
 
-		_finderPathFetchByG_ERC_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "version"}, 0, 2,
-			false, JournalArticle::getGroupId,
-			convertNullFunction(JournalArticle::getExternalReferenceCode),
-			JournalArticle::getVersion);
-
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_JOURNALARTICLE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Double.class.getName()
+				},
+				new String[] {"groupId", "externalReferenceCode", "version"}, 0,
+				2, false, JournalArticle::getGroupId,
+				convertNullFunction(JournalArticle::getExternalReferenceCode),
+				JournalArticle::getVersion),
+			_SQL_SELECT_JOURNALARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"journalArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalArticle::getGroupId),
@@ -10703,48 +10514,46 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "version", FinderColumn.Type.DOUBLE, "=",
 				true, true, JournalArticle::getVersion));
 
-		_finderPathWithPaginationFindByG_ERC_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_ERC_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, 0, 2,
-			true, null);
-
-		_finderPathCountByG_ERC_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_ERC_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, 0, 2,
-			false, null);
-
 		_collectionPersistenceFinderByG_ERC_ST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ERC_ST,
-				_finderPathWithoutPaginationFindByG_ERC_ST,
-				_finderPathCountByG_ERC_ST, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_ERC_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					0, 2, false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10758,46 +10567,43 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					false, true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_F_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_F_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, true);
-
-		_finderPathCountByG_F_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_F_ST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_ST,
-				_finderPathWithoutPaginationFindByG_F_ST,
-				_finderPathCountByG_F_ST, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10810,44 +10616,43 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					false, true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByG_C_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C,
-				_finderPathWithoutPaginationFindByG_C_C,
-				_finderPathCountByG_C_C, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10860,18 +10665,19 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, JournalArticle::getClassPK));
 
-		_finderPathFetchByG_C_DDMSI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_DDMSI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "DDMStructureId"}, 0, 0,
-			false, JournalArticle::getGroupId, JournalArticle::getClassNameId,
-			JournalArticle::getDDMStructureId);
-
 		_uniquePersistenceFinderByG_C_DDMSI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_DDMSI, _SQL_SELECT_JOURNALARTICLE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_DDMSI",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "DDMStructureId"}, 0, 0,
+				false, JournalArticle::getGroupId,
+				JournalArticle::getClassNameId,
+				JournalArticle::getDDMStructureId),
+			_SQL_SELECT_JOURNALARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"journalArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalArticle::getGroupId),
@@ -10882,48 +10688,48 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "DDMStructureId", FinderColumn.Type.LONG,
 				"=", true, true, JournalArticle::getDDMStructureId));
 
-		_finderPathWithPaginationFindByG_C_DDMTK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_DDMTK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "DDMTemplateKey"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_DDMTK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_DDMTK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "DDMTemplateKey"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_C_DDMTK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_DDMTK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "DDMTemplateKey"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_C_DDMTK =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_DDMTK,
-				_finderPathWithoutPaginationFindByG_C_DDMTK,
-				_finderPathCountByG_C_DDMTK, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_DDMTK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "DDMTemplateKey"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_C_DDMTK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "DDMTemplateKey"},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_C_DDMTK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "DDMTemplateKey"},
+					0, 4, false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10937,48 +10743,46 @@ public class JournalArticlePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalArticle::getDDMTemplateKey));
 
-		_finderPathWithPaginationFindByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "layoutUuid"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "layoutUuid"}, 0, 4, true,
-			null);
-
-		_finderPathCountByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "layoutUuid"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByG_C_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_L,
-				_finderPathWithoutPaginationFindByG_C_L,
-				_finderPathCountByG_C_L, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "layoutUuid"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "layoutUuid"}, 0, 4,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "layoutUuid"}, 0, 4,
+					false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -10991,38 +10795,39 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "layoutUuid", FinderColumn.Type.STRING,
 					"=", true, true, JournalArticle::getLayoutUuid));
 
-		_finderPathWithPaginationFindByG_C_NotL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "layoutUuid"}, true);
-
-		_finderPathWithPaginationCountByG_C_NotL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "layoutUuid"}, false);
-
 		_collectionPersistenceFinderByG_C_NotL =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_NotL, null,
-				_finderPathWithPaginationCountByG_C_NotL,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "layoutUuid"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "layoutUuid"},
+					false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -11035,19 +10840,19 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "layoutUuid", FinderColumn.Type.STRING,
 					"!=", true, true, true, JournalArticle::getLayoutUuid));
 
-		_finderPathFetchByG_A_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_A_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Double.class.getName()
-			},
-			new String[] {"groupId", "articleId", "version"}, 0, 2, false,
-			JournalArticle::getGroupId,
-			convertNullFunction(JournalArticle::getArticleId),
-			JournalArticle::getVersion);
-
 		_uniquePersistenceFinderByG_A_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_A_V, _SQL_SELECT_JOURNALARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_A_V",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Double.class.getName()
+				},
+				new String[] {"groupId", "articleId", "version"}, 0, 2, false,
+				JournalArticle::getGroupId,
+				convertNullFunction(JournalArticle::getArticleId),
+				JournalArticle::getVersion),
+			_SQL_SELECT_JOURNALARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"journalArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalArticle::getGroupId),
@@ -11058,46 +10863,45 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "version", FinderColumn.Type.DOUBLE, "=",
 				true, true, JournalArticle::getVersion));
 
-		_finderPathWithPaginationFindByG_A_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "articleId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_A_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "articleId", "status"}, 0, 2, true, null);
-
-		_finderPathCountByG_A_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "articleId", "status"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_A_ST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_A_ST,
-				_finderPathWithoutPaginationFindByG_A_ST,
-				_finderPathCountByG_A_ST, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "articleId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "articleId", "status"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "articleId", "status"}, 0, 2,
+					false, null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -11110,38 +10914,37 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					false, true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_A_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_NotST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "articleId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_A_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_NotST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "articleId", "status"}, false);
-
 		_collectionPersistenceFinderByG_A_NotST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_A_NotST, null,
-				_finderPathWithPaginationCountByG_A_NotST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_NotST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "articleId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_NotST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "articleId", "status"}, false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -11154,46 +10957,45 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_UT_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UT_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "urlTitle", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_UT_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UT_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "urlTitle", "status"}, 0, 2, true, null);
-
-		_finderPathCountByG_UT_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UT_ST",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "urlTitle", "status"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_UT_ST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_UT_ST,
-				_finderPathWithoutPaginationFindByG_UT_ST,
-				_finderPathCountByG_UT_ST, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UT_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "urlTitle", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UT_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "urlTitle", "status"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UT_ST",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "urlTitle", "status"}, 0, 2, false,
+					null),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -11206,36 +11008,33 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByC_V_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_V_ST",
-			new String[] {
-				Long.class.getName(), Double.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "version", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_V_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_V_ST",
-			new String[] {
-				Long.class.getName(), Double.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "version", "status"}, true);
-
-		_finderPathCountByC_V_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V_ST",
-			new String[] {
-				Long.class.getName(), Double.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "version", "status"}, false);
-
 		_collectionPersistenceFinderByC_V_ST =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_V_ST,
-				_finderPathWithoutPaginationFindByC_V_ST,
-				_finderPathCountByC_V_ST, _SQL_SELECT_JOURNALARTICLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_V_ST",
+					new String[] {
+						Long.class.getName(), Double.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "version", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_V_ST",
+					new String[] {
+						Long.class.getName(), Double.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "version", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V_ST",
+					new String[] {
+						Long.class.getName(), Double.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "version", "status"}, false),
+				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -11248,41 +11047,44 @@ public class JournalArticlePersistenceImpl
 					"journalArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, JournalArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_F_C_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_C_NotST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "classNameId", "status"},
-			true);
-
-		_finderPathWithPaginationCountByG_F_C_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_C_NotST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "classNameId", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_F_C_NotST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_C_NotST, null,
-				_finderPathWithPaginationCountByG_F_C_NotST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_C_NotST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "folderId", "classNameId", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_F_C_NotST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "folderId", "classNameId", "status"
+					},
+					false),
 				_SQL_SELECT_JOURNALARTICLE_WHERE,
 				_SQL_COUNT_JOURNALARTICLE_WHERE,
 				JournalArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					JournalArticleImpl.class, JournalArticle.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_WHERE,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALARTICLE_WHERE,
+					"journalArticle", "JournalArticle",
+					"journalArticle.resourcePrimKey",
+					"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ",
+					"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ",
+					") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_",
+					"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ",
 					JournalArticleModelImpl.ORDER_BY_SQL,
 					JournalArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -11355,27 +11157,6 @@ public class JournalArticlePersistenceImpl
 	private static final String _SQL_COUNT_JOURNALARTICLE_WHERE =
 		"SELECT COUNT(journalArticle) FROM JournalArticle journalArticle WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"journalArticle.resourcePrimKey";
-
-	private static final String _FILTER_SQL_SELECT_JOURNALARTICLE_WHERE =
-		"SELECT DISTINCT {journalArticle.*} FROM JournalArticle journalArticle WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {JournalArticle.*} FROM (SELECT DISTINCT journalArticle.id_ FROM JournalArticle journalArticle WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_JOURNALARTICLE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN JournalArticle ON TEMP_TABLE.id_ = JournalArticle.id_";
-
-	private static final String _FILTER_SQL_COUNT_JOURNALARTICLE_WHERE =
-		"SELECT COUNT(DISTINCT journalArticle.id_) AS COUNT_VALUE FROM JournalArticle journalArticle WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "journalArticle";
-
-	private static final String _FILTER_ENTITY_TABLE = "JournalArticle";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalArticle exists with the key {";
 
@@ -11391,4 +11172,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1964290725
+// LIFERAY-SERVICE-BUILDER-HASH:-932355365

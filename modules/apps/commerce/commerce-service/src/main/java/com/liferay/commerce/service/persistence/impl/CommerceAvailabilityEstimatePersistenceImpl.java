@@ -79,9 +79,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<CommerceAvailabilityEstimate>
 		_collectionPersistenceFinderByUuid;
 
@@ -291,9 +288,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<CommerceAvailabilityEstimate>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -522,9 +516,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<CommerceAvailabilityEstimate>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -982,40 +973,39 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceAvailabilityEstimateImpl.class,
-					CommerceAvailabilityEstimate.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
+					CommerceAvailabilityEstimate.class,
+					"commerceAvailabilityEstimate",
+					"CommerceAvailabilityEstimate",
+					"commerceAvailabilityEstimate.commerceAvailabilityEstimateId",
+					"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
+					"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId",
+					"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
 					CommerceAvailabilityEstimateModelImpl.ORDER_BY_SQL,
 					CommerceAvailabilityEstimateModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1024,42 +1014,39 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceAvailabilityEstimate::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceAvailabilityEstimateImpl.class,
-					CommerceAvailabilityEstimate.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
+					CommerceAvailabilityEstimate.class,
+					"commerceAvailabilityEstimate",
+					"CommerceAvailabilityEstimate",
+					"commerceAvailabilityEstimate.commerceAvailabilityEstimateId",
+					"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
+					"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId",
+					"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
 					CommerceAvailabilityEstimateModelImpl.ORDER_BY_SQL,
 					CommerceAvailabilityEstimateModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1072,41 +1059,39 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceAvailabilityEstimate::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceAvailabilityEstimateImpl.class,
-					CommerceAvailabilityEstimate.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
+					CommerceAvailabilityEstimate.class,
+					"commerceAvailabilityEstimate",
+					"CommerceAvailabilityEstimate",
+					"commerceAvailabilityEstimate.commerceAvailabilityEstimateId",
+					"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
+					"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId",
+					"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
 					CommerceAvailabilityEstimateModelImpl.ORDER_BY_SQL,
 					CommerceAvailabilityEstimateModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1170,31 +1155,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE =
 		"SELECT COUNT(commerceAvailabilityEstimate) FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"commerceAvailabilityEstimate.commerceAvailabilityEstimateId";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE =
-			"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId";
-
-	private static final String
-		_FILTER_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE =
-			"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS =
-		"commerceAvailabilityEstimate";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"CommerceAvailabilityEstimate";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceAvailabilityEstimate exists with the key {";
 
@@ -1207,4 +1167,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1647894149
+// LIFERAY-SERVICE-BUILDER-HASH:1874704226

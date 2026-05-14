@@ -69,9 +69,6 @@ public class PortalPreferenceValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByPortalPreferencesId;
-	private FinderPath _finderPathWithoutPaginationFindByPortalPreferencesId;
-	private FinderPath _finderPathCountByPortalPreferencesId;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByPortalPreferencesId;
 
@@ -328,9 +325,6 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(portalPreferencesIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_N;
-	private FinderPath _finderPathWithoutPaginationFindByP_N;
-	private FinderPath _finderPathCountByP_N;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByP_N;
 
@@ -491,9 +485,6 @@ public class PortalPreferenceValuePersistenceImpl
 			dummyFinderCache, new Object[] {portalPreferencesId, namespace});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_K_N;
-	private FinderPath _finderPathWithoutPaginationFindByP_K_N;
-	private FinderPath _finderPathCountByP_K_N;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByP_K_N;
 
@@ -672,7 +663,6 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {portalPreferencesId, key, namespace});
 	}
 
-	private FinderPath _finderPathFetchByP_I_K_N;
 	private UniquePersistenceFinder<PortalPreferenceValue>
 		_uniquePersistenceFinderByP_I_K_N;
 
@@ -785,9 +775,6 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {portalPreferencesId, index, key, namespace});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_K_N_SV;
-	private FinderPath _finderPathWithoutPaginationFindByP_K_N_SV;
-	private FinderPath _finderPathCountByP_K_N_SV;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByP_K_N_SV;
 
@@ -1180,29 +1167,28 @@ public class PortalPreferenceValuePersistenceImpl
 	 * Initializes the portal preference value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortalPreferencesId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portalPreferencesId"}, true);
-
-		_finderPathWithoutPaginationFindByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByPortalPreferencesId", new String[] {Long.class.getName()},
-			new String[] {"portalPreferencesId"}, true);
-
-		_finderPathCountByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByPortalPreferencesId", new String[] {Long.class.getName()},
-			new String[] {"portalPreferencesId"}, false);
-
 		_collectionPersistenceFinderByPortalPreferencesId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPortalPreferencesId,
-				_finderPathWithoutPaginationFindByPortalPreferencesId,
-				_finderPathCountByPortalPreferencesId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPortalPreferencesId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portalPreferencesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPortalPreferencesId",
+					new String[] {Long.class.getName()},
+					new String[] {"portalPreferencesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByPortalPreferencesId",
+					new String[] {Long.class.getName()},
+					new String[] {"portalPreferencesId"}, false),
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1212,30 +1198,26 @@ public class PortalPreferenceValuePersistenceImpl
 					FinderColumn.Type.LONG, "=", false, true, true,
 					PortalPreferenceValue::getPortalPreferencesId));
 
-		_finderPathWithPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"portalPreferencesId", "namespace"}, true);
-
-		_finderPathWithoutPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portalPreferencesId", "namespace"}, 0, 2, true,
-			null);
-
-		_finderPathCountByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portalPreferencesId", "namespace"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByP_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_N,
-			_finderPathWithoutPaginationFindByP_N, _finderPathCountByP_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"portalPreferencesId", "namespace"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"portalPreferencesId", "namespace"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"portalPreferencesId", "namespace"}, 0, 2, false,
+				null),
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1248,36 +1230,33 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathWithPaginationFindByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portalPreferencesId", "key_", "namespace"}, true);
-
-		_finderPathWithoutPaginationFindByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
-			true, null);
-
-		_finderPathCountByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
-			false, null);
-
 		_collectionPersistenceFinderByP_K_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_K_N,
-			_finderPathWithoutPaginationFindByP_K_N, _finderPathCountByP_K_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"portalPreferencesId", "key_", "namespace"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
+				false, null),
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1293,20 +1272,21 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathFetchByP_I_K_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"portalPreferencesId", "index_", "key_", "namespace"},
-			0, 12, false, PortalPreferenceValue::getPortalPreferencesId,
-			PortalPreferenceValue::getIndex,
-			convertNullFunction(PortalPreferenceValue::getKey),
-			convertNullFunction(PortalPreferenceValue::getNamespace));
-
 		_uniquePersistenceFinderByP_I_K_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByP_I_K_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName(), String.class.getName()
+				},
+				new String[] {
+					"portalPreferencesId", "index_", "key_", "namespace"
+				},
+				0, 12, false, PortalPreferenceValue::getPortalPreferencesId,
+				PortalPreferenceValue::getIndex,
+				convertNullFunction(PortalPreferenceValue::getKey),
+				convertNullFunction(PortalPreferenceValue::getNamespace)),
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE, "",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
@@ -1322,46 +1302,42 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathWithPaginationFindByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"portalPreferencesId", "key_", "namespace", "smallValue"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"portalPreferencesId", "key_", "namespace", "smallValue"
-			},
-			0, 14, true, null);
-
-		_finderPathCountByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"portalPreferencesId", "key_", "namespace", "smallValue"
-			},
-			0, 14, false, null);
-
 		_collectionPersistenceFinderByP_K_N_SV =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_K_N_SV,
-				_finderPathWithoutPaginationFindByP_K_N_SV,
-				_finderPathCountByP_K_N_SV,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"portalPreferencesId", "key_", "namespace", "smallValue"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"portalPreferencesId", "key_", "namespace", "smallValue"
+					},
+					0, 14, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByP_K_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"portalPreferencesId", "key_", "namespace", "smallValue"
+					},
+					0, 14, false, null),
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1418,4 +1394,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1771898488
+// LIFERAY-SERVICE-BUILDER-HASH:-340051936

@@ -74,9 +74,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<AnnouncementsDelivery>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -223,9 +220,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<AnnouncementsDelivery>
 		_collectionPersistenceFinderByUserId;
 
@@ -371,7 +365,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByU_T;
 	private UniquePersistenceFinder<AnnouncementsDelivery>
 		_uniquePersistenceFinderByU_T;
 
@@ -725,29 +718,25 @@ public class AnnouncementsDeliveryPersistenceImpl
 	 * Initializes the announcements delivery persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE,
 				AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL,
@@ -757,28 +746,25 @@ public class AnnouncementsDeliveryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AnnouncementsDelivery::getCompanyId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE,
 				AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL,
@@ -787,15 +773,14 @@ public class AnnouncementsDeliveryPersistenceImpl
 					"announcementsDelivery.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsDelivery::getUserId));
 
-		_finderPathFetchByU_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, 0, 2, false,
-			AnnouncementsDelivery::getUserId,
-			convertNullFunction(AnnouncementsDelivery::getType));
-
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "type_"}, 0, 2, false,
+				AnnouncementsDelivery::getUserId,
+				convertNullFunction(AnnouncementsDelivery::getType)),
 			_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE, "",
 			new FinderColumn<>(
 				"announcementsDelivery.", "userId", FinderColumn.Type.LONG, "=",
@@ -840,4 +825,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-799182118
+// LIFERAY-SERVICE-BUILDER-HASH:627478851

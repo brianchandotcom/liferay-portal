@@ -82,9 +82,6 @@ public class LVEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LVEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -223,9 +220,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_Head;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
-	private FinderPath _finderPathCountByUuid_Head;
 	private CollectionPersistenceFinder<LVEntry>
 		_collectionPersistenceFinderByUuid_Head;
 
@@ -377,9 +371,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUUID_G;
-	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 	private CollectionPersistenceFinder<LVEntry>
 		_collectionPersistenceFinderByUUID_G;
 
@@ -531,7 +522,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G_Head;
 	private UniquePersistenceFinder<LVEntry>
 		_uniquePersistenceFinderByUUID_G_Head;
 
@@ -627,9 +617,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LVEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -783,9 +770,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
-	private FinderPath _finderPathCountByUuid_C_Head;
 	private CollectionPersistenceFinder<LVEntry>
 		_collectionPersistenceFinderByUuid_C_Head;
 
@@ -2203,9 +2187,6 @@ public class LVEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_HEAD_HEAD_2 =
 		"lvEntry.head = ? AND lvEntry.lvEntryId > 0";
 
-	private FinderPath _finderPathWithPaginationFindByG_UGK;
-	private FinderPath _finderPathWithoutPaginationFindByG_UGK;
-	private FinderPath _finderPathCountByG_UGK;
 	private CollectionPersistenceFinder<LVEntry>
 		_collectionPersistenceFinderByG_UGK;
 
@@ -2362,7 +2343,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {groupId, uniqueGroupKey});
 	}
 
-	private FinderPath _finderPathFetchByG_UGK_Head;
 	private UniquePersistenceFinder<LVEntry>
 		_uniquePersistenceFinderByG_UGK_Head;
 
@@ -2466,7 +2446,6 @@ public class LVEntryPersistenceImpl
 			finderCache, new Object[] {groupId, uniqueGroupKey, head});
 	}
 
-	private FinderPath _finderPathFetchByHeadId;
 	private UniquePersistenceFinder<LVEntry> _uniquePersistenceFinderByHeadId;
 
 	/**
@@ -3101,59 +3080,56 @@ public class LVEntryPersistenceImpl
 			"BigDecimalEntries_LVEntries", "companyId", "lvEntryId",
 			"bigDecimalEntryId", this, bigDecimalEntryPersistence);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				LVEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
-			new String[] {
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "head"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Head",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"uuid_", "head"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Head",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"uuid_", "head"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_Head,
-				_finderPathWithoutPaginationFindByUuid_Head,
-				_finderPathCountByUuid_Head, _SQL_SELECT_LVENTRY_WHERE,
-				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"uuid_", "head"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"uuid_", "head"}, 0, 1, false, null),
+				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
+				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, LVEntry::getUuid),
@@ -3161,32 +3137,27 @@ public class LVEntryPersistenceImpl
 					"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 					true, LVEntry::isHead));
 
-		_finderPathWithPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, true, null);
-
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUUID_G =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUUID_G,
-				_finderPathWithoutPaginationFindByUUID_G,
-				_finderPathCountByUUID_G, _SQL_SELECT_LVENTRY_WHERE,
-				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, false, null),
+				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
+				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, LVEntry::getUuid),
@@ -3194,18 +3165,18 @@ public class LVEntryPersistenceImpl
 					"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "head"}, 0, 1, false,
-			convertNullFunction(LVEntry::getUuid), LVEntry::getGroupId,
-			LVEntry::isHead);
-
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G_Head, _SQL_SELECT_LVENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"uuid_", "groupId", "head"}, 0, 1, false,
+				convertNullFunction(LVEntry::getUuid), LVEntry::getGroupId,
+				LVEntry::isHead),
+			_SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
 				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				LVEntry::getUuid),
@@ -3216,32 +3187,27 @@ public class LVEntryPersistenceImpl
 				"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true, true,
 				LVEntry::isHead));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LVENTRY_WHERE,
-				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
+				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, LVEntry::getUuid),
@@ -3249,38 +3215,38 @@ public class LVEntryPersistenceImpl
 					"lvEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C_Head,
-				_finderPathWithoutPaginationFindByUuid_C_Head,
-				_finderPathCountByUuid_C_Head, _SQL_SELECT_LVENTRY_WHERE,
-				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, 0, 1, false,
+					null),
+				_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
+				LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, LVEntry::getUuid),
@@ -3338,28 +3304,24 @@ public class LVEntryPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "head"}, false);
 
-		_finderPathWithPaginationFindByG_UGK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UGK",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "uniqueGroupKey"}, true);
-
-		_finderPathWithoutPaginationFindByG_UGK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UGK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "uniqueGroupKey"}, 0, 2, true, null);
-
-		_finderPathCountByG_UGK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UGK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "uniqueGroupKey"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_UGK = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_UGK,
-			_finderPathWithoutPaginationFindByG_UGK, _finderPathCountByG_UGK,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_UGK",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "uniqueGroupKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_UGK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "uniqueGroupKey"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_UGK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "uniqueGroupKey"}, 0, 2, false, null),
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
 			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -3369,18 +3331,19 @@ public class LVEntryPersistenceImpl
 				"lvEntry.", "uniqueGroupKey", FinderColumn.Type.STRING, "=",
 				true, true, LVEntry::getUniqueGroupKey));
 
-		_finderPathFetchByG_UGK_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_UGK_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "uniqueGroupKey", "head"}, 0, 2, false,
-			LVEntry::getGroupId,
-			convertNullFunction(LVEntry::getUniqueGroupKey), LVEntry::isHead);
-
 		_uniquePersistenceFinderByG_UGK_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_UGK_Head, _SQL_SELECT_LVENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_UGK_Head",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "uniqueGroupKey", "head"}, 0, 2, false,
+				LVEntry::getGroupId,
+				convertNullFunction(LVEntry::getUniqueGroupKey),
+				LVEntry::isHead),
+			_SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
 				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getGroupId),
@@ -3391,13 +3354,13 @@ public class LVEntryPersistenceImpl
 				"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true, true,
 				LVEntry::isHead));
 
-		_finderPathFetchByHeadId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, 0, 0,
-			false, LVEntry::getHeadId);
-
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHeadId, _SQL_SELECT_LVENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
+				new String[] {Long.class.getName()}, new String[] {"headId"}, 0,
+				0, false, LVEntry::getHeadId),
+			_SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
 				"lvEntry.", "headId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getHeadId));
@@ -3457,4 +3420,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1083563943
+// LIFERAY-SERVICE-BUILDER-HASH:598024228

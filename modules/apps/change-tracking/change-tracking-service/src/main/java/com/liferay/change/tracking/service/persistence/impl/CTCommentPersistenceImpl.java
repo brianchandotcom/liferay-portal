@@ -73,9 +73,6 @@ public class CTCommentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
-	private FinderPath _finderPathCountByCtCollectionId;
 	private CollectionPersistenceFinder<CTComment>
 		_collectionPersistenceFinderByCtCollectionId;
 
@@ -220,9 +217,6 @@ public class CTCommentPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCtEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCtEntryId;
-	private FinderPath _finderPathCountByCtEntryId;
 	private CollectionPersistenceFinder<CTComment>
 		_collectionPersistenceFinderByCtEntryId;
 
@@ -558,60 +552,54 @@ public class CTCommentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false);
-
 		_collectionPersistenceFinderByCtCollectionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtCollectionId,
-				_finderPathWithoutPaginationFindByCtCollectionId,
-				_finderPathCountByCtCollectionId, _SQL_SELECT_CTCOMMENT_WHERE,
-				_SQL_COUNT_CTCOMMENT_WHERE, CTCommentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtCollectionId", new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, false),
+				_SQL_SELECT_CTCOMMENT_WHERE, _SQL_COUNT_CTCOMMENT_WHERE,
+				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctComment.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtCollectionId));
 
-		_finderPathWithPaginationFindByCtEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCtEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtEntryId",
-			new String[] {Long.class.getName()}, new String[] {"ctEntryId"},
-			true);
-
-		_finderPathCountByCtEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtEntryId",
-			new String[] {Long.class.getName()}, new String[] {"ctEntryId"},
-			false);
-
 		_collectionPersistenceFinderByCtEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtEntryId,
-				_finderPathWithoutPaginationFindByCtEntryId,
-				_finderPathCountByCtEntryId, _SQL_SELECT_CTCOMMENT_WHERE,
-				_SQL_COUNT_CTCOMMENT_WHERE, CTCommentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtEntryId", new String[] {Long.class.getName()},
+					new String[] {"ctEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtEntryId", new String[] {Long.class.getName()},
+					new String[] {"ctEntryId"}, false),
+				_SQL_SELECT_CTCOMMENT_WHERE, _SQL_COUNT_CTCOMMENT_WHERE,
+				CTCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctComment.", "ctEntryId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtEntryId));
@@ -679,4 +667,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1234040616
+// LIFERAY-SERVICE-BUILDER-HASH:-373763530

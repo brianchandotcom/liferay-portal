@@ -84,9 +84,6 @@ public class CPConfigurationListRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCPConfigurationListId;
-	private FinderPath _finderPathWithoutPaginationFindByCPConfigurationListId;
-	private FinderPath _finderPathCountByCPConfigurationListId;
 	private CollectionPersistenceFinder<CPConfigurationListRel>
 		_collectionPersistenceFinderByCPConfigurationListId;
 
@@ -240,9 +237,6 @@ public class CPConfigurationListRelPersistenceImpl
 			finderCache, new Object[] {CPConfigurationListId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CPConfigurationListRel>
 		_collectionPersistenceFinderByC_C;
 
@@ -403,7 +397,6 @@ public class CPConfigurationListRelPersistenceImpl
 			finderCache, new Object[] {classNameId, CPConfigurationListId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_C;
 	private UniquePersistenceFinder<CPConfigurationListRel>
 		_uniquePersistenceFinderByC_C_C;
 
@@ -799,32 +792,28 @@ public class CPConfigurationListRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCPConfigurationListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCPConfigurationListId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPConfigurationListId"}, true);
-
-		_finderPathWithoutPaginationFindByCPConfigurationListId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCPConfigurationListId",
-				new String[] {Long.class.getName()},
-				new String[] {"CPConfigurationListId"}, true);
-
-		_finderPathCountByCPConfigurationListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCPConfigurationListId", new String[] {Long.class.getName()},
-			new String[] {"CPConfigurationListId"}, false);
-
 		_collectionPersistenceFinderByCPConfigurationListId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPConfigurationListId,
-				_finderPathWithoutPaginationFindByCPConfigurationListId,
-				_finderPathCountByCPConfigurationListId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPConfigurationListId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPConfigurationListId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPConfigurationListId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPConfigurationListId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPConfigurationListId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPConfigurationListId"}, false),
 				_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONLISTREL_WHERE,
 				CPConfigurationListRelModelImpl.ORDER_BY_JPQL,
@@ -834,28 +823,24 @@ public class CPConfigurationListRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPConfigurationListRel::getCPConfigurationListId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "CPConfigurationListId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "CPConfigurationListId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "CPConfigurationListId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "CPConfigurationListId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "CPConfigurationListId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "CPConfigurationListId"}, false),
 			_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONLISTREL_WHERE,
 			CPConfigurationListRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -869,18 +854,20 @@ public class CPConfigurationListRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPConfigurationListRel::getCPConfigurationListId));
 
-		_finderPathFetchByC_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "CPConfigurationListId"}, 0,
-			0, false, CPConfigurationListRel::getClassNameId,
-			CPConfigurationListRel::getClassPK,
-			CPConfigurationListRel::getCPConfigurationListId);
-
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"classNameId", "classPK", "CPConfigurationListId"
+				},
+				0, 0, false, CPConfigurationListRel::getClassNameId,
+				CPConfigurationListRel::getClassPK,
+				CPConfigurationListRel::getCPConfigurationListId),
 			_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE, "",
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "classNameId",
@@ -963,4 +950,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2037218006
+// LIFERAY-SERVICE-BUILDER-HASH:-471265968

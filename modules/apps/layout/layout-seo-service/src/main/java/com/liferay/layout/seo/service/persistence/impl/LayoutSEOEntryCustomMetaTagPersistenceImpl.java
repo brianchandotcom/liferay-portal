@@ -78,9 +78,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByG_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_L;
-	private FinderPath _finderPathCountByG_L;
 	private CollectionPersistenceFinder<LayoutSEOEntryCustomMetaTag>
 		_collectionPersistenceFinderByG_L;
 
@@ -505,28 +502,24 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutSEOEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "layoutSEOEntryId"}, true);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "layoutSEOEntryId"}, false);
-
 		_collectionPersistenceFinderByG_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_L,
-			_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "layoutSEOEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "layoutSEOEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "layoutSEOEntryId"}, false),
 			_SQL_SELECT_LAYOUTSEOENTRYCUSTOMMETATAG_WHERE,
 			_SQL_COUNT_LAYOUTSEOENTRYCUSTOMMETATAG_WHERE,
 			LayoutSEOEntryCustomMetaTagModelImpl.ORDER_BY_JPQL,
@@ -607,4 +600,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1621336301
+// LIFERAY-SERVICE-BUILDER-HASH:1736849070

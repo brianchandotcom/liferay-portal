@@ -7,7 +7,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,7 +57,6 @@ public class NullConvertibleEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByName;
 	private UniquePersistenceFinder<NullConvertibleEntry>
 		_uniquePersistenceFinderByName;
 
@@ -322,13 +320,12 @@ public class NullConvertibleEntryPersistenceImpl
 	 * Initializes the null convertible entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, convertNullFunction(NullConvertibleEntry::getName));
-
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByName,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false, convertNullFunction(NullConvertibleEntry::getName)),
 			_SQL_SELECT_NULLCONVERTIBLEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"nullConvertibleEntry.", "name", FinderColumn.Type.STRING, "=",
@@ -361,4 +358,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2093185667
+// LIFERAY-SERVICE-BUILDER-HASH:-1042443409

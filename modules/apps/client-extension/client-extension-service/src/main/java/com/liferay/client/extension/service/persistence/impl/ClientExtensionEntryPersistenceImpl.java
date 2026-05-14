@@ -97,9 +97,6 @@ public class ClientExtensionEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -309,9 +306,6 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -540,9 +534,6 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -754,9 +745,6 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
 	private FilterCollectionPersistenceFinder<ClientExtensionEntry>
 		_collectionPersistenceFinderByC_T;
 
@@ -982,7 +970,6 @@ public class ClientExtensionEntryPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<ClientExtensionEntry>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1487,82 +1474,74 @@ public class ClientExtensionEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
+					"clientExtensionEntry", "ClientExtensionEntry",
+					"clientExtensionEntry.clientExtensionEntryId",
+					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
+					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, ClientExtensionEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
+					"clientExtensionEntry", "ClientExtensionEntry",
+					"clientExtensionEntry.clientExtensionEntryId",
+					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
+					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1573,41 +1552,37 @@ public class ClientExtensionEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ClientExtensionEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
+					"clientExtensionEntry", "ClientExtensionEntry",
+					"clientExtensionEntry.clientExtensionEntryId",
+					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
+					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1615,41 +1590,37 @@ public class ClientExtensionEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ClientExtensionEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_T,
-				_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "type_"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "type_"}, 0, 2, false, null),
 				_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
+					"clientExtensionEntry", "ClientExtensionEntry",
+					"clientExtensionEntry.clientExtensionEntryId",
+					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
+					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
+					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
 					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1660,15 +1631,16 @@ public class ClientExtensionEntryPersistenceImpl
 					"clientExtensionEntry.", "type", FinderColumn.Type.STRING,
 					"=", true, true, ClientExtensionEntry::getType));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(ClientExtensionEntry::getExternalReferenceCode),
-			ClientExtensionEntry::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					ClientExtensionEntry::getExternalReferenceCode),
+				ClientExtensionEntry::getCompanyId),
 			_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE, "",
 			new FinderColumn<>(
 				"clientExtensionEntry.", "externalReferenceCode",
@@ -1735,27 +1707,6 @@ public class ClientExtensionEntryPersistenceImpl
 	private static final String _SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE =
 		"SELECT COUNT(clientExtensionEntry) FROM ClientExtensionEntry clientExtensionEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"clientExtensionEntry.clientExtensionEntryId";
-
-	private static final String _FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE =
-		"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CLIENTEXTENSIONENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId";
-
-	private static final String _FILTER_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE =
-		"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "clientExtensionEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "ClientExtensionEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ClientExtensionEntry exists with the key {";
 
@@ -1771,4 +1722,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:815951459
+// LIFERAY-SERVICE-BUILDER-HASH:1958862004

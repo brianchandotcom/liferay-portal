@@ -90,9 +90,6 @@ public class CommerceCurrencyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceCurrency>
 		_collectionPersistenceFinderByUuid;
 
@@ -233,9 +230,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceCurrency>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -390,9 +384,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<CommerceCurrency>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -537,7 +528,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<CommerceCurrency>
 		_uniquePersistenceFinderByC_C;
 
@@ -627,9 +617,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {companyId, code});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_P;
-	private FinderPath _finderPathCountByC_P;
 	private CollectionPersistenceFinder<CommerceCurrency>
 		_collectionPersistenceFinderByC_P;
 
@@ -784,9 +771,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {companyId, primary});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A;
-	private FinderPath _finderPathCountByC_A;
 	private CollectionPersistenceFinder<CommerceCurrency>
 		_collectionPersistenceFinderByC_A;
 
@@ -941,9 +925,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {companyId, active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_P_A;
-	private FinderPath _finderPathCountByC_P_A;
 	private CollectionPersistenceFinder<CommerceCurrency>
 		_collectionPersistenceFinderByC_P_A;
 
@@ -1111,7 +1092,6 @@ public class CommerceCurrencyPersistenceImpl
 			finderCache, new Object[] {companyId, primary, active});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommerceCurrency>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1501,27 +1481,23 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1529,30 +1505,26 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceCurrency::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCECURRENCY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_COMMERCECURRENCY_WHERE,
 				_SQL_COUNT_COMMERCECURRENCY_WHERE,
 				CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1563,29 +1535,26 @@ public class CommerceCurrencyPersistenceImpl
 					"commerceCurrency.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCurrency::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_COMMERCECURRENCY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_COMMERCECURRENCY_WHERE,
 				_SQL_COUNT_COMMERCECURRENCY_WHERE,
 				CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1593,15 +1562,15 @@ public class CommerceCurrencyPersistenceImpl
 					"commerceCurrency.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCurrency::getCompanyId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "code_"}, 0, 2, false,
-			CommerceCurrency::getCompanyId,
-			convertNullFunction(CommerceCurrency::getCode));
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_COMMERCECURRENCY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "code_"}, 0, 2, false,
+				CommerceCurrency::getCompanyId,
+				convertNullFunction(CommerceCurrency::getCode)),
+			_SQL_SELECT_COMMERCECURRENCY_WHERE, "",
 			new FinderColumn<>(
 				"commerceCurrency.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceCurrency::getCompanyId),
@@ -1609,28 +1578,24 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "code", FinderColumn.Type.STRING, "=",
 				true, true, CommerceCurrency::getCode));
 
-		_finderPathWithPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "primary_"}, true);
-
-		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "primary_"}, true);
-
-		_finderPathCountByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "primary_"}, false);
-
 		_collectionPersistenceFinderByC_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P,
-			_finderPathWithoutPaginationFindByC_P, _finderPathCountByC_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "primary_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "primary_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "primary_"}, false),
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1641,28 +1606,24 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "primary", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceCurrency::isPrimary));
 
-		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "active_"}, true);
-
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "active_"}, false);
-
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A,
-			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "active_"}, false),
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1673,34 +1634,30 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceCurrency::isActive));
 
-		_finderPathWithPaginationFindByC_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "primary_", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByC_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "primary_", "active_"}, true);
-
-		_finderPathCountByC_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "primary_", "active_"}, false);
-
 		_collectionPersistenceFinderByC_P_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P_A,
-			_finderPathWithoutPaginationFindByC_P_A, _finderPathCountByC_P_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "primary_", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "primary_", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "primary_", "active_"}, false),
 			_SQL_SELECT_COMMERCECURRENCY_WHERE,
 			_SQL_COUNT_COMMERCECURRENCY_WHERE,
 			CommerceCurrencyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1714,16 +1671,16 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceCurrency::isActive));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CommerceCurrency::getExternalReferenceCode),
-			CommerceCurrency::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECURRENCY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(CommerceCurrency::getExternalReferenceCode),
+				CommerceCurrency::getCompanyId),
+			_SQL_SELECT_COMMERCECURRENCY_WHERE, "",
 			new FinderColumn<>(
 				"commerceCurrency.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1801,4 +1758,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:135264995
+// LIFERAY-SERVICE-BUILDER-HASH:294795186

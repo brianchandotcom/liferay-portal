@@ -93,9 +93,6 @@ public class CSDiagramEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathCountByCPDefinitionId;
 	private CollectionPersistenceFinder<CSDiagramEntry>
 		_collectionPersistenceFinderByCPDefinitionId;
 
@@ -242,9 +239,6 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPInstanceId;
-	private FinderPath _finderPathWithoutPaginationFindByCPInstanceId;
-	private FinderPath _finderPathCountByCPInstanceId;
 	private CollectionPersistenceFinder<CSDiagramEntry>
 		_collectionPersistenceFinderByCPInstanceId;
 
@@ -391,9 +385,6 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CPInstanceId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCProductId;
-	private FinderPath _finderPathWithoutPaginationFindByCProductId;
-	private FinderPath _finderPathCountByCProductId;
 	private CollectionPersistenceFinder<CSDiagramEntry>
 		_collectionPersistenceFinderByCProductId;
 
@@ -539,7 +530,6 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CProductId});
 	}
 
-	private FinderPath _finderPathFetchByCPDI_S;
 	private UniquePersistenceFinder<CSDiagramEntry>
 		_uniquePersistenceFinderByCPDI_S;
 
@@ -631,7 +621,6 @@ public class CSDiagramEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, sequence});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CSDiagramEntry>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1080,29 +1069,27 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathCountByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, false);
-
 		_collectionPersistenceFinderByCPDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPDefinitionId,
-				_finderPathWithoutPaginationFindByCPDefinitionId,
-				_finderPathCountByCPDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPDefinitionId", new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, false),
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
 				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1110,29 +1097,26 @@ public class CSDiagramEntryPersistenceImpl
 					"csDiagramEntry.", "CPDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCPDefinitionId));
 
-		_finderPathWithPaginationFindByCPInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPInstanceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPInstanceId"}, true);
-
-		_finderPathWithoutPaginationFindByCPInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceId",
-			new String[] {Long.class.getName()}, new String[] {"CPInstanceId"},
-			true);
-
-		_finderPathCountByCPInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceId",
-			new String[] {Long.class.getName()}, new String[] {"CPInstanceId"},
-			false);
-
 		_collectionPersistenceFinderByCPInstanceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPInstanceId,
-				_finderPathWithoutPaginationFindByCPInstanceId,
-				_finderPathCountByCPInstanceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPInstanceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPInstanceId", new String[] {Long.class.getName()},
+					new String[] {"CPInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPInstanceId", new String[] {Long.class.getName()},
+					new String[] {"CPInstanceId"}, false),
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
 				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1140,45 +1124,41 @@ public class CSDiagramEntryPersistenceImpl
 					"csDiagramEntry.", "CPInstanceId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCPInstanceId));
 
-		_finderPathWithPaginationFindByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CProductId"}, true);
-
-		_finderPathWithoutPaginationFindByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			true);
-
-		_finderPathCountByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			false);
-
 		_collectionPersistenceFinderByCProductId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCProductId,
-				_finderPathWithoutPaginationFindByCProductId,
-				_finderPathCountByCProductId, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CProductId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCProductId", new String[] {Long.class.getName()},
+					new String[] {"CProductId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCProductId", new String[] {Long.class.getName()},
+					new String[] {"CProductId"}, false),
+				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
 				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCProductId));
 
-		_finderPathFetchByCPDI_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "sequence"}, 0, 2, false,
-			CSDiagramEntry::getCPDefinitionId,
-			convertNullFunction(CSDiagramEntry::getSequence));
-
 		_uniquePersistenceFinderByCPDI_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCPDI_S, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"CPDefinitionId", "sequence"}, 0, 2, false,
+				CSDiagramEntry::getCPDefinitionId,
+				convertNullFunction(CSDiagramEntry::getSequence)),
+			_SQL_SELECT_CSDIAGRAMENTRY_WHERE, "",
 			new FinderColumn<>(
 				"csDiagramEntry.", "CPDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, CSDiagramEntry::getCPDefinitionId),
@@ -1186,15 +1166,16 @@ public class CSDiagramEntryPersistenceImpl
 				"csDiagramEntry.", "sequence", FinderColumn.Type.STRING, "=",
 				true, true, CSDiagramEntry::getSequence));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CSDiagramEntry::getExternalReferenceCode),
-			CSDiagramEntry::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CSDIAGRAMENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(CSDiagramEntry::getExternalReferenceCode),
+				CSDiagramEntry::getCompanyId),
+			_SQL_SELECT_CSDIAGRAMENTRY_WHERE, "",
 			new FinderColumn<>(
 				"csDiagramEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1272,4 +1253,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1867928275
+// LIFERAY-SERVICE-BUILDER-HASH:-1535293178

@@ -75,9 +75,6 @@ public class AnnouncementsFlagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<AnnouncementsFlag>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -224,9 +221,6 @@ public class AnnouncementsFlagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByEntryId;
-	private FinderPath _finderPathCountByEntryId;
 	private CollectionPersistenceFinder<AnnouncementsFlag>
 		_collectionPersistenceFinderByEntryId;
 
@@ -372,7 +366,6 @@ public class AnnouncementsFlagPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {entryId});
 	}
 
-	private FinderPath _finderPathFetchByU_E_V;
 	private UniquePersistenceFinder<AnnouncementsFlag>
 		_uniquePersistenceFinderByU_E_V;
 
@@ -731,29 +724,25 @@ public class AnnouncementsFlagPersistenceImpl
 	 * Initializes the announcements flag persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE,
 				AnnouncementsFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -762,29 +751,26 @@ public class AnnouncementsFlagPersistenceImpl
 					"announcementsFlag.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getCompanyId));
 
-		_finderPathWithPaginationFindByEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"entryId"}, true);
-
-		_finderPathWithoutPaginationFindByEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
-			new String[] {Long.class.getName()}, new String[] {"entryId"},
-			true);
-
-		_finderPathCountByEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
-			new String[] {Long.class.getName()}, new String[] {"entryId"},
-			false);
-
 		_collectionPersistenceFinderByEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByEntryId,
-				_finderPathWithoutPaginationFindByEntryId,
-				_finderPathCountByEntryId, _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"entryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"entryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"entryId"}, false),
+				_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE,
 				AnnouncementsFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -792,19 +778,18 @@ public class AnnouncementsFlagPersistenceImpl
 					"announcementsFlag.", "entryId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getEntryId));
 
-		_finderPathFetchByU_E_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_E_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"userId", "entryId", "value"}, 0, 0, false,
-			AnnouncementsFlag::getUserId, AnnouncementsFlag::getEntryId,
-			AnnouncementsFlag::getValue);
-
 		_uniquePersistenceFinderByU_E_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_E_V, _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_E_V",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"userId", "entryId", "value"}, 0, 0, false,
+				AnnouncementsFlag::getUserId, AnnouncementsFlag::getEntryId,
+				AnnouncementsFlag::getValue),
+			_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE, "",
 			new FinderColumn<>(
 				"announcementsFlag.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, AnnouncementsFlag::getUserId),
@@ -848,4 +833,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1274397066
+// LIFERAY-SERVICE-BUILDER-HASH:-2019081010

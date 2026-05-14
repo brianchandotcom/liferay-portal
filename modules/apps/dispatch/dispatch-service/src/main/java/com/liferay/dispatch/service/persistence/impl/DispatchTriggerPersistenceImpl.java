@@ -93,9 +93,6 @@ public class DispatchTriggerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByUuid;
 
@@ -301,9 +298,6 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -530,9 +524,6 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -743,9 +734,6 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByActive;
-	private FinderPath _finderPathWithoutPaginationFindByActive;
-	private FinderPath _finderPathCountByActive;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByActive;
 
@@ -954,9 +942,6 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_U;
-	private FinderPath _finderPathCountByC_U;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByC_U;
 
@@ -1181,9 +1166,6 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_DTET;
-	private FinderPath _finderPathWithoutPaginationFindByC_DTET;
-	private FinderPath _finderPathCountByC_DTET;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByC_DTET;
 
@@ -1424,7 +1406,6 @@ public class DispatchTriggerPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByC_N;
 	private UniquePersistenceFinder<DispatchTrigger>
 		_uniquePersistenceFinderByC_N;
 
@@ -1514,9 +1495,6 @@ public class DispatchTriggerPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByA_DTCM;
-	private FinderPath _finderPathWithoutPaginationFindByA_DTCM;
-	private FinderPath _finderPathCountByA_DTCM;
 	private FilterCollectionPersistenceFinder<DispatchTrigger>
 		_collectionPersistenceFinderByA_DTCM;
 
@@ -1959,7 +1937,6 @@ public class DispatchTriggerPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<DispatchTrigger>
 		_uniquePersistenceFinderByERC_C;
 
@@ -2347,81 +2324,74 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
 					DispatchTriggerModelImpl.ORDER_BY_SQL,
 					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, DispatchTrigger::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
 					DispatchTriggerModelImpl.ORDER_BY_SQL,
 					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2431,121 +2401,111 @@ public class DispatchTriggerPersistenceImpl
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
-				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
-				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
-				new FinderColumn<>(
-					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
-					"=", true, true, DispatchTrigger::getCompanyId));
-
-		_finderPathWithPaginationFindByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"active_"}, true);
-
-		_finderPathWithoutPaginationFindByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
-			new String[] {Boolean.class.getName()}, new String[] {"active_"},
-			true);
-
-		_finderPathCountByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
-			new String[] {Boolean.class.getName()}, new String[] {"active_"},
-			false);
-
-		_collectionPersistenceFinderByActive =
-			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByActive,
-				_finderPathWithoutPaginationFindByActive,
-				_finderPathCountByActive, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
-				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
-				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
-					DispatchTriggerModelImpl.ORDER_BY_SQL,
-					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
-				new FinderColumn<>(
-					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
-					"=", true, true, DispatchTrigger::isActive));
-
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false);
-
-		_collectionPersistenceFinderByC_U =
-			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_U,
-				_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, DispatchTrigger::getCompanyId));
+
+		_collectionPersistenceFinderByActive =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+					new String[] {Boolean.class.getName()},
+					new String[] {"active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+					new String[] {Boolean.class.getName()},
+					new String[] {"active_"}, false),
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
+					DispatchTriggerModelImpl.ORDER_BY_SQL,
+					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
+					"=", true, true, DispatchTrigger::isActive));
+
+		_collectionPersistenceFinderByC_U =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "userId"}, false),
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					DispatchTriggerImpl.class, DispatchTrigger.class,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
 					DispatchTriggerModelImpl.ORDER_BY_SQL,
 					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2555,43 +2515,40 @@ public class DispatchTriggerPersistenceImpl
 					"dispatchTrigger.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, DispatchTrigger::getUserId));
 
-		_finderPathWithPaginationFindByC_DTET = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DTET",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "dispatchTaskExecutorType"}, true);
-
-		_finderPathWithoutPaginationFindByC_DTET = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DTET",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "dispatchTaskExecutorType"}, 0, 2, true,
-			null);
-
-		_finderPathCountByC_DTET = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DTET",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "dispatchTaskExecutorType"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByC_DTET =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_DTET,
-				_finderPathWithoutPaginationFindByC_DTET,
-				_finderPathCountByC_DTET, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_DTET",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "dispatchTaskExecutorType"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_DTET",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "dispatchTaskExecutorType"}, 0,
+					2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_DTET",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "dispatchTaskExecutorType"}, 0,
+					2, false, null),
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
 					DispatchTriggerModelImpl.ORDER_BY_SQL,
 					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2602,15 +2559,15 @@ public class DispatchTriggerPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					DispatchTrigger::getDispatchTaskExecutorType));
 
-		_finderPathFetchByC_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, 0, 2, false,
-			DispatchTrigger::getCompanyId,
-			convertNullFunction(DispatchTrigger::getName));
-
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_DISPATCHTRIGGER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "name"}, 0, 2, false,
+				DispatchTrigger::getCompanyId,
+				convertNullFunction(DispatchTrigger::getName)),
+			_SQL_SELECT_DISPATCHTRIGGER_WHERE, "",
 			new FinderColumn<>(
 				"dispatchTrigger.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, DispatchTrigger::getCompanyId),
@@ -2618,41 +2575,41 @@ public class DispatchTriggerPersistenceImpl
 				"dispatchTrigger.", "name", FinderColumn.Type.STRING, "=", true,
 				true, DispatchTrigger::getName));
 
-		_finderPathWithPaginationFindByA_DTCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_DTCM",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"active_", "dispatchTaskClusterMode"}, true);
-
-		_finderPathWithoutPaginationFindByA_DTCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_DTCM",
-			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"active_", "dispatchTaskClusterMode"}, true);
-
-		_finderPathCountByA_DTCM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_DTCM",
-			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"active_", "dispatchTaskClusterMode"}, false);
-
 		_collectionPersistenceFinderByA_DTCM =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByA_DTCM,
-				_finderPathWithoutPaginationFindByA_DTCM,
-				_finderPathCountByA_DTCM, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_DTCM",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"active_", "dispatchTaskClusterMode"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_DTCM",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"active_", "dispatchTaskClusterMode"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_DTCM",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"active_", "dispatchTaskClusterMode"}, false),
+				_SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DispatchTriggerImpl.class, DispatchTrigger.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE,
+					"dispatchTrigger", "DispatchTrigger",
+					"dispatchTrigger.dispatchTriggerId",
+					"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ",
+					"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ",
+					") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId",
+					"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ",
 					DispatchTriggerModelImpl.ORDER_BY_SQL,
 					DispatchTriggerModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2663,16 +2620,16 @@ public class DispatchTriggerPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					DispatchTrigger::getDispatchTaskClusterMode));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(DispatchTrigger::getExternalReferenceCode),
-			DispatchTrigger::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(DispatchTrigger::getExternalReferenceCode),
+				DispatchTrigger::getCompanyId),
+			_SQL_SELECT_DISPATCHTRIGGER_WHERE, "",
 			new FinderColumn<>(
 				"dispatchTrigger.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2735,27 +2692,6 @@ public class DispatchTriggerPersistenceImpl
 	private static final String _SQL_COUNT_DISPATCHTRIGGER_WHERE =
 		"SELECT COUNT(dispatchTrigger) FROM DispatchTrigger dispatchTrigger WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"dispatchTrigger.dispatchTriggerId";
-
-	private static final String _FILTER_SQL_SELECT_DISPATCHTRIGGER_WHERE =
-		"SELECT DISTINCT {dispatchTrigger.*} FROM DispatchTrigger dispatchTrigger WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {DispatchTrigger.*} FROM (SELECT DISTINCT dispatchTrigger.dispatchTriggerId FROM DispatchTrigger dispatchTrigger WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DISPATCHTRIGGER_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN DispatchTrigger ON TEMP_TABLE.dispatchTriggerId = DispatchTrigger.dispatchTriggerId";
-
-	private static final String _FILTER_SQL_COUNT_DISPATCHTRIGGER_WHERE =
-		"SELECT COUNT(DISTINCT dispatchTrigger.dispatchTriggerId) AS COUNT_VALUE FROM DispatchTrigger dispatchTrigger WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "dispatchTrigger";
-
-	private static final String _FILTER_ENTITY_TABLE = "DispatchTrigger";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DispatchTrigger exists with the key {";
 
@@ -2771,4 +2707,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1740835499
+// LIFERAY-SERVICE-BUILDER-HASH:539534525

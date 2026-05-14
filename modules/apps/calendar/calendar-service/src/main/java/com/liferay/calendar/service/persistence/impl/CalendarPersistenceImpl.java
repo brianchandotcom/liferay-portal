@@ -88,9 +88,6 @@ public class CalendarPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<Calendar>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,7 +226,6 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<Calendar> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -318,9 +314,6 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<Calendar>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -474,9 +467,6 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private FilterCollectionPersistenceFinder<Calendar>
 		_collectionPersistenceFinderByG_C;
 
@@ -706,9 +696,6 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {groupId, calendarResourceId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_D;
-	private FinderPath _finderPathCountByG_C_D;
 	private FilterCollectionPersistenceFinder<Calendar>
 		_collectionPersistenceFinderByG_C_D;
 
@@ -1265,41 +1252,37 @@ public class CalendarPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
 			CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"calendar.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Calendar::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(Calendar::getUuid), Calendar::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_CALENDAR_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(Calendar::getUuid), Calendar::getGroupId),
+			_SQL_SELECT_CALENDAR_WHERE, "",
 			new FinderColumn<>(
 				"calendar.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Calendar::getUuid),
@@ -1307,32 +1290,27 @@ public class CalendarPersistenceImpl
 				"calendar.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Calendar::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CALENDAR_WHERE,
-				_SQL_COUNT_CALENDAR_WHERE, CalendarModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
+				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"calendar.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Calendar::getUuid),
@@ -1340,38 +1318,34 @@ public class CalendarPersistenceImpl
 					"calendar.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Calendar::getCompanyId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "calendarResourceId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "calendarResourceId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "calendarResourceId"}, false);
-
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C,
-				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "calendarResourceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "calendarResourceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "calendarResourceId"}, false),
 				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
 				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarImpl.class, Calendar.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CALENDAR_WHERE,
-					_FILTER_SQL_SELECT_CALENDAR_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CALENDAR_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CALENDAR_WHERE,
+					CalendarImpl.class, Calendar.class, "calendar", "Calendar",
+					"calendar.calendarId",
+					"SELECT DISTINCT {calendar.*} FROM Calendar calendar WHERE ",
+					"SELECT {Calendar.*} FROM (SELECT DISTINCT calendar.calendarId FROM Calendar calendar WHERE ",
+					") TEMP_TABLE INNER JOIN Calendar ON TEMP_TABLE.calendarId = Calendar.calendarId",
+					"SELECT COUNT(DISTINCT calendar.calendarId) AS COUNT_VALUE FROM Calendar calendar WHERE ",
 					CalendarModelImpl.ORDER_BY_SQL,
 					CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1381,48 +1355,50 @@ public class CalendarPersistenceImpl
 					"calendar.", "calendarResourceId", FinderColumn.Type.LONG,
 					"=", true, true, Calendar::getCalendarResourceId));
 
-		_finderPathWithPaginationFindByG_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "calendarResourceId", "defaultCalendar"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "calendarResourceId", "defaultCalendar"},
-			true);
-
-		_finderPathCountByG_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "calendarResourceId", "defaultCalendar"},
-			false);
-
 		_collectionPersistenceFinderByG_C_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_D,
-				_finderPathWithoutPaginationFindByG_C_D,
-				_finderPathCountByG_C_D, _SQL_SELECT_CALENDAR_WHERE,
-				_SQL_COUNT_CALENDAR_WHERE, CalendarModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "calendarResourceId", "defaultCalendar"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "calendarResourceId", "defaultCalendar"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "calendarResourceId", "defaultCalendar"
+					},
+					false),
+				_SQL_SELECT_CALENDAR_WHERE, _SQL_COUNT_CALENDAR_WHERE,
+				CalendarModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarImpl.class, Calendar.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CALENDAR_WHERE,
-					_FILTER_SQL_SELECT_CALENDAR_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CALENDAR_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CALENDAR_WHERE,
+					CalendarImpl.class, Calendar.class, "calendar", "Calendar",
+					"calendar.calendarId",
+					"SELECT DISTINCT {calendar.*} FROM Calendar calendar WHERE ",
+					"SELECT {Calendar.*} FROM (SELECT DISTINCT calendar.calendarId FROM Calendar calendar WHERE ",
+					") TEMP_TABLE INNER JOIN Calendar ON TEMP_TABLE.calendarId = Calendar.calendarId",
+					"SELECT COUNT(DISTINCT calendar.calendarId) AS COUNT_VALUE FROM Calendar calendar WHERE ",
 					CalendarModelImpl.ORDER_BY_SQL,
 					CalendarModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1492,27 +1468,6 @@ public class CalendarPersistenceImpl
 	private static final String _SQL_COUNT_CALENDAR_WHERE =
 		"SELECT COUNT(calendar) FROM Calendar calendar WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"calendar.calendarId";
-
-	private static final String _FILTER_SQL_SELECT_CALENDAR_WHERE =
-		"SELECT DISTINCT {calendar.*} FROM Calendar calendar WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CALENDAR_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {Calendar.*} FROM (SELECT DISTINCT calendar.calendarId FROM Calendar calendar WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CALENDAR_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN Calendar ON TEMP_TABLE.calendarId = Calendar.calendarId";
-
-	private static final String _FILTER_SQL_COUNT_CALENDAR_WHERE =
-		"SELECT COUNT(DISTINCT calendar.calendarId) AS COUNT_VALUE FROM Calendar calendar WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "calendar";
-
-	private static final String _FILTER_ENTITY_TABLE = "Calendar";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Calendar exists with the key {";
 
@@ -1528,4 +1483,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-953863362
+// LIFERAY-SERVICE-BUILDER-HASH:-1004540295

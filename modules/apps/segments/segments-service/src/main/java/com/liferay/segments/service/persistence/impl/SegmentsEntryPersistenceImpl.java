@@ -100,9 +100,6 @@ public class SegmentsEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -243,7 +240,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<SegmentsEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -333,9 +329,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -490,9 +483,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
-	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
-	private FinderPath _finderPathCountBySegmentsEntryId;
 	private CollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderBySegmentsEntryId;
 
@@ -743,9 +733,6 @@ public class SegmentsEntryPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(segmentsEntryIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -1124,9 +1111,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {groupIds}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByActive;
-	private FinderPath _finderPathWithoutPaginationFindByActive;
-	private FinderPath _finderPathCountByActive;
 	private CollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByActive;
 
@@ -1269,9 +1253,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySource;
-	private FinderPath _finderPathWithoutPaginationFindBySource;
-	private FinderPath _finderPathCountBySource;
 	private CollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderBySource;
 
@@ -1412,7 +1393,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {source});
 	}
 
-	private FinderPath _finderPathFetchByG_S;
 	private UniquePersistenceFinder<SegmentsEntry>
 		_uniquePersistenceFinderByG_S;
 
@@ -1504,9 +1484,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {groupId, segmentsEntryKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_A;
-	private FinderPath _finderPathCountByG_A;
 	private FilterCollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByG_A;
 
@@ -1917,9 +1894,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {groupIds, active}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_SRC;
-	private FinderPath _finderPathWithoutPaginationFindByG_SRC;
-	private FinderPath _finderPathCountByG_SRC;
 	private FilterCollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByG_SRC;
 
@@ -2332,9 +2306,6 @@ public class SegmentsEntryPersistenceImpl
 			finderCache, new Object[] {groupIds, source}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A_SRC;
-	private FinderPath _finderPathWithoutPaginationFindByG_A_SRC;
-	private FinderPath _finderPathCountByG_A_SRC;
 	private FilterCollectionPersistenceFinder<SegmentsEntry>
 		_collectionPersistenceFinderByG_A_SRC;
 
@@ -2803,7 +2774,6 @@ public class SegmentsEntryPersistenceImpl
 			groupIds);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<SegmentsEntry>
 		_uniquePersistenceFinderByERC_G;
 
@@ -3272,42 +3242,38 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SegmentsEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(SegmentsEntry::getUuid),
-			SegmentsEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_SEGMENTSENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(SegmentsEntry::getUuid),
+				SegmentsEntry::getGroupId),
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SegmentsEntry::getUuid),
@@ -3315,31 +3281,26 @@ public class SegmentsEntryPersistenceImpl
 				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SegmentsEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_SEGMENTSENTRY_WHERE,
-				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=",
@@ -3348,141 +3309,128 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntry::getCompanyId));
 
-		_finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySegmentsEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"segmentsEntryId"}, true);
-
-		_finderPathWithoutPaginationFindBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySegmentsEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"segmentsEntryId"}, true);
-
-		_finderPathCountBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countBySegmentsEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"segmentsEntryId"}, false);
-
 		_collectionPersistenceFinderBySegmentsEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySegmentsEntryId,
-				_finderPathWithoutPaginationFindBySegmentsEntryId,
-				_finderPathCountBySegmentsEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySegmentsEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"segmentsEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySegmentsEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countBySegmentsEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsEntryId"}, false),
 				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
 					"segmentsEntry.", "segmentsEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, SegmentsEntry::getSegmentsEntryId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_SEGMENTSENTRY_WHERE,
-				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					SegmentsEntryImpl.class, SegmentsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SEGMENTSENTRY_WHERE,
+					"segmentsEntry", "SegmentsEntry",
+					"segmentsEntry.segmentsEntryId",
+					"SELECT DISTINCT {segmentsEntry.*} FROM SegmentsEntry segmentsEntry WHERE ",
+					"SELECT {SegmentsEntry.*} FROM (SELECT DISTINCT segmentsEntry.segmentsEntryId FROM SegmentsEntry segmentsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN SegmentsEntry ON TEMP_TABLE.segmentsEntryId = SegmentsEntry.segmentsEntryId",
+					"SELECT COUNT(DISTINCT segmentsEntry.segmentsEntryId) AS COUNT_VALUE FROM SegmentsEntry segmentsEntry WHERE ",
 					SegmentsEntryModelImpl.ORDER_BY_SQL,
 					SegmentsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, SegmentsEntry::getGroupId));
 
-		_finderPathWithPaginationFindByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"active_"}, true);
-
-		_finderPathWithoutPaginationFindByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
-			new String[] {Boolean.class.getName()}, new String[] {"active_"},
-			true);
-
-		_finderPathCountByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
-			new String[] {Boolean.class.getName()}, new String[] {"active_"},
-			false);
-
 		_collectionPersistenceFinderByActive =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByActive,
-				_finderPathWithoutPaginationFindByActive,
-				_finderPathCountByActive, _SQL_SELECT_SEGMENTSENTRY_WHERE,
-				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+					new String[] {Boolean.class.getName()},
+					new String[] {"active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+					new String[] {Boolean.class.getName()},
+					new String[] {"active_"}, false),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
 					true, true, SegmentsEntry::isActive));
 
-		_finderPathWithPaginationFindBySource = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySource",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"source"}, true);
-
-		_finderPathWithoutPaginationFindBySource = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySource",
-			new String[] {String.class.getName()}, new String[] {"source"}, 0,
-			1, true, null);
-
-		_finderPathCountBySource = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySource",
-			new String[] {String.class.getName()}, new String[] {"source"}, 0,
-			1, false, null);
-
 		_collectionPersistenceFinderBySource =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySource,
-				_finderPathWithoutPaginationFindBySource,
-				_finderPathCountBySource, _SQL_SELECT_SEGMENTSENTRY_WHERE,
-				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySource",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"source"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySource",
+					new String[] {String.class.getName()},
+					new String[] {"source"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySource",
+					new String[] {String.class.getName()},
+					new String[] {"source"}, 0, 1, false, null),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					true, true, SegmentsEntry::getSource));
 
-		_finderPathFetchByG_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "segmentsEntryKey"}, 0, 2, false,
-			SegmentsEntry::getGroupId,
-			convertNullFunction(SegmentsEntry::getSegmentsEntryKey));
-
 		_uniquePersistenceFinderByG_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_S, _SQL_SELECT_SEGMENTSENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "segmentsEntryKey"}, 0, 2, false,
+				SegmentsEntry::getGroupId,
+				convertNullFunction(SegmentsEntry::getSegmentsEntryKey)),
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SegmentsEntry::getGroupId),
@@ -3490,39 +3438,39 @@ public class SegmentsEntryPersistenceImpl
 				"segmentsEntry.", "segmentsEntryKey", FinderColumn.Type.STRING,
 				"=", true, true, SegmentsEntry::getSegmentsEntryKey));
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, false);
-
 		_collectionPersistenceFinderByG_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_A,
-				_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "active_"}, false),
 				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					SegmentsEntryImpl.class, SegmentsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SEGMENTSENTRY_WHERE,
+					"segmentsEntry", "SegmentsEntry",
+					"segmentsEntry.segmentsEntryId",
+					"SELECT DISTINCT {segmentsEntry.*} FROM SegmentsEntry segmentsEntry WHERE ",
+					"SELECT {SegmentsEntry.*} FROM (SELECT DISTINCT segmentsEntry.segmentsEntryId FROM SegmentsEntry segmentsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN SegmentsEntry ON TEMP_TABLE.segmentsEntryId = SegmentsEntry.segmentsEntryId",
+					"SELECT COUNT(DISTINCT segmentsEntry.segmentsEntryId) AS COUNT_VALUE FROM SegmentsEntry segmentsEntry WHERE ",
 					SegmentsEntryModelImpl.ORDER_BY_SQL,
 					SegmentsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -3532,40 +3480,35 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
 					true, true, SegmentsEntry::isActive));
 
-		_finderPathWithPaginationFindByG_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SRC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "source"}, true);
-
-		_finderPathWithoutPaginationFindByG_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SRC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "source"}, 0, 2, true, null);
-
-		_finderPathCountByG_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_SRC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "source"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_SRC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_SRC,
-				_finderPathWithoutPaginationFindByG_SRC,
-				_finderPathCountByG_SRC, _SQL_SELECT_SEGMENTSENTRY_WHERE,
-				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SRC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "source"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SRC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "source"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_SRC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "source"}, 0, 2, false, null),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					SegmentsEntryImpl.class, SegmentsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SEGMENTSENTRY_WHERE,
+					"segmentsEntry", "SegmentsEntry",
+					"segmentsEntry.segmentsEntryId",
+					"SELECT DISTINCT {segmentsEntry.*} FROM SegmentsEntry segmentsEntry WHERE ",
+					"SELECT {SegmentsEntry.*} FROM (SELECT DISTINCT segmentsEntry.segmentsEntryId FROM SegmentsEntry segmentsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN SegmentsEntry ON TEMP_TABLE.segmentsEntryId = SegmentsEntry.segmentsEntryId",
+					"SELECT COUNT(DISTINCT segmentsEntry.segmentsEntryId) AS COUNT_VALUE FROM SegmentsEntry segmentsEntry WHERE ",
 					SegmentsEntryModelImpl.ORDER_BY_SQL,
 					SegmentsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -3575,46 +3518,44 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					true, true, SegmentsEntry::getSource));
 
-		_finderPathWithPaginationFindByG_A_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_SRC",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "active_", "source"}, true);
-
-		_finderPathWithoutPaginationFindByG_A_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_SRC",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "active_", "source"}, 0, 4, true, null);
-
-		_finderPathCountByG_A_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_SRC",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "active_", "source"}, 0, 4, false, null);
-
 		_collectionPersistenceFinderByG_A_SRC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_A_SRC,
-				_finderPathWithoutPaginationFindByG_A_SRC,
-				_finderPathCountByG_A_SRC, _SQL_SELECT_SEGMENTSENTRY_WHERE,
-				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_SRC",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "active_", "source"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_SRC",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "active_", "source"}, 0, 4, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_SRC",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "active_", "source"}, 0, 4, false,
+					null),
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
 				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					SegmentsEntryImpl.class, SegmentsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SEGMENTSENTRY_WHERE,
+					"segmentsEntry", "SegmentsEntry",
+					"segmentsEntry.segmentsEntryId",
+					"SELECT DISTINCT {segmentsEntry.*} FROM SegmentsEntry segmentsEntry WHERE ",
+					"SELECT {SegmentsEntry.*} FROM (SELECT DISTINCT segmentsEntry.segmentsEntryId FROM SegmentsEntry segmentsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN SegmentsEntry ON TEMP_TABLE.segmentsEntryId = SegmentsEntry.segmentsEntryId",
+					"SELECT COUNT(DISTINCT segmentsEntry.segmentsEntryId) AS COUNT_VALUE FROM SegmentsEntry segmentsEntry WHERE ",
 					SegmentsEntryModelImpl.ORDER_BY_SQL,
 					SegmentsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -3627,15 +3568,15 @@ public class SegmentsEntryPersistenceImpl
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					false, true, true, SegmentsEntry::getSource));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(SegmentsEntry::getExternalReferenceCode),
-			SegmentsEntry::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_SEGMENTSENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(SegmentsEntry::getExternalReferenceCode),
+				SegmentsEntry::getGroupId),
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -3701,27 +3642,6 @@ public class SegmentsEntryPersistenceImpl
 	private static final String _SQL_COUNT_SEGMENTSENTRY_WHERE =
 		"SELECT COUNT(segmentsEntry) FROM SegmentsEntry segmentsEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"segmentsEntry.segmentsEntryId";
-
-	private static final String _FILTER_SQL_SELECT_SEGMENTSENTRY_WHERE =
-		"SELECT DISTINCT {segmentsEntry.*} FROM SegmentsEntry segmentsEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {SegmentsEntry.*} FROM (SELECT DISTINCT segmentsEntry.segmentsEntryId FROM SegmentsEntry segmentsEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_SEGMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN SegmentsEntry ON TEMP_TABLE.segmentsEntryId = SegmentsEntry.segmentsEntryId";
-
-	private static final String _FILTER_SQL_COUNT_SEGMENTSENTRY_WHERE =
-		"SELECT COUNT(DISTINCT segmentsEntry.segmentsEntryId) AS COUNT_VALUE FROM SegmentsEntry segmentsEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "segmentsEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "SegmentsEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SegmentsEntry exists with the key {";
 
@@ -3737,4 +3657,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1349458489
+// LIFERAY-SERVICE-BUILDER-HASH:1029216908

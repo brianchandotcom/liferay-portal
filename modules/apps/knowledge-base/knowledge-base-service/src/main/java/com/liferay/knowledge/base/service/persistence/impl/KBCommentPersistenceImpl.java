@@ -90,9 +90,6 @@ public class KBCommentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByUuid;
 
@@ -232,7 +229,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<KBComment> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -321,9 +317,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -478,9 +471,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByGroupId;
 
@@ -621,9 +611,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByG_C;
 
@@ -779,9 +766,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByG_S;
 
@@ -935,9 +919,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {groupId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByC_C;
 
@@ -1093,9 +1074,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByU_C_C;
-	private FinderPath _finderPathCountByU_C_C;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByU_C_C;
 
@@ -1263,9 +1241,6 @@ public class KBCommentPersistenceImpl
 			finderCache, new Object[] {userId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_S;
-	private FinderPath _finderPathCountByC_C_S;
 	private CollectionPersistenceFinder<KBComment>
 		_collectionPersistenceFinderByC_C_S;
 
@@ -1856,41 +1831,37 @@ public class KBCommentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBComment::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(KBComment::getUuid), KBComment::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBCOMMENT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(KBComment::getUuid), KBComment::getGroupId),
+			_SQL_SELECT_KBCOMMENT_WHERE, "",
 			new FinderColumn<>(
 				"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBComment::getUuid),
@@ -1898,32 +1869,27 @@ public class KBCommentPersistenceImpl
 				"kbComment.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_KBCOMMENT_WHERE,
-				_SQL_COUNT_KBCOMMENT_WHERE, KBCommentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
+				KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, KBComment::getUuid),
@@ -1931,57 +1897,49 @@ public class KBCommentPersistenceImpl
 					"kbComment.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBComment::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_KBCOMMENT_WHERE,
-				_SQL_COUNT_KBCOMMENT_WHERE, KBCommentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
+				KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbComment.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBComment::getGroupId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByG_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C,
-			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1991,28 +1949,24 @@ public class KBCommentPersistenceImpl
 				"kbComment.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getClassNameId));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_S,
-			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "status"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2022,28 +1976,24 @@ public class KBCommentPersistenceImpl
 				"kbComment.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBComment::getStatus));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2053,32 +2003,30 @@ public class KBCommentPersistenceImpl
 				"kbComment.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getClassPK));
 
-		_finderPathWithPaginationFindByU_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByU_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"userId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByU_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"userId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByU_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_C_C,
-			_finderPathWithoutPaginationFindByU_C_C, _finderPathCountByU_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"userId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"userId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2091,34 +2039,30 @@ public class KBCommentPersistenceImpl
 				"kbComment.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, KBComment::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "status"}, true);
-
-		_finderPathCountByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "status"}, false);
-
 		_collectionPersistenceFinderByC_C_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_S,
-			_finderPathWithoutPaginationFindByC_C_S, _finderPathCountByC_C_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "status"}, false),
 			_SQL_SELECT_KBCOMMENT_WHERE, _SQL_COUNT_KBCOMMENT_WHERE,
 			KBCommentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2203,4 +2147,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1864493241
+// LIFERAY-SERVICE-BUILDER-HASH:306765312

@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchReleaseException;
 import com.liferay.portal.kernel.log.Log;
@@ -65,7 +64,6 @@ public class ReleasePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByServletContextName;
 	private UniquePersistenceFinder<Release>
 		_uniquePersistenceFinderByServletContextName;
 
@@ -356,15 +354,14 @@ public class ReleasePersistenceImpl
 	 * Initializes the release persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByServletContextName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
-			new String[] {String.class.getName()},
-			new String[] {"servletContextName"}, 1, 1, true,
-			convertCaseFunction(Release::getServletContextName));
-
 		_uniquePersistenceFinderByServletContextName =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByServletContextName,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
+					new String[] {String.class.getName()},
+					new String[] {"servletContextName"}, 1, 1, true,
+					convertCaseFunction(Release::getServletContextName)),
 				_SQL_SELECT_RELEASE__WHERE, "",
 				new FinderColumn<>(
 					"release_.", "servletContextName", FinderColumn.Type.STRING,
@@ -400,4 +397,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1335640256
+// LIFERAY-SERVICE-BUILDER-HASH:-1075947250

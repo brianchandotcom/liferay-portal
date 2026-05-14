@@ -80,9 +80,6 @@ public class IndexEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByOwnerId;
-	private FinderPath _finderPathWithoutPaginationFindByOwnerId;
-	private FinderPath _finderPathCountByOwnerId;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByOwnerId;
 
@@ -224,9 +221,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPlid;
-	private FinderPath _finderPathWithoutPaginationFindByPlid;
-	private FinderPath _finderPathCountByPlid;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByPlid;
 
@@ -366,9 +360,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPortletId;
-	private FinderPath _finderPathWithoutPaginationFindByPortletId;
-	private FinderPath _finderPathCountByPortletId;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByPortletId;
 
@@ -512,9 +503,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByO_P;
-	private FinderPath _finderPathWithoutPaginationFindByO_P;
-	private FinderPath _finderPathCountByO_P;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByO_P;
 
@@ -670,9 +658,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerType, portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_P;
-	private FinderPath _finderPathWithoutPaginationFindByP_P;
-	private FinderPath _finderPathCountByP_P;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByP_P;
 
@@ -826,9 +811,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {plid, portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByO_O_P;
-	private FinderPath _finderPathWithoutPaginationFindByO_O_P;
-	private FinderPath _finderPathCountByO_O_P;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByO_O_P;
 
@@ -996,9 +978,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByO_O_PI;
-	private FinderPath _finderPathWithoutPaginationFindByO_O_PI;
-	private FinderPath _finderPathCountByO_O_PI;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByO_O_PI;
 
@@ -1166,9 +1145,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByO_P_P;
-	private FinderPath _finderPathWithoutPaginationFindByO_P_P;
-	private FinderPath _finderPathCountByO_P_P;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByO_P_P;
 
@@ -1336,8 +1312,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerType, plid, portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_O_O_LikeP;
-	private FinderPath _finderPathWithPaginationCountByC_O_O_LikeP;
 	private CollectionPersistenceFinder<IndexEntry>
 		_collectionPersistenceFinderByC_O_O_LikeP;
 
@@ -1524,7 +1498,6 @@ public class IndexEntryPersistenceImpl
 			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
-	private FinderPath _finderPathFetchByO_O_P_P;
 	private UniquePersistenceFinder<IndexEntry>
 		_uniquePersistenceFinderByO_O_P_P;
 
@@ -1635,7 +1608,6 @@ public class IndexEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, plid, portletId});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<IndexEntry> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -2037,111 +2009,97 @@ public class IndexEntryPersistenceImpl
 	 * Initializes the index entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByOwnerId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ownerId"}, true);
-
-		_finderPathWithoutPaginationFindByOwnerId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOwnerId",
-			new String[] {Long.class.getName()}, new String[] {"ownerId"},
-			true);
-
-		_finderPathCountByOwnerId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOwnerId",
-			new String[] {Long.class.getName()}, new String[] {"ownerId"},
-			false);
-
 		_collectionPersistenceFinderByOwnerId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOwnerId,
-				_finderPathWithoutPaginationFindByOwnerId,
-				_finderPathCountByOwnerId, _SQL_SELECT_INDEXENTRY_WHERE,
-				_SQL_COUNT_INDEXENTRY_WHERE, IndexEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ownerId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOwnerId",
+					new String[] {Long.class.getName()},
+					new String[] {"ownerId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOwnerId",
+					new String[] {Long.class.getName()},
+					new String[] {"ownerId"}, false),
+				_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
+				IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
 					true, IndexEntry::getOwnerId));
 
-		_finderPathWithPaginationFindByPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"plid"}, true);
-
-		_finderPathWithoutPaginationFindByPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, true);
-
-		_finderPathCountByPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, false);
-
 		_collectionPersistenceFinderByPlid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByPlid,
-			_finderPathWithoutPaginationFindByPlid, _finderPathCountByPlid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"},
+				false),
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
 			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid));
 
-		_finderPathWithPaginationFindByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portletId"}, true);
-
-		_finderPathWithoutPaginationFindByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
-			new String[] {String.class.getName()}, new String[] {"portletId"},
-			0, 1, true, null);
-
-		_finderPathCountByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
-			new String[] {String.class.getName()}, new String[] {"portletId"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByPortletId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPortletId,
-				_finderPathWithoutPaginationFindByPortletId,
-				_finderPathCountByPortletId, _SQL_SELECT_INDEXENTRY_WHERE,
-				_SQL_COUNT_INDEXENTRY_WHERE, IndexEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portletId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPortletId", new String[] {String.class.getName()},
+					new String[] {"portletId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPortletId", new String[] {String.class.getName()},
+					new String[] {"portletId"}, 0, 1, false, null),
+				_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
+				IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, IndexEntry::getPortletId));
 
-		_finderPathWithPaginationFindByO_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_P",
-			new String[] {
-				Integer.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"ownerType", "portletId"}, true);
-
-		_finderPathWithoutPaginationFindByO_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_P",
-			new String[] {Integer.class.getName(), String.class.getName()},
-			new String[] {"ownerType", "portletId"}, 0, 2, true, null);
-
-		_finderPathCountByO_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_P",
-			new String[] {Integer.class.getName(), String.class.getName()},
-			new String[] {"ownerType", "portletId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByO_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByO_P,
-			_finderPathWithoutPaginationFindByO_P, _finderPathCountByO_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_P",
+				new String[] {
+					Integer.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"ownerType", "portletId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_P",
+				new String[] {Integer.class.getName(), String.class.getName()},
+				new String[] {"ownerType", "portletId"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_P",
+				new String[] {Integer.class.getName(), String.class.getName()},
+				new String[] {"ownerType", "portletId"}, 0, 2, false, null),
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
 			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2151,28 +2109,24 @@ public class IndexEntryPersistenceImpl
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, IndexEntry::getPortletId));
 
-		_finderPathWithPaginationFindByP_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"plid", "portletId"}, true);
-
-		_finderPathWithoutPaginationFindByP_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "portletId"}, 0, 2, true, null);
-
-		_finderPathCountByP_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "portletId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByP_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_P,
-			_finderPathWithoutPaginationFindByP_P, _finderPathCountByP_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"plid", "portletId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"plid", "portletId"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"plid", "portletId"}, 0, 2, false, null),
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
 			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2182,34 +2136,30 @@ public class IndexEntryPersistenceImpl
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, IndexEntry::getPortletId));
 
-		_finderPathWithPaginationFindByO_O_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_O_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "plid"}, true);
-
-		_finderPathWithoutPaginationFindByO_O_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_O_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "plid"}, true);
-
-		_finderPathCountByO_O_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "plid"}, false);
-
 		_collectionPersistenceFinderByO_O_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByO_O_P,
-			_finderPathWithoutPaginationFindByO_O_P, _finderPathCountByO_O_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_O_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"ownerId", "ownerType", "plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_O_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"ownerId", "ownerType", "plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"ownerId", "ownerType", "plid"}, false),
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
 			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2222,40 +2172,36 @@ public class IndexEntryPersistenceImpl
 				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid));
 
-		_finderPathWithPaginationFindByO_O_PI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_O_PI",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "portletId"}, true);
-
-		_finderPathWithoutPaginationFindByO_O_PI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_O_PI",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "portletId"}, 0, 4, true,
-			null);
-
-		_finderPathCountByO_O_PI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_PI",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "portletId"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByO_O_PI =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByO_O_PI,
-				_finderPathWithoutPaginationFindByO_O_PI,
-				_finderPathCountByO_O_PI, _SQL_SELECT_INDEXENTRY_WHERE,
-				_SQL_COUNT_INDEXENTRY_WHERE, IndexEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_O_PI",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ownerId", "ownerType", "portletId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_O_PI",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"ownerId", "ownerType", "portletId"}, 0, 4,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_O_PI",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"ownerId", "ownerType", "portletId"}, 0, 4,
+					false, null),
+				_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
+				IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
 					true, IndexEntry::getOwnerId),
@@ -2266,34 +2212,32 @@ public class IndexEntryPersistenceImpl
 					"indexEntry.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, IndexEntry::getPortletId));
 
-		_finderPathWithPaginationFindByO_P_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_P_P",
-			new String[] {
-				Integer.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ownerType", "plid", "portletId"}, true);
-
-		_finderPathWithoutPaginationFindByO_P_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_P_P",
-			new String[] {
-				Integer.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"ownerType", "plid", "portletId"}, 0, 4, true, null);
-
-		_finderPathCountByO_P_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_P_P",
-			new String[] {
-				Integer.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"ownerType", "plid", "portletId"}, 0, 4, false, null);
-
 		_collectionPersistenceFinderByO_P_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByO_P_P,
-			_finderPathWithoutPaginationFindByO_P_P, _finderPathCountByO_P_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_P_P",
+				new String[] {
+					Integer.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"ownerType", "plid", "portletId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_P_P",
+				new String[] {
+					Integer.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"ownerType", "plid", "portletId"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_P_P",
+				new String[] {
+					Integer.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"ownerType", "plid", "portletId"}, 0, 4, false,
+				null),
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
 			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2306,30 +2250,33 @@ public class IndexEntryPersistenceImpl
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, IndexEntry::getPortletId));
 
-		_finderPathWithPaginationFindByC_O_O_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_O_O_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "ownerId", "ownerType", "portletId"},
-			true);
-
-		_finderPathWithPaginationCountByC_O_O_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_O_O_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "ownerId", "ownerType", "portletId"},
-			false);
-
 		_collectionPersistenceFinderByC_O_O_LikeP =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_O_O_LikeP, null,
-				_finderPathWithPaginationCountByC_O_O_LikeP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_O_O_LikeP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "ownerId", "ownerType", "portletId"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_O_O_LikeP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "ownerId", "ownerType", "portletId"
+					},
+					false),
 				_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
 				IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -2345,18 +2292,19 @@ public class IndexEntryPersistenceImpl
 					"indexEntry.", "portletId", FinderColumn.Type.STRING,
 					"LIKE", true, true, IndexEntry::getPortletId));
 
-		_finderPathFetchByO_O_P_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"ownerId", "ownerType", "plid", "portletId"}, 0, 8,
-			false, IndexEntry::getOwnerId, IndexEntry::getOwnerType,
-			IndexEntry::getPlid, convertNullFunction(IndexEntry::getPortletId));
-
 		_uniquePersistenceFinderByO_O_P_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByO_O_P_P, _SQL_SELECT_INDEXENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Long.class.getName(), String.class.getName()
+				},
+				new String[] {"ownerId", "ownerType", "plid", "portletId"}, 0,
+				8, false, IndexEntry::getOwnerId, IndexEntry::getOwnerType,
+				IndexEntry::getPlid,
+				convertNullFunction(IndexEntry::getPortletId)),
+			_SQL_SELECT_INDEXENTRY_WHERE, "",
 			new FinderColumn<>(
 				"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
 				true, IndexEntry::getOwnerId),
@@ -2370,15 +2318,16 @@ public class IndexEntryPersistenceImpl
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, IndexEntry::getPortletId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(IndexEntry::getExternalReferenceCode),
-			IndexEntry::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_INDEXENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(IndexEntry::getExternalReferenceCode),
+				IndexEntry::getCompanyId),
+			_SQL_SELECT_INDEXENTRY_WHERE, "",
 			new FinderColumn<>(
 				"indexEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2429,4 +2378,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:7571477
+// LIFERAY-SERVICE-BUILDER-HASH:1961278106

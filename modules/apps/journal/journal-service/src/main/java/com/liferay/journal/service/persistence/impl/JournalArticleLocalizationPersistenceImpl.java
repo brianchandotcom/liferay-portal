@@ -81,9 +81,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A;
-	private FinderPath _finderPathCountByC_A;
 	private CollectionPersistenceFinder<JournalArticleLocalization>
 		_collectionPersistenceFinderByC_A;
 
@@ -241,7 +238,6 @@ public class JournalArticleLocalizationPersistenceImpl
 			finderCache, new Object[] {companyId, articlePK});
 	}
 
-	private FinderPath _finderPathFetchByC_A_L;
 	private UniquePersistenceFinder<JournalArticleLocalization>
 		_uniquePersistenceFinderByC_A_L;
 
@@ -606,28 +602,24 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "articlePK"}, true);
-
-		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "articlePK"}, true);
-
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "articlePK"}, false);
-
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A,
-			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "articlePK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "articlePK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "articlePK"}, false),
 			_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE,
 			_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE,
 			JournalArticleLocalizationModelImpl.ORDER_BY_JPQL,
@@ -641,19 +633,18 @@ public class JournalArticleLocalizationPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				JournalArticleLocalization::getArticlePK));
 
-		_finderPathFetchByC_A_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "articlePK", "languageId"}, 0, 4, false,
-			JournalArticleLocalization::getCompanyId,
-			JournalArticleLocalization::getArticlePK,
-			convertNullFunction(JournalArticleLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByC_A_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_A_L,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_A_L",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "articlePK", "languageId"}, 0, 4,
+				false, JournalArticleLocalization::getCompanyId,
+				JournalArticleLocalization::getArticlePK,
+				convertNullFunction(JournalArticleLocalization::getLanguageId)),
 			_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"journalArticleLocalization.", "companyId",
@@ -737,4 +728,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1880991036
+// LIFERAY-SERVICE-BUILDER-HASH:-1079848291

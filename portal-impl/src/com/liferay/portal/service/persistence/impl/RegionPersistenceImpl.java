@@ -90,9 +90,6 @@ public class RegionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<Region>
 		_collectionPersistenceFinderByUuid;
 
@@ -232,9 +229,6 @@ public class RegionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<Region>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -388,9 +382,6 @@ public class RegionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCountryId;
-	private FinderPath _finderPathWithoutPaginationFindByCountryId;
-	private FinderPath _finderPathCountByCountryId;
 	private CollectionPersistenceFinder<Region>
 		_collectionPersistenceFinderByCountryId;
 
@@ -531,9 +522,6 @@ public class RegionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {countryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByActive;
-	private FinderPath _finderPathWithoutPaginationFindByActive;
-	private FinderPath _finderPathCountByActive;
 	private CollectionPersistenceFinder<Region>
 		_collectionPersistenceFinderByActive;
 
@@ -673,9 +661,6 @@ public class RegionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A;
-	private FinderPath _finderPathCountByC_A;
 	private CollectionPersistenceFinder<Region>
 		_collectionPersistenceFinderByC_A;
 
@@ -829,7 +814,6 @@ public class RegionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {countryId, active});
 	}
 
-	private FinderPath _finderPathFetchByC_R;
 	private UniquePersistenceFinder<Region> _uniquePersistenceFinderByC_R;
 
 	/**
@@ -921,7 +905,6 @@ public class RegionPersistenceImpl
 			new Object[] {countryId, regionCode});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<Region> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -1368,59 +1351,50 @@ public class RegionPersistenceImpl
 	 * Initializes the region persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"region.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Region::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_REGION_WHERE,
-				_SQL_COUNT_REGION_WHERE, RegionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
+				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"region.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Region::getUuid),
@@ -1428,86 +1402,74 @@ public class RegionPersistenceImpl
 					"region.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Region::getCompanyId));
 
-		_finderPathWithPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"countryId"}, true);
-
-		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			true);
-
-		_finderPathCountByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			false);
-
 		_collectionPersistenceFinderByCountryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCountryId,
-				_finderPathWithoutPaginationFindByCountryId,
-				_finderPathCountByCountryId, _SQL_SELECT_REGION_WHERE,
-				_SQL_COUNT_REGION_WHERE, RegionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, false),
+				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
+				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"region.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Region::getCountryId));
 
-		_finderPathWithPaginationFindByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"active_"}, true);
-
-		_finderPathWithoutPaginationFindByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
-			new String[] {Boolean.class.getName()}, new String[] {"active_"},
-			true);
-
-		_finderPathCountByActive = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
-			new String[] {Boolean.class.getName()}, new String[] {"active_"},
-			false);
-
 		_collectionPersistenceFinderByActive =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByActive,
-				_finderPathWithoutPaginationFindByActive,
-				_finderPathCountByActive, _SQL_SELECT_REGION_WHERE,
-				_SQL_COUNT_REGION_WHERE, RegionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+					new String[] {Boolean.class.getName()},
+					new String[] {"active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+					new String[] {Boolean.class.getName()},
+					new String[] {"active_"}, false),
+				_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
+				RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"region.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Region::isActive));
 
-		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"countryId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"countryId", "active_"}, true);
-
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"countryId", "active_"}, false);
-
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A,
-			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"countryId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"countryId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"countryId", "active_"}, false),
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
 			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1517,14 +1479,15 @@ public class RegionPersistenceImpl
 				"region.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Region::isActive));
 
-		_finderPathFetchByC_R = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "regionCode"}, 0, 2, false,
-			Region::getCountryId, convertNullFunction(Region::getRegionCode));
-
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R, _SQL_SELECT_REGION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"countryId", "regionCode"}, 0, 2, false,
+				Region::getCountryId,
+				convertNullFunction(Region::getRegionCode)),
+			_SQL_SELECT_REGION_WHERE, "",
 			new FinderColumn<>(
 				"region.", "countryId", FinderColumn.Type.LONG, "=", true, true,
 				Region::getCountryId),
@@ -1532,15 +1495,15 @@ public class RegionPersistenceImpl
 				"region.", "regionCode", FinderColumn.Type.STRING, "=", true,
 				true, Region::getRegionCode));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(Region::getExternalReferenceCode),
-			Region::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_REGION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false, convertNullFunction(Region::getExternalReferenceCode),
+				Region::getCompanyId),
+			_SQL_SELECT_REGION_WHERE, "",
 			new FinderColumn<>(
 				"region.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, Region::getExternalReferenceCode),
@@ -1587,4 +1550,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397189621
+// LIFERAY-SERVICE-BUILDER-HASH:1328168825

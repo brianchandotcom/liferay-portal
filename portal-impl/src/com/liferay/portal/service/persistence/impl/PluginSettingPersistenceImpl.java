@@ -67,9 +67,6 @@ public class PluginSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<PluginSetting>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -214,7 +211,6 @@ public class PluginSettingPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByC_P_P;
 	private UniquePersistenceFinder<PluginSetting>
 		_uniquePersistenceFinderByC_P_P;
 
@@ -506,48 +502,44 @@ public class PluginSettingPersistenceImpl
 	 * Initializes the plugin setting persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_PLUGINSETTING_WHERE,
-				_SQL_COUNT_PLUGINSETTING_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_PLUGINSETTING_WHERE, _SQL_COUNT_PLUGINSETTING_WHERE,
 				PluginSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"pluginSetting.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PluginSetting::getCompanyId));
 
-		_finderPathFetchByC_P_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_P_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "pluginId", "pluginType"}, 0, 6, false,
-			PluginSetting::getCompanyId,
-			convertNullFunction(PluginSetting::getPluginId),
-			convertNullFunction(PluginSetting::getPluginType));
-
 		_uniquePersistenceFinderByC_P_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_P_P, _SQL_SELECT_PLUGINSETTING_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_P_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "pluginId", "pluginType"}, 0, 6,
+				false, PluginSetting::getCompanyId,
+				convertNullFunction(PluginSetting::getPluginId),
+				convertNullFunction(PluginSetting::getPluginType)),
+			_SQL_SELECT_PLUGINSETTING_WHERE, "",
 			new FinderColumn<>(
 				"pluginSetting.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, PluginSetting::getCompanyId),
@@ -594,4 +586,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-372399732
+// LIFERAY-SERVICE-BUILDER-HASH:-1943340612

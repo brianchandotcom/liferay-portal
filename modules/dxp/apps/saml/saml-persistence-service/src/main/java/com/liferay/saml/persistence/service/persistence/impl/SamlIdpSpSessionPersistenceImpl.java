@@ -73,8 +73,6 @@ public class SamlIdpSpSessionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
-	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 	private CollectionPersistenceFinder<SamlIdpSpSession>
 		_collectionPersistenceFinderByLtCreateDate;
 
@@ -221,9 +219,6 @@ public class SamlIdpSpSessionPersistenceImpl
 			finderCache, new Object[] {createDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySamlIdpSsoSessionId;
-	private FinderPath _finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
-	private FinderPath _finderPathCountBySamlIdpSsoSessionId;
 	private CollectionPersistenceFinder<SamlIdpSpSession>
 		_collectionPersistenceFinderBySamlIdpSsoSessionId;
 
@@ -576,23 +571,23 @@ public class SamlIdpSpSessionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"createDate"}, true);
-
-		_finderPathWithPaginationCountByLtCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateDate",
-			new String[] {Date.class.getName()}, new String[] {"createDate"},
-			false);
-
 		_collectionPersistenceFinderByLtCreateDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtCreateDate, null,
-				_finderPathWithPaginationCountByLtCreateDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtCreateDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"createDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtCreateDate", new String[] {Date.class.getName()},
+					new String[] {"createDate"}, false),
 				_SQL_SELECT_SAMLIDPSPSESSION_WHERE,
 				_SQL_COUNT_SAMLIDPSPSESSION_WHERE,
 				SamlIdpSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -601,29 +596,28 @@ public class SamlIdpSpSessionPersistenceImpl
 					"samlIdpSpSession.", "createDate", FinderColumn.Type.DATE,
 					"<", true, true, SamlIdpSpSession::getCreateDate));
 
-		_finderPathWithPaginationFindBySamlIdpSsoSessionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySamlIdpSsoSessionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"samlIdpSsoSessionId"}, true);
-
-		_finderPathWithoutPaginationFindBySamlIdpSsoSessionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySamlIdpSsoSessionId", new String[] {Long.class.getName()},
-			new String[] {"samlIdpSsoSessionId"}, true);
-
-		_finderPathCountBySamlIdpSsoSessionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySamlIdpSsoSessionId", new String[] {Long.class.getName()},
-			new String[] {"samlIdpSsoSessionId"}, false);
-
 		_collectionPersistenceFinderBySamlIdpSsoSessionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySamlIdpSsoSessionId,
-				_finderPathWithoutPaginationFindBySamlIdpSsoSessionId,
-				_finderPathCountBySamlIdpSsoSessionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySamlIdpSsoSessionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"samlIdpSsoSessionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySamlIdpSsoSessionId",
+					new String[] {Long.class.getName()},
+					new String[] {"samlIdpSsoSessionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySamlIdpSsoSessionId",
+					new String[] {Long.class.getName()},
+					new String[] {"samlIdpSsoSessionId"}, false),
 				_SQL_SELECT_SAMLIDPSPSESSION_WHERE,
 				_SQL_COUNT_SAMLIDPSPSESSION_WHERE,
 				SamlIdpSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -696,4 +690,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-64966075
+// LIFERAY-SERVICE-BUILDER-HASH:687722958

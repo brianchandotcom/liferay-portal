@@ -80,9 +80,6 @@ public class TrashVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByEntryId;
-	private FinderPath _finderPathCountByEntryId;
 	private CollectionPersistenceFinder<TrashVersion>
 		_collectionPersistenceFinderByEntryId;
 
@@ -224,9 +221,6 @@ public class TrashVersionPersistenceImpl
 			finderCache, new Object[] {entryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByE_CN;
-	private FinderPath _finderPathWithoutPaginationFindByE_CN;
-	private FinderPath _finderPathCountByE_CN;
 	private CollectionPersistenceFinder<TrashVersion>
 		_collectionPersistenceFinderByE_CN;
 
@@ -382,7 +376,6 @@ public class TrashVersionPersistenceImpl
 			finderCache, new Object[] {entryId, classNameId});
 	}
 
-	private FinderPath _finderPathFetchByCN_CPK;
 	private UniquePersistenceFinder<TrashVersion>
 		_uniquePersistenceFinderByCN_CPK;
 
@@ -715,57 +708,49 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"entryId"}, true);
-
-		_finderPathWithoutPaginationFindByEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
-			new String[] {Long.class.getName()}, new String[] {"entryId"},
-			true);
-
-		_finderPathCountByEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
-			new String[] {Long.class.getName()}, new String[] {"entryId"},
-			false);
-
 		_collectionPersistenceFinderByEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByEntryId,
-				_finderPathWithoutPaginationFindByEntryId,
-				_finderPathCountByEntryId, _SQL_SELECT_TRASHVERSION_WHERE,
-				_SQL_COUNT_TRASHVERSION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"entryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"entryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"entryId"}, false),
+				_SQL_SELECT_TRASHVERSION_WHERE, _SQL_COUNT_TRASHVERSION_WHERE,
 				TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"trashVersion.", "entryId", FinderColumn.Type.LONG, "=",
 					true, true, TrashVersion::getEntryId));
 
-		_finderPathWithPaginationFindByE_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_CN",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"entryId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByE_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_CN",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"entryId", "classNameId"}, true);
-
-		_finderPathCountByE_CN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_CN",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"entryId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByE_CN = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByE_CN,
-			_finderPathWithoutPaginationFindByE_CN, _finderPathCountByE_CN,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_CN",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"entryId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_CN",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"entryId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_CN",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"entryId", "classNameId"}, false),
 			_SQL_SELECT_TRASHVERSION_WHERE, _SQL_COUNT_TRASHVERSION_WHERE,
 			TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -775,14 +760,14 @@ public class TrashVersionPersistenceImpl
 				"trashVersion.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, TrashVersion::getClassNameId));
 
-		_finderPathFetchByCN_CPK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, 0, 0, false,
-			TrashVersion::getClassNameId, TrashVersion::getClassPK);
-
 		_uniquePersistenceFinderByCN_CPK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCN_CPK, _SQL_SELECT_TRASHVERSION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, 0, 0, false,
+				TrashVersion::getClassNameId, TrashVersion::getClassPK),
+			_SQL_SELECT_TRASHVERSION_WHERE, "",
 			new FinderColumn<>(
 				"trashVersion.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, TrashVersion::getClassNameId),
@@ -859,4 +844,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-698349370
+// LIFERAY-SERVICE-BUILDER-HASH:2049734642

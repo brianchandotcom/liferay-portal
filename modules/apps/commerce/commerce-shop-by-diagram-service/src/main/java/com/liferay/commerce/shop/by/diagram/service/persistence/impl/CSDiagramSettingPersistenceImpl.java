@@ -88,9 +88,6 @@ public class CSDiagramSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CSDiagramSetting>
 		_collectionPersistenceFinderByUuid;
 
@@ -231,9 +228,6 @@ public class CSDiagramSettingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CSDiagramSetting>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -388,7 +382,6 @@ public class CSDiagramSettingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByCPDefinitionId;
 	private UniquePersistenceFinder<CSDiagramSetting>
 		_uniquePersistenceFinderByCPDefinitionId;
 
@@ -777,27 +770,23 @@ public class CSDiagramSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CSDIAGRAMSETTING_WHERE,
 			_SQL_COUNT_CSDIAGRAMSETTING_WHERE,
 			CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -805,30 +794,26 @@ public class CSDiagramSettingPersistenceImpl
 				"csDiagramSetting.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CSDiagramSetting::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CSDIAGRAMSETTING_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CSDIAGRAMSETTING_WHERE,
 				_SQL_COUNT_CSDIAGRAMSETTING_WHERE,
 				CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -839,15 +824,14 @@ public class CSDiagramSettingPersistenceImpl
 					"csDiagramSetting.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramSetting::getCompanyId));
 
-		_finderPathFetchByCPDefinitionId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, 0, 0, false,
-			CSDiagramSetting::getCPDefinitionId);
-
 		_uniquePersistenceFinderByCPDefinitionId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCPDefinitionId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, 0, 0, false,
+					CSDiagramSetting::getCPDefinitionId),
 				_SQL_SELECT_CSDIAGRAMSETTING_WHERE, "",
 				new FinderColumn<>(
 					"csDiagramSetting.", "CPDefinitionId",
@@ -926,4 +910,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2041774356
+// LIFERAY-SERVICE-BUILDER-HASH:1961432261

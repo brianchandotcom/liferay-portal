@@ -92,9 +92,6 @@ public class ListTypeEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ListTypeEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -235,9 +232,6 @@ public class ListTypeEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ListTypeEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -392,9 +386,6 @@ public class ListTypeEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByListTypeEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByListTypeEntryId;
-	private FinderPath _finderPathCountByListTypeEntryId;
 	private CollectionPersistenceFinder<ListTypeEntry>
 		_collectionPersistenceFinderByListTypeEntryId;
 
@@ -645,9 +636,6 @@ public class ListTypeEntryPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(listTypeEntryIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
-	private FinderPath _finderPathCountByListTypeDefinitionId;
 	private CollectionPersistenceFinder<ListTypeEntry>
 		_collectionPersistenceFinderByListTypeDefinitionId;
 
@@ -904,9 +892,6 @@ public class ListTypeEntryPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(listTypeDefinitionIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_U;
-	private FinderPath _finderPathCountByC_U;
 	private CollectionPersistenceFinder<ListTypeEntry>
 		_collectionPersistenceFinderByC_U;
 
@@ -1061,7 +1046,6 @@ public class ListTypeEntryPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private FinderPath _finderPathFetchByLTDI_K;
 	private UniquePersistenceFinder<ListTypeEntry>
 		_uniquePersistenceFinderByLTDI_K;
 
@@ -1153,7 +1137,6 @@ public class ListTypeEntryPersistenceImpl
 			finderCache, new Object[] {listTypeDefinitionId, key});
 	}
 
-	private FinderPath _finderPathFetchByERC_C_LTDI;
 	private UniquePersistenceFinder<ListTypeEntry>
 		_uniquePersistenceFinderByERC_C_LTDI;
 
@@ -1534,58 +1517,49 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"listTypeEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ListTypeEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LISTTYPEENTRY_WHERE,
-				_SQL_COUNT_LISTTYPEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"listTypeEntry.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1594,59 +1568,56 @@ public class ListTypeEntryPersistenceImpl
 					"listTypeEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ListTypeEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByListTypeEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"listTypeEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByListTypeEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"listTypeEntryId"}, true);
-
-		_finderPathCountByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByListTypeEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"listTypeEntryId"}, false);
-
 		_collectionPersistenceFinderByListTypeEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByListTypeEntryId,
-				_finderPathWithoutPaginationFindByListTypeEntryId,
-				_finderPathCountByListTypeEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByListTypeEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"listTypeEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByListTypeEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByListTypeEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeEntryId"}, false),
 				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
 					"listTypeEntry.", "listTypeEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, ListTypeEntry::getListTypeEntryId));
 
-		_finderPathWithPaginationFindByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByListTypeDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"listTypeDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, true);
-
-		_finderPathCountByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, false);
-
 		_collectionPersistenceFinderByListTypeDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByListTypeDefinitionId,
-				_finderPathWithoutPaginationFindByListTypeDefinitionId,
-				_finderPathCountByListTypeDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByListTypeDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"listTypeDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByListTypeDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByListTypeDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeDefinitionId"}, false),
 				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -1654,28 +1625,24 @@ public class ListTypeEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", false, true, true,
 					ListTypeEntry::getListTypeDefinitionId));
 
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false);
-
 		_collectionPersistenceFinderByC_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_U,
-			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
 			ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1685,15 +1652,15 @@ public class ListTypeEntryPersistenceImpl
 				"listTypeEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, ListTypeEntry::getUserId));
 
-		_finderPathFetchByLTDI_K = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLTDI_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"listTypeDefinitionId", "key_"}, 0, 2, false,
-			ListTypeEntry::getListTypeDefinitionId,
-			convertNullFunction(ListTypeEntry::getKey));
-
 		_uniquePersistenceFinderByLTDI_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByLTDI_K, _SQL_SELECT_LISTTYPEENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByLTDI_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"listTypeDefinitionId", "key_"}, 0, 2, false,
+				ListTypeEntry::getListTypeDefinitionId,
+				convertNullFunction(ListTypeEntry::getKey)),
+			_SQL_SELECT_LISTTYPEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"listTypeEntry.", "listTypeDefinitionId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1702,23 +1669,22 @@ public class ListTypeEntryPersistenceImpl
 				"listTypeEntry.", "key", FinderColumn.Type.STRING, "=", true,
 				true, ListTypeEntry::getKey));
 
-		_finderPathFetchByERC_C_LTDI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_LTDI",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"externalReferenceCode", "companyId", "listTypeDefinitionId"
-			},
-			0, 1, false,
-			convertNullFunction(ListTypeEntry::getExternalReferenceCode),
-			ListTypeEntry::getCompanyId,
-			ListTypeEntry::getListTypeDefinitionId);
-
 		_uniquePersistenceFinderByERC_C_LTDI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C_LTDI, _SQL_SELECT_LISTTYPEENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_LTDI",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"externalReferenceCode", "companyId", "listTypeDefinitionId"
+				},
+				0, 1, false,
+				convertNullFunction(ListTypeEntry::getExternalReferenceCode),
+				ListTypeEntry::getCompanyId,
+				ListTypeEntry::getListTypeDefinitionId),
+			_SQL_SELECT_LISTTYPEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"listTypeEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1800,4 +1766,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1643442473
+// LIFERAY-SERVICE-BUILDER-HASH:1051024612

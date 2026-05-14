@@ -80,9 +80,6 @@ public class CommerceQualifierEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByS_S;
-	private FinderPath _finderPathWithoutPaginationFindByS_S;
-	private FinderPath _finderPathCountByS_S;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByS_S;
 
@@ -243,9 +240,6 @@ public class CommerceQualifierEntryPersistenceImpl
 			finderCache, new Object[] {sourceClassNameId, sourceClassPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_T;
-	private FinderPath _finderPathWithoutPaginationFindByT_T;
-	private FinderPath _finderPathCountByT_T;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByT_T;
 
@@ -406,9 +400,6 @@ public class CommerceQualifierEntryPersistenceImpl
 			finderCache, new Object[] {targetClassNameId, targetClassPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_S_T;
-	private FinderPath _finderPathWithoutPaginationFindByS_S_T;
-	private FinderPath _finderPathCountByS_S_T;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByS_S_T;
 
@@ -593,9 +584,6 @@ public class CommerceQualifierEntryPersistenceImpl
 			new Object[] {sourceClassNameId, sourceClassPK, targetClassNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_T_T;
-	private FinderPath _finderPathWithoutPaginationFindByS_T_T;
-	private FinderPath _finderPathCountByS_T_T;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByS_T_T;
 
@@ -780,7 +768,6 @@ public class CommerceQualifierEntryPersistenceImpl
 			new Object[] {sourceClassNameId, targetClassNameId, targetClassPK});
 	}
 
-	private FinderPath _finderPathFetchByS_S_T_T;
 	private UniquePersistenceFinder<CommerceQualifierEntry>
 		_uniquePersistenceFinderByS_S_T_T;
 
@@ -1136,28 +1123,24 @@ public class CommerceQualifierEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"sourceClassNameId", "sourceClassPK"}, true);
-
-		_finderPathWithoutPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"sourceClassNameId", "sourceClassPK"}, true);
-
-		_finderPathCountByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"sourceClassNameId", "sourceClassPK"}, false);
-
 		_collectionPersistenceFinderByS_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_S,
-			_finderPathWithoutPaginationFindByS_S, _finderPathCountByS_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"sourceClassNameId", "sourceClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"sourceClassNameId", "sourceClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"sourceClassNameId", "sourceClassPK"}, false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1171,28 +1154,24 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassPK));
 
-		_finderPathWithPaginationFindByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"targetClassNameId", "targetClassPK"}, true);
-
-		_finderPathWithoutPaginationFindByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"targetClassNameId", "targetClassPK"}, true);
-
-		_finderPathCountByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"targetClassNameId", "targetClassPK"}, false);
-
 		_collectionPersistenceFinderByT_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_T,
-			_finderPathWithoutPaginationFindByT_T, _finderPathCountByT_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"targetClassNameId", "targetClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_T",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"targetClassNameId", "targetClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"targetClassNameId", "targetClassPK"}, false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1206,41 +1185,39 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassPK));
 
-		_finderPathWithPaginationFindByS_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId"
-			},
-			true);
-
-		_finderPathCountByS_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_S_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_S_T,
-			_finderPathWithoutPaginationFindByS_S_T, _finderPathCountByS_S_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId"
+				},
+				false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1258,41 +1235,39 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassNameId));
 
-		_finderPathWithPaginationFindByS_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "targetClassNameId", "targetClassPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "targetClassNameId", "targetClassPK"
-			},
-			true);
-
-		_finderPathCountByS_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "targetClassNameId", "targetClassPK"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_T_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_T_T,
-			_finderPathWithoutPaginationFindByS_T_T, _finderPathCountByS_T_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "targetClassNameId", "targetClassPK"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "targetClassNameId", "targetClassPK"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "targetClassNameId", "targetClassPK"
+				},
+				false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1310,23 +1285,22 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassPK));
 
-		_finderPathFetchByS_S_T_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_S_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId",
-				"targetClassPK"
-			},
-			0, 0, false, CommerceQualifierEntry::getSourceClassNameId,
-			CommerceQualifierEntry::getSourceClassPK,
-			CommerceQualifierEntry::getTargetClassNameId,
-			CommerceQualifierEntry::getTargetClassPK);
-
 		_uniquePersistenceFinderByS_S_T_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_S_T_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_S_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId",
+					"targetClassPK"
+				},
+				0, 0, false, CommerceQualifierEntry::getSourceClassNameId,
+				CommerceQualifierEntry::getSourceClassPK,
+				CommerceQualifierEntry::getTargetClassNameId,
+				CommerceQualifierEntry::getTargetClassPK),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
@@ -1417,4 +1391,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:202480348
+// LIFERAY-SERVICE-BUILDER-HASH:450391

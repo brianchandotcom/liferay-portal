@@ -74,10 +74,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByBatchEngineImportTaskId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByBatchEngineImportTaskId;
-	private FinderPath _finderPathCountByBatchEngineImportTaskId;
 	private CollectionPersistenceFinder<BatchEngineImportTaskError>
 		_collectionPersistenceFinderByBatchEngineImportTaskId;
 
@@ -450,33 +446,28 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByBatchEngineImportTaskId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByBatchEngineImportTaskId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"batchEngineImportTaskId"}, true);
-
-		_finderPathWithoutPaginationFindByBatchEngineImportTaskId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByBatchEngineImportTaskId",
-				new String[] {Long.class.getName()},
-				new String[] {"batchEngineImportTaskId"}, true);
-
-		_finderPathCountByBatchEngineImportTaskId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByBatchEngineImportTaskId",
-			new String[] {Long.class.getName()},
-			new String[] {"batchEngineImportTaskId"}, false);
-
 		_collectionPersistenceFinderByBatchEngineImportTaskId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByBatchEngineImportTaskId,
-				_finderPathWithoutPaginationFindByBatchEngineImportTaskId,
-				_finderPathCountByBatchEngineImportTaskId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByBatchEngineImportTaskId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"batchEngineImportTaskId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByBatchEngineImportTaskId",
+					new String[] {Long.class.getName()},
+					new String[] {"batchEngineImportTaskId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByBatchEngineImportTaskId",
+					new String[] {Long.class.getName()},
+					new String[] {"batchEngineImportTaskId"}, false),
 				_SQL_SELECT_BATCHENGINEIMPORTTASKERROR_WHERE,
 				_SQL_COUNT_BATCHENGINEIMPORTTASKERROR_WHERE,
 				BatchEngineImportTaskErrorModelImpl.ORDER_BY_JPQL,
@@ -549,4 +540,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-602983463
+// LIFERAY-SERVICE-BUILDER-HASH:867629722

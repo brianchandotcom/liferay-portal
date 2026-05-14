@@ -80,9 +80,6 @@ public class DDMStructureLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByStructureId;
-	private FinderPath _finderPathCountByStructureId;
 	private CollectionPersistenceFinder<DDMStructureLink>
 		_collectionPersistenceFinderByStructureId;
 
@@ -229,9 +226,6 @@ public class DDMStructureLinkPersistenceImpl
 			finderCache, new Object[] {structureId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<DDMStructureLink>
 		_collectionPersistenceFinderByC_C;
 
@@ -387,7 +381,6 @@ public class DDMStructureLinkPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByC_C_S;
 	private UniquePersistenceFinder<DDMStructureLink>
 		_uniquePersistenceFinderByC_C_S;
 
@@ -737,29 +730,25 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			true);
-
-		_finderPathCountByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			false);
-
 		_collectionPersistenceFinderByStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureId,
-				_finderPathWithoutPaginationFindByStructureId,
-				_finderPathCountByStructureId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, false),
 				_SQL_SELECT_DDMSTRUCTURELINK_WHERE,
 				_SQL_COUNT_DDMSTRUCTURELINK_WHERE,
 				DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -768,28 +757,24 @@ public class DDMStructureLinkPersistenceImpl
 					"ddmStructureLink.", "structureId", FinderColumn.Type.LONG,
 					"=", true, true, DDMStructureLink::getStructureId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_DDMSTRUCTURELINK_WHERE,
 			_SQL_COUNT_DDMSTRUCTURELINK_WHERE,
 			DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -800,18 +785,18 @@ public class DDMStructureLinkPersistenceImpl
 				"ddmStructureLink.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructureLink::getClassPK));
 
-		_finderPathFetchByC_C_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "structureId"}, 0, 0, false,
-			DDMStructureLink::getClassNameId, DDMStructureLink::getClassPK,
-			DDMStructureLink::getStructureId);
-
 		_uniquePersistenceFinderByC_C_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_S, _SQL_SELECT_DDMSTRUCTURELINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "structureId"}, 0, 0,
+				false, DDMStructureLink::getClassNameId,
+				DDMStructureLink::getClassPK, DDMStructureLink::getStructureId),
+			_SQL_SELECT_DDMSTRUCTURELINK_WHERE, "",
 			new FinderColumn<>(
 				"ddmStructureLink.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructureLink::getClassNameId),
@@ -891,4 +876,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-851742194
+// LIFERAY-SERVICE-BUILDER-HASH:1456757950

@@ -90,9 +90,6 @@ public class SXPElementPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<SXPElement>
 		_collectionPersistenceFinderByUuid;
 
@@ -295,9 +292,6 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<SXPElement>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -522,9 +516,6 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<SXPElement>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -734,9 +725,6 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R;
-	private FinderPath _finderPathWithoutPaginationFindByC_R;
-	private FinderPath _finderPathCountByC_R;
 	private FilterCollectionPersistenceFinder<SXPElement>
 		_collectionPersistenceFinderByC_R;
 
@@ -961,9 +949,6 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId, readOnly}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
 	private FilterCollectionPersistenceFinder<SXPElement>
 		_collectionPersistenceFinderByC_T;
 
@@ -1187,9 +1172,6 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_T_S;
-	private FinderPath _finderPathCountByC_T_S;
 	private FilterCollectionPersistenceFinder<SXPElement>
 		_collectionPersistenceFinderByC_T_S;
 
@@ -1432,7 +1414,6 @@ public class SXPElementPersistenceImpl
 			finderCache, new Object[] {companyId, type, status}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<SXPElement> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -1834,78 +1815,68 @@ public class SXPElementPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPELEMENT_WHERE,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPELEMENT_WHERE,
+					SXPElementImpl.class, SXPElement.class, "sxpElement",
+					"SXPElement", "sxpElement.sxpElementId",
+					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
+					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
+					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
+					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
 					SXPElementModelImpl.ORDER_BY_SQL,
 					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, SXPElement::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_SXPELEMENT_WHERE,
-				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPELEMENT_WHERE,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPELEMENT_WHERE,
+					SXPElementImpl.class, SXPElement.class, "sxpElement",
+					"SXPElement", "sxpElement.sxpElementId",
+					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
+					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
+					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
+					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
 					SXPElementModelImpl.ORDER_BY_SQL,
 					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1915,78 +1886,72 @@ public class SXPElementPersistenceImpl
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_SXPELEMENT_WHERE,
-				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPELEMENT_WHERE,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPELEMENT_WHERE,
+					SXPElementImpl.class, SXPElement.class, "sxpElement",
+					"SXPElement", "sxpElement.sxpElementId",
+					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
+					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
+					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
+					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
 					SXPElementModelImpl.ORDER_BY_SQL,
 					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
 
-		_finderPathWithPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "readOnly"}, true);
-
-		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "readOnly"}, true);
-
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "readOnly"}, false);
-
 		_collectionPersistenceFinderByC_R =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_R,
-				_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "readOnly"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"companyId", "readOnly"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"companyId", "readOnly"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPELEMENT_WHERE,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPELEMENT_WHERE,
+					SXPElementImpl.class, SXPElement.class, "sxpElement",
+					"SXPElement", "sxpElement.sxpElementId",
+					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
+					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
+					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
+					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
 					SXPElementModelImpl.ORDER_BY_SQL,
 					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1996,39 +1961,38 @@ public class SXPElementPersistenceImpl
 					"sxpElement.", "readOnly", FinderColumn.Type.BOOLEAN, "=",
 					true, true, SXPElement::isReadOnly));
 
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, false);
-
 		_collectionPersistenceFinderByC_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_T,
-				_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPELEMENT_WHERE,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPELEMENT_WHERE,
+					SXPElementImpl.class, SXPElement.class, "sxpElement",
+					"SXPElement", "sxpElement.sxpElementId",
+					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
+					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
+					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
+					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
 					SXPElementModelImpl.ORDER_BY_SQL,
 					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2038,46 +2002,41 @@ public class SXPElementPersistenceImpl
 					"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
 					true, SXPElement::getType));
 
-		_finderPathWithPaginationFindByC_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "type_", "status"}, true);
-
-		_finderPathCountByC_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "type_", "status"}, false);
-
 		_collectionPersistenceFinderByC_T_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_T_S,
-				_finderPathWithoutPaginationFindByC_T_S,
-				_finderPathCountByC_T_S, _SQL_SELECT_SXPELEMENT_WHERE,
-				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "type_", "status"}, false),
+				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPELEMENT_WHERE,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPELEMENT_WHERE,
+					SXPElementImpl.class, SXPElement.class, "sxpElement",
+					"SXPElement", "sxpElement.sxpElementId",
+					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
+					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
+					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
+					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
 					SXPElementModelImpl.ORDER_BY_SQL,
 					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2090,15 +2049,16 @@ public class SXPElementPersistenceImpl
 					"sxpElement.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, SXPElement::getStatus));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(SXPElement::getExternalReferenceCode),
-			SXPElement::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPELEMENT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(SXPElement::getExternalReferenceCode),
+				SXPElement::getCompanyId),
+			_SQL_SELECT_SXPELEMENT_WHERE, "",
 			new FinderColumn<>(
 				"sxpElement.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2161,27 +2121,6 @@ public class SXPElementPersistenceImpl
 	private static final String _SQL_COUNT_SXPELEMENT_WHERE =
 		"SELECT COUNT(sxpElement) FROM SXPElement sxpElement WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"sxpElement.sxpElementId";
-
-	private static final String _FILTER_SQL_SELECT_SXPELEMENT_WHERE =
-		"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_SXPELEMENT_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId";
-
-	private static final String _FILTER_SQL_COUNT_SXPELEMENT_WHERE =
-		"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "sxpElement";
-
-	private static final String _FILTER_ENTITY_TABLE = "SXPElement";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SXPElement exists with the key {";
 
@@ -2197,4 +2136,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1922165054
+// LIFERAY-SERVICE-BUILDER-HASH:828393068

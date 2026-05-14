@@ -82,9 +82,6 @@ public class KaleoProcessPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<KaleoProcess>
 		_collectionPersistenceFinderByUuid;
 
@@ -224,7 +221,6 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<KaleoProcess>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -314,9 +310,6 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<KaleoProcess>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -471,9 +464,6 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<KaleoProcess>
 		_collectionPersistenceFinderByGroupId;
 
@@ -681,7 +671,6 @@ public class KaleoProcessPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByDDLRecordSetId;
 	private UniquePersistenceFinder<KaleoProcess>
 		_uniquePersistenceFinderByDDLRecordSetId;
 
@@ -986,42 +975,38 @@ public class KaleoProcessPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_KALEOPROCESS_WHERE, _SQL_COUNT_KALEOPROCESS_WHERE,
 			KaleoProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KaleoProcess::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(KaleoProcess::getUuid),
-			KaleoProcess::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KALEOPROCESS_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(KaleoProcess::getUuid),
+				KaleoProcess::getGroupId),
+			_SQL_SELECT_KALEOPROCESS_WHERE, "",
 			new FinderColumn<>(
 				"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KaleoProcess::getUuid),
@@ -1029,31 +1014,26 @@ public class KaleoProcessPersistenceImpl
 				"kaleoProcess.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KaleoProcess::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_KALEOPROCESS_WHERE,
-				_SQL_COUNT_KALEOPROCESS_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_KALEOPROCESS_WHERE, _SQL_COUNT_KALEOPROCESS_WHERE,
 				KaleoProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1062,54 +1042,48 @@ public class KaleoProcessPersistenceImpl
 					"kaleoProcess.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoProcess::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_KALEOPROCESS_WHERE,
-				_SQL_COUNT_KALEOPROCESS_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_KALEOPROCESS_WHERE, _SQL_COUNT_KALEOPROCESS_WHERE,
 				KaleoProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KaleoProcessImpl.class, KaleoProcess.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KALEOPROCESS_WHERE,
-					_FILTER_SQL_SELECT_KALEOPROCESS_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KALEOPROCESS_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KALEOPROCESS_WHERE,
+					KaleoProcessImpl.class, KaleoProcess.class, "kaleoProcess",
+					"KaleoProcess", "kaleoProcess.kaleoProcessId",
+					"SELECT DISTINCT {kaleoProcess.*} FROM KaleoProcess kaleoProcess WHERE ",
+					"SELECT {KaleoProcess.*} FROM (SELECT DISTINCT kaleoProcess.kaleoProcessId FROM KaleoProcess kaleoProcess WHERE ",
+					") TEMP_TABLE INNER JOIN KaleoProcess ON TEMP_TABLE.kaleoProcessId = KaleoProcess.kaleoProcessId",
+					"SELECT COUNT(DISTINCT kaleoProcess.kaleoProcessId) AS COUNT_VALUE FROM KaleoProcess kaleoProcess WHERE ",
 					KaleoProcessModelImpl.ORDER_BY_SQL,
 					KaleoProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"kaleoProcess.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoProcess::getGroupId));
 
-		_finderPathFetchByDDLRecordSetId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByDDLRecordSetId",
-			new String[] {Long.class.getName()},
-			new String[] {"DDLRecordSetId"}, 0, 0, false,
-			KaleoProcess::getDDLRecordSetId);
-
 		_uniquePersistenceFinderByDDLRecordSetId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByDDLRecordSetId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByDDLRecordSetId",
+					new String[] {Long.class.getName()},
+					new String[] {"DDLRecordSetId"}, 0, 0, false,
+					KaleoProcess::getDDLRecordSetId),
 				_SQL_SELECT_KALEOPROCESS_WHERE, "",
 				new FinderColumn<>(
 					"kaleoProcess.", "DDLRecordSetId", FinderColumn.Type.LONG,
@@ -1169,27 +1143,6 @@ public class KaleoProcessPersistenceImpl
 	private static final String _SQL_COUNT_KALEOPROCESS_WHERE =
 		"SELECT COUNT(kaleoProcess) FROM KaleoProcess kaleoProcess WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"kaleoProcess.kaleoProcessId";
-
-	private static final String _FILTER_SQL_SELECT_KALEOPROCESS_WHERE =
-		"SELECT DISTINCT {kaleoProcess.*} FROM KaleoProcess kaleoProcess WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KALEOPROCESS_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {KaleoProcess.*} FROM (SELECT DISTINCT kaleoProcess.kaleoProcessId FROM KaleoProcess kaleoProcess WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KALEOPROCESS_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN KaleoProcess ON TEMP_TABLE.kaleoProcessId = KaleoProcess.kaleoProcessId";
-
-	private static final String _FILTER_SQL_COUNT_KALEOPROCESS_WHERE =
-		"SELECT COUNT(DISTINCT kaleoProcess.kaleoProcessId) AS COUNT_VALUE FROM KaleoProcess kaleoProcess WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "kaleoProcess";
-
-	private static final String _FILTER_ENTITY_TABLE = "KaleoProcess";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoProcess exists with the key {";
 
@@ -1205,4 +1158,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2081445124
+// LIFERAY-SERVICE-BUILDER-HASH:483364656

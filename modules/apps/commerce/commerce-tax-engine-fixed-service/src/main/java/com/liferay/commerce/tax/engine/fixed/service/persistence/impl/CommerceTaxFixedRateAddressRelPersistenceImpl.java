@@ -77,9 +77,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceTaxMethodId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceTaxMethodId;
-	private FinderPath _finderPathCountByCommerceTaxMethodId;
 	private CollectionPersistenceFinder<CommerceTaxFixedRateAddressRel>
 		_collectionPersistenceFinderByCommerceTaxMethodId;
 
@@ -231,9 +228,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			finderCache, new Object[] {commerceTaxMethodId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPTaxCategoryId;
-	private FinderPath _finderPathWithoutPaginationFindByCPTaxCategoryId;
-	private FinderPath _finderPathCountByCPTaxCategoryId;
 	private CollectionPersistenceFinder<CommerceTaxFixedRateAddressRel>
 		_collectionPersistenceFinderByCPTaxCategoryId;
 
@@ -382,9 +376,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			finderCache, new Object[] {CPTaxCategoryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCountryId;
-	private FinderPath _finderPathWithoutPaginationFindByCountryId;
-	private FinderPath _finderPathCountByCountryId;
 	private CollectionPersistenceFinder<CommerceTaxFixedRateAddressRel>
 		_collectionPersistenceFinderByCountryId;
 
@@ -768,29 +759,28 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTaxMethodId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceTaxMethodId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			new String[] {"commerceTaxMethodId"}, true);
-
-		_finderPathCountByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			new String[] {"commerceTaxMethodId"}, false);
-
 		_collectionPersistenceFinderByCommerceTaxMethodId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceTaxMethodId,
-				_finderPathWithoutPaginationFindByCommerceTaxMethodId,
-				_finderPathCountByCommerceTaxMethodId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceTaxMethodId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceTaxMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceTaxMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTaxMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceTaxMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTaxMethodId"}, false),
 				_SQL_SELECT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				CommerceTaxFixedRateAddressRelModelImpl.ORDER_BY_JPQL,
@@ -800,29 +790,28 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxFixedRateAddressRel::getCommerceTaxMethodId));
 
-		_finderPathWithPaginationFindByCPTaxCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPTaxCategoryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPTaxCategoryId"}, true);
-
-		_finderPathWithoutPaginationFindByCPTaxCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPTaxCategoryId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPTaxCategoryId"}, true);
-
-		_finderPathCountByCPTaxCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPTaxCategoryId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPTaxCategoryId"}, false);
-
 		_collectionPersistenceFinderByCPTaxCategoryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPTaxCategoryId,
-				_finderPathWithoutPaginationFindByCPTaxCategoryId,
-				_finderPathCountByCPTaxCategoryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPTaxCategoryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPTaxCategoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPTaxCategoryId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPTaxCategoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPTaxCategoryId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPTaxCategoryId"}, false),
 				_SQL_SELECT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				CommerceTaxFixedRateAddressRelModelImpl.ORDER_BY_JPQL,
@@ -832,29 +821,25 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxFixedRateAddressRel::getCPTaxCategoryId));
 
-		_finderPathWithPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"countryId"}, true);
-
-		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			true);
-
-		_finderPathCountByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			false);
-
 		_collectionPersistenceFinderByCountryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCountryId,
-				_finderPathWithoutPaginationFindByCountryId,
-				_finderPathCountByCountryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, false),
 				_SQL_SELECT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				CommerceTaxFixedRateAddressRelModelImpl.ORDER_BY_JPQL,
@@ -933,4 +918,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1724912102
+// LIFERAY-SERVICE-BUILDER-HASH:893013990

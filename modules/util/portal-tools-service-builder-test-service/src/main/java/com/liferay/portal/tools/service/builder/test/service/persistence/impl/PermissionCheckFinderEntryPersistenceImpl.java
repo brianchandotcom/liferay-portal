@@ -67,9 +67,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<PermissionCheckFinderEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -658,41 +655,38 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	 * Initializes the permission check finder entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_WHERE,
 				_SQL_COUNT_PERMISSIONCHECKFINDERENTRY_WHERE,
 				PermissionCheckFinderEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PermissionCheckFinderEntryImpl.class,
-					PermissionCheckFinderEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_WHERE,
-					_FILTER_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PERMISSIONCHECKFINDERENTRY_WHERE,
+					PermissionCheckFinderEntry.class,
+					"permissionCheckFinderEntry", "PermissionCheckFinderEntry",
+					"permissionCheckFinderEntry.permissionCheckFinderEntryId",
+					"SELECT DISTINCT {permissionCheckFinderEntry.*} FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ",
+					"SELECT {PermissionCheckFinderEntry.*} FROM (SELECT DISTINCT permissionCheckFinderEntry.permissionCheckFinderEntryId FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ",
+					") TEMP_TABLE INNER JOIN PermissionCheckFinderEntry ON TEMP_TABLE.permissionCheckFinderEntryId = PermissionCheckFinderEntry.permissionCheckFinderEntryId",
+					"SELECT COUNT(DISTINCT permissionCheckFinderEntry.permissionCheckFinderEntryId) AS COUNT_VALUE FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ",
 					PermissionCheckFinderEntryModelImpl.ORDER_BY_SQL,
 					PermissionCheckFinderEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -728,31 +722,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	private static final String _SQL_COUNT_PERMISSIONCHECKFINDERENTRY_WHERE =
 		"SELECT COUNT(permissionCheckFinderEntry) FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"permissionCheckFinderEntry.permissionCheckFinderEntryId";
-
-	private static final String
-		_FILTER_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_WHERE =
-			"SELECT DISTINCT {permissionCheckFinderEntry.*} FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {PermissionCheckFinderEntry.*} FROM (SELECT DISTINCT permissionCheckFinderEntry.permissionCheckFinderEntryId FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PERMISSIONCHECKFINDERENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN PermissionCheckFinderEntry ON TEMP_TABLE.permissionCheckFinderEntryId = PermissionCheckFinderEntry.permissionCheckFinderEntryId";
-
-	private static final String
-		_FILTER_SQL_COUNT_PERMISSIONCHECKFINDERENTRY_WHERE =
-			"SELECT COUNT(DISTINCT permissionCheckFinderEntry.permissionCheckFinderEntryId) AS COUNT_VALUE FROM PermissionCheckFinderEntry permissionCheckFinderEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS =
-		"permissionCheckFinderEntry";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"PermissionCheckFinderEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PermissionCheckFinderEntry exists with the key {";
 
@@ -765,4 +734,4 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:134585401
+// LIFERAY-SERVICE-BUILDER-HASH:116693885

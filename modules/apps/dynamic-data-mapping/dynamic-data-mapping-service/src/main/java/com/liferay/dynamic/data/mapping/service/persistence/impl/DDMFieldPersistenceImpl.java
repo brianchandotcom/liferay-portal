@@ -80,9 +80,6 @@ public class DDMFieldPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByStorageId;
-	private FinderPath _finderPathWithoutPaginationFindByStorageId;
-	private FinderPath _finderPathCountByStorageId;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByStorageId;
 
@@ -223,9 +220,6 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {storageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByStructureVersionId;
-	private FinderPath _finderPathWithoutPaginationFindByStructureVersionId;
-	private FinderPath _finderPathCountByStructureVersionId;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByStructureVersionId;
 
@@ -373,9 +367,6 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {structureVersionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_F;
-	private FinderPath _finderPathWithoutPaginationFindByC_F;
-	private FinderPath _finderPathCountByC_F;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByC_F;
 
@@ -530,9 +521,6 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {companyId, fieldType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_F;
-	private FinderPath _finderPathWithoutPaginationFindByS_F;
-	private FinderPath _finderPathCountByS_F;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByS_F;
 
@@ -687,7 +675,6 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {storageId, fieldName});
 	}
 
-	private FinderPath _finderPathFetchByS_I;
 	private UniquePersistenceFinder<DDMField> _uniquePersistenceFinderByS_I;
 
 	/**
@@ -1015,86 +1002,77 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"storageId"}, true);
-
-		_finderPathWithoutPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStorageId",
-			new String[] {Long.class.getName()}, new String[] {"storageId"},
-			true);
-
-		_finderPathCountByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStorageId",
-			new String[] {Long.class.getName()}, new String[] {"storageId"},
-			false);
-
 		_collectionPersistenceFinderByStorageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStorageId,
-				_finderPathWithoutPaginationFindByStorageId,
-				_finderPathCountByStorageId, _SQL_SELECT_DDMFIELD_WHERE,
-				_SQL_COUNT_DDMFIELD_WHERE, DDMFieldModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"storageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStorageId", new String[] {Long.class.getName()},
+					new String[] {"storageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStorageId", new String[] {Long.class.getName()},
+					new String[] {"storageId"}, false),
+				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
+				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 					true, DDMField::getStorageId));
 
-		_finderPathWithPaginationFindByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureVersionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureVersionId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByStructureVersionId", new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, true);
-
-		_finderPathCountByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByStructureVersionId", new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, false);
-
 		_collectionPersistenceFinderByStructureVersionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureVersionId,
-				_finderPathWithoutPaginationFindByStructureVersionId,
-				_finderPathCountByStructureVersionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByStructureVersionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"structureVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"structureVersionId"}, false),
 				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmField.", "structureVersionId", FinderColumn.Type.LONG,
 					"=", true, true, DDMField::getStructureVersionId));
 
-		_finderPathWithPaginationFindByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "fieldType"}, true);
-
-		_finderPathWithoutPaginationFindByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "fieldType"}, 0, 2, true, null);
-
-		_finderPathCountByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "fieldType"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_F,
-			_finderPathWithoutPaginationFindByC_F, _finderPathCountByC_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "fieldType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "fieldType"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "fieldType"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1104,28 +1082,24 @@ public class DDMFieldPersistenceImpl
 				"ddmField.", "fieldType", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldType));
 
-		_finderPathWithPaginationFindByS_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_F",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"storageId", "fieldName"}, true);
-
-		_finderPathWithoutPaginationFindByS_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "fieldName"}, 0, 2, true, null);
-
-		_finderPathCountByS_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "fieldName"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByS_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_F,
-			_finderPathWithoutPaginationFindByS_F, _finderPathCountByS_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_F",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"storageId", "fieldName"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "fieldName"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "fieldName"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1135,15 +1109,15 @@ public class DDMFieldPersistenceImpl
 				"ddmField.", "fieldName", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldName));
 
-		_finderPathFetchByS_I = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "instanceId"}, 0, 2, false,
-			DDMField::getStorageId,
-			convertNullFunction(DDMField::getInstanceId));
-
 		_uniquePersistenceFinderByS_I = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_I, _SQL_SELECT_DDMFIELD_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "instanceId"}, 0, 2, false,
+				DDMField::getStorageId,
+				convertNullFunction(DDMField::getInstanceId)),
+			_SQL_SELECT_DDMFIELD_WHERE, "",
 			new FinderColumn<>(
 				"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 				true, DDMField::getStorageId),
@@ -1220,4 +1194,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:660830429
+// LIFERAY-SERVICE-BUILDER-HASH:-315736283

@@ -85,9 +85,6 @@ public class SubscriptionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByGroupId;
 
@@ -229,9 +226,6 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByUserId;
 
@@ -372,9 +366,6 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_U;
-	private FinderPath _finderPathCountByG_U;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByG_U;
 
@@ -528,9 +519,6 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {groupId, userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByC_C;
 
@@ -687,9 +675,6 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {companyId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_C;
-	private FinderPath _finderPathWithoutPaginationFindByU_C;
-	private FinderPath _finderPathCountByU_C;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByU_C;
 
@@ -844,9 +829,6 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {userId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByC_C_C;
 
@@ -1015,10 +997,6 @@ public class SubscriptionPersistenceImpl
 			finderCache, new Object[] {companyId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_U_C_C;
-	private FinderPath _finderPathFetchByC_U_C_C;
-	private FinderPath _finderPathCountByC_U_C_C;
 	private CollectionPersistenceFinder<Subscription>
 		_collectionPersistenceFinderByC_U_C_C;
 	private UniquePersistenceFinder<Subscription>
@@ -1548,85 +1526,74 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_SUBSCRIPTION_WHERE,
-				_SQL_COUNT_SUBSCRIPTION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"subscription.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, Subscription::getGroupId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_SUBSCRIPTION_WHERE,
-				_SQL_COUNT_SUBSCRIPTION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"subscription.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, Subscription::getUserId));
 
-		_finderPathWithPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
-
 		_collectionPersistenceFinderByG_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_U,
-			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1636,28 +1603,24 @@ public class SubscriptionPersistenceImpl
 				"subscription.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getUserId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1667,28 +1630,24 @@ public class SubscriptionPersistenceImpl
 				"subscription.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, Subscription::getClassNameId));
 
-		_finderPathWithPaginationFindByU_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByU_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "classNameId"}, true);
-
-		_finderPathCountByU_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByU_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_C,
-			_finderPathWithoutPaginationFindByU_C, _finderPathCountByU_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "classNameId"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1698,32 +1657,30 @@ public class SubscriptionPersistenceImpl
 				"subscription.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, Subscription::getClassNameId));
 
-		_finderPathWithPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_C,
-			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1736,51 +1693,42 @@ public class SubscriptionPersistenceImpl
 				"subscription.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getClassPK));
 
-		_finderPathWithPaginationFindByC_U_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId", "classNameId", "classPK"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_U_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "userId", "classNameId", "classPK"},
-			true);
-
-		_finderPathFetchByC_U_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "userId", "classNameId", "classPK"}, 0,
-			0, false, Subscription::getCompanyId, Subscription::getUserId,
-			Subscription::getClassNameId, Subscription::getClassPK);
-
-		_finderPathCountByC_U_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_U_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "userId", "classNameId", "classPK"},
-			false);
-
 		_collectionPersistenceFinderByC_U_C_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_U_C_C,
-				_finderPathWithoutPaginationFindByC_U_C_C,
-				_finderPathCountByC_U_C_C, _SQL_SELECT_SUBSCRIPTION_WHERE,
-				_SQL_COUNT_SUBSCRIPTION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "userId", "classNameId", "classPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"companyId", "userId", "classNameId", "classPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_U_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"companyId", "userId", "classNameId", "classPK"
+					},
+					false),
+				_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
 				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"subscription.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1796,7 +1744,18 @@ public class SubscriptionPersistenceImpl
 					false, true, true, Subscription::getClassPK));
 
 		_uniquePersistenceFinderByC_U_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_U_C_C, _SQL_SELECT_SUBSCRIPTION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_U_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Long.class.getName()
+				},
+				new String[] {"companyId", "userId", "classNameId", "classPK"},
+				0, 0, false, Subscription::getCompanyId,
+				Subscription::getUserId, Subscription::getClassNameId,
+				Subscription::getClassPK),
+			_SQL_SELECT_SUBSCRIPTION_WHERE, "",
 			new FinderColumn<>(
 				"subscription.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getCompanyId),
@@ -1879,4 +1838,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1331957933
+// LIFERAY-SERVICE-BUILDER-HASH:217012114

@@ -86,10 +86,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCPSpecificationOptionId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCPSpecificationOptionId;
-	private FinderPath _finderPathCountByCPSpecificationOptionId;
 	private CollectionPersistenceFinder
 		<CPSpecificationOptionListTypeDefinitionRel>
 			_collectionPersistenceFinderByCPSpecificationOptionId;
@@ -255,9 +251,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			finderCache, new Object[] {CPSpecificationOptionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
-	private FinderPath _finderPathCountByListTypeDefinitionId;
 	private CollectionPersistenceFinder
 		<CPSpecificationOptionListTypeDefinitionRel>
 			_collectionPersistenceFinderByListTypeDefinitionId;
@@ -422,7 +415,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			finderCache, new Object[] {listTypeDefinitionId});
 	}
 
-	private FinderPath _finderPathFetchByC_L;
 	private UniquePersistenceFinder<CPSpecificationOptionListTypeDefinitionRel>
 		_uniquePersistenceFinderByC_L;
 
@@ -822,33 +814,28 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCPSpecificationOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCPSpecificationOptionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPSpecificationOptionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPSpecificationOptionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCPSpecificationOptionId",
-				new String[] {Long.class.getName()},
-				new String[] {"CPSpecificationOptionId"}, true);
-
-		_finderPathCountByCPSpecificationOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCPSpecificationOptionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPSpecificationOptionId"}, false);
-
 		_collectionPersistenceFinderByCPSpecificationOptionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPSpecificationOptionId,
-				_finderPathWithoutPaginationFindByCPSpecificationOptionId,
-				_finderPathCountByCPSpecificationOptionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPSpecificationOptionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPSpecificationOptionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPSpecificationOptionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPSpecificationOptionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPSpecificationOptionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPSpecificationOptionId"}, false),
 				_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				CPSpecificationOptionListTypeDefinitionRelModelImpl.
@@ -861,30 +848,28 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 					CPSpecificationOptionListTypeDefinitionRel::
 						getCPSpecificationOptionId));
 
-		_finderPathWithPaginationFindByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByListTypeDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"listTypeDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, true);
-
-		_finderPathCountByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, false);
-
 		_collectionPersistenceFinderByListTypeDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByListTypeDefinitionId,
-				_finderPathWithoutPaginationFindByListTypeDefinitionId,
-				_finderPathCountByListTypeDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByListTypeDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"listTypeDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByListTypeDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByListTypeDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeDefinitionId"}, false),
 				_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				CPSpecificationOptionListTypeDefinitionRelModelImpl.
@@ -897,18 +882,19 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 					CPSpecificationOptionListTypeDefinitionRel::
 						getListTypeDefinitionId));
 
-		_finderPathFetchByC_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPSpecificationOptionId", "listTypeDefinitionId"}, 0,
-			0, false,
-			CPSpecificationOptionListTypeDefinitionRel::
-				getCPSpecificationOptionId,
-			CPSpecificationOptionListTypeDefinitionRel::
-				getListTypeDefinitionId);
-
 		_uniquePersistenceFinderByC_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_L,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"CPSpecificationOptionId", "listTypeDefinitionId"
+				},
+				0, 0, false,
+				CPSpecificationOptionListTypeDefinitionRel::
+					getCPSpecificationOptionId,
+				CPSpecificationOptionListTypeDefinitionRel::
+					getListTypeDefinitionId),
 			_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE, "",
 			new FinderColumn<>(
 				"cpSpecificationOptionListTypeDefinitionRel.",
@@ -998,4 +984,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1471040321
+// LIFERAY-SERVICE-BUILDER-HASH:-2143651672

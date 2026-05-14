@@ -80,9 +80,6 @@ public class ExportImportReportEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_E;
-	private FinderPath _finderPathWithoutPaginationFindByC_E;
-	private FinderPath _finderPathCountByC_E;
 	private CollectionPersistenceFinder<ExportImportReportEntry>
 		_collectionPersistenceFinderByC_E;
 
@@ -244,7 +241,6 @@ public class ExportImportReportEntryPersistenceImpl
 			finderCache, new Object[] {companyId, exportImportConfigurationId});
 	}
 
-	private FinderPath _finderPathFetchByG_C_C_C_E_T;
 	private UniquePersistenceFinder<ExportImportReportEntry>
 		_uniquePersistenceFinderByG_C_C_C_E_T;
 
@@ -609,28 +605,27 @@ public class ExportImportReportEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "exportImportConfigurationId"}, true);
-
-		_finderPathWithoutPaginationFindByC_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "exportImportConfigurationId"}, true);
-
-		_finderPathCountByC_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "exportImportConfigurationId"}, false);
-
 		_collectionPersistenceFinderByC_E = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_E,
-			_finderPathWithoutPaginationFindByC_E, _finderPathCountByC_E,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "exportImportConfigurationId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "exportImportConfigurationId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "exportImportConfigurationId"},
+				false),
 			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE,
 			_SQL_COUNT_EXPORTIMPORTREPORTENTRY_WHERE,
 			ExportImportReportEntryModelImpl.ORDER_BY_JPQL,
@@ -643,27 +638,26 @@ public class ExportImportReportEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ExportImportReportEntry::getExportImportConfigurationId));
 
-		_finderPathFetchByG_C_C_C_E_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C_E_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "companyId", "classExternalReferenceCode",
-				"classNameId", "exportImportConfigurationId", "type_"
-			},
-			0, 4, false, ExportImportReportEntry::getGroupId,
-			ExportImportReportEntry::getCompanyId,
-			convertNullFunction(
-				ExportImportReportEntry::getClassExternalReferenceCode),
-			ExportImportReportEntry::getClassNameId,
-			ExportImportReportEntry::getExportImportConfigurationId,
-			ExportImportReportEntry::getType);
-
 		_uniquePersistenceFinderByG_C_C_C_E_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_C_C_E_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C_E_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName()
+				},
+				new String[] {
+					"groupId", "companyId", "classExternalReferenceCode",
+					"classNameId", "exportImportConfigurationId", "type_"
+				},
+				0, 4, false, ExportImportReportEntry::getGroupId,
+				ExportImportReportEntry::getCompanyId,
+				convertNullFunction(
+					ExportImportReportEntry::getClassExternalReferenceCode),
+				ExportImportReportEntry::getClassNameId,
+				ExportImportReportEntry::getExportImportConfigurationId,
+				ExportImportReportEntry::getType),
 			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"exportImportReportEntry.", "groupId", FinderColumn.Type.LONG,
@@ -756,4 +750,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505057142
+// LIFERAY-SERVICE-BUILDER-HASH:-172593977

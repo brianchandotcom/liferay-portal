@@ -82,9 +82,6 @@ public class KaleoLogPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<KaleoLog>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -225,10 +222,6 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
-	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
 	private CollectionPersistenceFinder<KaleoLog>
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
@@ -384,9 +377,6 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKaleoInstanceId;
-	private FinderPath _finderPathWithoutPaginationFindByKaleoInstanceId;
-	private FinderPath _finderPathCountByKaleoInstanceId;
 	private CollectionPersistenceFinder<KaleoLog>
 		_collectionPersistenceFinderByKaleoInstanceId;
 
@@ -530,10 +520,6 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoInstanceId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKaleoTaskInstanceTokenId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
-	private FinderPath _finderPathCountByKaleoTaskInstanceTokenId;
 	private CollectionPersistenceFinder<KaleoLog>
 		_collectionPersistenceFinderByKaleoTaskInstanceTokenId;
 
@@ -689,9 +675,6 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoTaskInstanceTokenId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKITI_T;
-	private FinderPath _finderPathWithoutPaginationFindByKITI_T;
-	private FinderPath _finderPathCountByKITI_T;
 	private CollectionPersistenceFinder<KaleoLog>
 		_collectionPersistenceFinderByKITI_T;
 
@@ -848,9 +831,6 @@ public class KaleoLogPersistenceImpl
 			finderCache, new Object[] {kaleoInstanceTokenId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_KITI_T;
-	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_KITI_T;
-	private FinderPath _finderPathCountByKCN_KCPK_KITI_T;
 	private CollectionPersistenceFinder<KaleoLog>
 		_collectionPersistenceFinderByKCN_KCPK_KITI_T;
 
@@ -1350,63 +1330,53 @@ public class KaleoLogPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_KALEOLOG_WHERE,
-				_SQL_COUNT_KALEOLOG_WHERE, KaleoLogModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_KALEOLOG_WHERE, _SQL_COUNT_KALEOLOG_WHERE,
+				KaleoLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoLog.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, KaleoLog::getCompanyId));
 
-		_finderPathWithPaginationFindByKaleoDefinitionVersionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByKaleoDefinitionVersionId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"kaleoDefinitionVersionId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByKaleoDefinitionVersionId",
-				new String[] {Long.class.getName()},
-				new String[] {"kaleoDefinitionVersionId"}, true);
-
-		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByKaleoDefinitionVersionId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoDefinitionVersionId"}, false);
-
 		_collectionPersistenceFinderByKaleoDefinitionVersionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoDefinitionVersionId,
-				_finderPathWithoutPaginationFindByKaleoDefinitionVersionId,
-				_finderPathCountByKaleoDefinitionVersionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoDefinitionVersionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoDefinitionVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoDefinitionVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoDefinitionVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoDefinitionVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoDefinitionVersionId"}, false),
 				_SQL_SELECT_KALEOLOG_WHERE, _SQL_COUNT_KALEOLOG_WHERE,
 				KaleoLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1414,63 +1384,56 @@ public class KaleoLogPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoLog::getKaleoDefinitionVersionId));
 
-		_finderPathWithPaginationFindByKaleoInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoInstanceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoInstanceId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoInstanceId"}, true);
-
-		_finderPathCountByKaleoInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoInstanceId"}, false);
-
 		_collectionPersistenceFinderByKaleoInstanceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoInstanceId,
-				_finderPathWithoutPaginationFindByKaleoInstanceId,
-				_finderPathCountByKaleoInstanceId, _SQL_SELECT_KALEOLOG_WHERE,
-				_SQL_COUNT_KALEOLOG_WHERE, KaleoLogModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoInstanceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoInstanceId"}, false),
+				_SQL_SELECT_KALEOLOG_WHERE, _SQL_COUNT_KALEOLOG_WHERE,
+				KaleoLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoLog.", "kaleoInstanceId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoLog::getKaleoInstanceId));
 
-		_finderPathWithPaginationFindByKaleoTaskInstanceTokenId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByKaleoTaskInstanceTokenId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"kaleoTaskInstanceTokenId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByKaleoTaskInstanceTokenId",
-				new String[] {Long.class.getName()},
-				new String[] {"kaleoTaskInstanceTokenId"}, true);
-
-		_finderPathCountByKaleoTaskInstanceTokenId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByKaleoTaskInstanceTokenId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoTaskInstanceTokenId"}, false);
-
 		_collectionPersistenceFinderByKaleoTaskInstanceTokenId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoTaskInstanceTokenId,
-				_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId,
-				_finderPathCountByKaleoTaskInstanceTokenId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoTaskInstanceTokenId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoTaskInstanceTokenId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoTaskInstanceTokenId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoTaskInstanceTokenId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoTaskInstanceTokenId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoTaskInstanceTokenId"}, false),
 				_SQL_SELECT_KALEOLOG_WHERE, _SQL_COUNT_KALEOLOG_WHERE,
 				KaleoLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1478,32 +1441,29 @@ public class KaleoLogPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoLog::getKaleoTaskInstanceTokenId));
 
-		_finderPathWithPaginationFindByKITI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKITI_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoInstanceTokenId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByKITI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKITI_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoInstanceTokenId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByKITI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKITI_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoInstanceTokenId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByKITI_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKITI_T,
-				_finderPathWithoutPaginationFindByKITI_T,
-				_finderPathCountByKITI_T, _SQL_SELECT_KALEOLOG_WHERE,
-				_SQL_COUNT_KALEOLOG_WHERE, KaleoLogModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKITI_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoInstanceTokenId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKITI_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"kaleoInstanceTokenId", "type_"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKITI_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"kaleoInstanceTokenId", "type_"}, 0, 2, false,
+					null),
+				_SQL_SELECT_KALEOLOG_WHERE, _SQL_COUNT_KALEOLOG_WHERE,
+				KaleoLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoLog.", "kaleoInstanceTokenId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoLog::getKaleoInstanceTokenId),
@@ -1511,51 +1471,49 @@ public class KaleoLogPersistenceImpl
 					"kaleoLog.", "type", FinderColumn.Type.STRING, "=", true,
 					true, KaleoLog::getType));
 
-		_finderPathWithPaginationFindByKCN_KCPK_KITI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK_KITI_T",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"kaleoClassName", "kaleoClassPK", "kaleoInstanceTokenId",
-				"type_"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByKCN_KCPK_KITI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK_KITI_T",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"kaleoClassName", "kaleoClassPK", "kaleoInstanceTokenId",
-				"type_"
-			},
-			0, 9, true, null);
-
-		_finderPathCountByKCN_KCPK_KITI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK_KITI_T",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"kaleoClassName", "kaleoClassPK", "kaleoInstanceTokenId",
-				"type_"
-			},
-			0, 9, false, null);
-
 		_collectionPersistenceFinderByKCN_KCPK_KITI_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKCN_KCPK_KITI_T,
-				_finderPathWithoutPaginationFindByKCN_KCPK_KITI_T,
-				_finderPathCountByKCN_KCPK_KITI_T, _SQL_SELECT_KALEOLOG_WHERE,
-				_SQL_COUNT_KALEOLOG_WHERE, KaleoLogModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKCN_KCPK_KITI_T",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"kaleoClassName", "kaleoClassPK",
+						"kaleoInstanceTokenId", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKCN_KCPK_KITI_T",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"kaleoClassName", "kaleoClassPK",
+						"kaleoInstanceTokenId", "type_"
+					},
+					0, 9, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKCN_KCPK_KITI_T",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"kaleoClassName", "kaleoClassPK",
+						"kaleoInstanceTokenId", "type_"
+					},
+					0, 9, false, null),
+				_SQL_SELECT_KALEOLOG_WHERE, _SQL_COUNT_KALEOLOG_WHERE,
+				KaleoLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoLog.", "kaleoClassName", FinderColumn.Type.STRING,
 					"=", true, true, KaleoLog::getKaleoClassName),
@@ -1638,4 +1596,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1522441078
+// LIFERAY-SERVICE-BUILDER-HASH:1447145635

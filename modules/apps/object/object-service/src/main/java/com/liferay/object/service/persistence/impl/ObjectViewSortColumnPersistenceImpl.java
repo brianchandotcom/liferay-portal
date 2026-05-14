@@ -79,9 +79,6 @@ public class ObjectViewSortColumnPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectViewSortColumn>
 		_collectionPersistenceFinderByUuid;
 
@@ -226,9 +223,6 @@ public class ObjectViewSortColumnPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectViewSortColumn>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -385,9 +379,6 @@ public class ObjectViewSortColumnPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectViewId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectViewId;
-	private FinderPath _finderPathCountByObjectViewId;
 	private CollectionPersistenceFinder<ObjectViewSortColumn>
 		_collectionPersistenceFinderByObjectViewId;
 
@@ -534,9 +525,6 @@ public class ObjectViewSortColumnPersistenceImpl
 			finderCache, new Object[] {objectViewId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByOVI_OFN;
-	private FinderPath _finderPathWithoutPaginationFindByOVI_OFN;
-	private FinderPath _finderPathCountByOVI_OFN;
 	private CollectionPersistenceFinder<ObjectViewSortColumn>
 		_collectionPersistenceFinderByOVI_OFN;
 
@@ -924,27 +912,23 @@ public class ObjectViewSortColumnPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 			_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 			ObjectViewSortColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -953,30 +937,25 @@ public class ObjectViewSortColumnPersistenceImpl
 				"objectViewSortColumn.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectViewSortColumn::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 				ObjectViewSortColumnModelImpl.ORDER_BY_JPQL,
@@ -989,29 +968,26 @@ public class ObjectViewSortColumnPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectViewSortColumn::getCompanyId));
 
-		_finderPathWithPaginationFindByObjectViewId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectViewId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectViewId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectViewId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByObjectViewId",
-			new String[] {Long.class.getName()}, new String[] {"objectViewId"},
-			true);
-
-		_finderPathCountByObjectViewId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectViewId",
-			new String[] {Long.class.getName()}, new String[] {"objectViewId"},
-			false);
-
 		_collectionPersistenceFinderByObjectViewId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectViewId,
-				_finderPathWithoutPaginationFindByObjectViewId,
-				_finderPathCountByObjectViewId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectViewId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectViewId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectViewId", new String[] {Long.class.getName()},
+					new String[] {"objectViewId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectViewId", new String[] {Long.class.getName()},
+					new String[] {"objectViewId"}, false),
 				_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 				ObjectViewSortColumnModelImpl.ORDER_BY_JPQL,
@@ -1021,31 +997,27 @@ public class ObjectViewSortColumnPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectViewSortColumn::getObjectViewId));
 
-		_finderPathWithPaginationFindByOVI_OFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOVI_OFN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectViewId", "objectFieldName"}, true);
-
-		_finderPathWithoutPaginationFindByOVI_OFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOVI_OFN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectViewId", "objectFieldName"}, 0, 2, true, null);
-
-		_finderPathCountByOVI_OFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVI_OFN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectViewId", "objectFieldName"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByOVI_OFN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOVI_OFN,
-				_finderPathWithoutPaginationFindByOVI_OFN,
-				_finderPathCountByOVI_OFN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOVI_OFN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectViewId", "objectFieldName"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOVI_OFN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"objectViewId", "objectFieldName"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVI_OFN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"objectViewId", "objectFieldName"}, 0, 2,
+					false, null),
 				_SQL_SELECT_OBJECTVIEWSORTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWSORTCOLUMN_WHERE,
 				ObjectViewSortColumnModelImpl.ORDER_BY_JPQL,
@@ -1125,4 +1097,4 @@ public class ObjectViewSortColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:261385472
+// LIFERAY-SERVICE-BUILDER-HASH:1480010607

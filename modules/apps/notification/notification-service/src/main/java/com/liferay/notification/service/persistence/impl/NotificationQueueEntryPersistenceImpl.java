@@ -77,9 +77,6 @@ public class NotificationQueueEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -291,9 +288,6 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
-	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
-	private FinderPath _finderPathCountByNotificationTemplateId;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByNotificationTemplateId;
 
@@ -518,8 +512,6 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {notificationTemplateId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtSentDate;
-	private FinderPath _finderPathWithPaginationCountByLtSentDate;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByLtSentDate;
 
@@ -731,9 +723,6 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {sentDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_S;
-	private FinderPath _finderPathWithoutPaginationFindByT_S;
-	private FinderPath _finderPathCountByT_S;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByT_S;
 
@@ -1182,41 +1171,38 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1225,45 +1211,41 @@ public class NotificationQueueEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationQueueEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByNotificationTemplateId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"notificationTemplateId"}, true);
-
-		_finderPathWithoutPaginationFindByNotificationTemplateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByNotificationTemplateId",
-				new String[] {Long.class.getName()},
-				new String[] {"notificationTemplateId"}, true);
-
-		_finderPathCountByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByNotificationTemplateId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationTemplateId"}, false);
-
 		_collectionPersistenceFinderByNotificationTemplateId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByNotificationTemplateId,
-				_finderPathWithoutPaginationFindByNotificationTemplateId,
-				_finderPathCountByNotificationTemplateId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByNotificationTemplateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"notificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationTemplateId"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1272,35 +1254,35 @@ public class NotificationQueueEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationQueueEntry::getNotificationTemplateId));
 
-		_finderPathWithPaginationFindByLtSentDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"sentDate"}, true);
-
-		_finderPathWithPaginationCountByLtSentDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
-			new String[] {Date.class.getName()}, new String[] {"sentDate"},
-			false);
-
 		_collectionPersistenceFinderByLtSentDate =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtSentDate, null,
-				_finderPathWithPaginationCountByLtSentDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"sentDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
+					new String[] {Date.class.getName()},
+					new String[] {"sentDate"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1309,41 +1291,42 @@ public class NotificationQueueEntryPersistenceImpl
 					FinderColumn.Type.DATE, "<", true, true,
 					NotificationQueueEntry::getSentDate));
 
-		_finderPathWithPaginationFindByT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"type_", "status"}, 0, 1, true, null);
-
-		_finderPathCountByT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"type_", "status"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByT_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByT_S,
-				_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
+					new String[] {
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"type_", "status"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
+					new String[] {
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"type_", "status"}, 0, 1, false, null),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1409,28 +1392,6 @@ public class NotificationQueueEntryPersistenceImpl
 	private static final String _SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE =
 		"SELECT COUNT(notificationQueueEntry) FROM NotificationQueueEntry notificationQueueEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"notificationQueueEntry.notificationQueueEntryId";
-
-	private static final String
-		_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE =
-			"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId";
-
-	private static final String _FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE =
-		"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "notificationQueueEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "NotificationQueueEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationQueueEntry exists with the key {";
 
@@ -1443,4 +1404,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-868825223
+// LIFERAY-SERVICE-BUILDER-HASH:1256998185

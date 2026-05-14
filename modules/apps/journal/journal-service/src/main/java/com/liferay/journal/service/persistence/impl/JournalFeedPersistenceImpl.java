@@ -88,9 +88,6 @@ public class JournalFeedPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<JournalFeed>
 		_collectionPersistenceFinderByUuid;
 
@@ -230,7 +227,6 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<JournalFeed>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -320,9 +316,6 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<JournalFeed>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -477,9 +470,6 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<JournalFeed>
 		_collectionPersistenceFinderByGroupId;
 
@@ -687,7 +677,6 @@ public class JournalFeedPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_F;
 	private UniquePersistenceFinder<JournalFeed> _uniquePersistenceFinderByG_F;
 
 	/**
@@ -1081,41 +1070,38 @@ public class JournalFeedPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 			JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalFeed::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(JournalFeed::getUuid), JournalFeed::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALFEED_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(JournalFeed::getUuid),
+				JournalFeed::getGroupId),
+			_SQL_SELECT_JOURNALFEED_WHERE, "",
 			new FinderColumn<>(
 				"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalFeed::getUuid),
@@ -1123,31 +1109,26 @@ public class JournalFeedPersistenceImpl
 				"journalFeed.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalFeed::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_JOURNALFEED_WHERE,
-				_SQL_COUNT_JOURNALFEED_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -1156,54 +1137,49 @@ public class JournalFeedPersistenceImpl
 					"journalFeed.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_JOURNALFEED_WHERE,
-				_SQL_COUNT_JOURNALFEED_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
 				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					JournalFeedImpl.class, JournalFeed.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_JOURNALFEED_WHERE,
-					_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_JOURNALFEED_WHERE,
+					JournalFeedImpl.class, JournalFeed.class, "journalFeed",
+					"JournalFeed", "journalFeed.id_",
+					"SELECT DISTINCT {journalFeed.*} FROM JournalFeed journalFeed WHERE ",
+					"SELECT {JournalFeed.*} FROM (SELECT DISTINCT journalFeed.id_ FROM JournalFeed journalFeed WHERE ",
+					") TEMP_TABLE INNER JOIN JournalFeed ON TEMP_TABLE.id_ = JournalFeed.id_",
+					"SELECT COUNT(DISTINCT journalFeed.id_) AS COUNT_VALUE FROM JournalFeed journalFeed WHERE ",
 					JournalFeedModelImpl.ORDER_BY_SQL,
 					JournalFeedModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"journalFeed.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getGroupId));
 
-		_finderPathFetchByG_F = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "feedId"}, 0, 2, false,
-			JournalFeed::getGroupId,
-			convertNullFunction(JournalFeed::getFeedId));
-
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F, _SQL_SELECT_JOURNALFEED_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "feedId"}, 0, 2, false,
+				JournalFeed::getGroupId,
+				convertNullFunction(JournalFeed::getFeedId)),
+			_SQL_SELECT_JOURNALFEED_WHERE, "",
 			new FinderColumn<>(
 				"journalFeed.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalFeed::getGroupId),
@@ -1268,27 +1244,6 @@ public class JournalFeedPersistenceImpl
 	private static final String _SQL_COUNT_JOURNALFEED_WHERE =
 		"SELECT COUNT(journalFeed) FROM JournalFeed journalFeed WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"journalFeed.id_";
-
-	private static final String _FILTER_SQL_SELECT_JOURNALFEED_WHERE =
-		"SELECT DISTINCT {journalFeed.*} FROM JournalFeed journalFeed WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {JournalFeed.*} FROM (SELECT DISTINCT journalFeed.id_ FROM JournalFeed journalFeed WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_JOURNALFEED_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN JournalFeed ON TEMP_TABLE.id_ = JournalFeed.id_";
-
-	private static final String _FILTER_SQL_COUNT_JOURNALFEED_WHERE =
-		"SELECT COUNT(DISTINCT journalFeed.id_) AS COUNT_VALUE FROM JournalFeed journalFeed WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "journalFeed";
-
-	private static final String _FILTER_ENTITY_TABLE = "JournalFeed";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalFeed exists with the key {";
 
@@ -1304,4 +1259,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1236170783
+// LIFERAY-SERVICE-BUILDER-HASH:532529961

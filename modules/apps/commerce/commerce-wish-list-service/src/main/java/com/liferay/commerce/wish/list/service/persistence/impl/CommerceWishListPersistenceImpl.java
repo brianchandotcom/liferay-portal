@@ -81,9 +81,6 @@ public class CommerceWishListPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByUuid;
 
@@ -224,7 +221,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommerceWishList>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -314,9 +310,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -471,9 +464,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByGroupId;
 
@@ -617,9 +607,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByUserId;
 
@@ -762,9 +749,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_U;
-	private FinderPath _finderPathCountByG_U;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByG_U;
 
@@ -918,8 +902,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {groupId, userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_LtC;
-	private FinderPath _finderPathWithPaginationCountByU_LtC;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByU_LtC;
 
@@ -1074,9 +1056,6 @@ public class CommerceWishListPersistenceImpl
 			finderCache, new Object[] {userId, createDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_U_D;
-	private FinderPath _finderPathCountByG_U_D;
 	private CollectionPersistenceFinder<CommerceWishList>
 		_collectionPersistenceFinderByG_U_D;
 
@@ -1473,27 +1452,23 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1501,16 +1476,15 @@ public class CommerceWishListPersistenceImpl
 				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceWishList::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommerceWishList::getUuid),
-			CommerceWishList::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommerceWishList::getUuid),
+				CommerceWishList::getGroupId),
+			_SQL_SELECT_COMMERCEWISHLIST_WHERE, "",
 			new FinderColumn<>(
 				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceWishList::getUuid),
@@ -1518,30 +1492,26 @@ public class CommerceWishListPersistenceImpl
 				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceWishList::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1552,29 +1522,26 @@ public class CommerceWishListPersistenceImpl
 					"commerceWishList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceWishList::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1582,28 +1549,26 @@ public class CommerceWishListPersistenceImpl
 					"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceWishList::getGroupId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 				CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1611,28 +1576,24 @@ public class CommerceWishListPersistenceImpl
 					"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceWishList::getUserId));
 
-		_finderPathWithPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
-
 		_collectionPersistenceFinderByG_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_U,
-			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, false),
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1643,23 +1604,21 @@ public class CommerceWishListPersistenceImpl
 				"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceWishList::getUserId));
 
-		_finderPathWithPaginationFindByU_LtC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_LtC",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "createDate"}, true);
-
-		_finderPathWithPaginationCountByU_LtC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_LtC",
-			new String[] {Long.class.getName(), Date.class.getName()},
-			new String[] {"userId", "createDate"}, false);
-
 		_collectionPersistenceFinderByU_LtC = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_LtC, null,
-			_finderPathWithPaginationCountByU_LtC,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_LtC",
+				new String[] {
+					Long.class.getName(), Date.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "createDate"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_LtC",
+				new String[] {Long.class.getName(), Date.class.getName()},
+				new String[] {"userId", "createDate"}, false),
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1670,34 +1629,30 @@ public class CommerceWishListPersistenceImpl
 				"commerceWishList.", "createDate", FinderColumn.Type.DATE, "<",
 				true, true, CommerceWishList::getCreateDate));
 
-		_finderPathWithPaginationFindByG_U_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "defaultWishList"}, true);
-
-		_finderPathWithoutPaginationFindByG_U_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "userId", "defaultWishList"}, true);
-
-		_finderPathCountByG_U_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "userId", "defaultWishList"}, false);
-
 		_collectionPersistenceFinderByG_U_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_U_D,
-			_finderPathWithoutPaginationFindByG_U_D, _finderPathCountByG_U_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "userId", "defaultWishList"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "userId", "defaultWishList"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "userId", "defaultWishList"}, false),
 			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
 			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
 			CommerceWishListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1781,4 +1736,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:792263218
+// LIFERAY-SERVICE-BUILDER-HASH:-368438178

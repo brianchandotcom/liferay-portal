@@ -96,9 +96,6 @@ public class CommerceChannelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<CommerceChannel>
 		_collectionPersistenceFinderByUuid;
 
@@ -304,9 +301,6 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<CommerceChannel>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -533,9 +527,6 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<CommerceChannel>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -746,9 +737,6 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
-	private FinderPath _finderPathCountByAccountEntryId;
 	private FilterCollectionPersistenceFinder<CommerceChannel>
 		_collectionPersistenceFinderByAccountEntryId;
 
@@ -963,9 +951,6 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySiteGroupId;
-	private FinderPath _finderPathWithoutPaginationFindBySiteGroupId;
-	private FinderPath _finderPathCountBySiteGroupId;
 	private FilterCollectionPersistenceFinder<CommerceChannel>
 		_collectionPersistenceFinderBySiteGroupId;
 
@@ -1178,7 +1163,6 @@ public class CommerceChannelPersistenceImpl
 			finderCache, new Object[] {siteGroupId});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommerceChannel>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1648,81 +1632,74 @@ public class CommerceChannelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceChannelImpl.class, CommerceChannel.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCECHANNEL_WHERE,
+					"commerceChannel", "CommerceChannel",
+					"commerceChannel.commerceChannelId",
+					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
+					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
+					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
 					CommerceChannelModelImpl.ORDER_BY_SQL,
 					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceChannel::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCECHANNEL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceChannelImpl.class, CommerceChannel.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCECHANNEL_WHERE,
+					"commerceChannel", "CommerceChannel",
+					"commerceChannel.commerceChannelId",
+					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
+					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
+					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
 					CommerceChannelModelImpl.ORDER_BY_SQL,
 					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1732,81 +1709,76 @@ public class CommerceChannelPersistenceImpl
 					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_COMMERCECHANNEL_WHERE,
-				_SQL_COUNT_COMMERCECHANNEL_WHERE,
-				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceChannelImpl.class, CommerceChannel.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCECHANNEL_WHERE,
-					CommerceChannelModelImpl.ORDER_BY_SQL,
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
-				new FinderColumn<>(
-					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
-					"=", true, true, CommerceChannel::getCompanyId));
-
-		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, false);
-
-		_collectionPersistenceFinderByAccountEntryId =
-			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryId,
-				_finderPathWithoutPaginationFindByAccountEntryId,
-				_finderPathCountByAccountEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceChannelImpl.class, CommerceChannel.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCECHANNEL_WHERE,
+					"commerceChannel", "CommerceChannel",
+					"commerceChannel.commerceChannelId",
+					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
+					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
+					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
+					CommerceChannelModelImpl.ORDER_BY_SQL,
+					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, CommerceChannel::getCompanyId));
+
+		_collectionPersistenceFinderByAccountEntryId =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryId", new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, false),
+				_SQL_SELECT_COMMERCECHANNEL_WHERE,
+				_SQL_COUNT_COMMERCECHANNEL_WHERE,
+				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					CommerceChannelImpl.class, CommerceChannel.class,
+					"commerceChannel", "CommerceChannel",
+					"commerceChannel.commerceChannelId",
+					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
+					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
+					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
 					CommerceChannelModelImpl.ORDER_BY_SQL,
 					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1814,57 +1786,53 @@ public class CommerceChannelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceChannel::getAccountEntryId));
 
-		_finderPathWithPaginationFindBySiteGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySiteGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"siteGroupId"}, true);
-
-		_finderPathWithoutPaginationFindBySiteGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySiteGroupId",
-			new String[] {Long.class.getName()}, new String[] {"siteGroupId"},
-			true);
-
-		_finderPathCountBySiteGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySiteGroupId",
-			new String[] {Long.class.getName()}, new String[] {"siteGroupId"},
-			false);
-
 		_collectionPersistenceFinderBySiteGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySiteGroupId,
-				_finderPathWithoutPaginationFindBySiteGroupId,
-				_finderPathCountBySiteGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySiteGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"siteGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySiteGroupId", new String[] {Long.class.getName()},
+					new String[] {"siteGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySiteGroupId", new String[] {Long.class.getName()},
+					new String[] {"siteGroupId"}, false),
 				_SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceChannelImpl.class, CommerceChannel.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCECHANNEL_WHERE,
+					"commerceChannel", "CommerceChannel",
+					"commerceChannel.commerceChannelId",
+					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
+					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
+					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
 					CommerceChannelModelImpl.ORDER_BY_SQL,
 					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "siteGroupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getSiteGroupId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CommerceChannel::getExternalReferenceCode),
-			CommerceChannel::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECHANNEL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(CommerceChannel::getExternalReferenceCode),
+				CommerceChannel::getCompanyId),
+			_SQL_SELECT_COMMERCECHANNEL_WHERE, "",
 			new FinderColumn<>(
 				"commerceChannel.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1930,27 +1898,6 @@ public class CommerceChannelPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCECHANNEL_WHERE =
 		"SELECT COUNT(commerceChannel) FROM CommerceChannel commerceChannel WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"commerceChannel.commerceChannelId";
-
-	private static final String _FILTER_SQL_SELECT_COMMERCECHANNEL_WHERE =
-		"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCECHANNEL_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId";
-
-	private static final String _FILTER_SQL_COUNT_COMMERCECHANNEL_WHERE =
-		"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "commerceChannel";
-
-	private static final String _FILTER_ENTITY_TABLE = "CommerceChannel";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceChannel exists with the key {";
 
@@ -1966,4 +1913,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-491189827
+// LIFERAY-SERVICE-BUILDER-HASH:-1401226144

@@ -73,9 +73,6 @@ public class RegionLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByRegionId;
-	private FinderPath _finderPathWithoutPaginationFindByRegionId;
-	private FinderPath _finderPathCountByRegionId;
 	private CollectionPersistenceFinder<RegionLocalization>
 		_collectionPersistenceFinderByRegionId;
 
@@ -222,7 +219,6 @@ public class RegionLocalizationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {regionId});
 	}
 
-	private FinderPath _finderPathFetchByRegionId_LanguageId;
 	private UniquePersistenceFinder<RegionLocalization>
 		_uniquePersistenceFinderByRegionId_LanguageId;
 
@@ -570,29 +566,25 @@ public class RegionLocalizationPersistenceImpl
 	 * Initializes the region localization persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByRegionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRegionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"regionId"}, true);
-
-		_finderPathWithoutPaginationFindByRegionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRegionId",
-			new String[] {Long.class.getName()}, new String[] {"regionId"},
-			true);
-
-		_finderPathCountByRegionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRegionId",
-			new String[] {Long.class.getName()}, new String[] {"regionId"},
-			false);
-
 		_collectionPersistenceFinderByRegionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRegionId,
-				_finderPathWithoutPaginationFindByRegionId,
-				_finderPathCountByRegionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRegionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"regionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRegionId",
+					new String[] {Long.class.getName()},
+					new String[] {"regionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByRegionId", new String[] {Long.class.getName()},
+					new String[] {"regionId"}, false),
 				_SQL_SELECT_REGIONLOCALIZATION_WHERE,
 				_SQL_COUNT_REGIONLOCALIZATION_WHERE,
 				RegionLocalizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -601,16 +593,15 @@ public class RegionLocalizationPersistenceImpl
 					"regionLocalization.", "regionId", FinderColumn.Type.LONG,
 					"=", true, true, RegionLocalization::getRegionId));
 
-		_finderPathFetchByRegionId_LanguageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByRegionId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"regionId", "languageId"}, 0, 2, false,
-			RegionLocalization::getRegionId,
-			convertNullFunction(RegionLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByRegionId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByRegionId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByRegionId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"regionId", "languageId"}, 0, 2, false,
+					RegionLocalization::getRegionId,
+					convertNullFunction(RegionLocalization::getLanguageId)),
 				_SQL_SELECT_REGIONLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"regionLocalization.", "regionId", FinderColumn.Type.LONG,
@@ -653,4 +644,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1646866774
+// LIFERAY-SERVICE-BUILDER-HASH:-563872121

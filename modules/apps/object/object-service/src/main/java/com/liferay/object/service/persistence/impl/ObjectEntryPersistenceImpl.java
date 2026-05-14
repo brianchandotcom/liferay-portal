@@ -89,9 +89,6 @@ public class ObjectEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -231,7 +228,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<ObjectEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -321,9 +317,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -478,7 +471,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByHeadObjectEntryId;
 	private UniquePersistenceFinder<ObjectEntry>
 		_uniquePersistenceFinderByHeadObjectEntryId;
 
@@ -565,9 +557,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {headObjectEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
-	private FinderPath _finderPathCountByObjectDefinitionId;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByObjectDefinitionId;
 
@@ -716,9 +705,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ODI;
-	private FinderPath _finderPathWithoutPaginationFindByG_ODI;
-	private FinderPath _finderPathCountByG_ODI;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByG_ODI;
 
@@ -878,9 +864,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {groupId, objectDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_OEFI;
-	private FinderPath _finderPathWithoutPaginationFindByG_OEFI;
-	private FinderPath _finderPathCountByG_OEFI;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByG_OEFI;
 
@@ -1040,9 +1023,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {groupId, objectEntryFolderId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_ODI;
-	private FinderPath _finderPathWithoutPaginationFindByU_ODI;
-	private FinderPath _finderPathCountByU_ODI;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByU_ODI;
 
@@ -1200,8 +1180,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {userId, objectDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI_NotS;
-	private FinderPath _finderPathWithPaginationCountByODI_NotS;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByODI_NotS;
 
@@ -1361,8 +1339,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByROEI_NotS;
-	private FinderPath _finderPathWithPaginationCountByROEI_NotS;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByROEI_NotS;
 
@@ -1522,9 +1498,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {rootObjectEntryId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_OEFI;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_OEFI;
-	private FinderPath _finderPathCountByG_C_OEFI;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByG_C_OEFI;
 
@@ -1701,9 +1674,6 @@ public class ObjectEntryPersistenceImpl
 			new Object[] {groupId, companyId, objectEntryFolderId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ODI_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_ODI_S;
-	private FinderPath _finderPathCountByG_ODI_S;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByG_ODI_S;
 
@@ -1877,8 +1847,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {groupId, objectDefinitionId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_GtCD_ODI;
-	private FinderPath _finderPathWithPaginationCountByU_GtCD_ODI;
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByU_GtCD_ODI;
 
@@ -2053,7 +2021,6 @@ public class ObjectEntryPersistenceImpl
 			finderCache, new Object[] {userId, createDate, objectDefinitionId});
 	}
 
-	private FinderPath _finderPathFetchByERC_G_C_ODI;
 	private UniquePersistenceFinder<ObjectEntry>
 		_uniquePersistenceFinderByERC_G_C_ODI;
 
@@ -2436,41 +2403,38 @@ public class ObjectEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(ObjectEntry::getUuid), ObjectEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_OBJECTENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(ObjectEntry::getUuid),
+				ObjectEntry::getGroupId),
+			_SQL_SELECT_OBJECTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"objectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectEntry::getUuid),
@@ -2478,31 +2442,26 @@ public class ObjectEntryPersistenceImpl
 				"objectEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, ObjectEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTENTRY_WHERE,
-				_SQL_COUNT_OBJECTENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -2511,44 +2470,42 @@ public class ObjectEntryPersistenceImpl
 					"objectEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectEntry::getCompanyId));
 
-		_finderPathFetchByHeadObjectEntryId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByHeadObjectEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"headObjectEntryId"}, 0, 0, false,
-			ObjectEntry::getHeadObjectEntryId);
-
 		_uniquePersistenceFinderByHeadObjectEntryId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByHeadObjectEntryId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByHeadObjectEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"headObjectEntryId"}, 0, 0, false,
+					ObjectEntry::getHeadObjectEntryId),
 				_SQL_SELECT_OBJECTENTRY_WHERE,
 				"objectEntry.objectEntryId != objectEntry.headObjectEntryId",
 				new FinderColumn<>(
 					"objectEntry.", "headObjectEntryId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntry::getHeadObjectEntryId));
 
-		_finderPathWithPaginationFindByObjectDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId"}, true);
-
-		_finderPathCountByObjectDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId"}, false);
-
 		_collectionPersistenceFinderByObjectDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectDefinitionId,
-				_finderPathWithoutPaginationFindByObjectDefinitionId,
-				_finderPathCountByObjectDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId"}, false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
@@ -2557,28 +2514,24 @@ public class ObjectEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectEntry::getObjectDefinitionId));
 
-		_finderPathWithPaginationFindByG_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ODI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "objectDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByG_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ODI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "objectDefinitionId"}, true);
-
-		_finderPathCountByG_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ODI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "objectDefinitionId"}, false);
-
 		_collectionPersistenceFinderByG_ODI = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_ODI,
-			_finderPathWithoutPaginationFindByG_ODI, _finderPathCountByG_ODI,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ODI",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "objectDefinitionId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ODI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "objectDefinitionId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ODI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "objectDefinitionId"}, false),
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
@@ -2589,31 +2542,26 @@ public class ObjectEntryPersistenceImpl
 				"objectEntry.", "objectDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectEntry::getObjectDefinitionId));
 
-		_finderPathWithPaginationFindByG_OEFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_OEFI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "objectEntryFolderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_OEFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_OEFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "objectEntryFolderId"}, true);
-
-		_finderPathCountByG_OEFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_OEFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "objectEntryFolderId"}, false);
-
 		_collectionPersistenceFinderByG_OEFI =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_OEFI,
-				_finderPathWithoutPaginationFindByG_OEFI,
-				_finderPathCountByG_OEFI, _SQL_SELECT_OBJECTENTRY_WHERE,
-				_SQL_COUNT_OBJECTENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_OEFI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "objectEntryFolderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_OEFI",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "objectEntryFolderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_OEFI",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "objectEntryFolderId"}, false),
+				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
@@ -2624,28 +2572,24 @@ public class ObjectEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectEntry::getObjectEntryFolderId));
 
-		_finderPathWithPaginationFindByU_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_ODI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "objectDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByU_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_ODI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "objectDefinitionId"}, true);
-
-		_finderPathCountByU_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_ODI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "objectDefinitionId"}, false);
-
 		_collectionPersistenceFinderByU_ODI = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_ODI,
-			_finderPathWithoutPaginationFindByU_ODI, _finderPathCountByU_ODI,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_ODI",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "objectDefinitionId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_ODI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "objectDefinitionId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_ODI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "objectDefinitionId"}, false),
 			_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 			ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
@@ -2656,24 +2600,24 @@ public class ObjectEntryPersistenceImpl
 				"objectEntry.", "objectDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectEntry::getObjectDefinitionId));
 
-		_finderPathWithPaginationFindByODI_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_NotS",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId", "status"}, true);
-
-		_finderPathWithPaginationCountByODI_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByODI_NotS",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"objectDefinitionId", "status"}, false);
-
 		_collectionPersistenceFinderByODI_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI_NotS, null,
-				_finderPathWithPaginationCountByODI_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByODI_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"objectDefinitionId", "status"}, false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
@@ -2685,24 +2629,24 @@ public class ObjectEntryPersistenceImpl
 					"objectEntry.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, ObjectEntry::getStatus));
 
-		_finderPathWithPaginationFindByROEI_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByROEI_NotS",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"rootObjectEntryId", "status"}, true);
-
-		_finderPathWithPaginationCountByROEI_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByROEI_NotS",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"rootObjectEntryId", "status"}, false);
-
 		_collectionPersistenceFinderByROEI_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByROEI_NotS, null,
-				_finderPathWithPaginationCountByROEI_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByROEI_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"rootObjectEntryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByROEI_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"rootObjectEntryId", "status"}, false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
@@ -2713,36 +2657,43 @@ public class ObjectEntryPersistenceImpl
 					"objectEntry.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, ObjectEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_C_OEFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_OEFI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "objectEntryFolderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_OEFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_OEFI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "companyId", "objectEntryFolderId"}, true);
-
-		_finderPathCountByG_C_OEFI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_OEFI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "companyId", "objectEntryFolderId"},
-			false);
-
 		_collectionPersistenceFinderByG_C_OEFI =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_OEFI,
-				_finderPathWithoutPaginationFindByG_C_OEFI,
-				_finderPathCountByG_C_OEFI, _SQL_SELECT_OBJECTENTRY_WHERE,
-				_SQL_COUNT_OBJECTENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_OEFI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "objectEntryFolderId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_OEFI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "objectEntryFolderId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_C_OEFI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "objectEntryFolderId"
+					},
+					false),
+				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
@@ -2756,37 +2707,36 @@ public class ObjectEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectEntry::getObjectEntryFolderId));
 
-		_finderPathWithPaginationFindByG_ODI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ODI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "objectDefinitionId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_ODI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ODI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "objectDefinitionId", "status"}, true);
-
-		_finderPathCountByG_ODI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ODI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "objectDefinitionId", "status"}, false);
-
 		_collectionPersistenceFinderByG_ODI_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ODI_S,
-				_finderPathWithoutPaginationFindByG_ODI_S,
-				_finderPathCountByG_ODI_S, _SQL_SELECT_OBJECTENTRY_WHERE,
-				_SQL_COUNT_OBJECTENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ODI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "objectDefinitionId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ODI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "objectDefinitionId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ODI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "objectDefinitionId", "status"},
+					false),
+				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
 				new FinderColumn<>(
@@ -2800,26 +2750,28 @@ public class ObjectEntryPersistenceImpl
 					"objectEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, ObjectEntry::getStatus));
 
-		_finderPathWithPaginationFindByU_GtCD_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_GtCD_ODI",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "createDate", "objectDefinitionId"}, true);
-
-		_finderPathWithPaginationCountByU_GtCD_ODI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_GtCD_ODI",
-			new String[] {
-				Long.class.getName(), Date.class.getName(), Long.class.getName()
-			},
-			new String[] {"userId", "createDate", "objectDefinitionId"}, false);
-
 		_collectionPersistenceFinderByU_GtCD_ODI =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_GtCD_ODI, null,
-				_finderPathWithPaginationCountByU_GtCD_ODI,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_GtCD_ODI",
+					new String[] {
+						Long.class.getName(), Date.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId", "createDate", "objectDefinitionId"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_GtCD_ODI",
+					new String[] {
+						Long.class.getName(), Date.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"userId", "createDate", "objectDefinitionId"},
+					false),
 				_SQL_SELECT_OBJECTENTRY_WHERE, _SQL_COUNT_OBJECTENTRY_WHERE,
 				ObjectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"objectEntry.objectEntryId = objectEntry.headObjectEntryId",
@@ -2834,24 +2786,23 @@ public class ObjectEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectEntry::getObjectDefinitionId));
 
-		_finderPathFetchByERC_G_C_ODI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_C_ODI",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"externalReferenceCode", "groupId", "companyId",
-				"objectDefinitionId"
-			},
-			0, 1, false,
-			convertNullFunction(ObjectEntry::getExternalReferenceCode),
-			ObjectEntry::getGroupId, ObjectEntry::getCompanyId,
-			ObjectEntry::getObjectDefinitionId);
-
 		_uniquePersistenceFinderByERC_G_C_ODI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G_C_ODI, _SQL_SELECT_OBJECTENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_C_ODI",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName(), Long.class.getName()
+				},
+				new String[] {
+					"externalReferenceCode", "groupId", "companyId",
+					"objectDefinitionId"
+				},
+				0, 1, false,
+				convertNullFunction(ObjectEntry::getExternalReferenceCode),
+				ObjectEntry::getGroupId, ObjectEntry::getCompanyId,
+				ObjectEntry::getObjectDefinitionId),
+			_SQL_SELECT_OBJECTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"objectEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2935,4 +2886,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1479012827
+// LIFERAY-SERVICE-BUILDER-HASH:-481277866

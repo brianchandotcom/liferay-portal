@@ -73,9 +73,6 @@ public class FaroChannelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<FaroChannel>
 		_collectionPersistenceFinderByGroupId;
 
@@ -217,9 +214,6 @@ public class FaroChannelPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByWorkspaceGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByWorkspaceGroupId;
-	private FinderPath _finderPathCountByWorkspaceGroupId;
 	private CollectionPersistenceFinder<FaroChannel>
 		_collectionPersistenceFinderByWorkspaceGroupId;
 
@@ -367,9 +361,6 @@ public class FaroChannelPersistenceImpl
 			finderCache, new Object[] {workspaceGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_U;
-	private FinderPath _finderPathCountByG_U;
 	private CollectionPersistenceFinder<FaroChannel>
 		_collectionPersistenceFinderByG_U;
 
@@ -523,7 +514,6 @@ public class FaroChannelPersistenceImpl
 			finderCache, new Object[] {groupId, userId});
 	}
 
-	private FinderPath _finderPathFetchByC_W;
 	private UniquePersistenceFinder<FaroChannel> _uniquePersistenceFinderByC_W;
 
 	/**
@@ -788,86 +778,77 @@ public class FaroChannelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_FAROCHANNEL_WHERE,
-				_SQL_COUNT_FAROCHANNEL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
 				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroChannel.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroChannel::getGroupId));
 
-		_finderPathWithPaginationFindByWorkspaceGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByWorkspaceGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"workspaceGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByWorkspaceGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByWorkspaceGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"workspaceGroupId"}, true);
-
-		_finderPathCountByWorkspaceGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByWorkspaceGroupId", new String[] {Long.class.getName()},
-			new String[] {"workspaceGroupId"}, false);
-
 		_collectionPersistenceFinderByWorkspaceGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByWorkspaceGroupId,
-				_finderPathWithoutPaginationFindByWorkspaceGroupId,
-				_finderPathCountByWorkspaceGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByWorkspaceGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"workspaceGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByWorkspaceGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"workspaceGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByWorkspaceGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"workspaceGroupId"}, false),
 				_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
 				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroChannel.", "workspaceGroupId", FinderColumn.Type.LONG,
 					"=", true, true, FaroChannel::getWorkspaceGroupId));
 
-		_finderPathWithPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
-
 		_collectionPersistenceFinderByG_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_U,
-			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, false),
 			_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
 			FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -877,15 +858,15 @@ public class FaroChannelPersistenceImpl
 				"faroChannel.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, FaroChannel::getUserId));
 
-		_finderPathFetchByC_W = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_W",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"channelId", "workspaceGroupId"}, 0, 1, false,
-			convertNullFunction(FaroChannel::getChannelId),
-			FaroChannel::getWorkspaceGroupId);
-
 		_uniquePersistenceFinderByC_W = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_W, _SQL_SELECT_FAROCHANNEL_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_W",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"channelId", "workspaceGroupId"}, 0, 1, false,
+				convertNullFunction(FaroChannel::getChannelId),
+				FaroChannel::getWorkspaceGroupId),
+			_SQL_SELECT_FAROCHANNEL_WHERE, "",
 			new FinderColumn<>(
 				"faroChannel.", "channelId", FinderColumn.Type.STRING, "=",
 				true, true, FaroChannel::getChannelId),
@@ -959,4 +940,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:487338489
+// LIFERAY-SERVICE-BUILDER-HASH:1464665884

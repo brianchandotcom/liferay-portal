@@ -69,7 +69,6 @@ public class CompanyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByWebId;
 	private UniquePersistenceFinder<Company> _uniquePersistenceFinderByWebId;
 
 	/**
@@ -148,9 +147,6 @@ public class CompanyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {webId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLogoId;
-	private FinderPath _finderPathWithoutPaginationFindByLogoId;
-	private FinderPath _finderPathCountByLogoId;
 	private CollectionPersistenceFinder<Company>
 		_collectionPersistenceFinderByLogoId;
 
@@ -494,41 +490,38 @@ public class CompanyPersistenceImpl
 	 * Initializes the company persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByWebId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
-			new String[] {String.class.getName()}, new String[] {"webId"}, 0, 1,
-			false, convertNullFunction(Company::getWebId));
-
 		_uniquePersistenceFinderByWebId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByWebId, _SQL_SELECT_COMPANY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
+				new String[] {String.class.getName()}, new String[] {"webId"},
+				0, 1, false, convertNullFunction(Company::getWebId)),
+			_SQL_SELECT_COMPANY_WHERE, "",
 			new FinderColumn<>(
 				"company.", "webId", FinderColumn.Type.STRING, "=", true, true,
 				Company::getWebId));
 
-		_finderPathWithPaginationFindByLogoId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLogoId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"logoId"}, true);
-
-		_finderPathWithoutPaginationFindByLogoId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLogoId",
-			new String[] {Long.class.getName()}, new String[] {"logoId"}, true);
-
-		_finderPathCountByLogoId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLogoId",
-			new String[] {Long.class.getName()}, new String[] {"logoId"},
-			false);
-
 		_collectionPersistenceFinderByLogoId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLogoId,
-				_finderPathWithoutPaginationFindByLogoId,
-				_finderPathCountByLogoId, _SQL_SELECT_COMPANY_WHERE,
-				_SQL_COUNT_COMPANY_WHERE, CompanyModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLogoId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"logoId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLogoId",
+					new String[] {Long.class.getName()},
+					new String[] {"logoId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLogoId",
+					new String[] {Long.class.getName()},
+					new String[] {"logoId"}, false),
+				_SQL_SELECT_COMPANY_WHERE, _SQL_COUNT_COMPANY_WHERE,
+				CompanyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"company.", "logoId", FinderColumn.Type.LONG, "=", true,
 					true, Company::getLogoId));
@@ -569,4 +562,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1667084195
+// LIFERAY-SERVICE-BUILDER-HASH:726697081

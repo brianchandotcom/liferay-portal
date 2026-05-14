@@ -81,9 +81,6 @@ public class SiteFriendlyURLPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<SiteFriendlyURL>
 		_collectionPersistenceFinderByUuid;
 
@@ -224,7 +221,6 @@ public class SiteFriendlyURLPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<SiteFriendlyURL>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -314,9 +310,6 @@ public class SiteFriendlyURLPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<SiteFriendlyURL>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -471,9 +464,6 @@ public class SiteFriendlyURLPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private CollectionPersistenceFinder<SiteFriendlyURL>
 		_collectionPersistenceFinderByG_C;
 
@@ -628,7 +618,6 @@ public class SiteFriendlyURLPersistenceImpl
 			finderCache, new Object[] {groupId, companyId});
 	}
 
-	private FinderPath _finderPathFetchByC_F;
 	private UniquePersistenceFinder<SiteFriendlyURL>
 		_uniquePersistenceFinderByC_F;
 
@@ -719,7 +708,6 @@ public class SiteFriendlyURLPersistenceImpl
 			finderCache, new Object[] {companyId, friendlyURL});
 	}
 
-	private FinderPath _finderPathFetchByG_C_L;
 	private UniquePersistenceFinder<SiteFriendlyURL>
 		_uniquePersistenceFinderByG_C_L;
 
@@ -823,7 +811,6 @@ public class SiteFriendlyURLPersistenceImpl
 			finderCache, new Object[] {groupId, companyId, languageId});
 	}
 
-	private FinderPath _finderPathFetchByC_F_L;
 	private UniquePersistenceFinder<SiteFriendlyURL>
 		_uniquePersistenceFinderByC_F_L;
 
@@ -1152,43 +1139,38 @@ public class SiteFriendlyURLPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_SITEFRIENDLYURL_WHERE, _SQL_COUNT_SITEFRIENDLYURL_WHERE,
 			SiteFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"siteFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SiteFriendlyURL::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(SiteFriendlyURL::getUuid),
-			SiteFriendlyURL::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_SITEFRIENDLYURL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(SiteFriendlyURL::getUuid),
+				SiteFriendlyURL::getGroupId),
+			_SQL_SELECT_SITEFRIENDLYURL_WHERE, "",
 			new FinderColumn<>(
 				"siteFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SiteFriendlyURL::getUuid),
@@ -1196,30 +1178,26 @@ public class SiteFriendlyURLPersistenceImpl
 				"siteFriendlyURL.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SiteFriendlyURL::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_SITEFRIENDLYURL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_SITEFRIENDLYURL_WHERE,
 				_SQL_COUNT_SITEFRIENDLYURL_WHERE,
 				SiteFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1230,28 +1208,24 @@ public class SiteFriendlyURLPersistenceImpl
 					"siteFriendlyURL.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SiteFriendlyURL::getCompanyId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "companyId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "companyId"}, false);
-
 		_collectionPersistenceFinderByG_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C,
-			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "companyId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "companyId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "companyId"}, false),
 			_SQL_SELECT_SITEFRIENDLYURL_WHERE, _SQL_COUNT_SITEFRIENDLYURL_WHERE,
 			SiteFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1261,15 +1235,15 @@ public class SiteFriendlyURLPersistenceImpl
 				"siteFriendlyURL.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, SiteFriendlyURL::getCompanyId));
 
-		_finderPathFetchByC_F = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "friendlyURL"}, 0, 2, false,
-			SiteFriendlyURL::getCompanyId,
-			convertNullFunction(SiteFriendlyURL::getFriendlyURL));
-
 		_uniquePersistenceFinderByC_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_F, _SQL_SELECT_SITEFRIENDLYURL_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "friendlyURL"}, 0, 2, false,
+				SiteFriendlyURL::getCompanyId,
+				convertNullFunction(SiteFriendlyURL::getFriendlyURL)),
+			_SQL_SELECT_SITEFRIENDLYURL_WHERE, "",
 			new FinderColumn<>(
 				"siteFriendlyURL.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, SiteFriendlyURL::getCompanyId),
@@ -1277,19 +1251,19 @@ public class SiteFriendlyURLPersistenceImpl
 				"siteFriendlyURL.", "friendlyURL", FinderColumn.Type.STRING,
 				"=", true, true, SiteFriendlyURL::getFriendlyURL));
 
-		_finderPathFetchByG_C_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "companyId", "languageId"}, 0, 4, false,
-			SiteFriendlyURL::getGroupId, SiteFriendlyURL::getCompanyId,
-			convertNullFunction(SiteFriendlyURL::getLanguageId));
-
 		_uniquePersistenceFinderByG_C_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_L, _SQL_SELECT_SITEFRIENDLYURL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_L",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "companyId", "languageId"}, 0, 4,
+				false, SiteFriendlyURL::getGroupId,
+				SiteFriendlyURL::getCompanyId,
+				convertNullFunction(SiteFriendlyURL::getLanguageId)),
+			_SQL_SELECT_SITEFRIENDLYURL_WHERE, "",
 			new FinderColumn<>(
 				"siteFriendlyURL.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SiteFriendlyURL::getGroupId),
@@ -1300,20 +1274,19 @@ public class SiteFriendlyURLPersistenceImpl
 				"siteFriendlyURL.", "languageId", FinderColumn.Type.STRING, "=",
 				true, true, SiteFriendlyURL::getLanguageId));
 
-		_finderPathFetchByC_F_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_F_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "friendlyURL", "languageId"}, 0, 6,
-			false, SiteFriendlyURL::getCompanyId,
-			convertNullFunction(SiteFriendlyURL::getFriendlyURL),
-			convertNullFunction(SiteFriendlyURL::getLanguageId));
-
 		_uniquePersistenceFinderByC_F_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_F_L, _SQL_SELECT_SITEFRIENDLYURL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_F_L",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "friendlyURL", "languageId"}, 0, 6,
+				false, SiteFriendlyURL::getCompanyId,
+				convertNullFunction(SiteFriendlyURL::getFriendlyURL),
+				convertNullFunction(SiteFriendlyURL::getLanguageId)),
+			_SQL_SELECT_SITEFRIENDLYURL_WHERE, "",
 			new FinderColumn<>(
 				"siteFriendlyURL.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, SiteFriendlyURL::getCompanyId),
@@ -1393,4 +1366,4 @@ public class SiteFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-156456525
+// LIFERAY-SERVICE-BUILDER-HASH:-1077991902

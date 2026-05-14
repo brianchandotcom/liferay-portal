@@ -74,9 +74,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
-	private FinderPath _finderPathCountByAccountEntryId;
 	private CollectionPersistenceFinder<AccountEntryOrganizationRel>
 		_collectionPersistenceFinderByAccountEntryId;
 
@@ -225,9 +222,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByOrganizationId;
-	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
-	private FinderPath _finderPathCountByOrganizationId;
 	private CollectionPersistenceFinder<AccountEntryOrganizationRel>
 		_collectionPersistenceFinderByOrganizationId;
 
@@ -376,7 +370,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			finderCache, new Object[] {organizationId});
 	}
 
-	private FinderPath _finderPathFetchByA_O;
 	private UniquePersistenceFinder<AccountEntryOrganizationRel>
 		_uniquePersistenceFinderByA_O;
 
@@ -672,29 +665,27 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, false);
-
 		_collectionPersistenceFinderByAccountEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryId,
-				_finderPathWithoutPaginationFindByAccountEntryId,
-				_finderPathCountByAccountEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryId", new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL,
@@ -704,29 +695,27 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountEntryOrganizationRel::getAccountEntryId));
 
-		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"organizationId"}, true);
-
-		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
-			new String[] {Long.class.getName()},
-			new String[] {"organizationId"}, true);
-
-		_finderPathCountByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOrganizationId",
-			new String[] {Long.class.getName()},
-			new String[] {"organizationId"}, false);
-
 		_collectionPersistenceFinderByOrganizationId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOrganizationId,
-				_finderPathWithoutPaginationFindByOrganizationId,
-				_finderPathCountByOrganizationId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByOrganizationId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"organizationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOrganizationId", new String[] {Long.class.getName()},
+					new String[] {"organizationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOrganizationId",
+					new String[] {Long.class.getName()},
+					new String[] {"organizationId"}, false),
 				_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL,
@@ -736,15 +725,14 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountEntryOrganizationRel::getOrganizationId));
 
-		_finderPathFetchByA_O = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "organizationId"}, 0, 0, false,
-			AccountEntryOrganizationRel::getAccountEntryId,
-			AccountEntryOrganizationRel::getOrganizationId);
-
 		_uniquePersistenceFinderByA_O = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_O,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"accountEntryId", "organizationId"}, 0, 0, false,
+				AccountEntryOrganizationRel::getAccountEntryId,
+				AccountEntryOrganizationRel::getOrganizationId),
 			_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE, "",
 			new FinderColumn<>(
 				"accountEntryOrganizationRel.", "accountEntryId",
@@ -822,4 +810,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1420529800
+// LIFERAY-SERVICE-BUILDER-HASH:-1937805718

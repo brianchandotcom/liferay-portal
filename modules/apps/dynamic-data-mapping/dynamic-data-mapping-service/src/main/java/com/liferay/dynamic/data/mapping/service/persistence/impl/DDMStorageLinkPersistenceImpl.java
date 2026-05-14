@@ -90,9 +90,6 @@ public class DDMStorageLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DDMStorageLink>
 		_collectionPersistenceFinderByUuid;
 
@@ -233,9 +230,6 @@ public class DDMStorageLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DDMStorageLink>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -390,7 +384,6 @@ public class DDMStorageLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByClassPK;
 	private UniquePersistenceFinder<DDMStorageLink>
 		_uniquePersistenceFinderByClassPK;
 
@@ -473,9 +466,6 @@ public class DDMStorageLinkPersistenceImpl
 			finderCache, new Object[] {classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByStructureId;
-	private FinderPath _finderPathCountByStructureId;
 	private CollectionPersistenceFinder<DDMStorageLink>
 		_collectionPersistenceFinderByStructureId;
 
@@ -1548,57 +1538,49 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DDMSTORAGELINK_WHERE, _SQL_COUNT_DDMSTORAGELINK_WHERE,
 			DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmStorageLink.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMStorageLink::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DDMSTORAGELINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DDMSTORAGELINK_WHERE,
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
 				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1608,41 +1590,37 @@ public class DDMStorageLinkPersistenceImpl
 					"ddmStorageLink.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStorageLink::getCompanyId));
 
-		_finderPathFetchByClassPK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
-			new String[] {Long.class.getName()}, new String[] {"classPK"}, 0, 0,
-			false, DDMStorageLink::getClassPK);
-
 		_uniquePersistenceFinderByClassPK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByClassPK, _SQL_SELECT_DDMSTORAGELINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
+				new String[] {Long.class.getName()}, new String[] {"classPK"},
+				0, 0, false, DDMStorageLink::getClassPK),
+			_SQL_SELECT_DDMSTORAGELINK_WHERE, "",
 			new FinderColumn<>(
 				"ddmStorageLink.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, DDMStorageLink::getClassPK));
 
-		_finderPathWithPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			true);
-
-		_finderPathCountByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			false);
-
 		_collectionPersistenceFinderByStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureId,
-				_finderPathWithoutPaginationFindByStructureId,
-				_finderPathCountByStructureId, _SQL_SELECT_DDMSTORAGELINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, false),
+				_SQL_SELECT_DDMSTORAGELINK_WHERE,
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
 				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1744,4 +1722,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1199693689
+// LIFERAY-SERVICE-BUILDER-HASH:848185629

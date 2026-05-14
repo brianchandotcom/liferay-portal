@@ -96,9 +96,6 @@ public class StyleBookEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -239,9 +236,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_Head;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
-	private FinderPath _finderPathCountByUuid_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByUuid_Head;
 
@@ -395,9 +389,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUUID_G;
-	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByUUID_G;
 
@@ -551,7 +542,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G_Head;
 	private UniquePersistenceFinder<StyleBookEntry>
 		_uniquePersistenceFinderByUUID_G_Head;
 
@@ -651,9 +641,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -808,9 +795,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
-	private FinderPath _finderPathCountByUuid_C_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByUuid_C_Head;
 
@@ -977,9 +961,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -1123,9 +1104,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
-	private FinderPath _finderPathCountByGroupId_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByGroupId_Head;
 
@@ -1280,9 +1258,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_D;
-	private FinderPath _finderPathCountByG_D;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_D;
 
@@ -1443,9 +1418,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, defaultStyleBookEntry});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_Head;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_Head;
-	private FinderPath _finderPathCountByG_D_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_D_Head;
 
@@ -1620,9 +1592,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, defaultStyleBookEntry, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N;
-	private FinderPath _finderPathWithoutPaginationFindByG_N;
-	private FinderPath _finderPathCountByG_N;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_N;
 
@@ -1776,9 +1745,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N_Head;
-	private FinderPath _finderPathWithoutPaginationFindByG_N_Head;
-	private FinderPath _finderPathCountByG_N_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_N_Head;
 
@@ -1943,8 +1909,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_LikeN;
 
@@ -2099,8 +2063,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN_Head;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_LikeN_Head;
 
@@ -2265,9 +2227,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_SBEK;
-	private FinderPath _finderPathWithoutPaginationFindByG_SBEK;
-	private FinderPath _finderPathCountByG_SBEK;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_SBEK;
 
@@ -2427,7 +2386,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, styleBookEntryKey});
 	}
 
-	private FinderPath _finderPathFetchByG_SBEK_Head;
 	private UniquePersistenceFinder<StyleBookEntry>
 		_uniquePersistenceFinderByG_SBEK_Head;
 
@@ -2533,9 +2491,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, styleBookEntryKey, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_T;
 
@@ -2689,9 +2644,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, themeId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_Head;
-	private FinderPath _finderPathWithoutPaginationFindByG_T_Head;
-	private FinderPath _finderPathCountByG_T_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_T_Head;
 
@@ -2858,9 +2810,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {groupId, themeId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_T;
-	private FinderPath _finderPathCountByG_D_T;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_D_T;
 
@@ -3037,9 +2986,6 @@ public class StyleBookEntryPersistenceImpl
 			new Object[] {groupId, defaultStyleBookEntry, themeId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_T_Head;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_T_Head;
-	private FinderPath _finderPathCountByG_D_T_Head;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByG_D_T_Head;
 
@@ -3231,9 +3177,6 @@ public class StyleBookEntryPersistenceImpl
 			new Object[] {groupId, defaultStyleBookEntry, themeId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByERC_G;
-	private FinderPath _finderPathWithoutPaginationFindByERC_G;
-	private FinderPath _finderPathCountByERC_G;
 	private CollectionPersistenceFinder<StyleBookEntry>
 		_collectionPersistenceFinderByERC_G;
 
@@ -3394,7 +3337,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
-	private FinderPath _finderPathFetchByERC_G_Head;
 	private UniquePersistenceFinder<StyleBookEntry>
 		_uniquePersistenceFinderByERC_G_Head;
 
@@ -3500,7 +3442,6 @@ public class StyleBookEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId, head});
 	}
 
-	private FinderPath _finderPathFetchByHeadId;
 	private UniquePersistenceFinder<StyleBookEntry>
 		_uniquePersistenceFinderByHeadId;
 
@@ -3958,57 +3899,55 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, StyleBookEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
-			new String[] {
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "head"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Head",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"uuid_", "head"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Head",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"uuid_", "head"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_Head,
-				_finderPathWithoutPaginationFindByUuid_Head,
-				_finderPathCountByUuid_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"uuid_", "head"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"uuid_", "head"}, 0, 1, false, null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4018,30 +3957,26 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, true, null);
-
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUUID_G =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUUID_G,
-				_finderPathWithoutPaginationFindByUUID_G,
-				_finderPathCountByUUID_G, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, false, null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4051,18 +3986,17 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "head"}, 0, 1, false,
-			convertNullFunction(StyleBookEntry::getUuid),
-			StyleBookEntry::getGroupId, StyleBookEntry::isHead);
-
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G_Head,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"uuid_", "groupId", "head"}, 0, 1, false,
+				convertNullFunction(StyleBookEntry::getUuid),
+				StyleBookEntry::getGroupId, StyleBookEntry::isHead),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -4074,30 +4008,26 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4107,36 +4037,37 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C_Head,
-				_finderPathWithoutPaginationFindByUuid_C_Head,
-				_finderPathCountByUuid_C_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, 0, 1, false,
+					null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4149,59 +4080,58 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
 
-		_finderPathWithPaginationFindByGroupId_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "head"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId_Head",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "head"}, true);
-
-		_finderPathCountByGroupId_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId_Head",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "head"}, false);
-
 		_collectionPersistenceFinderByGroupId_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId_Head,
-				_finderPathWithoutPaginationFindByGroupId_Head,
-				_finderPathCountByGroupId_Head,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByGroupId_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByGroupId_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByGroupId_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "head"}, false),
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4212,28 +4142,24 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry"}, true);
-
-		_finderPathWithoutPaginationFindByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "defaultStyleBookEntry"}, true);
-
-		_finderPathCountByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "defaultStyleBookEntry"}, false);
-
 		_collectionPersistenceFinderByG_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_D,
-			_finderPathWithoutPaginationFindByG_D, _finderPathCountByG_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "defaultStyleBookEntry"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "defaultStyleBookEntry"}, false),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4244,36 +4170,37 @@ public class StyleBookEntryPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				StyleBookEntry::isDefaultStyleBookEntry));
 
-		_finderPathWithPaginationFindByG_D_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "head"}, true);
-
-		_finderPathWithoutPaginationFindByG_D_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "head"}, true);
-
-		_finderPathCountByG_D_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "head"}, false);
-
 		_collectionPersistenceFinderByG_D_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D_Head,
-				_finderPathWithoutPaginationFindByG_D_Head,
-				_finderPathCountByG_D_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "defaultStyleBookEntry", "head"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "defaultStyleBookEntry", "head"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_D_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "defaultStyleBookEntry", "head"},
+					false),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4287,28 +4214,24 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_N,
-			_finderPathWithoutPaginationFindByG_N, _finderPathCountByG_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, false, null),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4318,36 +4241,35 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "name", FinderColumn.Type.STRING, "=", true,
 				true, StyleBookEntry::getName));
 
-		_finderPathWithPaginationFindByG_N_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "head"}, true);
-
-		_finderPathWithoutPaginationFindByG_N_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "name", "head"}, 0, 2, true, null);
-
-		_finderPathCountByG_N_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "name", "head"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_N_Head,
-				_finderPathWithoutPaginationFindByG_N_Head,
-				_finderPathCountByG_N_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "name", "head"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_N_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "name", "head"}, 0, 2, false,
+					null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4360,24 +4282,22 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, false);
-
 		_collectionPersistenceFinderByG_LikeN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN, null,
-				_finderPathWithPaginationCountByG_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, false),
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4388,27 +4308,28 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "name", FinderColumn.Type.STRING, "LIKE",
 					true, true, StyleBookEntry::getName));
 
-		_finderPathWithPaginationFindByG_LikeN_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "head"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "name", "head"}, false);
-
 		_collectionPersistenceFinderByG_LikeN_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN_Head, null,
-				_finderPathWithPaginationCountByG_LikeN_Head,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_LikeN_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "head"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_LikeN_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "name", "head"}, false),
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4422,30 +4343,28 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByG_SBEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SBEK",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "styleBookEntryKey"}, true);
-
-		_finderPathWithoutPaginationFindByG_SBEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SBEK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "styleBookEntryKey"}, 0, 2, true, null);
-
-		_finderPathCountByG_SBEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SBEK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "styleBookEntryKey"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_SBEK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_SBEK,
-				_finderPathWithoutPaginationFindByG_SBEK,
-				_finderPathCountByG_SBEK, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SBEK",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "styleBookEntryKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SBEK",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "styleBookEntryKey"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SBEK",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "styleBookEntryKey"}, 0, 2, false,
+					null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4456,19 +4375,18 @@ public class StyleBookEntryPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					StyleBookEntry::getStyleBookEntryKey));
 
-		_finderPathFetchByG_SBEK_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_SBEK_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "styleBookEntryKey", "head"}, 0, 2, false,
-			StyleBookEntry::getGroupId,
-			convertNullFunction(StyleBookEntry::getStyleBookEntryKey),
-			StyleBookEntry::isHead);
-
 		_uniquePersistenceFinderByG_SBEK_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_SBEK_Head,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_SBEK_Head",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "styleBookEntryKey", "head"}, 0, 2,
+				false, StyleBookEntry::getGroupId,
+				convertNullFunction(StyleBookEntry::getStyleBookEntryKey),
+				StyleBookEntry::isHead),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -4481,28 +4399,24 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "themeId"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "themeId"}, 0, 2, true, null);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "themeId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_T,
-			_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "themeId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "themeId"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "themeId"}, 0, 2, false, null),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4512,36 +4426,36 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntry::getThemeId));
 
-		_finderPathWithPaginationFindByG_T_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "themeId", "head"}, true);
-
-		_finderPathWithoutPaginationFindByG_T_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "themeId", "head"}, 0, 2, true, null);
-
-		_finderPathCountByG_T_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_Head",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "themeId", "head"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_Head,
-				_finderPathWithoutPaginationFindByG_T_Head,
-				_finderPathCountByG_T_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "themeId", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "themeId", "head"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_T_Head",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "themeId", "head"}, 0, 2, false,
+					null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4554,36 +4468,33 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, true);
-
-		_finderPathWithoutPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_D_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_D_T,
-			_finderPathWithoutPaginationFindByG_D_T, _finderPathCountByG_D_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry", "themeId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0,
+				4, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0,
+				4, false, null),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4597,46 +4508,44 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntry::getThemeId));
 
-		_finderPathWithPaginationFindByG_D_T_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "defaultStyleBookEntry", "themeId", "head"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_D_T_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"groupId", "defaultStyleBookEntry", "themeId", "head"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByG_D_T_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T_Head",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"groupId", "defaultStyleBookEntry", "themeId", "head"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_D_T_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D_T_Head,
-				_finderPathWithoutPaginationFindByG_D_T_Head,
-				_finderPathCountByG_D_T_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "themeId", "head"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_D_T_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "themeId", "head"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_D_T_Head",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "themeId", "head"
+					},
+					0, 4, false, null),
+				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -4653,30 +4562,26 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
 
-		_finderPathWithPaginationFindByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByERC_G",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"externalReferenceCode", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, true,
-			null);
-
-		_finderPathCountByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			null);
-
 		_collectionPersistenceFinderByERC_G = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByERC_G,
-			_finderPathWithoutPaginationFindByERC_G, _finderPathCountByERC_G,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByERC_G",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"externalReferenceCode", "groupId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				null),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4687,19 +4592,18 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, StyleBookEntry::getGroupId));
 
-		_finderPathFetchByERC_G_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"externalReferenceCode", "groupId", "head"}, 0, 1,
-			false,
-			convertNullFunction(StyleBookEntry::getExternalReferenceCode),
-			StyleBookEntry::getGroupId, StyleBookEntry::isHead);
-
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G_Head,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"externalReferenceCode", "groupId", "head"}, 0, 1,
+				false,
+				convertNullFunction(StyleBookEntry::getExternalReferenceCode),
+				StyleBookEntry::getGroupId, StyleBookEntry::isHead),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "externalReferenceCode",
@@ -4712,14 +4616,13 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, StyleBookEntry::isHead));
 
-		_finderPathFetchByHeadId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, 0, 0,
-			false, StyleBookEntry::getHeadId);
-
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHeadId, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
+				new String[] {Long.class.getName()}, new String[] {"headId"}, 0,
+				0, false, StyleBookEntry::getHeadId),
+			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "headId", FinderColumn.Type.LONG, "=", true,
 				true, StyleBookEntry::getHeadId));
@@ -4796,4 +4699,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2066183318
+// LIFERAY-SERVICE-BUILDER-HASH:42692835

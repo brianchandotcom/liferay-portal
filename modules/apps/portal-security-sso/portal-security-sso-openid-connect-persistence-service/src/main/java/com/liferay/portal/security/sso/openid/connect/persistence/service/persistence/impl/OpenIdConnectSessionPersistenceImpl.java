@@ -76,9 +76,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<OpenIdConnectSession>
 		_collectionPersistenceFinderByUserId;
 
@@ -223,10 +220,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByLtAccessTokenExpirationDate;
-	private FinderPath
-		_finderPathWithPaginationCountByLtAccessTokenExpirationDate;
 	private CollectionPersistenceFinder<OpenIdConnectSession>
 		_collectionPersistenceFinderByLtAccessTokenExpirationDate;
 
@@ -386,7 +379,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {accessTokenExpirationDate});
 	}
 
-	private FinderPath _finderPathFetchByU_I;
 	private UniquePersistenceFinder<OpenIdConnectSession>
 		_uniquePersistenceFinderByU_I;
 
@@ -476,7 +468,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {userId, issuer});
 	}
 
-	private FinderPath _finderPathFetchByI_S;
 	private UniquePersistenceFinder<OpenIdConnectSession>
 		_uniquePersistenceFinderByI_S;
 
@@ -568,9 +559,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			finderCache, new Object[] {issuer, sessionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_A_C;
-	private FinderPath _finderPathCountByC_A_C;
 	private CollectionPersistenceFinder<OpenIdConnectSession>
 		_collectionPersistenceFinderByC_A_C;
 
@@ -751,7 +739,6 @@ public class OpenIdConnectSessionPersistenceImpl
 			new Object[] {companyId, authServerWellKnownURI, clientId});
 	}
 
-	private FinderPath _finderPathFetchByU_A_C;
 	private UniquePersistenceFinder<OpenIdConnectSession>
 		_uniquePersistenceFinderByU_A_C;
 
@@ -1056,28 +1043,25 @@ public class OpenIdConnectSessionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
 				_SQL_COUNT_OPENIDCONNECTSESSION_WHERE,
 				OpenIdConnectSessionModelImpl.ORDER_BY_JPQL,
@@ -1086,29 +1070,24 @@ public class OpenIdConnectSessionPersistenceImpl
 					"openIdConnectSession.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, OpenIdConnectSession::getUserId));
 
-		_finderPathWithPaginationFindByLtAccessTokenExpirationDate =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByLtAccessTokenExpirationDate",
-				new String[] {
-					Date.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"accessTokenExpirationDate"}, true);
-
-		_finderPathWithPaginationCountByLtAccessTokenExpirationDate =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"countByLtAccessTokenExpirationDate",
-				new String[] {Date.class.getName()},
-				new String[] {"accessTokenExpirationDate"}, false);
-
 		_collectionPersistenceFinderByLtAccessTokenExpirationDate =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByLtAccessTokenExpirationDate,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtAccessTokenExpirationDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accessTokenExpirationDate"}, true),
 				null,
-				_finderPathWithPaginationCountByLtAccessTokenExpirationDate,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtAccessTokenExpirationDate",
+					new String[] {Date.class.getName()},
+					new String[] {"accessTokenExpirationDate"}, false),
 				_SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
 				_SQL_COUNT_OPENIDCONNECTSESSION_WHERE,
 				OpenIdConnectSessionModelImpl.ORDER_BY_JPQL,
@@ -1118,16 +1097,15 @@ public class OpenIdConnectSessionPersistenceImpl
 					FinderColumn.Type.DATE, "<", true, true,
 					OpenIdConnectSession::getAccessTokenExpirationDate));
 
-		_finderPathFetchByU_I = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_I",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "issuer"}, 0, 2, false,
-			OpenIdConnectSession::getUserId,
-			convertNullFunction(OpenIdConnectSession::getIssuer));
-
 		_uniquePersistenceFinderByU_I = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_I, _SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_I",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "issuer"}, 0, 2, false,
+				OpenIdConnectSession::getUserId,
+				convertNullFunction(OpenIdConnectSession::getIssuer)),
+			_SQL_SELECT_OPENIDCONNECTSESSION_WHERE, "",
 			new FinderColumn<>(
 				"openIdConnectSession.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, OpenIdConnectSession::getUserId),
@@ -1135,16 +1113,15 @@ public class OpenIdConnectSessionPersistenceImpl
 				"openIdConnectSession.", "issuer", FinderColumn.Type.STRING,
 				"=", true, true, OpenIdConnectSession::getIssuer));
 
-		_finderPathFetchByI_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByI_S",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"issuer", "sessionId"}, 0, 3, false,
-			convertNullFunction(OpenIdConnectSession::getIssuer),
-			convertNullFunction(OpenIdConnectSession::getSessionId));
-
 		_uniquePersistenceFinderByI_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByI_S, _SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByI_S",
+				new String[] {String.class.getName(), String.class.getName()},
+				new String[] {"issuer", "sessionId"}, 0, 3, false,
+				convertNullFunction(OpenIdConnectSession::getIssuer),
+				convertNullFunction(OpenIdConnectSession::getSessionId)),
+			_SQL_SELECT_OPENIDCONNECTSESSION_WHERE, "",
 			new FinderColumn<>(
 				"openIdConnectSession.", "issuer", FinderColumn.Type.STRING,
 				"=", true, true, OpenIdConnectSession::getIssuer),
@@ -1152,37 +1129,39 @@ public class OpenIdConnectSessionPersistenceImpl
 				"openIdConnectSession.", "sessionId", FinderColumn.Type.STRING,
 				"=", true, true, OpenIdConnectSession::getSessionId));
 
-		_finderPathWithPaginationFindByC_A_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_A_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"}, 0,
-			6, true, null);
-
-		_finderPathCountByC_A_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"}, 0,
-			6, false, null);
-
 		_collectionPersistenceFinderByC_A_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A_C,
-			_finderPathWithoutPaginationFindByC_A_C, _finderPathCountByC_A_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {
+					"companyId", "authServerWellKnownURI", "clientId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"companyId", "authServerWellKnownURI", "clientId"
+				},
+				0, 6, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"companyId", "authServerWellKnownURI", "clientId"
+				},
+				0, 6, false, null),
 			_SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
 			_SQL_COUNT_OPENIDCONNECTSESSION_WHERE,
 			OpenIdConnectSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1198,20 +1177,19 @@ public class OpenIdConnectSessionPersistenceImpl
 				"openIdConnectSession.", "clientId", FinderColumn.Type.STRING,
 				"=", true, true, OpenIdConnectSession::getClientId));
 
-		_finderPathFetchByU_A_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_A_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"userId", "authServerWellKnownURI", "clientId"}, 0, 6,
-			false, OpenIdConnectSession::getUserId,
-			convertNullFunction(
-				OpenIdConnectSession::getAuthServerWellKnownURI),
-			convertNullFunction(OpenIdConnectSession::getClientId));
-
 		_uniquePersistenceFinderByU_A_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_A_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_A_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"userId", "authServerWellKnownURI", "clientId"},
+				0, 6, false, OpenIdConnectSession::getUserId,
+				convertNullFunction(
+					OpenIdConnectSession::getAuthServerWellKnownURI),
+				convertNullFunction(OpenIdConnectSession::getClientId)),
 			_SQL_SELECT_OPENIDCONNECTSESSION_WHERE, "",
 			new FinderColumn<>(
 				"openIdConnectSession.", "userId", FinderColumn.Type.LONG, "=",
@@ -1290,4 +1268,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1317148912
+// LIFERAY-SERVICE-BUILDER-HASH:-1781544844

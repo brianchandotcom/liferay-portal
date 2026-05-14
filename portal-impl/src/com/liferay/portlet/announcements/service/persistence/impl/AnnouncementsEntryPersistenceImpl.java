@@ -83,9 +83,6 @@ public class AnnouncementsEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -296,9 +293,6 @@ public class AnnouncementsEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -527,9 +521,6 @@ public class AnnouncementsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -743,9 +734,6 @@ public class AnnouncementsEntryPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByUserId;
 
@@ -956,9 +944,6 @@ public class AnnouncementsEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByC_C;
 
@@ -1190,9 +1175,6 @@ public class AnnouncementsEntryPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByC_C_C;
 
@@ -1446,9 +1428,6 @@ public class AnnouncementsEntryPersistenceImpl
 			new Object[] {companyId, classNameId, classPK}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_A;
-	private FinderPath _finderPathCountByC_C_A;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByC_C_A;
 
@@ -1700,9 +1679,6 @@ public class AnnouncementsEntryPersistenceImpl
 			new Object[] {classNameId, classPK, alert});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C_A;
-	private FinderPath _finderPathCountByC_C_C_A;
 	private FilterCollectionPersistenceFinder<AnnouncementsEntry>
 		_collectionPersistenceFinderByC_C_C_A;
 
@@ -2311,81 +2287,74 @@ public class AnnouncementsEntryPersistenceImpl
 	 * Initializes the announcements entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, AnnouncementsEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2395,121 +2364,111 @@ public class AnnouncementsEntryPersistenceImpl
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
-				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
-				new FinderColumn<>(
-					"announcementsEntry.", "userId", FinderColumn.Type.LONG,
-					"=", true, true, AnnouncementsEntry::getUserId));
-
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
-		_collectionPersistenceFinderByC_C =
-			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C,
-				_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
+					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
+					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"announcementsEntry.", "userId", FinderColumn.Type.LONG,
+					"=", true, true, AnnouncementsEntry::getUserId));
+
+		_collectionPersistenceFinderByC_C =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"classNameId", "classPK"}, false),
+				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
+				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2520,45 +2479,45 @@ public class AnnouncementsEntryPersistenceImpl
 					"announcementsEntry.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_C,
-				_finderPathWithoutPaginationFindByC_C_C,
-				_finderPathCountByC_C_C, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"companyId", "classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"companyId", "classNameId", "classPK"},
+					false),
+				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2572,47 +2531,44 @@ public class AnnouncementsEntryPersistenceImpl
 					"announcementsEntry.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "alert"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "alert"}, true);
-
-		_finderPathCountByC_C_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "alert"}, false);
-
 		_collectionPersistenceFinderByC_C_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_A,
-				_finderPathWithoutPaginationFindByC_C_A,
-				_finderPathCountByC_C_A, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "alert"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "alert"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "alert"}, false),
+				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2626,51 +2582,53 @@ public class AnnouncementsEntryPersistenceImpl
 					"announcementsEntry.", "alert", FinderColumn.Type.BOOLEAN,
 					"=", true, true, AnnouncementsEntry::isAlert));
 
-		_finderPathWithPaginationFindByC_C_C_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "alert"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_C_C_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "alert"},
-			true);
-
-		_finderPathCountByC_C_C_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "alert"},
-			false);
-
 		_collectionPersistenceFinderByC_C_C_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_C_A,
-				_finderPathWithoutPaginationFindByC_C_C_A,
-				_finderPathCountByC_C_C_A, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "alert"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "alert"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "alert"
+					},
+					false),
+				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
+					"announcementsEntry", "AnnouncementsEntry",
+					"announcementsEntry.entryId",
+					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
+					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
+					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
+					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
 					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2708,27 +2666,6 @@ public class AnnouncementsEntryPersistenceImpl
 	private static final String _SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE =
 		"SELECT COUNT(announcementsEntry) FROM AnnouncementsEntry announcementsEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"announcementsEntry.entryId";
-
-	private static final String _FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE =
-		"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId";
-
-	private static final String _FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE =
-		"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "announcementsEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "AnnouncementsEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnnouncementsEntry exists with the key {";
 
@@ -2741,4 +2678,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:135841736
+// LIFERAY-SERVICE-BUILDER-HASH:347922595

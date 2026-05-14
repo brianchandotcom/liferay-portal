@@ -88,9 +88,6 @@ public class EmailAddressPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByUuid;
 
@@ -231,9 +228,6 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -389,9 +383,6 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -536,9 +527,6 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByUserId;
 
@@ -680,9 +668,6 @@ public class EmailAddressPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByC_C;
 
@@ -842,9 +827,6 @@ public class EmailAddressPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByC_C_C;
 
@@ -1016,9 +998,6 @@ public class EmailAddressPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C_P;
-	private FinderPath _finderPathCountByC_C_C_P;
 	private CollectionPersistenceFinder<EmailAddress>
 		_collectionPersistenceFinderByC_C_C_P;
 
@@ -1205,7 +1184,6 @@ public class EmailAddressPersistenceImpl
 			new Object[] {companyId, classNameId, classPK, primary});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<EmailAddress>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1665,58 +1643,49 @@ public class EmailAddressPersistenceImpl
 	 * Initializes the email address persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"emailAddress.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, EmailAddress::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_EMAILADDRESS_WHERE,
-				_SQL_COUNT_EMAILADDRESS_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1725,85 +1694,74 @@ public class EmailAddressPersistenceImpl
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_EMAILADDRESS_WHERE,
-				_SQL_COUNT_EMAILADDRESS_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getCompanyId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_EMAILADDRESS_WHERE,
-				_SQL_COUNT_EMAILADDRESS_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getUserId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1813,32 +1771,30 @@ public class EmailAddressPersistenceImpl
 				"emailAddress.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, EmailAddress::getClassNameId));
 
-		_finderPathWithPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_C,
-			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1851,41 +1807,42 @@ public class EmailAddressPersistenceImpl
 				"emailAddress.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, EmailAddress::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "primary_"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_C_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "primary_"},
-			true);
-
-		_finderPathCountByC_C_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "primary_"},
-			false);
-
 		_collectionPersistenceFinderByC_C_C_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_C_P,
-				_finderPathWithoutPaginationFindByC_C_C_P,
-				_finderPathCountByC_C_C_P, _SQL_SELECT_EMAILADDRESS_WHERE,
-				_SQL_COUNT_EMAILADDRESS_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "primary_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "primary_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "primary_"
+					},
+					false),
+				_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
 				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1900,15 +1857,16 @@ public class EmailAddressPersistenceImpl
 					"emailAddress.", "primary", FinderColumn.Type.BOOLEAN, "=",
 					true, true, EmailAddress::isPrimary));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(EmailAddress::getExternalReferenceCode),
-			EmailAddress::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_EMAILADDRESS_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(EmailAddress::getExternalReferenceCode),
+				EmailAddress::getCompanyId),
+			_SQL_SELECT_EMAILADDRESS_WHERE, "",
 			new FinderColumn<>(
 				"emailAddress.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1953,4 +1911,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-14151854
+// LIFERAY-SERVICE-BUILDER-HASH:81329556

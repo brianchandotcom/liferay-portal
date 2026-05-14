@@ -77,9 +77,6 @@ public class PatcherProductVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByFixDeliveryMethod;
-	private FinderPath _finderPathWithoutPaginationFindByFixDeliveryMethod;
-	private FinderPath _finderPathCountByFixDeliveryMethod;
 	private FilterCollectionPersistenceFinder<PatcherProductVersion>
 		_collectionPersistenceFinderByFixDeliveryMethod;
 
@@ -300,7 +297,6 @@ public class PatcherProductVersionPersistenceImpl
 			finderCache, new Object[] {fixDeliveryMethod});
 	}
 
-	private FinderPath _finderPathFetchByName;
 	private UniquePersistenceFinder<PatcherProductVersion>
 		_uniquePersistenceFinderByName;
 
@@ -596,41 +592,41 @@ public class PatcherProductVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByFixDeliveryMethod = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFixDeliveryMethod",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"fixDeliveryMethod"}, true);
-
-		_finderPathWithoutPaginationFindByFixDeliveryMethod = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByFixDeliveryMethod", new String[] {Integer.class.getName()},
-			new String[] {"fixDeliveryMethod"}, true);
-
-		_finderPathCountByFixDeliveryMethod = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByFixDeliveryMethod", new String[] {Integer.class.getName()},
-			new String[] {"fixDeliveryMethod"}, false);
-
 		_collectionPersistenceFinderByFixDeliveryMethod =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFixDeliveryMethod,
-				_finderPathWithoutPaginationFindByFixDeliveryMethod,
-				_finderPathCountByFixDeliveryMethod,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFixDeliveryMethod",
+					new String[] {
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fixDeliveryMethod"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFixDeliveryMethod",
+					new String[] {Integer.class.getName()},
+					new String[] {"fixDeliveryMethod"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFixDeliveryMethod",
+					new String[] {Integer.class.getName()},
+					new String[] {"fixDeliveryMethod"}, false),
 				_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE,
 				_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
 				PatcherProductVersionModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherProductVersionImpl.class,
-					PatcherProductVersion.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE,
-					_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
+					PatcherProductVersion.class, "patcherProductVersion",
+					"OSBPatcher_PProductVersion",
+					"patcherProductVersion.patcherProductVersionId",
+					"SELECT DISTINCT {patcherProductVersion.*} FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ",
+					"SELECT {OSBPatcher_PProductVersion.*} FROM (SELECT DISTINCT patcherProductVersion.patcherProductVersionId FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PProductVersion ON TEMP_TABLE.patcherProductVersionId = OSBPatcher_PProductVersion.patcherProductVersionId",
+					"SELECT COUNT(DISTINCT patcherProductVersion.patcherProductVersionId) AS COUNT_VALUE FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ",
 					PatcherProductVersionModelImpl.ORDER_BY_SQL,
 					PatcherProductVersionModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -639,13 +635,12 @@ public class PatcherProductVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					PatcherProductVersion::getFixDeliveryMethod));
 
-		_finderPathFetchByName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, convertNullFunction(PatcherProductVersion::getName));
-
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByName,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false, convertNullFunction(PatcherProductVersion::getName)),
 			_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE, "",
 			new FinderColumn<>(
 				"patcherProductVersion.", "name", FinderColumn.Type.STRING, "=",
@@ -705,28 +700,6 @@ public class PatcherProductVersionPersistenceImpl
 	private static final String _SQL_COUNT_PATCHERPRODUCTVERSION_WHERE =
 		"SELECT COUNT(patcherProductVersion) FROM PatcherProductVersion patcherProductVersion WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"patcherProductVersion.patcherProductVersionId";
-
-	private static final String _FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE =
-		"SELECT DISTINCT {patcherProductVersion.*} FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {OSBPatcher_PProductVersion.*} FROM (SELECT DISTINCT patcherProductVersion.patcherProductVersionId FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PATCHERPRODUCTVERSION_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN OSBPatcher_PProductVersion ON TEMP_TABLE.patcherProductVersionId = OSBPatcher_PProductVersion.patcherProductVersionId";
-
-	private static final String _FILTER_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE =
-		"SELECT COUNT(DISTINCT patcherProductVersion.patcherProductVersionId) AS COUNT_VALUE FROM OSBPatcher_PProductVersion patcherProductVersion WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "patcherProductVersion";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"OSBPatcher_PProductVersion";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherProductVersion exists with the key {";
 
@@ -739,4 +712,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-14033196
+// LIFERAY-SERVICE-BUILDER-HASH:-128934592

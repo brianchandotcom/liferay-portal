@@ -66,7 +66,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByName;
 	private UniquePersistenceFinder<UndefinedDefaultOrderEntry>
 		_uniquePersistenceFinderByName;
 
@@ -153,9 +152,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 			finderCache, new Object[] {name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByName_Collection;
-	private FinderPath _finderPathWithoutPaginationFindByName_Collection;
-	private FinderPath _finderPathCountByName_Collection;
 	private CollectionPersistenceFinder<UndefinedDefaultOrderEntry>
 		_collectionPersistenceFinderByName_Collection;
 
@@ -505,41 +501,40 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	 * Initializes the undefined default order entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, convertNullFunction(UndefinedDefaultOrderEntry::getName));
-
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByName,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false,
+				convertNullFunction(UndefinedDefaultOrderEntry::getName)),
 			_SQL_SELECT_UNDEFINEDDEFAULTORDERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"undefinedDefaultOrderEntry.", "name", FinderColumn.Type.STRING,
 				"=", true, true, UndefinedDefaultOrderEntry::getName));
 
-		_finderPathWithPaginationFindByName_Collection = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName_Collection",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"name"}, true);
-
-		_finderPathWithoutPaginationFindByName_Collection = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName_Collection",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			true, null);
-
-		_finderPathCountByName_Collection = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Collection",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByName_Collection =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByName_Collection,
-				_finderPathWithoutPaginationFindByName_Collection,
-				_finderPathCountByName_Collection,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByName_Collection",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByName_Collection",
+					new String[] {String.class.getName()},
+					new String[] {"name"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByName_Collection",
+					new String[] {String.class.getName()},
+					new String[] {"name"}, 0, 1, false, null),
 				_SQL_SELECT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
 				_SQL_COUNT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
 				UndefinedDefaultOrderEntryModelImpl.ORDER_BY_JPQL,
@@ -588,4 +583,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:776159358
+// LIFERAY-SERVICE-BUILDER-HASH:-2105529216

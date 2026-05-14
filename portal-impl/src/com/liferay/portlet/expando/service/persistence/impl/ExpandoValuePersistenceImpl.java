@@ -74,9 +74,6 @@ public class ExpandoValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByTableId;
-	private FinderPath _finderPathWithoutPaginationFindByTableId;
-	private FinderPath _finderPathCountByTableId;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByTableId;
 
@@ -219,9 +216,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByColumnId;
-	private FinderPath _finderPathWithoutPaginationFindByColumnId;
-	private FinderPath _finderPathCountByColumnId;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByColumnId;
 
@@ -366,9 +360,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {columnId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRowId;
-	private FinderPath _finderPathWithoutPaginationFindByRowId;
-	private FinderPath _finderPathCountByRowId;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByRowId;
 
@@ -510,9 +501,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {rowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_C;
-	private FinderPath _finderPathWithoutPaginationFindByT_C;
-	private FinderPath _finderPathCountByT_C;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_C;
 
@@ -668,9 +656,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_R;
-	private FinderPath _finderPathWithoutPaginationFindByT_R;
-	private FinderPath _finderPathCountByT_R;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_R;
 
@@ -825,9 +810,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_CPK;
-	private FinderPath _finderPathWithoutPaginationFindByT_CPK;
-	private FinderPath _finderPathCountByT_CPK;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_CPK;
 
@@ -983,7 +965,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByC_R;
 	private UniquePersistenceFinder<ExpandoValue> _uniquePersistenceFinderByC_R;
 
 	/**
@@ -1073,9 +1054,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {columnId, rowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByC_C;
 
@@ -1234,7 +1212,6 @@ public class ExpandoValuePersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByT_C_C;
 	private UniquePersistenceFinder<ExpandoValue>
 		_uniquePersistenceFinderByT_C_C;
 
@@ -1334,9 +1311,6 @@ public class ExpandoValuePersistenceImpl
 			new Object[] {tableId, columnId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_C_D;
-	private FinderPath _finderPathWithoutPaginationFindByT_C_D;
-	private FinderPath _finderPathCountByT_C_D;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_C_D;
 
@@ -1764,112 +1738,97 @@ public class ExpandoValuePersistenceImpl
 	 * Initializes the expando value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"tableId"}, true);
-
-		_finderPathWithoutPaginationFindByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTableId",
-			new String[] {Long.class.getName()}, new String[] {"tableId"},
-			true);
-
-		_finderPathCountByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTableId",
-			new String[] {Long.class.getName()}, new String[] {"tableId"},
-			false);
-
 		_collectionPersistenceFinderByTableId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByTableId,
-				_finderPathWithoutPaginationFindByTableId,
-				_finderPathCountByTableId, _SQL_SELECT_EXPANDOVALUE_WHERE,
-				_SQL_COUNT_EXPANDOVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"tableId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTableId",
+					new String[] {Long.class.getName()},
+					new String[] {"tableId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTableId",
+					new String[] {Long.class.getName()},
+					new String[] {"tableId"}, false),
+				_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoValue.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getTableId));
 
-		_finderPathWithPaginationFindByColumnId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByColumnId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"columnId"}, true);
-
-		_finderPathWithoutPaginationFindByColumnId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByColumnId",
-			new String[] {Long.class.getName()}, new String[] {"columnId"},
-			true);
-
-		_finderPathCountByColumnId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByColumnId",
-			new String[] {Long.class.getName()}, new String[] {"columnId"},
-			false);
-
 		_collectionPersistenceFinderByColumnId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByColumnId,
-				_finderPathWithoutPaginationFindByColumnId,
-				_finderPathCountByColumnId, _SQL_SELECT_EXPANDOVALUE_WHERE,
-				_SQL_COUNT_EXPANDOVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByColumnId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"columnId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByColumnId",
+					new String[] {Long.class.getName()},
+					new String[] {"columnId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByColumnId", new String[] {Long.class.getName()},
+					new String[] {"columnId"}, false),
+				_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoValue.", "columnId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getColumnId));
 
-		_finderPathWithPaginationFindByRowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRowId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"rowId_"}, true);
-
-		_finderPathWithoutPaginationFindByRowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRowId",
-			new String[] {Long.class.getName()}, new String[] {"rowId_"}, true);
-
-		_finderPathCountByRowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRowId",
-			new String[] {Long.class.getName()}, new String[] {"rowId_"},
-			false);
-
 		_collectionPersistenceFinderByRowId = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByRowId,
-			_finderPathWithoutPaginationFindByRowId, _finderPathCountByRowId,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRowId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"rowId_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRowId",
+				new String[] {Long.class.getName()}, new String[] {"rowId_"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRowId",
+				new String[] {Long.class.getName()}, new String[] {"rowId_"},
+				false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
 
-		_finderPathWithPaginationFindByT_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "columnId"}, true);
-
-		_finderPathWithoutPaginationFindByT_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "columnId"}, true);
-
-		_finderPathCountByT_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "columnId"}, false);
-
 		_collectionPersistenceFinderByT_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_C,
-			_finderPathWithoutPaginationFindByT_C, _finderPathCountByT_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "columnId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "columnId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "columnId"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1879,28 +1838,24 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId));
 
-		_finderPathWithPaginationFindByT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "rowId_"}, true);
-
-		_finderPathWithoutPaginationFindByT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "rowId_"}, true);
-
-		_finderPathCountByT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "rowId_"}, false);
-
 		_collectionPersistenceFinderByT_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_R,
-			_finderPathWithoutPaginationFindByT_R, _finderPathCountByT_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_R",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "rowId_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "rowId_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "rowId_"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1910,28 +1865,24 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
 
-		_finderPathWithPaginationFindByT_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_CPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByT_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, true);
-
-		_finderPathCountByT_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, false);
-
 		_collectionPersistenceFinderByT_CPK = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_CPK,
-			_finderPathWithoutPaginationFindByT_CPK, _finderPathCountByT_CPK,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_CPK",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "classPK"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1941,14 +1892,14 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathFetchByC_R = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"columnId", "rowId_"}, 0, 0, false,
-			ExpandoValue::getColumnId, ExpandoValue::getRowId);
-
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R, _SQL_SELECT_EXPANDOVALUE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"columnId", "rowId_"}, 0, 0, false,
+				ExpandoValue::getColumnId, ExpandoValue::getRowId),
+			_SQL_SELECT_EXPANDOVALUE_WHERE, "",
 			new FinderColumn<>(
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId),
@@ -1956,28 +1907,24 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1987,17 +1934,18 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathFetchByT_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByT_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"tableId", "columnId", "classPK"}, 0, 0, false,
-			ExpandoValue::getTableId, ExpandoValue::getColumnId,
-			ExpandoValue::getClassPK);
-
 		_uniquePersistenceFinderByT_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByT_C_C, _SQL_SELECT_EXPANDOVALUE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByT_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"tableId", "columnId", "classPK"}, 0, 0, false,
+				ExpandoValue::getTableId, ExpandoValue::getColumnId,
+				ExpandoValue::getClassPK),
+			_SQL_SELECT_EXPANDOVALUE_WHERE, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
@@ -2008,34 +1956,32 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathWithPaginationFindByT_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "columnId", "data_"}, true);
-
-		_finderPathWithoutPaginationFindByT_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"tableId", "columnId", "data_"}, 0, 4, true, null);
-
-		_finderPathCountByT_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"tableId", "columnId", "data_"}, 0, 4, false, null);
-
 		_collectionPersistenceFinderByT_C_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_C_D,
-			_finderPathWithoutPaginationFindByT_C_D, _finderPathCountByT_C_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "columnId", "data_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"tableId", "columnId", "data_"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"tableId", "columnId", "data_"}, 0, 4, false,
+				null),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2084,4 +2030,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1665029282
+// LIFERAY-SERVICE-BUILDER-HASH:-682227923

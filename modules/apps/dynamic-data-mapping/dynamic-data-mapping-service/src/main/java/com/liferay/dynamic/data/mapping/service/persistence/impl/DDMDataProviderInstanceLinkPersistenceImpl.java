@@ -81,9 +81,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByDataProviderInstanceId;
-	private FinderPath _finderPathWithoutPaginationFindByDataProviderInstanceId;
-	private FinderPath _finderPathCountByDataProviderInstanceId;
 	private CollectionPersistenceFinder<DDMDataProviderInstanceLink>
 		_collectionPersistenceFinderByDataProviderInstanceId;
 
@@ -237,9 +234,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			finderCache, new Object[] {dataProviderInstanceId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByStructureId;
-	private FinderPath _finderPathCountByStructureId;
 	private CollectionPersistenceFinder<DDMDataProviderInstanceLink>
 		_collectionPersistenceFinderByStructureId;
 
@@ -388,7 +382,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			finderCache, new Object[] {structureId});
 	}
 
-	private FinderPath _finderPathFetchByD_S;
 	private UniquePersistenceFinder<DDMDataProviderInstanceLink>
 		_uniquePersistenceFinderByD_S;
 
@@ -748,33 +741,28 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByDataProviderInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByDataProviderInstanceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"dataProviderInstanceId"}, true);
-
-		_finderPathWithoutPaginationFindByDataProviderInstanceId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByDataProviderInstanceId",
-				new String[] {Long.class.getName()},
-				new String[] {"dataProviderInstanceId"}, true);
-
-		_finderPathCountByDataProviderInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByDataProviderInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"dataProviderInstanceId"}, false);
-
 		_collectionPersistenceFinderByDataProviderInstanceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDataProviderInstanceId,
-				_finderPathWithoutPaginationFindByDataProviderInstanceId,
-				_finderPathCountByDataProviderInstanceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDataProviderInstanceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"dataProviderInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDataProviderInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"dataProviderInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDataProviderInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"dataProviderInstanceId"}, false),
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				DDMDataProviderInstanceLinkModelImpl.ORDER_BY_JPQL,
@@ -784,29 +772,25 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMDataProviderInstanceLink::getDataProviderInstanceId));
 
-		_finderPathWithPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			true);
-
-		_finderPathCountByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			false);
-
 		_collectionPersistenceFinderByStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureId,
-				_finderPathWithoutPaginationFindByStructureId,
-				_finderPathCountByStructureId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, false),
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				DDMDataProviderInstanceLinkModelImpl.ORDER_BY_JPQL,
@@ -816,15 +800,14 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMDataProviderInstanceLink::getStructureId));
 
-		_finderPathFetchByD_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByD_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"dataProviderInstanceId", "structureId"}, 0, 0, false,
-			DDMDataProviderInstanceLink::getDataProviderInstanceId,
-			DDMDataProviderInstanceLink::getStructureId);
-
 		_uniquePersistenceFinderByD_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByD_S,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByD_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"dataProviderInstanceId", "structureId"}, 0, 0,
+				false, DDMDataProviderInstanceLink::getDataProviderInstanceId,
+				DDMDataProviderInstanceLink::getStructureId),
 			_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE, "",
 			new FinderColumn<>(
 				"ddmDataProviderInstanceLink.", "dataProviderInstanceId",
@@ -905,4 +888,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2109580059
+// LIFERAY-SERVICE-BUILDER-HASH:2008493743

@@ -67,9 +67,6 @@ public class UserIdMapperPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<UserIdMapper>
 		_collectionPersistenceFinderByUserId;
 
@@ -211,7 +208,6 @@ public class UserIdMapperPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByU_T;
 	private UniquePersistenceFinder<UserIdMapper> _uniquePersistenceFinderByU_T;
 
 	/**
@@ -301,7 +297,6 @@ public class UserIdMapperPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, type});
 	}
 
-	private FinderPath _finderPathFetchByT_E;
 	private UniquePersistenceFinder<UserIdMapper> _uniquePersistenceFinderByT_E;
 
 	/**
@@ -578,43 +573,40 @@ public class UserIdMapperPersistenceImpl
 	 * Initializes the user ID mapper persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_USERIDMAPPER_WHERE,
-				_SQL_COUNT_USERIDMAPPER_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_USERIDMAPPER_WHERE, _SQL_COUNT_USERIDMAPPER_WHERE,
 				UserIdMapperModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userIdMapper.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserIdMapper::getUserId));
 
-		_finderPathFetchByU_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, 0, 2, false,
-			UserIdMapper::getUserId,
-			convertNullFunction(UserIdMapper::getType));
-
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_T, _SQL_SELECT_USERIDMAPPER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "type_"}, 0, 2, false,
+				UserIdMapper::getUserId,
+				convertNullFunction(UserIdMapper::getType)),
+			_SQL_SELECT_USERIDMAPPER_WHERE, "",
 			new FinderColumn<>(
 				"userIdMapper.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, UserIdMapper::getUserId),
@@ -622,15 +614,15 @@ public class UserIdMapperPersistenceImpl
 				"userIdMapper.", "type", FinderColumn.Type.STRING, "=", true,
 				true, UserIdMapper::getType));
 
-		_finderPathFetchByT_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"type_", "externalUserId"}, 0, 3, false,
-			convertNullFunction(UserIdMapper::getType),
-			convertNullFunction(UserIdMapper::getExternalUserId));
-
 		_uniquePersistenceFinderByT_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByT_E, _SQL_SELECT_USERIDMAPPER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
+				new String[] {String.class.getName(), String.class.getName()},
+				new String[] {"type_", "externalUserId"}, 0, 3, false,
+				convertNullFunction(UserIdMapper::getType),
+				convertNullFunction(UserIdMapper::getExternalUserId)),
+			_SQL_SELECT_USERIDMAPPER_WHERE, "",
 			new FinderColumn<>(
 				"userIdMapper.", "type", FinderColumn.Type.STRING, "=", true,
 				true, UserIdMapper::getType),
@@ -674,4 +666,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-499589595
+// LIFERAY-SERVICE-BUILDER-HASH:-1200939995

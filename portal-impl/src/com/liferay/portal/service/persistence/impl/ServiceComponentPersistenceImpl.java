@@ -67,9 +67,6 @@ public class ServiceComponentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByBuildNamespace;
-	private FinderPath _finderPathWithoutPaginationFindByBuildNamespace;
-	private FinderPath _finderPathCountByBuildNamespace;
 	private CollectionPersistenceFinder<ServiceComponent>
 		_collectionPersistenceFinderByBuildNamespace;
 
@@ -217,7 +214,6 @@ public class ServiceComponentPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {buildNamespace});
 	}
 
-	private FinderPath _finderPathFetchByBNS_BNU;
 	private UniquePersistenceFinder<ServiceComponent>
 		_uniquePersistenceFinderByBNS_BNU;
 
@@ -501,29 +497,28 @@ public class ServiceComponentPersistenceImpl
 	 * Initializes the service component persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByBuildNamespace = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBuildNamespace",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"buildNamespace"}, true);
-
-		_finderPathWithoutPaginationFindByBuildNamespace = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBuildNamespace",
-			new String[] {String.class.getName()},
-			new String[] {"buildNamespace"}, 0, 1, true, null);
-
-		_finderPathCountByBuildNamespace = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBuildNamespace",
-			new String[] {String.class.getName()},
-			new String[] {"buildNamespace"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByBuildNamespace =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByBuildNamespace,
-				_finderPathWithoutPaginationFindByBuildNamespace,
-				_finderPathCountByBuildNamespace,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByBuildNamespace",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"buildNamespace"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByBuildNamespace",
+					new String[] {String.class.getName()},
+					new String[] {"buildNamespace"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByBuildNamespace",
+					new String[] {String.class.getName()},
+					new String[] {"buildNamespace"}, 0, 1, false, null),
 				_SQL_SELECT_SERVICECOMPONENT_WHERE,
 				_SQL_COUNT_SERVICECOMPONENT_WHERE,
 				ServiceComponentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -533,16 +528,15 @@ public class ServiceComponentPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					ServiceComponent::getBuildNamespace));
 
-		_finderPathFetchByBNS_BNU = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByBNS_BNU",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"buildNamespace", "buildNumber"}, 0, 1, false,
-			convertNullFunction(ServiceComponent::getBuildNamespace),
-			ServiceComponent::getBuildNumber);
-
 		_uniquePersistenceFinderByBNS_BNU = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByBNS_BNU, _SQL_SELECT_SERVICECOMPONENT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByBNS_BNU",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"buildNamespace", "buildNumber"}, 0, 1, false,
+				convertNullFunction(ServiceComponent::getBuildNamespace),
+				ServiceComponent::getBuildNumber),
+			_SQL_SELECT_SERVICECOMPONENT_WHERE, "",
 			new FinderColumn<>(
 				"serviceComponent.", "buildNamespace", FinderColumn.Type.STRING,
 				"=", true, true, ServiceComponent::getBuildNamespace),
@@ -586,4 +580,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1596841481
+// LIFERAY-SERVICE-BUILDER-HASH:-1527880538

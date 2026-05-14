@@ -16,7 +16,6 @@ import com.liferay.document.library.service.persistence.impl.constants.DLPersist
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -69,7 +68,6 @@ public class DLStorageQuotaPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByCompanyId;
 	private UniquePersistenceFinder<DLStorageQuota>
 		_uniquePersistenceFinderByCompanyId;
 
@@ -330,14 +328,13 @@ public class DLStorageQuotaPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByCompanyId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"}, 0,
-			0, false, DLStorageQuota::getCompanyId);
-
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCompanyId, _SQL_SELECT_DLSTORAGEQUOTA_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
+				new String[] {Long.class.getName()}, new String[] {"companyId"},
+				0, 0, false, DLStorageQuota::getCompanyId),
+			_SQL_SELECT_DLSTORAGEQUOTA_WHERE, "",
 			new FinderColumn<>(
 				"dlStorageQuota.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, DLStorageQuota::getCompanyId));
@@ -402,4 +399,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:275290629
+// LIFERAY-SERVICE-BUILDER-HASH:-600788304

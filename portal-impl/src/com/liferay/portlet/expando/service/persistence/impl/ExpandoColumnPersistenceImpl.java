@@ -79,9 +79,6 @@ public class ExpandoColumnPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByTableId;
-	private FinderPath _finderPathWithoutPaginationFindByTableId;
-	private FinderPath _finderPathCountByTableId;
 	private FilterCollectionPersistenceFinder<ExpandoColumn>
 		_collectionPersistenceFinderByTableId;
 
@@ -290,10 +287,6 @@ public class ExpandoColumnPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_N;
-	private FinderPath _finderPathWithoutPaginationFindByT_N;
-	private FinderPath _finderPathFetchByT_N;
-	private FinderPath _finderPathCountByT_N;
 	private FilterCollectionPersistenceFinder<ExpandoColumn>
 		_collectionPersistenceFinderByT_N;
 	private UniquePersistenceFinder<ExpandoColumn>
@@ -803,85 +796,68 @@ public class ExpandoColumnPersistenceImpl
 	 * Initializes the expando column persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"tableId"}, true);
-
-		_finderPathWithoutPaginationFindByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTableId",
-			new String[] {Long.class.getName()}, new String[] {"tableId"},
-			true);
-
-		_finderPathCountByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTableId",
-			new String[] {Long.class.getName()}, new String[] {"tableId"},
-			false);
-
 		_collectionPersistenceFinderByTableId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByTableId,
-				_finderPathWithoutPaginationFindByTableId,
-				_finderPathCountByTableId, _SQL_SELECT_EXPANDOCOLUMN_WHERE,
-				_SQL_COUNT_EXPANDOCOLUMN_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"tableId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTableId",
+					new String[] {Long.class.getName()},
+					new String[] {"tableId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTableId",
+					new String[] {Long.class.getName()},
+					new String[] {"tableId"}, false),
+				_SQL_SELECT_EXPANDOCOLUMN_WHERE, _SQL_COUNT_EXPANDOCOLUMN_WHERE,
 				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ExpandoColumnImpl.class, ExpandoColumn.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE,
-					_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE,
+					"expandoColumn", "ExpandoColumn", "expandoColumn.columnId",
+					"SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ",
+					"SELECT {ExpandoColumn.*} FROM (SELECT DISTINCT expandoColumn.columnId FROM ExpandoColumn expandoColumn WHERE ",
+					") TEMP_TABLE INNER JOIN ExpandoColumn ON TEMP_TABLE.columnId = ExpandoColumn.columnId",
+					"SELECT COUNT(DISTINCT expandoColumn.columnId) AS COUNT_VALUE FROM ExpandoColumn expandoColumn WHERE ",
 					ExpandoColumnModelImpl.ORDER_BY_SQL,
 					ExpandoColumnModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoColumn::getTableId));
 
-		_finderPathWithPaginationFindByT_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByT_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"tableId", "name"}, 0, 2, true, null);
-
-		_finderPathFetchByT_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"tableId", "name"}, 0, 2, false,
-			ExpandoColumn::getTableId,
-			convertNullFunction(ExpandoColumn::getName));
-
-		_finderPathCountByT_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByT_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"tableId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByT_N =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByT_N,
-				_finderPathWithoutPaginationFindByT_N, _finderPathCountByT_N,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_N",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"tableId", "name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_N",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"tableId", "name"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByT_N",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"tableId", "name"}, 0, 2, false, null),
 				_SQL_SELECT_EXPANDOCOLUMN_WHERE, _SQL_COUNT_EXPANDOCOLUMN_WHERE,
 				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ExpandoColumnImpl.class, ExpandoColumn.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE,
-					_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE,
+					"expandoColumn", "ExpandoColumn", "expandoColumn.columnId",
+					"SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ",
+					"SELECT {ExpandoColumn.*} FROM (SELECT DISTINCT expandoColumn.columnId FROM ExpandoColumn expandoColumn WHERE ",
+					") TEMP_TABLE INNER JOIN ExpandoColumn ON TEMP_TABLE.columnId = ExpandoColumn.columnId",
+					"SELECT COUNT(DISTINCT expandoColumn.columnId) AS COUNT_VALUE FROM ExpandoColumn expandoColumn WHERE ",
 					ExpandoColumnModelImpl.ORDER_BY_SQL,
 					ExpandoColumnModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -892,7 +868,14 @@ public class ExpandoColumnPersistenceImpl
 					false, true, true, ExpandoColumn::getName));
 
 		_uniquePersistenceFinderByT_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByT_N, _SQL_SELECT_EXPANDOCOLUMN_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"tableId", "name"}, 0, 2, false,
+				ExpandoColumn::getTableId,
+				convertNullFunction(ExpandoColumn::getName)),
+			_SQL_SELECT_EXPANDOCOLUMN_WHERE, "",
 			new FinderColumn<>(
 				"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoColumn::getTableId),
@@ -921,27 +904,6 @@ public class ExpandoColumnPersistenceImpl
 	private static final String _SQL_COUNT_EXPANDOCOLUMN_WHERE =
 		"SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"expandoColumn.columnId";
-
-	private static final String _FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE =
-		"SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {ExpandoColumn.*} FROM (SELECT DISTINCT expandoColumn.columnId FROM ExpandoColumn expandoColumn WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN ExpandoColumn ON TEMP_TABLE.columnId = ExpandoColumn.columnId";
-
-	private static final String _FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE =
-		"SELECT COUNT(DISTINCT expandoColumn.columnId) AS COUNT_VALUE FROM ExpandoColumn expandoColumn WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "expandoColumn";
-
-	private static final String _FILTER_ENTITY_TABLE = "ExpandoColumn";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ExpandoColumn exists with the key {";
 
@@ -957,4 +919,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1305482355
+// LIFERAY-SERVICE-BUILDER-HASH:-864047255

@@ -91,9 +91,6 @@ public class OAuth2ApplicationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<OAuth2Application>
 		_collectionPersistenceFinderByUuid;
 
@@ -299,9 +296,6 @@ public class OAuth2ApplicationPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<OAuth2Application>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -528,9 +522,6 @@ public class OAuth2ApplicationPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<OAuth2Application>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -742,7 +733,6 @@ public class OAuth2ApplicationPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<OAuth2Application>
 		_uniquePersistenceFinderByC_C;
 
@@ -833,9 +823,6 @@ public class OAuth2ApplicationPersistenceImpl
 			finderCache, new Object[] {companyId, clientId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_CP;
-	private FinderPath _finderPathWithoutPaginationFindByC_CP;
-	private FinderPath _finderPathCountByC_CP;
 	private FilterCollectionPersistenceFinder<OAuth2Application>
 		_collectionPersistenceFinderByC_CP;
 
@@ -1068,7 +1055,6 @@ public class OAuth2ApplicationPersistenceImpl
 			finderCache, new Object[] {companyId, clientProfile}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<OAuth2Application>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1459,81 +1445,74 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_WHERE,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OAUTH2APPLICATION_WHERE,
+					"oAuth2Application", "OAuth2Application",
+					"oAuth2Application.oAuth2ApplicationId",
+					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
+					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
+					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
+					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuth2Application::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_WHERE,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OAUTH2APPLICATION_WHERE,
+					"oAuth2Application", "OAuth2Application",
+					"oAuth2Application.oAuth2ApplicationId",
+					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
+					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
+					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
+					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1543,57 +1522,52 @@ public class OAuth2ApplicationPersistenceImpl
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_WHERE,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OAUTH2APPLICATION_WHERE,
+					"oAuth2Application", "OAuth2Application",
+					"oAuth2Application.oAuth2ApplicationId",
+					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
+					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
+					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
+					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "clientId"}, 0, 2, false,
-			OAuth2Application::getCompanyId,
-			convertNullFunction(OAuth2Application::getClientId));
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "clientId"}, 0, 2, false,
+				OAuth2Application::getCompanyId,
+				convertNullFunction(OAuth2Application::getClientId)),
+			_SQL_SELECT_OAUTH2APPLICATION_WHERE, "",
 			new FinderColumn<>(
 				"oAuth2Application.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, OAuth2Application::getCompanyId),
@@ -1601,41 +1575,41 @@ public class OAuth2ApplicationPersistenceImpl
 				"oAuth2Application.", "clientId", FinderColumn.Type.STRING, "=",
 				true, true, OAuth2Application::getClientId));
 
-		_finderPathWithPaginationFindByC_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CP",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "clientProfile"}, true);
-
-		_finderPathWithoutPaginationFindByC_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CP",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "clientProfile"}, true);
-
-		_finderPathCountByC_CP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CP",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "clientProfile"}, false);
-
 		_collectionPersistenceFinderByC_CP =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_CP,
-				_finderPathWithoutPaginationFindByC_CP, _finderPathCountByC_CP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CP",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "clientProfile"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CP",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "clientProfile"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CP",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "clientProfile"}, false),
 				_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					OAuth2ApplicationImpl.class, OAuth2Application.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_WHERE,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OAUTH2APPLICATION_WHERE,
+					"oAuth2Application", "OAuth2Application",
+					"oAuth2Application.oAuth2ApplicationId",
+					"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ",
+					"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ",
+					") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId",
+					"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ",
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL,
 					OAuth2ApplicationModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1646,16 +1620,17 @@ public class OAuth2ApplicationPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					OAuth2Application::getClientProfile));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(OAuth2Application::getExternalReferenceCode),
-			OAuth2Application::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					OAuth2Application::getExternalReferenceCode),
+				OAuth2Application::getCompanyId),
+			_SQL_SELECT_OAUTH2APPLICATION_WHERE, "",
 			new FinderColumn<>(
 				"oAuth2Application.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1718,27 +1693,6 @@ public class OAuth2ApplicationPersistenceImpl
 	private static final String _SQL_COUNT_OAUTH2APPLICATION_WHERE =
 		"SELECT COUNT(oAuth2Application) FROM OAuth2Application oAuth2Application WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"oAuth2Application.oAuth2ApplicationId";
-
-	private static final String _FILTER_SQL_SELECT_OAUTH2APPLICATION_WHERE =
-		"SELECT DISTINCT {oAuth2Application.*} FROM OAuth2Application oAuth2Application WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {OAuth2Application.*} FROM (SELECT DISTINCT oAuth2Application.oAuth2ApplicationId FROM OAuth2Application oAuth2Application WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_OAUTH2APPLICATION_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN OAuth2Application ON TEMP_TABLE.oAuth2ApplicationId = OAuth2Application.oAuth2ApplicationId";
-
-	private static final String _FILTER_SQL_COUNT_OAUTH2APPLICATION_WHERE =
-		"SELECT COUNT(DISTINCT oAuth2Application.oAuth2ApplicationId) AS COUNT_VALUE FROM OAuth2Application oAuth2Application WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "oAuth2Application";
-
-	private static final String _FILTER_ENTITY_TABLE = "OAuth2Application";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuth2Application exists with the key {";
 
@@ -1754,4 +1708,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:943572695
+// LIFERAY-SERVICE-BUILDER-HASH:1022196893

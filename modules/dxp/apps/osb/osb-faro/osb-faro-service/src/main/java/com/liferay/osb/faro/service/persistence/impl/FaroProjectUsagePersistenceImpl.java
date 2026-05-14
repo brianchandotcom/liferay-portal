@@ -16,7 +16,6 @@ import com.liferay.osb.faro.service.persistence.impl.constants.OSBFaroPersistenc
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -70,7 +69,6 @@ public class FaroProjectUsagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByF_U;
 	private UniquePersistenceFinder<FaroProjectUsage>
 		_uniquePersistenceFinderByF_U;
 
@@ -340,14 +338,15 @@ public class FaroProjectUsagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByF_U = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"faroProjectId", "usageTime"}, 0, 0, false,
-			FaroProjectUsage::getFaroProjectId, FaroProjectUsage::getUsageTime);
-
 		_uniquePersistenceFinderByF_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_U, _SQL_SELECT_FAROPROJECTUSAGE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"faroProjectId", "usageTime"}, 0, 0, false,
+				FaroProjectUsage::getFaroProjectId,
+				FaroProjectUsage::getUsageTime),
+			_SQL_SELECT_FAROPROJECTUSAGE_WHERE, "",
 			new FinderColumn<>(
 				"faroProjectUsage.", "faroProjectId", FinderColumn.Type.LONG,
 				"=", true, true, FaroProjectUsage::getFaroProjectId),
@@ -415,4 +414,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:24067300
+// LIFERAY-SERVICE-BUILDER-HASH:418401565

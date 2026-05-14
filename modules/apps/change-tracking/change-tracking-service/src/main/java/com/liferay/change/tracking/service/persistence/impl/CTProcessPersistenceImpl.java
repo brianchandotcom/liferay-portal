@@ -76,9 +76,6 @@ public class CTProcessPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<CTProcess>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -286,9 +283,6 @@ public class CTProcessPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
-	private FinderPath _finderPathCountByCtCollectionId;
 	private FilterCollectionPersistenceFinder<CTProcess>
 		_collectionPersistenceFinderByCtCollectionId;
 
@@ -499,9 +493,6 @@ public class CTProcessPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
 	private FilterCollectionPersistenceFinder<CTProcess>
 		_collectionPersistenceFinderByC_T;
 
@@ -923,114 +914,108 @@ public class CTProcessPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_CTPROCESS_WHERE,
-				_SQL_COUNT_CTPROCESS_WHERE, CTProcessModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
+				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CTPROCESS_WHERE,
-					_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CTPROCESS_WHERE,
+					CTProcessImpl.class, CTProcess.class, "ctProcess",
+					"CTProcess", "ctProcess.ctProcessId",
+					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
+					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
+					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
+					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
 					CTProcessModelImpl.ORDER_BY_SQL,
 					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCompanyId));
 
-		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false);
-
 		_collectionPersistenceFinderByCtCollectionId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtCollectionId,
-				_finderPathWithoutPaginationFindByCtCollectionId,
-				_finderPathCountByCtCollectionId, _SQL_SELECT_CTPROCESS_WHERE,
-				_SQL_COUNT_CTPROCESS_WHERE, CTProcessModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtCollectionId", new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, false),
+				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
+				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CTPROCESS_WHERE,
-					_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CTPROCESS_WHERE,
+					CTProcessImpl.class, CTProcess.class, "ctProcess",
+					"CTProcess", "ctProcess.ctProcessId",
+					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
+					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
+					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
+					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
 					CTProcessModelImpl.ORDER_BY_SQL,
 					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId));
 
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ctCollectionId", "type_"}, true);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ctCollectionId", "type_"}, false);
-
 		_collectionPersistenceFinderByC_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_T,
-				_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"ctCollectionId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"ctCollectionId", "type_"}, false),
 				_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
 				CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTProcessImpl.class, CTProcess.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CTPROCESS_WHERE,
-					_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CTPROCESS_WHERE,
+					CTProcessImpl.class, CTProcess.class, "ctProcess",
+					"CTProcess", "ctProcess.ctProcessId",
+					"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ",
+					"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ",
+					") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId",
+					"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ",
 					CTProcessModelImpl.ORDER_BY_SQL,
 					CTProcessModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1094,27 +1079,6 @@ public class CTProcessPersistenceImpl
 	private static final String _SQL_COUNT_CTPROCESS_WHERE =
 		"SELECT COUNT(ctProcess) FROM CTProcess ctProcess WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"ctProcess.ctProcessId";
-
-	private static final String _FILTER_SQL_SELECT_CTPROCESS_WHERE =
-		"SELECT DISTINCT {ctProcess.*} FROM CTProcess ctProcess WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CTProcess.*} FROM (SELECT DISTINCT ctProcess.ctProcessId FROM CTProcess ctProcess WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CTPROCESS_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CTProcess ON TEMP_TABLE.ctProcessId = CTProcess.ctProcessId";
-
-	private static final String _FILTER_SQL_COUNT_CTPROCESS_WHERE =
-		"SELECT COUNT(DISTINCT ctProcess.ctProcessId) AS COUNT_VALUE FROM CTProcess ctProcess WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "ctProcess";
-
-	private static final String _FILTER_ENTITY_TABLE = "CTProcess";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTProcess exists with the key {";
 
@@ -1127,4 +1091,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:727495553
+// LIFERAY-SERVICE-BUILDER-HASH:1775643222

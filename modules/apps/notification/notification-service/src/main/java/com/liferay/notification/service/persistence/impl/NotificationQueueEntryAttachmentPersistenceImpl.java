@@ -75,10 +75,6 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByNotificationQueueEntryId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByNotificationQueueEntryId;
-	private FinderPath _finderPathCountByNotificationQueueEntryId;
 	private CollectionPersistenceFinder<NotificationQueueEntryAttachment>
 		_collectionPersistenceFinderByNotificationQueueEntryId;
 
@@ -457,34 +453,28 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByNotificationQueueEntryId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByNotificationQueueEntryId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"notificationQueueEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByNotificationQueueEntryId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByNotificationQueueEntryId",
-				new String[] {Long.class.getName()},
-				new String[] {"notificationQueueEntryId"}, true);
-
-		_finderPathCountByNotificationQueueEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByNotificationQueueEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationQueueEntryId"}, false);
-
 		_collectionPersistenceFinderByNotificationQueueEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByNotificationQueueEntryId,
-				_finderPathWithoutPaginationFindByNotificationQueueEntryId,
-				_finderPathCountByNotificationQueueEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByNotificationQueueEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"notificationQueueEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByNotificationQueueEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationQueueEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByNotificationQueueEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationQueueEntryId"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRYATTACHMENT_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRYATTACHMENT_WHERE,
 				NotificationQueueEntryAttachmentModelImpl.ORDER_BY_JPQL,
@@ -565,4 +555,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1491251141
+// LIFERAY-SERVICE-BUILDER-HASH:-94925138

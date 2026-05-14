@@ -63,9 +63,6 @@ public class ResourceActionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByName;
-	private FinderPath _finderPathWithoutPaginationFindByName;
-	private FinderPath _finderPathCountByName;
 	private CollectionPersistenceFinder<ResourceAction>
 		_collectionPersistenceFinderByName;
 
@@ -207,7 +204,6 @@ public class ResourceActionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
-	private FinderPath _finderPathFetchByN_A;
 	private UniquePersistenceFinder<ResourceAction>
 		_uniquePersistenceFinderByN_A;
 
@@ -471,42 +467,38 @@ public class ResourceActionPersistenceImpl
 	 * Initializes the resource action persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"name"}, true);
-
-		_finderPathWithoutPaginationFindByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			true, null);
-
-		_finderPathCountByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByName = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByName,
-			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false, null),
 			_SQL_SELECT_RESOURCEACTION_WHERE, _SQL_COUNT_RESOURCEACTION_WHERE,
 			ResourceActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ResourceAction::getName));
 
-		_finderPathFetchByN_A = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"name", "actionId"}, 0, 3, false,
-			convertNullFunction(ResourceAction::getName),
-			convertNullFunction(ResourceAction::getActionId));
-
 		_uniquePersistenceFinderByN_A = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByN_A, _SQL_SELECT_RESOURCEACTION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
+				new String[] {String.class.getName(), String.class.getName()},
+				new String[] {"name", "actionId"}, 0, 3, false,
+				convertNullFunction(ResourceAction::getName),
+				convertNullFunction(ResourceAction::getActionId)),
+			_SQL_SELECT_RESOURCEACTION_WHERE, "",
 			new FinderColumn<>(
 				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ResourceAction::getName),
@@ -547,4 +539,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1401545808
+// LIFERAY-SERVICE-BUILDER-HASH:-413759394

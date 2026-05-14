@@ -72,9 +72,6 @@ public class ExpandoTablePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<ExpandoTable>
 		_collectionPersistenceFinderByC_C;
 
@@ -234,7 +231,6 @@ public class ExpandoTablePersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_N;
 	private UniquePersistenceFinder<ExpandoTable>
 		_uniquePersistenceFinderByC_C_N;
 
@@ -573,28 +569,24 @@ public class ExpandoTablePersistenceImpl
 	 * Initializes the expando table persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_EXPANDOTABLE_WHERE, _SQL_COUNT_EXPANDOTABLE_WHERE,
 			ExpandoTableModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -604,18 +596,18 @@ public class ExpandoTablePersistenceImpl
 				"expandoTable.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, ExpandoTable::getClassNameId));
 
-		_finderPathFetchByC_C_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "name"}, 0, 4, false,
-			ExpandoTable::getCompanyId, ExpandoTable::getClassNameId,
-			convertNullFunction(ExpandoTable::getName));
-
 		_uniquePersistenceFinderByC_C_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_N, _SQL_SELECT_EXPANDOTABLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "name"}, 0, 4, false,
+				ExpandoTable::getCompanyId, ExpandoTable::getClassNameId,
+				convertNullFunction(ExpandoTable::getName)),
+			_SQL_SELECT_EXPANDOTABLE_WHERE, "",
 			new FinderColumn<>(
 				"expandoTable.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoTable::getCompanyId),
@@ -659,4 +651,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1288846753
+// LIFERAY-SERVICE-BUILDER-HASH:-1193174706

@@ -88,9 +88,6 @@ public class CPDefinitionLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByUuid;
 
@@ -231,7 +228,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CPDefinitionLink>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -321,9 +317,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -478,9 +471,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathCountByCPDefinitionId;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCPDefinitionId;
 
@@ -627,9 +617,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCProductId;
-	private FinderPath _finderPathWithoutPaginationFindByCProductId;
-	private FinderPath _finderPathCountByCProductId;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCProductId;
 
@@ -776,9 +763,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CProductId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPD_T;
-	private FinderPath _finderPathWithoutPaginationFindByCPD_T;
-	private FinderPath _finderPathCountByCPD_T;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCPD_T;
 
@@ -936,9 +920,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPD_S;
-	private FinderPath _finderPathWithoutPaginationFindByCPD_S;
-	private FinderPath _finderPathCountByCPD_S;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCPD_S;
 
@@ -1095,9 +1076,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCP_T;
-	private FinderPath _finderPathWithoutPaginationFindByCP_T;
-	private FinderPath _finderPathCountByCP_T;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCP_T;
 
@@ -1252,9 +1230,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CProductId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCP_S;
-	private FinderPath _finderPathWithoutPaginationFindByCP_S;
-	private FinderPath _finderPathCountByCP_S;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCP_S;
 
@@ -1409,8 +1384,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CProductId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtD_S;
-	private FinderPath _finderPathWithPaginationCountByLtD_S;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByLtD_S;
 
@@ -1565,8 +1538,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtE_S;
-	private FinderPath _finderPathWithPaginationCountByLtE_S;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByLtE_S;
 
@@ -1723,7 +1694,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {expirationDate, status});
 	}
 
-	private FinderPath _finderPathFetchByC_C_T;
 	private UniquePersistenceFinder<CPDefinitionLink>
 		_uniquePersistenceFinderByC_C_T;
 
@@ -1827,9 +1797,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, CProductId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPD_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByCPD_T_S;
-	private FinderPath _finderPathCountByCPD_T_S;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCPD_T_S;
 
@@ -1997,9 +1964,6 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, type, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCP_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByCP_T_S;
-	private FinderPath _finderPathCountByCP_T_S;
 	private CollectionPersistenceFinder<CPDefinitionLink>
 		_collectionPersistenceFinderByCP_T_S;
 
@@ -2479,27 +2443,23 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2507,16 +2467,15 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CPDefinitionLink::getUuid),
-			CPDefinitionLink::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CPDefinitionLink::getUuid),
+				CPDefinitionLink::getGroupId),
+			_SQL_SELECT_CPDEFINITIONLINK_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getUuid),
@@ -2524,30 +2483,26 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPDefinitionLink::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2558,29 +2513,27 @@ public class CPDefinitionLinkPersistenceImpl
 					"cpDefinitionLink.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPDefinitionLink::getCompanyId));
 
-		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathCountByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, false);
-
 		_collectionPersistenceFinderByCPDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPDefinitionId,
-				_finderPathWithoutPaginationFindByCPDefinitionId,
-				_finderPathCountByCPDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPDefinitionId", new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, false),
 				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2590,29 +2543,25 @@ public class CPDefinitionLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionLink::getCPDefinitionId));
 
-		_finderPathWithPaginationFindByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CProductId"}, true);
-
-		_finderPathWithoutPaginationFindByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			true);
-
-		_finderPathCountByCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			false);
-
 		_collectionPersistenceFinderByCProductId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCProductId,
-				_finderPathWithoutPaginationFindByCProductId,
-				_finderPathCountByCProductId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCProductId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CProductId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCProductId", new String[] {Long.class.getName()},
+					new String[] {"CProductId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCProductId", new String[] {Long.class.getName()},
+					new String[] {"CProductId"}, false),
 				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2621,28 +2570,24 @@ public class CPDefinitionLinkPersistenceImpl
 					"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CPDefinitionLink::getCProductId));
 
-		_finderPathWithPaginationFindByCPD_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPD_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByCPD_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPD_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByCPD_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByCPD_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByCPD_T,
-			_finderPathWithoutPaginationFindByCPD_T, _finderPathCountByCPD_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPD_T",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"CPDefinitionId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPD_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"CPDefinitionId", "type_"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"CPDefinitionId", "type_"}, 0, 2, false, null),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2652,29 +2597,25 @@ public class CPDefinitionLinkPersistenceImpl
 			new FinderColumn<>(
 				"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getType));
-
-		_finderPathWithPaginationFindByCPD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPD_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByCPD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPD_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CPDefinitionId", "status"}, true);
-
-		_finderPathCountByCPD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CPDefinitionId", "status"}, false);
 
 		_collectionPersistenceFinderByCPD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByCPD_S,
-			_finderPathWithoutPaginationFindByCPD_S, _finderPathCountByCPD_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPD_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"CPDefinitionId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPD_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"CPDefinitionId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"CPDefinitionId", "status"}, false),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2685,28 +2626,24 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CPDefinitionLink::getStatus));
 
-		_finderPathWithPaginationFindByCP_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCP_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"CProductId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByCP_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCP_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CProductId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByCP_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCP_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CProductId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByCP_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByCP_T,
-			_finderPathWithoutPaginationFindByCP_T, _finderPathCountByCP_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCP_T",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"CProductId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCP_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"CProductId", "type_"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCP_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"CProductId", "type_"}, 0, 2, false, null),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2717,28 +2654,24 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getType));
 
-		_finderPathWithPaginationFindByCP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCP_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"CProductId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByCP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CProductId", "status"}, true);
-
-		_finderPathCountByCP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CProductId", "status"}, false);
-
 		_collectionPersistenceFinderByCP_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByCP_S,
-			_finderPathWithoutPaginationFindByCP_S, _finderPathCountByCP_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCP_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"CProductId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"CProductId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"CProductId", "status"}, false),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2749,23 +2682,21 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CPDefinitionLink::getStatus));
 
-		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"displayDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"displayDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtD_S, null,
-			_finderPathWithPaginationCountByLtD_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"displayDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2776,23 +2707,21 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CPDefinitionLink::getStatus));
 
-		_finderPathWithPaginationFindByLtE_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtE_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"expirationDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtE_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtE_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"expirationDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtE_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtE_S, null,
-			_finderPathWithPaginationCountByLtE_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtE_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"expirationDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtE_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"expirationDate", "status"}, false),
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2803,20 +2732,19 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CPDefinitionLink::getStatus));
 
-		_finderPathFetchByC_C_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"CPDefinitionId", "CProductId", "type_"}, 0, 4, false,
-			CPDefinitionLink::getCPDefinitionId,
-			CPDefinitionLink::getCProductId,
-			convertNullFunction(CPDefinitionLink::getType));
-
 		_uniquePersistenceFinderByC_C_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_T, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"CPDefinitionId", "CProductId", "type_"}, 0, 4,
+				false, CPDefinitionLink::getCPDefinitionId,
+				CPDefinitionLink::getCProductId,
+				convertNullFunction(CPDefinitionLink::getType)),
+			_SQL_SELECT_CPDEFINITIONLINK_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionLink.", "CPDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, CPDefinitionLink::getCPDefinitionId),
@@ -2827,38 +2755,35 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "type", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getType));
 
-		_finderPathWithPaginationFindByCPD_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPD_T_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByCPD_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPD_T_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"CPDefinitionId", "type_", "status"}, 0, 2, true,
-			null);
-
-		_finderPathCountByCPD_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_T_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"CPDefinitionId", "type_", "status"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByCPD_T_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPD_T_S,
-				_finderPathWithoutPaginationFindByCPD_T_S,
-				_finderPathCountByCPD_T_S, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPD_T_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPDefinitionId", "type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPD_T_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"CPDefinitionId", "type_", "status"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPD_T_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"CPDefinitionId", "type_", "status"}, 0, 2,
+					false, null),
+				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2873,36 +2798,35 @@ public class CPDefinitionLinkPersistenceImpl
 					"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CPDefinitionLink::getStatus));
 
-		_finderPathWithPaginationFindByCP_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCP_T_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CProductId", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByCP_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCP_T_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"CProductId", "type_", "status"}, 0, 2, true, null);
-
-		_finderPathCountByCP_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCP_T_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"CProductId", "type_", "status"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByCP_T_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCP_T_S,
-				_finderPathWithoutPaginationFindByCP_T_S,
-				_finderPathCountByCP_T_S, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCP_T_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CProductId", "type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCP_T_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"CProductId", "type_", "status"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCP_T_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"CProductId", "type_", "status"}, 0, 2, false,
+					null),
+				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
 				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2988,4 +2912,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1782303639
+// LIFERAY-SERVICE-BUILDER-HASH:-1606650439

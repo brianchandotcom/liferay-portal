@@ -87,9 +87,6 @@ public class LayoutSEOSitePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LayoutSEOSite>
 		_collectionPersistenceFinderByUuid;
 
@@ -230,7 +227,6 @@ public class LayoutSEOSitePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<LayoutSEOSite>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -320,9 +316,6 @@ public class LayoutSEOSitePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LayoutSEOSite>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -477,7 +470,6 @@ public class LayoutSEOSitePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByGroupId;
 	private UniquePersistenceFinder<LayoutSEOSite>
 		_uniquePersistenceFinderByGroupId;
 
@@ -859,42 +851,38 @@ public class LayoutSEOSitePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUTSEOSITE_WHERE, _SQL_COUNT_LAYOUTSEOSITE_WHERE,
 			LayoutSEOSiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LayoutSEOSite::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(LayoutSEOSite::getUuid),
-			LayoutSEOSite::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAYOUTSEOSITE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(LayoutSEOSite::getUuid),
+				LayoutSEOSite::getGroupId),
+			_SQL_SELECT_LAYOUTSEOSITE_WHERE, "",
 			new FinderColumn<>(
 				"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LayoutSEOSite::getUuid),
@@ -902,31 +890,26 @@ public class LayoutSEOSitePersistenceImpl
 				"layoutSEOSite.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, LayoutSEOSite::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
-				_SQL_COUNT_LAYOUTSEOSITE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LAYOUTSEOSITE_WHERE, _SQL_COUNT_LAYOUTSEOSITE_WHERE,
 				LayoutSEOSiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=",
@@ -935,14 +918,13 @@ public class LayoutSEOSitePersistenceImpl
 					"layoutSEOSite.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSEOSite::getCompanyId));
 
-		_finderPathFetchByGroupId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"}, 0, 0,
-			false, LayoutSEOSite::getGroupId);
-
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByGroupId, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
+				new String[] {Long.class.getName()}, new String[] {"groupId"},
+				0, 0, false, LayoutSEOSite::getGroupId),
+			_SQL_SELECT_LAYOUTSEOSITE_WHERE, "",
 			new FinderColumn<>(
 				"layoutSEOSite.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, LayoutSEOSite::getGroupId));
@@ -1019,4 +1001,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-369953909
+// LIFERAY-SERVICE-BUILDER-HASH:815912937

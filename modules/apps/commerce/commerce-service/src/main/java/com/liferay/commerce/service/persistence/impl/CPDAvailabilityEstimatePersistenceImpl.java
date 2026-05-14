@@ -82,9 +82,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPDAvailabilityEstimate>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,9 +226,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPDAvailabilityEstimate>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -388,11 +382,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceAvailabilityEstimateId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceAvailabilityEstimateId;
-	private FinderPath _finderPathCountByCommerceAvailabilityEstimateId;
 	private CollectionPersistenceFinder<CPDAvailabilityEstimate>
 		_collectionPersistenceFinderByCommerceAvailabilityEstimateId;
 
@@ -554,7 +543,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			count(finderCache, new Object[] {commerceAvailabilityEstimateId});
 	}
 
-	private FinderPath _finderPathFetchByCProductId;
 	private UniquePersistenceFinder<CPDAvailabilityEstimate>
 		_uniquePersistenceFinderByCProductId;
 
@@ -875,27 +863,23 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
 			_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE,
 			CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
@@ -904,30 +888,25 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				"cpdAvailabilityEstimate.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDAvailabilityEstimate::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE,
 				CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
@@ -941,35 +920,28 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDAvailabilityEstimate::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceAvailabilityEstimateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceAvailabilityEstimateId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceAvailabilityEstimateId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceAvailabilityEstimateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceAvailabilityEstimateId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceAvailabilityEstimateId"}, true);
-
-		_finderPathCountByCommerceAvailabilityEstimateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceAvailabilityEstimateId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceAvailabilityEstimateId"}, false);
-
 		_collectionPersistenceFinderByCommerceAvailabilityEstimateId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCommerceAvailabilityEstimateId,
-				_finderPathWithoutPaginationFindByCommerceAvailabilityEstimateId,
-				_finderPathCountByCommerceAvailabilityEstimateId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceAvailabilityEstimateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceAvailabilityEstimateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceAvailabilityEstimateId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceAvailabilityEstimateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceAvailabilityEstimateId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceAvailabilityEstimateId"}, false),
 				_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE,
 				CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
@@ -981,13 +953,13 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					CPDAvailabilityEstimate::
 						getCommerceAvailabilityEstimateId));
 
-		_finderPathFetchByCProductId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCProductId",
-			new String[] {Long.class.getName()}, new String[] {"CProductId"}, 0,
-			0, false, CPDAvailabilityEstimate::getCProductId);
-
 		_uniquePersistenceFinderByCProductId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCProductId,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCProductId",
+				new String[] {Long.class.getName()},
+				new String[] {"CProductId"}, 0, 0, false,
+				CPDAvailabilityEstimate::getCProductId),
 			_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE, "",
 			new FinderColumn<>(
 				"cpdAvailabilityEstimate.", "CProductId",
@@ -1063,4 +1035,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1608902566
+// LIFERAY-SERVICE-BUILDER-HASH:518460496

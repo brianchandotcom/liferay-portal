@@ -84,9 +84,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceNotificationAttachment>
 		_collectionPersistenceFinderByUuid;
 
@@ -231,7 +228,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommerceNotificationAttachment>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -327,9 +323,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceNotificationAttachment>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -486,11 +479,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceNotificationQueueEntryId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceNotificationQueueEntryId;
-	private FinderPath _finderPathCountByCommerceNotificationQueueEntryId;
 	private CollectionPersistenceFinder<CommerceNotificationAttachment>
 		_collectionPersistenceFinderByCommerceNotificationQueueEntryId;
 
@@ -910,27 +898,23 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 			CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
@@ -940,15 +924,14 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationAttachment::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommerceNotificationAttachment::getUuid),
-			CommerceNotificationAttachment::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommerceNotificationAttachment::getUuid),
+				CommerceNotificationAttachment::getGroupId),
 			_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE, "",
 			new FinderColumn<>(
 				"commerceNotificationAttachment.", "uuid",
@@ -959,30 +942,25 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceNotificationAttachment::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
@@ -996,35 +974,28 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceNotificationAttachment::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceNotificationQueueEntryId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceNotificationQueueEntryId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"CNotificationQueueEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceNotificationQueueEntryId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceNotificationQueueEntryId",
-				new String[] {Long.class.getName()},
-				new String[] {"CNotificationQueueEntryId"}, true);
-
-		_finderPathCountByCommerceNotificationQueueEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceNotificationQueueEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"CNotificationQueueEntryId"}, false);
-
 		_collectionPersistenceFinderByCommerceNotificationQueueEntryId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCommerceNotificationQueueEntryId,
-				_finderPathWithoutPaginationFindByCommerceNotificationQueueEntryId,
-				_finderPathCountByCommerceNotificationQueueEntryId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceNotificationQueueEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CNotificationQueueEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceNotificationQueueEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"CNotificationQueueEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceNotificationQueueEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"CNotificationQueueEntryId"}, false),
 				_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
@@ -1111,4 +1082,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-577788649
+// LIFERAY-SERVICE-BUILDER-HASH:-1098262576

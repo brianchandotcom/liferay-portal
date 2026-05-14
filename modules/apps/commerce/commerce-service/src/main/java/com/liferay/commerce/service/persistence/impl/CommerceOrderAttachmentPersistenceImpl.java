@@ -91,9 +91,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceOrderAttachment>
 		_collectionPersistenceFinderByUuid;
 
@@ -238,7 +235,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommerceOrderAttachment>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -330,9 +326,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceOrderAttachment>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -489,9 +482,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceOrderId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderId;
-	private FinderPath _finderPathCountByCommerceOrderId;
 	private CollectionPersistenceFinder<CommerceOrderAttachment>
 		_collectionPersistenceFinderByCommerceOrderId;
 
@@ -640,9 +630,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {commerceOrderId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R;
-	private FinderPath _finderPathWithoutPaginationFindByC_R;
-	private FinderPath _finderPathCountByC_R;
 	private CollectionPersistenceFinder<CommerceOrderAttachment>
 		_collectionPersistenceFinderByC_R;
 
@@ -802,7 +789,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 			finderCache, new Object[] {commerceOrderId, restricted});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommerceOrderAttachment>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1206,27 +1192,23 @@ public class CommerceOrderAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 			_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 			CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
@@ -1235,15 +1217,14 @@ public class CommerceOrderAttachmentPersistenceImpl
 				"commerceOrderAttachment.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceOrderAttachment::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommerceOrderAttachment::getUuid),
-			CommerceOrderAttachment::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommerceOrderAttachment::getUuid),
+				CommerceOrderAttachment::getGroupId),
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE, "",
 			new FinderColumn<>(
 				"commerceOrderAttachment.", "uuid", FinderColumn.Type.STRING,
@@ -1252,30 +1233,25 @@ public class CommerceOrderAttachmentPersistenceImpl
 				"commerceOrderAttachment.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceOrderAttachment::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 				CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
@@ -1289,29 +1265,28 @@ public class CommerceOrderAttachmentPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceOrderAttachment::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceOrderId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceOrderId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceOrderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceOrderId"}, true);
-
-		_finderPathCountByCommerceOrderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceOrderId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceOrderId"}, false);
-
 		_collectionPersistenceFinderByCommerceOrderId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceOrderId,
-				_finderPathWithoutPaginationFindByCommerceOrderId,
-				_finderPathCountByCommerceOrderId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceOrderId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceOrderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceOrderId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceOrderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceOrderId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceOrderId"}, false),
 				_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 				CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
@@ -1321,28 +1296,24 @@ public class CommerceOrderAttachmentPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceOrderAttachment::getCommerceOrderId));
 
-		_finderPathWithPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"commerceOrderId", "restricted"}, true);
-
-		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"commerceOrderId", "restricted"}, true);
-
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"commerceOrderId", "restricted"}, false);
-
 		_collectionPersistenceFinderByC_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_R,
-			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"commerceOrderId", "restricted"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"commerceOrderId", "restricted"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"commerceOrderId", "restricted"}, false),
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 			_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 			CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
@@ -1356,16 +1327,16 @@ public class CommerceOrderAttachmentPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				CommerceOrderAttachment::isRestricted));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				CommerceOrderAttachment::getExternalReferenceCode),
-			CommerceOrderAttachment::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CommerceOrderAttachment::getExternalReferenceCode),
+				CommerceOrderAttachment::getCompanyId),
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE, "",
 			new FinderColumn<>(
 				"commerceOrderAttachment.", "externalReferenceCode",
@@ -1444,4 +1415,4 @@ public class CommerceOrderAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:487201841
+// LIFERAY-SERVICE-BUILDER-HASH:1041913434

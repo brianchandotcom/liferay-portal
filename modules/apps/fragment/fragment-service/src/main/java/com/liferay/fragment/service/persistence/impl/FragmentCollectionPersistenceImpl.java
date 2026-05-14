@@ -99,9 +99,6 @@ public class FragmentCollectionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<FragmentCollection>
 		_collectionPersistenceFinderByUuid;
 
@@ -245,7 +242,6 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<FragmentCollection>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -335,9 +331,6 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<FragmentCollection>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -492,9 +485,6 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<FragmentCollection>
 		_collectionPersistenceFinderByGroupId;
 
@@ -740,7 +730,6 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
 
-	private FinderPath _finderPathFetchByG_FCK;
 	private UniquePersistenceFinder<FragmentCollection>
 		_uniquePersistenceFinderByG_FCK;
 
@@ -838,8 +827,6 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN;
 	private CollectionPersistenceFinder<FragmentCollection>
 		_collectionPersistenceFinderByG_LikeN;
 
@@ -1106,9 +1093,6 @@ public class FragmentCollectionPersistenceImpl
 			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_M;
-	private FinderPath _finderPathWithoutPaginationFindByG_M;
-	private FinderPath _finderPathCountByG_M;
 	private CollectionPersistenceFinder<FragmentCollection>
 		_collectionPersistenceFinderByG_M;
 
@@ -1379,8 +1363,6 @@ public class FragmentCollectionPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(groupIds), marketplace});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN_M;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN_M;
 	private CollectionPersistenceFinder<FragmentCollection>
 		_collectionPersistenceFinderByG_LikeN_M;
 
@@ -1677,7 +1659,6 @@ public class FragmentCollectionPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(groupIds), name, marketplace});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<FragmentCollection>
 		_uniquePersistenceFinderByERC_G;
 
@@ -2154,27 +2135,23 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 			_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2182,15 +2159,14 @@ public class FragmentCollectionPersistenceImpl
 				"fragmentCollection.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentCollection::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(FragmentCollection::getUuid),
-			FragmentCollection::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(FragmentCollection::getUuid),
+				FragmentCollection::getGroupId),
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE, "",
 			new FinderColumn<>(
 				"fragmentCollection.", "uuid", FinderColumn.Type.STRING, "=",
@@ -2199,30 +2175,26 @@ public class FragmentCollectionPersistenceImpl
 				"fragmentCollection.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentCollection::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2233,29 +2205,26 @@ public class FragmentCollectionPersistenceImpl
 					"fragmentCollection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentCollection::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2263,16 +2232,16 @@ public class FragmentCollectionPersistenceImpl
 					"fragmentCollection.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, FragmentCollection::getGroupId));
 
-		_finderPathFetchByG_FCK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_FCK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "fragmentCollectionKey"}, 0, 2, false,
-			FragmentCollection::getGroupId,
-			convertNullFunction(FragmentCollection::getFragmentCollectionKey));
-
 		_uniquePersistenceFinderByG_FCK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_FCK, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_FCK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "fragmentCollectionKey"}, 0, 2, false,
+				FragmentCollection::getGroupId,
+				convertNullFunction(
+					FragmentCollection::getFragmentCollectionKey)),
+			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE, "",
 			new FinderColumn<>(
 				"fragmentCollection.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentCollection::getGroupId),
@@ -2281,24 +2250,22 @@ public class FragmentCollectionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				FragmentCollection::getFragmentCollectionKey));
 
-		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, false);
-
 		_collectionPersistenceFinderByG_LikeN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN, null,
-				_finderPathWithPaginationCountByG_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, false),
 				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2310,28 +2277,24 @@ public class FragmentCollectionPersistenceImpl
 					"fragmentCollection.", "name", FinderColumn.Type.STRING,
 					"LIKE", true, true, FragmentCollection::getName));
 
-		_finderPathWithPaginationFindByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "marketplace"}, true);
-
-		_finderPathWithoutPaginationFindByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "marketplace"}, true);
-
-		_finderPathCountByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "marketplace"}, false);
-
 		_collectionPersistenceFinderByG_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_M,
-			_finderPathWithoutPaginationFindByG_M, _finderPathCountByG_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "marketplace"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "marketplace"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "marketplace"}, false),
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 			_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2342,27 +2305,26 @@ public class FragmentCollectionPersistenceImpl
 				"fragmentCollection.", "marketplace", FinderColumn.Type.BOOLEAN,
 				"=", true, true, FragmentCollection::isMarketplace));
 
-		_finderPathWithPaginationFindByG_LikeN_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_M",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "marketplace"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_M",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "name", "marketplace"}, false);
-
 		_collectionPersistenceFinderByG_LikeN_M =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN_M, null,
-				_finderPathWithPaginationCountByG_LikeN_M,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_M",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "marketplace"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_M",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "name", "marketplace"}, false),
 				_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2378,16 +2340,16 @@ public class FragmentCollectionPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					FragmentCollection::isMarketplace));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(FragmentCollection::getExternalReferenceCode),
-			FragmentCollection::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					FragmentCollection::getExternalReferenceCode),
+				FragmentCollection::getGroupId),
+			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE, "",
 			new FinderColumn<>(
 				"fragmentCollection.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2468,4 +2430,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1396661718
+// LIFERAY-SERVICE-BUILDER-HASH:-430401449

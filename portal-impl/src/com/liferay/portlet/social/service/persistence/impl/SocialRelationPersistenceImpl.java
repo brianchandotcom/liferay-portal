@@ -76,9 +76,6 @@ public class SocialRelationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByUuid;
 
@@ -220,9 +217,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -378,9 +372,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -525,9 +516,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId1;
-	private FinderPath _finderPathWithoutPaginationFindByUserId1;
-	private FinderPath _finderPathCountByUserId1;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByUserId1;
 
@@ -672,9 +660,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId1});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId2;
-	private FinderPath _finderPathWithoutPaginationFindByUserId2;
-	private FinderPath _finderPathCountByUserId2;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByUserId2;
 
@@ -819,9 +804,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId2});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByType;
-	private FinderPath _finderPathWithoutPaginationFindByType;
-	private FinderPath _finderPathCountByType;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByType;
 
@@ -963,9 +945,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByC_T;
 
@@ -1120,9 +1099,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU1_U2;
-	private FinderPath _finderPathWithoutPaginationFindByU1_U2;
-	private FinderPath _finderPathCountByU1_U2;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByU1_U2;
 
@@ -1278,9 +1254,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId1, userId2});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU1_T;
-	private FinderPath _finderPathWithoutPaginationFindByU1_T;
-	private FinderPath _finderPathCountByU1_T;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByU1_T;
 
@@ -1435,9 +1408,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId1, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU2_T;
-	private FinderPath _finderPathWithoutPaginationFindByU2_T;
-	private FinderPath _finderPathCountByU2_T;
 	private CollectionPersistenceFinder<SocialRelation>
 		_collectionPersistenceFinderByU2_T;
 
@@ -1592,7 +1562,6 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId2, type});
 	}
 
-	private FinderPath _finderPathFetchByU1_U2_T;
 	private UniquePersistenceFinder<SocialRelation>
 		_uniquePersistenceFinderByU1_U2_T;
 
@@ -1957,57 +1926,49 @@ public class SocialRelationPersistenceImpl
 	 * Initializes the social relation persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialRelation.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SocialRelation::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_SOCIALRELATION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_SOCIALRELATION_WHERE,
 				_SQL_COUNT_SOCIALRELATION_WHERE,
 				SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -2017,142 +1978,125 @@ public class SocialRelationPersistenceImpl
 					"socialRelation.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRelation::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_SOCIALRELATION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_SOCIALRELATION_WHERE,
 				_SQL_COUNT_SOCIALRELATION_WHERE,
 				SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRelation.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRelation::getCompanyId));
 
-		_finderPathWithPaginationFindByUserId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId1",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId1"}, true);
-
-		_finderPathWithoutPaginationFindByUserId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId1",
-			new String[] {Long.class.getName()}, new String[] {"userId1"},
-			true);
-
-		_finderPathCountByUserId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId1",
-			new String[] {Long.class.getName()}, new String[] {"userId1"},
-			false);
-
 		_collectionPersistenceFinderByUserId1 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId1,
-				_finderPathWithoutPaginationFindByUserId1,
-				_finderPathCountByUserId1, _SQL_SELECT_SOCIALRELATION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId1",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId1"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId1",
+					new String[] {Long.class.getName()},
+					new String[] {"userId1"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId1",
+					new String[] {Long.class.getName()},
+					new String[] {"userId1"}, false),
+				_SQL_SELECT_SOCIALRELATION_WHERE,
 				_SQL_COUNT_SOCIALRELATION_WHERE,
 				SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRelation.", "userId1", FinderColumn.Type.LONG, "=",
 					true, true, SocialRelation::getUserId1));
 
-		_finderPathWithPaginationFindByUserId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId2",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId2"}, true);
-
-		_finderPathWithoutPaginationFindByUserId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId2",
-			new String[] {Long.class.getName()}, new String[] {"userId2"},
-			true);
-
-		_finderPathCountByUserId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId2",
-			new String[] {Long.class.getName()}, new String[] {"userId2"},
-			false);
-
 		_collectionPersistenceFinderByUserId2 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId2,
-				_finderPathWithoutPaginationFindByUserId2,
-				_finderPathCountByUserId2, _SQL_SELECT_SOCIALRELATION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId2",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId2"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId2",
+					new String[] {Long.class.getName()},
+					new String[] {"userId2"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId2",
+					new String[] {Long.class.getName()},
+					new String[] {"userId2"}, false),
+				_SQL_SELECT_SOCIALRELATION_WHERE,
 				_SQL_COUNT_SOCIALRELATION_WHERE,
 				SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRelation.", "userId2", FinderColumn.Type.LONG, "=",
 					true, true, SocialRelation::getUserId2));
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"type_"}, true);
-
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {Integer.class.getName()}, new String[] {"type_"},
-			true);
-
-		_finderPathCountByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] {Integer.class.getName()}, new String[] {"type_"},
-			false);
-
 		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByType,
-			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {Integer.class.getName()}, new String[] {"type_"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] {Integer.class.getName()}, new String[] {"type_"},
+				false),
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, SocialRelation::getType));
 
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, false);
-
 		_collectionPersistenceFinderByC_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_T,
-			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "type_"}, false),
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2162,28 +2106,24 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, SocialRelation::getType));
 
-		_finderPathWithPaginationFindByU1_U2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU1_U2",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId1", "userId2"}, true);
-
-		_finderPathWithoutPaginationFindByU1_U2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU1_U2",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId1", "userId2"}, true);
-
-		_finderPathCountByU1_U2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU1_U2",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId1", "userId2"}, false);
-
 		_collectionPersistenceFinderByU1_U2 = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU1_U2,
-			_finderPathWithoutPaginationFindByU1_U2, _finderPathCountByU1_U2,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU1_U2",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId1", "userId2"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU1_U2",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId1", "userId2"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU1_U2",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId1", "userId2"}, false),
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2193,28 +2133,24 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "userId2", FinderColumn.Type.LONG, "=", true,
 				true, SocialRelation::getUserId2));
 
-		_finderPathWithPaginationFindByU1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU1_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId1", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByU1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU1_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"userId1", "type_"}, true);
-
-		_finderPathCountByU1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU1_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"userId1", "type_"}, false);
-
 		_collectionPersistenceFinderByU1_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU1_T,
-			_finderPathWithoutPaginationFindByU1_T, _finderPathCountByU1_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU1_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId1", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU1_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"userId1", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU1_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"userId1", "type_"}, false),
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2224,28 +2160,24 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, SocialRelation::getType));
 
-		_finderPathWithPaginationFindByU2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU2_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId2", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByU2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU2_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"userId2", "type_"}, true);
-
-		_finderPathCountByU2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU2_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"userId2", "type_"}, false);
-
 		_collectionPersistenceFinderByU2_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU2_T,
-			_finderPathWithoutPaginationFindByU2_T, _finderPathCountByU2_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU2_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId2", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU2_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"userId2", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU2_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"userId2", "type_"}, false),
 			_SQL_SELECT_SOCIALRELATION_WHERE, _SQL_COUNT_SOCIALRELATION_WHERE,
 			SocialRelationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2255,19 +2187,18 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, SocialRelation::getType));
 
-		_finderPathFetchByU1_U2_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU1_U2_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"userId1", "userId2", "type_"}, 0, 0, false,
-			SocialRelation::getUserId1, SocialRelation::getUserId2,
-			SocialRelation::getType);
-
 		_uniquePersistenceFinderByU1_U2_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU1_U2_T, _SQL_SELECT_SOCIALRELATION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU1_U2_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"userId1", "userId2", "type_"}, 0, 0, false,
+				SocialRelation::getUserId1, SocialRelation::getUserId2,
+				SocialRelation::getType),
+			_SQL_SELECT_SOCIALRELATION_WHERE, "",
 			new FinderColumn<>(
 				"socialRelation.", "userId1", FinderColumn.Type.LONG, "=", true,
 				true, SocialRelation::getUserId1),
@@ -2314,4 +2245,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-63305823
+// LIFERAY-SERVICE-BUILDER-HASH:2114889462

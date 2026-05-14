@@ -83,9 +83,6 @@ public class KaleoNodeSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByKaleoNodeId;
-	private FinderPath _finderPathWithoutPaginationFindByKaleoNodeId;
-	private FinderPath _finderPathCountByKaleoNodeId;
 	private CollectionPersistenceFinder<KaleoNodeSetting>
 		_collectionPersistenceFinderByKaleoNodeId;
 
@@ -232,7 +229,6 @@ public class KaleoNodeSettingPersistenceImpl
 			finderCache, new Object[] {kaleoNodeId});
 	}
 
-	private FinderPath _finderPathFetchByKNI_N;
 	private UniquePersistenceFinder<KaleoNodeSetting>
 		_uniquePersistenceFinderByKNI_N;
 
@@ -599,29 +595,25 @@ public class KaleoNodeSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByKaleoNodeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoNodeId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoNodeId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoNodeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoNodeId",
-			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
-			true);
-
-		_finderPathCountByKaleoNodeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoNodeId",
-			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
-			false);
-
 		_collectionPersistenceFinderByKaleoNodeId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoNodeId,
-				_finderPathWithoutPaginationFindByKaleoNodeId,
-				_finderPathCountByKaleoNodeId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoNodeId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoNodeId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoNodeId", new String[] {Long.class.getName()},
+					new String[] {"kaleoNodeId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoNodeId", new String[] {Long.class.getName()},
+					new String[] {"kaleoNodeId"}, false),
 				_SQL_SELECT_KALEONODESETTING_WHERE,
 				_SQL_COUNT_KALEONODESETTING_WHERE,
 				KaleoNodeSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -630,16 +622,15 @@ public class KaleoNodeSettingPersistenceImpl
 					"kaleoNodeSetting.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoNodeSetting::getKaleoNodeId));
 
-		_finderPathFetchByKNI_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoNodeId", "name"}, 0, 2, false,
-			KaleoNodeSetting::getKaleoNodeId,
-			convertNullFunction(KaleoNodeSetting::getName));
-
 		_uniquePersistenceFinderByKNI_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKNI_N, _SQL_SELECT_KALEONODESETTING_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"kaleoNodeId", "name"}, 0, 2, false,
+				KaleoNodeSetting::getKaleoNodeId,
+				convertNullFunction(KaleoNodeSetting::getName)),
+			_SQL_SELECT_KALEONODESETTING_WHERE, "",
 			new FinderColumn<>(
 				"kaleoNodeSetting.", "kaleoNodeId", FinderColumn.Type.LONG, "=",
 				true, true, KaleoNodeSetting::getKaleoNodeId),
@@ -716,4 +707,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2042327012
+// LIFERAY-SERVICE-BUILDER-HASH:154634167

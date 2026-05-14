@@ -85,9 +85,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceNotificationTemplate>
 		_collectionPersistenceFinderByUuid;
 
@@ -232,7 +229,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommerceNotificationTemplate>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -327,9 +323,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceNotificationTemplate>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -486,9 +479,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<CommerceNotificationTemplate>
 		_collectionPersistenceFinderByGroupId;
 
@@ -702,9 +692,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_E;
-	private FinderPath _finderPathWithoutPaginationFindByG_E;
-	private FinderPath _finderPathCountByG_E;
 	private FilterCollectionPersistenceFinder<CommerceNotificationTemplate>
 		_collectionPersistenceFinderByG_E;
 
@@ -932,9 +919,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {groupId, enabled}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_E;
-	private FinderPath _finderPathWithoutPaginationFindByG_T_E;
-	private FinderPath _finderPathCountByG_T_E;
 	private FilterCollectionPersistenceFinder<CommerceNotificationTemplate>
 		_collectionPersistenceFinderByG_T_E;
 
@@ -1424,27 +1408,23 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
@@ -1454,15 +1434,14 @@ public class CommerceNotificationTemplatePersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationTemplate::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommerceNotificationTemplate::getUuid),
-			CommerceNotificationTemplate::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommerceNotificationTemplate::getUuid),
+				CommerceNotificationTemplate::getGroupId),
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "uuid",
@@ -1473,30 +1452,25 @@ public class CommerceNotificationTemplatePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceNotificationTemplate::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
@@ -1510,41 +1484,39 @@ public class CommerceNotificationTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceNotificationTemplate::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceNotificationTemplateImpl.class,
-					CommerceNotificationTemplate.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
+					CommerceNotificationTemplate.class,
+					"commerceNotificationTemplate",
+					"CommerceNotificationTemplate",
+					"commerceNotificationTemplate.commerceNotificationTemplateId",
+					"SELECT DISTINCT {commerceNotificationTemplate.*} FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
+					"SELECT {CommerceNotificationTemplate.*} FROM (SELECT DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceNotificationTemplate ON TEMP_TABLE.commerceNotificationTemplateId = CommerceNotificationTemplate.commerceNotificationTemplateId",
+					"SELECT COUNT(DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId) AS COUNT_VALUE FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
 					CommerceNotificationTemplateModelImpl.ORDER_BY_SQL,
 					CommerceNotificationTemplateModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1553,41 +1525,43 @@ public class CommerceNotificationTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceNotificationTemplate::getGroupId));
 
-		_finderPathWithPaginationFindByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_E",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "enabled"}, true);
-
-		_finderPathWithoutPaginationFindByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "enabled"}, true);
-
-		_finderPathCountByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "enabled"}, false);
-
 		_collectionPersistenceFinderByG_E =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_E,
-				_finderPathWithoutPaginationFindByG_E, _finderPathCountByG_E,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "enabled"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "enabled"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "enabled"}, false),
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceNotificationTemplateImpl.class,
-					CommerceNotificationTemplate.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
+					CommerceNotificationTemplate.class,
+					"commerceNotificationTemplate",
+					"CommerceNotificationTemplate",
+					"commerceNotificationTemplate.commerceNotificationTemplateId",
+					"SELECT DISTINCT {commerceNotificationTemplate.*} FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
+					"SELECT {CommerceNotificationTemplate.*} FROM (SELECT DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceNotificationTemplate ON TEMP_TABLE.commerceNotificationTemplateId = CommerceNotificationTemplate.commerceNotificationTemplateId",
+					"SELECT COUNT(DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId) AS COUNT_VALUE FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
 					CommerceNotificationTemplateModelImpl.ORDER_BY_SQL,
 					CommerceNotificationTemplateModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1600,48 +1574,48 @@ public class CommerceNotificationTemplatePersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommerceNotificationTemplate::isEnabled));
 
-		_finderPathWithPaginationFindByG_T_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_", "enabled"}, true);
-
-		_finderPathWithoutPaginationFindByG_T_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "type_", "enabled"}, 0, 2, true, null);
-
-		_finderPathCountByG_T_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "type_", "enabled"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T_E =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_E,
-				_finderPathWithoutPaginationFindByG_T_E,
-				_finderPathCountByG_T_E,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_E",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "type_", "enabled"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_E",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "type_", "enabled"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_E",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "type_", "enabled"}, 0, 2, false,
+					null),
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommerceNotificationTemplateImpl.class,
-					CommerceNotificationTemplate.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
+					CommerceNotificationTemplate.class,
+					"commerceNotificationTemplate",
+					"CommerceNotificationTemplate",
+					"commerceNotificationTemplate.commerceNotificationTemplateId",
+					"SELECT DISTINCT {commerceNotificationTemplate.*} FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
+					"SELECT {CommerceNotificationTemplate.*} FROM (SELECT DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN CommerceNotificationTemplate ON TEMP_TABLE.commerceNotificationTemplateId = CommerceNotificationTemplate.commerceNotificationTemplateId",
+					"SELECT COUNT(DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId) AS COUNT_VALUE FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ",
 					CommerceNotificationTemplateModelImpl.ORDER_BY_SQL,
 					CommerceNotificationTemplateModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1713,31 +1687,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 	private static final String _SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE =
 		"SELECT COUNT(commerceNotificationTemplate) FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"commerceNotificationTemplate.commerceNotificationTemplateId";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE =
-			"SELECT DISTINCT {commerceNotificationTemplate.*} FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CommerceNotificationTemplate.*} FROM (SELECT DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CommerceNotificationTemplate ON TEMP_TABLE.commerceNotificationTemplateId = CommerceNotificationTemplate.commerceNotificationTemplateId";
-
-	private static final String
-		_FILTER_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE =
-			"SELECT COUNT(DISTINCT commerceNotificationTemplate.commerceNotificationTemplateId) AS COUNT_VALUE FROM CommerceNotificationTemplate commerceNotificationTemplate WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS =
-		"commerceNotificationTemplate";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"CommerceNotificationTemplate";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceNotificationTemplate exists with the key {";
 
@@ -1753,4 +1702,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-932529864
+// LIFERAY-SERVICE-BUILDER-HASH:-1795002617

@@ -76,7 +76,6 @@ public class FaroProjectPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByGroupId;
 	private UniquePersistenceFinder<FaroProject>
 		_uniquePersistenceFinderByGroupId;
 
@@ -159,9 +158,6 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<FaroProject>
 		_collectionPersistenceFinderByUserId;
 
@@ -302,7 +298,6 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByCorpProjectUuid;
 	private UniquePersistenceFinder<FaroProject>
 		_uniquePersistenceFinderByCorpProjectUuid;
 
@@ -387,9 +382,6 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {corpProjectUuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByServerLocation;
-	private FinderPath _finderPathWithoutPaginationFindByServerLocation;
-	private FinderPath _finderPathCountByServerLocation;
 	private CollectionPersistenceFinder<FaroProject>
 		_collectionPersistenceFinderByServerLocation;
 
@@ -536,7 +528,6 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {serverLocation});
 	}
 
-	private FinderPath _finderPathFetchByWeDeployKey;
 	private UniquePersistenceFinder<FaroProject>
 		_uniquePersistenceFinderByWeDeployKey;
 
@@ -806,96 +797,91 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByGroupId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"}, 0, 0,
-			false, FaroProject::getGroupId);
-
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByGroupId, _SQL_SELECT_FAROPROJECT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
+				new String[] {Long.class.getName()}, new String[] {"groupId"},
+				0, 0, false, FaroProject::getGroupId),
+			_SQL_SELECT_FAROPROJECT_WHERE, "",
 			new FinderColumn<>(
 				"faroProject.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, FaroProject::getGroupId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_FAROPROJECT_WHERE,
-				_SQL_COUNT_FAROPROJECT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_FAROPROJECT_WHERE, _SQL_COUNT_FAROPROJECT_WHERE,
 				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroProject.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, FaroProject::getUserId));
 
-		_finderPathFetchByCorpProjectUuid = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
-			new String[] {String.class.getName()},
-			new String[] {"corpProjectUuid"}, 0, 1, false,
-			convertNullFunction(FaroProject::getCorpProjectUuid));
-
 		_uniquePersistenceFinderByCorpProjectUuid =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCorpProjectUuid,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
+					new String[] {String.class.getName()},
+					new String[] {"corpProjectUuid"}, 0, 1, false,
+					convertNullFunction(FaroProject::getCorpProjectUuid)),
 				_SQL_SELECT_FAROPROJECT_WHERE, "",
 				new FinderColumn<>(
 					"faroProject.", "corpProjectUuid", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getCorpProjectUuid));
 
-		_finderPathWithPaginationFindByServerLocation = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByServerLocation",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"serverLocation"}, true);
-
-		_finderPathWithoutPaginationFindByServerLocation = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByServerLocation",
-			new String[] {String.class.getName()},
-			new String[] {"serverLocation"}, 0, 1, true, null);
-
-		_finderPathCountByServerLocation = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByServerLocation",
-			new String[] {String.class.getName()},
-			new String[] {"serverLocation"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByServerLocation =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByServerLocation,
-				_finderPathWithoutPaginationFindByServerLocation,
-				_finderPathCountByServerLocation, _SQL_SELECT_FAROPROJECT_WHERE,
-				_SQL_COUNT_FAROPROJECT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByServerLocation",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"serverLocation"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByServerLocation",
+					new String[] {String.class.getName()},
+					new String[] {"serverLocation"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByServerLocation",
+					new String[] {String.class.getName()},
+					new String[] {"serverLocation"}, 0, 1, false, null),
+				_SQL_SELECT_FAROPROJECT_WHERE, _SQL_COUNT_FAROPROJECT_WHERE,
 				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroProject.", "serverLocation", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getServerLocation));
 
-		_finderPathFetchByWeDeployKey = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
-			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
-			0, 1, false, convertNullFunction(FaroProject::getWeDeployKey));
-
 		_uniquePersistenceFinderByWeDeployKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByWeDeployKey, _SQL_SELECT_FAROPROJECT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
+				new String[] {String.class.getName()},
+				new String[] {"weDeployKey"}, 0, 1, false,
+				convertNullFunction(FaroProject::getWeDeployKey)),
+			_SQL_SELECT_FAROPROJECT_WHERE, "",
 			new FinderColumn<>(
 				"faroProject.", "weDeployKey", FinderColumn.Type.STRING, "=",
 				true, true, FaroProject::getWeDeployKey));
@@ -969,4 +955,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:433744398
+// LIFERAY-SERVICE-BUILDER-HASH:163385239

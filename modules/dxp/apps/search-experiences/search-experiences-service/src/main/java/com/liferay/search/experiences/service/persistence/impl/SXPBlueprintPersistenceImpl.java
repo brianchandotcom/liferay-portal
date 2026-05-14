@@ -90,9 +90,6 @@ public class SXPBlueprintPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<SXPBlueprint>
 		_collectionPersistenceFinderByUuid;
 
@@ -297,9 +294,6 @@ public class SXPBlueprintPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<SXPBlueprint>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -524,9 +518,6 @@ public class SXPBlueprintPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<SXPBlueprint>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -736,7 +727,6 @@ public class SXPBlueprintPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<SXPBlueprint>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1142,78 +1132,68 @@ public class SXPBlueprintPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPBlueprintImpl.class, SXPBlueprint.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_WHERE,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPBLUEPRINT_WHERE,
+					SXPBlueprintImpl.class, SXPBlueprint.class, "sxpBlueprint",
+					"SXPBlueprint", "sxpBlueprint.sxpBlueprintId",
+					"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ",
+					"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ",
+					") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId",
+					"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ",
 					SXPBlueprintModelImpl.ORDER_BY_SQL,
 					SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpBlueprint.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, SXPBlueprint::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_SXPBLUEPRINT_WHERE,
-				_SQL_COUNT_SXPBLUEPRINT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPBlueprintImpl.class, SXPBlueprint.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_WHERE,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPBLUEPRINT_WHERE,
+					SXPBlueprintImpl.class, SXPBlueprint.class, "sxpBlueprint",
+					"SXPBlueprint", "sxpBlueprint.sxpBlueprintId",
+					"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ",
+					"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ",
+					") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId",
+					"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ",
 					SXPBlueprintModelImpl.ORDER_BY_SQL,
 					SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1223,54 +1203,50 @@ public class SXPBlueprintPersistenceImpl
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_SXPBLUEPRINT_WHERE,
-				_SQL_COUNT_SXPBLUEPRINT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
 				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPBlueprintImpl.class, SXPBlueprint.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_WHERE,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_SXPBLUEPRINT_WHERE,
+					SXPBlueprintImpl.class, SXPBlueprint.class, "sxpBlueprint",
+					"SXPBlueprint", "sxpBlueprint.sxpBlueprintId",
+					"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ",
+					"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ",
+					") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId",
+					"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ",
 					SXPBlueprintModelImpl.ORDER_BY_SQL,
 					SXPBlueprintModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(SXPBlueprint::getExternalReferenceCode),
-			SXPBlueprint::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPBLUEPRINT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(SXPBlueprint::getExternalReferenceCode),
+				SXPBlueprint::getCompanyId),
+			_SQL_SELECT_SXPBLUEPRINT_WHERE, "",
 			new FinderColumn<>(
 				"sxpBlueprint.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1333,27 +1309,6 @@ public class SXPBlueprintPersistenceImpl
 	private static final String _SQL_COUNT_SXPBLUEPRINT_WHERE =
 		"SELECT COUNT(sxpBlueprint) FROM SXPBlueprint sxpBlueprint WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"sxpBlueprint.sxpBlueprintId";
-
-	private static final String _FILTER_SQL_SELECT_SXPBLUEPRINT_WHERE =
-		"SELECT DISTINCT {sxpBlueprint.*} FROM SXPBlueprint sxpBlueprint WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {SXPBlueprint.*} FROM (SELECT DISTINCT sxpBlueprint.sxpBlueprintId FROM SXPBlueprint sxpBlueprint WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_SXPBLUEPRINT_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN SXPBlueprint ON TEMP_TABLE.sxpBlueprintId = SXPBlueprint.sxpBlueprintId";
-
-	private static final String _FILTER_SQL_COUNT_SXPBLUEPRINT_WHERE =
-		"SELECT COUNT(DISTINCT sxpBlueprint.sxpBlueprintId) AS COUNT_VALUE FROM SXPBlueprint sxpBlueprint WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "sxpBlueprint";
-
-	private static final String _FILTER_ENTITY_TABLE = "SXPBlueprint";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SXPBlueprint exists with the key {";
 
@@ -1369,4 +1324,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:621966809
+// LIFERAY-SERVICE-BUILDER-HASH:-1119657495

@@ -96,9 +96,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByUuid;
 
@@ -243,7 +240,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<SiteNavigationMenuItem>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -335,9 +331,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -494,9 +487,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -642,9 +632,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySiteNavigationMenuId;
-	private FinderPath _finderPathWithoutPaginationFindBySiteNavigationMenuId;
-	private FinderPath _finderPathCountBySiteNavigationMenuId;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderBySiteNavigationMenuId;
 
@@ -798,11 +785,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {siteNavigationMenuId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId;
-	private FinderPath _finderPathCountByParentSiteNavigationMenuItemId;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByParentSiteNavigationMenuItemId;
 
@@ -964,9 +946,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			count(finderCache, new Object[] {parentSiteNavigationMenuItemId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByType;
-	private FinderPath _finderPathWithoutPaginationFindByType;
-	private FinderPath _finderPathCountByType;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByType;
 
@@ -1111,9 +1090,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_P;
-	private FinderPath _finderPathWithoutPaginationFindByS_P;
-	private FinderPath _finderPathCountByS_P;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByS_P;
 
@@ -1294,8 +1270,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_LikeN;
-	private FinderPath _finderPathWithPaginationCountByS_LikeN;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByS_LikeN;
 
@@ -1455,7 +1429,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {siteNavigationMenuId, name});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<SiteNavigationMenuItem>
 		_uniquePersistenceFinderByERC_G;
 
@@ -1943,27 +1916,23 @@ public class SiteNavigationMenuItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1972,15 +1941,14 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, SiteNavigationMenuItem::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(SiteNavigationMenuItem::getUuid),
-			SiteNavigationMenuItem::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(SiteNavigationMenuItem::getUuid),
+				SiteNavigationMenuItem::getGroupId),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE, "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
@@ -1989,30 +1957,25 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SiteNavigationMenuItem::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2025,29 +1988,25 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2057,30 +2016,28 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getCompanyId));
 
-		_finderPathWithPaginationFindBySiteNavigationMenuId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySiteNavigationMenuId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"siteNavigationMenuId"}, true);
-
-		_finderPathWithoutPaginationFindBySiteNavigationMenuId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySiteNavigationMenuId", new String[] {Long.class.getName()},
-			new String[] {"siteNavigationMenuId"}, true);
-
-		_finderPathCountBySiteNavigationMenuId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySiteNavigationMenuId", new String[] {Long.class.getName()},
-			new String[] {"siteNavigationMenuId"}, false);
-
 		_collectionPersistenceFinderBySiteNavigationMenuId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySiteNavigationMenuId,
-				_finderPathWithoutPaginationFindBySiteNavigationMenuId,
-				_finderPathCountBySiteNavigationMenuId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySiteNavigationMenuId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"siteNavigationMenuId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySiteNavigationMenuId",
+					new String[] {Long.class.getName()},
+					new String[] {"siteNavigationMenuId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySiteNavigationMenuId",
+					new String[] {Long.class.getName()},
+					new String[] {"siteNavigationMenuId"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2090,35 +2047,28 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getSiteNavigationMenuId));
 
-		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByParentSiteNavigationMenuItemId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"parentSiteNavigationMenuItemId"}, true);
-
-		_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByParentSiteNavigationMenuItemId",
-				new String[] {Long.class.getName()},
-				new String[] {"parentSiteNavigationMenuItemId"}, true);
-
-		_finderPathCountByParentSiteNavigationMenuItemId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentSiteNavigationMenuItemId",
-			new String[] {Long.class.getName()},
-			new String[] {"parentSiteNavigationMenuItemId"}, false);
-
 		_collectionPersistenceFinderByParentSiteNavigationMenuItemId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByParentSiteNavigationMenuItemId,
-				_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId,
-				_finderPathCountByParentSiteNavigationMenuItemId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentSiteNavigationMenuItemId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentSiteNavigationMenuItemId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentSiteNavigationMenuItemId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentSiteNavigationMenuItemId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentSiteNavigationMenuItemId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentSiteNavigationMenuItemId"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2128,27 +2078,23 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getParentSiteNavigationMenuItemId));
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"type_"}, true);
-
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByType,
-			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, false, null),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2157,37 +2103,33 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "type", FinderColumn.Type.STRING,
 				"=", true, true, SiteNavigationMenuItem::getType));
 
-		_finderPathWithPaginationFindByS_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
-			},
-			true);
-
-		_finderPathCountByS_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_P,
-			_finderPathWithoutPaginationFindByS_P, _finderPathCountByS_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {
+					"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
+				},
+				false),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2201,24 +2143,22 @@ public class SiteNavigationMenuItemPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				SiteNavigationMenuItem::getParentSiteNavigationMenuItemId));
 
-		_finderPathWithPaginationFindByS_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"siteNavigationMenuId", "name"}, true);
-
-		_finderPathWithPaginationCountByS_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"siteNavigationMenuId", "name"}, false);
-
 		_collectionPersistenceFinderByS_LikeN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByS_LikeN, null,
-				_finderPathWithPaginationCountByS_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"siteNavigationMenuId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"siteNavigationMenuId", "name"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2231,16 +2171,15 @@ public class SiteNavigationMenuItemPersistenceImpl
 					"siteNavigationMenuItem.", "name", FinderColumn.Type.STRING,
 					"LIKE", true, true, SiteNavigationMenuItem::getName));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(
-				SiteNavigationMenuItem::getExternalReferenceCode),
-			SiteNavigationMenuItem::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					SiteNavigationMenuItem::getExternalReferenceCode),
+				SiteNavigationMenuItem::getGroupId),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE, "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "externalReferenceCode",
@@ -2322,4 +2261,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:240801365
+// LIFERAY-SERVICE-BUILDER-HASH:-555084294

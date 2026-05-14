@@ -73,9 +73,6 @@ public class CTRemotePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<CTRemote>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -476,38 +473,34 @@ public class CTRemotePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_CTREMOTE_WHERE,
-				_SQL_COUNT_CTREMOTE_WHERE, CTRemoteModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_CTREMOTE_WHERE, _SQL_COUNT_CTREMOTE_WHERE,
+				CTRemoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CTRemoteImpl.class, CTRemote.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CTREMOTE_WHERE,
-					_FILTER_SQL_SELECT_CTREMOTE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CTREMOTE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CTREMOTE_WHERE,
+					CTRemoteImpl.class, CTRemote.class, "ctRemote", "CTRemote",
+					"ctRemote.ctRemoteId",
+					"SELECT DISTINCT {ctRemote.*} FROM CTRemote ctRemote WHERE ",
+					"SELECT {CTRemote.*} FROM (SELECT DISTINCT ctRemote.ctRemoteId FROM CTRemote ctRemote WHERE ",
+					") TEMP_TABLE INNER JOIN CTRemote ON TEMP_TABLE.ctRemoteId = CTRemote.ctRemoteId",
+					"SELECT COUNT(DISTINCT ctRemote.ctRemoteId) AS COUNT_VALUE FROM CTRemote ctRemote WHERE ",
 					CTRemoteModelImpl.ORDER_BY_SQL,
 					CTRemoteModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -568,27 +561,6 @@ public class CTRemotePersistenceImpl
 	private static final String _SQL_COUNT_CTREMOTE_WHERE =
 		"SELECT COUNT(ctRemote) FROM CTRemote ctRemote WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"ctRemote.ctRemoteId";
-
-	private static final String _FILTER_SQL_SELECT_CTREMOTE_WHERE =
-		"SELECT DISTINCT {ctRemote.*} FROM CTRemote ctRemote WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CTREMOTE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CTRemote.*} FROM (SELECT DISTINCT ctRemote.ctRemoteId FROM CTRemote ctRemote WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CTREMOTE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CTRemote ON TEMP_TABLE.ctRemoteId = CTRemote.ctRemoteId";
-
-	private static final String _FILTER_SQL_COUNT_CTREMOTE_WHERE =
-		"SELECT COUNT(DISTINCT ctRemote.ctRemoteId) AS COUNT_VALUE FROM CTRemote ctRemote WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "ctRemote";
-
-	private static final String _FILTER_ENTITY_TABLE = "CTRemote";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTRemote exists with the key {";
 
@@ -598,4 +570,4 @@ public class CTRemotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-320830363
+// LIFERAY-SERVICE-BUILDER-HASH:1535621399

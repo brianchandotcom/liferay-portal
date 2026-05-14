@@ -77,9 +77,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
-	private FinderPath _finderPathCountByCtCollectionId;
 	private CollectionPersistenceFinder<CTAutoResolutionInfo>
 		_collectionPersistenceFinderByCtCollectionId;
 
@@ -228,9 +225,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_MCNI_SMCPK;
-	private FinderPath _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
-	private FinderPath _finderPathCountByC_MCNI_SMCPK;
 	private CollectionPersistenceFinder<CTAutoResolutionInfo>
 		_collectionPersistenceFinderByC_MCNI_SMCPK;
 
@@ -759,29 +753,27 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false);
-
 		_collectionPersistenceFinderByCtCollectionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtCollectionId,
-				_finderPathWithoutPaginationFindByCtCollectionId,
-				_finderPathCountByCtCollectionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtCollectionId", new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
 				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
 				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
@@ -791,43 +783,47 @@ public class CTAutoResolutionInfoPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTAutoResolutionInfo::getCtCollectionId));
 
-		_finderPathWithPaginationFindByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			true);
-
-		_finderPathCountByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_MCNI_SMCPK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_MCNI_SMCPK,
-				_finderPathWithoutPaginationFindByC_MCNI_SMCPK,
-				_finderPathCountByC_MCNI_SMCPK,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByC_MCNI_SMCPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"ctCollectionId", "modelClassNameId",
+						"sourceModelClassPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_MCNI_SMCPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"ctCollectionId", "modelClassNameId",
+						"sourceModelClassPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_MCNI_SMCPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"ctCollectionId", "modelClassNameId",
+						"sourceModelClassPK"
+					},
+					false),
 				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
 				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
 				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
@@ -908,4 +904,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1592880633
+// LIFERAY-SERVICE-BUILDER-HASH:1306144261

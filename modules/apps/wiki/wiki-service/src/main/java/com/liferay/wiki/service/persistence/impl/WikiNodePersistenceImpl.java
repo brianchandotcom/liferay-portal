@@ -97,9 +97,6 @@ public class WikiNodePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<WikiNode>
 		_collectionPersistenceFinderByUuid;
 
@@ -238,7 +235,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<WikiNode> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -327,9 +323,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<WikiNode>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -483,9 +476,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<WikiNode>
 		_collectionPersistenceFinderByGroupId;
 
@@ -691,9 +681,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<WikiNode>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -834,7 +821,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByG_N;
 	private UniquePersistenceFinder<WikiNode> _uniquePersistenceFinderByG_N;
 
 	/**
@@ -923,9 +909,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<WikiNode>
 		_collectionPersistenceFinderByG_S;
 
@@ -1148,9 +1131,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_S;
-	private FinderPath _finderPathCountByC_S;
 	private CollectionPersistenceFinder<WikiNode>
 		_collectionPersistenceFinderByC_S;
 
@@ -1304,7 +1284,6 @@ public class WikiNodePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<WikiNode> _uniquePersistenceFinderByERC_G;
 
 	/**
@@ -1754,41 +1733,37 @@ public class WikiNodePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
 			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(WikiNode::getUuid), WikiNode::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKINODE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(WikiNode::getUuid), WikiNode::getGroupId),
+			_SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
 				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getUuid),
@@ -1796,32 +1771,27 @@ public class WikiNodePersistenceImpl
 				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				WikiNode::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_WIKINODE_WHERE,
-				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
+				WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, WikiNode::getUuid),
@@ -1829,81 +1799,73 @@ public class WikiNodePersistenceImpl
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_WIKINODE_WHERE,
-				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
+				WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiNodeImpl.class, WikiNode.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_WIKINODE_WHERE,
-					_FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_WIKINODE_WHERE,
+					WikiNodeImpl.class, WikiNode.class, "wikiNode", "WikiNode",
+					"wikiNode.nodeId",
+					"SELECT DISTINCT {wikiNode.*} FROM WikiNode wikiNode WHERE ",
+					"SELECT {WikiNode.*} FROM (SELECT DISTINCT wikiNode.nodeId FROM WikiNode wikiNode WHERE ",
+					") TEMP_TABLE INNER JOIN WikiNode ON TEMP_TABLE.nodeId = WikiNode.nodeId",
+					"SELECT COUNT(DISTINCT wikiNode.nodeId) AS COUNT_VALUE FROM WikiNode wikiNode WHERE ",
 					WikiNodeModelImpl.ORDER_BY_SQL,
 					WikiNodeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_WIKINODE_WHERE,
-				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
+				WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
 
-		_finderPathFetchByG_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, WikiNode::getGroupId,
-			convertNullFunction(WikiNode::getName));
-
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N, _SQL_SELECT_WIKINODE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, false,
+				WikiNode::getGroupId, convertNullFunction(WikiNode::getName)),
+			_SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
 				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				WikiNode::getGroupId),
@@ -1911,38 +1873,38 @@ public class WikiNodePersistenceImpl
 				"wikiNode.", "name", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getName));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
 				WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiNodeImpl.class, WikiNode.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_WIKINODE_WHERE,
-					_FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_WIKINODE_WHERE,
+					WikiNodeImpl.class, WikiNode.class, "wikiNode", "WikiNode",
+					"wikiNode.nodeId",
+					"SELECT DISTINCT {wikiNode.*} FROM WikiNode wikiNode WHERE ",
+					"SELECT {WikiNode.*} FROM (SELECT DISTINCT wikiNode.nodeId FROM WikiNode wikiNode WHERE ",
+					") TEMP_TABLE INNER JOIN WikiNode ON TEMP_TABLE.nodeId = WikiNode.nodeId",
+					"SELECT COUNT(DISTINCT wikiNode.nodeId) AS COUNT_VALUE FROM WikiNode wikiNode WHERE ",
 					WikiNodeModelImpl.ORDER_BY_SQL,
 					WikiNodeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1952,28 +1914,24 @@ public class WikiNodePersistenceImpl
 					"wikiNode.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, WikiNode::getStatus));
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathCountByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S,
-			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
 			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1983,15 +1941,15 @@ public class WikiNodePersistenceImpl
 				"wikiNode.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiNode::getStatus));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(WikiNode::getExternalReferenceCode),
-			WikiNode::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_WIKINODE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(WikiNode::getExternalReferenceCode),
+				WikiNode::getGroupId),
+			_SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
 				"wikiNode.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, WikiNode::getExternalReferenceCode),
@@ -2056,27 +2014,6 @@ public class WikiNodePersistenceImpl
 	private static final String _SQL_COUNT_WIKINODE_WHERE =
 		"SELECT COUNT(wikiNode) FROM WikiNode wikiNode WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"wikiNode.nodeId";
-
-	private static final String _FILTER_SQL_SELECT_WIKINODE_WHERE =
-		"SELECT DISTINCT {wikiNode.*} FROM WikiNode wikiNode WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {WikiNode.*} FROM (SELECT DISTINCT wikiNode.nodeId FROM WikiNode wikiNode WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_WIKINODE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN WikiNode ON TEMP_TABLE.nodeId = WikiNode.nodeId";
-
-	private static final String _FILTER_SQL_COUNT_WIKINODE_WHERE =
-		"SELECT COUNT(DISTINCT wikiNode.nodeId) AS COUNT_VALUE FROM WikiNode wikiNode WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "wikiNode";
-
-	private static final String _FILTER_ENTITY_TABLE = "WikiNode";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WikiNode exists with the key {";
 
@@ -2092,4 +2029,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:727582804
+// LIFERAY-SERVICE-BUILDER-HASH:-697397323

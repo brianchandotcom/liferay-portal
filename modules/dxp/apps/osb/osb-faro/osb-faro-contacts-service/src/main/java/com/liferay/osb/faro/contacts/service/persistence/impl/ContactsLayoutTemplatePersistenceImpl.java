@@ -74,9 +74,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<ContactsLayoutTemplate>
 		_collectionPersistenceFinderByGroupId;
 
@@ -222,9 +219,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private CollectionPersistenceFinder<ContactsLayoutTemplate>
 		_collectionPersistenceFinderByG_T;
 
@@ -577,29 +571,25 @@ public class ContactsLayoutTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_CONTACTSLAYOUTTEMPLATE_WHERE,
 				_SQL_COUNT_CONTACTSLAYOUTTEMPLATE_WHERE,
 				ContactsLayoutTemplateModelImpl.ORDER_BY_JPQL,
@@ -609,28 +599,24 @@ public class ContactsLayoutTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ContactsLayoutTemplate::getGroupId));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, false);
-
 		_collectionPersistenceFinderByG_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_T,
-			_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "type_"}, false),
 			_SQL_SELECT_CONTACTSLAYOUTTEMPLATE_WHERE,
 			_SQL_COUNT_CONTACTSLAYOUTTEMPLATE_WHERE,
 			ContactsLayoutTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -708,4 +694,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1755053302
+// LIFERAY-SERVICE-BUILDER-HASH:584508521

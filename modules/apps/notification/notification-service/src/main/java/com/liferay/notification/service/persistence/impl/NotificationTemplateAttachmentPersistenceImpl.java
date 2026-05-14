@@ -78,9 +78,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
-	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
-	private FinderPath _finderPathCountByNotificationTemplateId;
 	private CollectionPersistenceFinder<NotificationTemplateAttachment>
 		_collectionPersistenceFinderByNotificationTemplateId;
 
@@ -234,7 +231,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			finderCache, new Object[] {notificationTemplateId});
 	}
 
-	private FinderPath _finderPathFetchByNTI_OFI;
 	private UniquePersistenceFinder<NotificationTemplateAttachment>
 		_uniquePersistenceFinderByNTI_OFI;
 
@@ -544,33 +540,28 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByNotificationTemplateId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"notificationTemplateId"}, true);
-
-		_finderPathWithoutPaginationFindByNotificationTemplateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByNotificationTemplateId",
-				new String[] {Long.class.getName()},
-				new String[] {"notificationTemplateId"}, true);
-
-		_finderPathCountByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByNotificationTemplateId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationTemplateId"}, false);
-
 		_collectionPersistenceFinderByNotificationTemplateId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByNotificationTemplateId,
-				_finderPathWithoutPaginationFindByNotificationTemplateId,
-				_finderPathCountByNotificationTemplateId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByNotificationTemplateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"notificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationTemplateId"}, false),
 				_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
 				_SQL_COUNT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
 				NotificationTemplateAttachmentModelImpl.ORDER_BY_JPQL,
@@ -580,15 +571,15 @@ public class NotificationTemplateAttachmentPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationTemplateAttachment::getNotificationTemplateId));
 
-		_finderPathFetchByNTI_OFI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"notificationTemplateId", "objectFieldId"}, 0, 0,
-			false, NotificationTemplateAttachment::getNotificationTemplateId,
-			NotificationTemplateAttachment::getObjectFieldId);
-
 		_uniquePersistenceFinderByNTI_OFI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByNTI_OFI,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"notificationTemplateId", "objectFieldId"}, 0, 0,
+				false,
+				NotificationTemplateAttachment::getNotificationTemplateId,
+				NotificationTemplateAttachment::getObjectFieldId),
 			_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE, "",
 			new FinderColumn<>(
 				"notificationTemplateAttachment.", "notificationTemplateId",
@@ -671,4 +662,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1246117503
+// LIFERAY-SERVICE-BUILDER-HASH:-1073718342

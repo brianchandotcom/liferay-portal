@@ -97,9 +97,6 @@ public class KBFolderPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<KBFolder>
 		_collectionPersistenceFinderByUuid;
 
@@ -238,7 +235,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<KBFolder> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -327,9 +323,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<KBFolder>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -483,9 +476,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<KBFolder>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -626,9 +616,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P;
-	private FinderPath _finderPathCountByG_P;
 	private FilterCollectionPersistenceFinder<KBFolder>
 		_collectionPersistenceFinderByG_P;
 
@@ -856,7 +843,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {groupId, parentKBFolderId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_P_N;
 	private UniquePersistenceFinder<KBFolder> _uniquePersistenceFinderByG_P_N;
 
 	/**
@@ -957,7 +943,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {groupId, parentKBFolderId, name});
 	}
 
-	private FinderPath _finderPathFetchByG_P_UT;
 	private UniquePersistenceFinder<KBFolder> _uniquePersistenceFinderByG_P_UT;
 
 	/**
@@ -1060,9 +1045,6 @@ public class KBFolderPersistenceImpl
 			finderCache, new Object[] {groupId, parentKBFolderId, urlTitle});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
-	private FinderPath _finderPathCountByG_P_S;
 	private FilterCollectionPersistenceFinder<KBFolder>
 		_collectionPersistenceFinderByG_P_S;
 
@@ -1311,7 +1293,6 @@ public class KBFolderPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<KBFolder> _uniquePersistenceFinderByERC_G;
 
 	/**
@@ -1760,41 +1741,37 @@ public class KBFolderPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
 			KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBFolder::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(KBFolder::getUuid), KBFolder::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBFOLDER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(KBFolder::getUuid), KBFolder::getGroupId),
+			_SQL_SELECT_KBFOLDER_WHERE, "",
 			new FinderColumn<>(
 				"kbFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBFolder::getUuid),
@@ -1802,32 +1779,27 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				KBFolder::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_KBFOLDER_WHERE,
-				_SQL_COUNT_KBFOLDER_WHERE, KBFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, KBFolder::getUuid),
@@ -1835,67 +1807,59 @@ public class KBFolderPersistenceImpl
 					"kbFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_KBFOLDER_WHERE,
-				_SQL_COUNT_KBFOLDER_WHERE, KBFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, KBFolder::getCompanyId));
 
-		_finderPathWithPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentKBFolderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "parentKBFolderId"}, true);
-
-		_finderPathCountByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "parentKBFolderId"}, false);
-
 		_collectionPersistenceFinderByG_P =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P,
-				_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentKBFolderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "parentKBFolderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "parentKBFolderId"}, false),
 				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
 				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBFolderImpl.class, KBFolder.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBFOLDER_WHERE,
-					_FILTER_SQL_SELECT_KBFOLDER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBFOLDER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBFOLDER_WHERE,
+					KBFolderImpl.class, KBFolder.class, "kbFolder", "KBFolder",
+					"kbFolder.kbFolderId",
+					"SELECT DISTINCT {kbFolder.*} FROM KBFolder kbFolder WHERE ",
+					"SELECT {KBFolder.*} FROM (SELECT DISTINCT kbFolder.kbFolderId FROM KBFolder kbFolder WHERE ",
+					") TEMP_TABLE INNER JOIN KBFolder ON TEMP_TABLE.kbFolderId = KBFolder.kbFolderId",
+					"SELECT COUNT(DISTINCT kbFolder.kbFolderId) AS COUNT_VALUE FROM KBFolder kbFolder WHERE ",
 					KBFolderModelImpl.ORDER_BY_SQL,
 					KBFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1905,18 +1869,18 @@ public class KBFolderPersistenceImpl
 					"kbFolder.", "parentKBFolderId", FinderColumn.Type.LONG,
 					"=", true, true, KBFolder::getParentKBFolderId));
 
-		_finderPathFetchByG_P_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "parentKBFolderId", "name"}, 0, 4, false,
-			KBFolder::getGroupId, KBFolder::getParentKBFolderId,
-			convertNullFunction(KBFolder::getName));
-
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P_N, _SQL_SELECT_KBFOLDER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "parentKBFolderId", "name"}, 0, 4,
+				false, KBFolder::getGroupId, KBFolder::getParentKBFolderId,
+				convertNullFunction(KBFolder::getName)),
+			_SQL_SELECT_KBFOLDER_WHERE, "",
 			new FinderColumn<>(
 				"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				KBFolder::getGroupId),
@@ -1927,18 +1891,18 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "name", FinderColumn.Type.STRING, "=", true, true,
 				KBFolder::getName));
 
-		_finderPathFetchByG_P_UT = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "parentKBFolderId", "urlTitle"}, 0, 4,
-			false, KBFolder::getGroupId, KBFolder::getParentKBFolderId,
-			convertNullFunction(KBFolder::getUrlTitle));
-
 		_uniquePersistenceFinderByG_P_UT = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P_UT, _SQL_SELECT_KBFOLDER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_UT",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "parentKBFolderId", "urlTitle"}, 0, 4,
+				false, KBFolder::getGroupId, KBFolder::getParentKBFolderId,
+				convertNullFunction(KBFolder::getUrlTitle)),
+			_SQL_SELECT_KBFOLDER_WHERE, "",
 			new FinderColumn<>(
 				"kbFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				KBFolder::getGroupId),
@@ -1949,45 +1913,44 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "urlTitle", FinderColumn.Type.STRING, "=", true,
 				true, KBFolder::getUrlTitle));
 
-		_finderPathWithPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentKBFolderId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentKBFolderId", "status"}, true);
-
-		_finderPathCountByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentKBFolderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_P_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_S,
-				_finderPathWithoutPaginationFindByG_P_S,
-				_finderPathCountByG_P_S, _SQL_SELECT_KBFOLDER_WHERE,
-				_SQL_COUNT_KBFOLDER_WHERE, KBFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentKBFolderId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "parentKBFolderId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "parentKBFolderId", "status"},
+					false),
+				_SQL_SELECT_KBFOLDER_WHERE, _SQL_COUNT_KBFOLDER_WHERE,
+				KBFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBFolderImpl.class, KBFolder.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBFOLDER_WHERE,
-					_FILTER_SQL_SELECT_KBFOLDER_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBFOLDER_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBFOLDER_WHERE,
+					KBFolderImpl.class, KBFolder.class, "kbFolder", "KBFolder",
+					"kbFolder.kbFolderId",
+					"SELECT DISTINCT {kbFolder.*} FROM KBFolder kbFolder WHERE ",
+					"SELECT {KBFolder.*} FROM (SELECT DISTINCT kbFolder.kbFolderId FROM KBFolder kbFolder WHERE ",
+					") TEMP_TABLE INNER JOIN KBFolder ON TEMP_TABLE.kbFolderId = KBFolder.kbFolderId",
+					"SELECT COUNT(DISTINCT kbFolder.kbFolderId) AS COUNT_VALUE FROM KBFolder kbFolder WHERE ",
 					KBFolderModelImpl.ORDER_BY_SQL,
 					KBFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2000,15 +1963,15 @@ public class KBFolderPersistenceImpl
 					"kbFolder.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, KBFolder::getStatus));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(KBFolder::getExternalReferenceCode),
-			KBFolder::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_KBFOLDER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(KBFolder::getExternalReferenceCode),
+				KBFolder::getGroupId),
+			_SQL_SELECT_KBFOLDER_WHERE, "",
 			new FinderColumn<>(
 				"kbFolder.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, KBFolder::getExternalReferenceCode),
@@ -2073,27 +2036,6 @@ public class KBFolderPersistenceImpl
 	private static final String _SQL_COUNT_KBFOLDER_WHERE =
 		"SELECT COUNT(kbFolder) FROM KBFolder kbFolder WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"kbFolder.kbFolderId";
-
-	private static final String _FILTER_SQL_SELECT_KBFOLDER_WHERE =
-		"SELECT DISTINCT {kbFolder.*} FROM KBFolder kbFolder WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KBFOLDER_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {KBFolder.*} FROM (SELECT DISTINCT kbFolder.kbFolderId FROM KBFolder kbFolder WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KBFOLDER_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN KBFolder ON TEMP_TABLE.kbFolderId = KBFolder.kbFolderId";
-
-	private static final String _FILTER_SQL_COUNT_KBFOLDER_WHERE =
-		"SELECT COUNT(DISTINCT kbFolder.kbFolderId) AS COUNT_VALUE FROM KBFolder kbFolder WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "kbFolder";
-
-	private static final String _FILTER_ENTITY_TABLE = "KBFolder";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBFolder exists with the key {";
 
@@ -2109,4 +2051,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2048180261
+// LIFERAY-SERVICE-BUILDER-HASH:-1456743491

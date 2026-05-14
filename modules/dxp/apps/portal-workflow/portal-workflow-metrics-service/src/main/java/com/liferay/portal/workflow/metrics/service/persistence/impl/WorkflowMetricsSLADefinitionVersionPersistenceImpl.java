@@ -83,9 +83,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<WorkflowMetricsSLADefinitionVersion>
 		_collectionPersistenceFinderByUuid;
 
@@ -235,7 +232,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<WorkflowMetricsSLADefinitionVersion>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -331,9 +327,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<WorkflowMetricsSLADefinitionVersion>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -495,11 +488,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByWorkflowMetricsSLADefinitionId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId;
-	private FinderPath _finderPathCountByWorkflowMetricsSLADefinitionId;
 	private CollectionPersistenceFinder<WorkflowMetricsSLADefinitionVersion>
 		_collectionPersistenceFinderByWorkflowMetricsSLADefinitionId;
 
@@ -672,7 +660,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			count(finderCache, new Object[] {workflowMetricsSLADefinitionId});
 	}
 
-	private FinderPath _finderPathFetchByV_WMSLAD;
 	private UniquePersistenceFinder<WorkflowMetricsSLADefinitionVersion>
 		_uniquePersistenceFinderByV_WMSLAD;
 
@@ -1035,27 +1022,23 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 			_SQL_COUNT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 			WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
@@ -1065,15 +1048,15 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(WorkflowMetricsSLADefinitionVersion::getUuid),
-			WorkflowMetricsSLADefinitionVersion::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					WorkflowMetricsSLADefinitionVersion::getUuid),
+				WorkflowMetricsSLADefinitionVersion::getGroupId),
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.", "uuid",
@@ -1084,30 +1067,25 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
@@ -1121,35 +1099,28 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinitionVersion::getCompanyId));
 
-		_finderPathWithPaginationFindByWorkflowMetricsSLADefinitionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByWorkflowMetricsSLADefinitionId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"wmSLADefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByWorkflowMetricsSLADefinitionId",
-				new String[] {Long.class.getName()},
-				new String[] {"wmSLADefinitionId"}, true);
-
-		_finderPathCountByWorkflowMetricsSLADefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByWorkflowMetricsSLADefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"wmSLADefinitionId"}, false);
-
 		_collectionPersistenceFinderByWorkflowMetricsSLADefinitionId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByWorkflowMetricsSLADefinitionId,
-				_finderPathWithoutPaginationFindByWorkflowMetricsSLADefinitionId,
-				_finderPathCountByWorkflowMetricsSLADefinitionId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByWorkflowMetricsSLADefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"wmSLADefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByWorkflowMetricsSLADefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"wmSLADefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByWorkflowMetricsSLADefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"wmSLADefinitionId"}, false),
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
@@ -1161,17 +1132,16 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					WorkflowMetricsSLADefinitionVersion::
 						getWorkflowMetricsSLADefinitionId));
 
-		_finderPathFetchByV_WMSLAD = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByV_WMSLAD",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"version", "wmSLADefinitionId"}, 0, 1, false,
-			convertNullFunction(
-				WorkflowMetricsSLADefinitionVersion::getVersion),
-			WorkflowMetricsSLADefinitionVersion::
-				getWorkflowMetricsSLADefinitionId);
-
 		_uniquePersistenceFinderByV_WMSLAD = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByV_WMSLAD,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByV_WMSLAD",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"version", "wmSLADefinitionId"}, 0, 1, false,
+				convertNullFunction(
+					WorkflowMetricsSLADefinitionVersion::getVersion),
+				WorkflowMetricsSLADefinitionVersion::
+					getWorkflowMetricsSLADefinitionId),
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.", "version",
@@ -1260,4 +1230,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-190986592
+// LIFERAY-SERVICE-BUILDER-HASH:1473367183

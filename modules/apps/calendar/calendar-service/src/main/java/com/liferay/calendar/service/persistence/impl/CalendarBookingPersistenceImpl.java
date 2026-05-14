@@ -99,9 +99,6 @@ public class CalendarBookingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByUuid;
 
@@ -242,7 +239,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CalendarBooking>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -332,9 +328,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -489,9 +482,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCalendarId;
-	private FinderPath _finderPathWithoutPaginationFindByCalendarId;
-	private FinderPath _finderPathCountByCalendarId;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByCalendarId;
 
@@ -637,9 +627,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCalendarResourceId;
-	private FinderPath _finderPathWithoutPaginationFindByCalendarResourceId;
-	private FinderPath _finderPathCountByCalendarResourceId;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByCalendarResourceId;
 
@@ -790,10 +777,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarResourceId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParentCalendarBookingId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByParentCalendarBookingId;
-	private FinderPath _finderPathCountByParentCalendarBookingId;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByParentCalendarBookingId;
 
@@ -947,11 +930,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {parentCalendarBookingId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByRecurringCalendarBookingId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByRecurringCalendarBookingId;
-	private FinderPath _finderPathCountByRecurringCalendarBookingId;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByRecurringCalendarBookingId;
 
@@ -1111,7 +1089,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {recurringCalendarBookingId});
 	}
 
-	private FinderPath _finderPathFetchByC_P;
 	private UniquePersistenceFinder<CalendarBooking>
 		_uniquePersistenceFinderByC_P;
 
@@ -1209,7 +1186,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarId, parentCalendarBookingId});
 	}
 
-	private FinderPath _finderPathFetchByC_V;
 	private UniquePersistenceFinder<CalendarBooking>
 		_uniquePersistenceFinderByC_V;
 
@@ -1300,9 +1276,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {calendarId, vEventUid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_S;
-	private FinderPath _finderPathCountByC_S;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByC_S;
 
@@ -1569,9 +1542,6 @@ public class CalendarBookingPersistenceImpl
 			new Object[] {calendarId, ArrayUtil.sortedUnique(statuses)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_S;
-	private FinderPath _finderPathWithoutPaginationFindByP_S;
-	private FinderPath _finderPathCountByP_S;
 	private CollectionPersistenceFinder<CalendarBooking>
 		_collectionPersistenceFinderByP_S;
 
@@ -1732,7 +1702,6 @@ public class CalendarBookingPersistenceImpl
 			finderCache, new Object[] {parentCalendarBookingId, status});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<CalendarBooking>
 		_uniquePersistenceFinderByERC_G;
 
@@ -2220,43 +2189,38 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CalendarBooking::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CalendarBooking::getUuid),
-			CalendarBooking::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_CALENDARBOOKING_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CalendarBooking::getUuid),
+				CalendarBooking::getGroupId),
+			_SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
 				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CalendarBooking::getUuid),
@@ -2264,30 +2228,26 @@ public class CalendarBookingPersistenceImpl
 				"calendarBooking.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarBooking::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CALENDARBOOKING_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2298,29 +2258,26 @@ public class CalendarBookingPersistenceImpl
 					"calendarBooking.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarBooking::getCompanyId));
 
-		_finderPathWithPaginationFindByCalendarId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"calendarId"}, true);
-
-		_finderPathWithoutPaginationFindByCalendarId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCalendarId",
-			new String[] {Long.class.getName()}, new String[] {"calendarId"},
-			true);
-
-		_finderPathCountByCalendarId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCalendarId",
-			new String[] {Long.class.getName()}, new String[] {"calendarId"},
-			false);
-
 		_collectionPersistenceFinderByCalendarId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCalendarId,
-				_finderPathWithoutPaginationFindByCalendarId,
-				_finderPathCountByCalendarId, _SQL_SELECT_CALENDARBOOKING_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"calendarId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCalendarId", new String[] {Long.class.getName()},
+					new String[] {"calendarId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCalendarId", new String[] {Long.class.getName()},
+					new String[] {"calendarId"}, false),
+				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2328,29 +2285,28 @@ public class CalendarBookingPersistenceImpl
 					"calendarBooking.", "calendarId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarBooking::getCalendarId));
 
-		_finderPathWithPaginationFindByCalendarResourceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarResourceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"calendarResourceId"}, true);
-
-		_finderPathWithoutPaginationFindByCalendarResourceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCalendarResourceId", new String[] {Long.class.getName()},
-			new String[] {"calendarResourceId"}, true);
-
-		_finderPathCountByCalendarResourceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCalendarResourceId", new String[] {Long.class.getName()},
-			new String[] {"calendarResourceId"}, false);
-
 		_collectionPersistenceFinderByCalendarResourceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCalendarResourceId,
-				_finderPathWithoutPaginationFindByCalendarResourceId,
-				_finderPathCountByCalendarResourceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCalendarResourceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"calendarResourceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCalendarResourceId",
+					new String[] {Long.class.getName()},
+					new String[] {"calendarResourceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCalendarResourceId",
+					new String[] {Long.class.getName()},
+					new String[] {"calendarResourceId"}, false),
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2360,33 +2316,28 @@ public class CalendarBookingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarBooking::getCalendarResourceId));
 
-		_finderPathWithPaginationFindByParentCalendarBookingId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByParentCalendarBookingId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentCalendarBookingId"}, true);
-
-		_finderPathWithoutPaginationFindByParentCalendarBookingId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByParentCalendarBookingId",
-				new String[] {Long.class.getName()},
-				new String[] {"parentCalendarBookingId"}, true);
-
-		_finderPathCountByParentCalendarBookingId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentCalendarBookingId",
-			new String[] {Long.class.getName()},
-			new String[] {"parentCalendarBookingId"}, false);
-
 		_collectionPersistenceFinderByParentCalendarBookingId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParentCalendarBookingId,
-				_finderPathWithoutPaginationFindByParentCalendarBookingId,
-				_finderPathCountByParentCalendarBookingId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentCalendarBookingId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentCalendarBookingId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentCalendarBookingId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentCalendarBookingId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentCalendarBookingId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentCalendarBookingId"}, false),
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2396,34 +2347,28 @@ public class CalendarBookingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarBooking::getParentCalendarBookingId));
 
-		_finderPathWithPaginationFindByRecurringCalendarBookingId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByRecurringCalendarBookingId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"recurringCalendarBookingId"}, true);
-
-		_finderPathWithoutPaginationFindByRecurringCalendarBookingId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByRecurringCalendarBookingId",
-				new String[] {Long.class.getName()},
-				new String[] {"recurringCalendarBookingId"}, true);
-
-		_finderPathCountByRecurringCalendarBookingId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByRecurringCalendarBookingId",
-			new String[] {Long.class.getName()},
-			new String[] {"recurringCalendarBookingId"}, false);
-
 		_collectionPersistenceFinderByRecurringCalendarBookingId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRecurringCalendarBookingId,
-				_finderPathWithoutPaginationFindByRecurringCalendarBookingId,
-				_finderPathCountByRecurringCalendarBookingId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByRecurringCalendarBookingId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"recurringCalendarBookingId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByRecurringCalendarBookingId",
+					new String[] {Long.class.getName()},
+					new String[] {"recurringCalendarBookingId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByRecurringCalendarBookingId",
+					new String[] {Long.class.getName()},
+					new String[] {"recurringCalendarBookingId"}, false),
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2433,15 +2378,15 @@ public class CalendarBookingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarBooking::getRecurringCalendarBookingId));
 
-		_finderPathFetchByC_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"calendarId", "parentCalendarBookingId"}, 0, 0, false,
-			CalendarBooking::getCalendarId,
-			CalendarBooking::getParentCalendarBookingId);
-
 		_uniquePersistenceFinderByC_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_P, _SQL_SELECT_CALENDARBOOKING_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"calendarId", "parentCalendarBookingId"}, 0, 0,
+				false, CalendarBooking::getCalendarId,
+				CalendarBooking::getParentCalendarBookingId),
+			_SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
 				"calendarBooking.", "calendarId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarBooking::getCalendarId),
@@ -2450,15 +2395,15 @@ public class CalendarBookingPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CalendarBooking::getParentCalendarBookingId));
 
-		_finderPathFetchByC_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"calendarId", "vEventUid"}, 0, 2, false,
-			CalendarBooking::getCalendarId,
-			convertNullFunction(CalendarBooking::getVEventUid));
-
 		_uniquePersistenceFinderByC_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_V, _SQL_SELECT_CALENDARBOOKING_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"calendarId", "vEventUid"}, 0, 2, false,
+				CalendarBooking::getCalendarId,
+				convertNullFunction(CalendarBooking::getVEventUid)),
+			_SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
 				"calendarBooking.", "calendarId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarBooking::getCalendarId),
@@ -2466,28 +2411,24 @@ public class CalendarBookingPersistenceImpl
 				"calendarBooking.", "vEventUid", FinderColumn.Type.STRING, "=",
 				true, true, CalendarBooking::getVEventUid));
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"calendarId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"calendarId", "status"}, true);
-
-		_finderPathCountByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"calendarId", "status"}, false);
-
 		_collectionPersistenceFinderByC_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S,
-			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"calendarId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"calendarId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"calendarId", "status"}, false),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2497,28 +2438,24 @@ public class CalendarBookingPersistenceImpl
 				"calendarBooking.", "status", FinderColumn.Type.INTEGER, "=",
 				false, true, true, CalendarBooking::getStatus));
 
-		_finderPathWithPaginationFindByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentCalendarBookingId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"parentCalendarBookingId", "status"}, true);
-
-		_finderPathCountByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"parentCalendarBookingId", "status"}, false);
-
 		_collectionPersistenceFinderByP_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_S,
-			_finderPathWithoutPaginationFindByP_S, _finderPathCountByP_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentCalendarBookingId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"parentCalendarBookingId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"parentCalendarBookingId", "status"}, false),
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
 			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2529,16 +2466,15 @@ public class CalendarBookingPersistenceImpl
 				"calendarBooking.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CalendarBooking::getStatus));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(CalendarBooking::getExternalReferenceCode),
-			CalendarBooking::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_CALENDARBOOKING_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(CalendarBooking::getExternalReferenceCode),
+				CalendarBooking::getGroupId),
+			_SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
 				"calendarBooking.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2619,4 +2555,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1113104552
+// LIFERAY-SERVICE-BUILDER-HASH:1886916754

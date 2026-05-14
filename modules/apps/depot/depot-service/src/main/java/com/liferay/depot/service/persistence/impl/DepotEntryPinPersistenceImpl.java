@@ -84,9 +84,6 @@ public class DepotEntryPinPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DepotEntryPin>
 		_collectionPersistenceFinderByUuid;
 
@@ -227,7 +224,6 @@ public class DepotEntryPinPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DepotEntryPin>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -317,9 +313,6 @@ public class DepotEntryPinPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DepotEntryPin>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -474,9 +467,6 @@ public class DepotEntryPinPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<DepotEntryPin>
 		_collectionPersistenceFinderByUserId;
 
@@ -617,9 +607,6 @@ public class DepotEntryPinPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByDepotEntryId;
-	private FinderPath _finderPathCountByDepotEntryId;
 	private CollectionPersistenceFinder<DepotEntryPin>
 		_collectionPersistenceFinderByDepotEntryId;
 
@@ -765,7 +752,6 @@ public class DepotEntryPinPersistenceImpl
 			finderCache, new Object[] {depotEntryId});
 	}
 
-	private FinderPath _finderPathFetchByU_D;
 	private UniquePersistenceFinder<DepotEntryPin>
 		_uniquePersistenceFinderByU_D;
 
@@ -1123,42 +1109,38 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DEPOTENTRYPIN_WHERE, _SQL_COUNT_DEPOTENTRYPIN_WHERE,
 			DepotEntryPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"depotEntryPin.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DepotEntryPin::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DepotEntryPin::getUuid),
-			DepotEntryPin::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEPOTENTRYPIN_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DepotEntryPin::getUuid),
+				DepotEntryPin::getGroupId),
+			_SQL_SELECT_DEPOTENTRYPIN_WHERE, "",
 			new FinderColumn<>(
 				"depotEntryPin.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DepotEntryPin::getUuid),
@@ -1166,31 +1148,26 @@ public class DepotEntryPinPersistenceImpl
 				"depotEntryPin.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntryPin::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DEPOTENTRYPIN_WHERE,
-				_SQL_COUNT_DEPOTENTRYPIN_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DEPOTENTRYPIN_WHERE, _SQL_COUNT_DEPOTENTRYPIN_WHERE,
 				DepotEntryPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"depotEntryPin.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1199,71 +1176,65 @@ public class DepotEntryPinPersistenceImpl
 					"depotEntryPin.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DepotEntryPin::getCompanyId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_DEPOTENTRYPIN_WHERE,
-				_SQL_COUNT_DEPOTENTRYPIN_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_DEPOTENTRYPIN_WHERE, _SQL_COUNT_DEPOTENTRYPIN_WHERE,
 				DepotEntryPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"depotEntryPin.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, DepotEntryPin::getUserId));
 
-		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"depotEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			true);
-
-		_finderPathCountByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			false);
-
 		_collectionPersistenceFinderByDepotEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDepotEntryId,
-				_finderPathWithoutPaginationFindByDepotEntryId,
-				_finderPathCountByDepotEntryId, _SQL_SELECT_DEPOTENTRYPIN_WHERE,
-				_SQL_COUNT_DEPOTENTRYPIN_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDepotEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, false),
+				_SQL_SELECT_DEPOTENTRYPIN_WHERE, _SQL_COUNT_DEPOTENTRYPIN_WHERE,
 				DepotEntryPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"depotEntryPin.", "depotEntryId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryPin::getDepotEntryId));
 
-		_finderPathFetchByU_D = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_D",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "depotEntryId"}, 0, 0, false,
-			DepotEntryPin::getUserId, DepotEntryPin::getDepotEntryId);
-
 		_uniquePersistenceFinderByU_D = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_D, _SQL_SELECT_DEPOTENTRYPIN_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_D",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "depotEntryId"}, 0, 0, false,
+				DepotEntryPin::getUserId, DepotEntryPin::getDepotEntryId),
+			_SQL_SELECT_DEPOTENTRYPIN_WHERE, "",
 			new FinderColumn<>(
 				"depotEntryPin.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntryPin::getUserId),
@@ -1343,4 +1314,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-300192091
+// LIFERAY-SERVICE-BUILDER-HASH:1419445780

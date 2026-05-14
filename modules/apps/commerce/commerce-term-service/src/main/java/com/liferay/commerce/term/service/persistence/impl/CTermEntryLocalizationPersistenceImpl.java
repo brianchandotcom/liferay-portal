@@ -81,9 +81,6 @@ public class CTermEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceTermEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceTermEntryId;
-	private FinderPath _finderPathCountByCommerceTermEntryId;
 	private CollectionPersistenceFinder<CTermEntryLocalization>
 		_collectionPersistenceFinderByCommerceTermEntryId;
 
@@ -235,7 +232,6 @@ public class CTermEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {commerceTermEntryId});
 	}
 
-	private FinderPath _finderPathFetchByCommerceTermEntryId_LanguageId;
 	private UniquePersistenceFinder<CTermEntryLocalization>
 		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId;
 
@@ -562,29 +558,28 @@ public class CTermEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTermEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceTermEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceTermEntryId", new String[] {Long.class.getName()},
-			new String[] {"commerceTermEntryId"}, true);
-
-		_finderPathCountByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTermEntryId", new String[] {Long.class.getName()},
-			new String[] {"commerceTermEntryId"}, false);
-
 		_collectionPersistenceFinderByCommerceTermEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceTermEntryId,
-				_finderPathWithoutPaginationFindByCommerceTermEntryId,
-				_finderPathCountByCommerceTermEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceTermEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceTermEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceTermEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTermEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceTermEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTermEntryId"}, false),
 				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE,
 				CTermEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -594,18 +589,16 @@ public class CTermEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTermEntryLocalization::getCommerceTermEntryId));
 
-		_finderPathFetchByCommerceTermEntryId_LanguageId =
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY,
-				"fetchByCommerceTermEntryId_LanguageId",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"commerceTermEntryId", "languageId"}, 0, 2, false,
-				CTermEntryLocalization::getCommerceTermEntryId,
-				convertNullFunction(CTermEntryLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCommerceTermEntryId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByCommerceTermEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"commerceTermEntryId", "languageId"}, 0, 2,
+					false, CTermEntryLocalization::getCommerceTermEntryId,
+					convertNullFunction(CTermEntryLocalization::getLanguageId)),
 				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"cTermEntryLocalization.", "commerceTermEntryId",
@@ -682,4 +675,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1839639878
+// LIFERAY-SERVICE-BUILDER-HASH:2035921271

@@ -81,9 +81,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByFileEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
-	private FinderPath _finderPathCountByFileEntryId;
 	private CollectionPersistenceFinder<DLFileVersionPreview>
 		_collectionPersistenceFinderByFileEntryId;
 
@@ -230,9 +227,6 @@ public class DLFileVersionPreviewPersistenceImpl
 			finderCache, new Object[] {fileEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFileVersionId;
-	private FinderPath _finderPathWithoutPaginationFindByFileVersionId;
-	private FinderPath _finderPathCountByFileVersionId;
 	private CollectionPersistenceFinder<DLFileVersionPreview>
 		_collectionPersistenceFinderByFileVersionId;
 
@@ -379,7 +373,6 @@ public class DLFileVersionPreviewPersistenceImpl
 			finderCache, new Object[] {fileVersionId});
 	}
 
-	private FinderPath _finderPathFetchByF_F;
 	private UniquePersistenceFinder<DLFileVersionPreview>
 		_uniquePersistenceFinderByF_F;
 
@@ -476,7 +469,6 @@ public class DLFileVersionPreviewPersistenceImpl
 			finderCache, new Object[] {fileEntryId, fileVersionId});
 	}
 
-	private FinderPath _finderPathFetchByF_F_P;
 	private UniquePersistenceFinder<DLFileVersionPreview>
 		_uniquePersistenceFinderByF_F_P;
 
@@ -839,29 +831,25 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"fileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			true);
-
-		_finderPathCountByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			false);
-
 		_collectionPersistenceFinderByFileEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFileEntryId,
-				_finderPathWithoutPaginationFindByFileEntryId,
-				_finderPathCountByFileEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"fileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"fileEntryId"}, false),
 				_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
 				_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE,
 				DLFileVersionPreviewModelImpl.ORDER_BY_JPQL,
@@ -871,29 +859,26 @@ public class DLFileVersionPreviewPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DLFileVersionPreview::getFileEntryId));
 
-		_finderPathWithPaginationFindByFileVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileVersionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"fileVersionId"}, true);
-
-		_finderPathWithoutPaginationFindByFileVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileVersionId",
-			new String[] {Long.class.getName()}, new String[] {"fileVersionId"},
-			true);
-
-		_finderPathCountByFileVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileVersionId",
-			new String[] {Long.class.getName()}, new String[] {"fileVersionId"},
-			false);
-
 		_collectionPersistenceFinderByFileVersionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFileVersionId,
-				_finderPathWithoutPaginationFindByFileVersionId,
-				_finderPathCountByFileVersionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFileVersionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fileVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFileVersionId", new String[] {Long.class.getName()},
+					new String[] {"fileVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFileVersionId", new String[] {Long.class.getName()},
+					new String[] {"fileVersionId"}, false),
 				_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
 				_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE,
 				DLFileVersionPreviewModelImpl.ORDER_BY_JPQL,
@@ -903,16 +888,15 @@ public class DLFileVersionPreviewPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DLFileVersionPreview::getFileVersionId));
 
-		_finderPathFetchByF_F = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"fileEntryId", "fileVersionId"}, 0, 0, false,
-			DLFileVersionPreview::getFileEntryId,
-			DLFileVersionPreview::getFileVersionId);
-
 		_uniquePersistenceFinderByF_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_F, _SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_F",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"fileEntryId", "fileVersionId"}, 0, 0, false,
+				DLFileVersionPreview::getFileEntryId,
+				DLFileVersionPreview::getFileVersionId),
+			_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE, "",
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "fileEntryId", FinderColumn.Type.LONG,
 				"=", true, true, DLFileVersionPreview::getFileEntryId),
@@ -921,19 +905,18 @@ public class DLFileVersionPreviewPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				DLFileVersionPreview::getFileVersionId));
 
-		_finderPathFetchByF_F_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_F_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"fileEntryId", "fileVersionId", "previewStatus"}, 0,
-			0, false, DLFileVersionPreview::getFileEntryId,
-			DLFileVersionPreview::getFileVersionId,
-			DLFileVersionPreview::getPreviewStatus);
-
 		_uniquePersistenceFinderByF_F_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_F_P,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_F_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"fileEntryId", "fileVersionId", "previewStatus"},
+				0, 0, false, DLFileVersionPreview::getFileEntryId,
+				DLFileVersionPreview::getFileVersionId,
+				DLFileVersionPreview::getPreviewStatus),
 			_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE, "",
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "fileEntryId", FinderColumn.Type.LONG,
@@ -1016,4 +999,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1986691306
+// LIFERAY-SERVICE-BUILDER-HASH:1663167247

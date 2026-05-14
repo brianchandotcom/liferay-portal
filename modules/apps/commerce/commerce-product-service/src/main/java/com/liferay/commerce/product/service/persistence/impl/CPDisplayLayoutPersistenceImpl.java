@@ -87,9 +87,6 @@ public class CPDisplayLayoutPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByUuid;
 
@@ -230,7 +227,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CPDisplayLayout>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -320,9 +316,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -477,9 +470,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByGroupId;
 
@@ -623,9 +613,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByG_C;
 
@@ -781,9 +768,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LPTEU;
-	private FinderPath _finderPathWithoutPaginationFindByG_LPTEU;
-	private FinderPath _finderPathCountByG_LPTEU;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByG_LPTEU;
 
@@ -949,9 +933,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {groupId, layoutPageTemplateEntryUuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_L;
-	private FinderPath _finderPathCountByG_L;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByG_L;
 
@@ -1106,9 +1087,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {groupId, layoutUuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByC_C;
 
@@ -1264,9 +1242,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_LPTEU;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_LPTEU;
-	private FinderPath _finderPathCountByC_C_LPTEU;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByC_C_LPTEU;
 
@@ -1424,9 +1399,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_L;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_L;
-	private FinderPath _finderPathCountByC_C_L;
 	private CollectionPersistenceFinder<CPDisplayLayout>
 		_collectionPersistenceFinderByC_C_L;
 
@@ -1582,7 +1554,6 @@ public class CPDisplayLayoutPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByG_C_C;
 	private UniquePersistenceFinder<CPDisplayLayout>
 		_uniquePersistenceFinderByG_C_C;
 
@@ -1989,43 +1960,38 @@ public class CPDisplayLayoutPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, _SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 			CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpDisplayLayout.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPDisplayLayout::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CPDisplayLayout::getUuid),
-			CPDisplayLayout::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CPDisplayLayout::getUuid),
+				CPDisplayLayout::getGroupId),
+			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, "",
 			new FinderColumn<>(
 				"cpDisplayLayout.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPDisplayLayout::getUuid),
@@ -2033,30 +1999,26 @@ public class CPDisplayLayoutPersistenceImpl
 				"cpDisplayLayout.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPDisplayLayout::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
 				_SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 				CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2067,29 +2029,26 @@ public class CPDisplayLayoutPersistenceImpl
 					"cpDisplayLayout.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPDisplayLayout::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
 				_SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 				CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2097,28 +2056,24 @@ public class CPDisplayLayoutPersistenceImpl
 					"cpDisplayLayout.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CPDisplayLayout::getGroupId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByG_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C,
-			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, _SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 			CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2128,32 +2083,29 @@ public class CPDisplayLayoutPersistenceImpl
 				"cpDisplayLayout.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, CPDisplayLayout::getClassNameId));
 
-		_finderPathWithPaginationFindByG_LPTEU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LPTEU",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateEntryUuid"}, true);
-
-		_finderPathWithoutPaginationFindByG_LPTEU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_LPTEU",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutPageTemplateEntryUuid"}, 0, 2, true,
-			null);
-
-		_finderPathCountByG_LPTEU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_LPTEU",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutPageTemplateEntryUuid"}, 0, 2,
-			false, null);
-
 		_collectionPersistenceFinderByG_LPTEU =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LPTEU,
-				_finderPathWithoutPaginationFindByG_LPTEU,
-				_finderPathCountByG_LPTEU, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LPTEU",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "layoutPageTemplateEntryUuid"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_LPTEU",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "layoutPageTemplateEntryUuid"}, 0,
+					2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_LPTEU",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "layoutPageTemplateEntryUuid"}, 0,
+					2, false, null),
+				_SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
 				_SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 				CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2165,28 +2117,24 @@ public class CPDisplayLayoutPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					CPDisplayLayout::getLayoutPageTemplateEntryUuid));
 
-		_finderPathWithPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutUuid"}, true);
-
-		_finderPathWithoutPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutUuid"}, 0, 2, true, null);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutUuid"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_L,
-			_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "layoutUuid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "layoutUuid"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "layoutUuid"}, 0, 2, false, null),
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, _SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 			CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2196,28 +2144,24 @@ public class CPDisplayLayoutPersistenceImpl
 				"cpDisplayLayout.", "layoutUuid", FinderColumn.Type.STRING, "=",
 				true, true, CPDisplayLayout::getLayoutUuid));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, _SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 			CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2227,30 +2171,28 @@ public class CPDisplayLayoutPersistenceImpl
 				"cpDisplayLayout.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, CPDisplayLayout::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_LPTEU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LPTEU",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_LPTEU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_LPTEU",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_LPTEU = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_LPTEU",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_LPTEU =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_LPTEU,
-				_finderPathWithoutPaginationFindByC_C_LPTEU,
-				_finderPathCountByC_C_LPTEU, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LPTEU",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_C_LPTEU",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_C_LPTEU",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"classNameId", "classPK"}, false),
+				_SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
 				_SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 				CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"cpDisplayLayout.layoutPageTemplateEntryUuid IS NOT NULL",
@@ -2261,28 +2203,24 @@ public class CPDisplayLayoutPersistenceImpl
 					"cpDisplayLayout.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, CPDisplayLayout::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_L,
-			_finderPathWithoutPaginationFindByC_C_L, _finderPathCountByC_C_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_L",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, _SQL_COUNT_CPDISPLAYLAYOUT_WHERE,
 			CPDisplayLayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"cpDisplayLayout.layoutUuid IS NOT NULL",
@@ -2293,18 +2231,18 @@ public class CPDisplayLayoutPersistenceImpl
 				"cpDisplayLayout.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, CPDisplayLayout::getClassPK));
 
-		_finderPathFetchByG_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, 0, 0, false,
-			CPDisplayLayout::getGroupId, CPDisplayLayout::getClassNameId,
-			CPDisplayLayout::getClassPK);
-
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_C, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "classPK"}, 0, 0, false,
+				CPDisplayLayout::getGroupId, CPDisplayLayout::getClassNameId,
+				CPDisplayLayout::getClassPK),
+			_SQL_SELECT_CPDISPLAYLAYOUT_WHERE, "",
 			new FinderColumn<>(
 				"cpDisplayLayout.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPDisplayLayout::getGroupId),
@@ -2387,4 +2325,4 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1856112159
+// LIFERAY-SERVICE-BUILDER-HASH:-304827862

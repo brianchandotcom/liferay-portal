@@ -82,9 +82,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPDVirtualSettingFileEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,7 +226,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CPDVirtualSettingFileEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -321,9 +317,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPDVirtualSettingFileEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -480,11 +473,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByCPDefinitionVirtualSettingId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCPDefinitionVirtualSettingId;
-	private FinderPath _finderPathCountByCPDefinitionVirtualSettingId;
 	private CollectionPersistenceFinder<CPDVirtualSettingFileEntry>
 		_collectionPersistenceFinderByCPDefinitionVirtualSettingId;
 
@@ -644,9 +632,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionVirtualSettingId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFileEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
-	private FinderPath _finderPathCountByFileEntryId;
 	private CollectionPersistenceFinder<CPDVirtualSettingFileEntry>
 		_collectionPersistenceFinderByFileEntryId;
 
@@ -1041,27 +1026,23 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 			_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 			CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1070,15 +1051,14 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 				"cpdVirtualSettingFileEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDVirtualSettingFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CPDVirtualSettingFileEntry::getUuid),
-			CPDVirtualSettingFileEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CPDVirtualSettingFileEntry::getUuid),
+				CPDVirtualSettingFileEntry::getGroupId),
 			_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cpdVirtualSettingFileEntry.", "uuid", FinderColumn.Type.STRING,
@@ -1088,30 +1068,25 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPDVirtualSettingFileEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1125,35 +1100,28 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDVirtualSettingFileEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByCPDefinitionVirtualSettingId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCPDefinitionVirtualSettingId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"CPDefinitionVirtualSettingId"}, true);
-
-		_finderPathWithoutPaginationFindByCPDefinitionVirtualSettingId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCPDefinitionVirtualSettingId",
-				new String[] {Long.class.getName()},
-				new String[] {"CPDefinitionVirtualSettingId"}, true);
-
-		_finderPathCountByCPDefinitionVirtualSettingId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCPDefinitionVirtualSettingId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionVirtualSettingId"}, false);
-
 		_collectionPersistenceFinderByCPDefinitionVirtualSettingId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCPDefinitionVirtualSettingId,
-				_finderPathWithoutPaginationFindByCPDefinitionVirtualSettingId,
-				_finderPathCountByCPDefinitionVirtualSettingId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPDefinitionVirtualSettingId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPDefinitionVirtualSettingId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPDefinitionVirtualSettingId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionVirtualSettingId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPDefinitionVirtualSettingId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionVirtualSettingId"}, false),
 				_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1165,29 +1133,25 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 					CPDVirtualSettingFileEntry::
 						getCPDefinitionVirtualSettingId));
 
-		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"fileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			true);
-
-		_finderPathCountByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			false);
-
 		_collectionPersistenceFinderByFileEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFileEntryId,
-				_finderPathWithoutPaginationFindByFileEntryId,
-				_finderPathCountByFileEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"fileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"fileEntryId"}, false),
 				_SQL_SELECT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				_SQL_COUNT_CPDVIRTUALSETTINGFILEENTRY_WHERE,
 				CPDVirtualSettingFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1266,4 +1230,4 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1412849852
+// LIFERAY-SERVICE-BUILDER-HASH:-1637040590

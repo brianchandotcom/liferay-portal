@@ -76,9 +76,6 @@ public class AssetTagGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<AssetTagGroupRel>
 		_collectionPersistenceFinderByUuid;
 
@@ -220,7 +217,6 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<AssetTagGroupRel>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -311,9 +307,6 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<AssetTagGroupRel>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -469,9 +462,6 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<AssetTagGroupRel>
 		_collectionPersistenceFinderByGroupId;
 
@@ -616,9 +606,6 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByTagId;
-	private FinderPath _finderPathWithoutPaginationFindByTagId;
-	private FinderPath _finderPathCountByTagId;
 	private CollectionPersistenceFinder<AssetTagGroupRel>
 		_collectionPersistenceFinderByTagId;
 
@@ -760,7 +747,6 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tagId});
 	}
 
-	private FinderPath _finderPathFetchByG_T;
 	private UniquePersistenceFinder<AssetTagGroupRel>
 		_uniquePersistenceFinderByG_T;
 
@@ -1116,27 +1102,23 @@ public class AssetTagGroupRelPersistenceImpl
 	 * Initializes the asset tag group rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_ASSETTAGGROUPREL_WHERE,
 			_SQL_COUNT_ASSETTAGGROUPREL_WHERE,
 			AssetTagGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1144,16 +1126,15 @@ public class AssetTagGroupRelPersistenceImpl
 				"assetTagGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AssetTagGroupRel::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(AssetTagGroupRel::getUuid),
-			AssetTagGroupRel::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETTAGGROUPREL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(AssetTagGroupRel::getUuid),
+				AssetTagGroupRel::getGroupId),
+			_SQL_SELECT_ASSETTAGGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"assetTagGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AssetTagGroupRel::getUuid),
@@ -1161,30 +1142,26 @@ public class AssetTagGroupRelPersistenceImpl
 				"assetTagGroupRel.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, AssetTagGroupRel::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_ASSETTAGGROUPREL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_ASSETTAGGROUPREL_WHERE,
 				_SQL_COUNT_ASSETTAGGROUPREL_WHERE,
 				AssetTagGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1195,29 +1172,26 @@ public class AssetTagGroupRelPersistenceImpl
 					"assetTagGroupRel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AssetTagGroupRel::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_ASSETTAGGROUPREL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_ASSETTAGGROUPREL_WHERE,
 				_SQL_COUNT_ASSETTAGGROUPREL_WHERE,
 				AssetTagGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1225,25 +1199,23 @@ public class AssetTagGroupRelPersistenceImpl
 					"assetTagGroupRel.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetTagGroupRel::getGroupId));
 
-		_finderPathWithPaginationFindByTagId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTagId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"tagId"}, true);
-
-		_finderPathWithoutPaginationFindByTagId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTagId",
-			new String[] {Long.class.getName()}, new String[] {"tagId"}, true);
-
-		_finderPathCountByTagId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTagId",
-			new String[] {Long.class.getName()}, new String[] {"tagId"}, false);
-
 		_collectionPersistenceFinderByTagId = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByTagId,
-			_finderPathWithoutPaginationFindByTagId, _finderPathCountByTagId,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTagId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"tagId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTagId",
+				new String[] {Long.class.getName()}, new String[] {"tagId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTagId",
+				new String[] {Long.class.getName()}, new String[] {"tagId"},
+				false),
 			_SQL_SELECT_ASSETTAGGROUPREL_WHERE,
 			_SQL_COUNT_ASSETTAGGROUPREL_WHERE,
 			AssetTagGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1251,14 +1223,14 @@ public class AssetTagGroupRelPersistenceImpl
 				"assetTagGroupRel.", "tagId", FinderColumn.Type.LONG, "=", true,
 				true, AssetTagGroupRel::getTagId));
 
-		_finderPathFetchByG_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "tagId"}, 0, 0, false,
-			AssetTagGroupRel::getGroupId, AssetTagGroupRel::getTagId);
-
 		_uniquePersistenceFinderByG_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_T, _SQL_SELECT_ASSETTAGGROUPREL_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_T",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "tagId"}, 0, 0, false,
+				AssetTagGroupRel::getGroupId, AssetTagGroupRel::getTagId),
+			_SQL_SELECT_ASSETTAGGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"assetTagGroupRel.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, AssetTagGroupRel::getGroupId),
@@ -1302,4 +1274,4 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1524320344
+// LIFERAY-SERVICE-BUILDER-HASH:396829925

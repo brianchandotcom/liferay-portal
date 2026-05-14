@@ -98,9 +98,6 @@ public class MBThreadPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByUuid;
 
@@ -239,7 +236,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<MBThread> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -328,9 +324,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -484,9 +477,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByGroupId;
 
@@ -692,7 +682,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByRootMessageId;
 	private UniquePersistenceFinder<MBThread>
 		_uniquePersistenceFinderByRootMessageId;
 
@@ -777,9 +766,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {rootMessageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C;
 
@@ -1188,8 +1174,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotC;
-	private FinderPath _finderPathWithPaginationCountByG_NotC;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_NotC;
 
@@ -1413,9 +1397,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId, categoryId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_S;
 
@@ -1638,9 +1619,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_P;
-	private FinderPath _finderPathCountByC_P;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByC_P;
 
@@ -1795,9 +1773,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {categoryId, priority});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByL_P;
-	private FinderPath _finderPathWithoutPaginationFindByL_P;
-	private FinderPath _finderPathCountByL_P;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByL_P;
 
@@ -1953,9 +1928,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {lastPostDate, priority});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_L;
-	private FinderPath _finderPathCountByG_C_L;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C_L;
 
@@ -2206,9 +2178,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_S;
-	private FinderPath _finderPathCountByG_C_S;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C_S;
 
@@ -2663,8 +2632,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_C_NotS;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C_NotS;
 
@@ -3122,8 +3089,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotC_S;
-	private FinderPath _finderPathWithPaginationCountByG_NotC_S;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_NotC_S;
 
@@ -3370,8 +3335,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId, categoryId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotC_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_NotC_NotS;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_NotC_NotS;
 
@@ -3941,41 +3904,37 @@ public class MBThreadPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBThread::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(MBThread::getUuid), MBThread::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBTHREAD_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(MBThread::getUuid), MBThread::getGroupId),
+			_SQL_SELECT_MBTHREAD_WHERE, "",
 			new FinderColumn<>(
 				"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBThread::getUuid),
@@ -3983,32 +3942,27 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				MBThread::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, MBThread::getUuid),
@@ -4016,88 +3970,81 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "mbThread.categoryId != -1",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"mbThread.categoryId != -1",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId));
 
-		_finderPathFetchByRootMessageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByRootMessageId",
-			new String[] {Long.class.getName()}, new String[] {"rootMessageId"},
-			0, 0, false, MBThread::getRootMessageId);
-
 		_uniquePersistenceFinderByRootMessageId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByRootMessageId, _SQL_SELECT_MBTHREAD_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByRootMessageId",
+				new String[] {Long.class.getName()},
+				new String[] {"rootMessageId"}, 0, 0, false,
+				MBThread::getRootMessageId),
+			_SQL_SELECT_MBTHREAD_WHERE, "",
 			new FinderColumn<>(
 				"mbThread.", "rootMessageId", FinderColumn.Type.LONG, "=", true,
 				true, MBThread::getRootMessageId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, false);
-
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C,
-				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "categoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4107,33 +4054,31 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "categoryId", FinderColumn.Type.LONG, "=",
 					false, true, true, MBThread::getCategoryId));
 
-		_finderPathWithPaginationFindByG_NotC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId"}, true);
-
-		_finderPathWithPaginationCountByG_NotC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, false);
-
 		_collectionPersistenceFinderByG_NotC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotC, null,
-				_finderPathWithPaginationCountByG_NotC,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4143,39 +4088,39 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "categoryId", FinderColumn.Type.LONG, "!=",
 					true, true, MBThread::getCategoryId));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbThread.categoryId != -1",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4185,28 +4130,24 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
-			new String[] {
-				Long.class.getName(), Double.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"categoryId", "priority"}, true);
-
-		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
-			new String[] {Long.class.getName(), Double.class.getName()},
-			new String[] {"categoryId", "priority"}, true);
-
-		_finderPathCountByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
-			new String[] {Long.class.getName(), Double.class.getName()},
-			new String[] {"categoryId", "priority"}, false);
-
 		_collectionPersistenceFinderByC_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P,
-			_finderPathWithoutPaginationFindByC_P, _finderPathCountByC_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
+				new String[] {
+					Long.class.getName(), Double.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"categoryId", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
+				new String[] {Long.class.getName(), Double.class.getName()},
+				new String[] {"categoryId", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+				new String[] {Long.class.getName(), Double.class.getName()},
+				new String[] {"categoryId", "priority"}, false),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4216,28 +4157,24 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "priority", FinderColumn.Type.DOUBLE, "=", true,
 				true, MBThread::getPriority));
 
-		_finderPathWithPaginationFindByL_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P",
-			new String[] {
-				Date.class.getName(), Double.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"lastPostDate", "priority"}, true);
-
-		_finderPathWithoutPaginationFindByL_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P",
-			new String[] {Date.class.getName(), Double.class.getName()},
-			new String[] {"lastPostDate", "priority"}, true);
-
-		_finderPathCountByL_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
-			new String[] {Date.class.getName(), Double.class.getName()},
-			new String[] {"lastPostDate", "priority"}, false);
-
 		_collectionPersistenceFinderByL_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByL_P,
-			_finderPathWithoutPaginationFindByL_P, _finderPathCountByL_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P",
+				new String[] {
+					Date.class.getName(), Double.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"lastPostDate", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P",
+				new String[] {Date.class.getName(), Double.class.getName()},
+				new String[] {"lastPostDate", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
+				new String[] {Date.class.getName(), Double.class.getName()},
+				new String[] {"lastPostDate", "priority"}, false),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"mbThread.categoryId != -1",
@@ -4248,43 +4185,44 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "priority", FinderColumn.Type.DOUBLE, "=", true,
 				true, MBThread::getPriority));
 
-		_finderPathWithPaginationFindByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "lastPostDate"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Date.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "lastPostDate"}, true);
-
-		_finderPathCountByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Date.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "lastPostDate"}, false);
-
 		_collectionPersistenceFinderByG_C_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_L,
-				_finderPathWithoutPaginationFindByG_C_L,
-				_finderPathCountByG_C_L, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "lastPostDate"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "lastPostDate"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "lastPostDate"},
+					false),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4297,45 +4235,41 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "lastPostDate", FinderColumn.Type.DATE, "=",
 					true, true, MBThread::getLastPostDate));
 
-		_finderPathWithPaginationFindByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathCountByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_S,
-				_finderPathWithoutPaginationFindByG_C_S,
-				_finderPathCountByG_C_S, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4348,36 +4282,35 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByG_C_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_C_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_NotS, null,
-				_finderPathWithPaginationCountByG_C_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4390,36 +4323,35 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByG_NotC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_NotC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_NotC_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotC_S, null,
-				_finderPathWithPaginationCountByG_NotC_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4432,36 +4364,36 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByG_NotC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_NotC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_NotC_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotC_NotS, null,
-				_finderPathWithPaginationCountByG_NotC_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_NotC_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4531,27 +4463,6 @@ public class MBThreadPersistenceImpl
 	private static final String _SQL_COUNT_MBTHREAD_WHERE =
 		"SELECT COUNT(mbThread) FROM MBThread mbThread WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"mbThread.threadId";
-
-	private static final String _FILTER_SQL_SELECT_MBTHREAD_WHERE =
-		"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId";
-
-	private static final String _FILTER_SQL_COUNT_MBTHREAD_WHERE =
-		"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "mbThread";
-
-	private static final String _FILTER_ENTITY_TABLE = "MBThread";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBThread exists with the key {";
 
@@ -4567,4 +4478,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1573485955
+// LIFERAY-SERVICE-BUILDER-HASH:821918415

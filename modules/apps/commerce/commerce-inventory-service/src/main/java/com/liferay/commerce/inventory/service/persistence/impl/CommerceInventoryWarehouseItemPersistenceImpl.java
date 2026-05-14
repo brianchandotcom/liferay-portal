@@ -91,9 +91,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseItem>
 		_collectionPersistenceFinderByUuid;
 
@@ -238,9 +235,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseItem>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -397,9 +391,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseItem>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -547,11 +538,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
-	private FinderPath _finderPathCountByCommerceInventoryWarehouseId;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseItem>
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId;
 
@@ -719,9 +705,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			finderCache, new Object[] {commerceInventoryWarehouseId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_S_U;
-	private FinderPath _finderPathCountByC_S_U;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseItem>
 		_collectionPersistenceFinderByC_S_U;
 
@@ -896,7 +879,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			finderCache, new Object[] {companyId, sku, unitOfMeasureKey});
 	}
 
-	private FinderPath _finderPathFetchByCIWI_S_U;
 	private UniquePersistenceFinder<CommerceInventoryWarehouseItem>
 		_uniquePersistenceFinderByCIWI_S_U;
 
@@ -1012,7 +994,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			new Object[] {commerceInventoryWarehouseId, sku, unitOfMeasureKey});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommerceInventoryWarehouseItem>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1435,27 +1416,23 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 			CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
@@ -1465,30 +1442,25 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouseItem::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 				CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
@@ -1502,29 +1474,25 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceInventoryWarehouseItem::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 				CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
@@ -1534,35 +1502,28 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceInventoryWarehouseItem::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceInventoryWarehouseId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceInventoryWarehouseId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceInventoryWarehouseId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceInventoryWarehouseId"}, true);
-
-		_finderPathCountByCommerceInventoryWarehouseId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceInventoryWarehouseId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceInventoryWarehouseId"}, false);
-
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCommerceInventoryWarehouseId,
-				_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-				_finderPathCountByCommerceInventoryWarehouseId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceInventoryWarehouseId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceInventoryWarehouseId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceInventoryWarehouseId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceInventoryWarehouseId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceInventoryWarehouseId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceInventoryWarehouseId"}, false),
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 				CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
@@ -1574,36 +1535,32 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 					CommerceInventoryWarehouseItem::
 						getCommerceInventoryWarehouseId));
 
-		_finderPathWithPaginationFindByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, true,
-			null);
-
-		_finderPathCountByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, false,
-			null);
-
 		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S_U,
-			_finderPathWithoutPaginationFindByC_S_U, _finderPathCountByC_S_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6,
+				false, null),
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE,
 			CommerceInventoryWarehouseItemModelImpl.ORDER_BY_JPQL,
@@ -1621,23 +1578,22 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouseItem::getUnitOfMeasureKey));
 
-		_finderPathFetchByCIWI_S_U = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCIWI_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"commerceInventoryWarehouseId", "sku", "unitOfMeasureKey"
-			},
-			0, 6, false,
-			CommerceInventoryWarehouseItem::getCommerceInventoryWarehouseId,
-			convertNullFunction(CommerceInventoryWarehouseItem::getSku),
-			convertNullFunction(
-				CommerceInventoryWarehouseItem::getUnitOfMeasureKey));
-
 		_uniquePersistenceFinderByCIWI_S_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCIWI_S_U,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCIWI_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"commerceInventoryWarehouseId", "sku", "unitOfMeasureKey"
+				},
+				0, 6, false,
+				CommerceInventoryWarehouseItem::getCommerceInventoryWarehouseId,
+				convertNullFunction(CommerceInventoryWarehouseItem::getSku),
+				convertNullFunction(
+					CommerceInventoryWarehouseItem::getUnitOfMeasureKey)),
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouseItem.",
@@ -1654,16 +1610,16 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouseItem::getUnitOfMeasureKey));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				CommerceInventoryWarehouseItem::getExternalReferenceCode),
-			CommerceInventoryWarehouseItem::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CommerceInventoryWarehouseItem::getExternalReferenceCode),
+				CommerceInventoryWarehouseItem::getCompanyId),
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouseItem.", "externalReferenceCode",
@@ -1746,4 +1702,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1506085045
+// LIFERAY-SERVICE-BUILDER-HASH:259177218

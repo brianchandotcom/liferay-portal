@@ -78,9 +78,6 @@ public class ObjectLayoutRowPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectLayoutRow>
 		_collectionPersistenceFinderByUuid;
 
@@ -221,9 +218,6 @@ public class ObjectLayoutRowPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectLayoutRow>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -378,9 +372,6 @@ public class ObjectLayoutRowPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectLayoutBoxId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectLayoutBoxId;
-	private FinderPath _finderPathCountByObjectLayoutBoxId;
 	private CollectionPersistenceFinder<ObjectLayoutRow>
 		_collectionPersistenceFinderByObjectLayoutBoxId;
 
@@ -754,57 +745,49 @@ public class ObjectLayoutRowPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTLAYOUTROW_WHERE, _SQL_COUNT_OBJECTLAYOUTROW_WHERE,
 			ObjectLayoutRowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectLayoutRow.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectLayoutRow::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTLAYOUTROW_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_OBJECTLAYOUTROW_WHERE,
 				_SQL_COUNT_OBJECTLAYOUTROW_WHERE,
 				ObjectLayoutRowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -815,29 +798,28 @@ public class ObjectLayoutRowPersistenceImpl
 					"objectLayoutRow.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectLayoutRow::getCompanyId));
 
-		_finderPathWithPaginationFindByObjectLayoutBoxId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectLayoutBoxId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectLayoutBoxId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectLayoutBoxId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectLayoutBoxId", new String[] {Long.class.getName()},
-			new String[] {"objectLayoutBoxId"}, true);
-
-		_finderPathCountByObjectLayoutBoxId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectLayoutBoxId", new String[] {Long.class.getName()},
-			new String[] {"objectLayoutBoxId"}, false);
-
 		_collectionPersistenceFinderByObjectLayoutBoxId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectLayoutBoxId,
-				_finderPathWithoutPaginationFindByObjectLayoutBoxId,
-				_finderPathCountByObjectLayoutBoxId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectLayoutBoxId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectLayoutBoxId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectLayoutBoxId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectLayoutBoxId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectLayoutBoxId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectLayoutBoxId"}, false),
 				_SQL_SELECT_OBJECTLAYOUTROW_WHERE,
 				_SQL_COUNT_OBJECTLAYOUTROW_WHERE,
 				ObjectLayoutRowModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -913,4 +895,4 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:930219741
+// LIFERAY-SERVICE-BUILDER-HASH:-812105233

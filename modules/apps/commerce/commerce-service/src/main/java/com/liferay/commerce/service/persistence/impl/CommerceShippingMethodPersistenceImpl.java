@@ -80,9 +80,6 @@ public class CommerceShippingMethodPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<CommerceShippingMethod>
 		_collectionPersistenceFinderByGroupId;
 
@@ -228,9 +225,6 @@ public class CommerceShippingMethodPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_A;
-	private FinderPath _finderPathCountByG_A;
 	private CollectionPersistenceFinder<CommerceShippingMethod>
 		_collectionPersistenceFinderByG_A;
 
@@ -386,7 +380,6 @@ public class CommerceShippingMethodPersistenceImpl
 			finderCache, new Object[] {groupId, active});
 	}
 
-	private FinderPath _finderPathFetchByG_E;
 	private UniquePersistenceFinder<CommerceShippingMethod>
 		_uniquePersistenceFinderByG_E;
 
@@ -702,29 +695,25 @@ public class CommerceShippingMethodPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_COMMERCESHIPPINGMETHOD_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGMETHOD_WHERE,
 				CommerceShippingMethodModelImpl.ORDER_BY_JPQL,
@@ -734,28 +723,24 @@ public class CommerceShippingMethodPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceShippingMethod::getGroupId));
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, false);
-
 		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_A,
-			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "active_"}, false),
 			_SQL_SELECT_COMMERCESHIPPINGMETHOD_WHERE,
 			_SQL_COUNT_COMMERCESHIPPINGMETHOD_WHERE,
 			CommerceShippingMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -767,15 +752,14 @@ public class CommerceShippingMethodPersistenceImpl
 				"commerceShippingMethod.", "active", FinderColumn.Type.BOOLEAN,
 				"=", true, true, CommerceShippingMethod::isActive));
 
-		_finderPathFetchByG_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, 0, 2, false,
-			CommerceShippingMethod::getGroupId,
-			convertNullFunction(CommerceShippingMethod::getEngineKey));
-
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_E,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "engineKey"}, 0, 2, false,
+				CommerceShippingMethod::getGroupId,
+				convertNullFunction(CommerceShippingMethod::getEngineKey)),
 			_SQL_SELECT_COMMERCESHIPPINGMETHOD_WHERE, "",
 			new FinderColumn<>(
 				"commerceShippingMethod.", "groupId", FinderColumn.Type.LONG,
@@ -854,4 +838,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-781457019
+// LIFERAY-SERVICE-BUILDER-HASH:1012259677

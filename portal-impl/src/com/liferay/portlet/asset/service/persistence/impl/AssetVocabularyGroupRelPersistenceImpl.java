@@ -77,9 +77,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
 		_collectionPersistenceFinderByUuid;
 
@@ -225,7 +222,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<AssetVocabularyGroupRel>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -318,9 +314,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -478,9 +471,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
 		_collectionPersistenceFinderByGroupId;
 
@@ -627,9 +617,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByVocabularyId;
-	private FinderPath _finderPathWithoutPaginationFindByVocabularyId;
-	private FinderPath _finderPathCountByVocabularyId;
 	private CollectionPersistenceFinder<AssetVocabularyGroupRel>
 		_collectionPersistenceFinderByVocabularyId;
 
@@ -777,7 +764,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId});
 	}
 
-	private FinderPath _finderPathFetchByG_V;
 	private UniquePersistenceFinder<AssetVocabularyGroupRel>
 		_uniquePersistenceFinderByG_V;
 
@@ -1148,27 +1134,23 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 * Initializes the asset vocabulary group rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 			_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 			AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
@@ -1177,15 +1159,14 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, AssetVocabularyGroupRel::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(AssetVocabularyGroupRel::getUuid),
-			AssetVocabularyGroupRel::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(AssetVocabularyGroupRel::getUuid),
+				AssetVocabularyGroupRel::getGroupId),
 			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
@@ -1194,30 +1175,25 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				"assetVocabularyGroupRel.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, AssetVocabularyGroupRel::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 				_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
@@ -1231,29 +1207,25 @@ public class AssetVocabularyGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetVocabularyGroupRel::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 				_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
@@ -1263,29 +1235,26 @@ public class AssetVocabularyGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetVocabularyGroupRel::getGroupId));
 
-		_finderPathWithPaginationFindByVocabularyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVocabularyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"vocabularyId"}, true);
-
-		_finderPathWithoutPaginationFindByVocabularyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVocabularyId",
-			new String[] {Long.class.getName()}, new String[] {"vocabularyId"},
-			true);
-
-		_finderPathCountByVocabularyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVocabularyId",
-			new String[] {Long.class.getName()}, new String[] {"vocabularyId"},
-			false);
-
 		_collectionPersistenceFinderByVocabularyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByVocabularyId,
-				_finderPathWithoutPaginationFindByVocabularyId,
-				_finderPathCountByVocabularyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByVocabularyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"vocabularyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByVocabularyId", new String[] {Long.class.getName()},
+					new String[] {"vocabularyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByVocabularyId", new String[] {Long.class.getName()},
+					new String[] {"vocabularyId"}, false),
 				_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 				_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
@@ -1295,15 +1264,14 @@ public class AssetVocabularyGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetVocabularyGroupRel::getVocabularyId));
 
-		_finderPathFetchByG_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_V",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "vocabularyId"}, 0, 0, false,
-			AssetVocabularyGroupRel::getGroupId,
-			AssetVocabularyGroupRel::getVocabularyId);
-
 		_uniquePersistenceFinderByG_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_V,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_V",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "vocabularyId"}, 0, 0, false,
+				AssetVocabularyGroupRel::getGroupId,
+				AssetVocabularyGroupRel::getVocabularyId),
 			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "groupId", FinderColumn.Type.LONG,
@@ -1350,4 +1318,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1557122886
+// LIFERAY-SERVICE-BUILDER-HASH:364209295

@@ -88,9 +88,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommercePriceListChannelRel>
 		_collectionPersistenceFinderByUuid;
 
@@ -235,9 +232,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommercePriceListChannelRel>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -394,9 +388,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommercePriceListId;
-	private FinderPath _finderPathWithoutPaginationFindByCommercePriceListId;
-	private FinderPath _finderPathCountByCommercePriceListId;
 	private CollectionPersistenceFinder<CommercePriceListChannelRel>
 		_collectionPersistenceFinderByCommercePriceListId;
 
@@ -548,7 +539,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 			finderCache, new Object[] {commercePriceListId});
 	}
 
-	private FinderPath _finderPathFetchByCCI_CPI;
 	private UniquePersistenceFinder<CommercePriceListChannelRel>
 		_uniquePersistenceFinderByCCI_CPI;
 
@@ -972,27 +962,23 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE,
 			_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE,
 			CommercePriceListChannelRelModelImpl.ORDER_BY_JPQL,
@@ -1002,30 +988,25 @@ public class CommercePriceListChannelRelPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommercePriceListChannelRel::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				CommercePriceListChannelRelModelImpl.ORDER_BY_JPQL,
@@ -1039,29 +1020,28 @@ public class CommercePriceListChannelRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceListChannelRel::getCompanyId));
 
-		_finderPathWithPaginationFindByCommercePriceListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommercePriceListId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commercePriceListId"}, true);
-
-		_finderPathWithoutPaginationFindByCommercePriceListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommercePriceListId", new String[] {Long.class.getName()},
-			new String[] {"commercePriceListId"}, true);
-
-		_finderPathCountByCommercePriceListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommercePriceListId", new String[] {Long.class.getName()},
-			new String[] {"commercePriceListId"}, false);
-
 		_collectionPersistenceFinderByCommercePriceListId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommercePriceListId,
-				_finderPathWithoutPaginationFindByCommercePriceListId,
-				_finderPathCountByCommercePriceListId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommercePriceListId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commercePriceListId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommercePriceListId",
+					new String[] {Long.class.getName()},
+					new String[] {"commercePriceListId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommercePriceListId",
+					new String[] {Long.class.getName()},
+					new String[] {"commercePriceListId"}, false),
 				_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCHANNELREL_WHERE,
 				CommercePriceListChannelRelModelImpl.ORDER_BY_JPQL,
@@ -1071,15 +1051,14 @@ public class CommercePriceListChannelRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceListChannelRel::getCommercePriceListId));
 
-		_finderPathFetchByCCI_CPI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCCI_CPI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceChannelId", "commercePriceListId"}, 0, 0,
-			false, CommercePriceListChannelRel::getCommerceChannelId,
-			CommercePriceListChannelRel::getCommercePriceListId);
-
 		_uniquePersistenceFinderByCCI_CPI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCCI_CPI,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCCI_CPI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"commerceChannelId", "commercePriceListId"}, 0, 0,
+				false, CommercePriceListChannelRel::getCommerceChannelId,
+				CommercePriceListChannelRel::getCommercePriceListId),
 			_SQL_SELECT_COMMERCEPRICELISTCHANNELREL_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceListChannelRel.", "commerceChannelId",
@@ -1163,4 +1142,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1538566661
+// LIFERAY-SERVICE-BUILDER-HASH:813781080

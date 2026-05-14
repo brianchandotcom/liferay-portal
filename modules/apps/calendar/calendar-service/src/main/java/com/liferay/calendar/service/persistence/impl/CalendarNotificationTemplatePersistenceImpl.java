@@ -88,9 +88,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CalendarNotificationTemplate>
 		_collectionPersistenceFinderByUuid;
 
@@ -235,7 +232,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CalendarNotificationTemplate>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -330,9 +326,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CalendarNotificationTemplate>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -489,9 +482,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCalendarId;
-	private FinderPath _finderPathWithoutPaginationFindByCalendarId;
-	private FinderPath _finderPathCountByCalendarId;
 	private CollectionPersistenceFinder<CalendarNotificationTemplate>
 		_collectionPersistenceFinderByCalendarId;
 
@@ -640,7 +630,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 			finderCache, new Object[] {calendarId});
 	}
 
-	private FinderPath _finderPathFetchByC_NT_NTT;
 	private UniquePersistenceFinder<CalendarNotificationTemplate>
 		_uniquePersistenceFinderByC_NT_NTT;
 
@@ -1086,27 +1075,23 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 			CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
@@ -1116,15 +1101,14 @@ public class CalendarNotificationTemplatePersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CalendarNotificationTemplate::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CalendarNotificationTemplate::getUuid),
-			CalendarNotificationTemplate::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CalendarNotificationTemplate::getUuid),
+				CalendarNotificationTemplate::getGroupId),
 			_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"calendarNotificationTemplate.", "uuid",
@@ -1135,30 +1119,25 @@ public class CalendarNotificationTemplatePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CalendarNotificationTemplate::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
@@ -1172,29 +1151,25 @@ public class CalendarNotificationTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarNotificationTemplate::getCompanyId));
 
-		_finderPathWithPaginationFindByCalendarId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"calendarId"}, true);
-
-		_finderPathWithoutPaginationFindByCalendarId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCalendarId",
-			new String[] {Long.class.getName()}, new String[] {"calendarId"},
-			true);
-
-		_finderPathCountByCalendarId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCalendarId",
-			new String[] {Long.class.getName()}, new String[] {"calendarId"},
-			false);
-
 		_collectionPersistenceFinderByCalendarId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCalendarId,
-				_finderPathWithoutPaginationFindByCalendarId,
-				_finderPathCountByCalendarId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"calendarId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCalendarId", new String[] {Long.class.getName()},
+					new String[] {"calendarId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCalendarId", new String[] {Long.class.getName()},
+					new String[] {"calendarId"}, false),
 				_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_CALENDARNOTIFICATIONTEMPLATE_WHERE,
 				CalendarNotificationTemplateModelImpl.ORDER_BY_JPQL,
@@ -1204,23 +1179,22 @@ public class CalendarNotificationTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarNotificationTemplate::getCalendarId));
 
-		_finderPathFetchByC_NT_NTT = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_NT_NTT",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"calendarId", "notificationType", "notificationTemplateType"
-			},
-			0, 6, false, CalendarNotificationTemplate::getCalendarId,
-			convertNullFunction(
-				CalendarNotificationTemplate::getNotificationType),
-			convertNullFunction(
-				CalendarNotificationTemplate::getNotificationTemplateType));
-
 		_uniquePersistenceFinderByC_NT_NTT = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_NT_NTT,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_NT_NTT",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"calendarId", "notificationType", "notificationTemplateType"
+				},
+				0, 6, false, CalendarNotificationTemplate::getCalendarId,
+				convertNullFunction(
+					CalendarNotificationTemplate::getNotificationType),
+				convertNullFunction(
+					CalendarNotificationTemplate::getNotificationTemplateType)),
 			_SQL_SELECT_CALENDARNOTIFICATIONTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"calendarNotificationTemplate.", "calendarId",
@@ -1308,4 +1282,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-579496871
+// LIFERAY-SERVICE-BUILDER-HASH:982307357

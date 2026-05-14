@@ -80,10 +80,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceShippingMethodId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceShippingMethodId;
-	private FinderPath _finderPathCountByCommerceShippingMethodId;
 	private CollectionPersistenceFinder<CommerceShippingFixedOption>
 		_collectionPersistenceFinderByCommerceShippingMethodId;
 
@@ -241,7 +237,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			finderCache, new Object[] {commerceShippingMethodId});
 	}
 
-	private FinderPath _finderPathFetchByC_K;
 	private UniquePersistenceFinder<CommerceShippingFixedOption>
 		_uniquePersistenceFinderByC_K;
 
@@ -567,34 +562,28 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceShippingMethodId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceShippingMethodId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceShippingMethodId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceShippingMethodId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceShippingMethodId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceShippingMethodId"}, true);
-
-		_finderPathCountByCommerceShippingMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceShippingMethodId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceShippingMethodId"}, false);
-
 		_collectionPersistenceFinderByCommerceShippingMethodId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceShippingMethodId,
-				_finderPathWithoutPaginationFindByCommerceShippingMethodId,
-				_finderPathCountByCommerceShippingMethodId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceShippingMethodId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceShippingMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceShippingMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceShippingMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceShippingMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceShippingMethodId"}, false),
 				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
 				CommerceShippingFixedOptionModelImpl.ORDER_BY_JPQL,
@@ -604,15 +593,14 @@ public class CommerceShippingFixedOptionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceShippingFixedOption::getCommerceShippingMethodId));
 
-		_finderPathFetchByC_K = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, 0, 2, false,
-			CommerceShippingFixedOption::getCompanyId,
-			convertNullFunction(CommerceShippingFixedOption::getKey));
-
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_K,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "key_"}, 0, 2, false,
+				CommerceShippingFixedOption::getCompanyId,
+				convertNullFunction(CommerceShippingFixedOption::getKey)),
 			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTION_WHERE, "",
 			new FinderColumn<>(
 				"commerceShippingFixedOption.", "companyId",
@@ -692,4 +680,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-587243940
+// LIFERAY-SERVICE-BUILDER-HASH:-652937283

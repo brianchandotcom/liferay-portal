@@ -81,9 +81,6 @@ public class JournalContentSearchPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -229,9 +226,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPortletId;
-	private FinderPath _finderPathWithoutPaginationFindByPortletId;
-	private FinderPath _finderPathCountByPortletId;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByPortletId;
 
@@ -377,9 +371,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {portletId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByArticleId;
-	private FinderPath _finderPathWithoutPaginationFindByArticleId;
-	private FinderPath _finderPathCountByArticleId;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByArticleId;
 
@@ -525,9 +516,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {articleId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P;
-	private FinderPath _finderPathCountByG_P;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByG_P;
 
@@ -686,9 +674,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {groupId, privateLayout});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_A;
-	private FinderPath _finderPathCountByG_A;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByG_A;
 
@@ -845,9 +830,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {groupId, articleId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_L;
-	private FinderPath _finderPathCountByG_P_L;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByG_P_L;
 
@@ -1021,9 +1003,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {groupId, privateLayout, layoutId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_A;
-	private FinderPath _finderPathCountByG_P_A;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByG_P_A;
 
@@ -1197,9 +1176,6 @@ public class JournalContentSearchPersistenceImpl
 			finderCache, new Object[] {groupId, privateLayout, articleId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_L_P;
-	private FinderPath _finderPathCountByG_P_L_P;
 	private CollectionPersistenceFinder<JournalContentSearch>
 		_collectionPersistenceFinderByG_P_L_P;
 
@@ -1389,7 +1365,6 @@ public class JournalContentSearchPersistenceImpl
 			new Object[] {groupId, privateLayout, layoutId, portletId});
 	}
 
-	private FinderPath _finderPathFetchByG_P_L_P_A;
 	private UniquePersistenceFinder<JournalContentSearch>
 		_uniquePersistenceFinderByG_P_L_P_A;
 
@@ -1773,29 +1748,25 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
@@ -1805,29 +1776,25 @@ public class JournalContentSearchPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					JournalContentSearch::getCompanyId));
 
-		_finderPathWithPaginationFindByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portletId"}, true);
-
-		_finderPathWithoutPaginationFindByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
-			new String[] {String.class.getName()}, new String[] {"portletId"},
-			0, 1, true, null);
-
-		_finderPathCountByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
-			new String[] {String.class.getName()}, new String[] {"portletId"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByPortletId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPortletId,
-				_finderPathWithoutPaginationFindByPortletId,
-				_finderPathCountByPortletId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portletId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPortletId", new String[] {String.class.getName()},
+					new String[] {"portletId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPortletId", new String[] {String.class.getName()},
+					new String[] {"portletId"}, 0, 1, false, null),
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
@@ -1837,29 +1804,25 @@ public class JournalContentSearchPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalContentSearch::getPortletId));
 
-		_finderPathWithPaginationFindByArticleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticleId",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"articleId"}, true);
-
-		_finderPathWithoutPaginationFindByArticleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticleId",
-			new String[] {String.class.getName()}, new String[] {"articleId"},
-			0, 1, true, null);
-
-		_finderPathCountByArticleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticleId",
-			new String[] {String.class.getName()}, new String[] {"articleId"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByArticleId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByArticleId,
-				_finderPathWithoutPaginationFindByArticleId,
-				_finderPathCountByArticleId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticleId",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"articleId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByArticleId", new String[] {String.class.getName()},
+					new String[] {"articleId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByArticleId", new String[] {String.class.getName()},
+					new String[] {"articleId"}, 0, 1, false, null),
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
@@ -1869,28 +1832,24 @@ public class JournalContentSearchPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalContentSearch::getArticleId));
 
-		_finderPathWithPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout"}, true);
-
-		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "privateLayout"}, true);
-
-		_finderPathCountByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "privateLayout"}, false);
-
 		_collectionPersistenceFinderByG_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P,
-			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "privateLayout"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "privateLayout"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "privateLayout"}, false),
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1903,28 +1862,24 @@ public class JournalContentSearchPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				JournalContentSearch::isPrivateLayout));
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "articleId"}, true);
-
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, 0, 2, true, null);
-
-		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_A,
-			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "articleId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "articleId"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "articleId"}, 0, 2, false, null),
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1936,34 +1891,30 @@ public class JournalContentSearchPersistenceImpl
 				"journalContentSearch.", "articleId", FinderColumn.Type.STRING,
 				"=", true, true, JournalContentSearch::getArticleId));
 
-		_finderPathWithPaginationFindByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId"}, true);
-
-		_finderPathCountByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId"}, false);
-
 		_collectionPersistenceFinderByG_P_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P_L,
-			_finderPathWithoutPaginationFindByG_P_L, _finderPathCountByG_P_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "layoutId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "layoutId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "layoutId"}, false),
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1979,36 +1930,32 @@ public class JournalContentSearchPersistenceImpl
 				"journalContentSearch.", "layoutId", FinderColumn.Type.LONG,
 				"=", true, true, JournalContentSearch::getLayoutId));
 
-		_finderPathWithPaginationFindByG_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "articleId"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "articleId"}, 0, 4, true,
-			null);
-
-		_finderPathCountByG_P_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "articleId"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByG_P_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P_A,
-			_finderPathWithoutPaginationFindByG_P_A, _finderPathCountByG_P_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "articleId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "articleId"}, 0, 4,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "articleId"}, 0, 4,
+				false, null),
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2024,40 +1971,41 @@ public class JournalContentSearchPersistenceImpl
 				"journalContentSearch.", "articleId", FinderColumn.Type.STRING,
 				"=", true, true, JournalContentSearch::getArticleId));
 
-		_finderPathWithPaginationFindByG_P_L_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId", "portletId"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_P_L_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId", "portletId"},
-			0, 8, true, null);
-
-		_finderPathCountByG_P_L_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId", "portletId"},
-			0, 8, false, null);
-
 		_collectionPersistenceFinderByG_P_L_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L_P,
-				_finderPathWithoutPaginationFindByG_P_L_P,
-				_finderPathCountByG_P_L_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_P",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout", "layoutId", "portletId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_P",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout", "layoutId", "portletId"
+					},
+					0, 8, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout", "layoutId", "portletId"
+					},
+					0, 8, false, null),
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
@@ -2077,24 +2025,24 @@ public class JournalContentSearchPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalContentSearch::getPortletId));
 
-		_finderPathFetchByG_P_L_P_A = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L_P_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "layoutId", "portletId", "articleId"
-			},
-			0, 24, false, JournalContentSearch::getGroupId,
-			JournalContentSearch::isPrivateLayout,
-			JournalContentSearch::getLayoutId,
-			convertNullFunction(JournalContentSearch::getPortletId),
-			convertNullFunction(JournalContentSearch::getArticleId));
-
 		_uniquePersistenceFinderByG_P_L_P_A = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P_L_P_A,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L_P_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"groupId", "privateLayout", "layoutId", "portletId",
+					"articleId"
+				},
+				0, 24, false, JournalContentSearch::getGroupId,
+				JournalContentSearch::isPrivateLayout,
+				JournalContentSearch::getLayoutId,
+				convertNullFunction(JournalContentSearch::getPortletId),
+				convertNullFunction(JournalContentSearch::getArticleId)),
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE, "",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
@@ -2182,4 +2130,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:587724583
+// LIFERAY-SERVICE-BUILDER-HASH:1623124563

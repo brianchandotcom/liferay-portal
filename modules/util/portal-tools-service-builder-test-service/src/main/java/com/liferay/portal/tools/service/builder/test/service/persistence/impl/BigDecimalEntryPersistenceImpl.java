@@ -71,9 +71,6 @@ public class BigDecimalEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByBigDecimalValue;
-	private FinderPath _finderPathWithoutPaginationFindByBigDecimalValue;
-	private FinderPath _finderPathCountByBigDecimalValue;
 	private CollectionPersistenceFinder<BigDecimalEntry>
 		_collectionPersistenceFinderByBigDecimalValue;
 
@@ -222,8 +219,6 @@ public class BigDecimalEntryPersistenceImpl
 			finderCache, new Object[] {bigDecimalValue});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGtBigDecimalValue;
-	private FinderPath _finderPathWithPaginationCountByGtBigDecimalValue;
 	private CollectionPersistenceFinder<BigDecimalEntry>
 		_collectionPersistenceFinderByGtBigDecimalValue;
 
@@ -373,8 +368,6 @@ public class BigDecimalEntryPersistenceImpl
 			finderCache, new Object[] {bigDecimalValue});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtBigDecimalValue;
-	private FinderPath _finderPathWithPaginationCountByLtBigDecimalValue;
 	private CollectionPersistenceFinder<BigDecimalEntry>
 		_collectionPersistenceFinderByLtBigDecimalValue;
 
@@ -1050,29 +1043,28 @@ public class BigDecimalEntryPersistenceImpl
 			"BigDecimalEntries_LVEntries", "companyId", "bigDecimalEntryId",
 			"lvEntryId", this, lvEntryPersistence);
 
-		_finderPathWithPaginationFindByBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBigDecimalValue",
-			new String[] {
-				BigDecimal.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"bigDecimalValue"}, true);
-
-		_finderPathWithoutPaginationFindByBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBigDecimalValue",
-			new String[] {BigDecimal.class.getName()},
-			new String[] {"bigDecimalValue"}, true);
-
-		_finderPathCountByBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBigDecimalValue",
-			new String[] {BigDecimal.class.getName()},
-			new String[] {"bigDecimalValue"}, false);
-
 		_collectionPersistenceFinderByBigDecimalValue =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByBigDecimalValue,
-				_finderPathWithoutPaginationFindByBigDecimalValue,
-				_finderPathCountByBigDecimalValue,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByBigDecimalValue",
+					new String[] {
+						BigDecimal.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"bigDecimalValue"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByBigDecimalValue",
+					new String[] {BigDecimal.class.getName()},
+					new String[] {"bigDecimalValue"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByBigDecimalValue",
+					new String[] {BigDecimal.class.getName()},
+					new String[] {"bigDecimalValue"}, false),
 				_SQL_SELECT_BIGDECIMALENTRY_WHERE,
 				_SQL_COUNT_BIGDECIMALENTRY_WHERE,
 				BigDecimalEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1082,23 +1074,24 @@ public class BigDecimalEntryPersistenceImpl
 					FinderColumn.Type.BIG_DECIMAL, "=", true, true,
 					BigDecimalEntry::getBigDecimalValue));
 
-		_finderPathWithPaginationFindByGtBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtBigDecimalValue",
-			new String[] {
-				BigDecimal.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"bigDecimalValue"}, true);
-
-		_finderPathWithPaginationCountByGtBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtBigDecimalValue",
-			new String[] {BigDecimal.class.getName()},
-			new String[] {"bigDecimalValue"}, false);
-
 		_collectionPersistenceFinderByGtBigDecimalValue =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGtBigDecimalValue, null,
-				_finderPathWithPaginationCountByGtBigDecimalValue,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByGtBigDecimalValue",
+					new String[] {
+						BigDecimal.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"bigDecimalValue"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByGtBigDecimalValue",
+					new String[] {BigDecimal.class.getName()},
+					new String[] {"bigDecimalValue"}, false),
 				_SQL_SELECT_BIGDECIMALENTRY_WHERE,
 				_SQL_COUNT_BIGDECIMALENTRY_WHERE,
 				BigDecimalEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1108,23 +1101,24 @@ public class BigDecimalEntryPersistenceImpl
 					FinderColumn.Type.BIG_DECIMAL, ">", true, true,
 					BigDecimalEntry::getBigDecimalValue));
 
-		_finderPathWithPaginationFindByLtBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtBigDecimalValue",
-			new String[] {
-				BigDecimal.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"bigDecimalValue"}, true);
-
-		_finderPathWithPaginationCountByLtBigDecimalValue = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtBigDecimalValue",
-			new String[] {BigDecimal.class.getName()},
-			new String[] {"bigDecimalValue"}, false);
-
 		_collectionPersistenceFinderByLtBigDecimalValue =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtBigDecimalValue, null,
-				_finderPathWithPaginationCountByLtBigDecimalValue,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtBigDecimalValue",
+					new String[] {
+						BigDecimal.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"bigDecimalValue"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtBigDecimalValue",
+					new String[] {BigDecimal.class.getName()},
+					new String[] {"bigDecimalValue"}, false),
 				_SQL_SELECT_BIGDECIMALENTRY_WHERE,
 				_SQL_COUNT_BIGDECIMALENTRY_WHERE,
 				BigDecimalEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1180,4 +1174,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1666474880
+// LIFERAY-SERVICE-BUILDER-HASH:-1614297706

@@ -1747,3 +1747,54 @@ test(
 		}
 	}
 );
+
+test(
+	'Cancelling the batch segment editor discards the in-progress segment',
+	{
+		tag: '@LRAC-8476',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		await setSegmentName({
+			page,
+			segmentName: getRandomString(),
+		});
+
+		await addSegmentField({
+			criterionName: 'Email Address',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: 'userea@liferay.com',
+			page,
+		});
+
+		// Dismiss the value autocomplete so it does not intercept the cancel click
+
+		await page.keyboard.press('Escape');
+
+		// Cancel and confirm leave page
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('button', {name: 'Leave Page'}),
+			trigger: page.getByRole('link', {name: 'Cancel'}),
+		});
+
+		// The cancelled segment is not persisted to the list
+
+		await expect(
+			page.getByText('There are no segments found.')
+		).toBeVisible();
+	}
+);

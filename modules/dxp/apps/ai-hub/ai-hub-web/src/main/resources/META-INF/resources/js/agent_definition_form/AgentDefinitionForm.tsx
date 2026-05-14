@@ -22,24 +22,22 @@ import {InputLocalized} from 'frontend-js-components-web';
 import Toolbar from '../components/ToolBar';
 import {
 	deleteAgentDefinitionToContentRetrievers,
+	deleteAgentDefinitionToModelArmorTemplates,
 	getAgentDefinition,
 	putAgentDefinition,
 	putAgentDefinitionToContentRetrievers,
+	putAgentDefinitionToModelArmorTemplates,
 } from './services/AgentDefinitionService';
 import {getContentRetrievers} from './services/ContentRetrieverService';
+import {getModelArmorTemplates} from './services/ModelArmorTemplateService';
 import {
 	getWorkflowDefinition,
 	getWorkflowDefinitions,
 } from './services/WorkflowDefinitionService';
 import {AgentDefinition} from './types/AgentDefinition';
 import {ContentRetriever} from './types/ContentRetriever';
+import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 import {WorkflowDefinition} from './types/WorkflowDefinition';
-
-const contentRetrieversList = await (async () => {
-	const response = await getContentRetrievers();
-
-	return response.items || [];
-})();
 
 export default function AgentDefinitionForm({
 	accountEntryExternalReferenceCode,
@@ -65,42 +63,100 @@ export default function AgentDefinitionForm({
 		ContentRetriever[]
 	>([]);
 
+	const [contentRetrieversList, setContentRetrieversList] = useState<
+		ContentRetriever[]
+	>([]);
+
 	const initialContentRetrieversRef = useRef<ContentRetriever[]>([]);
 
 	const [dataSourceValue, setDataSourceValue] = useState('');
 
+	const [modelArmorTemplates, setModelArmorTemplates] = useState<
+		ModelArmorTemplate[]
+	>([]);
+
+	const [modelArmorTemplatesList, setModelArmorTemplatesList] = useState<
+		ModelArmorTemplate[]
+	>([]);
+
+	const initialModelArmorTemplatesRef = useRef<ModelArmorTemplate[]>([]);
+
+	const [modelArmorTemplateValue, setModelArmorTemplateValue] = useState('');
+
 	const syncRelationships = async (agentDefinitionERC: string) => {
-		const initialERCs = new Set(
+		const initialContentRetrieverERCs = new Set(
 			initialContentRetrieversRef.current.map(
 				(contentRetriever) => contentRetriever.externalReferenceCode
 			)
 		);
-		const currentERCs = new Set(
+		const currentContentRetrieverERCs = new Set(
 			contentRetrievers.map(
 				(contentRetriever) => contentRetriever.externalReferenceCode
 			)
 		);
 
-		const toAdd = contentRetrievers.filter(
+		const contentRetrieversToAdd = contentRetrievers.filter(
 			(contentRetriever) =>
-				!initialERCs.has(contentRetriever.externalReferenceCode)
+				!initialContentRetrieverERCs.has(
+					contentRetriever.externalReferenceCode
+				)
 		);
-		const toRemove = initialContentRetrieversRef.current.filter(
-			(contentRetriever) =>
-				!currentERCs.has(contentRetriever.externalReferenceCode)
+		const contentRetrieversToRemove =
+			initialContentRetrieversRef.current.filter(
+				(contentRetriever) =>
+					!currentContentRetrieverERCs.has(
+						contentRetriever.externalReferenceCode
+					)
+			);
+
+		const initialModelArmorTemplateERCs = new Set(
+			initialModelArmorTemplatesRef.current.map(
+				(modelArmorTemplate) => modelArmorTemplate.externalReferenceCode
+			)
+		);
+		const currentModelArmorTemplateERCs = new Set(
+			modelArmorTemplates.map(
+				(modelArmorTemplate) => modelArmorTemplate.externalReferenceCode
+			)
 		);
 
+		const modelArmorTemplatesToAdd = modelArmorTemplates.filter(
+			(modelArmorTemplate) =>
+				!initialModelArmorTemplateERCs.has(
+					modelArmorTemplate.externalReferenceCode
+				)
+		);
+		const modelArmorTemplatesToRemove =
+			initialModelArmorTemplatesRef.current.filter(
+				(modelArmorTemplate) =>
+					!currentModelArmorTemplateERCs.has(
+						modelArmorTemplate.externalReferenceCode
+					)
+			);
+
 		const requests = [
-			...toAdd.map((contentRetriever) =>
+			...contentRetrieversToAdd.map((contentRetriever) =>
 				putAgentDefinitionToContentRetrievers(
 					agentDefinitionERC,
 					contentRetriever.externalReferenceCode
 				)
 			),
-			...toRemove.map((contentRetriever) =>
+			...contentRetrieversToRemove.map((contentRetriever) =>
 				deleteAgentDefinitionToContentRetrievers(
 					agentDefinitionERC,
 					contentRetriever.externalReferenceCode
+				)
+			),
+			...modelArmorTemplatesToAdd.map((modelArmorTemplate) =>
+				putAgentDefinitionToModelArmorTemplates(
+					agentDefinitionERC,
+					modelArmorTemplate.externalReferenceCode
+				)
+			),
+			...modelArmorTemplatesToRemove.map((modelArmorTemplate) =>
+				deleteAgentDefinitionToModelArmorTemplates(
+					agentDefinitionERC,
+					modelArmorTemplate.externalReferenceCode
 				)
 			),
 		];
@@ -108,6 +164,7 @@ export default function AgentDefinitionForm({
 		if (requests.length) {
 			await Promise.all(requests);
 			initialContentRetrieversRef.current = [...contentRetrievers];
+			initialModelArmorTemplatesRef.current = [...modelArmorTemplates];
 		}
 	};
 
@@ -166,6 +223,33 @@ export default function AgentDefinitionForm({
 	};
 
 	useEffect(() => {
+		async function fetchContentRetrieversList() {
+			try {
+				const response = await getContentRetrievers();
+
+				setContentRetrieversList(response.items || []);
+			}
+			catch (error) {
+				console.error(error);
+			}
+		}
+
+		async function fetchModelArmorTemplatesList() {
+			try {
+				const response = await getModelArmorTemplates();
+
+				setModelArmorTemplatesList(response.items || []);
+			}
+			catch (error) {
+				console.error(error);
+			}
+		}
+
+		fetchContentRetrieversList();
+		fetchModelArmorTemplatesList();
+	}, []);
+
+	useEffect(() => {
 		async function fetchFormData() {
 			if (!externalReferenceCode) {
 				setFormData({
@@ -208,6 +292,13 @@ export default function AgentDefinitionForm({
 
 				initialContentRetrieversRef.current =
 					agentDefinition.agentDefinitionsToContentRetrievers;
+
+				setModelArmorTemplates(
+					agentDefinition.agentDefinitionsToModelArmorTemplates || []
+				);
+
+				initialModelArmorTemplatesRef.current =
+					agentDefinition.agentDefinitionsToModelArmorTemplates || [];
 			}
 			catch (error) {
 				openToast({
@@ -531,6 +622,46 @@ export default function AgentDefinitionForm({
 										}
 										sourceItems={contentRetrieversList}
 										value={dataSourceValue}
+									/>
+								</ClayPanel.Body>
+							</ClayPanel>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<ClayLayout.Row>
+						<ClayLayout.Col md={12}>
+							<ClayPanel
+								className="agent-definition-details"
+								collapsable={false}
+								title={Liferay.Language.get('guardrails')}
+							>
+								<ClayPanel.Body>
+									<h2>
+										{Liferay.Language.get('guardrails')}
+									</h2>
+
+									<label htmlFor="assignedGuardrails">
+										{Liferay.Language.get(
+											'assigned-guardrails'
+										)}
+									</label>
+
+									<ClayMultiSelect
+										allowDuplicateValues={false}
+										allowsCustomLabel={false}
+										disabled={readonly}
+										inputName="assignedGuardrails"
+										items={modelArmorTemplates}
+										locator={{
+											label: 'name',
+											value: 'externalReferenceCode',
+										}}
+										onChange={setModelArmorTemplateValue}
+										onItemsChange={(items) =>
+											setModelArmorTemplates(items)
+										}
+										sourceItems={modelArmorTemplatesList}
+										value={modelArmorTemplateValue}
 									/>
 								</ClayPanel.Body>
 							</ClayPanel>

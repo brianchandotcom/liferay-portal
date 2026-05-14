@@ -22,7 +22,7 @@ async function getAgentDefinitions() {
 async function getAgentDefinition(externalReferenceCode: string) {
 	const response = await fetch(
 		`${AGENT_DEFINITION_BY_ERC_URI}${externalReferenceCode}` +
-			'?nestedFields=agentDefinitionsToContentRetrievers',
+			'?nestedFields=agentDefinitionsToContentRetrievers,agentDefinitionsToModelArmorTemplates',
 		{
 			method: 'GET',
 		}
@@ -68,10 +68,34 @@ async function deleteAgentDefinitionToContentRetrievers(
 	);
 }
 
+async function putAgentDefinitionToModelArmorTemplates(
+	agentDefinitionERC: string,
+	modelArmorTemplateERC: string
+) {
+	return fetch(
+		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
+			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
+		{method: 'PUT'}
+	);
+}
+
+async function deleteAgentDefinitionToModelArmorTemplates(
+	agentDefinitionERC: string,
+	modelArmorTemplateERC: string
+) {
+	return fetch(
+		`${AGENT_DEFINITION_BY_ERC_URI}${agentDefinitionERC}` +
+			`/agentDefinitionsToModelArmorTemplates/${modelArmorTemplateERC}`,
+		{method: 'DELETE'}
+	);
+}
+
 export {
+	deleteAgentDefinitionToContentRetrievers,
+	deleteAgentDefinitionToModelArmorTemplates,
 	getAgentDefinition,
 	getAgentDefinitions,
 	putAgentDefinition,
 	putAgentDefinitionToContentRetrievers,
-	deleteAgentDefinitionToContentRetrievers,
+	putAgentDefinitionToModelArmorTemplates,
 };

@@ -17,6 +17,7 @@ const lifecycleStageItems = Object.entries(lifecycleStagesLabelMap).map(
 );
 
 interface IAccountsDataSetProps {
+	apiURL: string;
 	channelId: string;
 	countryFilter?: string;
 	groupId: string;
@@ -34,6 +35,7 @@ const buildSelectionPreloadedData = (value?: string, label?: string) =>
 		: undefined;
 
 const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
+	apiURL,
 	channelId,
 	countryFilter,
 	groupId,
@@ -52,7 +54,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	return (
 		<Card>
 			<FrontendDataSet
-				apiURL={`/o/faro/contacts/${groupId}/account/search`}
+				apiURL={apiURL}
 				configInURLBehavior='off'
 				customDataRenderers={{
 					accountLifecycleStageRenderer: ({

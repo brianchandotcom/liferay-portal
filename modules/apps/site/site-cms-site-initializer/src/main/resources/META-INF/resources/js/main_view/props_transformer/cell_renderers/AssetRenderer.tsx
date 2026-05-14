@@ -114,7 +114,8 @@ export default function AssetRenderer({
 					{sub(
 						Liferay.Language.get('modified-at-x-by-x'),
 						formatDate(itemData.dateModified),
-						itemData.embedded.creator.name
+						itemData.embedded?.modifiedByUserName ??
+							itemData.embedded?.creator?.name
 					)}
 				</div>
 			</div>

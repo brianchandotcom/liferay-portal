@@ -201,6 +201,7 @@ Set `COMMITS_FOUND=true` when at least one commit is found for any ID; record th
 
 	Author the comment body in ADF.
 
+	```bash
 	curl \
 		--data "${COMMENT}" \
 		--header "Content-Type: application/json" \

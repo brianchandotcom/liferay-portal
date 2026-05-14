@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {SegmentConditions} from './selectors';
 import {searchByTerm} from './utils';
 
@@ -195,7 +196,10 @@ export async function includeAnonymousToggle({
 
 export async function saveSegment(page: Page) {
 	await page.locator('button[type="submit"]').click();
-	await page.waitForSelector('div.alert-success', {state: 'visible'});
+
+	await waitForAlert(page, 'Success:Changes to segment saved.', {
+		autoClose: false,
+	});
 }
 
 export async function selectAsset({
@@ -240,13 +244,15 @@ export async function setSegmentName({
 	page: Page;
 	segmentName: string;
 }) {
-	const editDynamicSegmentName = page.getByText('Unnamed Segment');
+	const input = page.getByPlaceholder('Unnamed Segment');
 
-	if (await editDynamicSegmentName.isVisible()) {
-		await editDynamicSegmentName.click();
-	}
+	await expect(async () => {
+		await page.getByLabel('Edit').click();
 
-	await page.getByPlaceholder('Segment').fill(segmentName);
+		await input.fill(segmentName, {timeout: 2000});
+
+		await expect(input).toHaveValue(segmentName);
+	}).toPass();
 }
 
 export async function viewSegmentCriteriaCard({

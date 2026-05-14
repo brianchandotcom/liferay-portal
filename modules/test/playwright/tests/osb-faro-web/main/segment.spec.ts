@@ -57,8 +57,12 @@ import {
 import {SegmentConditions} from './utils/selectors';
 import {
 	searchByTerm,
+	selectPaginationItemsPerPage,
+	selectPaginationPageNumber,
+	viewNameListInOrder,
 	viewNameNotPresentOnTableList,
 	viewNameOnTableList,
+	viewPaginationResults,
 } from './utils/utils';
 
 export const test = mergeTests(
@@ -1596,3 +1600,150 @@ test('Segment criteria card lists every criterion when the segment has many', as
 		page.locator('.criteria-row').filter({hasText: 'Date of Birth'})
 	).toHaveCount(duplicateCount + 1);
 });
+
+test(
+	'Segment list supports default view, search, sort, and pagination',
+	{
+		tag: '@LPD-89756',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const segmentIds: string[] = [];
+
+		const segmentNames = [
+			'Dynamic Segment Test1',
+			'Dynamic Segment Test2',
+			'Dynamic Segment Test3',
+			'Dynamic Segment Test4',
+			'Dynamic Segment Test5',
+		];
+
+		try {
+
+			// Create five batch segments through the Faro API
+
+			for (const name of segmentNames) {
+				const segment =
+					await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment(
+						{
+							channelId: channel.id,
+							groupId: project.groupId,
+							name,
+						}
+					);
+
+				segmentIds.push(segment.id);
+			}
+
+			// Default state lists the five segments with the 20 items per page selector
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.segmentPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await viewNameOnTableList({
+				itemNames: segmentNames,
+				page,
+			});
+
+			await expect(
+				page.locator(
+					'.pagination-items-per-page button.dropdown-toggle'
+				)
+			).toHaveText('20 Items');
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 5 of 5 entries.',
+			});
+
+			// Search filters the list and shows the empty state when nothing matches
+
+			await searchByTerm({
+				page,
+				searchTerm: 'Test1',
+			});
+
+			await viewNameOnTableList({
+				itemNames: 'Dynamic Segment Test1',
+				page,
+			});
+
+			await viewNameNotPresentOnTableList({
+				itemNames: ['Dynamic Segment Test2', 'Dynamic Segment Test5'],
+				page,
+			});
+
+			await searchByTerm({
+				page,
+				searchTerm: 'NonExistentSegment',
+			});
+
+			await expect(
+				page.getByText('There are no results found.')
+			).toBeVisible();
+
+			// Sort by Name ascending then toggle to descending
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.segmentPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Name'}),
+				trigger: page.getByRole('button', {name: 'Order'}),
+			});
+
+			await viewNameListInOrder({
+				itemNames: segmentNames,
+				page,
+			});
+
+			// Paginate with four items per page; the fifth segment lives on page two
+
+			await selectPaginationItemsPerPage({
+				itemsPerPage: '4',
+				page,
+			});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 4 of 5 entries.',
+			});
+
+			await viewNameListInOrder({
+				itemNames: segmentNames.slice(0, 4),
+				page,
+			});
+
+			await selectPaginationPageNumber({
+				page,
+				paginationPageNumber: '2',
+			});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 5 to 5 of 5 entries.',
+			});
+
+			await viewNameOnTableList({
+				itemNames: 'Dynamic Segment Test5',
+				page,
+			});
+		}
+		finally {
+			if (segmentIds.length) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteIndividualSegments(
+					`[${segmentIds.join(',')}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);

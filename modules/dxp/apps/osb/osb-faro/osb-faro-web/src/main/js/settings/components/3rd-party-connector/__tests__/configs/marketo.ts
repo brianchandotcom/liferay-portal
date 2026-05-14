@@ -28,13 +28,13 @@ describe('marketo config', () => {
 		expect(marketoConfig.singleton).toBe(true);
 	});
 
-	it('exposes the Accounts entity', () => {
+	it('exposes the Events entity', () => {
 		expect(marketoConfig.entities).toHaveLength(1);
 
-		const [accounts] = marketoConfig.entities;
+		const [events] = marketoConfig.entities;
 
-		expect(accounts.entity).toBe(Entity.Accounts);
-		expect(typeof accounts.fetchCount).toBe('function');
+		expect(events.entity).toBe(Entity.Events);
+		expect(typeof events.fetchCount).toBe('function');
 	});
 
 	it('delegates fetchCount to fetchConnectorEntityCount with the slug and entity', async () => {
@@ -45,7 +45,7 @@ describe('marketo config', () => {
 
 		expect(fetchConnectorEntityCount).toHaveBeenCalledWith(
 			'marketo',
-			Entity.Accounts,
+			Entity.Events,
 			{groupId: '23', id: 'data-source-1'}
 		);
 	});

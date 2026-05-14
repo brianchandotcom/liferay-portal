@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {createCategories} from '../../../helpers/CreateCategories';
@@ -18,9 +17,6 @@ import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest
 const test = mergeTests(
 	apiHelpersTest,
 	assetCategoriesPagesTest,
-	featureFlagsTest({
-		'LPD-31228': {enabled: true},
-	}),
 	isolatedSiteTest,
 	loginTest()
 );
@@ -325,7 +321,10 @@ test('Delete all categories of a vocabulary', async ({
 	await test.step('Add a vocabulary with 2 categories', async () => {
 		await createCategories({
 			apiHelpers,
-			categoryNames: [{name: getRandomString()}, {name: getRandomString()}],
+			categoryNames: [
+				{name: getRandomString()},
+				{name: getRandomString()},
+			],
 			siteId: site.id,
 			vocabularyName: getRandomString(),
 		});

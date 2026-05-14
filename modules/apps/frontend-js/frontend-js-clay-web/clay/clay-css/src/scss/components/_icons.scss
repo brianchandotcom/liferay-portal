@@ -2,18 +2,6 @@
 	@include clay-css($lexicon-icon);
 }
 
-.lexicon-icon-sm {
-	@include clay-css($lexicon-icon-sm);
-}
-
-.lexicon-icon-lg {
-	@include clay-css($lexicon-icon-lg);
-}
-
-.lexicon-icon-xl {
-	@include clay-css($lexicon-icon-xl);
-}
-
 .lexicon-icon-arrows-all {
 	background-color: hsl(from #{$white} h s l / 0.6);
 	border: 1px solid $border-color;
@@ -137,4 +125,16 @@ button.collapse-icon,
 		-ms-transform: translateY(-50%);
 		transform: translateY(-50%);
 	}
+}
+
+.lexicon-icon-sm {
+	@include clay-css($lexicon-icon-sm);
+}
+
+.lexicon-icon-lg {
+	@include clay-css($lexicon-icon-lg);
+}
+
+.lexicon-icon-xl {
+	@include clay-css($lexicon-icon-xl);
 }

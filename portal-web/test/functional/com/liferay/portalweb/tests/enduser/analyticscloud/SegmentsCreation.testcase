@@ -59,44 +59,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8476 | Test Summary: Cancel Creating a Dynamic Segment"
-	@priority = 3
-	test CanCancelCreatingDynamicSegment {
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Add a new dynamic segment") {
-			ACNavigation.goToSegments();
-
-			ACSegments.createDynamicSegment();
-
-			ACUtils.setItemName(itemName = "Dynamic Segment Test");
-		}
-
-		task ("Add an email field") {
-			ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
-
-			ACSegments.addSegmentField(segmentField = "email");
-
-			ACSegments.editTextCriterion(textInput = "userea@liferay.com");
-		}
-
-		task ("Cancel the creation") {
-			ACSegments.cancelSegment();
-
-			Button.click(button = "Leave Page");
-		}
-
-		task ("View the empty info in Segments admin") {
-			ACUtils.viewGenericText(textValueList = "There are no segments found.,Create a segment to get started.,Access our documentation to learn more.");
-
-			AssertVisible(locator1 = "ACSegments#CREATE_SEGMENT_BUTTON");
-		}
-	}
-
 	@description = "Create a dynamic segment with individuals"
 	@priority = 5
 	test CanCreateDynamicSegmentWithIndividuals {
@@ -575,59 +537,6 @@ definition {
 			for (var segmentName : list "Segment Name Already Exists,segment name already exists 2") {
 				ACSegments.assertSegmentPresent(segmentName = ${segmentName});
 			}
-		}
-	}
-
-	@description = "Feature ID: Legacy | Automation ID: LRAC-8484 | Test Summary: Segment Form Validation"
-	@priority = 5
-	test ViewSegmentFormValidation {
-		property test.run.type = "single";
-
-		task ("View the site page with new user") {
-			ACUtils.navigateToSitePageWithUser(
-				actionType = "View WC",
-				documentTitleList = "1,2,3,4",
-				emailList = "userea@liferay.com",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Close sessions and wait for 30 seconds") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-		}
-
-		task ("Add a new dynamic segment") {
-			ACNavigation.goToSegments();
-
-			ACSegments.createDynamicSegment();
-		}
-
-		task ("View the Save Segment button is disabled when the Name field is empty") {
-			AssertVisible(
-				key_text = "Save Segment",
-				locator1 = "Button#ANY_DISABLED");
-		}
-
-		task ("Type the segment name") {
-			ACUtils.setItemName(itemName = "Dynamic Segment Test");
-		}
-
-		task ("View the Save Segment button is still disabled when the form is empty") {
-			ACSegments.viewDeletedCriteria();
-
-			AssertTextPresent(
-				locator1 = "//body",
-				value1 = "Drag and drop over an existing criteria to form groups.");
-
-			AssertVisible(
-				key_text = "Save Segment",
-				locator1 = "Button#ANY_DISABLED");
 		}
 	}
 

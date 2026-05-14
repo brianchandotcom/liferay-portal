@@ -1,11 +1,10 @@
-import * as API from 'shared/api';
 import ClayDropDown from '@clayui/drop-down';
 import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import {createTagProperty, createVocabularyProperty} from '../utils/utils';
-import {CustomFunctionOperators, NotOperators} from '../utils/constants';
+import {extractRemoteCriterionEntries} from '../criterion-types/extract';
+import {getRemoteCriterionTypeByPropertyKey} from '../criterion-types/registry';
 import {List} from 'immutable';
 import {Option, Picker} from '@clayui/core';
 import {PaginationBar} from '@clayui/pagination-bar';
@@ -13,41 +12,6 @@ import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
 import {ReferencedObjectsContext} from '../context/referencedObjects';
 import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from '../utils/odata';
-
-const REMOTE_OPERATORS = new Set([
-	CustomFunctionOperators.VocabulariesFilter,
-	NotOperators.NotVocabulariesFilter,
-	CustomFunctionOperators.TagsFilter,
-	NotOperators.NotTagsFilter
-]);
-
-function extractRemoteCriteria(
-	criteria: any
-): Array<{id: string; isTag: boolean; name: string}> {
-	if (!criteria) return [];
-
-	if (criteria.items) {
-		return criteria.items.flatMap(extractRemoteCriteria);
-	}
-
-	if (criteria.propertyName && REMOTE_OPERATORS.has(criteria.operatorName)) {
-		const id = criteria.propertyName;
-		const isTag =
-			criteria.operatorName === CustomFunctionOperators.TagsFilter ||
-			criteria.operatorName === NotOperators.NotTagsFilter;
-		const items = criteria.value?.getIn?.(['criterionGroup', 'items']);
-		const nameItem = items?.find?.(
-			(item: any) =>
-				item.get?.('propertyName') === 'vocabularies/name' ||
-				item.get?.('propertyName') === 'tags/name'
-		);
-		const name = (nameItem?.get?.('value') as string) ?? id;
-
-		return [{id, isTag, name}];
-	}
-
-	return [];
-}
 
 const REMOTE_PAGE_SIZE = 12;
 
@@ -111,9 +75,9 @@ export default function CriteriaSidebar({
 
 	const {addProperty} = useContext(ReferencedObjectsContext);
 
-	const isVocabularySection = selectedPropertyKey === 'vocabulary';
-	const isTagsSection = selectedPropertyKey === 'tag';
-	const isRemoteSection = isVocabularySection || isTagsSection;
+	const selectedRemoteCriterionType =
+		getRemoteCriterionTypeByPropertyKey(selectedPropertyKey);
+	const isRemoteSection = !!selectedRemoteCriterionType;
 	const remoteKeywords = isRemoteSection ? searchValue : '';
 
 	useEffect(() => {
@@ -121,18 +85,10 @@ export default function CriteriaSidebar({
 			return;
 		}
 
-		const remoteCriteria = extractRemoteCriteria(
+		extractRemoteCriterionEntries(
 			translateQueryToCriteria(criteriaString)
-		);
-
-		if (!remoteCriteria.length) return;
-
-		remoteCriteria.forEach(({id, isTag, name}) => {
-			if (isTag) {
-				addProperty(createTagProperty({id, name}));
-			} else {
-				addProperty(createVocabularyProperty({id, name}));
-			}
+		).forEach(({criterionType, id, name}) => {
+			addProperty(criterionType.createProperty({id, name}));
 		});
 	}, []);
 
@@ -151,31 +107,23 @@ export default function CriteriaSidebar({
 	}, [selectedPropertyKey]);
 
 	useEffect(() => {
-		if (type !== SegmentTypes.Batch || !isRemoteSection) {
+		if (type !== SegmentTypes.Batch || !selectedRemoteCriterionType) {
 			return;
 		}
 
-		const apiMethod = isTagsSection
-			? API.tags.search
-			: API.vocabularies.search;
-
-		const factoryMethod = isTagsSection
-			? createTagProperty
-			: createVocabularyProperty;
-
-		apiMethod({
-			channelId,
-			groupId,
-			keywords: remoteQuery.keywords,
-			page: remoteQuery.page,
-			pageSize: REMOTE_PAGE_SIZE
-		}).then(
-			(result: {
-				items: Array<{id: string; name: string}>;
-				totalCount: number;
-			}) => {
+		selectedRemoteCriterionType
+			.api({
+				channelId,
+				groupId,
+				keywords: remoteQuery.keywords,
+				page: remoteQuery.page,
+				pageSize: REMOTE_PAGE_SIZE
+			})
+			.then(result => {
 				const properties: List<Property> = List(
-					(result.items ?? []).map(factoryMethod)
+					(result.items ?? []).map(
+						selectedRemoteCriterionType.createProperty
+					)
 				);
 
 				setRemoteItems(properties);
@@ -186,17 +134,8 @@ export default function CriteriaSidebar({
 						property => property && addProperty(property)
 					);
 				}
-			}
-		);
-	}, [
-		channelId,
-		groupId,
-		type,
-		selectedPropertyKey,
-		remoteQuery,
-		isRemoteSection,
-		isTagsSection
-	]);
+			});
+	}, [channelId, groupId, type, selectedRemoteCriterionType, remoteQuery]);
 
 	const effectivePropertyGroupsIList = useMemo(
 		() =>
@@ -204,8 +143,7 @@ export default function CriteriaSidebar({
 				.map(group => {
 					if (
 						!group ||
-						(group.propertyKey !== 'vocabulary' &&
-							group.propertyKey !== 'tag')
+						!getRemoteCriterionTypeByPropertyKey(group.propertyKey)
 					) {
 						return group as PropertyGroup;
 					}

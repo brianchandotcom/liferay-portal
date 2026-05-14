@@ -166,12 +166,12 @@ Set `COMMITS_FOUND=true` when at least one commit is found for any ID; record th
 
 ### Decide Whether to Close
 
-| `COMMITS_FOUND` | `TESTRAY_PASS` | Action |
-| --- | --- | --- |
-| true | true | Close as **Fixed** |
-| false | true | Close as **Not Reproducible** |
-| true | false | Log `SKIP <ticket> — fix commits on master but test still failing` and move on |
-| false | false | Log `SKIP <ticket> — no fix commits and test not passing on master` and move on |
+`TESTRAY_PASS` is the gate: when false, log `SKIP <ticket> — test not passing on master` and move on regardless of `COMMITS_FOUND`. When true, close the ticket — the label depends on commits:
+
+| `COMMITS_FOUND` | Action |
+| --- | --- |
+| true | Close as **Fixed** |
+| false | Close as **Not Reproducible** |
 
 ### Close the Ticket
 
@@ -214,8 +214,18 @@ Set `COMMITS_FOUND=true` when at least one commit is found for any ID; record th
 1. Apply the transition:
 
 	```bash
+	RESOLUTION=$([ "${CLOSE_AS}" = "Fixed" ] && echo "Fixed" || echo "Cannot Reproduce")
+
+	TRANSITION_BODY=$(cat <<EOF
+	{
+	  "fields": {"resolution": {"name": "${RESOLUTION}"}},
+	  "transition": {"id": "<transitionId>"}
+	}
+	EOF
+	)
+
 	curl \
-		--data '{"transition": {"id": "<transitionId>"}}' \
+		--data "${TRANSITION_BODY}" \
 		--header "Content-Type: application/json" \
 		--request POST \
 		--silent \

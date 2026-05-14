@@ -7180,6 +7180,10 @@ public class JenkinsResultsParserUtil {
 
 		String newValue = value;
 
+		if (SecretsUtil.isSecretProperty(newValue)) {
+			newValue = SecretsUtil.getSecret(newValue);
+		}
+
 		while (matcher.find()) {
 			String propertyGroup = matcher.group(0);
 			String propertyName = matcher.group(1);

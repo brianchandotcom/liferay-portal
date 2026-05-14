@@ -246,6 +246,10 @@ public class SharingEntryLocalServiceUtil {
 			externalReferenceCode, groupId);
 	}
 
+	public static void deleteToTicketSharingEntries(long toTicketId) {
+		getService().deleteToTicketSharingEntries(toTicketId);
+	}
+
 	public static void deleteToUserGroupSharingEntries(long toUserGroupId) {
 		getService().deleteToUserGroupSharingEntries(toUserGroupId);
 	}
@@ -887,4 +891,4 @@ public class SharingEntryLocalServiceUtil {
 			SharingEntryLocalServiceUtil.class, SharingEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1338912230
+// LIFERAY-SERVICE-BUILDER-HASH:646395971

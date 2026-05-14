@@ -225,6 +225,8 @@ public interface SharingEntryLocalService
 			String externalReferenceCode, long groupId)
 		throws PortalException;
 
+	public void deleteToTicketSharingEntries(long toTicketId);
+
 	public void deleteToUserGroupSharingEntries(long toUserGroupId);
 
 	/**
@@ -737,4 +739,4 @@ public interface SharingEntryLocalService
 	public SharingEntry updateSharingEntry(SharingEntry sharingEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:280135344
+// LIFERAY-SERVICE-BUILDER-HASH:-720703128

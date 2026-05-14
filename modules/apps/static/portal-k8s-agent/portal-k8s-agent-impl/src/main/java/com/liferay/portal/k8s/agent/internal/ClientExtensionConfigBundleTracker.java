@@ -12,10 +12,10 @@ import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThr
 import com.liferay.portal.k8s.agent.internal.util.ConfigurationUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.URLUtil;
-import com.liferay.portal.tools.DBUpgrader;
 
 import java.net.URL;
 
@@ -53,7 +53,7 @@ public class ClientExtensionConfigBundleTracker {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		if (DBUpgrader.isUpgradeClient()) {
+		if (UpgradeProcessUtil.isUpgradeClient()) {
 			return;
 		}
 

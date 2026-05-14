@@ -115,6 +115,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -2214,6 +2216,17 @@ public class ObjectDefinitionResourceTest
 			JSONCompareMode.LENIENT);
 	}
 
+	private void _assertObjectEntryCRUDOperationIds(
+			Consumer<Set<String>> consumer, String restContextPath)
+		throws Exception {
+
+		Set<String> operationIds = _getOpenAPIOperationIds(restContextPath);
+
+		operationIds.retainAll(_objectEntryCRUDOperationIds);
+
+		consumer.accept(operationIds);
+	}
+
 	private <T> void _assertObjectField(
 		T expectedValue, Function<ObjectField, T> function,
 		ObjectField objectField) {
@@ -2426,6 +2439,30 @@ public class ObjectDefinitionResourceTest
 			Arrays.toString(objectFields), 1, objectFields.length);
 
 		return objectFields[0];
+	}
+
+	private Set<String> _getOpenAPIOperationIds(String restContextPath)
+		throws Exception {
+
+		JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, restContextPath + "/openapi.json", Http.Method.GET);
+
+		JSONObject pathsJSONObject = openAPIJSONObject.getJSONObject("paths");
+
+		Set<String> operationIds = new HashSet<>();
+
+		for (String path : pathsJSONObject.keySet()) {
+			JSONObject pathJSONObject = pathsJSONObject.getJSONObject(path);
+
+			for (String httpMethod : pathJSONObject.keySet()) {
+				JSONObject operationJSONObject = pathJSONObject.getJSONObject(
+					httpMethod);
+
+				operationIds.add(operationJSONObject.getString("operationId"));
+			}
+		}
+
+		return operationIds;
 	}
 
 	private JSONObject _getOwnerPermissionsJSONObject() {
@@ -3334,15 +3371,17 @@ public class ObjectDefinitionResourceTest
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
 
-		objectDefinitionResource.postObjectDefinitionPublish(
-			parentObjectDefinition.getId());
+		parentObjectDefinition =
+			objectDefinitionResource.postObjectDefinitionPublish(
+				parentObjectDefinition.getId());
 
 		ObjectDefinition childObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
 
-		objectDefinitionResource.postObjectDefinitionPublish(
-			childObjectDefinition.getId());
+		childObjectDefinition =
+			objectDefinitionResource.postObjectDefinitionPublish(
+				childObjectDefinition.getId());
 
 		TreeTestUtil.bind(
 			parentObjectDefinition.getId(), childObjectDefinition.getId(),
@@ -3386,6 +3425,18 @@ public class ObjectDefinitionResourceTest
 				childObjectDefinition.getId()
 			).isAllowStandaloneObjectEntry());
 
+		String restContextPath = StringUtil.removeFirst(
+			childObjectDefinition.getRestContextPath(), "/o");
+
+		Assert.assertEquals(
+			409,
+			HTTPTestUtil.invokeToHttpCode(
+				null, restContextPath, Http.Method.GET));
+
+		_assertObjectEntryCRUDOperationIds(
+			operationIds -> Assert.assertTrue(operationIds.isEmpty()),
+			restContextPath);
+
 		childObjectDefinition.setObjectDefinitionSettings(
 			_getObjectDefinitionSettings("true"));
 
@@ -3401,6 +3452,15 @@ public class ObjectDefinitionResourceTest
 			_objectDefinitionLocalService.getObjectDefinition(
 				childObjectDefinition.getId()
 			).isAllowStandaloneObjectEntry());
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				null, restContextPath, Http.Method.GET));
+
+		_assertObjectEntryCRUDOperationIds(
+			operationIds -> Assert.assertFalse(operationIds.isEmpty()),
+			restContextPath);
 
 		TreeTestUtil.unbind(
 			parentObjectDefinition.getId(), _objectRelationshipLocalService);
@@ -3554,6 +3614,18 @@ public class ObjectDefinitionResourceTest
 			}
 		}
 	}
+
+	private static final List<String> _objectEntryCRUDOperationIds =
+		Arrays.asList(
+			"deleteByExternalReferenceCode", "deleteObjectEntry",
+			"deleteScopeScopeKeyByExternalReferenceCode",
+			"getByExternalReferenceCode", "getObjectEntriesPage",
+			"getObjectEntry", "getScopeScopeKeyByExternalReferenceCode",
+			"getScopeScopeKeyPage", "patchByExternalReferenceCode",
+			"patchObjectEntry", "patchScopeScopeKeyByExternalReferenceCode",
+			"postObjectEntry", "postScopeScopeKey",
+			"putByExternalReferenceCode", "putObjectEntry",
+			"putScopeScopeKeyByExternalReferenceCode");
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

@@ -141,12 +141,8 @@ public class DBUpgrader {
 		return _stopWatch.getTime();
 	}
 
-	public static boolean isUpgradeClient() {
-		return UpgradeProcessUtil.isUpgradeClient();
-	}
-
 	public static boolean isUpgradeDatabaseAutoRunEnabled() {
-		if (isUpgradeClient()) {
+		if (UpgradeProcessUtil.isUpgradeClient()) {
 			return true;
 		}
 
@@ -342,14 +338,16 @@ public class DBUpgrader {
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortalInitialized);
 
-		if (isUpgradeClient()) {
+		if (UpgradeProcessUtil.isUpgradeClient()) {
 			DependencyManagerSyncUtil.sync();
 		}
 
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
 
-		if (isUpgradeClient() || StartupHelperUtil.isNewRelease()) {
+		if (UpgradeProcessUtil.isUpgradeClient() ||
+			StartupHelperUtil.isNewRelease()) {
+
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 

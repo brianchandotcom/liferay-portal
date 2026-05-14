@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.EnvPropertiesUtil;
@@ -738,7 +739,7 @@ public class UpgradeReport {
 		}
 
 		if (reportsDir == null) {
-			if (DBUpgrader.isUpgradeClient()) {
+			if (UpgradeProcessUtil.isUpgradeClient()) {
 				reportsDir = new File(".", "reports");
 			}
 			else {

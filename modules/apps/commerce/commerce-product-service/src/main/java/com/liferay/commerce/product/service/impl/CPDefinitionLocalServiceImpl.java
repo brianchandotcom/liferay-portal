@@ -1738,8 +1738,7 @@ public class CPDefinitionLocalServiceImpl
 	public List<CPDefinition> getCPDefinitions(
 		long companyId, long accountEntryId, long[] accountGroupIds,
 		long[] commerceChannelGroupIds, boolean published, int[] statuses,
-		int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
+		int start, int end, OrderByComparator<CPDefinition> orderByComparator) {
 
 		GroupByStep groupByStep = _getGroupByStep(
 			DSLQueryFactoryUtil.select(
@@ -3033,15 +3032,15 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	private Predicate _getAccountGroupPredicate(long[] accountGroupIds) {
-		Predicate accountGroupFilterDisabledPredicate =
+		Predicate accountGroupFilterPredicate =
 			CPDefinitionTable.INSTANCE.accountGroupFilterEnabled.eq(false);
 
 		if (ArrayUtil.isEmpty(accountGroupIds)) {
-			return accountGroupFilterDisabledPredicate;
+			return accountGroupFilterPredicate;
 		}
 
 		return Predicate.withParentheses(
-			accountGroupFilterDisabledPredicate.or(
+			accountGroupFilterPredicate.or(
 				CPDefinitionTable.INSTANCE.CPDefinitionId.in(
 					DSLQueryFactoryUtil.select(
 						AccountGroupRelTable.INSTANCE.classPK
@@ -3110,15 +3109,15 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	private Predicate _getCommerceChannelPredicate(long[] commerceChannelIds) {
-		Predicate channelFilterDisabledPredicate =
+		Predicate channelFilterPredicate =
 			CPDefinitionTable.INSTANCE.channelFilterEnabled.eq(false);
 
 		if (ArrayUtil.isEmpty(commerceChannelIds)) {
-			return channelFilterDisabledPredicate;
+			return channelFilterPredicate;
 		}
 
 		return Predicate.withParentheses(
-			channelFilterDisabledPredicate.or(
+			channelFilterPredicate.or(
 				CPDefinitionTable.INSTANCE.CPDefinitionId.in(
 					DSLQueryFactoryUtil.select(
 						CommerceChannelRelTable.INSTANCE.classPK
@@ -3180,7 +3179,7 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionTable.INSTANCE.published.eq(true));
 		}
 
-		if (!ArrayUtil.isEmpty(statuses) &&
+		if (ArrayUtil.isNotEmpty(statuses) &&
 			!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
 
 			predicate = predicate.and(
@@ -3188,14 +3187,11 @@ public class CPDefinitionLocalServiceImpl
 					ArrayUtil.toArray(statuses)));
 		}
 
-		// Check these last as they are the most expensive
-
 		predicate = predicate.and(
 			_getAccountGroupPredicate(accountGroupIds)
 		).and(
 			_getCommerceChannelPredicate(
-				_getCommerceChannelIds(
-					accountEntryId, commerceChannelGroupIds))
+				_getCommerceChannelIds(accountEntryId, commerceChannelGroupIds))
 		);
 
 		return joinStep.where(predicate);

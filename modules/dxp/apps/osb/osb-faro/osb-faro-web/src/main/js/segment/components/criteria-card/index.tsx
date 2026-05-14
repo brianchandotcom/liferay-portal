@@ -42,10 +42,7 @@ function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
 		const nameItem = items?.find?.(
 			(item: any) => item.get?.('propertyName') === 'vocabularies/name'
 		);
-		const name =
-			(nameItem?.get?.('value') as string) ??
-			(criteria.value?.get?.('_name') as string) ??
-			id;
+		const name = (nameItem?.get?.('value') as string) ?? id;
 
 		return [{id, name}];
 	}
@@ -66,10 +63,7 @@ function extractTags(criteria: any): Array<{id: string; name: string}> {
 		const nameItem = items?.find?.(
 			(item: any) => item.get?.('propertyName') === 'tags/name'
 		);
-		const name =
-			(nameItem?.get?.('value') as string) ??
-			(criteria.value?.get?.('_name') as string) ??
-			id;
+		const name = (nameItem?.get?.('value') as string) ?? id;
 
 		return [{id, name}];
 	}

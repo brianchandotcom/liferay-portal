@@ -424,13 +424,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		throws Exception {
 
 		CPInstance cpInstance = _addCPInstance(false);
-
 		String unitOfMeasureKey1 = RandomTestUtil.randomString();
-		String unitOfMeasureKey2 = RandomTestUtil.randomString();
 
 		CPTestUtil.addCPInstanceUnitOfMeasure(
 			testGroup.getGroupId(), cpInstance.getCPInstanceId(),
 			unitOfMeasureKey1, BigDecimal.ONE, cpInstance.getSku());
+
+		String unitOfMeasureKey2 = RandomTestUtil.randomString();
+
 		CPTestUtil.addCPInstanceUnitOfMeasure(
 			testGroup.getGroupId(), cpInstance.getCPInstanceId(),
 			unitOfMeasureKey2, BigDecimal.ONE, cpInstance.getSku());

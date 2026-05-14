@@ -147,7 +147,7 @@ Inspect the test source to discover which feature flags it depends on. Mirror th
 
 Run the test, deploying first when the type requires it. For `Java Semantic Versioning`, the "test" is `<gradlew> baseline` from the failing module — strictly an API contract check, not a behavioral test. Then compare the local outcome with **errorTrace**:
 
-- **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip **Identify Suspect Commits** and **Iterate Through Suspects**. Run the cleanup in **Restore the Portal** and exit.
+- **Test passes** → check whether a commit between `${FIRST_FAIL_SHA}` and `HEAD` already addresses the failure. When one does, exit with `Verdict: No fix needed`. Otherwise, reason about why the test failed in CI (the test may be flaky or fail for environmental reasons), try to fix it and rerun to confirm. When no plausible cause surfaces, exit with `Verdict: No fix needed`. Skip **Identify Suspect Commits** and **Iterate Through Suspects** in either case.
 - **Same failure** → continue to **Identify Suspect Commits**.
 - **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarizing both traces (the one returned by the Testray fetch and the one observed locally) and exit.
 

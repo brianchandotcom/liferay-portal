@@ -27,40 +27,38 @@
 	const defaultVideoHeight = 300;
 	const defaultVideoWidth = 400;
 
-	function withFolderId(url, folderId) {
-		if (folderId === null || folderId === undefined || folderId === '') {
-			return url;
-		}
-
-		try {
-			const parsed = new URL(url, window.location.origin);
-
-			parsed.searchParams.set(
-				ITEM_SELECTOR_FOLDER_ID_PARAM,
-				String(folderId)
-			);
-
-			return parsed.toString();
-		}
-		catch (error) {
-			return url;
-		}
-	}
-
 	function createFolderMemory() {
 		let lastFolderId = null;
 
+		const isFolderIdEmpty = (folderId) => {
+			return (
+				folderId === null || folderId === undefined || folderId === ''
+			);
+		};
+
 		return {
 			applyTo(url) {
-				return withFolderId(url, lastFolderId);
+				if (isFolderIdEmpty(lastFolderId)) {
+					return url;
+				}
+
+				try {
+					const parsed = new URL(url, window.location.origin);
+
+					parsed.searchParams.set(
+						ITEM_SELECTOR_FOLDER_ID_PARAM,
+						String(lastFolderId)
+					);
+
+					return parsed.toString();
+				}
+				catch (error) {
+					return url;
+				}
 			},
 
 			remember(folderId) {
-				if (
-					folderId !== null &&
-					folderId !== undefined &&
-					folderId !== ''
-				) {
+				if (!isFolderIdEmpty(folderId)) {
 					lastFolderId = folderId;
 				}
 			},

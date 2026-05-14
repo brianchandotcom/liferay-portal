@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.cms.site.initializer.constants.CMSConstants;
+import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
 
@@ -1149,7 +1149,7 @@ public class SectionDisplayContextHelper {
 	}
 
 	private static final String _CMS_WORKFLOW_STATUSES_STRING =
-		StringUtil.merge(CMSConstants.CMS_WORKFLOW_STATUSES, ", ");
+		StringUtil.merge(CMSWorkflowConstants.WORKFLOW_STATUSES, ", ");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SectionDisplayContextHelper.class);

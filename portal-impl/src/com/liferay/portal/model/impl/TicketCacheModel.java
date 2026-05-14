@@ -67,7 +67,7 @@ public class TicketCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -85,6 +85,8 @@ public class TicketCacheModel
 		sb.append(key);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", emailAddress=");
+		sb.append(emailAddress);
 		sb.append(", extraInfo=");
 		sb.append(extraInfo);
 		sb.append(", expirationDate=");
@@ -120,6 +122,13 @@ public class TicketCacheModel
 		}
 
 		ticketImpl.setType(type);
+
+		if (emailAddress == null) {
+			ticketImpl.setEmailAddress("");
+		}
+		else {
+			ticketImpl.setEmailAddress(emailAddress);
+		}
 
 		if (extraInfo == null) {
 			ticketImpl.setExtraInfo("");
@@ -157,6 +166,7 @@ public class TicketCacheModel
 		key = objectInput.readUTF();
 
 		type = objectInput.readInt();
+		emailAddress = objectInput.readUTF();
 		extraInfo = (String)objectInput.readObject();
 		expirationDate = objectInput.readLong();
 	}
@@ -183,6 +193,13 @@ public class TicketCacheModel
 
 		objectOutput.writeInt(type);
 
+		if (emailAddress == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(emailAddress);
+		}
+
 		if (extraInfo == null) {
 			objectOutput.writeObject("");
 		}
@@ -201,8 +218,9 @@ public class TicketCacheModel
 	public long classPK;
 	public String key;
 	public int type;
+	public String emailAddress;
 	public String extraInfo;
 	public long expirationDate;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-878817001
+// LIFERAY-SERVICE-BUILDER-HASH:1332514131

@@ -93,7 +93,7 @@ public class ViewObjectEntriesDisplayContext {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
-				LanguageUtil.get(_httpServletRequest, "delete"), null, null,
+				LanguageUtil.get(_httpServletRequest, "delete"), null, "delete",
 				null));
 	}
 

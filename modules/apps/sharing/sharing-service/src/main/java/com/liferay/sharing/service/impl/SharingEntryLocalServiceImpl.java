@@ -344,6 +344,16 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteToTicketSharingEntries(long toTicketId) {
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByToTicketId(toTicketId);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+		}
+	}
+
+	@Override
 	public void deleteToUserGroupSharingEntries(long toUserGroupId) {
 		List<SharingEntry> sharingEntries =
 			sharingEntryPersistence.findByToUserGroupId(toUserGroupId);

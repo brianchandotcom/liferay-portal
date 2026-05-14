@@ -611,6 +611,7 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 	},
 	impression: {
 		'basic-web-content': 'webContentImpressionMade',
+		blogs: 'blogImpressionMade',
 		'web-content': 'webContentImpressionMade'
 	},
 	submit: {
@@ -645,6 +646,7 @@ export const APPLICATION_ID_ASSET_TYPE_MAP: Record<string, string> = {
 };
 
 export const EVENT_ID_EVENT_TYPE_MAP: Record<string, string> = {
+	blogImpressionMade: 'impression',
 	blogViewed: 'view',
 	commentPosted: 'comment',
 	documentDownloaded: 'download',

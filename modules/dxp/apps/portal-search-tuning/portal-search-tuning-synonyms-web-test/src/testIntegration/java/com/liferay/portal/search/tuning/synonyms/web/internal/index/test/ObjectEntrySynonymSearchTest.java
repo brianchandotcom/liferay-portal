@@ -93,14 +93,12 @@ public class ObjectEntrySynonymSearchTest {
 			_companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
 
-		_addSynonymSets();
-
-		_objectDefinition = _addObjectDefinition();
-
+		_addObjectDefinition();
+		_addObjectEntry("PD initiative");
+		_addObjectEntry("product delivery Initiative");
 		_addObjectEntry("Query Builder Initiative");
 		_addObjectEntry("UQB Initiative");
-		_addObjectEntry("product delivery Initiative");
-		_addObjectEntry("PD initiative");
+		_addSynonymSets();
 	}
 
 	@AfterClass
@@ -120,18 +118,14 @@ public class ObjectEntrySynonymSearchTest {
 	}
 
 	@Test
-	public void testMultiWordSynonym() {
-		_assertSearchCount("PD", 2);
-		_assertSearchCount("product delivery", 2);
+	public void testSearch() {
+		_testSearch("PD");
+		_testSearch("product delivery");
+		_testSearch("query");
+		_testSearch("uqb");
 	}
 
-	@Test
-	public void testSynonym() {
-		_assertSearchCount("query", 2);
-		_assertSearchCount("uqb", 2);
-	}
-
-	private static ObjectDefinition _addObjectDefinition() throws Exception {
+	private static void _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, _user.getUserId(), 0, null, true, false, true, false,
@@ -175,8 +169,9 @@ public class ObjectEntrySynonymSearchTest {
 			objectDefinition.getObjectDefinitionId(),
 			titleField.getObjectFieldId());
 
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			_user.getUserId(), objectDefinition.getObjectDefinitionId());
+		_objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				_user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
 	private static void _addObjectEntry(String content) throws Exception {
@@ -223,7 +218,7 @@ public class ObjectEntrySynonymSearchTest {
 			mockLiferayPortletActionRequest);
 	}
 
-	private void _assertSearchCount(String keyword, int expectedCount) {
+	private void _testSearch(String keyword) {
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
@@ -240,7 +235,7 @@ public class ObjectEntrySynonymSearchTest {
 		List<Document> documents = searchResponse.getDocuments71();
 
 		Assert.assertEquals(
-			searchResponse.getRequestString(), expectedCount, documents.size());
+			searchResponse.getRequestString(), 2, documents.size());
 	}
 
 	private static final String[] _SYNONYM_SETS = {

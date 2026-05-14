@@ -14,41 +14,37 @@ import {LiferayEditorConfig} from '../utils/types';
 const ITEM_SELECTOR_FOLDER_ID_PARAM =
 	'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
 
-function withFolderId(url: string, folderId: number | string | null) {
-	if (folderId === null || folderId === '') {
-		return url;
-	}
-
-	try {
-		const parsed = new URL(url, window.location.origin);
-
-		parsed.searchParams.set(
-			ITEM_SELECTOR_FOLDER_ID_PARAM,
-			String(folderId)
-		);
-
-		return parsed.toString();
-	}
-	catch (error) {
-		return url;
-	}
-}
-
 function createFolderMemory() {
 	let lastFolderId: number | string | null = null;
 
+	const isFolderIdEmpty = (folderId: number | string | null | undefined) => {
+		return folderId === null || folderId === undefined || folderId === '';
+	};
+
 	return {
 		applyTo(url: string): string {
-			return withFolderId(url, lastFolderId);
+			if (isFolderIdEmpty(lastFolderId)) {
+				return url;
+			}
+
+			try {
+				const parsed = new URL(url, window.location.origin);
+
+				parsed.searchParams.set(
+					ITEM_SELECTOR_FOLDER_ID_PARAM,
+					String(lastFolderId)
+				);
+
+				return parsed.toString();
+			}
+			catch (error) {
+				return url;
+			}
 		},
 
 		remember(folderId: number | string | undefined) {
-			if (
-				folderId !== null &&
-				folderId !== undefined &&
-				folderId !== ''
-			) {
-				lastFolderId = folderId;
+			if (!isFolderIdEmpty(folderId)) {
+				lastFolderId = folderId as number | string;
 			}
 		},
 	};

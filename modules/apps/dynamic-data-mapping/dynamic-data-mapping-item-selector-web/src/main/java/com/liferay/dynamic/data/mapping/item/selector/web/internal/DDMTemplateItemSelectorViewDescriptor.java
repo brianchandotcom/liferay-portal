@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -34,6 +35,9 @@ import jakarta.portlet.PortletRequest;
 import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -115,23 +119,13 @@ public class DDMTemplateItemSelectorViewDescriptor
 				getOrderByCol(), getOrderByType()));
 		ddmTemplateSearchContainer.setOrderByType(getOrderByType());
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
-			_ddmTemplateItemSelectorCriterion.getDDMStructureId());
+		long[] groupIds = _getGroupIds();
 
-		long[] currentAndAncestorSiteGroupIds =
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				_themeDisplay.getScopeGroupId(), false);
+		if (groupIds.length == 0) {
+			ddmTemplateSearchContainer.setResultsAndTotal(
+				Collections.emptyList());
 
-		long[] groupIds;
-
-		if ((ddmStructure != null) &&
-			_isDepotGroup(ddmStructure.getGroupId())) {
-
-			groupIds = ArrayUtil.append(
-				currentAndAncestorSiteGroupIds, ddmStructure.getGroupId());
-		}
-		else {
-			groupIds = currentAndAncestorSiteGroupIds;
+			return ddmTemplateSearchContainer;
 		}
 
 		ddmTemplateSearchContainer.setResultsAndTotal(
@@ -163,6 +157,40 @@ public class DDMTemplateItemSelectorViewDescriptor
 	@Override
 	public boolean isShowSearch() {
 		return true;
+	}
+
+	private long[] _getGroupIds() {
+		long refererGroupId = _themeDisplay.getRefererGroupId();
+
+		long scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		long[] scopeAndAncestorSiteGroupIds =
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId, false);
+
+		long[] refererAndAncestorSiteGroupIds = scopeAndAncestorSiteGroupIds;
+
+		if ((refererGroupId != 0) && (refererGroupId != scopeGroupId)) {
+			refererAndAncestorSiteGroupIds =
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					refererGroupId, false);
+		}
+
+		Set<Long> validGroupIds = SetUtil.fromArray(
+			refererAndAncestorSiteGroupIds);
+
+		validGroupIds.add(_themeDisplay.getCompanyGroupId());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
+			_ddmTemplateItemSelectorCriterion.getDDMStructureId());
+
+		if ((ddmStructure != null) &&
+			_isDepotGroup(ddmStructure.getGroupId())) {
+
+			validGroupIds.add(ddmStructure.getGroupId());
+		}
+
+		return ArrayUtil.filter(
+			scopeAndAncestorSiteGroupIds, validGroupIds::contains);
 	}
 
 	private String _getKeywords() {

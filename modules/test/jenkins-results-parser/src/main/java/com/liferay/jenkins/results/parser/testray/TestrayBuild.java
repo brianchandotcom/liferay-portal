@@ -369,7 +369,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 				_testrayRuns.add(testrayRun);
 
-				long testrayRunID = itemJSONObject.optLong("id");
+				long testrayRunID = testrayRun.getID();
 
 				if (testrayRunID <= 0) {
 					continue;

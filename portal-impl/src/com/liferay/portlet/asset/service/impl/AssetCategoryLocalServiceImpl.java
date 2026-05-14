@@ -7,6 +7,7 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.AssetCategoryParentCategoryIdException;
+import com.liferay.asset.kernel.exception.CategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
@@ -24,7 +25,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -141,7 +141,7 @@ public class AssetCategoryLocalServiceImpl
 
 		long categoryId = counterLocalService.increment();
 
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
+		_validateExternalReferenceCode(externalReferenceCode, groupId, 0);
 
 		AssetCategory category = assetCategoryPersistence.create(categoryId);
 
@@ -713,9 +713,9 @@ public class AssetCategoryLocalServiceImpl
 		AssetCategory category = assetCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		if (Validator.isNotNull(externalReferenceCode) &&
-			FeatureFlagManagerUtil.isEnabled(
-				category.getCompanyId(), "LPD-31228")) {
+		if (Validator.isNotNull(externalReferenceCode)) {
+			_validateExternalReferenceCode(
+				externalReferenceCode, category.getGroupId(), categoryId);
 
 			category.setExternalReferenceCode(externalReferenceCode);
 		}
@@ -961,21 +961,33 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
+			String externalReferenceCode, long groupId, long categoryId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {
 			return;
 		}
 
+		int maxLength = ModelHintsUtil.getMaxLength(
+			AssetCategory.class.getName(), "externalReferenceCode");
+
+		if (externalReferenceCode.length() > maxLength) {
+			throw new CategoryExternalReferenceCodeException(
+				StringBundler.concat(
+					"External reference code length cannot exceed ", maxLength,
+					" characters"));
+		}
+
 		AssetCategory assetCategory = assetCategoryPersistence.fetchByERC_G(
 			externalReferenceCode, groupId);
 
-		if (assetCategory != null) {
+		if ((assetCategory != null) &&
+			(assetCategory.getCategoryId() != categoryId)) {
+
 			throw new DuplicateCategoryExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate category external reference code ",
-					externalReferenceCode, " in group", groupId));
+					externalReferenceCode, " in group ", groupId));
 		}
 	}
 

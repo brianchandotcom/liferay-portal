@@ -878,6 +878,27 @@ public class CustomFDSSerializer
 	@Reference
 	protected FDSFilterRegistry fdsFilterRegistry;
 
+	private Object _convertListTypeEntryKey(
+		String entityFieldType, ListTypeEntry listTypeEntry) {
+
+		String key = listTypeEntry.getKey();
+
+		if (Objects.equals(entityFieldType, FDSEntityFieldTypes.INTEGER)) {
+			try {
+				return Integer.valueOf(key);
+			}
+			catch (NumberFormatException numberFormatException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid integer listTypeEntry key: " + key,
+						numberFormatException);
+				}
+			}
+		}
+
+		return key;
+	}
+
 	private JSONObject _getDateJSONObject(Object object) {
 		if (object == null) {
 			return null;
@@ -994,23 +1015,6 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return GetterUtil.getString(properties.get("type"));
-	}
-
-	private Object _getTypedKey(
-		String entityFieldType, ListTypeEntry listTypeEntry) {
-
-		if (Objects.equals(entityFieldType, FDSEntityFieldTypes.INTEGER)) {
-			try {
-				return Integer.valueOf(listTypeEntry.getKey());
-			}
-			catch (NumberFormatException numberFormatException) {
-				throw new IllegalArgumentException(
-					"Invalid integer key: " + listTypeEntry.getKey(),
-					numberFormatException);
-			}
-		}
-
-		return listTypeEntry.getKey();
 	}
 
 	private Boolean _isActive(ObjectEntry objectEntry) {
@@ -1288,7 +1292,9 @@ public class CustomFDSSerializer
 					listTypeEntry.getName(
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
-					"value", () -> _getTypedKey(entityFieldType, listTypeEntry)
+					"value",
+					() -> _convertListTypeEntryKey(
+						entityFieldType, listTypeEntry)
 				))
 		).put(
 			"preloadedData",
@@ -1320,7 +1326,7 @@ public class CustomFDSSerializer
 									PortalUtil.getLocale(httpServletRequest))
 							).put(
 								"value",
-								() -> _getTypedKey(
+								() -> _convertListTypeEntryKey(
 									entityFieldType, listTypeEntry)
 							));
 					}

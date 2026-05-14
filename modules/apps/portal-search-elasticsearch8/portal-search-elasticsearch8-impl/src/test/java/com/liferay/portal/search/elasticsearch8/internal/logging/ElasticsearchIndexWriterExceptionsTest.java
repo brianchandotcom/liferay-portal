@@ -29,7 +29,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -77,22 +77,15 @@ public class ElasticsearchIndexWriterExceptionsTest
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
 
-			String expectedMessage =
-				"failed to parse field [expirationDate] of type [date] in " +
-					"document with id";
-
-			List<Document> documents = new ArrayList<>();
-
 			Document document = new DocumentImpl();
 
 			document.addKeyword(Field.EXPIRATION_DATE, "text");
 
-			documents.add(document);
-
 			IndexWriter indexWriter = getIndexWriter();
 
 			try {
-				indexWriter.addDocuments(createSearchContext(), documents);
+				indexWriter.addDocuments(
+					createSearchContext(), Arrays.asList(document));
 
 				Assert.fail();
 			}
@@ -100,6 +93,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 				Assert.assertEquals(
 					"Bulk add failed", systemException.getMessage());
 			}
+
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -168,20 +165,14 @@ public class ElasticsearchIndexWriterExceptionsTest
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
 
-			String expectedMessage = "no such index [" + _COMPANY_ID + "]";
-
 			SearchContext searchContext = new SearchContext();
 
 			searchContext.setCompanyId(_COMPANY_ID);
 
-			List<String> uids = new ArrayList<>();
-
-			uids.add(_UID);
-
 			IndexWriter indexWriter = getIndexWriter();
 
 			try {
-				indexWriter.deleteDocuments(searchContext, uids);
+				indexWriter.deleteDocuments(searchContext, Arrays.asList(_UID));
 
 				Assert.fail();
 			}
@@ -189,6 +180,8 @@ public class ElasticsearchIndexWriterExceptionsTest
 				Assert.assertEquals(
 					"Bulk delete failed", systemException.getMessage());
 			}
+
+			String expectedMessage = "no such index [" + _COMPANY_ID + "]";
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -234,15 +227,12 @@ public class ElasticsearchIndexWriterExceptionsTest
 	public void testPartiallyUpdateDocuments() throws SearchException {
 		Document document = new DocumentImpl();
 
-		List<Document> documents = new ArrayList<>();
-
 		document.addKeyword(Field.UID, _UID);
-
-		documents.add(document);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		indexWriter.partiallyUpdateDocuments(createSearchContext(), documents);
+		indexWriter.partiallyUpdateDocuments(
+			createSearchContext(), Arrays.asList(document));
 	}
 
 	@Test
@@ -250,10 +240,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
-
-			String expectedMessage =
-				"failed to parse field [expirationDate] of type [date] in " +
-					"document with id";
 
 			Document document = new DocumentImpl();
 
@@ -272,6 +258,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 					"Update failed", systemException.getMessage());
 			}
 
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
+
 			_assertLogCapture(
 				message -> Assert.assertTrue(
 					message + " does not contain " + expectedMessage,
@@ -286,23 +276,16 @@ public class ElasticsearchIndexWriterExceptionsTest
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
 
-			String expectedMessage =
-				"failed to parse field [expirationDate] of type [date] in " +
-					"document with id";
-
-			List<Document> documents = new ArrayList<>();
-
 			Document document = new DocumentImpl();
 
 			document.addKeyword(Field.EXPIRATION_DATE, "text");
 			document.addKeyword(Field.UID, _UID);
 
-			documents.add(document);
-
 			IndexWriter indexWriter = getIndexWriter();
 
 			try {
-				indexWriter.updateDocuments(createSearchContext(), documents);
+				indexWriter.updateDocuments(
+					createSearchContext(), Arrays.asList(document));
 
 				Assert.fail();
 			}
@@ -310,6 +293,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 				Assert.assertEquals(
 					"Bulk update failed", systemException.getMessage());
 			}
+
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(

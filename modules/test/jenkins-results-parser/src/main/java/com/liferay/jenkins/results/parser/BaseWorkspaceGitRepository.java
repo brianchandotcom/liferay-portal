@@ -1344,7 +1344,7 @@ public abstract class BaseWorkspaceGitRepository
 				JenkinsResultsParserUtil.getBuildProperty(
 					"git.archive.dot.git.dir.required", getDirectoryName(),
 					System.getenv("CI_TEST_SUITE"), System.getenv("DIST_TYPE"),
-					jobName));
+					jobName, System.getenv("JOB_VARIANT")));
 		}
 		catch (IOException ioException) {
 			return false;

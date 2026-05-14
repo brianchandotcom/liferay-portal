@@ -414,6 +414,9 @@ public class OAuth2Controller extends BaseFaroController {
 		).put(
 			"hubspot",
 			Arrays.asList(ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE)
+		).put(
+			"marketo",
+			Arrays.asList(ApiApplication.OAuth2ScopeAliases.MARKETO_WRITE)
 		).build();
 
 }

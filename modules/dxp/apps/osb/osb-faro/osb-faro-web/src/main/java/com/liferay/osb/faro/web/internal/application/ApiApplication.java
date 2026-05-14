@@ -11,6 +11,7 @@ import com.liferay.osb.faro.web.internal.context.GroupInfoContextProvider;
 import com.liferay.osb.faro.web.internal.controller.api.DemandbaseAccountController;
 import com.liferay.osb.faro.web.internal.controller.api.GraphQLController;
 import com.liferay.osb.faro.web.internal.controller.api.HubSpotWebhookController;
+import com.liferay.osb.faro.web.internal.controller.api.MarketoWebhookController;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
@@ -47,6 +48,7 @@ public class ApiApplication extends Application {
 		singletons.add(_groupInfoContextProvider);
 		singletons.add(_hubSpotWebhookController);
 		singletons.add(new JacksonJsonProvider(JSONUtil.getObjectMapper()));
+		singletons.add(_marketoWebhookController);
 		singletons.add(_recommendationController);
 		singletons.add(_reportController);
 
@@ -60,6 +62,9 @@ public class ApiApplication extends Application {
 
 		public static final String HUBSPOT_WRITE =
 			"Liferay.Analytics.Cloud.REST.hubspot.write";
+
+		public static final String MARKETO_WRITE =
+			"Liferay.Analytics.Cloud.REST.marketo.write";
 
 		public static final String RECOMMENDATIONS_EVERYTHING =
 			"Liferay.Analytics.Cloud.REST.recommendations.everything";
@@ -80,6 +85,9 @@ public class ApiApplication extends Application {
 
 	@Reference
 	private HubSpotWebhookController _hubSpotWebhookController;
+
+	@Reference
+	private MarketoWebhookController _marketoWebhookController;
 
 	@Reference
 	private RecommendationController _recommendationController;

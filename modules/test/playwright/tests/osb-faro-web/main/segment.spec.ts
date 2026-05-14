@@ -2190,3 +2190,165 @@ test(
 		});
 	}
 );
+
+test(
+	'Segment name uniqueness is enforced on create and on edit',
+	{
+		tag: '@LRAC-14041 @LRAC-14043',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const segmentIds: string[] = [];
+
+		try {
+			const firstSegmentName = 'First Segment Name';
+
+			const firstSegment =
+				await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment(
+					{
+						channelId: channel.id,
+						groupId: project.groupId,
+						name: firstSegmentName,
+					}
+				);
+
+			segmentIds.push(firstSegment.id);
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.segmentPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			// Open the editor and try to save a case-insensitive duplicate name
+
+			await createBatchSegment(page);
+
+			await setSegmentName({
+				page,
+				segmentName: firstSegmentName,
+			});
+
+			await addSegmentField({
+				criterionName: 'Email Address',
+				criterionType: 'Individual Attributes',
+				page,
+			});
+
+			await editCriteriaAttributeValue({
+				attributeValue: 'userea@liferay.com',
+				page,
+			});
+
+			await page.keyboard.press('Escape');
+
+			await page.locator('button[type="submit"]').click();
+
+			await waitForAlert(page, 'This segment name is currently in use', {
+				autoClose: false,
+				type: 'warning',
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('button', {name: 'Leave Page'}),
+				trigger: page.getByRole('link', {name: 'Cancel'}),
+			});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 1 of 1 entry.',
+			});
+
+			// Create a second segment via API for the edit collision test
+
+			const secondSegmentName = 'Second Segment Name';
+
+			const secondSegment =
+				await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment(
+					{
+						channelId: channel.id,
+						groupId: project.groupId,
+						name: secondSegmentName,
+					}
+				);
+
+			segmentIds.push(secondSegment.id);
+
+			await page.reload();
+
+			// Open the first segment and try to rename it to the second segment's name
+
+			await page.goto(
+				`${faroConfig.environment.baseUrl}/workspace/${project.groupId}/${channel.id}/contacts/segments/${firstSegment.id}/edit`
+			);
+
+			await expect(
+				page.getByRole('button', {name: 'Save Segment'})
+			).toBeVisible();
+
+			// Add a criterion so the form is valid and the rename can be submitted
+
+			await addSegmentField({
+				criterionName: 'Email Address',
+				criterionType: 'Individual Attributes',
+				page,
+			});
+
+			await editCriteriaAttributeValue({
+				attributeValue: 'userea@liferay.com',
+				page,
+			});
+
+			await page.keyboard.press('Escape');
+
+			await setSegmentName({
+				page,
+				segmentName: secondSegmentName,
+			});
+
+			await page.locator('button[type="submit"]').click();
+
+			await waitForAlert(page, 'This segment name is currently in use', {
+				autoClose: false,
+				type: 'warning',
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('button', {name: 'Leave Page'}),
+				trigger: page.getByRole('link', {name: 'Cancel'}),
+			});
+
+			// Both segments retain their original names
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.segmentPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await viewPaginationResults({
+				page,
+				paginationResults: 'Showing 1 to 2 of 2 entries.',
+			});
+
+			await expect(
+				page.getByRole('link', {name: firstSegmentName})
+			).toBeAttached();
+
+			await expect(
+				page.getByRole('link', {name: secondSegmentName})
+			).toBeAttached();
+		}
+		finally {
+			if (segmentIds.length) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteIndividualSegments(
+					`[${segmentIds.join(',')}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);

@@ -237,6 +237,12 @@ components:
                     items:
                         type: string
                     type: array
+                modifiedByUserName:
+                    description:
+                        Optional field with the full name of the user who last modified the object entry, can be
+                        embedded with nestedFields
+                    readOnly: true
+                    type: string
                 objectEntryFolderExternalReferenceCode:
                     type: string
                 objectEntryFolderId:

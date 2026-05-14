@@ -4,73 +4,40 @@ import getCN from 'classnames';
 import Input from 'shared/components/Input';
 import React, {useEffect, useState} from 'react';
 import {
-	ALL_APPLICATION_IDS,
-	ALL_EVENT_IDS,
-	APPLICATION_ID_ASSET_TYPE_MAP,
-	ASSET_TYPE_APPLICATION_ID_MAP,
 	ASSET_TYPE_COMPATIBLE_EVENTS_MAP,
-	EVENT_ID_EVENT_TYPE_MAP,
-	EVENT_TYPE_EVENT_ID_MAP,
-	RelationalOperators,
-	TimeSpans
+	RelationalOperators
 } from '../utils/constants';
 import {
-	createCustomValueMap,
-	getFilterCriterionIMap,
-	getIndexFromPropertyName
-} from '../utils/custom-inputs';
+	ASSET_TYPE_OPTIONS,
+	buildRemoteFilterValue,
+	DEFAULT_CONJUNCTION_CRITERION,
+	EVENT_TYPE_OPTIONS,
+	getAssetTypeFromValue,
+	getConjunctionCriterionFromValue,
+	getEventTypeFromValue,
+	isValidOccurrenceCount,
+	OCCURRENCE_OPTIONS
+} from './shared/remote-filter-input-helpers';
 import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
+import {getIndexFromPropertyName} from '../utils/custom-inputs';
 import {Icon, Option, Picker} from '@clayui/core';
 import {isValid} from '../utils/utils';
 
-const isValidOccurrenceCount = (count: number | string) =>
-	isValid(count) && Number(count) >= 0;
+export {
+	ASSET_TYPE_OPTIONS,
+	EVENT_TYPE_OPTIONS,
+	getAssetTypeFromValue,
+	getConjunctionCriterionFromValue,
+	getEventTypeFromValue,
+	OCCURRENCE_OPTIONS
+};
 
-export const EVENT_TYPE_OPTIONS = [
-	{label: Liferay.Language.get('all-events'), value: 'all'},
-	{label: Liferay.Language.get('view'), value: 'view'},
-	{label: Liferay.Language.get('download'), value: 'download'},
-	{label: Liferay.Language.get('impression'), value: 'impression'},
-	{label: Liferay.Language.get('submit'), value: 'submit'},
-	{label: Liferay.Language.get('comment'), value: 'comment'}
-];
-
-export const OCCURRENCE_OPTIONS = [
-	{
-		label: Liferay.Language.get('at-least').toLowerCase(),
-		value: RelationalOperators.GE
-	},
-	{
-		label: Liferay.Language.get('at-most').toLowerCase(),
-		value: RelationalOperators.LE
-	}
-];
-
-export const ASSET_TYPE_OPTIONS = [
-	{label: Liferay.Language.get('any'), value: 'any'},
-	{label: Liferay.Language.get('blogs'), value: 'blogs'},
-	{label: Liferay.Language.get('forms'), value: 'forms'},
-	{
-		label: Liferay.Language.get('documents-and-media'),
-		value: 'documents-and-media'
-	},
-	{label: Liferay.Language.get('web-content'), value: 'web-content'},
-	{
-		label: Liferay.Language.get('basic-web-content'),
-		value: 'basic-web-content'
-	},
-	{label: Liferay.Language.get('basic-document'), value: 'basic-document'},
-	{label: Liferay.Language.get('knowledge-base'), value: 'knowledge-base'}
-];
-
-const DEFAULT_CONJUNCTION_CRITERION = {
-	operatorName: RelationalOperators.GT as any,
-	propertyName: 'day',
-	touched: false,
-	valid: true,
-	value: TimeSpans.Last24Hours
-} as Criterion & {touched: boolean; valid: boolean};
+const TAG_CONFIG = {
+	idProperty: 'tags/id',
+	nameProperty: 'tags/name',
+	supportsCategories: false
+};
 
 export function buildValue(
 	eventType: React.Key,
@@ -81,155 +48,17 @@ export function buildValue(
 	tagId: string,
 	tagName: string
 ): CustomValue {
-	const isAnyAsset = assetType === 'any';
-
-	const criterionItems: (Criterion & {touched: boolean; valid: boolean})[] = [
+	return buildRemoteFilterValue(
 		{
-			operatorName: RelationalOperators.EQ as any,
-			propertyName: 'tags/id',
-			touched: false,
-			valid: true,
-			value: tagId
-		} as Criterion & {touched: boolean; valid: boolean},
-		{
-			operatorName: RelationalOperators.EQ as any,
-			propertyName: 'tags/name',
-			touched: false,
-			valid: true,
-			value: tagName
-		} as Criterion & {touched: boolean; valid: boolean}
-	];
-
-	const applicationIds = isAnyAsset
-		? ALL_APPLICATION_IDS
-		: [ASSET_TYPE_APPLICATION_ID_MAP[assetType as string]];
-
-	criterionItems.push({
-		operatorName: RelationalOperators.In as any,
-		propertyName: 'applicationId',
-		touched: false,
-		valid: true,
-		value: applicationIds
-	} as Criterion & {touched: boolean; valid: boolean});
-
-	let eventIds: string[] = [];
-
-	if (eventType === 'all') {
-		if (isAnyAsset) {
-			eventIds = ALL_EVENT_IDS;
-		} else {
-			const compatibleEvents =
-				ASSET_TYPE_COMPATIBLE_EVENTS_MAP[assetType as string] || [];
-
-			const ids: string[] = [];
-			compatibleEvents.forEach(type => {
-				if (type !== 'all') {
-					const eventIdForAsset =
-						EVENT_TYPE_EVENT_ID_MAP[type]?.[assetType as string];
-					if (eventIdForAsset) ids.push(eventIdForAsset);
-				}
-			});
-			eventIds = Array.from(new Set(ids));
-		}
-	} else {
-		if (isAnyAsset) {
-			const eventMapForType =
-				EVENT_TYPE_EVENT_ID_MAP[eventType as string] || {};
-			eventIds = Array.from(
-				new Set(
-					Object.keys(eventMapForType).map(k => eventMapForType[k])
-				)
-			);
-		} else {
-			const specificId =
-				EVENT_TYPE_EVENT_ID_MAP[eventType as string]?.[
-					assetType as string
-				];
-			eventIds = specificId ? [specificId] : [];
-		}
-	}
-
-	criterionItems.push({
-		operatorName: RelationalOperators.In as any,
-		propertyName: 'eventId',
-		touched: false,
-		valid: true,
-		value: eventIds
-	} as Criterion & {touched: boolean; valid: boolean});
-
-	criterionItems.push(conjunctionCriterion);
-
-	return createCustomValueMap([
-		{key: 'operator', value: occurrenceOperator},
-		{key: 'value', value: occurrenceCount},
-		{key: 'criterionGroup', value: criterionItems}
-	]);
-}
-
-export function getAssetTypeFromValue(
-	value: CustomValue | undefined
-): React.Key {
-	if (!value) return 'any';
-
-	const appIdIndex = getIndexFromPropertyName(value, 'applicationId');
-
-	if (appIdIndex >= 0) {
-		const appIdValue = value.getIn([
-			'criterionGroup',
-			'items',
-			appIdIndex,
-			'value'
-		]) as any;
-
-		const appIds = appIdValue?.toJS?.() ?? appIdValue;
-
-		if (Array.isArray(appIds) && appIds.length === 1) {
-			return APPLICATION_ID_ASSET_TYPE_MAP[appIds[0]] ?? 'any';
-		}
-	}
-
-	return 'any';
-}
-
-export function getEventTypeFromValue(
-	value: CustomValue | undefined
-): React.Key {
-	if (!value) return 'all';
-
-	const eventIdIndex = getIndexFromPropertyName(value, 'eventId');
-
-	if (eventIdIndex >= 0) {
-		const eventIdValue = value.getIn([
-			'criterionGroup',
-			'items',
-			eventIdIndex,
-			'value'
-		]) as any;
-
-		const eventIds = eventIdValue?.toJS?.() ?? eventIdValue;
-
-		if (Array.isArray(eventIds) && eventIds.length === 1) {
-			return EVENT_ID_EVENT_TYPE_MAP[eventIds[0]] ?? 'all';
-		}
-	}
-
-	return 'all';
-}
-
-export function getConjunctionCriterionFromValue(
-	value: CustomValue | undefined
-): Criterion & {touched: boolean; valid: boolean} {
-	if (!value) return DEFAULT_CONJUNCTION_CRITERION;
-
-	const dayIndex = getIndexFromPropertyName(value, 'day');
-
-	if (dayIndex < 0) return DEFAULT_CONJUNCTION_CRITERION;
-
-	return (
-		(getFilterCriterionIMap(value, dayIndex)?.toJS() as Criterion & {
-			touched: boolean;
-			valid: boolean;
-		}) ?? DEFAULT_CONJUNCTION_CRITERION
+			assetType,
+			conjunctionCriterion,
+			entityId: tagId,
+			entityName: tagName,
+			eventType,
+			occurrenceCount,
+			occurrenceOperator
+		},
+		TAG_CONFIG
 	);
 }
 

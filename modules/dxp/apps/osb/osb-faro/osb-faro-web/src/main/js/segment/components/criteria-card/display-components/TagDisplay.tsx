@@ -7,7 +7,7 @@ import {
 	getConjunctionCriterionFromValue,
 	getEventTypeFromValue,
 	OCCURRENCE_OPTIONS
-} from 'segment/segment-editor/dynamic/inputs/TagInput';
+} from 'segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
 import {CustomValue} from 'shared/util/records';
 import {getIndexFromPropertyName} from 'segment/segment-editor/dynamic/utils/custom-inputs';
 import {getOperatorLabel, maybeFormatToKnownType} from '../utils';

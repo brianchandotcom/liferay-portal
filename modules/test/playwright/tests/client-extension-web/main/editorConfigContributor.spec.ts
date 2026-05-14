@@ -195,11 +195,6 @@ test('Check client extension does not apply to new instances @LPD-63018', async 
 
 		await virtualInstancePage.getByLabel('Publish').click();
 
-		await virtualInstancePage
-			.getByRole('link', {name: 'CKEditor 4'})
-			.first()
-			.click();
-
 		await virtualInstancePage.getByRole('link', {name: 'Alloy'}).click();
 
 		await expect(

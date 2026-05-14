@@ -8,10 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {ckeditorSamplePageTest} from '../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
-import {
-	SubTabName,
-	TabName,
-} from '../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage';
+import {SubTabName} from '../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage';
 
 export const test = mergeTests(
 	ckeditorSamplePageTest,
@@ -22,7 +19,7 @@ export const test = mergeTests(
 );
 
 test.beforeEach(async ({ckeditorSamplePage}) => {
-	await ckeditorSamplePage.gotoTab(TabName.CK_EDITOR_4, SubTabName.ALLOY);
+	await ckeditorSamplePage.gotoTab(SubTabName.ALLOY);
 });
 
 test(

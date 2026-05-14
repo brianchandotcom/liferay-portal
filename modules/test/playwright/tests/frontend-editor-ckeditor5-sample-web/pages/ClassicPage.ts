@@ -5,9 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {CKEditorSamplePageTab} from '../CKEditorSamplePage';
-
-export class ClassicPage implements CKEditorSamplePageTab {
+export class ClassicPage {
 	readonly editable: Locator;
 	readonly itemSelectorFrame: FrameLocator;
 	readonly sourceEditable: Locator;

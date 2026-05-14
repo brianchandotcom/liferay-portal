@@ -3,19 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {SubTabName, TabName} from '../../pages/CKEditorSamplePage';
-import {ClassicPage} from '../../pages/ckeditor5/ClassicPage';
-import {ckeditorSamplePageTest} from '../ckeditorSamplePageTest';
+import {SubTabName} from '../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage';
+import {ClassicPage} from '../pages/ClassicPage';
+import {ckeditor5SamplePageTest} from './ckeditor5SamplePageTest';
 
 const classicPageTestFor = (subTabName: SubTabName) =>
-	ckeditorSamplePageTest.extend<{
+	ckeditor5SamplePageTest.extend<{
 		classicPage: ClassicPage;
 	}>({
-		classicPage: async ({ckeditorSamplePage}, use) => {
-			const classicPage: ClassicPage = await ckeditorSamplePage.gotoTab(
-				TabName.CK_EDITOR_5,
-				subTabName
-			);
+		classicPage: async ({ckeditor5SamplePage}, use) => {
+			const classicPage: ClassicPage =
+				await ckeditor5SamplePage.gotoTab(subTabName);
 
 			await use(classicPage);
 		},

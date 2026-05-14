@@ -5,9 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {CKEditorSamplePageTab} from '../CKEditorSamplePage';
-
-export class BalloonPage implements CKEditorSamplePageTab {
+export class BalloonPage {
 	readonly editable: Locator;
 	readonly toolbar: Locator;
 

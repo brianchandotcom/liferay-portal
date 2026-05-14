@@ -1,0 +1,7 @@
+{
+	"contentType": {
+		"className": "com.liferay.commerce.product.model.CPDefinition"
+	},
+	"defaultTemplate": true,
+	"name": "App Detail"
+}

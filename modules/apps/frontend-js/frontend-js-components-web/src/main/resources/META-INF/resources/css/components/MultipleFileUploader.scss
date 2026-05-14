@@ -2,7 +2,7 @@
 
 .multiple-file-uploader {
 	.modal-body.inline-scroller {
-		max-height: 600px;
+		max-height: min(600px, calc(100vh - 14rem));
 	}
 
 	.dropzone {

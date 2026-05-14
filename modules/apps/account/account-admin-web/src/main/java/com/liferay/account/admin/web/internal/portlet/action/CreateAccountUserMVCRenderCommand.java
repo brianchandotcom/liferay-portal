@@ -74,14 +74,12 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 			FeatureFlagManagerUtil.isEnabled(
 				themeDisplay.getCompanyId(), "LPD-52006")) {
 
-			invitedAccountUserDisplayContext.setTitle(
-				"accept-sharing-invitation");
 			invitedAccountUserDisplayContext.setEmailAddress(
 				ticket.getExtraInfo());
+			invitedAccountUserDisplayContext.setTitle(
+				"accept-invitation-to-collaborate");
 		}
 		else {
-			invitedAccountUserDisplayContext.setTitle("create-account");
-
 			try {
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					ticket.getExtraInfo());
@@ -92,6 +90,8 @@ public class CreateAccountUserMVCRenderCommand implements MVCRenderCommand {
 			catch (JSONException jsonException) {
 				throw new PortletException(jsonException);
 			}
+
+			invitedAccountUserDisplayContext.setTitle("create-account");
 		}
 
 		renderRequest.setAttribute(

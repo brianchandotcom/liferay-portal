@@ -95,7 +95,7 @@ public class CreateAccountUserMVCActionCommand
 
 			user = _addUser(actionRequest, ticket.getExtraInfo());
 
-			_updateSharingEntry(ticket, user);
+			_updateSharingEntries(ticket, user);
 		}
 		else {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -215,12 +215,12 @@ public class CreateAccountUserMVCActionCommand
 		}
 	}
 
-	private void _updateSharingEntry(Ticket ticket, User user) {
-		List<SharingEntry> toTicketSharingEntries =
+	private void _updateSharingEntries(Ticket ticket, User user) {
+		List<SharingEntry> sharingEntries =
 			_sharingEntryLocalService.getToTicketSharingEntries(
 				ticket.getTicketId());
 
-		if (toTicketSharingEntries.isEmpty()) {
+		if (sharingEntries.isEmpty()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
@@ -233,7 +233,7 @@ public class CreateAccountUserMVCActionCommand
 			return;
 		}
 
-		for (SharingEntry sharingEntry : toTicketSharingEntries) {
+		for (SharingEntry sharingEntry : sharingEntries) {
 			sharingEntry.setToTicketId(0);
 			sharingEntry.setToUserId(user.getUserId());
 

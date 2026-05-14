@@ -42,8 +42,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharing.configuration.SharingEntryInvitationEmailConfiguration;
-import com.liferay.sharing.mail.SharingInvitationMailSender;
+import com.liferay.sharing.configuration.SharingEntryCollaborationEmailConfiguration;
+import com.liferay.sharing.mail.SharingCollaborationMailSender;
 import com.liferay.sharing.model.SharingEntry;
 
 import jakarta.mail.internet.InternetAddress;
@@ -60,9 +60,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(service = SharingInvitationMailSender.class)
-public class SharingInvitationMailSenderImpl
-	implements SharingInvitationMailSender {
+@Component(service = SharingCollaborationMailSender.class)
+public class SharingCollaborationMailSenderImpl
+	implements SharingCollaborationMailSender {
 
 	@Override
 	public void sendInvitation(
@@ -91,8 +91,9 @@ public class SharingInvitationMailSenderImpl
 		if (serviceContext.getRequest() == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Skipping sharing invitation email; no HTTP request in " +
-						"service context for ticket " + ticket.getTicketId());
+					"Skipping sharing collaboration email; no HTTP request " +
+						"in service context for ticket " +
+							ticket.getTicketId());
 			}
 
 			return;
@@ -163,7 +164,7 @@ public class SharingInvitationMailSenderImpl
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
-		mailTemplateContextBuilder.put("[$ACCEPT_INVITATION_URL$]", url);
+		mailTemplateContextBuilder.put("[$ACCEPT_COLLABORATION_URL$]", url);
 
 		User user = _userLocalService.getUser(sharingEntry.getUserId());
 
@@ -178,14 +179,15 @@ public class SharingInvitationMailSenderImpl
 		mailTemplateContextBuilder.put(
 			"[$COMPANY_NAME$]", new EscapableObject<>(company.getName()));
 
-		SharingEntryInvitationEmailConfiguration
-			sharingEntryInvitationEmailConfiguration =
+		SharingEntryCollaborationEmailConfiguration
+			sharingEntryCollaborationEmailConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					SharingEntryInvitationEmailConfiguration.class, companyId);
+					SharingEntryCollaborationEmailConfiguration.class,
+					companyId);
 
 		String fromAddress =
-			sharingEntryInvitationEmailConfiguration.
-				invitationEmailSenderEmailAddress();
+			sharingEntryCollaborationEmailConfiguration.
+				invitationToCollaborateEmailSenderEmailAddress();
 
 		if (Validator.isNull(fromAddress)) {
 			fromAddress = PrefsPropsUtil.getString(
@@ -193,8 +195,8 @@ public class SharingInvitationMailSenderImpl
 		}
 
 		String fromName =
-			sharingEntryInvitationEmailConfiguration.
-				invitationEmailSenderName();
+			sharingEntryCollaborationEmailConfiguration.
+				invitationToCollaborateEmailSenderName();
 
 		if (Validator.isNull(fromName)) {
 			fromName = PrefsPropsUtil.getString(
@@ -213,14 +215,16 @@ public class SharingInvitationMailSenderImpl
 			mailTemplateContextBuilder.build();
 
 		LocalizedValuesMap subjectLocalizedValuesMap =
-			sharingEntryInvitationEmailConfiguration.invitationEmailSubject();
+			sharingEntryCollaborationEmailConfiguration.
+				invitationToCollaborateEmailSubject();
 
 		MailTemplate subjectMailTemplate =
 			MailTemplateFactoryUtil.createMailTemplate(
 				subjectLocalizedValuesMap.get(user.getLocale()), false);
 
 		LocalizedValuesMap bodyLocalizedValuesMap =
-			sharingEntryInvitationEmailConfiguration.invitationEmailBody();
+			sharingEntryCollaborationEmailConfiguration.
+				invitationToCollaborateEmailBody();
 
 		MailTemplate bodyMailTemplate =
 			MailTemplateFactoryUtil.createMailTemplate(
@@ -251,7 +255,7 @@ public class SharingInvitationMailSenderImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SharingInvitationMailSenderImpl.class);
+		SharingCollaborationMailSenderImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

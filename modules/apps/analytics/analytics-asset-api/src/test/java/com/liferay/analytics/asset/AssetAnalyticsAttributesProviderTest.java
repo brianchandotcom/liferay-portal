@@ -1,0 +1,369 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.analytics.asset;
+
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+/**
+ * @author Georgel Pop
+ */
+public class AssetAnalyticsAttributesProviderTest {
+
+	@ClassRule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_featureFlagManagerUtilMockedStatic.when(
+			() -> FeatureFlagManagerUtil.isEnabled(
+				Mockito.anyLong(), Mockito.eq("LPD-81914"))
+		).thenReturn(
+			true
+		);
+	}
+
+	@After
+	public void tearDown() {
+		_featureFlagManagerUtilMockedStatic.close();
+		_objectDefinitionLocalServiceUtilMockedStatic.close();
+	}
+
+	@Test
+	@TestInfo("LPD-83537")
+	public void testBuildAttributes() {
+		_testBuildAttributesCMSVersion();
+		_testBuildAttributesForBlogsEntry();
+		_testBuildAttributesForDLFileEntry();
+		_testBuildAttributesForJournalArticle();
+		_testBuildAttributesTypeForObjectEntry();
+		_testBuildAttributesWithNullInputs();
+		_testBuildAttributesWithoutAssetEntry();
+	}
+
+	private void _assertCMSVersion(
+		AssetAnalyticsAttributesProvider provider, String expectedVersion) {
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_VIEW,
+			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
+
+		Assert.assertTrue(
+			attributes.contains(
+				"analytics-asset-cmsversion=\"" + expectedVersion + "\""));
+	}
+
+	private void _assertType(
+		AssetAnalyticsAttributesProvider provider, String expectedType) {
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_VIEW,
+			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
+
+		Assert.assertTrue(
+			attributes.contains(
+				"analytics-asset-type=\"" + expectedType + "\""));
+	}
+
+	private AssetEntry _mockAssetEntry(
+		String className, long classPK, long companyId) {
+
+		AssetEntry assetEntry = Mockito.mock(AssetEntry.class);
+
+		Mockito.when(
+			assetEntry.getClassName()
+		).thenReturn(
+			className
+		);
+
+		Mockito.when(
+			assetEntry.getClassPK()
+		).thenReturn(
+			classPK
+		);
+
+		Mockito.when(
+			assetEntry.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		return assetEntry;
+	}
+
+	private AssetRenderer<?> _mockAssetRenderer(String title) {
+		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
+
+		Mockito.when(
+			assetRenderer.getTitle(LocaleUtil.US)
+		).thenReturn(
+			title
+		);
+
+		return assetRenderer;
+	}
+
+	private void _testBuildAttributesCMSVersion() {
+		String className = "com.liferay.object.model.ObjectDefinition#42";
+		long companyId = RandomTestUtil.randomLong();
+
+		AssetEntry objectEntry = _mockAssetEntry(
+			className, RandomTestUtil.randomLong(), companyId);
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(objectEntry, null, null);
+
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+
+		_objectDefinitionLocalServiceUtilMockedStatic.when(
+			() ->
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(companyId, className)
+		).thenReturn(
+			objectDefinition
+		);
+
+		Mockito.when(
+			objectDefinition.isCMS()
+		).thenReturn(
+			true
+		);
+
+		_assertCMSVersion(provider, "2.0");
+
+		Mockito.when(
+			objectDefinition.isCMS()
+		).thenReturn(
+			false
+		);
+
+		_assertCMSVersion(provider, "1.0");
+
+		_objectDefinitionLocalServiceUtilMockedStatic.when(
+			() ->
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(companyId, className)
+		).thenReturn(
+			null
+		);
+
+		_assertCMSVersion(provider, "1.0");
+	}
+
+	private void _testBuildAttributesForBlogsEntry() {
+		AssetEntry assetEntry = _mockAssetEntry(
+			"com.liferay.blogs.model.BlogsEntry", RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong());
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+			AssetAnalyticsAttributesProvider.FIELD_TITLE);
+
+		Assert.assertFalse(attributes.contains("analytics-asset-subtype="));
+		Assert.assertTrue(attributes.contains("analytics-asset-type=\"blog\""));
+	}
+
+	private void _testBuildAttributesForDLFileEntry() {
+		AssetEntry assetEntry = _mockAssetEntry(
+			"com.liferay.document.library.kernel.model.DLFileEntry",
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+			AssetAnalyticsAttributesProvider.FIELD_TITLE);
+
+		Assert.assertTrue(
+			attributes.contains("analytics-asset-type=\"document\""));
+	}
+
+	private void _testBuildAttributesForJournalArticle() {
+		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
+		JournalArticle journalArticle = Mockito.mock(JournalArticle.class);
+
+		String structureKey = RandomTestUtil.randomString();
+
+		Mockito.when(
+			journalArticle.getDDMStructureKey()
+		).thenReturn(
+			structureKey
+		);
+
+		Mockito.when(
+			assetRenderer.getAssetObject()
+		).thenReturn(
+			journalArticle
+		);
+
+		String title = "Title \"quoted\" and <b>bold</b>";
+
+		Mockito.when(
+			assetRenderer.getTitle(LocaleUtil.US)
+		).thenReturn(
+			title
+		);
+
+		long journalArticleClassPK = RandomTestUtil.randomLong();
+
+		AssetEntry assetEntry = _mockAssetEntry(
+			_CLASS_NAME_JOURNAL_ARTICLE, journalArticleClassPK,
+			RandomTestUtil.randomLong());
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(
+				assetEntry, assetRenderer, LocaleUtil.US);
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_VIEW,
+			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
+
+		Assert.assertTrue(
+			attributes.contains(
+				"analytics-asset-action=\"" +
+					AssetAnalyticsAttributesProvider.ACTION_VIEW + "\""));
+		Assert.assertTrue(
+			attributes.contains("analytics-asset-cmsversion=\"1.0\""));
+		Assert.assertTrue(
+			attributes.contains(
+				"analytics-asset-field=\"" +
+					AssetAnalyticsAttributesProvider.FIELD_CONTENT + "\""));
+		Assert.assertTrue(
+			attributes.contains(
+				"analytics-asset-id=\"" + journalArticleClassPK + "\""));
+		Assert.assertTrue(
+			attributes.contains(
+				"analytics-asset-subtype=\"" +
+					StringUtil.toLowerCase(structureKey) + "\""));
+		Assert.assertFalse(attributes.contains("\"quoted\""));
+		Assert.assertFalse(attributes.contains("<b>"));
+		Assert.assertTrue(attributes.contains("analytics-asset-title=\""));
+		Assert.assertTrue(
+			attributes.contains("analytics-asset-type=\"web-content\""));
+	}
+
+	private void _testBuildAttributesTypeForObjectEntry() {
+		String className = "com.liferay.object.model.ObjectDefinition#42";
+		long companyId = RandomTestUtil.randomLong();
+
+		AssetEntry objectEntry = _mockAssetEntry(
+			className, RandomTestUtil.randomLong(), companyId);
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(objectEntry, null, null);
+
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+
+		_objectDefinitionLocalServiceUtilMockedStatic.when(
+			() ->
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(companyId, className)
+		).thenReturn(
+			objectDefinition
+		);
+
+		Mockito.when(
+			objectDefinition.getName()
+		).thenReturn(
+			"MyCMSType"
+		);
+
+		_assertType(provider, "my-cms-type");
+
+		Mockito.when(
+			objectDefinition.getName()
+		).thenReturn(
+			null
+		);
+
+		_assertType(provider, "object-entry");
+	}
+
+	private void _testBuildAttributesWithNullInputs() {
+		AssetEntry assetEntry = _mockAssetEntry(
+			_CLASS_NAME_JOURNAL_ARTICLE, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong());
+
+		AssetAnalyticsAttributesProvider provider1 =
+			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
+
+		String attributes1 = provider1.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+			AssetAnalyticsAttributesProvider.FIELD_TITLE);
+
+		Assert.assertFalse(attributes1.contains("analytics-asset-title="));
+
+		AssetRenderer<?> assetRenderer = _mockAssetRenderer(
+			RandomTestUtil.randomString());
+
+		AssetAnalyticsAttributesProvider provider2 =
+			new AssetAnalyticsAttributesProvider(
+				assetEntry, assetRenderer, null);
+
+		String attributes2 = provider2.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+			AssetAnalyticsAttributesProvider.FIELD_TITLE);
+
+		Assert.assertFalse(attributes2.contains("analytics-asset-title="));
+
+		AssetAnalyticsAttributesProvider provider3 =
+			new AssetAnalyticsAttributesProvider(
+				assetEntry, assetRenderer, LocaleUtil.US);
+
+		String attributes3 = provider3.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, null);
+
+		Assert.assertFalse(attributes3.contains("analytics-asset-field="));
+	}
+
+	private void _testBuildAttributesWithoutAssetEntry() {
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(null, null, null);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			provider.buildAttributes(
+				AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+				AssetAnalyticsAttributesProvider.FIELD_TITLE));
+	}
+
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
+
+	private final MockedStatic<FeatureFlagManagerUtil>
+		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+			FeatureFlagManagerUtil.class);
+	private final MockedStatic<ObjectDefinitionLocalServiceUtil>
+		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ObjectDefinitionLocalServiceUtil.class);
+
+}

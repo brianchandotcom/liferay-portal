@@ -8,97 +8,97 @@ import {dateUtils, sub} from 'frontend-js-web';
 import {
 	DateFilterValues,
 	EditingState,
-	FilterType,
-	ModifiedLastType,
+	LastRange,
 	NormalizedDateFilter,
+	Range,
 } from './types';
 
-export const FILTER_OPTIONS = [
+export const RANGE_OPTIONS = [
 	{
 		label: Liferay.Language.get('show-all'),
-		value: FilterType.All,
+		value: Range.All,
 	},
 	{
 		label: Liferay.Language.get('date-range'),
-		value: FilterType.Range,
+		value: Range.DateRange,
 	},
 	{
 		label: Liferay.Language.get('modified-last'),
-		value: FilterType.Last,
+		value: Range.Last,
 	},
 ];
 
-export const HOURS_BY_MODIFIED_LAST: Record<ModifiedLastType, number> = {
-	[ModifiedLastType.H12]: 12,
-	[ModifiedLastType.H24]: 24,
-	[ModifiedLastType.H48]: 48,
-	[ModifiedLastType.D7]: 24 * 7,
+export const HOURS_BY_LAST_RANGE: Record<LastRange, number> = {
+	[LastRange.H12]: 12,
+	[LastRange.H24]: 24,
+	[LastRange.H48]: 48,
+	[LastRange.D7]: 24 * 7,
 };
 
-export const MODIFIED_LAST_OPTIONS = [
+export const LAST_RANGE_OPTIONS = [
 	{
 		label: sub(Liferay.Language.get('x-hours'), '12'),
-		value: ModifiedLastType.H12,
+		value: LastRange.H12,
 	},
 	{
 		label: sub(Liferay.Language.get('x-hours'), '24'),
-		value: ModifiedLastType.H24,
+		value: LastRange.H24,
 	},
 	{
 		label: sub(Liferay.Language.get('x-hours'), '48'),
-		value: ModifiedLastType.H48,
+		value: LastRange.H48,
 	},
 	{
 		label: sub(Liferay.Language.get('x-days'), '7'),
-		value: ModifiedLastType.D7,
+		value: LastRange.D7,
 	},
 ];
 
 export function normalizeDateFilter(
 	dateFilter: DateFilterValues
 ): NormalizedDateFilter {
-	if (dateFilter.range === FilterType.Last) {
+	if (dateFilter.range === Range.Last) {
 		return {
-			last: HOURS_BY_MODIFIED_LAST[dateFilter.last],
-			range: FilterType.Last,
+			last: HOURS_BY_LAST_RANGE[dateFilter.last],
+			range: Range.Last,
 		};
 	}
 
-	if (dateFilter.range === FilterType.Range) {
+	if (dateFilter.range === Range.DateRange) {
 		return {
 			endDate: new Date(dateFilter.endDate).toISOString(),
-			range: FilterType.Range,
+			range: Range.DateRange,
 			startDate: new Date(dateFilter.startDate).toISOString(),
 		};
 	}
 
-	return {range: FilterType.All};
+	return {range: Range.All};
 }
 
 export function editingToDateFilter(editing: EditingState): DateFilterValues {
-	const {filterType, fromDate, modifiedLast, toDate} = editing;
+	const {endDate, last, range, startDate} = editing;
 
-	if (filterType === FilterType.Range) {
-		return {endDate: toDate, range: FilterType.Range, startDate: fromDate};
+	if (range === Range.DateRange) {
+		return {endDate, range: Range.DateRange, startDate};
 	}
 
-	if (filterType === FilterType.Last) {
-		return {last: modifiedLast, range: FilterType.Last};
+	if (range === Range.Last) {
+		return {last, range: Range.Last};
 	}
 
-	return {range: FilterType.All};
+	return {range: Range.All};
 }
 
 export function getAppliedFilterSummary(applied: DateFilterValues): string {
-	if (applied.range === FilterType.Last) {
-		const option = MODIFIED_LAST_OPTIONS.find(
+	if (applied.range === Range.Last) {
+		const option = LAST_RANGE_OPTIONS.find(
 			(opt) => opt.value === applied.last
 		);
 
 		return `${Liferay.Language.get('modified-last')}: ${option?.label ?? ''}`;
 	}
 
-	if (applied.range === FilterType.Range) {
+	if (applied.range === Range.DateRange) {
 		const {endDate, startDate} = applied;
 
 		if (startDate && endDate) {
@@ -124,24 +124,21 @@ export function getIsDirty(
 	editing: EditingState,
 	applied: DateFilterValues
 ): boolean {
-	if (editing.filterType !== applied.range) {
+	if (editing.range !== applied.range) {
 		return true;
 	}
 
-	if (
-		applied.range === FilterType.Last &&
-		editing.filterType === FilterType.Last
-	) {
-		return editing.modifiedLast !== applied.last;
+	if (applied.range === Range.Last && editing.range === Range.Last) {
+		return editing.last !== applied.last;
 	}
 
 	if (
-		applied.range === FilterType.Range &&
-		editing.filterType === FilterType.Range
+		applied.range === Range.DateRange &&
+		editing.range === Range.DateRange
 	) {
 		return (
-			editing.fromDate !== applied.startDate ||
-			editing.toDate !== applied.endDate
+			editing.startDate !== applied.startDate ||
+			editing.endDate !== applied.endDate
 		);
 	}
 
@@ -149,46 +146,48 @@ export function getIsDirty(
 }
 
 export function getValidation(editing: EditingState): {
-	errors: {fromDate?: string; toDate?: string};
+	errors: {endDate?: string; startDate?: string};
 	isValid: boolean;
 } {
-	const errors: {fromDate?: string; toDate?: string} = {};
+	const errors: {endDate?: string; startDate?: string} = {};
 
-	if (editing.filterType !== FilterType.Range) {
+	if (editing.range !== Range.DateRange) {
 		return {errors, isValid: true};
 	}
 
-	const {fromDate, toDate} = editing;
+	const {endDate, startDate} = editing;
 
-	if (!fromDate && !toDate) {
+	if (!startDate && !endDate) {
 		return {errors, isValid: false};
 	}
 
-	const isFromValid = !fromDate || dateUtils.isValid(fromDate);
-	const isToValid = !toDate || dateUtils.isValid(toDate);
+	const isStartValid = !startDate || dateUtils.isValid(startDate);
+	const isEndValid = !endDate || dateUtils.isValid(endDate);
 
-	if (!isFromValid || !isToValid) {
+	if (!isStartValid || !isEndValid) {
 		return {errors, isValid: false};
 	}
 
-	const fromDateObj = fromDate ? new Date(fromDate) : null;
-	const toDateObj = toDate ? new Date(toDate) : null;
+	const startDateObj = startDate ? new Date(startDate) : null;
+	const endDateObj = endDate ? new Date(endDate) : null;
 
-	if (fromDateObj && fromDateObj > new Date()) {
-		errors.fromDate = Liferay.Language.get(
+	if (startDateObj && startDateObj > new Date()) {
+		errors.startDate = Liferay.Language.get(
 			'dates-must-not-be-in-the-future'
 		);
 	}
 
-	if (toDateObj && toDateObj > new Date()) {
-		errors.toDate = Liferay.Language.get('dates-must-not-be-in-the-future');
+	if (endDateObj && endDateObj > new Date()) {
+		errors.endDate = Liferay.Language.get(
+			'dates-must-not-be-in-the-future'
+		);
 	}
 
-	if (fromDateObj && toDateObj && fromDateObj > toDateObj) {
+	if (startDateObj && endDateObj && startDateObj > endDateObj) {
 		const rangeError = Liferay.Language.get('date-range-is-invalid');
 
-		errors.fromDate = rangeError;
-		errors.toDate = rangeError;
+		errors.startDate = rangeError;
+		errors.endDate = rangeError;
 	}
 
 	return {

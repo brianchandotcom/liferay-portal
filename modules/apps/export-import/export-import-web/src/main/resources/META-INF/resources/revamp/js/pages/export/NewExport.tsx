@@ -12,7 +12,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Footer from '../../components/Footer';
 import {
 	DateFilterValues,
-	FilterType,
+	Range,
 	normalizeDateFilter,
 } from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
@@ -79,10 +79,7 @@ export function NewExport({
 	const sections = preview?.portletDataHandlerSections ?? [];
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
-		if (
-			filterValues.range === FilterType.All &&
-			initialPreviewRef.current
-		) {
+		if (filterValues.range === Range.All && initialPreviewRef.current) {
 			setPreview(initialPreviewRef.current);
 
 			return;
@@ -98,7 +95,7 @@ export function NewExport({
 		<Formik
 			initialValues={{
 				contentSelection: undefined,
-				dateFilter: {range: FilterType.All} as DateFilterValues,
+				dateFilter: {range: Range.All} as DateFilterValues,
 				fileName: '',
 			}}
 			onSubmit={async (values) => {

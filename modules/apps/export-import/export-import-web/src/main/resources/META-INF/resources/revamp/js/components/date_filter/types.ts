@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export enum FilterType {
+export enum Range {
 	All = 'all',
+	DateRange = 'dateRange',
 	Last = 'last',
-	Range = 'dateRange',
 }
 
-export enum ModifiedLastType {
+export enum LastRange {
 	H12 = '12h',
 	H24 = '24h',
 	H48 = '48h',
@@ -17,27 +17,27 @@ export enum ModifiedLastType {
 }
 
 export type DateFilterValues =
-	| {range: FilterType.All}
-	| {last: ModifiedLastType; range: FilterType.Last}
-	| {endDate: string; range: FilterType.Range; startDate: string};
+	| {range: Range.All}
+	| {last: LastRange; range: Range.Last}
+	| {endDate: string; range: Range.DateRange; startDate: string};
 
 export type NormalizedDateFilter = {
 	endDate?: string;
 	last?: number;
-	range?: FilterType;
+	range?: Range;
 	startDate?: string;
 };
 
 export type EditingState = {
-	filterType: FilterType;
-	fromDate: string;
-	modifiedLast: ModifiedLastType;
-	toDate: string;
+	endDate: string;
+	last: LastRange;
+	range: Range;
+	startDate: string;
 };
 
 export type TouchedFields = {
-	fromDate: boolean;
-	toDate: boolean;
+	endDate: boolean;
+	startDate: boolean;
 };
 
 export const YEARS_OFFSET = 10;

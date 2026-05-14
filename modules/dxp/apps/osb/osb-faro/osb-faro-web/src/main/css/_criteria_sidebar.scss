@@ -105,8 +105,13 @@
 		word-wrap: break-word;
 	}
 
+	.sidebar-pagination {
+		flex-shrink: 0;
+		padding: 4px 0;
+	}
+
 	.sidebar-collapse {
-		height: 100%;
+		flex: 1;
 		overflow-y: auto;
 		position: relative;
 

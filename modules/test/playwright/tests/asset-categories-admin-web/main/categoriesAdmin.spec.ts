@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
 
@@ -31,6 +32,139 @@ const assetTypes = [
 	'User',
 	'Web Content Article',
 ];
+
+test(
+	'Edit external reference code of an existing vocabulary',
+	{tag: '@LPD-90008'},
+	async ({
+		apiHelpers,
+		assetCategoriesAdminPage,
+		page,
+		site,
+		vocabulariesEditPage,
+	}) => {
+		const updatedExternalReferenceCode = getRandomString();
+		const vocabularyName = getRandomString();
+
+		const [vocabulary1, vocabulary2] = await Promise.all([
+			apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+				name: vocabularyName,
+				siteId: site.id,
+			}),
+			apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+				name: getRandomString(),
+				siteId: site.id,
+			}),
+		]);
+
+		await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
+
+		await test.step('Edit the external reference code', async () => {
+			await vocabulariesEditPage.goto(vocabularyName);
+
+			await expect(
+				vocabulariesEditPage.externalReferenceCodeInput
+			).toBeEditable();
+
+			await expect(
+				vocabulariesEditPage.externalReferenceCodeInput
+			).toHaveValue(vocabulary1.externalReferenceCode);
+
+			await vocabulariesEditPage.fillExternalReferenceCode(
+				updatedExternalReferenceCode
+			);
+
+			await vocabulariesEditPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await vocabulariesEditPage.goto(vocabularyName);
+
+			await expect(
+				vocabulariesEditPage.externalReferenceCodeInput
+			).toHaveValue(updatedExternalReferenceCode);
+		});
+
+		await test.step('Reject duplicate external reference code on edit', async () => {
+			await vocabulariesEditPage.fillExternalReferenceCode(
+				vocabulary2.externalReferenceCode
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: vocabulariesEditPage.saveButton,
+				trigger: page.getByText(
+					'Please enter a unique external reference code.',
+					{exact: true}
+				),
+			});
+		});
+	}
+);
+
+test(
+	'Edit external reference code of an existing category',
+	{tag: '@LPD-90008'},
+	async ({
+		apiHelpers,
+		assetCategoriesAdminPage,
+		assetCategoriesEditPage,
+		page,
+		site,
+	}) => {
+		const categoryName = getRandomString();
+		const updatedExternalReferenceCode = getRandomString();
+		const vocabularyName = getRandomString();
+
+		const [category1, category2] = await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}, {name: getRandomString()}],
+			siteId: site.id,
+			vocabularyName,
+		});
+
+		await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
+
+		await test.step('Edit the external reference code', async () => {
+			await assetCategoriesEditPage.goto(categoryName);
+
+			await expect(
+				assetCategoriesEditPage.externalReferenceCodeInput
+			).toBeEditable();
+
+			await expect(
+				assetCategoriesEditPage.externalReferenceCodeInput
+			).toHaveValue(category1.externalReferenceCode);
+
+			await assetCategoriesEditPage.fillExternalReferenceCode(
+				updatedExternalReferenceCode
+			);
+
+			await assetCategoriesEditPage.save(`Success:${categoryName}`);
+
+			await assetCategoriesEditPage.goto(categoryName);
+
+			await expect(
+				assetCategoriesEditPage.externalReferenceCodeInput
+			).toHaveValue(updatedExternalReferenceCode);
+		});
+
+		await test.step('Reject duplicate external reference code on edit', async () => {
+			await assetCategoriesEditPage.fillExternalReferenceCode(
+				category2.externalReferenceCode
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: assetCategoriesEditPage.saveButton,
+				trigger: page.getByText(
+					'Please enter a unique external reference code.',
+					{exact: true}
+				),
+			});
+		});
+	}
+);
 
 test('Add, edit and delete a vocabulary', async ({
 	assetCategoriesAdminPage,

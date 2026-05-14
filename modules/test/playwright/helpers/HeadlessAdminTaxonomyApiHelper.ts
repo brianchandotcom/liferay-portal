@@ -179,7 +179,10 @@ export class HeadlessAdminTaxonomyApiHelper {
 		name,
 		name_i18n,
 		vocabularyId,
-	}: postTaxonomyVocabularyTaxonomyCategoryProps): Promise<{id: number}> {
+	}: postTaxonomyVocabularyTaxonomyCategoryProps): Promise<{
+		externalReferenceCode: string;
+		id: number;
+	}> {
 		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories`,
 			{data: {name, name_i18n}}

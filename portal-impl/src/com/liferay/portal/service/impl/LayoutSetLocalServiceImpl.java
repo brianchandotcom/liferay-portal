@@ -6,7 +6,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.VirtualHost;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,7 +46,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
 import com.liferay.portal.util.ThemeFactoryUtil;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.IOException;
@@ -283,9 +280,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
-		String previousLayoutSetPrototypeUuid =
-			layoutSet.getLayoutSetPrototypeUuid();
-
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
 		if (layoutSetBranch == null) {
@@ -302,7 +296,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
 
-			layoutSet = layoutSetPersistence.update(layoutSet);
+			layoutSetPersistence.update(layoutSet);
 		}
 		else {
 			if (Validator.isNull(layoutSetPrototypeUuid)) {
@@ -323,29 +317,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				layoutSetPrototypeLinkEnabled);
 
 			_layoutSetBranchPersistence.update(layoutSetBranch);
-		}
-
-		if (!layoutSetPrototypeLinkEnabled ||
-			Validator.isNotNull(previousLayoutSetPrototypeUuid) ||
-			Validator.isNull(layoutSetPrototypeUuid)) {
-
-			return;
-		}
-
-		try {
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-			Sites sites = _sitesSnapshot.get();
-
-			sites.mergeLayoutSetPrototypeLayouts(
-				_groupPersistence.findByPrimaryKey(groupId), layoutSet);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to force propagation from site template to site",
-					exception);
-			}
 		}
 	}
 
@@ -692,9 +663,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetLocalServiceImpl.class);
-
-	private static final Snapshot<Sites> _sitesSnapshot = new Snapshot<>(
-		LayoutSetLocalServiceImpl.class, Sites.class);
 
 	@BeanReference(type = GroupPersistence.class)
 	private GroupPersistence _groupPersistence;

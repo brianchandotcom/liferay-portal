@@ -108,7 +108,7 @@ public class AccountLifecycleController extends BaseFaroController {
 	@GET
 	@Path("/{id}/accounts")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroFDSResultsDisplay getAccounts(
+	public FaroFDSResultsDisplay getAccountsFaroFDSResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@QueryParam("country") String country,
 			@QueryParam("industry") String industry,

@@ -69,8 +69,36 @@ public class AssetListAssetEntryProviderFiltersTest {
 					"priority")));
 	}
 
+	@FeatureFlag(enable = false, value = "LPD-74731")
 	@Test
-	@FeatureFlags(featureFlags = {@FeatureFlag(value = "LPD-74731")})
+	public void testFiltersAreIgnoredWhenFeatureFlagDisabled()
+		throws Exception {
+
+		JSONArray filtersJSONArray = JSONUtil.putAll(
+			JSONUtil.put(
+				"classNameId",
+				_portal.getClassNameId(_objectDefinition.getClassName())
+			).put(
+				"classTypeId", _objectDefinition.getObjectDefinitionId()
+			).put(
+				"propertyName", "title"
+			).put(
+				"value", "keyword"
+			));
+
+		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
+			filtersJSONArray.toString());
+
+		AssetEntryQuery assetEntryQuery =
+			_assetListAssetEntryProvider.getAssetEntryQuery(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
+
+		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
+	}
+
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
+	@Test
 	public void testFiltersArePropagatedAsAttributeWhenFeatureFlagEnabled()
 		throws Exception {
 
@@ -105,11 +133,11 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry,
-				new long[] {SegmentsEntryConstants.ID_DEFAULT}, null);
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
 
-		JSONArray actualJSONArray =
-			(JSONArray)assetEntryQuery.getAttribute("filters");
+		JSONArray actualJSONArray = (JSONArray)assetEntryQuery.getAttribute(
+			"filters");
 
 		Assert.assertNotNull(actualJSONArray);
 		Assert.assertEquals(
@@ -124,35 +152,22 @@ public class AssetListAssetEntryProviderFiltersTest {
 			jsonObject.getLong("classNameId"));
 	}
 
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	public void testFiltersAreIgnoredWhenFeatureFlagDisabled()
-		throws Exception {
-
-		JSONArray filtersJSONArray = JSONUtil.putAll(
-			JSONUtil.put(
-				"classNameId",
-				_portal.getClassNameId(_objectDefinition.getClassName())
-			).put(
-				"classTypeId", _objectDefinition.getObjectDefinitionId()
-			).put(
-				"propertyName", "title"
-			).put(
-				"value", "keyword"
-			));
-
+	public void testInvalidFiltersJSONIsTolerated() throws Exception {
 		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			filtersJSONArray.toString());
+			"not-a-json-array");
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry,
-				new long[] {SegmentsEntryConstants.ID_DEFAULT}, null);
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
 
 		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
 	}
 
+	@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-74731"))
 	@Test
-	@FeatureFlags(featureFlags = {@FeatureFlag(value = "LPD-74731")})
 	public void testNoFiltersAttributeWhenTypeSettingsHasNoFilters()
 		throws Exception {
 
@@ -161,22 +176,8 @@ public class AssetListAssetEntryProviderFiltersTest {
 
 		AssetEntryQuery assetEntryQuery =
 			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry,
-				new long[] {SegmentsEntryConstants.ID_DEFAULT}, null);
-
-		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
-	}
-
-	@Test
-	@FeatureFlags(featureFlags = {@FeatureFlag(value = "LPD-74731")})
-	public void testInvalidFiltersJSONIsTolerated() throws Exception {
-		AssetListEntry assetListEntry = _addDynamicAssetListEntryWithFilters(
-			"not-a-json-array");
-
-		AssetEntryQuery assetEntryQuery =
-			_assetListAssetEntryProvider.getAssetEntryQuery(
-				assetListEntry,
-				new long[] {SegmentsEntryConstants.ID_DEFAULT}, null);
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				null);
 
 		Assert.assertNull(assetEntryQuery.getAttribute("filters"));
 	}
@@ -201,27 +202,29 @@ public class AssetListAssetEntryProviderFiltersTest {
 				"filters", filters);
 		}
 
-		UnicodeProperties typeSettings = unicodePropertiesWrapper.build();
+		UnicodeProperties typeSettingsUnicodeProperties =
+			unicodePropertiesWrapper.build();
 
 		_assetListEntryLocalService.updateAssetListEntryTypeSettings(
 			assetListEntry.getAssetListEntryId(),
-			SegmentsEntryConstants.ID_DEFAULT, typeSettings.toString());
+			SegmentsEntryConstants.ID_DEFAULT,
+			typeSettingsUnicodeProperties.toString());
 
 		return _assetListEntryLocalService.getAssetListEntry(
 			assetListEntry.getAssetListEntryId());
 	}
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
 
 	@Inject
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
 
 	@Inject
 	private Portal _portal;

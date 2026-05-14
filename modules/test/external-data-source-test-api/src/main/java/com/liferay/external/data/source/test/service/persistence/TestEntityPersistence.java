@@ -69,4 +69,4 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	public TestEntity fetchByPrimaryKey(long id);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-161581209
+// LIFERAY-SERVICE-BUILDER-HASH:-660829273

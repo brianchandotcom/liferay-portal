@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.log.Log;
@@ -71,59 +70,10 @@ public class UserIdMapperPersistenceImpl
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the user ID mappers where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching user ID mappers
-	 */
-	@Override
-	public List<UserIdMapper> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user ID mappers where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserIdMapperModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user ID mappers
-	 * @param end the upper bound of the range of user ID mappers (not inclusive)
-	 * @return the range of matching user ID mappers
-	 */
-	@Override
-	public List<UserIdMapper> findByUserId(long userId, int start, int end) {
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the user ID mappers where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserIdMapperModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user ID mappers
-	 * @param end the upper bound of the range of user ID mappers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user ID mappers
-	 */
-	@Override
-	public List<UserIdMapper> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<UserIdMapper> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the user ID mappers where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserIdMapperModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserIdMapperModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -240,18 +190,6 @@ public class UserIdMapperPersistenceImpl
 	}
 
 	/**
-	 * Returns the user ID mapper where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 */
-	@Override
-	public UserIdMapper fetchByU_T(long userId, String type) {
-		return fetchByU_T(userId, type, true);
-	}
-
-	/**
 	 * Returns the user ID mapper where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -327,18 +265,6 @@ public class UserIdMapperPersistenceImpl
 		}
 
 		return userIdMapper;
-	}
-
-	/**
-	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param type the type
-	 * @param externalUserId the external user ID
-	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 */
-	@Override
-	public UserIdMapper fetchByT_E(String type, String externalUserId) {
-		return fetchByT_E(type, externalUserId, true);
 	}
 
 	/**
@@ -666,4 +592,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1200939995
+// LIFERAY-SERVICE-BUILDER-HASH:-1793545962

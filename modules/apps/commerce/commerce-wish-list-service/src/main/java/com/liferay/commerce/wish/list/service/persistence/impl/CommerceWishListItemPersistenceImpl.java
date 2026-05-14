@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -81,65 +80,10 @@ public class CommerceWishListItemPersistenceImpl
 		_collectionPersistenceFinderByCommerceWishListId;
 
 	/**
-	 * Returns all the commerce wish list items where commerceWishListId = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @return the matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCommerceWishListId(
-		long commerceWishListId) {
-
-		return findByCommerceWishListId(
-			commerceWishListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce wish list items where commerceWishListId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @return the range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCommerceWishListId(
-		long commerceWishListId, int start, int end) {
-
-		return findByCommerceWishListId(commerceWishListId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCommerceWishListId(
-		long commerceWishListId, int start, int end,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		return findByCommerceWishListId(
-			commerceWishListId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceWishListId the commerce wish list ID
@@ -232,65 +176,10 @@ public class CommerceWishListItemPersistenceImpl
 		_collectionPersistenceFinderByCPInstanceUuid;
 
 	/**
-	 * Returns all the commerce wish list items where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @return the matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCPInstanceUuid(
-		String CPInstanceUuid) {
-
-		return findByCPInstanceUuid(
-			CPInstanceUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce wish list items where CPInstanceUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @return the range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCPInstanceUuid(
-		String CPInstanceUuid, int start, int end) {
-
-		return findByCPInstanceUuid(CPInstanceUuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce wish list items where CPInstanceUuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCPInstanceUuid(
-		String CPInstanceUuid, int start, int end,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		return findByCPInstanceUuid(
-			CPInstanceUuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce wish list items where CPInstanceUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -380,63 +269,10 @@ public class CommerceWishListItemPersistenceImpl
 		_collectionPersistenceFinderByCProductId;
 
 	/**
-	 * Returns all the commerce wish list items where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @return the matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCProductId(long CProductId) {
-		return findByCProductId(
-			CProductId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce wish list items where CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @return the range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCProductId(
-		long CProductId, int start, int end) {
-
-		return findByCProductId(CProductId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce wish list items where CProductId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCProductId(
-		long CProductId, int start, int end,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		return findByCProductId(
-			CProductId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce wish list items where CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CProductId the c product ID
@@ -526,71 +362,10 @@ public class CommerceWishListItemPersistenceImpl
 		_collectionPersistenceFinderByCW_CPI;
 
 	/**
-	 * Returns all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @return the matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCW_CPI(
-		long commerceWishListId, String CPInstanceUuid) {
-
-		return findByCW_CPI(
-			commerceWishListId, CPInstanceUuid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @return the range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCW_CPI(
-		long commerceWishListId, String CPInstanceUuid, int start, int end) {
-
-		return findByCW_CPI(
-			commerceWishListId, CPInstanceUuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCW_CPI(
-		long commerceWishListId, String CPInstanceUuid, int start, int end,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		return findByCW_CPI(
-			commerceWishListId, CPInstanceUuid, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceWishListId the commerce wish list ID
@@ -687,70 +462,10 @@ public class CommerceWishListItemPersistenceImpl
 		_collectionPersistenceFinderByCW_CP;
 
 	/**
-	 * Returns all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CProductId the c product ID
-	 * @return the matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCW_CP(
-		long commerceWishListId, long CProductId) {
-
-		return findByCW_CP(
-			commerceWishListId, CProductId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @return the range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCW_CP(
-		long commerceWishListId, long CProductId, int start, int end) {
-
-		return findByCW_CP(commerceWishListId, CProductId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of commerce wish list items
-	 * @param end the upper bound of the range of commerce wish list items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce wish list items
-	 */
-	@Override
-	public List<CommerceWishListItem> findByCW_CP(
-		long commerceWishListId, long CProductId, int start, int end,
-		OrderByComparator<CommerceWishListItem> orderByComparator) {
-
-		return findByCW_CP(
-			commerceWishListId, CProductId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceWishListItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceWishListId the commerce wish list ID
@@ -879,22 +594,6 @@ public class CommerceWishListItemPersistenceImpl
 		}
 
 		return commerceWishListItem;
-	}
-
-	/**
-	 * Returns the commerce wish list item where commerceWishListId = &#63; and CPInstanceUuid = &#63; and CProductId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceWishListId the commerce wish list ID
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param CProductId the c product ID
-	 * @return the matching commerce wish list item, or <code>null</code> if a matching commerce wish list item could not be found
-	 */
-	@Override
-	public CommerceWishListItem fetchByCW_CPI_CP(
-		long commerceWishListId, String CPInstanceUuid, long CProductId) {
-
-		return fetchByCW_CPI_CP(
-			commerceWishListId, CPInstanceUuid, CProductId, true);
 	}
 
 	/**
@@ -1408,4 +1107,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-386667173
+// LIFERAY-SERVICE-BUILDER-HASH:-1916966208

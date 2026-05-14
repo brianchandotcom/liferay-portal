@@ -125,52 +125,6 @@ public class ObjectViewUtil {
 	}
 
 	/**
-	 * Returns all the object views where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object views
-	 */
-	public static List<ObjectView> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the object views where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @return the range of matching object views
-	 */
-	public static List<ObjectView> findByUuid(String uuid, int start, int end) {
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object views where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object views
-	 */
-	public static List<ObjectView> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object views where uuid = &#63;.
 	 *
 	 * <p>
@@ -238,58 +192,6 @@ public class ObjectViewUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the object views where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object views
-	 */
-	public static List<ObjectView> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the object views where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @return the range of matching object views
-	 */
-	public static List<ObjectView> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object views where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object views
-	 */
-	public static List<ObjectView> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -372,58 +274,6 @@ public class ObjectViewUtil {
 	}
 
 	/**
-	 * Returns all the object views where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object views
-	 */
-	public static List<ObjectView> findByObjectDefinitionId(
-		long objectDefinitionId) {
-
-		return getPersistence().findByObjectDefinitionId(objectDefinitionId);
-	}
-
-	/**
-	 * Returns a range of all the object views where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @return the range of matching object views
-	 */
-	public static List<ObjectView> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end) {
-
-		return getPersistence().findByObjectDefinitionId(
-			objectDefinitionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object views where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object views
-	 */
-	public static List<ObjectView> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().findByObjectDefinitionId(
-			objectDefinitionId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object views where objectDefinitionId = &#63;.
 	 *
 	 * <p>
@@ -495,64 +345,6 @@ public class ObjectViewUtil {
 	 */
 	public static int countByObjectDefinitionId(long objectDefinitionId) {
 		return getPersistence().countByObjectDefinitionId(objectDefinitionId);
-	}
-
-	/**
-	 * Returns all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @return the matching object views
-	 */
-	public static List<ObjectView> findByODI_DOV(
-		long objectDefinitionId, boolean defaultObjectView) {
-
-		return getPersistence().findByODI_DOV(
-			objectDefinitionId, defaultObjectView);
-	}
-
-	/**
-	 * Returns a range of all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @return the range of matching object views
-	 */
-	public static List<ObjectView> findByODI_DOV(
-		long objectDefinitionId, boolean defaultObjectView, int start,
-		int end) {
-
-		return getPersistence().findByODI_DOV(
-			objectDefinitionId, defaultObjectView, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param defaultObjectView the default object view
-	 * @param start the lower bound of the range of object views
-	 * @param end the upper bound of the range of object views (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object views
-	 */
-	public static List<ObjectView> findByODI_DOV(
-		long objectDefinitionId, boolean defaultObjectView, int start, int end,
-		OrderByComparator<ObjectView> orderByComparator) {
-
-		return getPersistence().findByODI_DOV(
-			objectDefinitionId, defaultObjectView, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -690,6 +482,214 @@ public class ObjectViewUtil {
 		return getPersistence().fetchByPrimaryKey(objectViewId);
 	}
 
+	/**
+	 * Returns all the object views where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object views
+	 */
+	public static List<ObjectView> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the object views where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @return the range of matching object views
+	 */
+	public static List<ObjectView> findByUuid(String uuid, int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object views where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object views
+	 */
+	public static List<ObjectView> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ObjectView> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object views where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object views
+	 */
+	public static List<ObjectView> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the object views where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @return the range of matching object views
+	 */
+	public static List<ObjectView> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object views where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object views
+	 */
+	public static List<ObjectView> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ObjectView> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object views where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object views
+	 */
+	public static List<ObjectView> findByObjectDefinitionId(
+		long objectDefinitionId) {
+
+		return getPersistence().findByObjectDefinitionId(objectDefinitionId);
+	}
+
+	/**
+	 * Returns a range of all the object views where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @return the range of matching object views
+	 */
+	public static List<ObjectView> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end) {
+
+		return getPersistence().findByObjectDefinitionId(
+			objectDefinitionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object views where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object views
+	 */
+	public static List<ObjectView> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end,
+		OrderByComparator<ObjectView> orderByComparator) {
+
+		return getPersistence().findByObjectDefinitionId(
+			objectDefinitionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param defaultObjectView the default object view
+	 * @return the matching object views
+	 */
+	public static List<ObjectView> findByODI_DOV(
+		long objectDefinitionId, boolean defaultObjectView) {
+
+		return getPersistence().findByODI_DOV(
+			objectDefinitionId, defaultObjectView);
+	}
+
+	/**
+	 * Returns a range of all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param defaultObjectView the default object view
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @return the range of matching object views
+	 */
+	public static List<ObjectView> findByODI_DOV(
+		long objectDefinitionId, boolean defaultObjectView, int start,
+		int end) {
+
+		return getPersistence().findByODI_DOV(
+			objectDefinitionId, defaultObjectView, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object views where objectDefinitionId = &#63; and defaultObjectView = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectViewModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param defaultObjectView the default object view
+	 * @param start the lower bound of the range of object views
+	 * @param end the upper bound of the range of object views (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object views
+	 */
+	public static List<ObjectView> findByODI_DOV(
+		long objectDefinitionId, boolean defaultObjectView, int start, int end,
+		OrderByComparator<ObjectView> orderByComparator) {
+
+		return getPersistence().findByODI_DOV(
+			objectDefinitionId, defaultObjectView, start, end,
+			orderByComparator);
+	}
+
 	public static ObjectViewPersistence getPersistence() {
 		return _persistence;
 	}
@@ -701,4 +701,4 @@ public class ObjectViewUtil {
 	private static volatile ObjectViewPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1846406450
+// LIFERAY-SERVICE-BUILDER-HASH:-1357351256

@@ -138,16 +138,6 @@ public class ReleaseUtil {
 	}
 
 	/**
-	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param servletContextName the servlet context name
-	 * @return the matching release, or <code>null</code> if a matching release could not be found
-	 */
-	public static Release fetchByServletContextName(String servletContextName) {
-		return getPersistence().fetchByServletContextName(servletContextName);
-	}
-
-	/**
 	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param servletContextName the servlet context name
@@ -233,6 +223,16 @@ public class ReleaseUtil {
 		return getPersistence().fetchByPrimaryKey(releaseId);
 	}
 
+	/**
+	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param servletContextName the servlet context name
+	 * @return the matching release, or <code>null</code> if a matching release could not be found
+	 */
+	public static Release fetchByServletContextName(String servletContextName) {
+		return getPersistence().fetchByServletContextName(servletContextName);
+	}
+
 	public static ReleasePersistence getPersistence() {
 		return _persistence;
 	}
@@ -244,4 +244,4 @@ public class ReleaseUtil {
 	private static volatile ReleasePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1001398893
+// LIFERAY-SERVICE-BUILDER-HASH:658222087

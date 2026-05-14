@@ -100,57 +100,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the site navigation menu items where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menu items where uuid = &#63;.
 	 *
 	 * <p>
@@ -274,18 +223,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -333,64 +270,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the site navigation menu items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
@@ -491,58 +370,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the site navigation menu items where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
 	 *
 	 * <p>
@@ -634,62 +461,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderBySiteNavigationMenuId;
-
-	/**
-	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
-		long siteNavigationMenuId) {
-
-		return findBySiteNavigationMenuId(
-			siteNavigationMenuId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where siteNavigationMenuId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
-		long siteNavigationMenuId, int start, int end) {
-
-		return findBySiteNavigationMenuId(
-			siteNavigationMenuId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
-		long siteNavigationMenuId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findBySiteNavigationMenuId(
-			siteNavigationMenuId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63;.
@@ -787,64 +558,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByParentSiteNavigationMenuItemId;
-
-	/**
-	 * Returns all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId, int start, int end) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
@@ -950,57 +663,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		_collectionPersistenceFinderByType;
 
 	/**
-	 * Returns all the site navigation menu items where type = &#63;.
-	 *
-	 * @param type the type
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByType(String type) {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByType(
-		String type, int start, int end) {
-
-		return findByType(type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByType(
-		String type, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByType(type, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menu items where type = &#63;.
 	 *
 	 * <p>
@@ -1092,70 +754,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByS_P;
-
-	/**
-	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByS_P(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
-
-		return findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByS_P(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		int start, int end) {
-
-		return findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByS_P(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
@@ -1462,20 +1060,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		}
 
 		return siteNavigationMenuItem;
-	}
-
-	/**
-	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -2261,4 +1845,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-555084294
+// LIFERAY-SERVICE-BUILDER-HASH:1009692403

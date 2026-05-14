@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -80,65 +79,10 @@ public class BatchPlannerMappingPersistenceImpl
 		_collectionPersistenceFinderByBatchPlannerPlanId;
 
 	/**
-	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @return the matching batch planner mappings
-	 */
-	@Override
-	public List<BatchPlannerMapping> findByBatchPlannerPlanId(
-		long batchPlannerPlanId) {
-
-		return findByBatchPlannerPlanId(
-			batchPlannerPlanId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the batch planner mappings where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner mappings
-	 * @param end the upper bound of the range of batch planner mappings (not inclusive)
-	 * @return the range of matching batch planner mappings
-	 */
-	@Override
-	public List<BatchPlannerMapping> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end) {
-
-		return findByBatchPlannerPlanId(batchPlannerPlanId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the batch planner mappings where batchPlannerPlanId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner mappings
-	 * @param end the upper bound of the range of batch planner mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch planner mappings
-	 */
-	@Override
-	public List<BatchPlannerMapping> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end,
-		OrderByComparator<BatchPlannerMapping> orderByComparator) {
-
-		return findByBatchPlannerPlanId(
-			batchPlannerPlanId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the batch planner mappings where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerMappingModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerMappingModelImpl</code>.
 	 * </p>
 	 *
 	 * @param batchPlannerPlanId the batch planner plan ID
@@ -264,23 +208,6 @@ public class BatchPlannerMappingPersistenceImpl
 		}
 
 		return batchPlannerMapping;
-	}
-
-	/**
-	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param externalFieldName the external field name
-	 * @param internalFieldName the internal field name
-	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
-	 */
-	@Override
-	public BatchPlannerMapping fetchByBPPI_EFN_IFN(
-		long batchPlannerPlanId, String externalFieldName,
-		String internalFieldName) {
-
-		return fetchByBPPI_EFN_IFN(
-			batchPlannerPlanId, externalFieldName, internalFieldName, true);
 	}
 
 	/**
@@ -677,4 +604,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1895475932
+// LIFERAY-SERVICE-BUILDER-HASH:-259824018

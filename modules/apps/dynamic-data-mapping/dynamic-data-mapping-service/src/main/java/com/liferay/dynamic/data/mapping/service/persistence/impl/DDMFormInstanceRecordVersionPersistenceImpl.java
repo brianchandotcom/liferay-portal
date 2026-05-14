@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -88,66 +87,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_collectionPersistenceFinderByFormInstanceRecordId;
 
 	/**
-	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63;.
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @return the matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByFormInstanceRecordId(
-		long formInstanceRecordId) {
-
-		return findByFormInstanceRecordId(
-			formInstanceRecordId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance record versions where formInstanceRecordId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @return the range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByFormInstanceRecordId(
-		long formInstanceRecordId, int start, int end) {
-
-		return findByFormInstanceRecordId(
-			formInstanceRecordId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance record versions where formInstanceRecordId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByFormInstanceRecordId(
-		long formInstanceRecordId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
-
-		return findByFormInstanceRecordId(
-			formInstanceRecordId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance record versions where formInstanceRecordId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param formInstanceRecordId the form instance record ID
@@ -241,68 +184,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_collectionPersistenceFinderByU_F;
 
 	/**
-	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByU_F(
-		long userId, long formInstanceId) {
-
-		return findByU_F(
-			userId, formInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @return the range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByU_F(
-		long userId, long formInstanceId, int start, int end) {
-
-		return findByU_F(userId, formInstanceId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByU_F(
-		long userId, long formInstanceId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
-
-		return findByU_F(
-			userId, formInstanceId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -399,70 +284,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_collectionPersistenceFinderByF_F;
 
 	/**
-	 * Returns all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @return the matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, String formInstanceVersion) {
-
-		return findByF_F(
-			formInstanceId, formInstanceVersion, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @return the range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, String formInstanceVersion, int start, int end) {
-
-		return findByF_F(formInstanceId, formInstanceVersion, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByF_F(
-		long formInstanceId, String formInstanceVersion, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
-
-		return findByF_F(
-			formInstanceId, formInstanceVersion, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance record versions where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param formInstanceId the form instance ID
@@ -592,20 +417,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param version the version
-	 * @return the matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
-	 */
-	@Override
-	public DDMFormInstanceRecordVersion fetchByF_V(
-		long formInstanceRecordId, String version) {
-
-		return fetchByF_V(formInstanceRecordId, version, true);
-	}
-
-	/**
 	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param formInstanceRecordId the form instance record ID
@@ -657,69 +468,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_collectionPersistenceFinderByF_S;
 
 	/**
-	 * Returns all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param status the status
-	 * @return the matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByF_S(
-		long formInstanceRecordId, int status) {
-
-		return findByF_S(
-			formInstanceRecordId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @return the range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByF_S(
-		long formInstanceRecordId, int status, int start, int end) {
-
-		return findByF_S(formInstanceRecordId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceRecordId the form instance record ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByF_S(
-		long formInstanceRecordId, int status, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
-
-		return findByF_S(
-			formInstanceRecordId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance record versions where formInstanceRecordId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param formInstanceRecordId the form instance record ID
@@ -816,81 +568,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_collectionPersistenceFinderByU_F_F_S;
 
 	/**
-	 * Returns all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param status the status
-	 * @return the matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, String formInstanceVersion,
-		int status) {
-
-		return findByU_F_F_S(
-			userId, formInstanceId, formInstanceVersion, status,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @return the range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, String formInstanceVersion,
-		int status, int start, int end) {
-
-		return findByU_F_F_S(
-			userId, formInstanceId, formInstanceVersion, status, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance record versions
-	 */
-	@Override
-	public List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, String formInstanceVersion,
-		int status, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
-
-		return findByU_F_F_S(
-			userId, formInstanceId, formInstanceVersion, status, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -1573,4 +1254,4 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:528996470
+// LIFERAY-SERVICE-BUILDER-HASH:1992559586

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -90,63 +89,10 @@ public class DDMStructureVersionPersistenceImpl
 		_collectionPersistenceFinderByStructureId;
 
 	/**
-	 * Returns all the ddm structure versions where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @return the matching ddm structure versions
-	 */
-	@Override
-	public List<DDMStructureVersion> findByStructureId(long structureId) {
-		return findByStructureId(
-			structureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm structure versions where structureId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @return the range of matching ddm structure versions
-	 */
-	@Override
-	public List<DDMStructureVersion> findByStructureId(
-		long structureId, int start, int end) {
-
-		return findByStructureId(structureId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm structure versions where structureId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm structure versions
-	 */
-	@Override
-	public List<DDMStructureVersion> findByStructureId(
-		long structureId, int start, int end,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		return findByStructureId(
-			structureId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm structure versions where structureId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
@@ -267,18 +213,6 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param structureId the structure ID
-	 * @param version the version
-	 * @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
-	 */
-	@Override
-	public DDMStructureVersion fetchByS_V(long structureId, String version) {
-		return fetchByS_V(structureId, version, true);
-	}
-
-	/**
 	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param structureId the structure ID
@@ -328,66 +262,10 @@ public class DDMStructureVersionPersistenceImpl
 		_collectionPersistenceFinderByS_S;
 
 	/**
-	 * Returns all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @return the matching ddm structure versions
-	 */
-	@Override
-	public List<DDMStructureVersion> findByS_S(long structureId, int status) {
-		return findByS_S(
-			structureId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @return the range of matching ddm structure versions
-	 */
-	@Override
-	public List<DDMStructureVersion> findByS_S(
-		long structureId, int status, int start, int end) {
-
-		return findByS_S(structureId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm structure versions
-	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm structure versions
-	 */
-	@Override
-	public List<DDMStructureVersion> findByS_S(
-		long structureId, int status, int start, int end,
-		OrderByComparator<DDMStructureVersion> orderByComparator) {
-
-		return findByS_S(
-			structureId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMStructureVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
@@ -911,4 +789,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1158052287
+// LIFERAY-SERVICE-BUILDER-HASH:455827934

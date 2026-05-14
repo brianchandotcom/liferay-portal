@@ -89,63 +89,6 @@ public class PatcherFixPersistenceImpl
 		_collectionPersistenceFinderByPatcherProjectVersionId;
 
 	/**
-	 * Returns all the patcher fixes where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @return the matching patcher fixes
-	 */
-	@Override
-	public List<PatcherFix> findByPatcherProjectVersionId(
-		long patcherProjectVersionId) {
-
-		return findByPatcherProjectVersionId(
-			patcherProjectVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fixes where patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher fixes
-	 * @param end the upper bound of the range of patcher fixes (not inclusive)
-	 * @return the range of matching patcher fixes
-	 */
-	@Override
-	public List<PatcherFix> findByPatcherProjectVersionId(
-		long patcherProjectVersionId, int start, int end) {
-
-		return findByPatcherProjectVersionId(
-			patcherProjectVersionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fixes where patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher fixes
-	 * @param end the upper bound of the range of patcher fixes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fixes
-	 */
-	@Override
-	public List<PatcherFix> findByPatcherProjectVersionId(
-		long patcherProjectVersionId, int start, int end,
-		OrderByComparator<PatcherFix> orderByComparator) {
-
-		return findByPatcherProjectVersionId(
-			patcherProjectVersionId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fixes where patcherProjectVersionId = &#63;.
 	 *
 	 * <p>
@@ -216,41 +159,6 @@ public class PatcherFixPersistenceImpl
 	}
 
 	/**
-	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @return the matching patcher fixes that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFix> filterFindByPatcherProjectVersionId(
-		long patcherProjectVersionId) {
-
-		return filterFindByPatcherProjectVersionId(
-			patcherProjectVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher fixes
-	 * @param end the upper bound of the range of patcher fixes (not inclusive)
-	 * @return the range of matching patcher fixes that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFix> filterFindByPatcherProjectVersionId(
-		long patcherProjectVersionId, int start, int end) {
-
-		return filterFindByPatcherProjectVersionId(
-			patcherProjectVersionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fixes that the user has permissions to view where patcherProjectVersionId = &#63;.
 	 *
 	 * <p>
@@ -312,71 +220,6 @@ public class PatcherFixPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<PatcherFix>
 		_collectionPersistenceFinderByP_L_T;
-
-	/**
-	 * Returns all the patcher fixes where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @return the matching patcher fixes
-	 */
-	@Override
-	public List<PatcherFix> findByP_L_T(
-		long patcherProjectVersionId, boolean latestFix, int type) {
-
-		return findByP_L_T(
-			patcherProjectVersionId, latestFix, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fixes where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param start the lower bound of the range of patcher fixes
-	 * @param end the upper bound of the range of patcher fixes (not inclusive)
-	 * @return the range of matching patcher fixes
-	 */
-	@Override
-	public List<PatcherFix> findByP_L_T(
-		long patcherProjectVersionId, boolean latestFix, int type, int start,
-		int end) {
-
-		return findByP_L_T(
-			patcherProjectVersionId, latestFix, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fixes where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param start the lower bound of the range of patcher fixes
-	 * @param end the upper bound of the range of patcher fixes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fixes
-	 */
-	@Override
-	public List<PatcherFix> findByP_L_T(
-		long patcherProjectVersionId, boolean latestFix, int type, int start,
-		int end, OrderByComparator<PatcherFix> orderByComparator) {
-
-		return findByP_L_T(
-			patcherProjectVersionId, latestFix, type, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the patcher fixes where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
@@ -453,46 +296,6 @@ public class PatcherFixPersistenceImpl
 			finderCache,
 			new Object[] {patcherProjectVersionId, latestFix, type},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @return the matching patcher fixes that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFix> filterFindByP_L_T(
-		long patcherProjectVersionId, boolean latestFix, int type) {
-
-		return filterFindByP_L_T(
-			patcherProjectVersionId, latestFix, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fixes that the user has permission to view where patcherProjectVersionId = &#63; and latestFix = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param latestFix the latest fix
-	 * @param type the type
-	 * @param start the lower bound of the range of patcher fixes
-	 * @param end the upper bound of the range of patcher fixes (not inclusive)
-	 * @return the range of matching patcher fixes that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFix> filterFindByP_L_T(
-		long patcherProjectVersionId, boolean latestFix, int type, int start,
-		int end) {
-
-		return filterFindByP_L_T(
-			patcherProjectVersionId, latestFix, type, start, end, null);
 	}
 
 	/**
@@ -3998,4 +3801,4 @@ public class PatcherFixPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:900664084
+// LIFERAY-SERVICE-BUILDER-HASH:-785204945

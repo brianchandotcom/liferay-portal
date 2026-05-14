@@ -143,16 +143,6 @@ public class CacheDisabledEntryUtil {
 	}
 
 	/**
-	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching cache disabled entry, or <code>null</code> if a matching cache disabled entry could not be found
-	 */
-	public static CacheDisabledEntry fetchByName(String name) {
-		return getPersistence().fetchByName(name);
-	}
-
-	/**
 	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -244,6 +234,16 @@ public class CacheDisabledEntryUtil {
 		return getPersistence().fetchByPrimaryKey(cacheDisabledEntryId);
 	}
 
+	/**
+	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching cache disabled entry, or <code>null</code> if a matching cache disabled entry could not be found
+	 */
+	public static CacheDisabledEntry fetchByName(String name) {
+		return getPersistence().fetchByName(name);
+	}
+
 	public static CacheDisabledEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -257,4 +257,4 @@ public class CacheDisabledEntryUtil {
 	private static volatile CacheDisabledEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:690039406
+// LIFERAY-SERVICE-BUILDER-HASH:-1829210130

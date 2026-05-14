@@ -125,54 +125,6 @@ public class ObjectLayoutBoxUtil {
 	}
 
 	/**
-	 * Returns all the object layout boxes where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the object layout boxes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object layout boxes
-	 * @param end the upper bound of the range of object layout boxes (not inclusive)
-	 * @return the range of matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout boxes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object layout boxes
-	 * @param end the upper bound of the range of object layout boxes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectLayoutBox> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object layout boxes where uuid = &#63;.
 	 *
 	 * <p>
@@ -240,60 +192,6 @@ public class ObjectLayoutBoxUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the object layout boxes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the object layout boxes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object layout boxes
-	 * @param end the upper bound of the range of object layout boxes (not inclusive)
-	 * @return the range of matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout boxes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object layout boxes
-	 * @param end the upper bound of the range of object layout boxes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectLayoutBox> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -373,58 +271,6 @@ public class ObjectLayoutBoxUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the object layout boxes where objectLayoutTabId = &#63;.
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @return the matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByObjectLayoutTabId(
-		long objectLayoutTabId) {
-
-		return getPersistence().findByObjectLayoutTabId(objectLayoutTabId);
-	}
-
-	/**
-	 * Returns a range of all the object layout boxes where objectLayoutTabId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param start the lower bound of the range of object layout boxes
-	 * @param end the upper bound of the range of object layout boxes (not inclusive)
-	 * @return the range of matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByObjectLayoutTabId(
-		long objectLayoutTabId, int start, int end) {
-
-		return getPersistence().findByObjectLayoutTabId(
-			objectLayoutTabId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout boxes where objectLayoutTabId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectLayoutTabId the object layout tab ID
-	 * @param start the lower bound of the range of object layout boxes
-	 * @param end the upper bound of the range of object layout boxes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout boxes
-	 */
-	public static List<ObjectLayoutBox> findByObjectLayoutTabId(
-		long objectLayoutTabId, int start, int end,
-		OrderByComparator<ObjectLayoutBox> orderByComparator) {
-
-		return getPersistence().findByObjectLayoutTabId(
-			objectLayoutTabId, start, end, orderByComparator);
 	}
 
 	/**
@@ -551,6 +397,160 @@ public class ObjectLayoutBoxUtil {
 		return getPersistence().fetchByPrimaryKey(objectLayoutBoxId);
 	}
 
+	/**
+	 * Returns all the object layout boxes where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the object layout boxes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object layout boxes
+	 * @param end the upper bound of the range of object layout boxes (not inclusive)
+	 * @return the range of matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object layout boxes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object layout boxes
+	 * @param end the upper bound of the range of object layout boxes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ObjectLayoutBox> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object layout boxes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the object layout boxes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object layout boxes
+	 * @param end the upper bound of the range of object layout boxes (not inclusive)
+	 * @return the range of matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object layout boxes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object layout boxes
+	 * @param end the upper bound of the range of object layout boxes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ObjectLayoutBox> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object layout boxes where objectLayoutTabId = &#63;.
+	 *
+	 * @param objectLayoutTabId the object layout tab ID
+	 * @return the matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByObjectLayoutTabId(
+		long objectLayoutTabId) {
+
+		return getPersistence().findByObjectLayoutTabId(objectLayoutTabId);
+	}
+
+	/**
+	 * Returns a range of all the object layout boxes where objectLayoutTabId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectLayoutTabId the object layout tab ID
+	 * @param start the lower bound of the range of object layout boxes
+	 * @param end the upper bound of the range of object layout boxes (not inclusive)
+	 * @return the range of matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByObjectLayoutTabId(
+		long objectLayoutTabId, int start, int end) {
+
+		return getPersistence().findByObjectLayoutTabId(
+			objectLayoutTabId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object layout boxes where objectLayoutTabId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectLayoutBoxModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectLayoutTabId the object layout tab ID
+	 * @param start the lower bound of the range of object layout boxes
+	 * @param end the upper bound of the range of object layout boxes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object layout boxes
+	 */
+	public static List<ObjectLayoutBox> findByObjectLayoutTabId(
+		long objectLayoutTabId, int start, int end,
+		OrderByComparator<ObjectLayoutBox> orderByComparator) {
+
+		return getPersistence().findByObjectLayoutTabId(
+			objectLayoutTabId, start, end, orderByComparator);
+	}
+
 	public static ObjectLayoutBoxPersistence getPersistence() {
 		return _persistence;
 	}
@@ -562,4 +562,4 @@ public class ObjectLayoutBoxUtil {
 	private static volatile ObjectLayoutBoxPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:674588143
+// LIFERAY-SERVICE-BUILDER-HASH:1339192071

@@ -125,54 +125,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns all the kaleo processes where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the kaleo processes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @return the range of matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo processes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<KaleoProcess> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo processes where uuid = &#63;.
 	 *
 	 * <p>
@@ -259,17 +211,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns the kaleo process where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the kaleo process where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -306,58 +247,6 @@ public class KaleoProcessUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the kaleo processes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @return the range of matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<KaleoProcess> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -441,55 +330,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Returns all the kaleo processes where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the kaleo processes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @return the range of matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo processes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo processes
-	 */
-	public static List<KaleoProcess> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<KaleoProcess> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo processes where groupId = &#63;.
 	 *
 	 * <p>
@@ -540,34 +380,6 @@ public class KaleoProcessUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the kaleo processes that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching kaleo processes that the user has permission to view
-	 */
-	public static List<KaleoProcess> filterFindByGroupId(long groupId) {
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the kaleo processes that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of kaleo processes
-	 * @param end the upper bound of the range of kaleo processes (not inclusive)
-	 * @return the range of matching kaleo processes that the user has permission to view
-	 */
-	public static List<KaleoProcess> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
 	/**
@@ -632,16 +444,6 @@ public class KaleoProcessUtil {
 			NoSuchKaleoProcessException {
 
 		return getPersistence().findByDDLRecordSetId(DDLRecordSetId);
-	}
-
-	/**
-	 * Returns the kaleo process where DDLRecordSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param DDLRecordSetId the ddl record set ID
-	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
-	 */
-	public static KaleoProcess fetchByDDLRecordSetId(long DDLRecordSetId) {
-		return getPersistence().fetchByDDLRecordSetId(DDLRecordSetId);
 	}
 
 	/**
@@ -733,6 +535,204 @@ public class KaleoProcessUtil {
 		return getPersistence().fetchByPrimaryKey(kaleoProcessId);
 	}
 
+	/**
+	 * Returns the kaleo process where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	 */
+	public static KaleoProcess fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the kaleo process where DDLRecordSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param DDLRecordSetId the ddl record set ID
+	 * @return the matching kaleo process, or <code>null</code> if a matching kaleo process could not be found
+	 */
+	public static KaleoProcess fetchByDDLRecordSetId(long DDLRecordSetId) {
+		return getPersistence().fetchByDDLRecordSetId(DDLRecordSetId);
+	}
+
+	/**
+	 * Returns all the kaleo processes where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the kaleo processes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @return the range of matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo processes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<KaleoProcess> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @return the range of matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo processes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<KaleoProcess> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kaleo processes where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the kaleo processes where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @return the range of matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo processes where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo processes
+	 */
+	public static List<KaleoProcess> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<KaleoProcess> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kaleo processes that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching kaleo processes that the user has permission to view
+	 */
+	public static List<KaleoProcess> filterFindByGroupId(long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the kaleo processes that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of kaleo processes
+	 * @param end the upper bound of the range of kaleo processes (not inclusive)
+	 * @return the range of matching kaleo processes that the user has permission to view
+	 */
+	public static List<KaleoProcess> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
 	public static KaleoProcessPersistence getPersistence() {
 		return _persistence;
 	}
@@ -744,4 +744,4 @@ public class KaleoProcessUtil {
 	private static volatile KaleoProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1637040370
+// LIFERAY-SERVICE-BUILDER-HASH:-695679400

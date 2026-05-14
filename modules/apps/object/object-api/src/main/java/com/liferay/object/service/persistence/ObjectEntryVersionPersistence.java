@@ -35,47 +35,6 @@ public interface ObjectEntryVersionPersistence
 	 */
 
 	/**
-	 * Returns all the object entry versions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the object entry versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @return the range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object entry versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the object entry versions where uuid = &#63;.
 	 *
 	 * <p>
@@ -135,51 +94,6 @@ public interface ObjectEntryVersionPersistence
 	 * @return the number of matching object entry versions
 	 */
 	public int countByUuid(String uuid);
-
-	/**
-	 * Returns all the object entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the object entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @return the range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object entry versions where uuid = &#63; and companyId = &#63;.
@@ -248,48 +162,6 @@ public interface ObjectEntryVersionPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the object entry versions where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByObjectDefinitionId(
-		long objectDefinitionId);
-
-	/**
-	 * Returns a range of all the object entry versions where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @return the range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object entry versions where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the object entry versions where objectDefinitionId = &#63;.
 	 *
 	 * <p>
@@ -351,48 +223,6 @@ public interface ObjectEntryVersionPersistence
 	public int countByObjectDefinitionId(long objectDefinitionId);
 
 	/**
-	 * Returns all the object entry versions where objectEntryId = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @return the matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
-		long objectEntryId);
-
-	/**
-	 * Returns a range of all the object entry versions where objectEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @return the range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
-		long objectEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
-		long objectEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
 	 *
 	 * <p>
@@ -452,51 +282,6 @@ public interface ObjectEntryVersionPersistence
 	 * @return the number of matching object entry versions
 	 */
 	public int countByObjectEntryId(long objectEntryId);
-
-	/**
-	 * Returns all the object entry versions where companyId = &#63; and createDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @return the matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByC_CD(
-		long companyId, Date createDate);
-
-	/**
-	 * Returns a range of all the object entry versions where companyId = &#63; and createDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @return the range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByC_CD(
-		long companyId, Date createDate, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param createDate the create date
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByC_CD(
-		long companyId, Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
@@ -576,15 +361,6 @@ public interface ObjectEntryVersionPersistence
 		throws NoSuchObjectEntryVersionException;
 
 	/**
-	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param version the version
-	 * @return the matching object entry version, or <code>null</code> if a matching object entry version could not be found
-	 */
-	public ObjectEntryVersion fetchByOEI_V(long objectEntryId, int version);
-
-	/**
 	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param objectEntryId the object entry ID
@@ -613,51 +389,6 @@ public interface ObjectEntryVersionPersistence
 	 * @return the number of matching object entry versions
 	 */
 	public int countByOEI_V(long objectEntryId, int version);
-
-	/**
-	 * Returns all the object entry versions where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @return the matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByOEI_S(
-		long objectEntryId, int status);
-
-	/**
-	 * Returns a range of all the object entry versions where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @return the range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByOEI_S(
-		long objectEntryId, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectEntryId the object entry ID
-	 * @param status the status
-	 * @param start the lower bound of the range of object entry versions
-	 * @param end the upper bound of the range of object entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry versions
-	 */
-	public java.util.List<ObjectEntryVersion> findByOEI_S(
-		long objectEntryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63; and status = &#63;.
@@ -763,5 +494,353 @@ public interface ObjectEntryVersionPersistence
 	 */
 	public ObjectEntryVersion fetchByPrimaryKey(long objectEntryVersionId);
 
+	/**
+	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param version the version
+	 * @return the matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	public default ObjectEntryVersion fetchByOEI_V(
+		long objectEntryId, int version) {
+
+		return fetchByOEI_V(objectEntryId, version, true);
+	}
+
+	/**
+	 * Returns all the object entry versions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object entry versions where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByObjectDefinitionId(
+		long objectDefinitionId) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByObjectDefinitionId(
+		long objectDefinitionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @return the matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId) {
+
+		return findByObjectEntryId(
+			objectEntryId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end) {
+
+		return findByObjectEntryId(objectEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator) {
+
+		return findByObjectEntryId(
+			objectEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object entry versions where companyId = &#63; and createDate = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @return the matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByC_CD(
+		long companyId, Date createDate) {
+
+		return findByC_CD(
+			companyId, createDate,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where companyId = &#63; and createDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByC_CD(
+		long companyId, Date createDate, int start, int end) {
+
+		return findByC_CD(companyId, createDate, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where companyId = &#63; and createDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByC_CD(
+		long companyId, Date createDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator) {
+
+		return findByC_CD(
+			companyId, createDate, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object entry versions where objectEntryId = &#63; and status = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param status the status
+	 * @return the matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByOEI_S(
+		long objectEntryId, int status) {
+
+		return findByOEI_S(
+			objectEntryId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where objectEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByOEI_S(
+		long objectEntryId, int status, int start, int end) {
+
+		return findByOEI_S(objectEntryId, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param status the status
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public default java.util.List<ObjectEntryVersion> findByOEI_S(
+		long objectEntryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator) {
+
+		return findByOEI_S(
+			objectEntryId, status, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:575125997
+// LIFERAY-SERVICE-BUILDER-HASH:2114407580

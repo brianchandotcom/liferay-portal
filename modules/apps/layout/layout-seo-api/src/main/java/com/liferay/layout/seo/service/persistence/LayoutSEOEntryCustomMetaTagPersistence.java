@@ -35,51 +35,6 @@ public interface LayoutSEOEntryCustomMetaTagPersistence
 	 */
 
 	/**
-	 * Returns all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @return the matching layout seo entry custom meta tags
-	 */
-	public java.util.List<LayoutSEOEntryCustomMetaTag> findByG_L(
-		long groupId, long layoutSEOEntryId);
-
-	/**
-	 * Returns a range of all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOEntryCustomMetaTagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param start the lower bound of the range of layout seo entry custom meta tags
-	 * @param end the upper bound of the range of layout seo entry custom meta tags (not inclusive)
-	 * @return the range of matching layout seo entry custom meta tags
-	 */
-	public java.util.List<LayoutSEOEntryCustomMetaTag> findByG_L(
-		long groupId, long layoutSEOEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOEntryCustomMetaTagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutSEOEntryId the layout seo entry ID
-	 * @param start the lower bound of the range of layout seo entry custom meta tags
-	 * @param end the upper bound of the range of layout seo entry custom meta tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout seo entry custom meta tags
-	 */
-	public java.util.List<LayoutSEOEntryCustomMetaTag> findByG_L(
-		long groupId, long layoutSEOEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutSEOEntryCustomMetaTag> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
 	 *
 	 * <p>
@@ -188,5 +143,63 @@ public interface LayoutSEOEntryCustomMetaTagPersistence
 	public LayoutSEOEntryCustomMetaTag fetchByPrimaryKey(
 		long layoutSEOEntryCustomMetaTagId);
 
+	/**
+	 * Returns all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutSEOEntryId the layout seo entry ID
+	 * @return the matching layout seo entry custom meta tags
+	 */
+	public default java.util.List<LayoutSEOEntryCustomMetaTag> findByG_L(
+		long groupId, long layoutSEOEntryId) {
+
+		return findByG_L(
+			groupId, layoutSEOEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOEntryCustomMetaTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutSEOEntryId the layout seo entry ID
+	 * @param start the lower bound of the range of layout seo entry custom meta tags
+	 * @param end the upper bound of the range of layout seo entry custom meta tags (not inclusive)
+	 * @return the range of matching layout seo entry custom meta tags
+	 */
+	public default java.util.List<LayoutSEOEntryCustomMetaTag> findByG_L(
+		long groupId, long layoutSEOEntryId, int start, int end) {
+
+		return findByG_L(groupId, layoutSEOEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout seo entry custom meta tags where groupId = &#63; and layoutSEOEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOEntryCustomMetaTagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutSEOEntryId the layout seo entry ID
+	 * @param start the lower bound of the range of layout seo entry custom meta tags
+	 * @param end the upper bound of the range of layout seo entry custom meta tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout seo entry custom meta tags
+	 */
+	public default java.util.List<LayoutSEOEntryCustomMetaTag> findByG_L(
+		long groupId, long layoutSEOEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutSEOEntryCustomMetaTag> orderByComparator) {
+
+		return findByG_L(
+			groupId, layoutSEOEntryId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:466357680
+// LIFERAY-SERVICE-BUILDER-HASH:-1241728235

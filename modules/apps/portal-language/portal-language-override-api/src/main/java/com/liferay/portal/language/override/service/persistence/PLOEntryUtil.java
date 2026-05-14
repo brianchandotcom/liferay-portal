@@ -125,55 +125,6 @@ public class PLOEntryUtil {
 	}
 
 	/**
-	 * Returns all the plo entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching plo entries
-	 */
-	public static List<PLOEntry> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the plo entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of plo entries
-	 * @param end the upper bound of the range of plo entries (not inclusive)
-	 * @return the range of matching plo entries
-	 */
-	public static List<PLOEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the plo entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of plo entries
-	 * @param end the upper bound of the range of plo entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching plo entries
-	 */
-	public static List<PLOEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the plo entries where companyId = &#63;.
 	 *
 	 * <p>
@@ -243,58 +194,6 @@ public class PLOEntryUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the plo entries where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @return the matching plo entries
-	 */
-	public static List<PLOEntry> findByC_K(long companyId, String key) {
-		return getPersistence().findByC_K(companyId, key);
-	}
-
-	/**
-	 * Returns a range of all the plo entries where companyId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param start the lower bound of the range of plo entries
-	 * @param end the upper bound of the range of plo entries (not inclusive)
-	 * @return the range of matching plo entries
-	 */
-	public static List<PLOEntry> findByC_K(
-		long companyId, String key, int start, int end) {
-
-		return getPersistence().findByC_K(companyId, key, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the plo entries where companyId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param start the lower bound of the range of plo entries
-	 * @param end the upper bound of the range of plo entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching plo entries
-	 */
-	public static List<PLOEntry> findByC_K(
-		long companyId, String key, int start, int end,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		return getPersistence().findByC_K(
-			companyId, key, start, end, orderByComparator);
 	}
 
 	/**
@@ -374,58 +273,6 @@ public class PLOEntryUtil {
 	 */
 	public static int countByC_K(long companyId, String key) {
 		return getPersistence().countByC_K(companyId, key);
-	}
-
-	/**
-	 * Returns all the plo entries where companyId = &#63; and languageId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @return the matching plo entries
-	 */
-	public static List<PLOEntry> findByC_L(long companyId, String languageId) {
-		return getPersistence().findByC_L(companyId, languageId);
-	}
-
-	/**
-	 * Returns a range of all the plo entries where companyId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of plo entries
-	 * @param end the upper bound of the range of plo entries (not inclusive)
-	 * @return the range of matching plo entries
-	 */
-	public static List<PLOEntry> findByC_L(
-		long companyId, String languageId, int start, int end) {
-
-		return getPersistence().findByC_L(companyId, languageId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the plo entries where companyId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of plo entries
-	 * @param end the upper bound of the range of plo entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching plo entries
-	 */
-	public static List<PLOEntry> findByC_L(
-		long companyId, String languageId, int start, int end,
-		OrderByComparator<PLOEntry> orderByComparator) {
-
-		return getPersistence().findByC_L(
-			companyId, languageId, start, end, orderByComparator);
 	}
 
 	/**
@@ -526,20 +373,6 @@ public class PLOEntryUtil {
 	}
 
 	/**
-	 * Returns the plo entry where companyId = &#63; and key = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param languageId the language ID
-	 * @return the matching plo entry, or <code>null</code> if a matching plo entry could not be found
-	 */
-	public static PLOEntry fetchByC_K_L(
-		long companyId, String key, String languageId) {
-
-		return getPersistence().fetchByC_K_L(companyId, key, languageId);
-	}
-
-	/**
 	 * Returns the plo entry where companyId = &#63; and key = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -637,6 +470,173 @@ public class PLOEntryUtil {
 		return getPersistence().fetchByPrimaryKey(ploEntryId);
 	}
 
+	/**
+	 * Returns the plo entry where companyId = &#63; and key = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param languageId the language ID
+	 * @return the matching plo entry, or <code>null</code> if a matching plo entry could not be found
+	 */
+	public static PLOEntry fetchByC_K_L(
+		long companyId, String key, String languageId) {
+
+		return getPersistence().fetchByC_K_L(companyId, key, languageId);
+	}
+
+	/**
+	 * Returns all the plo entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching plo entries
+	 */
+	public static List<PLOEntry> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the plo entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of plo entries
+	 * @param end the upper bound of the range of plo entries (not inclusive)
+	 * @return the range of matching plo entries
+	 */
+	public static List<PLOEntry> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the plo entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of plo entries
+	 * @param end the upper bound of the range of plo entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching plo entries
+	 */
+	public static List<PLOEntry> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<PLOEntry> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the plo entries where companyId = &#63; and key = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @return the matching plo entries
+	 */
+	public static List<PLOEntry> findByC_K(long companyId, String key) {
+		return getPersistence().findByC_K(companyId, key);
+	}
+
+	/**
+	 * Returns a range of all the plo entries where companyId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param start the lower bound of the range of plo entries
+	 * @param end the upper bound of the range of plo entries (not inclusive)
+	 * @return the range of matching plo entries
+	 */
+	public static List<PLOEntry> findByC_K(
+		long companyId, String key, int start, int end) {
+
+		return getPersistence().findByC_K(companyId, key, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the plo entries where companyId = &#63; and key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param key the key
+	 * @param start the lower bound of the range of plo entries
+	 * @param end the upper bound of the range of plo entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching plo entries
+	 */
+	public static List<PLOEntry> findByC_K(
+		long companyId, String key, int start, int end,
+		OrderByComparator<PLOEntry> orderByComparator) {
+
+		return getPersistence().findByC_K(
+			companyId, key, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the plo entries where companyId = &#63; and languageId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param languageId the language ID
+	 * @return the matching plo entries
+	 */
+	public static List<PLOEntry> findByC_L(long companyId, String languageId) {
+		return getPersistence().findByC_L(companyId, languageId);
+	}
+
+	/**
+	 * Returns a range of all the plo entries where companyId = &#63; and languageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param languageId the language ID
+	 * @param start the lower bound of the range of plo entries
+	 * @param end the upper bound of the range of plo entries (not inclusive)
+	 * @return the range of matching plo entries
+	 */
+	public static List<PLOEntry> findByC_L(
+		long companyId, String languageId, int start, int end) {
+
+		return getPersistence().findByC_L(companyId, languageId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the plo entries where companyId = &#63; and languageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.language.override.model.impl.PLOEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param languageId the language ID
+	 * @param start the lower bound of the range of plo entries
+	 * @param end the upper bound of the range of plo entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching plo entries
+	 */
+	public static List<PLOEntry> findByC_L(
+		long companyId, String languageId, int start, int end,
+		OrderByComparator<PLOEntry> orderByComparator) {
+
+		return getPersistence().findByC_L(
+			companyId, languageId, start, end, orderByComparator);
+	}
+
 	public static PLOEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -648,4 +648,4 @@ public class PLOEntryUtil {
 	private static volatile PLOEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-792063031
+// LIFERAY-SERVICE-BUILDER-HASH:-450222567

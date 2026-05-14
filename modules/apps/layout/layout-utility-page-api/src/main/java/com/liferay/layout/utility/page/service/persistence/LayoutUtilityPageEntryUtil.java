@@ -134,54 +134,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns all the layout utility page entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -270,19 +222,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public static LayoutUtilityPageEntry fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -320,60 +259,6 @@ public class LayoutUtilityPageEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -457,55 +342,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns all the layout utility page entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -558,36 +394,6 @@ public class LayoutUtilityPageEntryUtil {
 
 		return getPersistence().fetchByGroupId_First(
 			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
-		long groupId) {
-
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
 	/**
@@ -655,16 +461,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param plid the plid
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public static LayoutUtilityPageEntry fetchByPlid(long plid) {
-		return getPersistence().fetchByPlid(plid);
-	}
-
-	/**
 	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param plid the plid
@@ -698,60 +494,6 @@ public class LayoutUtilityPageEntryUtil {
 	 */
 	public static int countByPlid(long plid) {
 		return getPersistence().countByPlid(plid);
-	}
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type) {
-
-		return getPersistence().findByG_T(groupId, type);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type, int start, int end) {
-
-		return getPersistence().findByG_T(groupId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getPersistence().findByG_T(
-			groupId, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -814,38 +556,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String type) {
-
-		return getPersistence().filterFindByG_T(groupId, type);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String type, int start, int end) {
-
-		return getPersistence().filterFindByG_T(groupId, type, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -868,38 +578,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String[] types) {
-
-		return getPersistence().filterFindByG_T(groupId, types);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String[] types, int start, int end) {
-
-		return getPersistence().filterFindByG_T(groupId, types, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
 	 *
 	 * <p>
@@ -918,64 +596,6 @@ public class LayoutUtilityPageEntryUtil {
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return getPersistence().filterFindByG_T(
-			groupId, types, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types) {
-
-		return getPersistence().findByG_T(groupId, types);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types, int start, int end) {
-
-		return getPersistence().findByG_T(groupId, types, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getPersistence().findByG_T(
 			groupId, types, start, end, orderByComparator);
 	}
 
@@ -1058,68 +678,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @return the matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
-
-		return getPersistence().findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end) {
-
-		return getPersistence().findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	public static List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return getPersistence().findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1181,43 +739,6 @@ public class LayoutUtilityPageEntryUtil {
 
 		return getPersistence().fetchByG_D_T_First(
 			groupId, defaultLayoutUtilityPageEntry, type, orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
-
-		return getPersistence().filterFindByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	public static List<LayoutUtilityPageEntry> filterFindByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end) {
-
-		return getPersistence().filterFindByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end);
 	}
 
 	/**
@@ -1304,20 +825,6 @@ public class LayoutUtilityPageEntryUtil {
 			NoSuchLayoutUtilityPageEntryException {
 
 		return getPersistence().findByG_N_T(groupId, name, type);
-	}
-
-	/**
-	 * Returns the layout utility page entry where groupId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public static LayoutUtilityPageEntry fetchByG_N_T(
-		long groupId, String name, String type) {
-
-		return getPersistence().fetchByG_N_T(groupId, name, type);
 	}
 
 	/**
@@ -1772,19 +1279,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	public static LayoutUtilityPageEntry fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
-	}
-
-	/**
 	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -1882,6 +1376,508 @@ public class LayoutUtilityPageEntryUtil {
 		return getPersistence().fetchByPrimaryKey(LayoutUtilityPageEntryId);
 	}
 
+	/**
+	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry fetchByPlid(long plid) {
+		return getPersistence().fetchByPlid(plid);
+	}
+
+	/**
+	 * Returns the layout utility page entry where groupId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry fetchByG_N_T(
+		long groupId, String name, String type) {
+
+		return getPersistence().fetchByG_N_T(groupId, name, type);
+	}
+
+	/**
+	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
+	 */
+	public static LayoutUtilityPageEntry fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns all the layout utility page entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout utility page entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout utility page entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
+		long groupId) {
+
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns all the layout utility page entries where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_T(
+		long groupId, String type) {
+
+		return getPersistence().findByG_T(groupId, type);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_T(
+		long groupId, String type, int start, int end) {
+
+		return getPersistence().findByG_T(groupId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_T(
+		long groupId, String type, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().findByG_T(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout utility page entries where groupId = &#63; and type = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param types the types
+	 * @return the matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_T(
+		long groupId, String[] types) {
+
+		return getPersistence().findByG_T(groupId, types);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param types the types
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_T(
+		long groupId, String[] types, int start, int end) {
+
+		return getPersistence().findByG_T(groupId, types, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param types the types
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_T(
+		long groupId, String[] types, int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().findByG_T(
+			groupId, types, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, String type) {
+
+		return getPersistence().filterFindByG_T(groupId, type);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, String type, int start, int end) {
+
+		return getPersistence().filterFindByG_T(groupId, type, start, end);
+	}
+
+	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param types the types
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, String[] types) {
+
+		return getPersistence().filterFindByG_T(groupId, types);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param types the types
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_T(
+		long groupId, String[] types, int start, int end) {
+
+		return getPersistence().filterFindByG_T(groupId, types, start, end);
+	}
+
+	/**
+	 * Returns all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param type the type
+	 * @return the matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_D_T(
+		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
+
+		return getPersistence().findByG_D_T(
+			groupId, defaultLayoutUtilityPageEntry, type);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_D_T(
+		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
+		int start, int end) {
+
+		return getPersistence().findByG_D_T(
+			groupId, defaultLayoutUtilityPageEntry, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout utility page entries
+	 */
+	public static List<LayoutUtilityPageEntry> findByG_D_T(
+		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
+		int start, int end,
+		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
+
+		return getPersistence().findByG_D_T(
+			groupId, defaultLayoutUtilityPageEntry, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param type the type
+	 * @return the matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_D_T(
+		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
+
+		return getPersistence().filterFindByG_D_T(
+			groupId, defaultLayoutUtilityPageEntry, type);
+	}
+
+	/**
+	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.utility.page.model.impl.LayoutUtilityPageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
+	 * @param type the type
+	 * @param start the lower bound of the range of layout utility page entries
+	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
+	 * @return the range of matching layout utility page entries that the user has permission to view
+	 */
+	public static List<LayoutUtilityPageEntry> filterFindByG_D_T(
+		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
+		int start, int end) {
+
+		return getPersistence().filterFindByG_D_T(
+			groupId, defaultLayoutUtilityPageEntry, type, start, end);
+	}
+
 	public static LayoutUtilityPageEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1895,4 +1891,4 @@ public class LayoutUtilityPageEntryUtil {
 	private static volatile LayoutUtilityPageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1185814656
+// LIFERAY-SERVICE-BUILDER-HASH:1039371848

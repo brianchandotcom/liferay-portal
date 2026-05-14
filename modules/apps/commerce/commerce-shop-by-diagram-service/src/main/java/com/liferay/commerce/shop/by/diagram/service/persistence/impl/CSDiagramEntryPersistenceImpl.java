@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -97,63 +96,10 @@ public class CSDiagramEntryPersistenceImpl
 		_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
-	 * Returns all the cs diagram entries where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @return the matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCPDefinitionId(long CPDefinitionId) {
-		return findByCPDefinitionId(
-			CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cs diagram entries where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of cs diagram entries
-	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
-	 * @return the range of matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end) {
-
-		return findByCPDefinitionId(CPDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cs diagram entries where CPDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of cs diagram entries
-	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		return findByCPDefinitionId(
-			CPDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cs diagram entries where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -243,63 +189,10 @@ public class CSDiagramEntryPersistenceImpl
 		_collectionPersistenceFinderByCPInstanceId;
 
 	/**
-	 * Returns all the cs diagram entries where CPInstanceId = &#63;.
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @return the matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCPInstanceId(long CPInstanceId) {
-		return findByCPInstanceId(
-			CPInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cs diagram entries where CPInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param start the lower bound of the range of cs diagram entries
-	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
-	 * @return the range of matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCPInstanceId(
-		long CPInstanceId, int start, int end) {
-
-		return findByCPInstanceId(CPInstanceId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cs diagram entries where CPInstanceId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPInstanceId the cp instance ID
-	 * @param start the lower bound of the range of cs diagram entries
-	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCPInstanceId(
-		long CPInstanceId, int start, int end,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		return findByCPInstanceId(
-			CPInstanceId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cs diagram entries where CPInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPInstanceId the cp instance ID
@@ -389,63 +282,10 @@ public class CSDiagramEntryPersistenceImpl
 		_collectionPersistenceFinderByCProductId;
 
 	/**
-	 * Returns all the cs diagram entries where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @return the matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCProductId(long CProductId) {
-		return findByCProductId(
-			CProductId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cs diagram entries where CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of cs diagram entries
-	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
-	 * @return the range of matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCProductId(
-		long CProductId, int start, int end) {
-
-		return findByCProductId(CProductId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cs diagram entries where CProductId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of cs diagram entries
-	 * @param end the upper bound of the range of cs diagram entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cs diagram entries
-	 */
-	@Override
-	public List<CSDiagramEntry> findByCProductId(
-		long CProductId, int start, int end,
-		OrderByComparator<CSDiagramEntry> orderByComparator) {
-
-		return findByCProductId(
-			CProductId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cs diagram entries where CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CSDiagramEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CProductId the c product ID
@@ -564,18 +404,6 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the cs diagram entry where CPDefinitionId = &#63; and sequence = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param sequence the sequence
-	 * @return the matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry fetchByCPDI_S(long CPDefinitionId, String sequence) {
-		return fetchByCPDI_S(CPDefinitionId, sequence, true);
-	}
-
-	/**
 	 * Returns the cs diagram entry where CPDefinitionId = &#63; and sequence = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -654,20 +482,6 @@ public class CSDiagramEntryPersistenceImpl
 		}
 
 		return csDiagramEntry;
-	}
-
-	/**
-	 * Returns the cs diagram entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching cs diagram entry, or <code>null</code> if a matching cs diagram entry could not be found
-	 */
-	@Override
-	public CSDiagramEntry fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -1253,4 +1067,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1535293178
+// LIFERAY-SERVICE-BUILDER-HASH:-979963801

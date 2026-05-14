@@ -68,61 +68,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByLayoutSetBranchId;
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByLayoutSetBranchId(
-		long layoutSetBranchId) {
-
-		return findByLayoutSetBranchId(
-			layoutSetBranchId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByLayoutSetBranchId(
-		long layoutSetBranchId, int start, int end) {
-
-		return findByLayoutSetBranchId(layoutSetBranchId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByLayoutSetBranchId(
-		long layoutSetBranchId, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
 	 *
 	 * <p>
@@ -219,55 +164,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByPlid;
 
 	/**
-	 * Returns all the layout revisions where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByPlid(long plid) {
-		return findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByPlid(long plid, int start, int end) {
-		return findByPlid(plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByPlid(
-		long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByPlid(plid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where plid = &#63;.
 	 *
 	 * <p>
@@ -360,55 +256,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByStatus;
 
 	/**
-	 * Returns all the layout revisions where status = &#63;.
-	 *
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByStatus(int status) {
-		return findByStatus(status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByStatus(int status, int start, int end) {
-		return findByStatus(status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByStatus(
-		int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByStatus(status, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where status = &#63;.
 	 *
 	 * <p>
@@ -499,65 +346,6 @@ public class LayoutRevisionPersistenceImpl
 
 	private CollectionPersistenceFinder<LayoutRevision>
 		_collectionPersistenceFinderByL_H;
-
-	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head) {
-
-		return findByL_H(
-			layoutSetBranchId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head, int start, int end) {
-
-		return findByL_H(layoutSetBranchId, head, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_H(
-			layoutSetBranchId, head, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
@@ -663,63 +451,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByL_P;
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P(long layoutSetBranchId, long plid) {
-		return findByL_P(
-			layoutSetBranchId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid, int start, int end) {
-
-		return findByL_P(layoutSetBranchId, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_P(
-			layoutSetBranchId, plid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -823,63 +554,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByL_S;
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_S(long layoutSetBranchId, int status) {
-		return findByL_S(
-			layoutSetBranchId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status, int start, int end) {
-
-		return findByL_S(layoutSetBranchId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_S(
-			layoutSetBranchId, status, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -981,61 +655,6 @@ public class LayoutRevisionPersistenceImpl
 
 	private CollectionPersistenceFinder<LayoutRevision>
 		_collectionPersistenceFinderByH_P;
-
-	/**
-	 * Returns all the layout revisions where head = &#63; and plid = &#63;.
-	 *
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByH_P(boolean head, long plid) {
-		return findByH_P(
-			head, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByH_P(
-		boolean head, long plid, int start, int end) {
-
-		return findByH_P(head, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByH_P(
-		boolean head, long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByH_P(head, plid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout revisions where head = &#63; and plid = &#63;.
@@ -1291,71 +910,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByL_L_P;
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid) {
-
-		return findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end) {
-
-		return findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end, OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -1467,72 +1021,6 @@ public class LayoutRevisionPersistenceImpl
 
 	private CollectionPersistenceFinder<LayoutRevision>
 		_collectionPersistenceFinderByL_P_P;
-
-	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid) {
-
-		return findByL_P_P(
-			layoutSetBranchId, parentLayoutRevisionId, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		int start, int end) {
-
-		return findByL_P_P(
-			layoutSetBranchId, parentLayoutRevisionId, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_P_P(
-			layoutSetBranchId, parentLayoutRevisionId, plid, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
@@ -1650,69 +1138,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByL_H_P_Collection;
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H_P_Collection(
-		long layoutSetBranchId, boolean head, long plid) {
-
-		return findByL_H_P_Collection(
-			layoutSetBranchId, head, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H_P_Collection(
-		long layoutSetBranchId, boolean head, long plid, int start, int end) {
-
-		return findByL_H_P_Collection(
-			layoutSetBranchId, head, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H_P_Collection(
-		long layoutSetBranchId, boolean head, long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_H_P_Collection(
-			layoutSetBranchId, head, plid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -1826,69 +1251,6 @@ public class LayoutRevisionPersistenceImpl
 		_collectionPersistenceFinderByL_H_S;
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H_S(
-		long layoutSetBranchId, boolean head, int status) {
-
-		return findByL_H_S(
-			layoutSetBranchId, head, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H_S(
-		long layoutSetBranchId, boolean head, int status, int start, int end) {
-
-		return findByL_H_S(layoutSetBranchId, head, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_H_S(
-		long layoutSetBranchId, boolean head, int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_H_S(
-			layoutSetBranchId, head, status, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1997,69 +1359,6 @@ public class LayoutRevisionPersistenceImpl
 
 	private CollectionPersistenceFinder<LayoutRevision>
 		_collectionPersistenceFinderByL_P_S;
-
-	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status) {
-
-		return findByL_P_S(
-			layoutSetBranchId, plid, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status, int start, int end) {
-
-		return findByL_P_S(layoutSetBranchId, plid, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	@Override
-	public List<LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return findByL_P_S(
-			layoutSetBranchId, plid, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
@@ -2812,4 +2111,4 @@ public class LayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-726137053
+// LIFERAY-SERVICE-BUILDER-HASH:-1845047651

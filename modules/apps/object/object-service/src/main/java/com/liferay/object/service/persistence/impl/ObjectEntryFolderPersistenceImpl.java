@@ -95,55 +95,6 @@ public class ObjectEntryFolderPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object entry folders where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entry folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @return the range of matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entry folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the object entry folders where uuid = &#63;.
 	 *
 	 * <p>
@@ -264,18 +215,6 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the object entry folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the object entry folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -322,62 +261,6 @@ public class ObjectEntryFolderPersistenceImpl
 
 	private CollectionPersistenceFinder<ObjectEntryFolder>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the object entry folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entry folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @return the range of matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entry folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entry folders where uuid = &#63; and companyId = &#63;.
@@ -511,21 +394,6 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the object entry folder where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the matching object entry folder, or <code>null</code> if a matching object entry folder could not be found
-	 */
-	@Override
-	public ObjectEntryFolder fetchByERC_G_C(
-		String externalReferenceCode, long groupId, long companyId) {
-
-		return fetchByERC_G_C(externalReferenceCode, groupId, companyId, true);
-	}
-
-	/**
 	 * Returns the object entry folder where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -583,71 +451,6 @@ public class ObjectEntryFolderPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<ObjectEntryFolder>
 		_collectionPersistenceFinderByG_C_P;
-
-	/**
-	 * Returns all the object entry folders where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @return the matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByG_C_P(
-		long groupId, long companyId, long parentObjectEntryFolderId) {
-
-		return findByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entry folders where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @return the range of matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByG_C_P(
-		long groupId, long companyId, long parentObjectEntryFolderId, int start,
-		int end) {
-
-		return findByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entry folders where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entry folders
-	 */
-	@Override
-	public List<ObjectEntryFolder> findByG_C_P(
-		long groupId, long companyId, long parentObjectEntryFolderId, int start,
-		int end, OrderByComparator<ObjectEntryFolder> orderByComparator) {
-
-		return findByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entry folders where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
@@ -724,46 +527,6 @@ public class ObjectEntryFolderPersistenceImpl
 			finderCache,
 			new Object[] {groupId, companyId, parentObjectEntryFolderId},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @return the matching object entry folders that the user has permission to view
-	 */
-	@Override
-	public List<ObjectEntryFolder> filterFindByG_C_P(
-		long groupId, long companyId, long parentObjectEntryFolderId) {
-
-		return filterFindByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entry folders that the user has permission to view where groupId = &#63; and companyId = &#63; and parentObjectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param parentObjectEntryFolderId the parent object entry folder ID
-	 * @param start the lower bound of the range of object entry folders
-	 * @param end the upper bound of the range of object entry folders (not inclusive)
-	 * @return the range of matching object entry folders that the user has permission to view
-	 */
-	@Override
-	public List<ObjectEntryFolder> filterFindByG_C_P(
-		long groupId, long companyId, long parentObjectEntryFolderId, int start,
-		int end) {
-
-		return filterFindByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, start, end, null);
 	}
 
 	/**
@@ -2001,4 +1764,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1739003159
+// LIFERAY-SERVICE-BUILDER-HASH:356337899

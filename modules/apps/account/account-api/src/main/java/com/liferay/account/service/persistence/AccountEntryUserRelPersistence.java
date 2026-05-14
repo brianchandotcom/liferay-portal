@@ -33,48 +33,6 @@ public interface AccountEntryUserRelPersistence
 	 */
 
 	/**
-	 * Returns all the account entry user rels where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account entry user rels
-	 */
-	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
-		long accountEntryId);
-
-	/**
-	 * Returns a range of all the account entry user rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account entry user rels
-	 * @param end the upper bound of the range of account entry user rels (not inclusive)
-	 * @return the range of matching account entry user rels
-	 */
-	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
-		long accountEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the account entry user rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account entry user rels
-	 * @param end the upper bound of the range of account entry user rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account entry user rels
-	 */
-	public java.util.List<AccountEntryUserRel> findByAccountEntryId(
-		long accountEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the account entry user rels where accountEntryId = &#63;.
 	 *
 	 * <p>
@@ -134,48 +92,6 @@ public interface AccountEntryUserRelPersistence
 	 * @return the number of matching account entry user rels
 	 */
 	public int countByAccountEntryId(long accountEntryId);
-
-	/**
-	 * Returns all the account entry user rels where accountUserId = &#63;.
-	 *
-	 * @param accountUserId the account user ID
-	 * @return the matching account entry user rels
-	 */
-	public java.util.List<AccountEntryUserRel> findByAccountUserId(
-		long accountUserId);
-
-	/**
-	 * Returns a range of all the account entry user rels where accountUserId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountUserId the account user ID
-	 * @param start the lower bound of the range of account entry user rels
-	 * @param end the upper bound of the range of account entry user rels (not inclusive)
-	 * @return the range of matching account entry user rels
-	 */
-	public java.util.List<AccountEntryUserRel> findByAccountUserId(
-		long accountUserId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the account entry user rels where accountUserId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountUserId the account user ID
-	 * @param start the lower bound of the range of account entry user rels
-	 * @param end the upper bound of the range of account entry user rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account entry user rels
-	 */
-	public java.util.List<AccountEntryUserRel> findByAccountUserId(
-		long accountUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the account entry user rels where accountUserId = &#63;.
@@ -251,16 +167,6 @@ public interface AccountEntryUserRelPersistence
 		throws NoSuchEntryUserRelException;
 
 	/**
-	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param accountUserId the account user ID
-	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
-	 */
-	public AccountEntryUserRel fetchByAEI_AUI(
-		long accountEntryId, long accountUserId);
-
-	/**
 	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountEntryId the account entry ID
@@ -330,5 +236,126 @@ public interface AccountEntryUserRelPersistence
 	 */
 	public AccountEntryUserRel fetchByPrimaryKey(long accountEntryUserRelId);
 
+	/**
+	 * Returns the account entry user rel where accountEntryId = &#63; and accountUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param accountUserId the account user ID
+	 * @return the matching account entry user rel, or <code>null</code> if a matching account entry user rel could not be found
+	 */
+	public default AccountEntryUserRel fetchByAEI_AUI(
+		long accountEntryId, long accountUserId) {
+
+		return fetchByAEI_AUI(accountEntryId, accountUserId, true);
+	}
+
+	/**
+	 * Returns all the account entry user rels where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account entry user rels
+	 */
+	public default java.util.List<AccountEntryUserRel> findByAccountEntryId(
+		long accountEntryId) {
+
+		return findByAccountEntryId(
+			accountEntryId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the account entry user rels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account entry user rels
+	 * @param end the upper bound of the range of account entry user rels (not inclusive)
+	 * @return the range of matching account entry user rels
+	 */
+	public default java.util.List<AccountEntryUserRel> findByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return findByAccountEntryId(accountEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry user rels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account entry user rels
+	 * @param end the upper bound of the range of account entry user rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry user rels
+	 */
+	public default java.util.List<AccountEntryUserRel> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
+			orderByComparator) {
+
+		return findByAccountEntryId(
+			accountEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the account entry user rels where accountUserId = &#63;.
+	 *
+	 * @param accountUserId the account user ID
+	 * @return the matching account entry user rels
+	 */
+	public default java.util.List<AccountEntryUserRel> findByAccountUserId(
+		long accountUserId) {
+
+		return findByAccountUserId(
+			accountUserId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the account entry user rels where accountUserId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountUserId the account user ID
+	 * @param start the lower bound of the range of account entry user rels
+	 * @param end the upper bound of the range of account entry user rels (not inclusive)
+	 * @return the range of matching account entry user rels
+	 */
+	public default java.util.List<AccountEntryUserRel> findByAccountUserId(
+		long accountUserId, int start, int end) {
+
+		return findByAccountUserId(accountUserId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry user rels where accountUserId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryUserRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountUserId the account user ID
+	 * @param start the lower bound of the range of account entry user rels
+	 * @param end the upper bound of the range of account entry user rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry user rels
+	 */
+	public default java.util.List<AccountEntryUserRel> findByAccountUserId(
+		long accountUserId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountEntryUserRel>
+			orderByComparator) {
+
+		return findByAccountUserId(
+			accountUserId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1775128961
+// LIFERAY-SERVICE-BUILDER-HASH:853438236

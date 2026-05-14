@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -85,62 +84,10 @@ public class KaleoInstanceTokenPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the kaleo instance tokens where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo instance tokens where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @return the range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -230,67 +177,10 @@ public class KaleoInstanceTokenPersistenceImpl
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
-	 * Returns all the kaleo instance tokens where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @return the matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByKaleoDefinitionVersionId(
-		long kaleoDefinitionVersionId) {
-
-		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo instance tokens where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @return the range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByKaleoDefinitionVersionId(
-		long kaleoDefinitionVersionId, int start, int end) {
-
-		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo instance tokens where kaleoDefinitionVersionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByKaleoDefinitionVersionId(
-		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator) {
-
-		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo instance tokens where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
 	 * </p>
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -387,65 +277,10 @@ public class KaleoInstanceTokenPersistenceImpl
 		_collectionPersistenceFinderByKaleoInstanceId;
 
 	/**
-	 * Returns all the kaleo instance tokens where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @return the matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByKaleoInstanceId(
-		long kaleoInstanceId) {
-
-		return findByKaleoInstanceId(
-			kaleoInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo instance tokens where kaleoInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @return the range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByKaleoInstanceId(
-		long kaleoInstanceId, int start, int end) {
-
-		return findByKaleoInstanceId(kaleoInstanceId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo instance tokens where kaleoInstanceId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByKaleoInstanceId(
-		long kaleoInstanceId, int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator) {
-
-		return findByKaleoInstanceId(
-			kaleoInstanceId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo instance tokens where kaleoInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
 	 * </p>
 	 *
 	 * @param kaleoInstanceId the kaleo instance ID
@@ -535,71 +370,10 @@ public class KaleoInstanceTokenPersistenceImpl
 		_collectionPersistenceFinderByC_PKITI;
 
 	/**
-	 * Returns all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @return the matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByC_PKITI(
-		long companyId, long parentKaleoInstanceTokenId) {
-
-		return findByC_PKITI(
-			companyId, parentKaleoInstanceTokenId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @return the range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByC_PKITI(
-		long companyId, long parentKaleoInstanceTokenId, int start, int end) {
-
-		return findByC_PKITI(
-			companyId, parentKaleoInstanceTokenId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByC_PKITI(
-		long companyId, long parentKaleoInstanceTokenId, int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator) {
-
-		return findByC_PKITI(
-			companyId, parentKaleoInstanceTokenId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -698,77 +472,10 @@ public class KaleoInstanceTokenPersistenceImpl
 		_collectionPersistenceFinderByC_PKITI_CD;
 
 	/**
-	 * Returns all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param completionDate the completion date
-	 * @return the matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByC_PKITI_CD(
-		long companyId, long parentKaleoInstanceTokenId, Date completionDate) {
-
-		return findByC_PKITI_CD(
-			companyId, parentKaleoInstanceTokenId, completionDate,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param completionDate the completion date
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @return the range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByC_PKITI_CD(
-		long companyId, long parentKaleoInstanceTokenId, Date completionDate,
-		int start, int end) {
-
-		return findByC_PKITI_CD(
-			companyId, parentKaleoInstanceTokenId, completionDate, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentKaleoInstanceTokenId the parent kaleo instance token ID
-	 * @param completionDate the completion date
-	 * @param start the lower bound of the range of kaleo instance tokens
-	 * @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo instance tokens
-	 */
-	@Override
-	public List<KaleoInstanceToken> findByC_PKITI_CD(
-		long companyId, long parentKaleoInstanceTokenId, Date completionDate,
-		int start, int end,
-		OrderByComparator<KaleoInstanceToken> orderByComparator) {
-
-		return findByC_PKITI_CD(
-			companyId, parentKaleoInstanceTokenId, completionDate, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo instance tokens where companyId = &#63; and parentKaleoInstanceTokenId = &#63; and completionDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoInstanceTokenModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1419,4 +1126,4 @@ public class KaleoInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1794517118
+// LIFERAY-SERVICE-BUILDER-HASH:-551204109

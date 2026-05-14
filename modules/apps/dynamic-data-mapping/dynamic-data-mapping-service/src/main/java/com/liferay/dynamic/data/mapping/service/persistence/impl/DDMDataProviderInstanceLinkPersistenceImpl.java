@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -85,66 +84,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		_collectionPersistenceFinderByDataProviderInstanceId;
 
 	/**
-	 * Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @return the matching ddm data provider instance links
-	 */
-	@Override
-	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
-		long dataProviderInstanceId) {
-
-		return findByDataProviderInstanceId(
-			dataProviderInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @return the range of matching ddm data provider instance links
-	 */
-	@Override
-	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
-		long dataProviderInstanceId, int start, int end) {
-
-		return findByDataProviderInstanceId(
-			dataProviderInstanceId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm data provider instance links
-	 */
-	@Override
-	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
-		long dataProviderInstanceId, int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
-
-		return findByDataProviderInstanceId(
-			dataProviderInstanceId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
@@ -238,65 +181,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		_collectionPersistenceFinderByStructureId;
 
 	/**
-	 * Returns all the ddm data provider instance links where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @return the matching ddm data provider instance links
-	 */
-	@Override
-	public List<DDMDataProviderInstanceLink> findByStructureId(
-		long structureId) {
-
-		return findByStructureId(
-			structureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm data provider instance links where structureId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @return the range of matching ddm data provider instance links
-	 */
-	@Override
-	public List<DDMDataProviderInstanceLink> findByStructureId(
-		long structureId, int start, int end) {
-
-		return findByStructureId(structureId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm data provider instance links
-	 */
-	@Override
-	public List<DDMDataProviderInstanceLink> findByStructureId(
-		long structureId, int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
-
-		return findByStructureId(
-			structureId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
@@ -415,20 +303,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		}
 
 		return ddmDataProviderInstanceLink;
-	}
-
-	/**
-	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param structureId the structure ID
-	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink fetchByD_S(
-		long dataProviderInstanceId, long structureId) {
-
-		return fetchByD_S(dataProviderInstanceId, structureId, true);
 	}
 
 	/**
@@ -888,4 +762,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2008493743
+// LIFERAY-SERVICE-BUILDER-HASH:1359114912

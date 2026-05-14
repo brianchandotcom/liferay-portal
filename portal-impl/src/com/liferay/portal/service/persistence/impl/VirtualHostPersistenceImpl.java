@@ -78,58 +78,6 @@ public class VirtualHostPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the virtual hosts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the virtual hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @return the range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the virtual hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the virtual hosts where companyId = &#63;.
 	 *
 	 * <p>
@@ -250,17 +198,6 @@ public class VirtualHostPersistenceImpl
 	}
 
 	/**
-	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param hostname the hostname
-	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost fetchByHostname(String hostname) {
-		return fetchByHostname(hostname, true);
-	}
-
-	/**
 	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param hostname the hostname
@@ -305,62 +242,6 @@ public class VirtualHostPersistenceImpl
 
 	private CollectionPersistenceFinder<VirtualHost>
 		_collectionPersistenceFinderByC_L;
-
-	/**
-	 * Returns all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @return the matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByC_L(long companyId, long layoutSetId) {
-		return findByC_L(
-			companyId, layoutSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @return the range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByC_L(
-		long companyId, long layoutSetId, int start, int end) {
-
-		return findByC_L(companyId, layoutSetId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByC_L(
-		long companyId, long layoutSetId, int start, int end,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		return findByC_L(
-			companyId, layoutSetId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
@@ -1094,4 +975,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:941034150
+// LIFERAY-SERVICE-BUILDER-HASH:68444542

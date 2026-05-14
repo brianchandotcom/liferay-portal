@@ -901,4 +901,4 @@ public interface FaroNotificationPersistence
 	public FaroNotification fetchByPrimaryKey(long faroNotificationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1524277974
+// LIFERAY-SERVICE-BUILDER-HASH:247174998

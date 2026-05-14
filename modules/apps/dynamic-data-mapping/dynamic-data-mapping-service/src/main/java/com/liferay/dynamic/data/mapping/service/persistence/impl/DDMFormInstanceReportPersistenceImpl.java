@@ -115,17 +115,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance report, or <code>null</code> if a matching ddm form instance report could not be found
-	 */
-	@Override
-	public DDMFormInstanceReport fetchByFormInstanceId(long formInstanceId) {
-		return fetchByFormInstanceId(formInstanceId, true);
-	}
-
-	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param formInstanceId the form instance ID
@@ -539,4 +528,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-512659519
+// LIFERAY-SERVICE-BUILDER-HASH:-206635778

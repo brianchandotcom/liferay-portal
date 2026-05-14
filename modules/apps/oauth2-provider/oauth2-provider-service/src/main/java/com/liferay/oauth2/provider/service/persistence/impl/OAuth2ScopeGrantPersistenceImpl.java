@@ -87,64 +87,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		_collectionPersistenceFinderByOAuth2ApplicationScopeAliasesId;
 
 	/**
-	 * Returns all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @return the matching o auth2 scope grants
-	 */
-	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
-		long oAuth2ApplicationScopeAliasesId) {
-
-		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>.
-	 * </p>
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	 * @return the range of matching o auth2 scope grants
-	 */
-	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
-		long oAuth2ApplicationScopeAliasesId, int start, int end) {
-
-		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>.
-	 * </p>
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching o auth2 scope grants
-	 */
-	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
-		long oAuth2ApplicationScopeAliasesId, int start, int end,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
-
-		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
 	 *
 	 * <p>
@@ -285,26 +227,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		}
 
 		return oAuth2ScopeGrant;
-	}
-
-	/**
-	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param applicationName the application name
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param scope the scope
-	 * @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant fetchByC_O_A_B_S(
-		long companyId, long oAuth2ApplicationScopeAliasesId,
-		String applicationName, String bundleSymbolicName, String scope) {
-
-		return fetchByC_O_A_B_S(
-			companyId, oAuth2ApplicationScopeAliasesId, applicationName,
-			bundleSymbolicName, scope, true);
 	}
 
 	/**
@@ -1076,4 +998,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:955414886
+// LIFERAY-SERVICE-BUILDER-HASH:248514199

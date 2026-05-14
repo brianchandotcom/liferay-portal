@@ -95,18 +95,6 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 	/**
-	 * Returns the web dav props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching web dav props, or <code>null</code> if a matching web dav props could not be found
-	 */
-	@Override
-	public WebDAVProps fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
-	}
-
-	/**
 	 * Returns the web dav props where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -392,4 +380,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-848193617
+// LIFERAY-SERVICE-BUILDER-HASH:-1202143229

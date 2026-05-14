@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -87,62 +86,10 @@ public class KaleoTransitionPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the kaleo transitions where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo transitions where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo transitions
-	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
-	 * @return the range of matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo transitions where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo transitions
-	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo transitions where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -231,67 +178,10 @@ public class KaleoTransitionPersistenceImpl
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
-	 * Returns all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @return the matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByKaleoDefinitionVersionId(
-		long kaleoDefinitionVersionId) {
-
-		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param start the lower bound of the range of kaleo transitions
-	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
-	 * @return the range of matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByKaleoDefinitionVersionId(
-		long kaleoDefinitionVersionId, int start, int end) {
-
-		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoDefinitionVersionId the kaleo definition version ID
-	 * @param start the lower bound of the range of kaleo transitions
-	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByKaleoDefinitionVersionId(
-		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
-
-		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo transitions where kaleoDefinitionVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
@@ -387,63 +277,10 @@ public class KaleoTransitionPersistenceImpl
 		_collectionPersistenceFinderByKaleoNodeId;
 
 	/**
-	 * Returns all the kaleo transitions where kaleoNodeId = &#63;.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @return the matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByKaleoNodeId(long kaleoNodeId) {
-		return findByKaleoNodeId(
-			kaleoNodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo transitions where kaleoNodeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param start the lower bound of the range of kaleo transitions
-	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
-	 * @return the range of matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByKaleoNodeId(
-		long kaleoNodeId, int start, int end) {
-
-		return findByKaleoNodeId(kaleoNodeId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo transitions where kaleoNodeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param start the lower bound of the range of kaleo transitions
-	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo transitions
-	 */
-	@Override
-	public List<KaleoTransition> findByKaleoNodeId(
-		long kaleoNodeId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
-
-		return findByKaleoNodeId(
-			kaleoNodeId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo transitions where kaleoNodeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -562,18 +399,6 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param name the name
-	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition fetchByKNI_N(long kaleoNodeId, String name) {
-		return fetchByKNI_N(kaleoNodeId, name, true);
-	}
-
-	/**
 	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param kaleoNodeId the kaleo node ID
@@ -651,20 +476,6 @@ public class KaleoTransitionPersistenceImpl
 		}
 
 		return kaleoTransition;
-	}
-
-	/**
-	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param kaleoNodeId the kaleo node ID
-	 * @param defaultTransition the default transition
-	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	 */
-	@Override
-	public KaleoTransition fetchByKNI_DT(
-		long kaleoNodeId, boolean defaultTransition) {
-
-		return fetchByKNI_DT(kaleoNodeId, defaultTransition, true);
 	}
 
 	/**
@@ -1186,4 +997,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1415811353
+// LIFERAY-SERVICE-BUILDER-HASH:473538683

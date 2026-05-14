@@ -32,47 +32,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 */
 
 	/**
-	 * Returns all the ct comments where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct comments
-	 */
-	public java.util.List<CTComment> findByCtCollectionId(long ctCollectionId);
-
-	/**
-	 * Returns a range of all the ct comments where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of ct comments
-	 * @param end the upper bound of the range of ct comments (not inclusive)
-	 * @return the range of matching ct comments
-	 */
-	public java.util.List<CTComment> findByCtCollectionId(
-		long ctCollectionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ct comments where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of ct comments
-	 * @param end the upper bound of the range of ct comments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct comments
-	 */
-	public java.util.List<CTComment> findByCtCollectionId(
-		long ctCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the ct comments where ctCollectionId = &#63;.
 	 *
 	 * <p>
@@ -132,47 +91,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 * @return the number of matching ct comments
 	 */
 	public int countByCtCollectionId(long ctCollectionId);
-
-	/**
-	 * Returns all the ct comments where ctEntryId = &#63;.
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @return the matching ct comments
-	 */
-	public java.util.List<CTComment> findByCtEntryId(long ctEntryId);
-
-	/**
-	 * Returns a range of all the ct comments where ctEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @param start the lower bound of the range of ct comments
-	 * @param end the upper bound of the range of ct comments (not inclusive)
-	 * @return the range of matching ct comments
-	 */
-	public java.util.List<CTComment> findByCtEntryId(
-		long ctEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ct comments where ctEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctEntryId the ct entry ID
-	 * @param start the lower bound of the range of ct comments
-	 * @param end the upper bound of the range of ct comments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct comments
-	 */
-	public java.util.List<CTComment> findByCtEntryId(
-		long ctEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ct comments where ctEntryId = &#63;.
@@ -272,5 +190,110 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	 */
 	public CTComment fetchByPrimaryKey(long ctCommentId);
 
+	/**
+	 * Returns all the ct comments where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching ct comments
+	 */
+	public default java.util.List<CTComment> findByCtCollectionId(
+		long ctCollectionId) {
+
+		return findByCtCollectionId(
+			ctCollectionId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ct comments where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of ct comments
+	 * @param end the upper bound of the range of ct comments (not inclusive)
+	 * @return the range of matching ct comments
+	 */
+	public default java.util.List<CTComment> findByCtCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return findByCtCollectionId(ctCollectionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct comments where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of ct comments
+	 * @param end the upper bound of the range of ct comments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct comments
+	 */
+	public default java.util.List<CTComment> findByCtCollectionId(
+		long ctCollectionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
+			orderByComparator) {
+
+		return findByCtCollectionId(
+			ctCollectionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ct comments where ctEntryId = &#63;.
+	 *
+	 * @param ctEntryId the ct entry ID
+	 * @return the matching ct comments
+	 */
+	public default java.util.List<CTComment> findByCtEntryId(long ctEntryId) {
+		return findByCtEntryId(
+			ctEntryId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ct comments where ctEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctEntryId the ct entry ID
+	 * @param start the lower bound of the range of ct comments
+	 * @param end the upper bound of the range of ct comments (not inclusive)
+	 * @return the range of matching ct comments
+	 */
+	public default java.util.List<CTComment> findByCtEntryId(
+		long ctEntryId, int start, int end) {
+
+		return findByCtEntryId(ctEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct comments where ctEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTCommentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctEntryId the ct entry ID
+	 * @param start the lower bound of the range of ct comments
+	 * @param end the upper bound of the range of ct comments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct comments
+	 */
+	public default java.util.List<CTComment> findByCtEntryId(
+		long ctEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CTComment>
+			orderByComparator) {
+
+		return findByCtEntryId(ctEntryId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-423558968
+// LIFERAY-SERVICE-BUILDER-HASH:-296869942

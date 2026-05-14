@@ -250,17 +250,6 @@ public class DLSyncEventPersistenceImpl
 	}
 
 	/**
-	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param typePK the type pk
-	 * @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
-	 */
-	@Override
-	public DLSyncEvent fetchByTypePK(long typePK) {
-		return fetchByTypePK(typePK, true);
-	}
-
-	/**
 	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param typePK the type pk
@@ -585,4 +574,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1968218299
+// LIFERAY-SERVICE-BUILDER-HASH:249876538

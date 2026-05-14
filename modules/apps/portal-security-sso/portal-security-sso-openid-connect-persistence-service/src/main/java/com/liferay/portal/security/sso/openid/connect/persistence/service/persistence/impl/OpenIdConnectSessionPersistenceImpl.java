@@ -80,57 +80,6 @@ public class OpenIdConnectSessionPersistenceImpl
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the open ID connect sessions where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching open ID connect sessions
-	 */
-	@Override
-	public List<OpenIdConnectSession> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the open ID connect sessions where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of open ID connect sessions
-	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
-	 * @return the range of matching open ID connect sessions
-	 */
-	@Override
-	public List<OpenIdConnectSession> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the open ID connect sessions where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of open ID connect sessions
-	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching open ID connect sessions
-	 */
-	@Override
-	public List<OpenIdConnectSession> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<OpenIdConnectSession> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the open ID connect sessions where userId = &#63;.
 	 *
 	 * <p>
@@ -412,18 +361,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the open ID connect session where userId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param issuer the issuer
-	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession fetchByU_I(long userId, String issuer) {
-		return fetchByU_I(userId, issuer, true);
-	}
-
-	/**
 	 * Returns the open ID connect session where userId = &#63; and issuer = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -502,18 +439,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the open ID connect session where issuer = &#63; and sessionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param issuer the issuer
-	 * @param sessionId the session ID
-	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession fetchByI_S(String issuer, String sessionId) {
-		return fetchByI_S(issuer, sessionId, true);
-	}
-
-	/**
 	 * Returns the open ID connect session where issuer = &#63; and sessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param issuer the issuer
@@ -561,72 +486,6 @@ public class OpenIdConnectSessionPersistenceImpl
 
 	private CollectionPersistenceFinder<OpenIdConnectSession>
 		_collectionPersistenceFinderByC_A_C;
-
-	/**
-	 * Returns all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @return the matching open ID connect sessions
-	 */
-	@Override
-	public List<OpenIdConnectSession> findByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId) {
-
-		return findByC_A_C(
-			companyId, authServerWellKnownURI, clientId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param start the lower bound of the range of open ID connect sessions
-	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
-	 * @return the range of matching open ID connect sessions
-	 */
-	@Override
-	public List<OpenIdConnectSession> findByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId,
-		int start, int end) {
-
-		return findByC_A_C(
-			companyId, authServerWellKnownURI, clientId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OpenIdConnectSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @param start the lower bound of the range of open ID connect sessions
-	 * @param end the upper bound of the range of open ID connect sessions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching open ID connect sessions
-	 */
-	@Override
-	public List<OpenIdConnectSession> findByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId,
-		int start, int end,
-		OrderByComparator<OpenIdConnectSession> orderByComparator) {
-
-		return findByC_A_C(
-			companyId, authServerWellKnownURI, clientId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the open ID connect sessions where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
@@ -773,21 +632,6 @@ public class OpenIdConnectSessionPersistenceImpl
 		}
 
 		return openIdConnectSession;
-	}
-
-	/**
-	 * Returns the open ID connect session where userId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param authServerWellKnownURI the auth server well known uri
-	 * @param clientId the client ID
-	 * @return the matching open ID connect session, or <code>null</code> if a matching open ID connect session could not be found
-	 */
-	@Override
-	public OpenIdConnectSession fetchByU_A_C(
-		long userId, String authServerWellKnownURI, String clientId) {
-
-		return fetchByU_A_C(userId, authServerWellKnownURI, clientId, true);
 	}
 
 	/**
@@ -1268,4 +1112,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1781544844
+// LIFERAY-SERVICE-BUILDER-HASH:-58965484

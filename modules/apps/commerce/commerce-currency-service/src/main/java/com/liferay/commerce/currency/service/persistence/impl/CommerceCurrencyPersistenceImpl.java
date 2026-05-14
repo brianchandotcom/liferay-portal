@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -94,59 +93,10 @@ public class CommerceCurrencyPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the commerce currencies where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce currencies where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @return the range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce currencies where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce currencies where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -234,66 +184,10 @@ public class CommerceCurrencyPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the commerce currencies where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce currencies where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @return the range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce currencies where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce currencies where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -388,62 +282,10 @@ public class CommerceCurrencyPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the commerce currencies where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce currencies where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @return the range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce currencies where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce currencies where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -561,18 +403,6 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 	/**
-	 * Returns the commerce currency where companyId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param code the code
-	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByC_C(long companyId, String code) {
-		return fetchByC_C(companyId, code, true);
-	}
-
-	/**
 	 * Returns the commerce currency where companyId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -621,66 +451,10 @@ public class CommerceCurrencyPersistenceImpl
 		_collectionPersistenceFinderByC_P;
 
 	/**
-	 * Returns all the commerce currencies where companyId = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @return the matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_P(long companyId, boolean primary) {
-		return findByC_P(
-			companyId, primary, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce currencies where companyId = &#63; and primary = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @return the range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_P(
-		long companyId, boolean primary, int start, int end) {
-
-		return findByC_P(companyId, primary, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce currencies where companyId = &#63; and primary = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_P(
-		long companyId, boolean primary, int start, int end,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		return findByC_P(
-			companyId, primary, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce currencies where companyId = &#63; and primary = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -775,66 +549,10 @@ public class CommerceCurrencyPersistenceImpl
 		_collectionPersistenceFinderByC_A;
 
 	/**
-	 * Returns all the commerce currencies where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @return the matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_A(long companyId, boolean active) {
-		return findByC_A(
-			companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce currencies where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @return the range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_A(
-		long companyId, boolean active, int start, int end) {
-
-		return findByC_A(companyId, active, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce currencies where companyId = &#63; and active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_A(
-		long companyId, boolean active, int start, int end,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		return findByC_A(
-			companyId, active, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce currencies where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -929,72 +647,10 @@ public class CommerceCurrencyPersistenceImpl
 		_collectionPersistenceFinderByC_P_A;
 
 	/**
-	 * Returns all the commerce currencies where companyId = &#63; and primary = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param active the active
-	 * @return the matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_P_A(
-		long companyId, boolean primary, boolean active) {
-
-		return findByC_P_A(
-			companyId, primary, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the commerce currencies where companyId = &#63; and primary = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @return the range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_P_A(
-		long companyId, boolean primary, boolean active, int start, int end) {
-
-		return findByC_P_A(companyId, primary, active, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce currencies where companyId = &#63; and primary = &#63; and active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param primary the primary
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce currencies
-	 * @param end the upper bound of the range of commerce currencies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce currencies
-	 */
-	@Override
-	public List<CommerceCurrency> findByC_P_A(
-		long companyId, boolean primary, boolean active, int start, int end,
-		OrderByComparator<CommerceCurrency> orderByComparator) {
-
-		return findByC_P_A(
-			companyId, primary, active, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce currencies where companyId = &#63; and primary = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCurrencyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1125,20 +781,6 @@ public class CommerceCurrencyPersistenceImpl
 		}
 
 		return commerceCurrency;
-	}
-
-	/**
-	 * Returns the commerce currency where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
-	 */
-	@Override
-	public CommerceCurrency fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -1758,4 +1400,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:294795186
+// LIFERAY-SERVICE-BUILDER-HASH:-83946786

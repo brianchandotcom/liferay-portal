@@ -139,19 +139,6 @@ public class FaroProjectUsageUtil {
 	}
 
 	/**
-	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param faroProjectId the faro project ID
-	 * @param usageTime the usage time
-	 * @return the matching faro project usage, or <code>null</code> if a matching faro project usage could not be found
-	 */
-	public static FaroProjectUsage fetchByF_U(
-		long faroProjectId, long usageTime) {
-
-		return getPersistence().fetchByF_U(faroProjectId, usageTime);
-	}
-
-	/**
 	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param faroProjectId the faro project ID
@@ -243,6 +230,19 @@ public class FaroProjectUsageUtil {
 		return getPersistence().fetchByPrimaryKey(faroProjectUsageId);
 	}
 
+	/**
+	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param faroProjectId the faro project ID
+	 * @param usageTime the usage time
+	 * @return the matching faro project usage, or <code>null</code> if a matching faro project usage could not be found
+	 */
+	public static FaroProjectUsage fetchByF_U(
+		long faroProjectId, long usageTime) {
+
+		return getPersistence().fetchByF_U(faroProjectId, usageTime);
+	}
+
 	public static FaroProjectUsagePersistence getPersistence() {
 		return _persistence;
 	}
@@ -254,4 +254,4 @@ public class FaroProjectUsageUtil {
 	private static volatile FaroProjectUsagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-435856538
+// LIFERAY-SERVICE-BUILDER-HASH:-1367261762

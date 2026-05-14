@@ -92,55 +92,6 @@ public class BookmarksFolderPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the bookmarks folders where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the bookmarks folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the bookmarks folders where uuid = &#63;.
 	 *
 	 * <p>
@@ -261,18 +212,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns the bookmarks folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 */
-	@Override
-	public BookmarksFolder fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the bookmarks folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -319,62 +258,6 @@ public class BookmarksFolderPersistenceImpl
 
 	private CollectionPersistenceFinder<BookmarksFolder>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the bookmarks folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the bookmarks folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the bookmarks folders where uuid = &#63; and companyId = &#63;.
@@ -475,58 +358,6 @@ public class BookmarksFolderPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the bookmarks folders where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the bookmarks folders where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the bookmarks folders where groupId = &#63;.
 	 *
 	 * <p>
@@ -592,37 +423,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Returns all the bookmarks folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching bookmarks folders that the user has permission to view
-	 */
-	@Override
-	public List<BookmarksFolder> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders that the user has permission to view
-	 */
-	@Override
-	public List<BookmarksFolder> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the bookmarks folders that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -682,58 +482,6 @@ public class BookmarksFolderPersistenceImpl
 
 	private CollectionPersistenceFinder<BookmarksFolder>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the bookmarks folders where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the bookmarks folders where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the bookmarks folders where companyId = &#63;.
@@ -828,63 +576,6 @@ public class BookmarksFolderPersistenceImpl
 		_collectionPersistenceFinderByG_P;
 
 	/**
-	 * Returns all the bookmarks folders where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByG_P(long groupId, long parentFolderId) {
-		return findByG_P(
-			groupId, parentFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByG_P(
-		long groupId, long parentFolderId, int start, int end) {
-
-		return findByG_P(groupId, parentFolderId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the bookmarks folders where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByG_P(
-		long groupId, long parentFolderId, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		return findByG_P(
-			groupId, parentFolderId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the bookmarks folders where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
@@ -954,42 +645,6 @@ public class BookmarksFolderPersistenceImpl
 		return _collectionPersistenceFinderByG_P.fetchFirst(
 			finderCache, new Object[] {groupId, parentFolderId},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching bookmarks folders that the user has permission to view
-	 */
-	@Override
-	public List<BookmarksFolder> filterFindByG_P(
-		long groupId, long parentFolderId) {
-
-		return filterFindByG_P(
-			groupId, parentFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders that the user has permission to view
-	 */
-	@Override
-	public List<BookmarksFolder> filterFindByG_P(
-		long groupId, long parentFolderId, int start, int end) {
-
-		return filterFindByG_P(groupId, parentFolderId, start, end, null);
 	}
 
 	/**
@@ -1212,69 +867,6 @@ public class BookmarksFolderPersistenceImpl
 		_collectionPersistenceFinderByG_P_S;
 
 	/**
-	 * Returns all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @return the matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByG_P_S(
-		long groupId, long parentFolderId, int status) {
-
-		return findByG_P_S(
-			groupId, parentFolderId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByG_P_S(
-		long groupId, long parentFolderId, int status, int start, int end) {
-
-		return findByG_P_S(groupId, parentFolderId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching bookmarks folders
-	 */
-	@Override
-	public List<BookmarksFolder> findByG_P_S(
-		long groupId, long parentFolderId, int status, int start, int end,
-		OrderByComparator<BookmarksFolder> orderByComparator) {
-
-		return findByG_P_S(
-			groupId, parentFolderId, status, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the bookmarks folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1347,45 +939,6 @@ public class BookmarksFolderPersistenceImpl
 		return _collectionPersistenceFinderByG_P_S.fetchFirst(
 			finderCache, new Object[] {groupId, parentFolderId, status},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @return the matching bookmarks folders that the user has permission to view
-	 */
-	@Override
-	public List<BookmarksFolder> filterFindByG_P_S(
-		long groupId, long parentFolderId, int status) {
-
-		return filterFindByG_P_S(
-			groupId, parentFolderId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the bookmarks folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BookmarksFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of bookmarks folders
-	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
-	 * @return the range of matching bookmarks folders that the user has permission to view
-	 */
-	@Override
-	public List<BookmarksFolder> filterFindByG_P_S(
-		long groupId, long parentFolderId, int status, int start, int end) {
-
-		return filterFindByG_P_S(
-			groupId, parentFolderId, status, start, end, null);
 	}
 
 	/**
@@ -2619,4 +2172,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-736242201
+// LIFERAY-SERVICE-BUILDER-HASH:2028492235

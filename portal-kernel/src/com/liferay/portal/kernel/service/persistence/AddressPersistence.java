@@ -33,46 +33,6 @@ public interface AddressPersistence
 	 */
 
 	/**
-	 * Returns all the addresses where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the addresses where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByUuid(String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the addresses where uuid = &#63;.
 	 *
 	 * <p>
@@ -132,50 +92,6 @@ public interface AddressPersistence
 	 * @return the number of matching addresses
 	 */
 	public int countByUuid(String uuid);
-
-	/**
-	 * Returns all the addresses where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the addresses where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the addresses where uuid = &#63; and companyId = &#63;.
@@ -244,47 +160,6 @@ public interface AddressPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the addresses where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByCompanyId(long companyId);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByCompanyId(
-		long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63;.
 	 *
 	 * <p>
@@ -344,47 +219,6 @@ public interface AddressPersistence
 	 * @return the number of matching addresses
 	 */
 	public int countByCompanyId(long companyId);
-
-	/**
-	 * Returns all the addresses where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByUserId(long userId);
-
-	/**
-	 * Returns a range of all the addresses where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByUserId(
-		long userId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByUserId(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the addresses where userId = &#63;.
@@ -448,47 +282,6 @@ public interface AddressPersistence
 	public int countByUserId(long userId);
 
 	/**
-	 * Returns all the addresses where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByCountryId(long countryId);
-
-	/**
-	 * Returns a range of all the addresses where countryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByCountryId(
-		long countryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where countryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByCountryId(
-		long countryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the addresses where countryId = &#63;.
 	 *
 	 * <p>
@@ -550,47 +343,6 @@ public interface AddressPersistence
 	public int countByCountryId(long countryId);
 
 	/**
-	 * Returns all the addresses where regionId = &#63;.
-	 *
-	 * @param regionId the region ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByRegionId(long regionId);
-
-	/**
-	 * Returns a range of all the addresses where regionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param regionId the region ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByRegionId(
-		long regionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where regionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param regionId the region ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByRegionId(
-		long regionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the addresses where regionId = &#63;.
 	 *
 	 * <p>
@@ -650,50 +402,6 @@ public interface AddressPersistence
 	 * @return the number of matching addresses
 	 */
 	public int countByRegionId(long regionId);
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByC_C(long companyId, long classNameId);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C(
-		long companyId, long classNameId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C(
-		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
@@ -762,50 +470,6 @@ public interface AddressPersistence
 	public int countByC_C(long companyId, long classNameId);
 
 	/**
-	 * Returns all the addresses where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByCN_CPK(long classNameId, long classPK);
-
-	/**
-	 * Returns a range of all the addresses where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByCN_CPK(
-		long classNameId, long classPK, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByCN_CPK(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the addresses where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
@@ -870,54 +534,6 @@ public interface AddressPersistence
 	 * @return the number of matching addresses
 	 */
 	public int countByCN_CPK(long classNameId, long classPK);
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C(
-		long companyId, long classNameId, long classPK);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C(
-		long companyId, long classNameId, long classPK, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C(
-		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -991,59 +607,6 @@ public interface AddressPersistence
 	public int countByC_C_C(long companyId, long classNameId, long classPK);
 
 	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeId the list type ID
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_L(
-		long companyId, long classNameId, long classPK, long listTypeId);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeId the list type ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_L(
-		long companyId, long classNameId, long classPK, long listTypeId,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeId the list type ID
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_L(
-		long companyId, long classNameId, long classPK, long listTypeId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
 	 *
 	 * <p>
@@ -1096,63 +659,6 @@ public interface AddressPersistence
 	 */
 	public Address fetchByC_C_C_L_First(
 		long companyId, long classNameId, long classPK, long listTypeId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeIds the list type IDs
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_L(
-		long companyId, long classNameId, long classPK, long[] listTypeIds);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeIds the list type IDs
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_L(
-		long companyId, long classNameId, long classPK, long[] listTypeIds,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param listTypeIds the list type IDs
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_L(
-		long companyId, long classNameId, long classPK, long[] listTypeIds,
-		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<Address>
 			orderByComparator);
 
@@ -1214,59 +720,6 @@ public interface AddressPersistence
 	 */
 	public int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds);
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param mailing the mailing
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_M(
-		long companyId, long classNameId, long classPK, boolean mailing);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param mailing the mailing
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_M(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param mailing the mailing
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_M(
-		long companyId, long classNameId, long classPK, boolean mailing,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1346,59 +799,6 @@ public interface AddressPersistence
 	 */
 	public int countByC_C_C_M(
 		long companyId, long classNameId, long classPK, boolean mailing);
-
-	/**
-	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @return the matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_P(
-		long companyId, long classNameId, long classPK, boolean primary);
-
-	/**
-	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @return the range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_P(
-		long companyId, long classNameId, long classPK, boolean primary,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param primary the primary
-	 * @param start the lower bound of the range of addresses
-	 * @param end the upper bound of the range of addresses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching addresses
-	 */
-	public java.util.List<Address> findByC_C_C_P(
-		long companyId, long classNameId, long classPK, boolean primary,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1491,15 +891,6 @@ public interface AddressPersistence
 		throws NoSuchAddressException;
 
 	/**
-	 * Returns the address where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching address, or <code>null</code> if a matching address could not be found
-	 */
-	public Address fetchByERC_C(String externalReferenceCode, long companyId);
-
-	/**
 	 * Returns the address where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -1566,5 +957,784 @@ public interface AddressPersistence
 	 */
 	public Address fetchByPrimaryKey(long addressId);
 
+	/**
+	 * Returns the address where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public default Address fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns all the addresses where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByCompanyId(long companyId) {
+		return findByCompanyId(
+			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return findByCompanyId(companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByUserId(long userId) {
+		return findByUserId(
+			userId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByUserId(
+		long userId, int start, int end) {
+
+		return findByUserId(userId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where countryId = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByCountryId(long countryId) {
+		return findByCountryId(
+			countryId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where countryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByCountryId(
+		long countryId, int start, int end) {
+
+		return findByCountryId(countryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where countryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByCountryId(
+		long countryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByCountryId(countryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where regionId = &#63;.
+	 *
+	 * @param regionId the region ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByRegionId(long regionId) {
+		return findByRegionId(
+			regionId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where regionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param regionId the region ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByRegionId(
+		long regionId, int start, int end) {
+
+		return findByRegionId(regionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where regionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param regionId the region ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByRegionId(
+		long regionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByRegionId(regionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByC_C(
+		long companyId, long classNameId) {
+
+		return findByC_C(
+			companyId, classNameId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C(
+		long companyId, long classNameId, int start, int end) {
+
+		return findByC_C(companyId, classNameId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByC_C(
+			companyId, classNameId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByCN_CPK(
+		long classNameId, long classPK) {
+
+		return findByCN_CPK(
+			classNameId, classPK,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByCN_CPK(
+		long classNameId, long classPK, int start, int end) {
+
+		return findByCN_CPK(classNameId, classPK, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByCN_CPK(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByCN_CPK(
+			classNameId, classPK, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C(
+		long companyId, long classNameId, long classPK) {
+
+		return findByC_C_C(
+			companyId, classNameId, classPK,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end) {
+
+		return findByC_C_C(
+			companyId, classNameId, classPK, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByC_C_C(
+			companyId, classNameId, classPK, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeId the list type ID
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_L(
+		long companyId, long classNameId, long classPK, long listTypeId) {
+
+		return findByC_C_C_L(
+			companyId, classNameId, classPK, listTypeId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeId the list type ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_L(
+		long companyId, long classNameId, long classPK, long listTypeId,
+		int start, int end) {
+
+		return findByC_C_C_L(
+			companyId, classNameId, classPK, listTypeId, start, end, null,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeId the list type ID
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_L(
+		long companyId, long classNameId, long classPK, long listTypeId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByC_C_C_L(
+			companyId, classNameId, classPK, listTypeId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeIds the list type IDs
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_L(
+		long companyId, long classNameId, long classPK, long[] listTypeIds) {
+
+		return findByC_C_C_L(
+			companyId, classNameId, classPK, listTypeIds,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeIds the list type IDs
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_L(
+		long companyId, long classNameId, long classPK, long[] listTypeIds,
+		int start, int end) {
+
+		return findByC_C_C_L(
+			companyId, classNameId, classPK, listTypeIds, start, end, null,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and listTypeId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param listTypeIds the list type IDs
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_L(
+		long companyId, long classNameId, long classPK, long[] listTypeIds,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByC_C_C_L(
+			companyId, classNameId, classPK, listTypeIds, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param mailing the mailing
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_M(
+		long companyId, long classNameId, long classPK, boolean mailing) {
+
+		return findByC_C_C_M(
+			companyId, classNameId, classPK, mailing,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param mailing the mailing
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_M(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		int start, int end) {
+
+		return findByC_C_C_M(
+			companyId, classNameId, classPK, mailing, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param mailing the mailing
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_M(
+		long companyId, long classNameId, long classPK, boolean mailing,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByC_C_C_M(
+			companyId, classNameId, classPK, mailing, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param primary the primary
+	 * @return the matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_P(
+		long companyId, long classNameId, long classPK, boolean primary) {
+
+		return findByC_C_C_P(
+			companyId, classNameId, classPK, primary,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param primary the primary
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_P(
+		long companyId, long classNameId, long classPK, boolean primary,
+		int start, int end) {
+
+		return findByC_C_C_P(
+			companyId, classNameId, classPK, primary, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param primary the primary
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public default java.util.List<Address> findByC_C_C_P(
+		long companyId, long classNameId, long classPK, boolean primary,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Address>
+			orderByComparator) {
+
+		return findByC_C_C_P(
+			companyId, classNameId, classPK, primary, start, end,
+			orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-470957858
+// LIFERAY-SERVICE-BUILDER-HASH:-1567925038

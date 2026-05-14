@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -91,61 +90,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the asset list entry usages where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -263,18 +211,6 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 	/**
-	 * Returns the asset list entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the asset list entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -323,66 +259,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the asset list entry usages where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -477,59 +357,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByPlid;
 
 	/**
-	 * Returns all the asset list entry usages where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByPlid(long plid) {
-		return findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByPlid(long plid, int start, int end) {
-		return findByPlid(plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByPlid(
-		long plid, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByPlid(plid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param plid the plid
@@ -617,66 +448,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByCT_P;
 
 	/**
-	 * Returns all the asset list entry usages where containerType = &#63; and plid = &#63;.
-	 *
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByCT_P(long containerType, long plid) {
-		return findByCT_P(
-			containerType, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where containerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByCT_P(
-		long containerType, long plid, int start, int end) {
-
-		return findByCT_P(containerType, plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByCT_P(
-		long containerType, long plid, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByCT_P(
-			containerType, plid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where containerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param containerType the container type
@@ -771,72 +546,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByG_C_K;
 
 	/**
-	 * Returns all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByG_C_K(
-		long groupId, long classNameId, String key) {
-
-		return findByG_C_K(
-			groupId, classNameId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByG_C_K(
-		long groupId, long classNameId, String key, int start, int end) {
-
-		return findByG_C_K(groupId, classNameId, key, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByG_C_K(
-		long groupId, long classNameId, String key, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByG_C_K(
-			groupId, classNameId, key, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -938,72 +651,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByC_C_K;
 
 	/**
-	 * Returns all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByC_C_K(
-		long companyId, long classNameId, String key) {
-
-		return findByC_C_K(
-			companyId, classNameId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByC_C_K(
-		long companyId, long classNameId, String key, int start, int end) {
-
-		return findByC_C_K(companyId, classNameId, key, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByC_C_K(
-		long companyId, long classNameId, String key, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByC_C_K(
-			companyId, classNameId, key, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where companyId = &#63; and classNameId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1105,75 +756,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByCK_CT_P;
 
 	/**
-	 * Returns all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByCK_CT_P(
-		String containerKey, long containerType, long plid) {
-
-		return findByCK_CT_P(
-			containerKey, containerType, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByCK_CT_P(
-		String containerKey, long containerType, long plid, int start,
-		int end) {
-
-		return findByCK_CT_P(
-			containerKey, containerType, plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param plid the plid
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByCK_CT_P(
-		String containerKey, long containerType, long plid, int start, int end,
-		OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByCK_CT_P(
-			containerKey, containerType, plid, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where containerKey = &#63; and containerType = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param containerKey the container key
@@ -1279,77 +865,10 @@ public class AssetListEntryUsagePersistenceImpl
 		_collectionPersistenceFinderByG_C_K_T;
 
 	/**
-	 * Returns all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @return the matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByG_C_K_T(
-		long groupId, long classNameId, String key, int type) {
-
-		return findByG_C_K_T(
-			groupId, classNameId, key, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @return the range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByG_C_K_T(
-		long groupId, long classNameId, String key, int type, int start,
-		int end) {
-
-		return findByG_C_K_T(groupId, classNameId, key, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param start the lower bound of the range of asset list entry usages
-	 * @param end the upper bound of the range of asset list entry usages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry usages
-	 */
-	@Override
-	public List<AssetListEntryUsage> findByG_C_K_T(
-		long groupId, long classNameId, String key, int type, int start,
-		int end, OrderByComparator<AssetListEntryUsage> orderByComparator) {
-
-		return findByG_C_K_T(
-			groupId, classNameId, key, type, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry usages where groupId = &#63; and classNameId = &#63; and key = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryUsageModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1497,26 +1016,6 @@ public class AssetListEntryUsagePersistenceImpl
 		}
 
 		return assetListEntryUsage;
-	}
-
-	/**
-	 * Returns the asset list entry usage where groupId = &#63; and classNameId = &#63; and containerKey = &#63; and containerType = &#63; and key = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param containerKey the container key
-	 * @param containerType the container type
-	 * @param key the key
-	 * @param plid the plid
-	 * @return the matching asset list entry usage, or <code>null</code> if a matching asset list entry usage could not be found
-	 */
-	@Override
-	public AssetListEntryUsage fetchByG_C_CK_CT_K_P(
-		long groupId, long classNameId, String containerKey, long containerType,
-		String key, long plid) {
-
-		return fetchByG_C_CK_CT_K_P(
-			groupId, classNameId, containerKey, containerType, key, plid, true);
 	}
 
 	/**
@@ -2315,4 +1814,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-856978104
+// LIFERAY-SERVICE-BUILDER-HASH:-2042192004

@@ -98,17 +98,6 @@ public class ReleasePersistenceImpl
 	}
 
 	/**
-	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param servletContextName the servlet context name
-	 * @return the matching release, or <code>null</code> if a matching release could not be found
-	 */
-	@Override
-	public Release fetchByServletContextName(String servletContextName) {
-		return fetchByServletContextName(servletContextName, true);
-	}
-
-	/**
 	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param servletContextName the servlet context name
@@ -397,4 +386,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1075947250
+// LIFERAY-SERVICE-BUILDER-HASH:916608323

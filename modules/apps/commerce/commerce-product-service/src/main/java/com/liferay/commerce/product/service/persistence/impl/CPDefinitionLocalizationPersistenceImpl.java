@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -92,65 +91,10 @@ public class CPDefinitionLocalizationPersistenceImpl
 		_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
-	 * Returns all the cp definition localizations where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @return the matching cp definition localizations
-	 */
-	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionId(
-		long CPDefinitionId) {
-
-		return findByCPDefinitionId(
-			CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition localizations where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of cp definition localizations
-	 * @param end the upper bound of the range of cp definition localizations (not inclusive)
-	 * @return the range of matching cp definition localizations
-	 */
-	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end) {
-
-		return findByCPDefinitionId(CPDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition localizations where CPDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of cp definition localizations
-	 * @param end the upper bound of the range of cp definition localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition localizations
-	 */
-	@Override
-	public List<CPDefinitionLocalization> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end,
-		OrderByComparator<CPDefinitionLocalization> orderByComparator) {
-
-		return findByCPDefinitionId(
-			CPDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition localizations where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLocalizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLocalizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -270,21 +214,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 		}
 
 		return cpDefinitionLocalization;
-	}
-
-	/**
-	 * Returns the cp definition localization where CPDefinitionId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param languageId the language ID
-	 * @return the matching cp definition localization, or <code>null</code> if a matching cp definition localization could not be found
-	 */
-	@Override
-	public CPDefinitionLocalization fetchByCPDefinitionId_LanguageId(
-		long CPDefinitionId, String languageId) {
-
-		return fetchByCPDefinitionId_LanguageId(
-			CPDefinitionId, languageId, true);
 	}
 
 	/**
@@ -790,4 +719,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1680544198
+// LIFERAY-SERVICE-BUILDER-HASH:337359310

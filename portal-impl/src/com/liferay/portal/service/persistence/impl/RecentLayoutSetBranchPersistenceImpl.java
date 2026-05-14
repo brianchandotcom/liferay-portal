@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.kernel.log.Log;
@@ -69,62 +68,10 @@ public class RecentLayoutSetBranchPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the recent layout set branches where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the recent layout set branches where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of recent layout set branches
-	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
-	 * @return the range of matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the recent layout set branches where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of recent layout set branches
-	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the recent layout set branches where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -215,61 +162,10 @@ public class RecentLayoutSetBranchPersistenceImpl
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the recent layout set branches where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the recent layout set branches where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of recent layout set branches
-	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
-	 * @return the range of matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the recent layout set branches where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of recent layout set branches
-	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the recent layout set branches where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -360,65 +256,10 @@ public class RecentLayoutSetBranchPersistenceImpl
 		_collectionPersistenceFinderByLayoutSetBranchId;
 
 	/**
-	 * Returns all the recent layout set branches where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @return the matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByLayoutSetBranchId(
-		long layoutSetBranchId) {
-
-		return findByLayoutSetBranchId(
-			layoutSetBranchId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the recent layout set branches where layoutSetBranchId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of recent layout set branches
-	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
-	 * @return the range of matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByLayoutSetBranchId(
-		long layoutSetBranchId, int start, int end) {
-
-		return findByLayoutSetBranchId(layoutSetBranchId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the recent layout set branches where layoutSetBranchId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of recent layout set branches
-	 * @param end the upper bound of the range of recent layout set branches (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching recent layout set branches
-	 */
-	@Override
-	public List<RecentLayoutSetBranch> findByLayoutSetBranchId(
-		long layoutSetBranchId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
-
-		return findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the recent layout set branches where layoutSetBranchId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>.
 	 * </p>
 	 *
 	 * @param layoutSetBranchId the layout set branch ID
@@ -540,18 +381,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 		}
 
 		return recentLayoutSetBranch;
-	}
-
-	/**
-	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param layoutSetId the layout set ID
-	 * @return the matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
-	 */
-	@Override
-	public RecentLayoutSetBranch fetchByU_L(long userId, long layoutSetId) {
-		return fetchByU_L(userId, layoutSetId, true);
 	}
 
 	/**
@@ -921,4 +750,4 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-505009528
+// LIFERAY-SERVICE-BUILDER-HASH:1746489416

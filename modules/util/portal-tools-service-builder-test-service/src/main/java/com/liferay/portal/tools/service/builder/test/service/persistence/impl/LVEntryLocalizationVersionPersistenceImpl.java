@@ -8,7 +8,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,66 +67,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		_collectionPersistenceFinderByLvEntryLocalizationId;
 
 	/**
-	 * Returns all the lv entry localization versions where lvEntryLocalizationId = &#63;.
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @return the matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryLocalizationId(
-		long lvEntryLocalizationId) {
-
-		return findByLvEntryLocalizationId(
-			lvEntryLocalizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry localization versions where lvEntryLocalizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @return the range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryLocalizationId(
-		long lvEntryLocalizationId, int start, int end) {
-
-		return findByLvEntryLocalizationId(
-			lvEntryLocalizationId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryLocalizationId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryLocalizationId(
-		long lvEntryLocalizationId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return findByLvEntryLocalizationId(
-			lvEntryLocalizationId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry localization versions where lvEntryLocalizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
@@ -255,21 +198,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param lvEntryLocalizationId the lv entry localization ID
-	 * @param version the version
-	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Version(
-		long lvEntryLocalizationId, int version) {
-
-		return fetchByLvEntryLocalizationId_Version(
-			lvEntryLocalizationId, version, true);
-	}
-
-	/**
 	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param lvEntryLocalizationId the lv entry localization ID
@@ -323,62 +251,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		_collectionPersistenceFinderByLvEntryId;
 
 	/**
-	 * Returns all the lv entry localization versions where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @return the matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId(long lvEntryId) {
-		return findByLvEntryId(
-			lvEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry localization versions where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @return the range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId(
-		long lvEntryId, int start, int end) {
-
-		return findByLvEntryId(lvEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId(
-		long lvEntryId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return findByLvEntryId(lvEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -468,68 +344,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		_collectionPersistenceFinderByLvEntryId_Version;
 
 	/**
-	 * Returns all the lv entry localization versions where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @return the matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId_Version(
-		long lvEntryId, int version) {
-
-		return findByLvEntryId_Version(
-			lvEntryId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry localization versions where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @return the range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId_Version(
-		long lvEntryId, int version, int start, int end) {
-
-		return findByLvEntryId_Version(lvEntryId, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId_Version(
-		long lvEntryId, int version, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return findByLvEntryId_Version(
-			lvEntryId, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -627,69 +445,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		_collectionPersistenceFinderByLvEntryId_LanguageId;
 
 	/**
-	 * Returns all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @return the matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId_LanguageId(
-		long lvEntryId, String languageId) {
-
-		return findByLvEntryId_LanguageId(
-			lvEntryId, languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @return the range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId_LanguageId(
-		long lvEntryId, String languageId, int start, int end) {
-
-		return findByLvEntryId_LanguageId(
-			lvEntryId, languageId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of lv entry localization versions
-	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry localization versions
-	 */
-	@Override
-	public List<LVEntryLocalizationVersion> findByLvEntryId_LanguageId(
-		long lvEntryId, String languageId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
-
-		return findByLvEntryId_LanguageId(
-			lvEntryId, languageId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -821,22 +580,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		}
 
 		return lvEntryLocalizationVersion;
-	}
-
-	/**
-	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param languageId the language ID
-	 * @param version the version
-	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Version(
-		long lvEntryId, String languageId, int version) {
-
-		return fetchByLvEntryId_LanguageId_Version(
-			lvEntryId, languageId, version, true);
 	}
 
 	/**
@@ -1308,4 +1051,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-448431946
+// LIFERAY-SERVICE-BUILDER-HASH:-1044363967

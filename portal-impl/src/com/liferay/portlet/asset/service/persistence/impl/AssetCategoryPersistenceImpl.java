@@ -96,55 +96,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the asset categories where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where uuid = &#63;.
 	 *
 	 * <p>
@@ -266,18 +217,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the asset category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the asset category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -325,62 +264,6 @@ public class AssetCategoryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetCategory>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the asset categories where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset categories where uuid = &#63; and companyId = &#63;.
@@ -482,56 +365,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the asset categories where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where groupId = &#63;.
 	 *
 	 * <p>
@@ -598,37 +431,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the asset categories that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -688,59 +490,6 @@ public class AssetCategoryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetCategory>
 		_collectionPersistenceFinderByParentCategoryId;
-
-	/**
-	 * Returns all the asset categories where parentCategoryId = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByParentCategoryId(long parentCategoryId) {
-		return findByParentCategoryId(
-			parentCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where parentCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByParentCategoryId(
-		long parentCategoryId, int start, int end) {
-
-		return findByParentCategoryId(parentCategoryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where parentCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByParentCategoryId(
-		long parentCategoryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByParentCategoryId(
-			parentCategoryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset categories where parentCategoryId = &#63;.
@@ -838,59 +587,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByVocabularyId;
 
 	/**
-	 * Returns all the asset categories where vocabularyId = &#63;.
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByVocabularyId(long vocabularyId) {
-		return findByVocabularyId(
-			vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByVocabularyId(
-		long vocabularyId, int start, int end) {
-
-		return findByVocabularyId(vocabularyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByVocabularyId(
-		long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByVocabularyId(
-			vocabularyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where vocabularyId = &#63;.
 	 *
 	 * <p>
@@ -984,63 +680,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByG_P;
 
 	/**
-	 * Returns all the asset categories where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_P(long groupId, long parentCategoryId) {
-		return findByG_P(
-			groupId, parentCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_P(
-		long groupId, long parentCategoryId, int start, int end) {
-
-		return findByG_P(groupId, parentCategoryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_P(
-		long groupId, long parentCategoryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByG_P(
-			groupId, parentCategoryId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63;.
 	 *
 	 * <p>
@@ -1114,42 +753,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @return the matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_P(
-		long groupId, long parentCategoryId) {
-
-		return filterFindByG_P(
-			groupId, parentCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_P(
-		long groupId, long parentCategoryId, int start, int end) {
-
-		return filterFindByG_P(groupId, parentCategoryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63; and parentCategoryId = &#63;.
 	 *
 	 * <p>
@@ -1217,62 +820,6 @@ public class AssetCategoryPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<AssetCategory>
 		_collectionPersistenceFinderByG_V;
-
-	/**
-	 * Returns all the asset categories where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_V(long groupId, long vocabularyId) {
-		return findByG_V(
-			groupId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_V(
-		long groupId, long vocabularyId, int start, int end) {
-
-		return findByG_V(groupId, vocabularyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_V(
-		long groupId, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByG_V(
-			groupId, vocabularyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset categories where groupId = &#63; and vocabularyId = &#63;.
@@ -1358,41 +905,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the asset categories that the user has permission to view where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_V(
-		long groupId, long vocabularyId) {
-
-		return filterFindByG_V(
-			groupId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories that the user has permission to view where groupId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_V(
-		long groupId, long vocabularyId, int start, int end) {
-
-		return filterFindByG_V(groupId, vocabularyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories that the user has permissions to view where groupId = &#63; and vocabularyId = &#63;.
 	 *
 	 * <p>
@@ -1415,42 +927,6 @@ public class AssetCategoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {new long[] {groupId}, new long[] {vocabularyId}},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the asset categories that the user has permission to view where groupId = any &#63; and vocabularyId = any &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @param vocabularyIds the vocabulary IDs
-	 * @return the matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_V(
-		long[] groupIds, long[] vocabularyIds) {
-
-		return filterFindByG_V(
-			groupIds, vocabularyIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories that the user has permission to view where groupId = any &#63; and vocabularyId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param vocabularyIds the vocabulary IDs
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_V(
-		long[] groupIds, long[] vocabularyIds, int start, int end) {
-
-		return filterFindByG_V(groupIds, vocabularyIds, start, end, null);
 	}
 
 	/**
@@ -1478,69 +954,6 @@ public class AssetCategoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {groupIds, ArrayUtil.sortedUnique(vocabularyIds)},
 			start, end, orderByComparator, groupIds);
-	}
-
-	/**
-	 * Returns all the asset categories where groupId = any &#63; and vocabularyId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param vocabularyIds the vocabulary IDs
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_V(
-		long[] groupIds, long[] vocabularyIds) {
-
-		return findByG_V(
-			groupIds, vocabularyIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where groupId = any &#63; and vocabularyId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param vocabularyIds the vocabulary IDs
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_V(
-		long[] groupIds, long[] vocabularyIds, int start, int end) {
-
-		return findByG_V(groupIds, vocabularyIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = any &#63; and vocabularyId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param vocabularyIds the vocabulary IDs
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_V(
-		long[] groupIds, long[] vocabularyIds, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByG_V(
-			groupIds, vocabularyIds, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1653,62 +1066,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByP_N;
 
 	/**
-	 * Returns all the asset categories where parentCategoryId = &#63; and name = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByP_N(long parentCategoryId, String name) {
-		return findByP_N(
-			parentCategoryId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where parentCategoryId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByP_N(
-		long parentCategoryId, String name, int start, int end) {
-
-		return findByP_N(parentCategoryId, name, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where parentCategoryId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByP_N(
-		long parentCategoryId, String name, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByP_N(
-			parentCategoryId, name, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where parentCategoryId = &#63; and name = &#63;.
 	 *
 	 * <p>
@@ -1810,66 +1167,6 @@ public class AssetCategoryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetCategory>
 		_collectionPersistenceFinderByP_V;
-
-	/**
-	 * Returns all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByP_V(
-		long parentCategoryId, long vocabularyId) {
-
-		return findByP_V(
-			parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByP_V(
-		long parentCategoryId, long vocabularyId, int start, int end) {
-
-		return findByP_V(parentCategoryId, vocabularyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByP_V(
-		long parentCategoryId, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByP_V(
-			parentCategoryId, vocabularyId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset categories where parentCategoryId = &#63; and vocabularyId = &#63;.
@@ -1975,62 +1272,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByN_V;
 
 	/**
-	 * Returns all the asset categories where name = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByN_V(String name, long vocabularyId) {
-		return findByN_V(
-			name, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where name = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByN_V(
-		String name, long vocabularyId, int start, int end) {
-
-		return findByN_V(name, vocabularyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where name = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByN_V(
-		String name, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByN_V(
-			name, vocabularyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where name = &#63; and vocabularyId = &#63;.
 	 *
 	 * <p>
@@ -2132,71 +1373,6 @@ public class AssetCategoryPersistenceImpl
 		_collectionPersistenceFinderByG_P_V;
 
 	/**
-	 * Returns all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_P_V(
-		long groupId, long parentCategoryId, long vocabularyId) {
-
-		return findByG_P_V(
-			groupId, parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_P_V(
-		long groupId, long parentCategoryId, long vocabularyId, int start,
-		int end) {
-
-		return findByG_P_V(
-			groupId, parentCategoryId, vocabularyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset categories
-	 */
-	@Override
-	public List<AssetCategory> findByG_P_V(
-		long groupId, long parentCategoryId, long vocabularyId, int start,
-		int end, OrderByComparator<AssetCategory> orderByComparator) {
-
-		return findByG_P_V(
-			groupId, parentCategoryId, vocabularyId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
 	 *
 	 * <p>
@@ -2271,46 +1447,6 @@ public class AssetCategoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {groupId, parentCategoryId, vocabularyId},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_P_V(
-		long groupId, long parentCategoryId, long vocabularyId) {
-
-		return filterFindByG_P_V(
-			groupId, parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset categories that the user has permission to view where groupId = &#63; and parentCategoryId = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @return the range of matching asset categories that the user has permission to view
-	 */
-	@Override
-	public List<AssetCategory> filterFindByG_P_V(
-		long groupId, long parentCategoryId, long vocabularyId, int start,
-		int end) {
-
-		return filterFindByG_P_V(
-			groupId, parentCategoryId, vocabularyId, start, end, null);
 	}
 
 	/**
@@ -3174,21 +2310,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByP_N_V(
-		long parentCategoryId, String name, long vocabularyId) {
-
-		return fetchByP_N_V(parentCategoryId, name, vocabularyId, true);
-	}
-
-	/**
 	 * Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param parentCategoryId the parent category ID
@@ -3276,20 +2397,6 @@ public class AssetCategoryPersistenceImpl
 		}
 
 		return assetCategory;
-	}
-
-	/**
-	 * Returns the asset category where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	 */
-	@Override
-	public AssetCategory fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -4245,4 +3352,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1994075670
+// LIFERAY-SERVICE-BUILDER-HASH:-992578739

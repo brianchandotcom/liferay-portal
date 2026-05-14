@@ -125,52 +125,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddl records where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByUuid(String uuid, int start, int end) {
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddl records where uuid = &#63;.
 	 *
 	 * <p>
@@ -255,17 +209,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns the ddl record where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
-	 */
-	public static DDLRecord fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the ddl record where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -301,58 +244,6 @@ public class DDLRecordUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the ddl records where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -435,55 +326,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddl records where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddl records where companyId = &#63;.
 	 *
 	 * <p>
@@ -556,55 +398,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddl records where recordSetId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByRecordSetId(long recordSetId) {
-		return getPersistence().findByRecordSetId(recordSetId);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where recordSetId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param recordSetId the record set ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByRecordSetId(
-		long recordSetId, int start, int end) {
-
-		return getPersistence().findByRecordSetId(recordSetId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where recordSetId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param recordSetId the record set ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByRecordSetId(
-		long recordSetId, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByRecordSetId(
-			recordSetId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddl records where recordSetId = &#63;.
 	 *
 	 * <p>
@@ -674,58 +467,6 @@ public class DDLRecordUtil {
 	 */
 	public static int countByRecordSetId(long recordSetId) {
 		return getPersistence().countByRecordSetId(recordSetId);
-	}
-
-	/**
-	 * Returns all the ddl records where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByR_U(long recordSetId, long userId) {
-		return getPersistence().findByR_U(recordSetId, userId);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByR_U(
-		long recordSetId, long userId, int start, int end) {
-
-		return getPersistence().findByR_U(recordSetId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param recordSetId the record set ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByR_U(
-		long recordSetId, long userId, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByR_U(
-			recordSetId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -808,61 +549,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByR_R(
-		long recordSetId, String recordSetVersion) {
-
-		return getPersistence().findByR_R(recordSetId, recordSetVersion);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByR_R(
-		long recordSetId, String recordSetVersion, int start, int end) {
-
-		return getPersistence().findByR_R(
-			recordSetId, recordSetVersion, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param recordSetId the record set ID
-	 * @param recordSetVersion the record set version
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByR_R(
-		long recordSetId, String recordSetVersion, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByR_R(
-			recordSetId, recordSetVersion, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
 	 *
 	 * <p>
@@ -940,58 +626,6 @@ public class DDLRecordUtil {
 	 */
 	public static int countByR_R(long recordSetId, String recordSetVersion) {
 		return getPersistence().countByR_R(recordSetId, recordSetVersion);
-	}
-
-	/**
-	 * Returns all the ddl records where className = &#63; and classPK = &#63;.
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @return the matching ddl records
-	 */
-	public static List<DDLRecord> findByC_C(String className, long classPK) {
-		return getPersistence().findByC_C(className, classPK);
-	}
-
-	/**
-	 * Returns a range of all the ddl records where className = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of matching ddl records
-	 */
-	public static List<DDLRecord> findByC_C(
-		String className, long classPK, int start, int end) {
-
-		return getPersistence().findByC_C(className, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records where className = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param className the class name
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddl records
-	 */
-	public static List<DDLRecord> findByC_C(
-		String className, long classPK, int start, int end,
-		OrderByComparator<DDLRecord> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			className, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -1123,6 +757,372 @@ public class DDLRecordUtil {
 		return getPersistence().fetchByPrimaryKey(recordId);
 	}
 
+	/**
+	 * Returns the ddl record where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
+	 */
+	public static DDLRecord fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns all the ddl records where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByUuid(String uuid, int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddl records where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddl records where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddl records where recordSetId = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByRecordSetId(long recordSetId) {
+		return getPersistence().findByRecordSetId(recordSetId);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where recordSetId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByRecordSetId(
+		long recordSetId, int start, int end) {
+
+		return getPersistence().findByRecordSetId(recordSetId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where recordSetId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByRecordSetId(
+		long recordSetId, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByRecordSetId(
+			recordSetId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddl records where recordSetId = &#63; and userId = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param userId the user ID
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByR_U(long recordSetId, long userId) {
+		return getPersistence().findByR_U(recordSetId, userId);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where recordSetId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByR_U(
+		long recordSetId, long userId, int start, int end) {
+
+		return getPersistence().findByR_U(recordSetId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByR_U(
+		long recordSetId, long userId, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByR_U(
+			recordSetId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByR_R(
+		long recordSetId, String recordSetVersion) {
+
+		return getPersistence().findByR_R(recordSetId, recordSetVersion);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByR_R(
+		long recordSetId, String recordSetVersion, int start, int end) {
+
+		return getPersistence().findByR_R(
+			recordSetId, recordSetVersion, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where recordSetId = &#63; and recordSetVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param recordSetId the record set ID
+	 * @param recordSetVersion the record set version
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByR_R(
+		long recordSetId, String recordSetVersion, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByR_R(
+			recordSetId, recordSetVersion, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @return the matching ddl records
+	 */
+	public static List<DDLRecord> findByC_C(String className, long classPK) {
+		return getPersistence().findByC_C(className, classPK);
+	}
+
+	/**
+	 * Returns a range of all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @return the range of matching ddl records
+	 */
+	public static List<DDLRecord> findByC_C(
+		String className, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C(className, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddl records where className = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param className the class name
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of ddl records
+	 * @param end the upper bound of the range of ddl records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddl records
+	 */
+	public static List<DDLRecord> findByC_C(
+		String className, long classPK, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			className, classPK, start, end, orderByComparator);
+	}
+
 	public static DDLRecordPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1134,4 +1134,4 @@ public class DDLRecordUtil {
 	private static volatile DDLRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:384854295
+// LIFERAY-SERVICE-BUILDER-HASH:2020426209

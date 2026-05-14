@@ -130,54 +130,6 @@ public class CommerceTermEntryUtil {
 	}
 
 	/**
-	 * Returns all the commerce term entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @return the range of matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce term entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce term entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -229,34 +181,6 @@ public class CommerceTermEntryUtil {
 	}
 
 	/**
-	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce term entries that the user has permission to view
-	 */
-	public static List<CommerceTermEntry> filterFindByUuid(String uuid) {
-		return getPersistence().filterFindByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entries that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @return the range of matching commerce term entries that the user has permission to view
-	 */
-	public static List<CommerceTermEntry> filterFindByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().filterFindByUuid(uuid, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
@@ -304,60 +228,6 @@ public class CommerceTermEntryUtil {
 	 */
 	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the commerce term entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @return the range of matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -419,38 +289,6 @@ public class CommerceTermEntryUtil {
 	}
 
 	/**
-	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce term entries that the user has permission to view
-	 */
-	public static List<CommerceTermEntry> filterFindByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().filterFindByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @return the range of matching commerce term entries that the user has permission to view
-	 */
-	public static List<CommerceTermEntry> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -502,60 +340,6 @@ public class CommerceTermEntryUtil {
 	 */
 	public static int filterCountByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the commerce term entries where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @return the matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByC_A(
-		long companyId, boolean active) {
-
-		return getPersistence().findByC_A(companyId, active);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entries where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @return the range of matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByC_A(
-		long companyId, boolean active, int start, int end) {
-
-		return getPersistence().findByC_A(companyId, active, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce term entries where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce term entries
-	 */
-	public static List<CommerceTermEntry> findByC_A(
-		long companyId, boolean active, int start, int end,
-		OrderByComparator<CommerceTermEntry> orderByComparator) {
-
-		return getPersistence().findByC_A(
-			companyId, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -614,38 +398,6 @@ public class CommerceTermEntryUtil {
 
 		return getPersistence().fetchByC_A_First(
 			companyId, active, orderByComparator);
-	}
-
-	/**
-	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @return the matching commerce term entries that the user has permission to view
-	 */
-	public static List<CommerceTermEntry> filterFindByC_A(
-		long companyId, boolean active) {
-
-		return getPersistence().filterFindByC_A(companyId, active);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce term entries
-	 * @param end the upper bound of the range of commerce term entries (not inclusive)
-	 * @return the range of matching commerce term entries that the user has permission to view
-	 */
-	public static List<CommerceTermEntry> filterFindByC_A(
-		long companyId, boolean active, int start, int end) {
-
-		return getPersistence().filterFindByC_A(companyId, active, start, end);
 	}
 
 	/**
@@ -714,17 +466,6 @@ public class CommerceTermEntryUtil {
 		throws com.liferay.commerce.term.exception.NoSuchTermEntryException {
 
 		return getPersistence().findByC_N(companyId, name);
-	}
-
-	/**
-	 * Returns the commerce term entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public static CommerceTermEntry fetchByC_N(long companyId, String name) {
-		return getPersistence().fetchByC_N(companyId, name);
 	}
 
 	/**
@@ -1601,20 +1342,6 @@ public class CommerceTermEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param priority the priority
-	 * @param type the type
-	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public static CommerceTermEntry fetchByC_P_T(
-		long companyId, double priority, String type) {
-
-		return getPersistence().fetchByC_P_T(companyId, priority, type);
-	}
-
-	/**
 	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -1672,19 +1399,6 @@ public class CommerceTermEntryUtil {
 		throws com.liferay.commerce.term.exception.NoSuchTermEntryException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
-	 */
-	public static CommerceTermEntry fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -1783,6 +1497,292 @@ public class CommerceTermEntryUtil {
 		return getPersistence().fetchByPrimaryKey(commerceTermEntryId);
 	}
 
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public static CommerceTermEntry fetchByC_N(long companyId, String name) {
+		return getPersistence().fetchByC_N(companyId, name);
+	}
+
+	/**
+	 * Returns the commerce term entry where companyId = &#63; and priority = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param priority the priority
+	 * @param type the type
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public static CommerceTermEntry fetchByC_P_T(
+		long companyId, double priority, String type) {
+
+		return getPersistence().fetchByC_P_T(companyId, priority, type);
+	}
+
+	/**
+	 * Returns the commerce term entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public static CommerceTermEntry fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the commerce term entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceTermEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public static List<CommerceTermEntry> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public static List<CommerceTermEntry> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceTermEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public static List<CommerceTermEntry> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public static List<CommerceTermEntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns all the commerce term entries where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByC_A(
+		long companyId, boolean active) {
+
+		return getPersistence().findByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entries where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return getPersistence().findByC_A(companyId, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public static List<CommerceTermEntry> findByC_A(
+		long companyId, boolean active, int start, int end,
+		OrderByComparator<CommerceTermEntry> orderByComparator) {
+
+		return getPersistence().findByC_A(
+			companyId, active, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public static List<CommerceTermEntry> filterFindByC_A(
+		long companyId, boolean active) {
+
+		return getPersistence().filterFindByC_A(companyId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public static List<CommerceTermEntry> filterFindByC_A(
+		long companyId, boolean active, int start, int end) {
+
+		return getPersistence().filterFindByC_A(companyId, active, start, end);
+	}
+
 	public static CommerceTermEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1796,4 +1796,4 @@ public class CommerceTermEntryUtil {
 	private static volatile CommerceTermEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-566598714
+// LIFERAY-SERVICE-BUILDER-HASH:1328530848

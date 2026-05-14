@@ -136,55 +136,6 @@ public class CookiesConsentPreferenceUtil {
 	}
 
 	/**
-	 * Returns all the cookies consent preferences where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	 * Returns a range of all the cookies consent preferences where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @return the range of matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByUserId(
-		long userId, int start, int end) {
-
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cookies consent preferences where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<CookiesConsentPreference> orderByComparator) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cookies consent preferences where userId = &#63;.
 	 *
 	 * <p>
@@ -255,58 +206,6 @@ public class CookiesConsentPreferenceUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
-	}
-
-	/**
-	 * Returns all the cookies consent preferences where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @return the matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByExpirationDate(
-		Date expirationDate) {
-
-		return getPersistence().findByExpirationDate(expirationDate);
-	}
-
-	/**
-	 * Returns a range of all the cookies consent preferences where expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @return the range of matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByExpirationDate(
-		Date expirationDate, int start, int end) {
-
-		return getPersistence().findByExpirationDate(
-			expirationDate, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cookies consent preferences where expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByExpirationDate(
-		Date expirationDate, int start, int end,
-		OrderByComparator<CookiesConsentPreference> orderByComparator) {
-
-		return getPersistence().findByExpirationDate(
-			expirationDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -382,60 +281,6 @@ public class CookiesConsentPreferenceUtil {
 	 */
 	public static int countByExpirationDate(Date expirationDate) {
 		return getPersistence().countByExpirationDate(expirationDate);
-	}
-
-	/**
-	 * Returns all the cookies consent preferences where userId = &#63; and domain = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @return the matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByU_D(
-		long userId, String domain) {
-
-		return getPersistence().findByU_D(userId, domain);
-	}
-
-	/**
-	 * Returns a range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @return the range of matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByU_D(
-		long userId, String domain, int start, int end) {
-
-		return getPersistence().findByU_D(userId, domain, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cookies consent preferences
-	 */
-	public static List<CookiesConsentPreference> findByU_D(
-		long userId, String domain, int start, int end,
-		OrderByComparator<CookiesConsentPreference> orderByComparator) {
-
-		return getPersistence().findByU_D(
-			userId, domain, start, end, orderByComparator);
 	}
 
 	/**
@@ -533,20 +378,6 @@ public class CookiesConsentPreferenceUtil {
 			NoSuchCookiesConsentPreferenceException {
 
 		return getPersistence().findByU_D_N(userId, domain, name);
-	}
-
-	/**
-	 * Returns the cookies consent preference where userId = &#63; and domain = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param name the name
-	 * @return the matching cookies consent preference, or <code>null</code> if a matching cookies consent preference could not be found
-	 */
-	public static CookiesConsentPreference fetchByU_D_N(
-		long userId, String domain, String name) {
-
-		return getPersistence().fetchByU_D_N(userId, domain, name);
 	}
 
 	/**
@@ -653,6 +484,175 @@ public class CookiesConsentPreferenceUtil {
 		return getPersistence().fetchByPrimaryKey(cookiesConsentPreferenceId);
 	}
 
+	/**
+	 * Returns the cookies consent preference where userId = &#63; and domain = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param domain the domain
+	 * @param name the name
+	 * @return the matching cookies consent preference, or <code>null</code> if a matching cookies consent preference could not be found
+	 */
+	public static CookiesConsentPreference fetchByU_D_N(
+		long userId, String domain, String name) {
+
+		return getPersistence().fetchByU_D_N(userId, domain, name);
+	}
+
+	/**
+	 * Returns all the cookies consent preferences where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the cookies consent preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of cookies consent preferences
+	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
+	 * @return the range of matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cookies consent preferences where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of cookies consent preferences
+	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<CookiesConsentPreference> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cookies consent preferences where expirationDate = &#63;.
+	 *
+	 * @param expirationDate the expiration date
+	 * @return the matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByExpirationDate(
+		Date expirationDate) {
+
+		return getPersistence().findByExpirationDate(expirationDate);
+	}
+
+	/**
+	 * Returns a range of all the cookies consent preferences where expirationDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param start the lower bound of the range of cookies consent preferences
+	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
+	 * @return the range of matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByExpirationDate(
+		Date expirationDate, int start, int end) {
+
+		return getPersistence().findByExpirationDate(
+			expirationDate, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cookies consent preferences where expirationDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param expirationDate the expiration date
+	 * @param start the lower bound of the range of cookies consent preferences
+	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByExpirationDate(
+		Date expirationDate, int start, int end,
+		OrderByComparator<CookiesConsentPreference> orderByComparator) {
+
+		return getPersistence().findByExpirationDate(
+			expirationDate, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cookies consent preferences where userId = &#63; and domain = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param domain the domain
+	 * @return the matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByU_D(
+		long userId, String domain) {
+
+		return getPersistence().findByU_D(userId, domain);
+	}
+
+	/**
+	 * Returns a range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param domain the domain
+	 * @param start the lower bound of the range of cookies consent preferences
+	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
+	 * @return the range of matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByU_D(
+		long userId, String domain, int start, int end) {
+
+		return getPersistence().findByU_D(userId, domain, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.cookies.model.impl.CookiesConsentPreferenceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param domain the domain
+	 * @param start the lower bound of the range of cookies consent preferences
+	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cookies consent preferences
+	 */
+	public static List<CookiesConsentPreference> findByU_D(
+		long userId, String domain, int start, int end,
+		OrderByComparator<CookiesConsentPreference> orderByComparator) {
+
+		return getPersistence().findByU_D(
+			userId, domain, start, end, orderByComparator);
+	}
+
 	public static CookiesConsentPreferencePersistence getPersistence() {
 		return _persistence;
 	}
@@ -666,4 +666,4 @@ public class CookiesConsentPreferenceUtil {
 	private static volatile CookiesConsentPreferencePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1914341812
+// LIFERAY-SERVICE-BUILDER-HASH:1249450644

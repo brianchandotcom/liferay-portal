@@ -89,57 +89,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the commerce ml forecast alert entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -231,64 +180,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
@@ -422,21 +313,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the commerce ml forecast alert entry where companyId = &#63; and commerceAccountId = &#63; and timestamp = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param timestamp the timestamp
-	 * @return the matching commerce ml forecast alert entry, or <code>null</code> if a matching commerce ml forecast alert entry could not be found
-	 */
-	@Override
-	public CommerceMLForecastAlertEntry fetchByC_C_T(
-		long companyId, long commerceAccountId, Date timestamp) {
-
-		return fetchByC_C_T(companyId, commerceAccountId, timestamp, true);
-	}
-
-	/**
 	 * Returns the commerce ml forecast alert entry where companyId = &#63; and commerceAccountId = &#63; and timestamp = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -493,71 +369,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByC_C_S;
-
-	/**
-	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long commerceAccountId, int status) {
-
-		return findByC_C_S(
-			companyId, commerceAccountId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long commerceAccountId, int status, int start,
-		int end) {
-
-		return findByC_C_S(
-			companyId, commerceAccountId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long commerceAccountId, int status, int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByC_C_S(
-			companyId, commerceAccountId, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
@@ -647,76 +458,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			finderCache,
 			new Object[] {companyId, new long[] {commerceAccountId}, status},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountIds the commerce account IDs
-	 * @param status the status
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long[] commerceAccountIds, int status) {
-
-		return findByC_C_S(
-			companyId, commerceAccountIds, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountIds the commerce account IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long[] commerceAccountIds, int status, int start,
-		int end) {
-
-		return findByC_C_S(
-			companyId, commerceAccountIds, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountIds the commerce account IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long[] commerceAccountIds, int status, int start,
-		int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByC_C_S(
-			companyId, commerceAccountIds, status, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -2057,4 +1798,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:860457501
+// LIFERAY-SERVICE-BUILDER-HASH:1638818213

@@ -35,48 +35,6 @@ public interface AnnouncementsDeliveryPersistence
 	 */
 
 	/**
-	 * Returns all the announcements deliveries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching announcements deliveries
-	 */
-	public java.util.List<AnnouncementsDelivery> findByCompanyId(
-		long companyId);
-
-	/**
-	 * Returns a range of all the announcements deliveries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of announcements deliveries
-	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
-	 * @return the range of matching announcements deliveries
-	 */
-	public java.util.List<AnnouncementsDelivery> findByCompanyId(
-		long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the announcements deliveries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of announcements deliveries
-	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching announcements deliveries
-	 */
-	public java.util.List<AnnouncementsDelivery> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the announcements deliveries where companyId = &#63;.
 	 *
 	 * <p>
@@ -136,47 +94,6 @@ public interface AnnouncementsDeliveryPersistence
 	 * @return the number of matching announcements deliveries
 	 */
 	public int countByCompanyId(long companyId);
-
-	/**
-	 * Returns all the announcements deliveries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching announcements deliveries
-	 */
-	public java.util.List<AnnouncementsDelivery> findByUserId(long userId);
-
-	/**
-	 * Returns a range of all the announcements deliveries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of announcements deliveries
-	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
-	 * @return the range of matching announcements deliveries
-	 */
-	public java.util.List<AnnouncementsDelivery> findByUserId(
-		long userId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the announcements deliveries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of announcements deliveries
-	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching announcements deliveries
-	 */
-	public java.util.List<AnnouncementsDelivery> findByUserId(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the announcements deliveries where userId = &#63;.
@@ -251,15 +168,6 @@ public interface AnnouncementsDeliveryPersistence
 		throws NoSuchDeliveryException;
 
 	/**
-	 * Returns the announcements delivery where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	 */
-	public AnnouncementsDelivery fetchByU_T(long userId, String type);
-
-	/**
 	 * Returns the announcements delivery where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -328,5 +236,122 @@ public interface AnnouncementsDeliveryPersistence
 	 */
 	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId);
 
+	/**
+	 * Returns the announcements delivery where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param type the type
+	 * @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
+	 */
+	public default AnnouncementsDelivery fetchByU_T(long userId, String type) {
+		return fetchByU_T(userId, type, true);
+	}
+
+	/**
+	 * Returns all the announcements deliveries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching announcements deliveries
+	 */
+	public default java.util.List<AnnouncementsDelivery> findByCompanyId(
+		long companyId) {
+
+		return findByCompanyId(
+			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the announcements deliveries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of announcements deliveries
+	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
+	 * @return the range of matching announcements deliveries
+	 */
+	public default java.util.List<AnnouncementsDelivery> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return findByCompanyId(companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements deliveries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of announcements deliveries
+	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching announcements deliveries
+	 */
+	public default java.util.List<AnnouncementsDelivery> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery>
+			orderByComparator) {
+
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the announcements deliveries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching announcements deliveries
+	 */
+	public default java.util.List<AnnouncementsDelivery> findByUserId(
+		long userId) {
+
+		return findByUserId(
+			userId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the announcements deliveries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of announcements deliveries
+	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
+	 * @return the range of matching announcements deliveries
+	 */
+	public default java.util.List<AnnouncementsDelivery> findByUserId(
+		long userId, int start, int end) {
+
+		return findByUserId(userId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements deliveries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of announcements deliveries
+	 * @param end the upper bound of the range of announcements deliveries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching announcements deliveries
+	 */
+	public default java.util.List<AnnouncementsDelivery> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsDelivery>
+			orderByComparator) {
+
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2031059042
+// LIFERAY-SERVICE-BUILDER-HASH:-621671419

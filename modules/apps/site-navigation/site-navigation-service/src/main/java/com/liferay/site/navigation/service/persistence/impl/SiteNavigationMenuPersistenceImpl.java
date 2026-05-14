@@ -104,57 +104,6 @@ public class SiteNavigationMenuPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the site navigation menus where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus where uuid = &#63;.
 	 *
 	 * <p>
@@ -276,18 +225,6 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 	/**
-	 * Returns the site navigation menu where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	@Override
-	public SiteNavigationMenu fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the site navigation menu where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -334,62 +271,6 @@ public class SiteNavigationMenuPersistenceImpl
 
 	private CollectionPersistenceFinder<SiteNavigationMenu>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the site navigation menus where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
@@ -490,58 +371,6 @@ public class SiteNavigationMenuPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the site navigation menus where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus where groupId = &#63;.
 	 *
 	 * <p>
@@ -616,37 +445,6 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -667,37 +465,6 @@ public class SiteNavigationMenuPersistenceImpl
 		return _collectionPersistenceFinderByGroupId.filterFind(
 			finderCache, new Object[] {new long[] {groupId}}, start, end,
 			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = any &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByGroupId(long[] groupIds) {
-		return filterFindByGroupId(
-			groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByGroupId(
-		long[] groupIds, int start, int end) {
-
-		return filterFindByGroupId(groupIds, start, end, null);
 	}
 
 	/**
@@ -723,62 +490,6 @@ public class SiteNavigationMenuPersistenceImpl
 		return _collectionPersistenceFinderByGroupId.filterFind(
 			finderCache, new Object[] {groupIds}, start, end, orderByComparator,
 			groupIds);
-	}
-
-	/**
-	 * Returns all the site navigation menus where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByGroupId(long[] groupIds) {
-		return findByGroupId(
-			groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByGroupId(
-		long[] groupIds, int start, int end) {
-
-		return findByGroupId(groupIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByGroupId(
-		long[] groupIds, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByGroupId(groupIds, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -869,58 +580,6 @@ public class SiteNavigationMenuPersistenceImpl
 
 	private CollectionPersistenceFinder<SiteNavigationMenu>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the site navigation menus where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menus where companyId = &#63;.
@@ -1042,18 +701,6 @@ public class SiteNavigationMenuPersistenceImpl
 		}
 
 		return siteNavigationMenu;
-	}
-
-	/**
-	 * Returns the site navigation menu where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	@Override
-	public SiteNavigationMenu fetchByG_N(long groupId, String name) {
-		return fetchByG_N(groupId, name, true);
 	}
 
 	/**
@@ -1519,61 +1166,6 @@ public class SiteNavigationMenuPersistenceImpl
 		_collectionPersistenceFinderByG_T;
 
 	/**
-	 * Returns all the site navigation menus where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByG_T(long groupId, int type) {
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByG_T(
-		long groupId, int type, int start, int end) {
-
-		return findByG_T(groupId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByG_T(
-		long groupId, int type, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1644,39 +1236,6 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByG_T(long groupId, int type) {
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByG_T(
-		long groupId, int type, int start, int end) {
-
-		return filterFindByG_T(groupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1740,61 +1299,6 @@ public class SiteNavigationMenuPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<SiteNavigationMenu>
 		_collectionPersistenceFinderByG_A;
-
-	/**
-	 * Returns all the site navigation menus where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @return the matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByG_A(long groupId, boolean auto) {
-		return findByG_A(
-			groupId, auto, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = &#63; and auto = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByG_A(
-		long groupId, boolean auto, int start, int end) {
-
-		return findByG_A(groupId, auto, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and auto = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	@Override
-	public List<SiteNavigationMenu> findByG_A(
-		long groupId, boolean auto, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return findByG_A(groupId, auto, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and auto = &#63;.
@@ -1864,41 +1368,6 @@ public class SiteNavigationMenuPersistenceImpl
 
 		return _collectionPersistenceFinderByG_A.fetchFirst(
 			finderCache, new Object[] {groupId, auto}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByG_A(
-		long groupId, boolean auto) {
-
-		return filterFindByG_A(
-			groupId, auto, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and auto = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	@Override
-	public List<SiteNavigationMenu> filterFindByG_A(
-		long groupId, boolean auto, int start, int end) {
-
-		return filterFindByG_A(groupId, auto, start, end, null);
 	}
 
 	/**
@@ -1996,20 +1465,6 @@ public class SiteNavigationMenuPersistenceImpl
 		}
 
 		return siteNavigationMenu;
-	}
-
-	/**
-	 * Returns the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	@Override
-	public SiteNavigationMenu fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -2804,4 +2259,4 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1155781457
+// LIFERAY-SERVICE-BUILDER-HASH:-388905672

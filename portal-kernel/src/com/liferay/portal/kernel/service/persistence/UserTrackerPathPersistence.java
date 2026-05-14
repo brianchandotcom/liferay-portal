@@ -32,48 +32,6 @@ public interface UserTrackerPathPersistence
 	 */
 
 	/**
-	 * Returns all the user tracker paths where userTrackerId = &#63;.
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @return the matching user tracker paths
-	 */
-	public java.util.List<UserTrackerPath> findByUserTrackerId(
-		long userTrackerId);
-
-	/**
-	 * Returns a range of all the user tracker paths where userTrackerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserTrackerPathModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @param start the lower bound of the range of user tracker paths
-	 * @param end the upper bound of the range of user tracker paths (not inclusive)
-	 * @return the range of matching user tracker paths
-	 */
-	public java.util.List<UserTrackerPath> findByUserTrackerId(
-		long userTrackerId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the user tracker paths where userTrackerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserTrackerPathModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userTrackerId the user tracker ID
-	 * @param start the lower bound of the range of user tracker paths
-	 * @param end the upper bound of the range of user tracker paths (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user tracker paths
-	 */
-	public java.util.List<UserTrackerPath> findByUserTrackerId(
-		long userTrackerId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserTrackerPath>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the user tracker paths where userTrackerId = &#63;.
 	 *
 	 * <p>
@@ -172,5 +130,59 @@ public interface UserTrackerPathPersistence
 	 */
 	public UserTrackerPath fetchByPrimaryKey(long userTrackerPathId);
 
+	/**
+	 * Returns all the user tracker paths where userTrackerId = &#63;.
+	 *
+	 * @param userTrackerId the user tracker ID
+	 * @return the matching user tracker paths
+	 */
+	public default java.util.List<UserTrackerPath> findByUserTrackerId(
+		long userTrackerId) {
+
+		return findByUserTrackerId(
+			userTrackerId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the user tracker paths where userTrackerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserTrackerPathModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userTrackerId the user tracker ID
+	 * @param start the lower bound of the range of user tracker paths
+	 * @param end the upper bound of the range of user tracker paths (not inclusive)
+	 * @return the range of matching user tracker paths
+	 */
+	public default java.util.List<UserTrackerPath> findByUserTrackerId(
+		long userTrackerId, int start, int end) {
+
+		return findByUserTrackerId(userTrackerId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user tracker paths where userTrackerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserTrackerPathModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userTrackerId the user tracker ID
+	 * @param start the lower bound of the range of user tracker paths
+	 * @param end the upper bound of the range of user tracker paths (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user tracker paths
+	 */
+	public default java.util.List<UserTrackerPath> findByUserTrackerId(
+		long userTrackerId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserTrackerPath>
+			orderByComparator) {
+
+		return findByUserTrackerId(
+			userTrackerId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:339735203
+// LIFERAY-SERVICE-BUILDER-HASH:-271931048

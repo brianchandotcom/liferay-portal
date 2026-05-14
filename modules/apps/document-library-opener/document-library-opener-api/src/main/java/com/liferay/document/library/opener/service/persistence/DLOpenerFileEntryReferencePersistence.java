@@ -43,14 +43,6 @@ public interface DLOpenerFileEntryReferencePersistence
 		throws NoSuchFileEntryReferenceException;
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
-	 */
-	public DLOpenerFileEntryReference fetchByFileEntryId(long fileEntryId);
-
-	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -88,16 +80,6 @@ public interface DLOpenerFileEntryReferencePersistence
 	public DLOpenerFileEntryReference findByR_F(
 			String referenceType, long fileEntryId)
 		throws NoSuchFileEntryReferenceException;
-
-	/**
-	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param referenceType the reference type
-	 * @param fileEntryId the file entry ID
-	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
-	 */
-	public DLOpenerFileEntryReference fetchByR_F(
-		String referenceType, long fileEntryId);
 
 	/**
 	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -171,5 +153,30 @@ public interface DLOpenerFileEntryReferencePersistence
 	public DLOpenerFileEntryReference fetchByPrimaryKey(
 		long dlOpenerFileEntryReferenceId);
 
+	/**
+	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
+	 */
+	public default DLOpenerFileEntryReference fetchByFileEntryId(
+		long fileEntryId) {
+
+		return fetchByFileEntryId(fileEntryId, true);
+	}
+
+	/**
+	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param referenceType the reference type
+	 * @param fileEntryId the file entry ID
+	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
+	 */
+	public default DLOpenerFileEntryReference fetchByR_F(
+		String referenceType, long fileEntryId) {
+
+		return fetchByR_F(referenceType, fileEntryId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-102046098
+// LIFERAY-SERVICE-BUILDER-HASH:170903764

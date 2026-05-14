@@ -105,57 +105,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the layout utility page entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -279,18 +228,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -338,64 +275,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
@@ -496,58 +375,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the layout utility page entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -612,37 +439,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByGroupId.fetchFirst(
 			finderCache, new Object[] {groupId}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
 	}
 
 	/**
@@ -735,17 +531,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param plid the plid
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByPlid(long plid) {
-		return fetchByPlid(plid, true);
-	}
-
-	/**
 	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param plid the plid
@@ -789,61 +574,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_T;
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(long groupId, String type) {
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type, int start, int end) {
-
-		return findByG_T(groupId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
@@ -927,41 +657,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String type) {
-
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String type, int start, int end) {
-
-		return filterFindByG_T(groupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -986,41 +681,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String[] types) {
-
-		return filterFindByG_T(
-			groupId, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String[] types, int start, int end) {
-
-		return filterFindByG_T(groupId, types, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
 	 *
 	 * <p>
@@ -1042,67 +702,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		return _collectionPersistenceFinderByG_T.filterFind(
 			finderCache, new Object[] {groupId, ArrayUtil.sortedUnique(types)},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types) {
-
-		return findByG_T(
-			groupId, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types, int start, int end) {
-
-		return findByG_T(groupId, types, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByG_T(groupId, types, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1200,72 +799,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		_collectionPersistenceFinderByG_D_T;
 
 	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
-
-		return findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end) {
-
-		return findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1341,46 +874,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache,
 			new Object[] {groupId, defaultLayoutUtilityPageEntry, type},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
-
-		return filterFindByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end) {
-
-		return filterFindByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end, null);
 	}
 
 	/**
@@ -1495,21 +988,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry where groupId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByG_N_T(
-		long groupId, String name, String type) {
-
-		return fetchByG_N_T(groupId, name, type, true);
 	}
 
 	/**
@@ -2039,20 +1517,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -2884,4 +2348,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1883506096
+// LIFERAY-SERVICE-BUILDER-HASH:780315862

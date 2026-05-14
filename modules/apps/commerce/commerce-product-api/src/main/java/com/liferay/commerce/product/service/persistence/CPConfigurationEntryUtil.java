@@ -130,54 +130,6 @@ public class CPConfigurationEntryUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @return the range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CPConfigurationEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -266,19 +218,6 @@ public class CPConfigurationEntryUtil {
 	}
 
 	/**
-	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
-	 */
-	public static CPConfigurationEntry fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -315,60 +254,6 @@ public class CPConfigurationEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the cp configuration entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @return the range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CPConfigurationEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -452,55 +337,6 @@ public class CPConfigurationEntryUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @return the range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CPConfigurationEntry> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration entries where companyId = &#63;.
 	 *
 	 * <p>
@@ -573,59 +409,6 @@ public class CPConfigurationEntryUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the cp configuration entries where CPConfigurationListId = &#63;.
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @return the matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByCPConfigurationListId(
-		long CPConfigurationListId) {
-
-		return getPersistence().findByCPConfigurationListId(
-			CPConfigurationListId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration entries where CPConfigurationListId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @return the range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByCPConfigurationListId(
-		long CPConfigurationListId, int start, int end) {
-
-		return getPersistence().findByCPConfigurationListId(
-			CPConfigurationListId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration entries where CPConfigurationListId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByCPConfigurationListId(
-		long CPConfigurationListId, int start, int end,
-		OrderByComparator<CPConfigurationEntry> orderByComparator) {
-
-		return getPersistence().findByCPConfigurationListId(
-			CPConfigurationListId, start, end, orderByComparator);
 	}
 
 	/**
@@ -705,60 +488,6 @@ public class CPConfigurationEntryUtil {
 	public static int countByCPConfigurationListId(long CPConfigurationListId) {
 		return getPersistence().countByCPConfigurationListId(
 			CPConfigurationListId);
-	}
-
-	/**
-	 * Returns all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByC_C(
-		long classNameId, long classPK) {
-
-		return getPersistence().findByC_C(classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @return the range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByC_C(classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of cp configuration entries
-	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration entries
-	 */
-	public static List<CPConfigurationEntry> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<CPConfigurationEntry> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -861,21 +590,6 @@ public class CPConfigurationEntryUtil {
 	}
 
 	/**
-	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param CPConfigurationListId the cp configuration list ID
-	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
-	 */
-	public static CPConfigurationEntry fetchByC_C_C(
-		long classNameId, long classPK, long CPConfigurationListId) {
-
-		return getPersistence().fetchByC_C_C(
-			classNameId, classPK, CPConfigurationListId);
-	}
-
-	/**
 	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -938,19 +652,6 @@ public class CPConfigurationEntryUtil {
 			NoSuchCPConfigurationEntryException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the cp configuration entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
-	 */
-	public static CPConfigurationEntry fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -1053,6 +754,305 @@ public class CPConfigurationEntryUtil {
 		return getPersistence().fetchByPrimaryKey(CPConfigurationEntryId);
 	}
 
+	/**
+	 * Returns the cp configuration entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public static CPConfigurationEntry fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the cp configuration entry where classNameId = &#63; and classPK = &#63; and CPConfigurationListId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public static CPConfigurationEntry fetchByC_C_C(
+		long classNameId, long classPK, long CPConfigurationListId) {
+
+		return getPersistence().fetchByC_C_C(
+			classNameId, classPK, CPConfigurationListId);
+	}
+
+	/**
+	 * Returns the cp configuration entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching cp configuration entry, or <code>null</code> if a matching cp configuration entry could not be found
+	 */
+	public static CPConfigurationEntry fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the cp configuration entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @return the range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CPConfigurationEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @return the range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CPConfigurationEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @return the range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<CPConfigurationEntry> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration entries where CPConfigurationListId = &#63;.
+	 *
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @return the matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByCPConfigurationListId(
+		long CPConfigurationListId) {
+
+		return getPersistence().findByCPConfigurationListId(
+			CPConfigurationListId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration entries where CPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @return the range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByCPConfigurationListId(
+		long CPConfigurationListId, int start, int end) {
+
+		return getPersistence().findByCPConfigurationListId(
+			CPConfigurationListId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where CPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPConfigurationListId the cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByCPConfigurationListId(
+		long CPConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationEntry> orderByComparator) {
+
+		return getPersistence().findByCPConfigurationListId(
+			CPConfigurationListId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK) {
+
+		return getPersistence().findByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @return the range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of cp configuration entries
+	 * @param end the upper bound of the range of cp configuration entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration entries
+	 */
+	public static List<CPConfigurationEntry> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<CPConfigurationEntry> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
 	public static CPConfigurationEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1066,4 +1066,4 @@ public class CPConfigurationEntryUtil {
 	private static volatile CPConfigurationEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1811305844
+// LIFERAY-SERVICE-BUILDER-HASH:-1288826230

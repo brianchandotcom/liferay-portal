@@ -104,57 +104,6 @@ public class SegmentsExperiencePersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the segments experiences where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences where uuid = &#63;.
 	 *
 	 * <p>
@@ -276,18 +225,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns the segments experience where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the segments experience where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -334,62 +271,6 @@ public class SegmentsExperiencePersistenceImpl
 
 	private CollectionPersistenceFinder<SegmentsExperience>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the segments experiences where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the segments experiences where uuid = &#63; and companyId = &#63;.
@@ -490,58 +371,6 @@ public class SegmentsExperiencePersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the segments experiences where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63;.
 	 *
 	 * <p>
@@ -608,37 +437,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -698,61 +496,6 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FilterCollectionPersistenceFinder<SegmentsExperience>
 		_collectionPersistenceFinderByG_P;
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_P(long groupId, long plid) {
-		return findByG_P(
-			groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_P(
-		long groupId, long plid, int start, int end) {
-
-		return findByG_P(groupId, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_P(
-		long groupId, long plid, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_P(groupId, plid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and plid = &#63;.
@@ -825,39 +568,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_P(long groupId, long plid) {
-		return filterFindByG_P(
-			groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_P(
-		long groupId, long plid, int start, int end) {
-
-		return filterFindByG_P(groupId, plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -921,61 +631,6 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FilterCollectionPersistenceFinder<SegmentsExperience>
 		_collectionPersistenceFinderByG_A;
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_A(long groupId, boolean active) {
-		return findByG_A(
-			groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_A(
-		long groupId, boolean active, int start, int end) {
-
-		return findByG_A(groupId, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_A(
-		long groupId, boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_A(groupId, active, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and active = &#63;.
@@ -1059,41 +714,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_A(
-		long groupId, boolean active) {
-
-		return filterFindByG_A(
-			groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_A(
-		long groupId, boolean active, int start, int end) {
-
-		return filterFindByG_A(groupId, active, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and active = &#63;.
 	 *
 	 * <p>
@@ -1115,41 +735,6 @@ public class SegmentsExperiencePersistenceImpl
 		return _collectionPersistenceFinderByG_A.filterFind(
 			finderCache, new Object[] {new long[] {groupId}, active}, start,
 			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = any &#63; and active = &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @param active the active
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_A(
-		long[] groupIds, boolean active) {
-
-		return filterFindByG_A(
-			groupIds, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = any &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_A(
-		long[] groupIds, boolean active, int start, int end) {
-
-		return filterFindByG_A(groupIds, active, start, end, null);
 	}
 
 	/**
@@ -1176,65 +761,6 @@ public class SegmentsExperiencePersistenceImpl
 		return _collectionPersistenceFinderByG_A.filterFind(
 			finderCache, new Object[] {groupIds, active}, start, end,
 			orderByComparator, groupIds);
-	}
-
-	/**
-	 * Returns all the segments experiences where groupId = any &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param active the active
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_A(long[] groupIds, boolean active) {
-		return findByG_A(
-			groupIds, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = any &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_A(
-		long[] groupIds, boolean active, int start, int end) {
-
-		return findByG_A(groupIds, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = any &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_A(
-		long[] groupIds, boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_A(groupIds, active, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1333,68 +859,6 @@ public class SegmentsExperiencePersistenceImpl
 
 	private CollectionPersistenceFinder<SegmentsExperience>
 		_collectionPersistenceFinderBySEERC_SESERC;
-
-	/**
-	 * Returns all the segments experiences where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findBySEERC_SESERC(
-		String segmentsEntryERC, String segmentsEntryScopeERC) {
-
-		return findBySEERC_SESERC(
-			segmentsEntryERC, segmentsEntryScopeERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findBySEERC_SESERC(
-		String segmentsEntryERC, String segmentsEntryScopeERC, int start,
-		int end) {
-
-		return findBySEERC_SESERC(
-			segmentsEntryERC, segmentsEntryScopeERC, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findBySEERC_SESERC(
-		String segmentsEntryERC, String segmentsEntryScopeERC, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findBySEERC_SESERC(
-			segmentsEntryERC, segmentsEntryScopeERC, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the segments experiences where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
@@ -1503,72 +967,6 @@ public class SegmentsExperiencePersistenceImpl
 		_collectionPersistenceFinderByG_SEERC_SESERC;
 
 	/**
-	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC) {
-
-		return findByG_SEERC_SESERC(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		int start, int end) {
-
-		return findByG_SEERC_SESERC(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_SEERC_SESERC(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
 	 *
 	 * <p>
@@ -1647,46 +1045,6 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache,
 			new Object[] {groupId, segmentsEntryERC, segmentsEntryScopeERC},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC) {
-
-		return filterFindByG_SEERC_SESERC(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		int start, int end) {
-
-		return filterFindByG_SEERC_SESERC(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, start, end, null);
 	}
 
 	/**
@@ -1804,21 +1162,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceKey the segments experience key
-	 * @param plid the plid
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_SEK_P(
-		long groupId, String segmentsExperienceKey, long plid) {
-
-		return fetchByG_SEK_P(groupId, segmentsExperienceKey, plid, true);
-	}
-
-	/**
 	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -1905,21 +1248,6 @@ public class SegmentsExperiencePersistenceImpl
 		}
 
 		return segmentsExperience;
-	}
-
-	/**
-	 * Returns the segments experience where groupId = &#63; and plid = &#63; and priority = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param priority the priority
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByG_P_P(
-		long groupId, long plid, int priority) {
-
-		return fetchByG_P_P(groupId, plid, priority, true);
 	}
 
 	/**
@@ -2465,67 +1793,6 @@ public class SegmentsExperiencePersistenceImpl
 		_collectionPersistenceFinderByG_P_A;
 
 	/**
-	 * Returns all the segments experiences where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_P_A(
-		long groupId, long plid, boolean active) {
-
-		return findByG_P_A(
-			groupId, plid, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_P_A(
-		long groupId, long plid, boolean active, int start, int end) {
-
-		return findByG_P_A(groupId, plid, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_P_A(
-		long groupId, long plid, boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_P_A(
-			groupId, plid, active, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and plid = &#63; and active = &#63;.
 	 *
 	 * <p>
@@ -2601,43 +1868,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_P_A(
-		long groupId, long plid, boolean active) {
-
-		return filterFindByG_P_A(
-			groupId, plid, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_P_A(
-		long groupId, long plid, boolean active, int start, int end) {
-
-		return filterFindByG_P_A(groupId, plid, active, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and plid = &#63; and active = &#63;.
 	 *
 	 * <p>
@@ -2705,77 +1935,6 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FilterCollectionPersistenceFinder<SegmentsExperience>
 		_collectionPersistenceFinderByG_SEERC_SESERC_P;
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid) {
-
-		return findByG_SEERC_SESERC_P(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, int start, int end) {
-
-		return findByG_SEERC_SESERC_P(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_SEERC_SESERC_P(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
@@ -2864,50 +2023,6 @@ public class SegmentsExperiencePersistenceImpl
 				groupId, segmentsEntryERC, segmentsEntryScopeERC, plid
 			},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC_P(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid) {
-
-		return filterFindByG_SEERC_SESERC_P(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC_P(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, int start, int end) {
-
-		return filterFindByG_SEERC_SESERC_P(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, start, end,
-			null);
 	}
 
 	/**
@@ -3005,80 +2120,6 @@ public class SegmentsExperiencePersistenceImpl
 
 	private FilterCollectionPersistenceFinder<SegmentsExperience>
 		_collectionPersistenceFinderByG_SEERC_SESERC_P_A;
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P_A(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, boolean active) {
-
-		return findByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P_A(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, boolean active, int start, int end) {
-
-		return findByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active,
-			start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P_A(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active,
-			start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
@@ -3192,52 +2233,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC_P_A(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, boolean active) {
-
-		return filterFindByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERC the segments entry erc
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC_P_A(
-		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
-		long plid, boolean active, int start, int end) {
-
-		return filterFindByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, active,
-			start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences that the user has permissions to view where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
 	 *
 	 * <p>
@@ -3270,52 +2265,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = any &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERCs the segments entry ercs
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @return the matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC_P_A(
-		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
-		long plid, boolean active) {
-
-		return filterFindByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERCs, segmentsEntryScopeERC, plid, active,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = any &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERCs the segments entry ercs
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences that the user has permission to view
-	 */
-	@Override
-	public List<SegmentsExperience> filterFindByG_SEERC_SESERC_P_A(
-		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
-		long plid, boolean active, int start, int end) {
-
-		return filterFindByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERCs, segmentsEntryScopeERC, plid, active,
-			start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences that the user has permission to view where groupId = &#63; and segmentsEntryERC = any &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
 	 *
 	 * <p>
@@ -3345,84 +2294,6 @@ public class SegmentsExperiencePersistenceImpl
 				segmentsEntryScopeERC, plid, active
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the segments experiences where groupId = &#63; and segmentsEntryERC = any &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERCs the segments entry ercs
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @return the matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P_A(
-		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
-		long plid, boolean active) {
-
-		return findByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERCs, segmentsEntryScopeERC, plid, active,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the segments experiences where groupId = &#63; and segmentsEntryERC = any &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERCs the segments entry ercs
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @return the range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P_A(
-		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
-		long plid, boolean active, int start, int end) {
-
-		return findByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERCs, segmentsEntryScopeERC, plid, active,
-			start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = any &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsEntryERCs the segments entry ercs
-	 * @param segmentsEntryScopeERC the segments entry scope erc
-	 * @param plid the plid
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Override
-	public List<SegmentsExperience> findByG_SEERC_SESERC_P_A(
-		long groupId, String[] segmentsEntryERCs, String segmentsEntryScopeERC,
-		long plid, boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
-
-		return findByG_SEERC_SESERC_P_A(
-			groupId, segmentsEntryERCs, segmentsEntryScopeERC, plid, active,
-			start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3608,20 +2479,6 @@ public class SegmentsExperiencePersistenceImpl
 		}
 
 		return segmentsExperience;
-	}
-
-	/**
-	 * Returns the segments experience where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
-	 */
-	@Override
-	public SegmentsExperience fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -4779,4 +3636,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1705027150
+// LIFERAY-SERVICE-BUILDER-HASH:1582521156

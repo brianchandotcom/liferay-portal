@@ -97,55 +97,6 @@ public class AccountGroupPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the account groups where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups where uuid = &#63;.
 	 *
 	 * <p>
@@ -210,37 +161,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByUuid(String uuid) {
-		return filterFindByUuid(
-			uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByUuid(
-		String uuid, int start, int end) {
-
-		return filterFindByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
@@ -299,62 +219,6 @@ public class AccountGroupPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the account groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the account groups where uuid = &#63; and companyId = &#63;.
@@ -427,39 +291,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByUuid_C(String uuid, long companyId) {
-		return filterFindByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return filterFindByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -523,59 +354,6 @@ public class AccountGroupPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByAccountGroupId;
-
-	/**
-	 * Returns all the account groups where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByAccountGroupId(long accountGroupId) {
-		return findByAccountGroupId(
-			accountGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByAccountGroupId(
-		long accountGroupId, int start, int end) {
-
-		return findByAccountGroupId(accountGroupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByAccountGroupId(
-		long accountGroupId, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByAccountGroupId(
-			accountGroupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the account groups where accountGroupId = &#63;.
@@ -653,37 +431,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByAccountGroupId(long accountGroupId) {
-		return filterFindByAccountGroupId(
-			accountGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByAccountGroupId(
-		long accountGroupId, int start, int end) {
-
-		return filterFindByAccountGroupId(accountGroupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where accountGroupId = &#63;.
 	 *
 	 * <p>
@@ -707,39 +454,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where accountGroupId = any &#63;.
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByAccountGroupId(
-		long[] accountGroupIds) {
-
-		return filterFindByAccountGroupId(
-			accountGroupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByAccountGroupId(
-		long[] accountGroupIds, int start, int end) {
-
-		return filterFindByAccountGroupId(accountGroupIds, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permission to view where accountGroupId = any &#63;.
 	 *
 	 * <p>
@@ -760,63 +474,6 @@ public class AccountGroupPersistenceImpl
 		return _collectionPersistenceFinderByAccountGroupId.filterFind(
 			finderCache, new Object[] {ArrayUtil.sortedUnique(accountGroupIds)},
 			start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account groups where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByAccountGroupId(long[] accountGroupIds) {
-		return findByAccountGroupId(
-			accountGroupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByAccountGroupId(
-		long[] accountGroupIds, int start, int end) {
-
-		return findByAccountGroupId(accountGroupIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByAccountGroupId(
-		long[] accountGroupIds, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByAccountGroupId(
-			accountGroupIds, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -909,58 +566,6 @@ public class AccountGroupPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the account groups where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups where companyId = &#63;.
 	 *
 	 * <p>
@@ -1026,37 +631,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByCompanyId(long companyId) {
-		return filterFindByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return filterFindByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where companyId = &#63;.
 	 *
 	 * <p>
@@ -1116,66 +690,6 @@ public class AccountGroupPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByC_D;
-
-	/**
-	 * Returns all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByC_D(
-		long companyId, boolean defaultAccountGroup) {
-
-		return findByC_D(
-			companyId, defaultAccountGroup, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByC_D(
-		long companyId, boolean defaultAccountGroup, int start, int end) {
-
-		return findByC_D(companyId, defaultAccountGroup, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByC_D(
-		long companyId, boolean defaultAccountGroup, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByC_D(
-			companyId, defaultAccountGroup, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
@@ -1247,43 +761,6 @@ public class AccountGroupPersistenceImpl
 		return _collectionPersistenceFinderByC_D.fetchFirst(
 			finderCache, new Object[] {companyId, defaultAccountGroup},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the account groups that the user has permission to view where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByC_D(
-		long companyId, boolean defaultAccountGroup) {
-
-		return filterFindByC_D(
-			companyId, defaultAccountGroup, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByC_D(
-		long companyId, boolean defaultAccountGroup, int start, int end) {
-
-		return filterFindByC_D(
-			companyId, defaultAccountGroup, start, end, null);
 	}
 
 	/**
@@ -1577,61 +1054,6 @@ public class AccountGroupPersistenceImpl
 		_collectionPersistenceFinderByC_T;
 
 	/**
-	 * Returns all the account groups where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @return the matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByC_T(long companyId, String type) {
-		return findByC_T(
-			companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByC_T(
-		long companyId, String type, int start, int end) {
-
-		return findByC_T(companyId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	@Override
-	public List<AccountGroup> findByC_T(
-		long companyId, String type, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return findByC_T(companyId, type, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1699,39 +1121,6 @@ public class AccountGroupPersistenceImpl
 
 		return _collectionPersistenceFinderByC_T.fetchFirst(
 			finderCache, new Object[] {companyId, type}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account groups that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @return the matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByC_T(long companyId, String type) {
-		return filterFindByC_T(
-			companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	@Override
-	public List<AccountGroup> filterFindByC_T(
-		long companyId, String type, int start, int end) {
-
-		return filterFindByC_T(companyId, type, start, end, null);
 	}
 
 	/**
@@ -1829,20 +1218,6 @@ public class AccountGroupPersistenceImpl
 		}
 
 		return accountGroup;
-	}
-
-	/**
-	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	@Override
-	public AccountGroup fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -2517,4 +1892,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:738327531
+// LIFERAY-SERVICE-BUILDER-HASH:-1815171246

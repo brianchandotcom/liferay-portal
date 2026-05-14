@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -84,70 +83,10 @@ public class CommerceQualifierEntryPersistenceImpl
 		_collectionPersistenceFinderByS_S;
 
 	/**
-	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S(
-		long sourceClassNameId, long sourceClassPK) {
-
-		return findByS_S(
-			sourceClassNameId, sourceClassPK, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S(
-		long sourceClassNameId, long sourceClassPK, int start, int end) {
-
-		return findByS_S(sourceClassNameId, sourceClassPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S(
-		long sourceClassNameId, long sourceClassPK, int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByS_S(
-			sourceClassNameId, sourceClassPK, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -244,70 +183,10 @@ public class CommerceQualifierEntryPersistenceImpl
 		_collectionPersistenceFinderByT_T;
 
 	/**
-	 * Returns all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByT_T(
-		long targetClassNameId, long targetClassPK) {
-
-		return findByT_T(
-			targetClassNameId, targetClassPK, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByT_T(
-		long targetClassNameId, long targetClassPK, int start, int end) {
-
-		return findByT_T(targetClassNameId, targetClassPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByT_T(
-		long targetClassNameId, long targetClassPK, int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByT_T(
-			targetClassNameId, targetClassPK, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param targetClassNameId the target class name ID
@@ -404,77 +283,10 @@ public class CommerceQualifierEntryPersistenceImpl
 		_collectionPersistenceFinderByS_S_T;
 
 	/**
-	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId) {
-
-		return findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		int start, int end) {
-
-		return findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -588,77 +400,10 @@ public class CommerceQualifierEntryPersistenceImpl
 		_collectionPersistenceFinderByS_T_T;
 
 	/**
-	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_T_T(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK) {
-
-		return findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_T_T(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK,
-		int start, int end) {
-
-		return findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_T_T(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK,
-		int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -807,25 +552,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		}
 
 		return commerceQualifierEntry;
-	}
-
-	/**
-	 * Returns the commerce qualifier entry where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63; and targetClassPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @return the matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry fetchByS_S_T_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		long targetClassPK) {
-
-		return fetchByS_S_T_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, targetClassPK,
-			true);
 	}
 
 	/**
@@ -1391,4 +1117,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:450391
+// LIFERAY-SERVICE-BUILDER-HASH:1253922160

@@ -87,56 +87,6 @@ public class TrashEntryPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the trash entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the trash entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the trash entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the trash entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -226,58 +176,6 @@ public class TrashEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<TrashEntry>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the trash entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the trash entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the trash entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the trash entries where companyId = &#63;.
@@ -525,62 +423,6 @@ public class TrashEntryPersistenceImpl
 		_collectionPersistenceFinderByG_CN;
 
 	/**
-	 * Returns all the trash entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @return the matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByG_CN(long groupId, long classNameId) {
-		return findByG_CN(
-			groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the trash entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByG_CN(
-		long groupId, long classNameId, int start, int end) {
-
-		return findByG_CN(groupId, classNameId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the trash entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByG_CN(
-		long groupId, long classNameId, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return findByG_CN(
-			groupId, classNameId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the trash entries where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
@@ -678,62 +520,6 @@ public class TrashEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<TrashEntry>
 		_collectionPersistenceFinderByC_CN;
-
-	/**
-	 * Returns all the trash entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByC_CN(long companyId, long classNameId) {
-		return findByC_CN(
-			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the trash entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @return the range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByC_CN(
-		long companyId, long classNameId, int start, int end) {
-
-		return findByC_CN(companyId, classNameId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the trash entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of trash entries
-	 * @param end the upper bound of the range of trash entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching trash entries
-	 */
-	@Override
-	public List<TrashEntry> findByC_CN(
-		long companyId, long classNameId, int start, int end,
-		OrderByComparator<TrashEntry> orderByComparator) {
-
-		return findByC_CN(
-			companyId, classNameId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the trash entries where companyId = &#63; and classNameId = &#63;.
@@ -863,18 +649,6 @@ public class TrashEntryPersistenceImpl
 		}
 
 		return trashEntry;
-	}
-
-	/**
-	 * Returns the trash entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
-	 */
-	@Override
-	public TrashEntry fetchByCN_CPK(long classNameId, long classPK) {
-		return fetchByCN_CPK(classNameId, classPK, true);
 	}
 
 	/**
@@ -1393,4 +1167,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-17572414
+// LIFERAY-SERVICE-BUILDER-HASH:-724118085

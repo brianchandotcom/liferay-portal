@@ -87,17 +87,6 @@ public class ClassNamePersistenceImpl
 	}
 
 	/**
-	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param value the value
-	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
-	 */
-	@Override
-	public ClassName fetchByValue(String value) {
-		return fetchByValue(value, true);
-	}
-
-	/**
 	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param value the value
@@ -344,4 +333,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1178206339
+// LIFERAY-SERVICE-BUILDER-HASH:530755084

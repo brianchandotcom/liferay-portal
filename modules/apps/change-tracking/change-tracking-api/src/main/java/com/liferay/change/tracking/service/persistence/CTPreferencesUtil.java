@@ -125,58 +125,6 @@ public class CTPreferencesUtil {
 	}
 
 	/**
-	 * Returns all the ct preferenceses where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct preferenceses
-	 */
-	public static List<CTPreferences> findByCtCollectionId(
-		long ctCollectionId) {
-
-		return getPersistence().findByCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Returns a range of all the ct preferenceses where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of ct preferenceses
-	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
-	 * @return the range of matching ct preferenceses
-	 */
-	public static List<CTPreferences> findByCtCollectionId(
-		long ctCollectionId, int start, int end) {
-
-		return getPersistence().findByCtCollectionId(
-			ctCollectionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct preferenceses where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of ct preferenceses
-	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct preferenceses
-	 */
-	public static List<CTPreferences> findByCtCollectionId(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTPreferences> orderByComparator) {
-
-		return getPersistence().findByCtCollectionId(
-			ctCollectionId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ct preferenceses where ctCollectionId = &#63;.
 	 *
 	 * <p>
@@ -249,59 +197,6 @@ public class CTPreferencesUtil {
 	 */
 	public static int countByCtCollectionId(long ctCollectionId) {
 		return getPersistence().countByCtCollectionId(ctCollectionId);
-	}
-
-	/**
-	 * Returns all the ct preferenceses where previousCtCollectionId = &#63;.
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @return the matching ct preferenceses
-	 */
-	public static List<CTPreferences> findByPreviousCtCollectionId(
-		long previousCtCollectionId) {
-
-		return getPersistence().findByPreviousCtCollectionId(
-			previousCtCollectionId);
-	}
-
-	/**
-	 * Returns a range of all the ct preferenceses where previousCtCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param start the lower bound of the range of ct preferenceses
-	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
-	 * @return the range of matching ct preferenceses
-	 */
-	public static List<CTPreferences> findByPreviousCtCollectionId(
-		long previousCtCollectionId, int start, int end) {
-
-		return getPersistence().findByPreviousCtCollectionId(
-			previousCtCollectionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct preferenceses where previousCtCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param previousCtCollectionId the previous ct collection ID
-	 * @param start the lower bound of the range of ct preferenceses
-	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct preferenceses
-	 */
-	public static List<CTPreferences> findByPreviousCtCollectionId(
-		long previousCtCollectionId, int start, int end,
-		OrderByComparator<CTPreferences> orderByComparator) {
-
-		return getPersistence().findByPreviousCtCollectionId(
-			previousCtCollectionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -401,17 +296,6 @@ public class CTPreferencesUtil {
 	}
 
 	/**
-	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
-	 */
-	public static CTPreferences fetchByC_U(long companyId, long userId) {
-		return getPersistence().fetchByC_U(companyId, userId);
-	}
-
-	/**
 	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -502,6 +386,122 @@ public class CTPreferencesUtil {
 		return getPersistence().fetchByPrimaryKey(ctPreferencesId);
 	}
 
+	/**
+	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
+	 */
+	public static CTPreferences fetchByC_U(long companyId, long userId) {
+		return getPersistence().fetchByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns all the ct preferenceses where ctCollectionId = &#63;.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching ct preferenceses
+	 */
+	public static List<CTPreferences> findByCtCollectionId(
+		long ctCollectionId) {
+
+		return getPersistence().findByCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Returns a range of all the ct preferenceses where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of ct preferenceses
+	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
+	 * @return the range of matching ct preferenceses
+	 */
+	public static List<CTPreferences> findByCtCollectionId(
+		long ctCollectionId, int start, int end) {
+
+		return getPersistence().findByCtCollectionId(
+			ctCollectionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct preferenceses where ctCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @param start the lower bound of the range of ct preferenceses
+	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct preferenceses
+	 */
+	public static List<CTPreferences> findByCtCollectionId(
+		long ctCollectionId, int start, int end,
+		OrderByComparator<CTPreferences> orderByComparator) {
+
+		return getPersistence().findByCtCollectionId(
+			ctCollectionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ct preferenceses where previousCtCollectionId = &#63;.
+	 *
+	 * @param previousCtCollectionId the previous ct collection ID
+	 * @return the matching ct preferenceses
+	 */
+	public static List<CTPreferences> findByPreviousCtCollectionId(
+		long previousCtCollectionId) {
+
+		return getPersistence().findByPreviousCtCollectionId(
+			previousCtCollectionId);
+	}
+
+	/**
+	 * Returns a range of all the ct preferenceses where previousCtCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param previousCtCollectionId the previous ct collection ID
+	 * @param start the lower bound of the range of ct preferenceses
+	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
+	 * @return the range of matching ct preferenceses
+	 */
+	public static List<CTPreferences> findByPreviousCtCollectionId(
+		long previousCtCollectionId, int start, int end) {
+
+		return getPersistence().findByPreviousCtCollectionId(
+			previousCtCollectionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ct preferenceses where previousCtCollectionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTPreferencesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param previousCtCollectionId the previous ct collection ID
+	 * @param start the lower bound of the range of ct preferenceses
+	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ct preferenceses
+	 */
+	public static List<CTPreferences> findByPreviousCtCollectionId(
+		long previousCtCollectionId, int start, int end,
+		OrderByComparator<CTPreferences> orderByComparator) {
+
+		return getPersistence().findByPreviousCtCollectionId(
+			previousCtCollectionId, start, end, orderByComparator);
+	}
+
 	public static CTPreferencesPersistence getPersistence() {
 		return _persistence;
 	}
@@ -513,4 +513,4 @@ public class CTPreferencesUtil {
 	private static volatile CTPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:919589227
+// LIFERAY-SERVICE-BUILDER-HASH:-1488020377

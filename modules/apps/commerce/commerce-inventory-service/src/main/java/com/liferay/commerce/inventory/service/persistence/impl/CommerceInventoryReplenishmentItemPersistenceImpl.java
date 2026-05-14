@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -96,62 +95,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -243,69 +190,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -402,70 +290,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem>
-		findByCommerceInventoryWarehouseId(long commerceInventoryWarehouseId) {
-
-		return findByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem>
-		findByCommerceInventoryWarehouseId(
-			long commerceInventoryWarehouseId, int start, int end) {
-
-		return findByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem>
-		findByCommerceInventoryWarehouseId(
-			long commerceInventoryWarehouseId, int start, int end,
-			OrderByComparator<CommerceInventoryReplenishmentItem>
-				orderByComparator) {
-
-		return findByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
@@ -570,66 +398,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderByAvailabilityDate;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where availabilityDate = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByAvailabilityDate(
-		Date availabilityDate) {
-
-		return findByAvailabilityDate(
-			availabilityDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where availabilityDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param availabilityDate the availability date
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByAvailabilityDate(
-		Date availabilityDate, int start, int end) {
-
-		return findByAvailabilityDate(availabilityDate, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where availabilityDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param availabilityDate the availability date
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByAvailabilityDate(
-		Date availabilityDate, int start, int end,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		return findByAvailabilityDate(
-			availabilityDate, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where availabilityDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param availabilityDate the availability date
@@ -722,62 +494,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderBySku;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findBySku(String sku) {
-		return findBySku(sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where sku = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sku the sku
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findBySku(
-		String sku, int start, int end) {
-
-		return findBySku(sku, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where sku = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sku the sku
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findBySku(
-		String sku, int start, int end,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		return findBySku(sku, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where sku = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sku the sku
@@ -869,75 +589,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderByC_S_U;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey) {
-
-		return findByC_S_U(
-			companyId, sku, unitOfMeasureKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey, int start,
-		int end) {
-
-		return findByC_S_U(companyId, sku, unitOfMeasureKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey, int start, int end,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		return findByC_S_U(
-			companyId, sku, unitOfMeasureKey, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1046,77 +701,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_collectionPersistenceFinderByAD_S_U;
 
 	/**
-	 * Returns all the commerce inventory replenishment items where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @return the matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByAD_S_U(
-		Date availabilityDate, String sku, String unitOfMeasureKey) {
-
-		return findByAD_S_U(
-			availabilityDate, sku, unitOfMeasureKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory replenishment items where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @return the range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByAD_S_U(
-		Date availabilityDate, String sku, String unitOfMeasureKey, int start,
-		int end) {
-
-		return findByAD_S_U(
-			availabilityDate, sku, unitOfMeasureKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param availabilityDate the availability date
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory replenishment items
-	 * @param end the upper bound of the range of commerce inventory replenishment items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory replenishment items
-	 */
-	@Override
-	public List<CommerceInventoryReplenishmentItem> findByAD_S_U(
-		Date availabilityDate, String sku, String unitOfMeasureKey, int start,
-		int end,
-		OrderByComparator<CommerceInventoryReplenishmentItem>
-			orderByComparator) {
-
-		return findByAD_S_U(
-			availabilityDate, sku, unitOfMeasureKey, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory replenishment items where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryReplenishmentItemModelImpl</code>.
 	 * </p>
 	 *
 	 * @param availabilityDate the availability date
@@ -1257,20 +845,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		}
 
 		return commerceInventoryReplenishmentItem;
-	}
-
-	/**
-	 * Returns the commerce inventory replenishment item where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -1989,4 +1563,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1460986594
+// LIFERAY-SERVICE-BUILDER-HASH:-174522631

@@ -125,52 +125,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Returns all the launch sets where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching launch sets
-	 */
-	public static List<LaunchSet> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the launch sets where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @return the range of matching launch sets
-	 */
-	public static List<LaunchSet> findByUuid(String uuid, int start, int end) {
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the launch sets where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching launch sets
-	 */
-	public static List<LaunchSet> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the launch sets where uuid = &#63;.
 	 *
 	 * <p>
@@ -238,58 +192,6 @@ public class LaunchSetUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the launch sets where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching launch sets
-	 */
-	public static List<LaunchSet> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the launch sets where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @return the range of matching launch sets
-	 */
-	public static List<LaunchSet> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the launch sets where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching launch sets
-	 */
-	public static List<LaunchSet> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -372,55 +274,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Returns all the launch sets where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching launch sets
-	 */
-	public static List<LaunchSet> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the launch sets where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @return the range of matching launch sets
-	 */
-	public static List<LaunchSet> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the launch sets where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching launch sets
-	 */
-	public static List<LaunchSet> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the launch sets where companyId = &#63;.
 	 *
 	 * <p>
@@ -490,58 +343,6 @@ public class LaunchSetUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the launch sets where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching launch sets
-	 */
-	public static List<LaunchSet> findByC_U(long companyId, long userId) {
-		return getPersistence().findByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the launch sets where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @return the range of matching launch sets
-	 */
-	public static List<LaunchSet> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return getPersistence().findByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the launch sets where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching launch sets
-	 */
-	public static List<LaunchSet> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -624,58 +425,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Returns all the launch sets where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching launch sets
-	 */
-	public static List<LaunchSet> findByC_S(long companyId, int status) {
-		return getPersistence().findByC_S(companyId, status);
-	}
-
-	/**
-	 * Returns a range of all the launch sets where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @return the range of matching launch sets
-	 */
-	public static List<LaunchSet> findByC_S(
-		long companyId, int status, int start, int end) {
-
-		return getPersistence().findByC_S(companyId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the launch sets where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching launch sets
-	 */
-	public static List<LaunchSet> findByC_S(
-		long companyId, int status, int start, int end,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the launch sets where companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -731,62 +480,6 @@ public class LaunchSetUtil {
 
 		return getPersistence().fetchByC_S_First(
 			companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns all the launch sets where companyId = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param statuses the statuses
-	 * @return the matching launch sets
-	 */
-	public static List<LaunchSet> findByC_S(long companyId, int[] statuses) {
-		return getPersistence().findByC_S(companyId, statuses);
-	}
-
-	/**
-	 * Returns a range of all the launch sets where companyId = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @return the range of matching launch sets
-	 */
-	public static List<LaunchSet> findByC_S(
-		long companyId, int[] statuses, int start, int end) {
-
-		return getPersistence().findByC_S(companyId, statuses, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the launch sets where companyId = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of launch sets
-	 * @param end the upper bound of the range of launch sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching launch sets
-	 */
-	public static List<LaunchSet> findByC_S(
-		long companyId, int[] statuses, int start, int end,
-		OrderByComparator<LaunchSet> orderByComparator) {
-
-		return getPersistence().findByC_S(
-			companyId, statuses, start, end, orderByComparator);
 	}
 
 	/**
@@ -858,19 +551,6 @@ public class LaunchSetUtil {
 		throws com.liferay.launch.exception.NoSuchLaunchSetException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the launch set where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching launch set, or <code>null</code> if a matching launch set could not be found
-	 */
-	public static LaunchSet fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -965,6 +645,322 @@ public class LaunchSetUtil {
 		return getPersistence().fetchByPrimaryKey(launchSetId);
 	}
 
+	/**
+	 * Returns the launch set where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching launch set, or <code>null</code> if a matching launch set could not be found
+	 */
+	public static LaunchSet fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the launch sets where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching launch sets
+	 */
+	public static List<LaunchSet> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the launch sets where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @return the range of matching launch sets
+	 */
+	public static List<LaunchSet> findByUuid(String uuid, int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the launch sets where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching launch sets
+	 */
+	public static List<LaunchSet> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<LaunchSet> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the launch sets where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching launch sets
+	 */
+	public static List<LaunchSet> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the launch sets where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @return the range of matching launch sets
+	 */
+	public static List<LaunchSet> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the launch sets where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching launch sets
+	 */
+	public static List<LaunchSet> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LaunchSet> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the launch sets where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching launch sets
+	 */
+	public static List<LaunchSet> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the launch sets where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @return the range of matching launch sets
+	 */
+	public static List<LaunchSet> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the launch sets where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching launch sets
+	 */
+	public static List<LaunchSet> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<LaunchSet> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the launch sets where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching launch sets
+	 */
+	public static List<LaunchSet> findByC_U(long companyId, long userId) {
+		return getPersistence().findByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the launch sets where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @return the range of matching launch sets
+	 */
+	public static List<LaunchSet> findByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return getPersistence().findByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the launch sets where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching launch sets
+	 */
+	public static List<LaunchSet> findByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<LaunchSet> orderByComparator) {
+
+		return getPersistence().findByC_U(
+			companyId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the launch sets where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching launch sets
+	 */
+	public static List<LaunchSet> findByC_S(long companyId, int status) {
+		return getPersistence().findByC_S(companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the launch sets where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @return the range of matching launch sets
+	 */
+	public static List<LaunchSet> findByC_S(
+		long companyId, int status, int start, int end) {
+
+		return getPersistence().findByC_S(companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the launch sets where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching launch sets
+	 */
+	public static List<LaunchSet> findByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<LaunchSet> orderByComparator) {
+
+		return getPersistence().findByC_S(
+			companyId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the launch sets where companyId = &#63; and status = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param statuses the statuses
+	 * @return the matching launch sets
+	 */
+	public static List<LaunchSet> findByC_S(long companyId, int[] statuses) {
+		return getPersistence().findByC_S(companyId, statuses);
+	}
+
+	/**
+	 * Returns a range of all the launch sets where companyId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @return the range of matching launch sets
+	 */
+	public static List<LaunchSet> findByC_S(
+		long companyId, int[] statuses, int start, int end) {
+
+		return getPersistence().findByC_S(companyId, statuses, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the launch sets where companyId = &#63; and status = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.launch.model.impl.LaunchSetModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param statuses the statuses
+	 * @param start the lower bound of the range of launch sets
+	 * @param end the upper bound of the range of launch sets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching launch sets
+	 */
+	public static List<LaunchSet> findByC_S(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<LaunchSet> orderByComparator) {
+
+		return getPersistence().findByC_S(
+			companyId, statuses, start, end, orderByComparator);
+	}
+
 	public static LaunchSetPersistence getPersistence() {
 		return _persistence;
 	}
@@ -976,4 +972,4 @@ public class LaunchSetUtil {
 	private static volatile LaunchSetPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-673431808
+// LIFERAY-SERVICE-BUILDER-HASH:-1222364388

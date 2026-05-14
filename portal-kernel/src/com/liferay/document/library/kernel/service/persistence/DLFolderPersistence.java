@@ -34,46 +34,6 @@ public interface DLFolderPersistence
 	 */
 
 	/**
-	 * Returns all the document library folders where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the document library folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByUuid(String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where uuid = &#63;.
 	 *
 	 * <p>
@@ -146,15 +106,6 @@ public interface DLFolderPersistence
 		throws NoSuchFolderException;
 
 	/**
-	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	 */
-	public DLFolder fetchByUUID_G(String uuid, long groupId);
-
-	/**
 	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -183,50 +134,6 @@ public interface DLFolderPersistence
 	 * @return the number of matching document library folders
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the document library folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the document library folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library folders where uuid = &#63; and companyId = &#63;.
@@ -295,47 +202,6 @@ public interface DLFolderPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the document library folders where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the document library folders where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where groupId = &#63;.
 	 *
 	 * <p>
@@ -382,29 +248,6 @@ public interface DLFolderPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the document library folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByGroupId(
-		long groupId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -444,47 +287,6 @@ public interface DLFolderPersistence
 	 * @return the number of matching document library folders that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
-
-	/**
-	 * Returns all the document library folders where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByCompanyId(long companyId);
-
-	/**
-	 * Returns a range of all the document library folders where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByCompanyId(
-		long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library folders where companyId = &#63;.
@@ -548,47 +350,6 @@ public interface DLFolderPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Returns all the document library folders where repositoryId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByRepositoryId(long repositoryId);
-
-	/**
-	 * Returns a range of all the document library folders where repositoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param repositoryId the repository ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByRepositoryId(
-		long repositoryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where repositoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param repositoryId the repository ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByRepositoryId(
-		long repositoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where repositoryId = &#63;.
 	 *
 	 * <p>
@@ -650,51 +411,6 @@ public interface DLFolderPersistence
 	public int countByRepositoryId(long repositoryId);
 
 	/**
-	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_P(
-		long groupId, long parentFolderId);
-
-	/**
-	 * Returns a range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_P(
-		long groupId, long parentFolderId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_P(
-		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
@@ -742,32 +458,6 @@ public interface DLFolderPersistence
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_P(
-		long groupId, long parentFolderId);
-
-	/**
-	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_P(
-		long groupId, long parentFolderId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63;.
@@ -936,15 +626,6 @@ public interface DLFolderPersistence
 		throws NoSuchFolderException;
 
 	/**
-	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param mountPoint the mount point
-	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	 */
-	public DLFolder fetchByR_M(long repositoryId, boolean mountPoint);
-
-	/**
 	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param repositoryId the repository ID
@@ -973,51 +654,6 @@ public interface DLFolderPersistence
 	 * @return the number of matching document library folders
 	 */
 	public int countByR_M(long repositoryId, boolean mountPoint);
-
-	/**
-	 * Returns all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByR_P(
-		long repositoryId, long parentFolderId);
-
-	/**
-	 * Returns a range of all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param repositoryId the repository ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByR_P(
-		long repositoryId, long parentFolderId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param repositoryId the repository ID
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByR_P(
-		long repositoryId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
@@ -1084,50 +720,6 @@ public interface DLFolderPersistence
 	 * @return the number of matching document library folders
 	 */
 	public int countByR_P(long repositoryId, long parentFolderId);
-
-	/**
-	 * Returns all the document library folders where parentFolderId = &#63; and name = &#63;.
-	 *
-	 * @param parentFolderId the parent folder ID
-	 * @param name the name
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByP_N(long parentFolderId, String name);
-
-	/**
-	 * Returns a range of all the document library folders where parentFolderId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentFolderId the parent folder ID
-	 * @param name the name
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByP_N(
-		long parentFolderId, String name, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where parentFolderId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentFolderId the parent folder ID
-	 * @param name the name
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByP_N(
-		long parentFolderId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library folders where parentFolderId = &#63; and name = &#63;.
@@ -1317,56 +909,6 @@ public interface DLFolderPersistence
 		long folderId, long companyId, long parentFolderId);
 
 	/**
-	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P(
-		long groupId, boolean mountPoint, long parentFolderId);
-
-	/**
-	 * Returns a range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P(
-		long groupId, boolean mountPoint, long parentFolderId, int start,
-		int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P(
-		long groupId, boolean mountPoint, long parentFolderId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
 	 *
 	 * <p>
@@ -1418,35 +960,6 @@ public interface DLFolderPersistence
 		long groupId, boolean mountPoint, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @return the matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_M_P(
-		long groupId, boolean mountPoint, long parentFolderId);
-
-	/**
-	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_M_P(
-		long groupId, boolean mountPoint, long parentFolderId, int start,
-		int end);
 
 	/**
 	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
@@ -1512,17 +1025,6 @@ public interface DLFolderPersistence
 	 */
 	public DLFolder findByG_P_N(long groupId, long parentFolderId, String name)
 		throws NoSuchFolderException;
-
-	/**
-	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param name the name
-	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	 */
-	public DLFolder fetchByG_P_N(
-		long groupId, long parentFolderId, String name);
 
 	/**
 	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1691,59 +1193,6 @@ public interface DLFolderPersistence
 		long folderId, long companyId, long parentFolderId, int status);
 
 	/**
-	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P_H(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden);
-
-	/**
-	 * Returns a range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P_H(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P_H(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
 	 *
 	 * <p>
@@ -1799,37 +1248,6 @@ public interface DLFolderPersistence
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @return the matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_M_P_H(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden);
-
-	/**
-	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_M_P_H(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int start, int end);
 
 	/**
 	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
@@ -2086,59 +1504,6 @@ public interface DLFolderPersistence
 		long groupId, boolean mountPoint, String treePath, boolean hidden);
 
 	/**
-	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_P_H_S(
-		long groupId, long parentFolderId, boolean hidden, int status);
-
-	/**
-	 * Returns a range of all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_P_H_S(
-		long groupId, long parentFolderId, boolean hidden, int status,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_P_H_S(
-		long groupId, long parentFolderId, boolean hidden, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -2193,37 +1558,6 @@ public interface DLFolderPersistence
 		long groupId, long parentFolderId, boolean hidden, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @return the matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_P_H_S(
-		long groupId, long parentFolderId, boolean hidden, int status);
-
-	/**
-	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_P_H_S(
-		long groupId, long parentFolderId, boolean hidden, int status,
-		int start, int end);
 
 	/**
 	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
@@ -2281,63 +1615,6 @@ public interface DLFolderPersistence
 	 */
 	public int filterCountByG_P_H_S(
 		long groupId, long parentFolderId, boolean hidden, int status);
-
-	/**
-	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @return the matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P_H_S(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status);
-
-	/**
-	 * Returns a range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P_H_S(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library folders
-	 */
-	public java.util.List<DLFolder> findByG_M_P_H_S(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
@@ -2399,40 +1676,6 @@ public interface DLFolderPersistence
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
 			orderByComparator);
-
-	/**
-	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @return the matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_M_P_H_S(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status);
-
-	/**
-	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @return the range of matching document library folders that the user has permission to view
-	 */
-	public java.util.List<DLFolder> filterFindByG_M_P_H_S(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the document library folders that the user has permissions to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
@@ -2726,15 +1969,6 @@ public interface DLFolderPersistence
 		throws NoSuchFolderException;
 
 	/**
-	 * Returns the document library folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
-	 */
-	public DLFolder fetchByERC_G(String externalReferenceCode, long groupId);
-
-	/**
 	 * Returns the document library folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -2990,5 +2224,999 @@ public interface DLFolderPersistence
 			<com.liferay.document.library.kernel.model.DLFileEntryType>
 				dlFileEntryTypes);
 
+	/**
+	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
+	public default DLFolder fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param mountPoint the mount point
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
+	public default DLFolder fetchByR_M(long repositoryId, boolean mountPoint) {
+		return fetchByR_M(repositoryId, mountPoint, true);
+	}
+
+	/**
+	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param name the name
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
+	public default DLFolder fetchByG_P_N(
+		long groupId, long parentFolderId, String name) {
+
+		return fetchByG_P_N(groupId, parentFolderId, name, true);
+	}
+
+	/**
+	 * Returns the document library folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
+	public default DLFolder fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns all the document library folders where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByGroupId(long groupId) {
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByGroupId(long groupId) {
+		return filterFindByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns all the document library folders where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByCompanyId(long companyId) {
+		return findByCompanyId(
+			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return findByCompanyId(companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders where repositoryId = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByRepositoryId(
+		long repositoryId) {
+
+		return findByRepositoryId(
+			repositoryId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where repositoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByRepositoryId(
+		long repositoryId, int start, int end) {
+
+		return findByRepositoryId(repositoryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where repositoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByRepositoryId(
+		long repositoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByRepositoryId(
+			repositoryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_P(
+		long groupId, long parentFolderId) {
+
+		return findByG_P(
+			groupId, parentFolderId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_P(
+		long groupId, long parentFolderId, int start, int end) {
+
+		return findByG_P(groupId, parentFolderId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_P(
+		long groupId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByG_P(
+			groupId, parentFolderId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @return the matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_P(
+		long groupId, long parentFolderId) {
+
+		return filterFindByG_P(
+			groupId, parentFolderId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_P(
+		long groupId, long parentFolderId, int start, int end) {
+
+		return filterFindByG_P(groupId, parentFolderId, start, end, null);
+	}
+
+	/**
+	 * Returns all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param repositoryId the repository ID
+	 * @param parentFolderId the parent folder ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByR_P(
+		long repositoryId, long parentFolderId) {
+
+		return findByR_P(
+			repositoryId, parentFolderId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByR_P(
+		long repositoryId, long parentFolderId, int start, int end) {
+
+		return findByR_P(repositoryId, parentFolderId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where repositoryId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByR_P(
+		long repositoryId, long parentFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByR_P(
+			repositoryId, parentFolderId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders where parentFolderId = &#63; and name = &#63;.
+	 *
+	 * @param parentFolderId the parent folder ID
+	 * @param name the name
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByP_N(
+		long parentFolderId, String name) {
+
+		return findByP_N(
+			parentFolderId, name,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where parentFolderId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentFolderId the parent folder ID
+	 * @param name the name
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByP_N(
+		long parentFolderId, String name, int start, int end) {
+
+		return findByP_N(parentFolderId, name, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where parentFolderId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentFolderId the parent folder ID
+	 * @param name the name
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByP_N(
+		long parentFolderId, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByP_N(
+			parentFolderId, name, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P(
+		long groupId, boolean mountPoint, long parentFolderId) {
+
+		return findByG_M_P(
+			groupId, mountPoint, parentFolderId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P(
+		long groupId, boolean mountPoint, long parentFolderId, int start,
+		int end) {
+
+		return findByG_M_P(
+			groupId, mountPoint, parentFolderId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P(
+		long groupId, boolean mountPoint, long parentFolderId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByG_M_P(
+			groupId, mountPoint, parentFolderId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @return the matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_M_P(
+		long groupId, boolean mountPoint, long parentFolderId) {
+
+		return filterFindByG_M_P(
+			groupId, mountPoint, parentFolderId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_M_P(
+		long groupId, boolean mountPoint, long parentFolderId, int start,
+		int end) {
+
+		return filterFindByG_M_P(
+			groupId, mountPoint, parentFolderId, start, end, null);
+	}
+
+	/**
+	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P_H(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden) {
+
+		return findByG_M_P_H(
+			groupId, mountPoint, parentFolderId, hidden,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P_H(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int start, int end) {
+
+		return findByG_M_P_H(
+			groupId, mountPoint, parentFolderId, hidden, start, end, null,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P_H(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByG_M_P_H(
+			groupId, mountPoint, parentFolderId, hidden, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @return the matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_M_P_H(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden) {
+
+		return filterFindByG_M_P_H(
+			groupId, mountPoint, parentFolderId, hidden,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_M_P_H(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int start, int end) {
+
+		return filterFindByG_M_P_H(
+			groupId, mountPoint, parentFolderId, hidden, start, end, null);
+	}
+
+	/**
+	 * Returns all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_P_H_S(
+		long groupId, long parentFolderId, boolean hidden, int status) {
+
+		return findByG_P_H_S(
+			groupId, parentFolderId, hidden, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_P_H_S(
+		long groupId, long parentFolderId, boolean hidden, int status,
+		int start, int end) {
+
+		return findByG_P_H_S(
+			groupId, parentFolderId, hidden, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_P_H_S(
+		long groupId, long parentFolderId, boolean hidden, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByG_P_H_S(
+			groupId, parentFolderId, hidden, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @return the matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_P_H_S(
+		long groupId, long parentFolderId, boolean hidden, int status) {
+
+		return filterFindByG_P_H_S(
+			groupId, parentFolderId, hidden, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_P_H_S(
+		long groupId, long parentFolderId, boolean hidden, int status,
+		int start, int end) {
+
+		return filterFindByG_P_H_S(
+			groupId, parentFolderId, hidden, status, start, end, null);
+	}
+
+	/**
+	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @return the matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P_H_S(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int status) {
+
+		return findByG_M_P_H_S(
+			groupId, mountPoint, parentFolderId, hidden, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P_H_S(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int status, int start, int end) {
+
+		return findByG_M_P_H_S(
+			groupId, mountPoint, parentFolderId, hidden, status, start, end,
+			null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public default java.util.List<DLFolder> findByG_M_P_H_S(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
+			orderByComparator) {
+
+		return findByG_M_P_H_S(
+			groupId, mountPoint, parentFolderId, hidden, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @return the matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_M_P_H_S(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int status) {
+
+		return filterFindByG_M_P_H_S(
+			groupId, mountPoint, parentFolderId, hidden, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library folders that the user has permission to view where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders that the user has permission to view
+	 */
+	public default java.util.List<DLFolder> filterFindByG_M_P_H_S(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int status, int start, int end) {
+
+		return filterFindByG_M_P_H_S(
+			groupId, mountPoint, parentFolderId, hidden, status, start, end,
+			null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1213012713
+// LIFERAY-SERVICE-BUILDER-HASH:-617129555

@@ -108,19 +108,6 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 	/**
-	 * Returns the patcher ticket hint where patcherProductVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @return the matching patcher ticket hint, or <code>null</code> if a matching patcher ticket hint could not be found
-	 */
-	@Override
-	public PatcherTicketHint fetchByPatcherProductVersionId(
-		long patcherProductVersionId) {
-
-		return fetchByPatcherProductVersionId(patcherProductVersionId, true);
-	}
-
-	/**
 	 * Returns the patcher ticket hint where patcherProductVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -443,4 +430,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:800801557
+// LIFERAY-SERVICE-BUILDER-HASH:585746567

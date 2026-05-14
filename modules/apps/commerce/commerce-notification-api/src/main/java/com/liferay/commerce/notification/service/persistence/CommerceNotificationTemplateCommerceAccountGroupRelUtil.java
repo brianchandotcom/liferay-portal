@@ -151,64 +151,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @return the matching commerce notification template commerce account group rels
-	 */
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		findByCommerceNotificationTemplateId(
-			long commerceNotificationTemplateId) {
-
-		return getPersistence().findByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param start the lower bound of the range of commerce notification template commerce account group rels
-	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
-	 * @return the range of matching commerce notification template commerce account group rels
-	 */
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		findByCommerceNotificationTemplateId(
-			long commerceNotificationTemplateId, int start, int end) {
-
-		return getPersistence().findByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param start the lower bound of the range of commerce notification template commerce account group rels
-	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification template commerce account group rels
-	 */
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		findByCommerceNotificationTemplateId(
-			long commerceNotificationTemplateId, int start, int end,
-			OrderByComparator
-				<CommerceNotificationTemplateCommerceAccountGroupRel>
-					orderByComparator) {
-
-		return getPersistence().findByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
 	 *
 	 * <p>
@@ -297,63 +239,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 
 		return getPersistence().countByCommerceNotificationTemplateId(
 			commerceNotificationTemplateId);
-	}
-
-	/**
-	 * Returns all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @return the matching commerce notification template commerce account group rels
-	 */
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(long commerceAccountGroupId) {
-
-		return getPersistence().findByCommerceAccountGroupId(
-			commerceAccountGroupId);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param start the lower bound of the range of commerce notification template commerce account group rels
-	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
-	 * @return the range of matching commerce notification template commerce account group rels
-	 */
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(
-			long commerceAccountGroupId, int start, int end) {
-
-		return getPersistence().findByCommerceAccountGroupId(
-			commerceAccountGroupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param start the lower bound of the range of commerce notification template commerce account group rels
-	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification template commerce account group rels
-	 */
-	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(
-			long commerceAccountGroupId, int start, int end,
-			OrderByComparator
-				<CommerceNotificationTemplateCommerceAccountGroupRel>
-					orderByComparator) {
-
-		return getPersistence().findByCommerceAccountGroupId(
-			commerceAccountGroupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -460,21 +345,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 			NoSuchNotificationTemplateCommerceAccountGroupRelException {
 
 		return getPersistence().findByC_C(
-			commerceNotificationTemplateId, commerceAccountGroupId);
-	}
-
-	/**
-	 * Returns the commerce notification template commerce account group rel where commerceNotificationTemplateId = &#63; and commerceAccountGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @return the matching commerce notification template commerce account group rel, or <code>null</code> if a matching commerce notification template commerce account group rel could not be found
-	 */
-	public static CommerceNotificationTemplateCommerceAccountGroupRel
-		fetchByC_C(
-			long commerceNotificationTemplateId, long commerceAccountGroupId) {
-
-		return getPersistence().fetchByC_C(
 			commerceNotificationTemplateId, commerceAccountGroupId);
 	}
 
@@ -597,6 +467,136 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 			commerceNotificationTemplateCommerceAccountGroupRelId);
 	}
 
+	/**
+	 * Returns the commerce notification template commerce account group rel where commerceNotificationTemplateId = &#63; and commerceAccountGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commerceNotificationTemplateId the commerce notification template ID
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @return the matching commerce notification template commerce account group rel, or <code>null</code> if a matching commerce notification template commerce account group rel could not be found
+	 */
+	public static CommerceNotificationTemplateCommerceAccountGroupRel
+		fetchByC_C(
+			long commerceNotificationTemplateId, long commerceAccountGroupId) {
+
+		return getPersistence().fetchByC_C(
+			commerceNotificationTemplateId, commerceAccountGroupId);
+	}
+
+	/**
+	 * Returns all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
+	 *
+	 * @param commerceNotificationTemplateId the commerce notification template ID
+	 * @return the matching commerce notification template commerce account group rels
+	 */
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		findByCommerceNotificationTemplateId(
+			long commerceNotificationTemplateId) {
+
+		return getPersistence().findByCommerceNotificationTemplateId(
+			commerceNotificationTemplateId);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceNotificationTemplateId the commerce notification template ID
+	 * @param start the lower bound of the range of commerce notification template commerce account group rels
+	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
+	 * @return the range of matching commerce notification template commerce account group rels
+	 */
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		findByCommerceNotificationTemplateId(
+			long commerceNotificationTemplateId, int start, int end) {
+
+		return getPersistence().findByCommerceNotificationTemplateId(
+			commerceNotificationTemplateId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification template commerce account group rels where commerceNotificationTemplateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceNotificationTemplateId the commerce notification template ID
+	 * @param start the lower bound of the range of commerce notification template commerce account group rels
+	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification template commerce account group rels
+	 */
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		findByCommerceNotificationTemplateId(
+			long commerceNotificationTemplateId, int start, int end,
+			OrderByComparator
+				<CommerceNotificationTemplateCommerceAccountGroupRel>
+					orderByComparator) {
+
+		return getPersistence().findByCommerceNotificationTemplateId(
+			commerceNotificationTemplateId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
+	 *
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @return the matching commerce notification template commerce account group rels
+	 */
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		findByCommerceAccountGroupId(long commerceAccountGroupId) {
+
+		return getPersistence().findByCommerceAccountGroupId(
+			commerceAccountGroupId);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @param start the lower bound of the range of commerce notification template commerce account group rels
+	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
+	 * @return the range of matching commerce notification template commerce account group rels
+	 */
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		findByCommerceAccountGroupId(
+			long commerceAccountGroupId, int start, int end) {
+
+		return getPersistence().findByCommerceAccountGroupId(
+			commerceAccountGroupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification template commerce account group rels where commerceAccountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @param start the lower bound of the range of commerce notification template commerce account group rels
+	 * @param end the upper bound of the range of commerce notification template commerce account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification template commerce account group rels
+	 */
+	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
+		findByCommerceAccountGroupId(
+			long commerceAccountGroupId, int start, int end,
+			OrderByComparator
+				<CommerceNotificationTemplateCommerceAccountGroupRel>
+					orderByComparator) {
+
+		return getPersistence().findByCommerceAccountGroupId(
+			commerceAccountGroupId, start, end, orderByComparator);
+	}
+
 	public static CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 		getPersistence() {
 
@@ -615,4 +615,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelUtil {
 			_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2105211038
+// LIFERAY-SERVICE-BUILDER-HASH:-1415040634

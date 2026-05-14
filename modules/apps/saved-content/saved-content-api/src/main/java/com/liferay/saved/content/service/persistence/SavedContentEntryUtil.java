@@ -129,54 +129,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -263,17 +215,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the saved content entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the saved content entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -310,60 +251,6 @@ public class SavedContentEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the saved content entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -447,55 +334,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -550,34 +388,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByGroupId(long groupId) {
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().filterFindByGroupId(groupId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -625,55 +435,6 @@ public class SavedContentEntryUtil {
 	 */
 	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
-	}
-
-	/**
-	 * Returns all the saved content entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUserId(
-		long userId, int start, int end) {
-
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -748,58 +509,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_U(long groupId, long userId) {
-		return getPersistence().findByG_U(groupId, userId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where groupId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_U(
-		long groupId, long userId, int start, int end) {
-
-		return getPersistence().findByG_U(groupId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where groupId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_U(
-		long groupId, long userId, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByG_U(
-			groupId, userId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
@@ -859,38 +568,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @return the matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByG_U(
-		long groupId, long userId) {
-
-		return getPersistence().filterFindByG_U(groupId, userId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByG_U(
-		long groupId, long userId, int start, int end) {
-
-		return getPersistence().filterFindByG_U(groupId, userId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries that the user has permissions to view where groupId = &#63; and userId = &#63;.
 	 *
 	 * <p>
@@ -942,60 +619,6 @@ public class SavedContentEntryUtil {
 	 */
 	public static int filterCountByG_U(long groupId, long userId) {
 		return getPersistence().filterCountByG_U(groupId, userId);
-	}
-
-	/**
-	 * Returns all the saved content entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_CN(
-		long groupId, long classNameId) {
-
-		return getPersistence().findByG_CN(groupId, classNameId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_CN(
-		long groupId, long classNameId, int start, int end) {
-
-		return getPersistence().findByG_CN(groupId, classNameId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_CN(
-		long groupId, long classNameId, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByG_CN(
-			groupId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1059,39 +682,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @return the matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByG_CN(
-		long groupId, long classNameId) {
-
-		return getPersistence().filterFindByG_CN(groupId, classNameId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByG_CN(
-		long groupId, long classNameId, int start, int end) {
-
-		return getPersistence().filterFindByG_CN(
-			groupId, classNameId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries that the user has permissions to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
@@ -1143,60 +733,6 @@ public class SavedContentEntryUtil {
 	 */
 	public static int filterCountByG_CN(long groupId, long classNameId) {
 		return getPersistence().filterCountByG_CN(groupId, classNameId);
-	}
-
-	/**
-	 * Returns all the saved content entries where userId = &#63; and classNameId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByU_C(
-		long userId, long classNameId) {
-
-		return getPersistence().findByU_C(userId, classNameId);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where userId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByU_C(
-		long userId, long classNameId, int start, int end) {
-
-		return getPersistence().findByU_C(userId, classNameId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where userId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByU_C(
-		long userId, long classNameId, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByU_C(
-			userId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1280,64 +816,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
-		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
@@ -1398,42 +876,6 @@ public class SavedContentEntryUtil {
 
 		return getPersistence().fetchByG_C_C_First(
 			groupId, classNameId, classPK, orderByComparator);
-	}
-
-	/**
-	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
-		return getPersistence().filterFindByG_C_C(
-			groupId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries that the user has permission to view
-	 */
-	public static List<SavedContentEntry> filterFindByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().filterFindByG_C_C(
-			groupId, classNameId, classPK, start, end);
 	}
 
 	/**
@@ -1499,64 +941,6 @@ public class SavedContentEntryUtil {
 
 		return getPersistence().filterCountByG_C_C(
 			groupId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByC_C_C(
-		long companyId, long classNameId, long classPK) {
-
-		return getPersistence().findByC_C_C(companyId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByC_C_C(
-		long companyId, long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByC_C_C(
-			companyId, classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByC_C_C(
-		long companyId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByC_C_C(
-			companyId, classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -1669,22 +1053,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns the saved content entry where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByG_U_C_C(
-		long groupId, long userId, long classNameId, long classPK) {
-
-		return getPersistence().fetchByG_U_C_C(
-			groupId, userId, classNameId, classPK);
-	}
-
-	/**
 	 * Returns the saved content entry where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -1737,75 +1105,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Returns all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPKs the class pks
-	 * @return the matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByC_U_C_C(
-		long companyId, long userId, long classNameId, long[] classPKs) {
-
-		return getPersistence().findByC_U_C_C(
-			companyId, userId, classNameId, classPKs);
-	}
-
-	/**
-	 * Returns a range of all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPKs the class pks
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @return the range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByC_U_C_C(
-		long companyId, long userId, long classNameId, long[] classPKs,
-		int start, int end) {
-
-		return getPersistence().findByC_U_C_C(
-			companyId, userId, classNameId, classPKs, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPKs the class pks
-	 * @param start the lower bound of the range of saved content entries
-	 * @param end the upper bound of the range of saved content entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saved content entries
-	 */
-	public static List<SavedContentEntry> findByC_U_C_C(
-		long companyId, long userId, long classNameId, long[] classPKs,
-		int start, int end,
-		OrderByComparator<SavedContentEntry> orderByComparator) {
-
-		return getPersistence().findByC_U_C_C(
-			companyId, userId, classNameId, classPKs, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -1849,22 +1148,6 @@ public class SavedContentEntryUtil {
 			NoSuchSavedContentEntryException {
 
 		return getPersistence().findByC_U_C_C(
-			companyId, userId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns the saved content entry where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
-	 */
-	public static SavedContentEntry fetchByC_U_C_C(
-		long companyId, long userId, long classNameId, long classPK) {
-
-		return getPersistence().fetchByC_U_C_C(
 			companyId, userId, classNameId, classPK);
 	}
 
@@ -1992,6 +1275,719 @@ public class SavedContentEntryUtil {
 		return getPersistence().fetchByPrimaryKey(savedContentEntryId);
 	}
 
+	/**
+	 * Returns the saved content entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public static SavedContentEntry fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the saved content entry where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public static SavedContentEntry fetchByG_U_C_C(
+		long groupId, long userId, long classNameId, long classPK) {
+
+		return getPersistence().fetchByG_U_C_C(
+			groupId, userId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns the saved content entry where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public static SavedContentEntry fetchByC_U_C_C(
+		long companyId, long userId, long classNameId, long classPK) {
+
+		return getPersistence().fetchByC_U_C_C(
+			companyId, userId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns all the saved content entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByGroupId(long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns all the saved content entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_U(long groupId, long userId) {
+		return getPersistence().findByG_U(groupId, userId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where groupId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_U(
+		long groupId, long userId, int start, int end) {
+
+		return getPersistence().findByG_U(groupId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where groupId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_U(
+		long groupId, long userId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByG_U(
+			groupId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @return the matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByG_U(
+		long groupId, long userId) {
+
+		return getPersistence().filterFindByG_U(groupId, userId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByG_U(
+		long groupId, long userId, int start, int end) {
+
+		return getPersistence().filterFindByG_U(groupId, userId, start, end);
+	}
+
+	/**
+	 * Returns all the saved content entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_CN(
+		long groupId, long classNameId) {
+
+		return getPersistence().findByG_CN(groupId, classNameId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_CN(
+		long groupId, long classNameId, int start, int end) {
+
+		return getPersistence().findByG_CN(groupId, classNameId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_CN(
+		long groupId, long classNameId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByG_CN(
+			groupId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByG_CN(
+		long groupId, long classNameId) {
+
+		return getPersistence().filterFindByG_CN(groupId, classNameId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByG_CN(
+		long groupId, long classNameId, int start, int end) {
+
+		return getPersistence().filterFindByG_CN(
+			groupId, classNameId, start, end);
+	}
+
+	/**
+	 * Returns all the saved content entries where userId = &#63; and classNameId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByU_C(
+		long userId, long classNameId) {
+
+		return getPersistence().findByU_C(userId, classNameId);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByU_C(
+		long userId, long classNameId, int start, int end) {
+
+		return getPersistence().findByU_C(userId, classNameId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where userId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByU_C(
+		long userId, long classNameId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByU_C(
+			userId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_C_C(
+		long groupId, long classNameId, long classPK) {
+
+		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_C_C(
+		long groupId, long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByG_C_C(
+			groupId, classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByG_C_C(
+		long groupId, long classNameId, long classPK, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByG_C_C(
+			groupId, classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByG_C_C(
+		long groupId, long classNameId, long classPK) {
+
+		return getPersistence().filterFindByG_C_C(
+			groupId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries that the user has permission to view
+	 */
+	public static List<SavedContentEntry> filterFindByG_C_C(
+		long groupId, long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().filterFindByG_C_C(
+			groupId, classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByC_C_C(
+		long companyId, long classNameId, long classPK) {
+
+		return getPersistence().findByC_C_C(companyId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C_C(
+			companyId, classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByC_C_C(
+			companyId, classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @return the matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByC_U_C_C(
+		long companyId, long userId, long classNameId, long[] classPKs) {
+
+		return getPersistence().findByC_U_C_C(
+			companyId, userId, classNameId, classPKs);
+	}
+
+	/**
+	 * Returns a range of all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByC_U_C_C(
+		long companyId, long userId, long classNameId, long[] classPKs,
+		int start, int end) {
+
+		return getPersistence().findByC_U_C_C(
+			companyId, userId, classNameId, classPKs, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saved content entries where companyId = &#63; and userId = &#63; and classNameId = &#63; and classPK = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saved.content.model.impl.SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param classNameId the class name ID
+	 * @param classPKs the class pks
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public static List<SavedContentEntry> findByC_U_C_C(
+		long companyId, long userId, long classNameId, long[] classPKs,
+		int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getPersistence().findByC_U_C_C(
+			companyId, userId, classNameId, classPKs, start, end,
+			orderByComparator);
+	}
+
 	public static SavedContentEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -2005,4 +2001,4 @@ public class SavedContentEntryUtil {
 	private static volatile SavedContentEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-745658421
+// LIFERAY-SERVICE-BUILDER-HASH:1395430583

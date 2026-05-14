@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -93,59 +92,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object fields where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -232,66 +182,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object fields where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -386,62 +280,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the object fields where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -529,66 +371,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByListTypeDefinitionId;
 
 	/**
-	 * Returns all the object fields where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByListTypeDefinitionId(
-		long listTypeDefinitionId) {
-
-		return findByListTypeDefinitionId(
-			listTypeDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByListTypeDefinitionId(
-		long listTypeDefinitionId, int start, int end) {
-
-		return findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByListTypeDefinitionId(
-		long listTypeDefinitionId, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -681,63 +467,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByObjectDefinitionId(long objectDefinitionId) {
-		return findByObjectDefinitionId(
-			objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end) {
-
-		return findByObjectDefinitionId(objectDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByObjectDefinitionId(
-			objectDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -829,66 +562,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByC_U;
 
 	/**
-	 * Returns all the object fields where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByC_U(long companyId, long userId) {
-		return findByC_U(
-			companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return findByC_U(companyId, userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where companyId = &#63; and userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByC_U(
-			companyId, userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -983,67 +660,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByC_BT;
 
 	/**
-	 * Returns all the object fields where companyId = &#63; and businessType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByC_BT(long companyId, String businessType) {
-		return findByC_BT(
-			companyId, businessType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where companyId = &#63; and businessType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByC_BT(
-		long companyId, String businessType, int start, int end) {
-
-		return findByC_BT(companyId, businessType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where companyId = &#63; and businessType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param businessType the business type
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByC_BT(
-		long companyId, String businessType, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByC_BT(
-			companyId, businessType, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where companyId = &#63; and businessType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1140,69 +760,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByLTDI_S;
 
 	/**
-	 * Returns all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByLTDI_S(
-		long listTypeDefinitionId, boolean state) {
-
-		return findByLTDI_S(
-			listTypeDefinitionId, state, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByLTDI_S(
-		long listTypeDefinitionId, boolean state, int start, int end) {
-
-		return findByLTDI_S(listTypeDefinitionId, state, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param state the state
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByLTDI_S(
-		long listTypeDefinitionId, boolean state, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByLTDI_S(
-			listTypeDefinitionId, state, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -1299,70 +860,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_BT;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_BT(
-		long objectDefinitionId, String businessType) {
-
-		return findByODI_BT(
-			objectDefinitionId, businessType, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_BT(
-		long objectDefinitionId, String businessType, int start, int end) {
-
-		return findByODI_BT(objectDefinitionId, businessType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param businessType the business type
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_BT(
-		long objectDefinitionId, String businessType, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_BT(
-			objectDefinitionId, businessType, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and businessType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1459,70 +960,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_DTN;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_DTN(
-		long objectDefinitionId, String dbTableName) {
-
-		return findByODI_DTN(
-			objectDefinitionId, dbTableName, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_DTN(
-		long objectDefinitionId, String dbTableName, int start, int end) {
-
-		return findByODI_DTN(objectDefinitionId, dbTableName, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbTableName the db table name
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_DTN(
-		long objectDefinitionId, String dbTableName, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_DTN(
-			objectDefinitionId, dbTableName, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1619,69 +1060,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_I;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_I(
-		long objectDefinitionId, boolean indexed) {
-
-		return findByODI_I(
-			objectDefinitionId, indexed, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_I(
-		long objectDefinitionId, boolean indexed, int start, int end) {
-
-		return findByODI_I(objectDefinitionId, indexed, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and indexed = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param indexed the indexed
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_I(
-		long objectDefinitionId, boolean indexed, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_I(
-			objectDefinitionId, indexed, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and indexed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1778,69 +1160,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_L;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_L(
-		long objectDefinitionId, boolean localized) {
-
-		return findByODI_L(
-			objectDefinitionId, localized, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_L(
-		long objectDefinitionId, boolean localized, int start, int end) {
-
-		return findByODI_L(objectDefinitionId, localized, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and localized = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_L(
-		long objectDefinitionId, boolean localized, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_L(
-			objectDefinitionId, localized, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and localized = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1967,18 +1290,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the object field where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param name the name
-	 * @return the matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByODI_N(long objectDefinitionId, String name) {
-		return fetchByODI_N(objectDefinitionId, name, true);
-	}
-
-	/**
 	 * Returns the object field where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2028,69 +1339,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_S;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_S(
-		long objectDefinitionId, boolean system) {
-
-		return findByODI_S(
-			objectDefinitionId, system, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_S(
-		long objectDefinitionId, boolean system, int start, int end) {
-
-		return findByODI_S(objectDefinitionId, system, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and system = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param system the system
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_S(
-		long objectDefinitionId, boolean system, int start, int end,
-		OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_S(
-			objectDefinitionId, system, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2223,22 +1475,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object field, or <code>null</code> if a matching object field could not be found
-	 */
-	@Override
-	public ObjectField fetchByERC_C_ODI(
-		String externalReferenceCode, long companyId, long objectDefinitionId) {
-
-		return fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId, true);
-	}
-
-	/**
 	 * Returns the object field where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -2301,75 +1537,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_DBT_I;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_DBT_I(
-		long objectDefinitionId, String dbType, boolean indexed) {
-
-		return findByODI_DBT_I(
-			objectDefinitionId, dbType, indexed, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_DBT_I(
-		long objectDefinitionId, String dbType, boolean indexed, int start,
-		int end) {
-
-		return findByODI_DBT_I(
-			objectDefinitionId, dbType, indexed, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param dbType the db type
-	 * @param indexed the indexed
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_DBT_I(
-		long objectDefinitionId, String dbType, boolean indexed, int start,
-		int end, OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_DBT_I(
-			objectDefinitionId, dbType, indexed, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and dbType = &#63; and indexed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -2475,75 +1646,10 @@ public class ObjectFieldPersistenceImpl
 		_collectionPersistenceFinderByODI_L_S;
 
 	/**
-	 * Returns all the object fields where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @return the matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_L_S(
-		long objectDefinitionId, boolean localized, boolean system) {
-
-		return findByODI_L_S(
-			objectDefinitionId, localized, system, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object fields where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @return the range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_L_S(
-		long objectDefinitionId, boolean localized, boolean system, int start,
-		int end) {
-
-		return findByODI_L_S(
-			objectDefinitionId, localized, system, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param localized the localized
-	 * @param system the system
-	 * @param start the lower bound of the range of object fields
-	 * @param end the upper bound of the range of object fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object fields
-	 */
-	@Override
-	public List<ObjectField> findByODI_L_S(
-		long objectDefinitionId, boolean localized, boolean system, int start,
-		int end, OrderByComparator<ObjectField> orderByComparator) {
-
-		return findByODI_L_S(
-			objectDefinitionId, localized, system, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object fields where objectDefinitionId = &#63; and localized = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -3465,4 +2571,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:993869811
+// LIFERAY-SERVICE-BUILDER-HASH:-2044541500

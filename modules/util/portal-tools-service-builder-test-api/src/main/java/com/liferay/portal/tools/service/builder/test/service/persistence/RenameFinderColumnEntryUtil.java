@@ -149,18 +149,6 @@ public class RenameFinderColumnEntryUtil {
 	}
 
 	/**
-	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param columnToRename the column to rename
-	 * @return the matching rename finder column entry, or <code>null</code> if a matching rename finder column entry could not be found
-	 */
-	public static RenameFinderColumnEntry fetchByColumnToRename(
-		String columnToRename) {
-
-		return getPersistence().fetchByColumnToRename(columnToRename);
-	}
-
-	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param columnToRename the column to rename
@@ -257,6 +245,18 @@ public class RenameFinderColumnEntryUtil {
 		return getPersistence().fetchByPrimaryKey(renameFinderColumnEntryId);
 	}
 
+	/**
+	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param columnToRename the column to rename
+	 * @return the matching rename finder column entry, or <code>null</code> if a matching rename finder column entry could not be found
+	 */
+	public static RenameFinderColumnEntry fetchByColumnToRename(
+		String columnToRename) {
+
+		return getPersistence().fetchByColumnToRename(columnToRename);
+	}
+
 	public static RenameFinderColumnEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -270,4 +270,4 @@ public class RenameFinderColumnEntryUtil {
 	private static volatile RenameFinderColumnEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:462770234
+// LIFERAY-SERVICE-BUILDER-HASH:-300600426

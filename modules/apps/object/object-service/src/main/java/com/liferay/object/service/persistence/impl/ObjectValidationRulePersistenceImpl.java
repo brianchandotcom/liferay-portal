@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -94,61 +93,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object validation rules where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -238,68 +186,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object validation rules where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -394,65 +284,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
-	 * Returns all the object validation rules where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByObjectDefinitionId(
-		long objectDefinitionId) {
-
-		return findByObjectDefinitionId(
-			objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end) {
-
-		return findByObjectDefinitionId(objectDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByObjectDefinitionId(
-			objectDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -545,69 +380,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByODI_A;
 
 	/**
-	 * Returns all the object validation rules where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_A(
-		long objectDefinitionId, boolean active) {
-
-		return findByODI_A(
-			objectDefinitionId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_A(
-		long objectDefinitionId, boolean active, int start, int end) {
-
-		return findByODI_A(objectDefinitionId, active, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and active = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param active the active
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_A(
-		long objectDefinitionId, boolean active, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByODI_A(
-			objectDefinitionId, active, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -704,69 +480,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByODI_E;
 
 	/**
-	 * Returns all the object validation rules where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_E(
-		long objectDefinitionId, String engine) {
-
-		return findByODI_E(
-			objectDefinitionId, engine, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_E(
-		long objectDefinitionId, String engine, int start, int end) {
-
-		return findByODI_E(objectDefinitionId, engine, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and engine = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param engine the engine
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_E(
-		long objectDefinitionId, String engine, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByODI_E(
-			objectDefinitionId, engine, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and engine = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -863,70 +580,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByODI_O;
 
 	/**
-	 * Returns all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_O(
-		long objectDefinitionId, String outputType) {
-
-		return findByODI_O(
-			objectDefinitionId, outputType, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_O(
-		long objectDefinitionId, String outputType, int start, int end) {
-
-		return findByODI_O(objectDefinitionId, outputType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param outputType the output type
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByODI_O(
-		long objectDefinitionId, String outputType, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByODI_O(
-			objectDefinitionId, outputType, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -1023,65 +680,10 @@ public class ObjectValidationRulePersistenceImpl
 		_collectionPersistenceFinderByA_E;
 
 	/**
-	 * Returns all the object validation rules where active = &#63; and engine = &#63;.
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @return the matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByA_E(boolean active, String engine) {
-		return findByA_E(
-			active, engine, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object validation rules where active = &#63; and engine = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @return the range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByA_E(
-		boolean active, String engine, int start, int end) {
-
-		return findByA_E(active, engine, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object validation rules where active = &#63; and engine = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param active the active
-	 * @param engine the engine
-	 * @param start the lower bound of the range of object validation rules
-	 * @param end the upper bound of the range of object validation rules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object validation rules
-	 */
-	@Override
-	public List<ObjectValidationRule> findByA_E(
-		boolean active, String engine, int start, int end,
-		OrderByComparator<ObjectValidationRule> orderByComparator) {
-
-		return findByA_E(active, engine, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object validation rules where active = &#63; and engine = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectValidationRuleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param active the active
@@ -1209,22 +811,6 @@ public class ObjectValidationRulePersistenceImpl
 		}
 
 		return objectValidationRule;
-	}
-
-	/**
-	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
-	 */
-	@Override
-	public ObjectValidationRule fetchByERC_C_ODI(
-		String externalReferenceCode, long companyId, long objectDefinitionId) {
-
-		return fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId, true);
 	}
 
 	/**
@@ -1864,4 +1450,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:872315291
+// LIFERAY-SERVICE-BUILDER-HASH:-935970674

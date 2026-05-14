@@ -34,46 +34,6 @@ public interface WikiNodePersistence
 	 */
 
 	/**
-	 * Returns all the wiki nodes where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the wiki nodes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByUuid(String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the wiki nodes where uuid = &#63;.
 	 *
 	 * <p>
@@ -146,15 +106,6 @@ public interface WikiNodePersistence
 		throws NoSuchNodeException;
 
 	/**
-	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public WikiNode fetchByUUID_G(String uuid, long groupId);
-
-	/**
 	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -183,50 +134,6 @@ public interface WikiNodePersistence
 	 * @return the number of matching wiki nodes
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the wiki nodes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -295,47 +202,6 @@ public interface WikiNodePersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the wiki nodes where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the wiki nodes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the wiki nodes where groupId = &#63;.
 	 *
 	 * <p>
@@ -382,29 +248,6 @@ public interface WikiNodePersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching wiki nodes that the user has permission to view
-	 */
-	public java.util.List<WikiNode> filterFindByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the wiki nodes that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes that the user has permission to view
-	 */
-	public java.util.List<WikiNode> filterFindByGroupId(
-		long groupId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the wiki nodes that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -444,47 +287,6 @@ public interface WikiNodePersistence
 	 * @return the number of matching wiki nodes that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
-
-	/**
-	 * Returns all the wiki nodes where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByCompanyId(long companyId);
-
-	/**
-	 * Returns a range of all the wiki nodes where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByCompanyId(
-		long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
@@ -559,15 +361,6 @@ public interface WikiNodePersistence
 		throws NoSuchNodeException;
 
 	/**
-	 * Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public WikiNode fetchByG_N(long groupId, String name);
-
-	/**
 	 * Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -596,50 +389,6 @@ public interface WikiNodePersistence
 	 * @return the number of matching wiki nodes
 	 */
 	public int countByG_N(long groupId, String name);
-
-	/**
-	 * Returns all the wiki nodes where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByG_S(long groupId, int status);
-
-	/**
-	 * Returns a range of all the wiki nodes where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByG_S(
-		long groupId, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByG_S(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where groupId = &#63; and status = &#63;.
@@ -691,31 +440,6 @@ public interface WikiNodePersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching wiki nodes that the user has permission to view
-	 */
-	public java.util.List<WikiNode> filterFindByG_S(long groupId, int status);
-
-	/**
-	 * Returns a range of all the wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes that the user has permission to view
-	 */
-	public java.util.List<WikiNode> filterFindByG_S(
-		long groupId, int status, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the wiki nodes that the user has permissions to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -759,50 +483,6 @@ public interface WikiNodePersistence
 	 * @return the number of matching wiki nodes that the user has permission to view
 	 */
 	public int filterCountByG_S(long groupId, int status);
-
-	/**
-	 * Returns all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByC_S(long companyId, int status);
-
-	/**
-	 * Returns a range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByC_S(
-		long companyId, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching wiki nodes
-	 */
-	public java.util.List<WikiNode> findByC_S(
-		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
@@ -882,15 +562,6 @@ public interface WikiNodePersistence
 		throws NoSuchNodeException;
 
 	/**
-	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
-	 */
-	public WikiNode fetchByERC_G(String externalReferenceCode, long groupId);
-
-	/**
 	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -956,5 +627,431 @@ public interface WikiNodePersistence
 	 */
 	public WikiNode fetchByPrimaryKey(long nodeId);
 
+	/**
+	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	public default WikiNode fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	public default WikiNode fetchByG_N(long groupId, String name) {
+		return fetchByG_N(groupId, name, true);
+	}
+
+	/**
+	 * Returns the wiki node where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
+	 */
+	public default WikiNode fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns all the wiki nodes where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the wiki nodes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the wiki nodes where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByGroupId(long groupId) {
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching wiki nodes that the user has permission to view
+	 */
+	public default java.util.List<WikiNode> filterFindByGroupId(long groupId) {
+		return filterFindByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes that the user has permission to view
+	 */
+	public default java.util.List<WikiNode> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns all the wiki nodes where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByCompanyId(long companyId) {
+		return findByCompanyId(
+			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return findByCompanyId(companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
+
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the wiki nodes where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByG_S(
+		long groupId, int status) {
+
+		return findByG_S(
+			groupId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByG_S(
+		long groupId, int status, int start, int end) {
+
+		return findByG_S(groupId, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
+
+		return findByG_S(groupId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching wiki nodes that the user has permission to view
+	 */
+	public default java.util.List<WikiNode> filterFindByG_S(
+		long groupId, int status) {
+
+		return filterFindByG_S(
+			groupId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes that the user has permission to view
+	 */
+	public default java.util.List<WikiNode> filterFindByG_S(
+		long groupId, int status, int start, int end) {
+
+		return filterFindByG_S(groupId, status, start, end, null);
+	}
+
+	/**
+	 * Returns all the wiki nodes where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByC_S(
+		long companyId, int status) {
+
+		return findByC_S(
+			companyId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the wiki nodes where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @return the range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByC_S(
+		long companyId, int status, int start, int end) {
+
+		return findByC_S(companyId, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.wiki.model.impl.WikiNodeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of wiki nodes
+	 * @param end the upper bound of the range of wiki nodes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki nodes
+	 */
+	public default java.util.List<WikiNode> findByC_S(
+		long companyId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
+			orderByComparator) {
+
+		return findByC_S(
+			companyId, status, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-842231750
+// LIFERAY-SERVICE-BUILDER-HASH:-2048731848

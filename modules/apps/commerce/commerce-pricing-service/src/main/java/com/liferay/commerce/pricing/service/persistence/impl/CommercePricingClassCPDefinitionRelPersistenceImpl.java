@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -91,69 +90,10 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		_collectionPersistenceFinderByCommercePricingClassId;
 
 	/**
-	 * Returns all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @return the matching commerce pricing class cp definition rels
-	 */
-	@Override
-	public List<CommercePricingClassCPDefinitionRel>
-		findByCommercePricingClassId(long commercePricingClassId) {
-
-		return findByCommercePricingClassId(
-			commercePricingClassId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param start the lower bound of the range of commerce pricing class cp definition rels
-	 * @param end the upper bound of the range of commerce pricing class cp definition rels (not inclusive)
-	 * @return the range of matching commerce pricing class cp definition rels
-	 */
-	@Override
-	public List<CommercePricingClassCPDefinitionRel>
-		findByCommercePricingClassId(
-			long commercePricingClassId, int start, int end) {
-
-		return findByCommercePricingClassId(
-			commercePricingClassId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param start the lower bound of the range of commerce pricing class cp definition rels
-	 * @param end the upper bound of the range of commerce pricing class cp definition rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce pricing class cp definition rels
-	 */
-	@Override
-	public List<CommercePricingClassCPDefinitionRel>
-		findByCommercePricingClassId(
-			long commercePricingClassId, int start, int end,
-			OrderByComparator<CommercePricingClassCPDefinitionRel>
-				orderByComparator) {
-
-		return findByCommercePricingClassId(
-			commercePricingClassId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce pricing class cp definition rels where commercePricingClassId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commercePricingClassId the commerce pricing class ID
@@ -254,66 +194,10 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
-	 * Returns all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @return the matching commerce pricing class cp definition rels
-	 */
-	@Override
-	public List<CommercePricingClassCPDefinitionRel> findByCPDefinitionId(
-		long CPDefinitionId) {
-
-		return findByCPDefinitionId(
-			CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of commerce pricing class cp definition rels
-	 * @param end the upper bound of the range of commerce pricing class cp definition rels (not inclusive)
-	 * @return the range of matching commerce pricing class cp definition rels
-	 */
-	@Override
-	public List<CommercePricingClassCPDefinitionRel> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end) {
-
-		return findByCPDefinitionId(CPDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of commerce pricing class cp definition rels
-	 * @param end the upper bound of the range of commerce pricing class cp definition rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce pricing class cp definition rels
-	 */
-	@Override
-	public List<CommercePricingClassCPDefinitionRel> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end,
-		OrderByComparator<CommercePricingClassCPDefinitionRel>
-			orderByComparator) {
-
-		return findByCPDefinitionId(
-			CPDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce pricing class cp definition rels where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassCPDefinitionRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -437,20 +321,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		}
 
 		return commercePricingClassCPDefinitionRel;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commercePricingClassId the commerce pricing class ID
-	 * @param CPDefinitionId the cp definition ID
-	 * @return the matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel fetchByC_C(
-		long commercePricingClassId, long CPDefinitionId) {
-
-		return fetchByC_C(commercePricingClassId, CPDefinitionId, true);
 	}
 
 	/**
@@ -985,4 +855,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1364648500
+// LIFERAY-SERVICE-BUILDER-HASH:1409758951

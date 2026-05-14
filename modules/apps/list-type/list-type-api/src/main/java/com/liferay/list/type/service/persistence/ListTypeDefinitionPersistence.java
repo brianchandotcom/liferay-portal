@@ -33,47 +33,6 @@ public interface ListTypeDefinitionPersistence
 	 */
 
 	/**
-	 * Returns all the list type definitions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the list type definitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @return the range of matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the list type definitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the list type definitions where uuid = &#63;.
 	 *
 	 * <p>
@@ -120,29 +79,6 @@ public interface ListTypeDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the list type definitions that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching list type definitions that the user has permission to view
-	 */
-	public java.util.List<ListTypeDefinition> filterFindByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the list type definitions that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @return the range of matching list type definitions that the user has permission to view
-	 */
-	public java.util.List<ListTypeDefinition> filterFindByUuid(
-		String uuid, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the list type definitions that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
@@ -182,51 +118,6 @@ public interface ListTypeDefinitionPersistence
 	 * @return the number of matching list type definitions that the user has permission to view
 	 */
 	public int filterCountByUuid(String uuid);
-
-	/**
-	 * Returns all the list type definitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the list type definitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @return the range of matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the list type definitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the list type definitions where uuid = &#63; and companyId = &#63;.
@@ -278,32 +169,6 @@ public interface ListTypeDefinitionPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching list type definitions that the user has permission to view
-	 */
-	public java.util.List<ListTypeDefinition> filterFindByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @return the range of matching list type definitions that the user has permission to view
-	 */
-	public java.util.List<ListTypeDefinition> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the list type definitions that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -347,51 +212,6 @@ public interface ListTypeDefinitionPersistence
 	 * @return the number of matching list type definitions that the user has permission to view
 	 */
 	public int filterCountByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns all the list type definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByC_U(
-		long companyId, long userId);
-
-	/**
-	 * Returns a range of all the list type definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @return the range of matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByC_U(
-		long companyId, long userId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the list type definitions where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type definitions
-	 */
-	public java.util.List<ListTypeDefinition> findByC_U(
-		long companyId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the list type definitions where companyId = &#63; and userId = &#63;.
@@ -441,32 +261,6 @@ public interface ListTypeDefinitionPersistence
 		long companyId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
 			orderByComparator);
-
-	/**
-	 * Returns all the list type definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching list type definitions that the user has permission to view
-	 */
-	public java.util.List<ListTypeDefinition> filterFindByC_U(
-		long companyId, long userId);
-
-	/**
-	 * Returns a range of all the list type definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of list type definitions
-	 * @param end the upper bound of the range of list type definitions (not inclusive)
-	 * @return the range of matching list type definitions that the user has permission to view
-	 */
-	public java.util.List<ListTypeDefinition> filterFindByC_U(
-		long companyId, long userId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the list type definitions that the user has permissions to view where companyId = &#63; and userId = &#63;.
@@ -524,16 +318,6 @@ public interface ListTypeDefinitionPersistence
 	public ListTypeDefinition findByERC_C(
 			String externalReferenceCode, long companyId)
 		throws NoSuchListTypeDefinitionException;
-
-	/**
-	 * Returns the list type definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching list type definition, or <code>null</code> if a matching list type definition could not be found
-	 */
-	public ListTypeDefinition fetchByERC_C(
-		String externalReferenceCode, long companyId);
 
 	/**
 	 * Returns the list type definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -604,5 +388,287 @@ public interface ListTypeDefinitionPersistence
 	 */
 	public ListTypeDefinition fetchByPrimaryKey(long listTypeDefinitionId);
 
+	/**
+	 * Returns the list type definition where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching list type definition, or <code>null</code> if a matching list type definition could not be found
+	 */
+	public default ListTypeDefinition fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns all the list type definitions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type definitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the list type definitions that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching list type definitions that the user has permission to view
+	 */
+	public default java.util.List<ListTypeDefinition> filterFindByUuid(
+		String uuid) {
+
+		return filterFindByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions that the user has permission to view
+	 */
+	public default java.util.List<ListTypeDefinition> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return filterFindByUuid(uuid, start, end, null);
+	}
+
+	/**
+	 * Returns all the list type definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type definitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching list type definitions that the user has permission to view
+	 */
+	public default java.util.List<ListTypeDefinition> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return filterFindByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions that the user has permission to view
+	 */
+	public default java.util.List<ListTypeDefinition> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return filterFindByUuid_C(uuid, companyId, start, end, null);
+	}
+
+	/**
+	 * Returns all the list type definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByC_U(
+		long companyId, long userId) {
+
+		return findByC_U(
+			companyId, userId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return findByC_U(companyId, userId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type definitions where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type definitions
+	 */
+	public default java.util.List<ListTypeDefinition> findByC_U(
+		long companyId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeDefinition>
+			orderByComparator) {
+
+		return findByC_U(
+			companyId, userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the list type definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching list type definitions that the user has permission to view
+	 */
+	public default java.util.List<ListTypeDefinition> filterFindByC_U(
+		long companyId, long userId) {
+
+		return filterFindByC_U(
+			companyId, userId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the list type definitions that the user has permission to view where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of list type definitions
+	 * @param end the upper bound of the range of list type definitions (not inclusive)
+	 * @return the range of matching list type definitions that the user has permission to view
+	 */
+	public default java.util.List<ListTypeDefinition> filterFindByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return filterFindByC_U(companyId, userId, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-518409618
+// LIFERAY-SERVICE-BUILDER-HASH:1228513726

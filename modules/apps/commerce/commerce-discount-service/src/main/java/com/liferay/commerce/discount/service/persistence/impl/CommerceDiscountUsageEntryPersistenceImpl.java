@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -78,65 +77,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		_collectionPersistenceFinderByCommerceDiscountId;
 
 	/**
-	 * Returns all the commerce discount usage entries where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @return the matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
-		long commerceDiscountId) {
-
-		return findByCommerceDiscountId(
-			commerceDiscountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce discount usage entries where commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @return the range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
-		long commerceDiscountId, int start, int end) {
-
-		return findByCommerceDiscountId(commerceDiscountId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceDiscountId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
-		long commerceDiscountId, int start, int end,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		return findByCommerceDiscountId(
-			commerceDiscountId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce discount usage entries where commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -229,71 +173,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		_collectionPersistenceFinderByCAI_CDI;
 
 	/**
-	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @return the matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
-		long commerceAccountId, long commerceDiscountId) {
-
-		return findByCAI_CDI(
-			commerceAccountId, commerceDiscountId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @return the range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
-		long commerceAccountId, long commerceDiscountId, int start, int end) {
-
-		return findByCAI_CDI(
-			commerceAccountId, commerceDiscountId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCAI_CDI(
-		long commerceAccountId, long commerceDiscountId, int start, int end,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		return findByCAI_CDI(
-			commerceAccountId, commerceDiscountId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -393,71 +276,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		_collectionPersistenceFinderByCOI_CDI;
 
 	/**
-	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @return the matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
-		long commerceOrderId, long commerceDiscountId) {
-
-		return findByCOI_CDI(
-			commerceOrderId, commerceDiscountId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @return the range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
-		long commerceOrderId, long commerceDiscountId, int start, int end) {
-
-		return findByCOI_CDI(
-			commerceOrderId, commerceDiscountId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCOI_CDI(
-		long commerceOrderId, long commerceDiscountId, int start, int end,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		return findByCOI_CDI(
-			commerceOrderId, commerceDiscountId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceOrderId the commerce order ID
@@ -555,77 +377,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		_collectionPersistenceFinderByCAI_COI_CDI;
 
 	/**
-	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @return the matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
-		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
-
-		return findByCAI_COI_CDI(
-			commerceAccountId, commerceOrderId, commerceDiscountId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @return the range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
-		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
-		int start, int end) {
-
-		return findByCAI_COI_CDI(
-			commerceAccountId, commerceOrderId, commerceDiscountId, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountId the commerce account ID
-	 * @param commerceOrderId the commerce order ID
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount usage entries
-	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount usage entries
-	 */
-	@Override
-	public List<CommerceDiscountUsageEntry> findByCAI_COI_CDI(
-		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
-		int start, int end,
-		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
-
-		return findByCAI_COI_CDI(
-			commerceAccountId, commerceOrderId, commerceDiscountId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceAccountId the commerce account ID
@@ -1184,4 +939,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1506816088
+// LIFERAY-SERVICE-BUILDER-HASH:2129474270

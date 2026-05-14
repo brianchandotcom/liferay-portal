@@ -33,50 +33,6 @@ public interface CommercePaymentEntryAuditPersistence
 	 */
 
 	/**
-	 * Returns all the commerce payment entry audits where commercePaymentEntryId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @return the matching commerce payment entry audits
-	 */
-	public java.util.List<CommercePaymentEntryAudit>
-		findByCommercePaymentEntryId(long commercePaymentEntryId);
-
-	/**
-	 * Returns a range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentEntryAuditModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param start the lower bound of the range of commerce payment entry audits
-	 * @param end the upper bound of the range of commerce payment entry audits (not inclusive)
-	 * @return the range of matching commerce payment entry audits
-	 */
-	public java.util.List<CommercePaymentEntryAudit>
-		findByCommercePaymentEntryId(
-			long commercePaymentEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentEntryAuditModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param start the lower bound of the range of commerce payment entry audits
-	 * @param end the upper bound of the range of commerce payment entry audits (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce payment entry audits
-	 */
-	public java.util.List<CommercePaymentEntryAudit>
-		findByCommercePaymentEntryId(
-			long commercePaymentEntryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommercePaymentEntryAudit> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
 	 *
 	 * <p>
@@ -122,31 +78,6 @@ public interface CommercePaymentEntryAuditPersistence
 		long commercePaymentEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePaymentEntryAudit> orderByComparator);
-
-	/**
-	 * Returns all the commerce payment entry audits that the user has permission to view where commercePaymentEntryId = &#63;.
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @return the matching commerce payment entry audits that the user has permission to view
-	 */
-	public java.util.List<CommercePaymentEntryAudit>
-		filterFindByCommercePaymentEntryId(long commercePaymentEntryId);
-
-	/**
-	 * Returns a range of all the commerce payment entry audits that the user has permission to view where commercePaymentEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentEntryAuditModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePaymentEntryId the commerce payment entry ID
-	 * @param start the lower bound of the range of commerce payment entry audits
-	 * @param end the upper bound of the range of commerce payment entry audits (not inclusive)
-	 * @return the range of matching commerce payment entry audits that the user has permission to view
-	 */
-	public java.util.List<CommercePaymentEntryAudit>
-		filterFindByCommercePaymentEntryId(
-			long commercePaymentEntryId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the commerce payment entry audits that the user has permissions to view where commercePaymentEntryId = &#63;.
@@ -231,5 +162,98 @@ public interface CommercePaymentEntryAuditPersistence
 	public CommercePaymentEntryAudit fetchByPrimaryKey(
 		long commercePaymentEntryAuditId);
 
+	/**
+	 * Returns all the commerce payment entry audits where commercePaymentEntryId = &#63;.
+	 *
+	 * @param commercePaymentEntryId the commerce payment entry ID
+	 * @return the matching commerce payment entry audits
+	 */
+	public default java.util.List<CommercePaymentEntryAudit>
+		findByCommercePaymentEntryId(long commercePaymentEntryId) {
+
+		return findByCommercePaymentEntryId(
+			commercePaymentEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentEntryAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commercePaymentEntryId the commerce payment entry ID
+	 * @param start the lower bound of the range of commerce payment entry audits
+	 * @param end the upper bound of the range of commerce payment entry audits (not inclusive)
+	 * @return the range of matching commerce payment entry audits
+	 */
+	public default java.util.List<CommercePaymentEntryAudit>
+		findByCommercePaymentEntryId(
+			long commercePaymentEntryId, int start, int end) {
+
+		return findByCommercePaymentEntryId(
+			commercePaymentEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentEntryAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commercePaymentEntryId the commerce payment entry ID
+	 * @param start the lower bound of the range of commerce payment entry audits
+	 * @param end the upper bound of the range of commerce payment entry audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment entry audits
+	 */
+	public default java.util.List<CommercePaymentEntryAudit>
+		findByCommercePaymentEntryId(
+			long commercePaymentEntryId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommercePaymentEntryAudit> orderByComparator) {
+
+		return findByCommercePaymentEntryId(
+			commercePaymentEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce payment entry audits that the user has permission to view where commercePaymentEntryId = &#63;.
+	 *
+	 * @param commercePaymentEntryId the commerce payment entry ID
+	 * @return the matching commerce payment entry audits that the user has permission to view
+	 */
+	public default java.util.List<CommercePaymentEntryAudit>
+		filterFindByCommercePaymentEntryId(long commercePaymentEntryId) {
+
+		return filterFindByCommercePaymentEntryId(
+			commercePaymentEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment entry audits that the user has permission to view where commercePaymentEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentEntryAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commercePaymentEntryId the commerce payment entry ID
+	 * @param start the lower bound of the range of commerce payment entry audits
+	 * @param end the upper bound of the range of commerce payment entry audits (not inclusive)
+	 * @return the range of matching commerce payment entry audits that the user has permission to view
+	 */
+	public default java.util.List<CommercePaymentEntryAudit>
+		filterFindByCommercePaymentEntryId(
+			long commercePaymentEntryId, int start, int end) {
+
+		return filterFindByCommercePaymentEntryId(
+			commercePaymentEntryId, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:752621860
+// LIFERAY-SERVICE-BUILDER-HASH:1777882470

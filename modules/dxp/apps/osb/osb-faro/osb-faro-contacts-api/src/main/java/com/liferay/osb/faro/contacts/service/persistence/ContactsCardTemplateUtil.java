@@ -130,55 +130,6 @@ public class ContactsCardTemplateUtil {
 	}
 
 	/**
-	 * Returns all the contacts card templates where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching contacts card templates
-	 */
-	public static List<ContactsCardTemplate> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the contacts card templates where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of contacts card templates
-	 * @param end the upper bound of the range of contacts card templates (not inclusive)
-	 * @return the range of matching contacts card templates
-	 */
-	public static List<ContactsCardTemplate> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the contacts card templates where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of contacts card templates
-	 * @param end the upper bound of the range of contacts card templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching contacts card templates
-	 */
-	public static List<ContactsCardTemplate> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<ContactsCardTemplate> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the contacts card templates where groupId = &#63;.
 	 *
 	 * <p>
@@ -309,6 +260,55 @@ public class ContactsCardTemplateUtil {
 		return getPersistence().fetchByPrimaryKey(contactsCardTemplateId);
 	}
 
+	/**
+	 * Returns all the contacts card templates where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching contacts card templates
+	 */
+	public static List<ContactsCardTemplate> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the contacts card templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of contacts card templates
+	 * @param end the upper bound of the range of contacts card templates (not inclusive)
+	 * @return the range of matching contacts card templates
+	 */
+	public static List<ContactsCardTemplate> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the contacts card templates where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.faro.contacts.model.impl.ContactsCardTemplateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of contacts card templates
+	 * @param end the upper bound of the range of contacts card templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contacts card templates
+	 */
+	public static List<ContactsCardTemplate> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<ContactsCardTemplate> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
 	public static ContactsCardTemplatePersistence getPersistence() {
 		return _persistence;
 	}
@@ -322,4 +322,4 @@ public class ContactsCardTemplateUtil {
 	private static volatile ContactsCardTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1124150813
+// LIFERAY-SERVICE-BUILDER-HASH:961605469

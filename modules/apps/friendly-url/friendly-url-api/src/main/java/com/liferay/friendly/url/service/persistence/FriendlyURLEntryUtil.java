@@ -125,54 +125,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns all the friendly url entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the friendly url entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -259,17 +211,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
-	 */
-	public static FriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -306,60 +247,6 @@ public class FriendlyURLEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -440,60 +327,6 @@ public class FriendlyURLEntryUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C(
-		long groupId, long classNameId) {
-
-		return getPersistence().findByG_C(groupId, classNameId);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C(
-		long groupId, long classNameId, int start, int end) {
-
-		return getPersistence().findByG_C(groupId, classNameId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C(
-		long groupId, long classNameId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByG_C(
-			groupId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -578,60 +411,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns all the friendly url entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByC_C(
-		long companyId, long classNameId) {
-
-		return getPersistence().findByC_C(companyId, classNameId);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByC_C(
-		long companyId, long classNameId, int start, int end) {
-
-		return getPersistence().findByC_C(companyId, classNameId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByC_C(
-		long companyId, long classNameId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			companyId, classNameId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
@@ -710,64 +489,6 @@ public class FriendlyURLEntryUtil {
 	 */
 	public static int countByC_C(long companyId, long classNameId) {
 		return getPersistence().countByC_C(companyId, classNameId);
-	}
-
-	/**
-	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
-		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @return the range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of friendly url entries
-	 * @param end the upper bound of the range of friendly url entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entries
-	 */
-	public static List<FriendlyURLEntry> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
-
-		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -914,6 +635,285 @@ public class FriendlyURLEntryUtil {
 		return getPersistence().fetchByPrimaryKey(friendlyURLEntryId);
 	}
 
+	/**
+	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
+	 */
+	public static FriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns all the friendly url entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @return the matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId) {
+
+		return getPersistence().findByG_C(groupId, classNameId);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId, int start, int end) {
+
+		return getPersistence().findByG_C(groupId, classNameId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByG_C(
+		long groupId, long classNameId, int start, int end,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+
+		return getPersistence().findByG_C(
+			groupId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId) {
+
+		return getPersistence().findByC_C(companyId, classNameId);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId, int start, int end) {
+
+		return getPersistence().findByC_C(companyId, classNameId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			companyId, classNameId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByG_C_C(
+		long groupId, long classNameId, long classPK) {
+
+		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @return the range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByG_C_C(
+		long groupId, long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByG_C_C(
+			groupId, classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.friendly.url.model.impl.FriendlyURLEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of friendly url entries
+	 * @param end the upper bound of the range of friendly url entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching friendly url entries
+	 */
+	public static List<FriendlyURLEntry> findByG_C_C(
+		long groupId, long classNameId, long classPK, int start, int end,
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+
+		return getPersistence().findByG_C_C(
+			groupId, classNameId, classPK, start, end, orderByComparator);
+	}
+
 	public static FriendlyURLEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -925,4 +925,4 @@ public class FriendlyURLEntryUtil {
 	private static volatile FriendlyURLEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:681619986
+// LIFERAY-SERVICE-BUILDER-HASH:-844990424

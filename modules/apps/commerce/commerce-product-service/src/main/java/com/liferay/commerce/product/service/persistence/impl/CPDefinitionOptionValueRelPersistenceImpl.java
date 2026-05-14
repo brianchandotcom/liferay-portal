@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -92,61 +91,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the cp definition option value rels where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -266,18 +214,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition option value rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the cp definition option value rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -327,68 +263,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the cp definition option value rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -483,62 +361,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the cp definition option value rels where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -628,62 +454,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the cp definition option value rels where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -773,67 +547,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByCPDefinitionOptionRelId;
 
 	/**
-	 * Returns all the cp definition option value rels where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCPDefinitionOptionRelId(
-		long CPDefinitionOptionRelId) {
-
-		return findByCPDefinitionOptionRelId(
-			CPDefinitionOptionRelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCPDefinitionOptionRelId(
-		long CPDefinitionOptionRelId, int start, int end) {
-
-		return findByCPDefinitionOptionRelId(
-			CPDefinitionOptionRelId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCPDefinitionOptionRelId(
-		long CPDefinitionOptionRelId, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByCPDefinitionOptionRelId(
-			CPDefinitionOptionRelId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -927,65 +644,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByCPInstanceUuid;
 
 	/**
-	 * Returns all the cp definition option value rels where CPInstanceUuid = &#63;.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCPInstanceUuid(
-		String CPInstanceUuid) {
-
-		return findByCPInstanceUuid(
-			CPInstanceUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where CPInstanceUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCPInstanceUuid(
-		String CPInstanceUuid, int start, int end) {
-
-		return findByCPInstanceUuid(CPInstanceUuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where CPInstanceUuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCPInstanceUuid(
-		String CPInstanceUuid, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByCPInstanceUuid(
-			CPInstanceUuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where CPInstanceUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPInstanceUuid the cp instance uuid
@@ -1075,61 +737,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByKey;
 
 	/**
-	 * Returns all the cp definition option value rels where key = &#63;.
-	 *
-	 * @param key the key
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByKey(String key) {
-		return findByKey(key, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByKey(
-		String key, int start, int end) {
-
-		return findByKey(key, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where key = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByKey(
-		String key, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByKey(key, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param key the key
@@ -1251,20 +862,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param key the key
-	 * @return the matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel fetchByC_K(
-		long CPDefinitionOptionRelId, String key) {
-
-		return fetchByC_K(CPDefinitionOptionRelId, key, true);
-	}
-
-	/**
 	 * Returns the cp definition option value rel where CPDefinitionOptionRelId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -1316,71 +913,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		_collectionPersistenceFinderByCDORI_P;
 
 	/**
-	 * Returns all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @return the matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCDORI_P(
-		long CPDefinitionOptionRelId, boolean preselected) {
-
-		return findByCDORI_P(
-			CPDefinitionOptionRelId, preselected, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @return the range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCDORI_P(
-		long CPDefinitionOptionRelId, boolean preselected, int start, int end) {
-
-		return findByCDORI_P(
-			CPDefinitionOptionRelId, preselected, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionOptionRelId the cp definition option rel ID
-	 * @param preselected the preselected
-	 * @param start the lower bound of the range of cp definition option value rels
-	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition option value rels
-	 */
-	@Override
-	public List<CPDefinitionOptionValueRel> findByCDORI_P(
-		long CPDefinitionOptionRelId, boolean preselected, int start, int end,
-		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
-
-		return findByCDORI_P(
-			CPDefinitionOptionRelId, preselected, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPDefinitionOptionRelId the cp definition option rel ID
@@ -2150,4 +1686,4 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:69837129
+// LIFERAY-SERVICE-BUILDER-HASH:-1628281970

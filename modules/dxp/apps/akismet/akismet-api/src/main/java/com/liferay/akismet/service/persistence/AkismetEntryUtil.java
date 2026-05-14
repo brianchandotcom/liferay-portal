@@ -262,17 +262,6 @@ public class AkismetEntryUtil {
 	}
 
 	/**
-	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
-	 */
-	public static AkismetEntry fetchByC_C(long classNameId, long classPK) {
-		return getPersistence().fetchByC_C(classNameId, classPK);
-	}
-
-	/**
 	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -361,6 +350,17 @@ public class AkismetEntryUtil {
 		return getPersistence().fetchByPrimaryKey(akismetEntryId);
 	}
 
+	/**
+	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
+	 */
+	public static AkismetEntry fetchByC_C(long classNameId, long classPK) {
+		return getPersistence().fetchByC_C(classNameId, classPK);
+	}
+
 	public static AkismetEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -372,4 +372,4 @@ public class AkismetEntryUtil {
 	private static volatile AkismetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:613424650
+// LIFERAY-SERVICE-BUILDER-HASH:1823314970

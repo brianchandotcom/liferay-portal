@@ -125,55 +125,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns all the asset links where entryId1 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @return the matching asset links
-	 */
-	public static List<AssetLink> findByEntryId1(long entryId1) {
-		return getPersistence().findByEntryId1(entryId1);
-	}
-
-	/**
-	 * Returns a range of all the asset links where entryId1 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId1 the entry id1
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @return the range of matching asset links
-	 */
-	public static List<AssetLink> findByEntryId1(
-		long entryId1, int start, int end) {
-
-		return getPersistence().findByEntryId1(entryId1, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset links where entryId1 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId1 the entry id1
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset links
-	 */
-	public static List<AssetLink> findByEntryId1(
-		long entryId1, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().findByEntryId1(
-			entryId1, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset links where entryId1 = &#63;.
 	 *
 	 * <p>
@@ -246,55 +197,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns all the asset links where entryId2 = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @return the matching asset links
-	 */
-	public static List<AssetLink> findByEntryId2(long entryId2) {
-		return getPersistence().findByEntryId2(entryId2);
-	}
-
-	/**
-	 * Returns a range of all the asset links where entryId2 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId2 the entry id2
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @return the range of matching asset links
-	 */
-	public static List<AssetLink> findByEntryId2(
-		long entryId2, int start, int end) {
-
-		return getPersistence().findByEntryId2(entryId2, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset links where entryId2 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId2 the entry id2
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset links
-	 */
-	public static List<AssetLink> findByEntryId2(
-		long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().findByEntryId2(
-			entryId2, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset links where entryId2 = &#63;.
 	 *
 	 * <p>
@@ -364,58 +266,6 @@ public class AssetLinkUtil {
 	 */
 	public static int countByEntryId2(long entryId2) {
 		return getPersistence().countByEntryId2(entryId2);
-	}
-
-	/**
-	 * Returns all the asset links where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @return the matching asset links
-	 */
-	public static List<AssetLink> findByE_E(long entryId1, long entryId2) {
-		return getPersistence().findByE_E(entryId1, entryId2);
-	}
-
-	/**
-	 * Returns a range of all the asset links where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @return the range of matching asset links
-	 */
-	public static List<AssetLink> findByE_E(
-		long entryId1, long entryId2, int start, int end) {
-
-		return getPersistence().findByE_E(entryId1, entryId2, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset links where entryId1 = &#63; and entryId2 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset links
-	 */
-	public static List<AssetLink> findByE_E(
-		long entryId1, long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().findByE_E(
-			entryId1, entryId2, start, end, orderByComparator);
 	}
 
 	/**
@@ -498,58 +348,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns all the asset links where entryId1 = &#63; and type = &#63;.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @return the matching asset links
-	 */
-	public static List<AssetLink> findByE1_T(long entryId1, int type) {
-		return getPersistence().findByE1_T(entryId1, type);
-	}
-
-	/**
-	 * Returns a range of all the asset links where entryId1 = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @return the range of matching asset links
-	 */
-	public static List<AssetLink> findByE1_T(
-		long entryId1, int type, int start, int end) {
-
-		return getPersistence().findByE1_T(entryId1, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset links where entryId1 = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId1 the entry id1
-	 * @param type the type
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset links
-	 */
-	public static List<AssetLink> findByE1_T(
-		long entryId1, int type, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().findByE1_T(
-			entryId1, type, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset links where entryId1 = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -626,58 +424,6 @@ public class AssetLinkUtil {
 	 */
 	public static int countByE1_T(long entryId1, int type) {
 		return getPersistence().countByE1_T(entryId1, type);
-	}
-
-	/**
-	 * Returns all the asset links where entryId2 = &#63; and type = &#63;.
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @return the matching asset links
-	 */
-	public static List<AssetLink> findByE2_T(long entryId2, int type) {
-		return getPersistence().findByE2_T(entryId2, type);
-	}
-
-	/**
-	 * Returns a range of all the asset links where entryId2 = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @return the range of matching asset links
-	 */
-	public static List<AssetLink> findByE2_T(
-		long entryId2, int type, int start, int end) {
-
-		return getPersistence().findByE2_T(entryId2, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset links where entryId2 = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @param start the lower bound of the range of asset links
-	 * @param end the upper bound of the range of asset links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset links
-	 */
-	public static List<AssetLink> findByE2_T(
-		long entryId2, int type, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
-
-		return getPersistence().findByE2_T(
-			entryId2, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -775,20 +521,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param entryId1 the entry id1
-	 * @param entryId2 the entry id2
-	 * @param type the type
-	 * @return the matching asset link, or <code>null</code> if a matching asset link could not be found
-	 */
-	public static AssetLink fetchByE_E_T(
-		long entryId1, long entryId2, int type) {
-
-		return getPersistence().fetchByE_E_T(entryId1, entryId2, type);
-	}
-
-	/**
 	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param entryId1 the entry id1
@@ -881,6 +613,274 @@ public class AssetLinkUtil {
 		return getPersistence().fetchByPrimaryKey(linkId);
 	}
 
+	/**
+	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param entryId1 the entry id1
+	 * @param entryId2 the entry id2
+	 * @param type the type
+	 * @return the matching asset link, or <code>null</code> if a matching asset link could not be found
+	 */
+	public static AssetLink fetchByE_E_T(
+		long entryId1, long entryId2, int type) {
+
+		return getPersistence().fetchByE_E_T(entryId1, entryId2, type);
+	}
+
+	/**
+	 * Returns all the asset links where entryId1 = &#63;.
+	 *
+	 * @param entryId1 the entry id1
+	 * @return the matching asset links
+	 */
+	public static List<AssetLink> findByEntryId1(long entryId1) {
+		return getPersistence().findByEntryId1(entryId1);
+	}
+
+	/**
+	 * Returns a range of all the asset links where entryId1 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId1 the entry id1
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public static List<AssetLink> findByEntryId1(
+		long entryId1, int start, int end) {
+
+		return getPersistence().findByEntryId1(entryId1, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where entryId1 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId1 the entry id1
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByEntryId1(
+		long entryId1, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().findByEntryId1(
+			entryId1, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the asset links where entryId2 = &#63;.
+	 *
+	 * @param entryId2 the entry id2
+	 * @return the matching asset links
+	 */
+	public static List<AssetLink> findByEntryId2(long entryId2) {
+		return getPersistence().findByEntryId2(entryId2);
+	}
+
+	/**
+	 * Returns a range of all the asset links where entryId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId2 the entry id2
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public static List<AssetLink> findByEntryId2(
+		long entryId2, int start, int end) {
+
+		return getPersistence().findByEntryId2(entryId2, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where entryId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId2 the entry id2
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByEntryId2(
+		long entryId2, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().findByEntryId2(
+			entryId2, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the asset links where entryId1 = &#63; and entryId2 = &#63;.
+	 *
+	 * @param entryId1 the entry id1
+	 * @param entryId2 the entry id2
+	 * @return the matching asset links
+	 */
+	public static List<AssetLink> findByE_E(long entryId1, long entryId2) {
+		return getPersistence().findByE_E(entryId1, entryId2);
+	}
+
+	/**
+	 * Returns a range of all the asset links where entryId1 = &#63; and entryId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId1 the entry id1
+	 * @param entryId2 the entry id2
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public static List<AssetLink> findByE_E(
+		long entryId1, long entryId2, int start, int end) {
+
+		return getPersistence().findByE_E(entryId1, entryId2, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where entryId1 = &#63; and entryId2 = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId1 the entry id1
+	 * @param entryId2 the entry id2
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByE_E(
+		long entryId1, long entryId2, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().findByE_E(
+			entryId1, entryId2, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the asset links where entryId1 = &#63; and type = &#63;.
+	 *
+	 * @param entryId1 the entry id1
+	 * @param type the type
+	 * @return the matching asset links
+	 */
+	public static List<AssetLink> findByE1_T(long entryId1, int type) {
+		return getPersistence().findByE1_T(entryId1, type);
+	}
+
+	/**
+	 * Returns a range of all the asset links where entryId1 = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId1 the entry id1
+	 * @param type the type
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public static List<AssetLink> findByE1_T(
+		long entryId1, int type, int start, int end) {
+
+		return getPersistence().findByE1_T(entryId1, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where entryId1 = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId1 the entry id1
+	 * @param type the type
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByE1_T(
+		long entryId1, int type, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().findByE1_T(
+			entryId1, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the asset links where entryId2 = &#63; and type = &#63;.
+	 *
+	 * @param entryId2 the entry id2
+	 * @param type the type
+	 * @return the matching asset links
+	 */
+	public static List<AssetLink> findByE2_T(long entryId2, int type) {
+		return getPersistence().findByE2_T(entryId2, type);
+	}
+
+	/**
+	 * Returns a range of all the asset links where entryId2 = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId2 the entry id2
+	 * @param type the type
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @return the range of matching asset links
+	 */
+	public static List<AssetLink> findByE2_T(
+		long entryId2, int type, int start, int end) {
+
+		return getPersistence().findByE2_T(entryId2, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset links where entryId2 = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.asset.link.model.impl.AssetLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryId2 the entry id2
+	 * @param type the type
+	 * @param start the lower bound of the range of asset links
+	 * @param end the upper bound of the range of asset links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset links
+	 */
+	public static List<AssetLink> findByE2_T(
+		long entryId2, int type, int start, int end,
+		OrderByComparator<AssetLink> orderByComparator) {
+
+		return getPersistence().findByE2_T(
+			entryId2, type, start, end, orderByComparator);
+	}
+
 	public static AssetLinkPersistence getPersistence() {
 		return _persistence;
 	}
@@ -892,4 +892,4 @@ public class AssetLinkUtil {
 	private static volatile AssetLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:749886902
+// LIFERAY-SERVICE-BUILDER-HASH:1322094652

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -83,61 +82,10 @@ public class ObjectStateTransitionPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object state transitions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -227,68 +175,10 @@ public class ObjectStateTransitionPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object state transitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -383,65 +273,10 @@ public class ObjectStateTransitionPersistenceImpl
 		_collectionPersistenceFinderByObjectStateFlowId;
 
 	/**
-	 * Returns all the object state transitions where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @return the matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId) {
-
-		return findByObjectStateFlowId(
-			objectStateFlowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where objectStateFlowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId, int start, int end) {
-
-		return findByObjectStateFlowId(objectStateFlowId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return findByObjectStateFlowId(
-			objectStateFlowId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectStateFlowId the object state flow ID
@@ -534,65 +369,10 @@ public class ObjectStateTransitionPersistenceImpl
 		_collectionPersistenceFinderBySourceObjectStateId;
 
 	/**
-	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @return the matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId) {
-
-		return findBySourceObjectStateId(
-			sourceObjectStateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where sourceObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId, int start, int end) {
-
-		return findBySourceObjectStateId(sourceObjectStateId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where sourceObjectStateId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return findBySourceObjectStateId(
-			sourceObjectStateId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where sourceObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceObjectStateId the source object state ID
@@ -685,65 +465,10 @@ public class ObjectStateTransitionPersistenceImpl
 		_collectionPersistenceFinderByTargetObjectStateId;
 
 	/**
-	 * Returns all the object state transitions where targetObjectStateId = &#63;.
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @return the matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByTargetObjectStateId(
-		long targetObjectStateId) {
-
-		return findByTargetObjectStateId(
-			targetObjectStateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where targetObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByTargetObjectStateId(
-		long targetObjectStateId, int start, int end) {
-
-		return findByTargetObjectStateId(targetObjectStateId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where targetObjectStateId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	@Override
-	public List<ObjectStateTransition> findByTargetObjectStateId(
-		long targetObjectStateId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return findByTargetObjectStateId(
-			targetObjectStateId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where targetObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param targetObjectStateId the target object state ID
@@ -1279,4 +1004,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:154412951
+// LIFERAY-SERVICE-BUILDER-HASH:1098523773

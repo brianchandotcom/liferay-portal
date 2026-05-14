@@ -33,47 +33,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	 */
 
 	/**
-	 * Returns all the cp definition grouped entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the cp definition grouped entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @return the range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -146,15 +105,6 @@ public interface CPDefinitionGroupedEntryPersistence
 		throws NoSuchCPDefinitionGroupedEntryException;
 
 	/**
-	 * Returns the cp definition grouped entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry fetchByUUID_G(String uuid, long groupId);
-
-	/**
 	 * Returns the cp definition grouped entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -183,51 +133,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	 * @return the number of matching cp definition grouped entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @return the range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
@@ -296,48 +201,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the cp definition grouped entries where CPDefinitionId = &#63;.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @return the matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByCPDefinitionId(
-		long CPDefinitionId);
-
-	/**
-	 * Returns a range of all the cp definition grouped entries where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @return the range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cp definition grouped entries where CPDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByCPDefinitionId(
-		long CPDefinitionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the cp definition grouped entries where CPDefinitionId = &#63;.
 	 *
 	 * <p>
@@ -397,48 +260,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	 * @return the number of matching cp definition grouped entries
 	 */
 	public int countByCPDefinitionId(long CPDefinitionId);
-
-	/**
-	 * Returns all the cp definition grouped entries where entryCProductId = &#63;.
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @return the matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByEntryCProductId(
-		long entryCProductId);
-
-	/**
-	 * Returns a range of all the cp definition grouped entries where entryCProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @return the range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByEntryCProductId(
-		long entryCProductId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cp definition grouped entries where entryCProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param entryCProductId the entry c product ID
-	 * @param start the lower bound of the range of cp definition grouped entries
-	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definition grouped entries
-	 */
-	public java.util.List<CPDefinitionGroupedEntry> findByEntryCProductId(
-		long entryCProductId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDefinitionGroupedEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the cp definition grouped entries where entryCProductId = &#63;.
@@ -514,16 +335,6 @@ public interface CPDefinitionGroupedEntryPersistence
 		throws NoSuchCPDefinitionGroupedEntryException;
 
 	/**
-	 * Returns the cp definition grouped entry where CPDefinitionId = &#63; and entryCProductId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPDefinitionId the cp definition ID
-	 * @param entryCProductId the entry c product ID
-	 * @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
-	 */
-	public CPDefinitionGroupedEntry fetchByC_E(
-		long CPDefinitionId, long entryCProductId);
-
-	/**
 	 * Returns the cp definition grouped entry where CPDefinitionId = &#63; and entryCProductId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CPDefinitionId the cp definition ID
@@ -595,5 +406,253 @@ public interface CPDefinitionGroupedEntryPersistence
 	public CPDefinitionGroupedEntry fetchByPrimaryKey(
 		long CPDefinitionGroupedEntryId);
 
+	/**
+	 * Returns the cp definition grouped entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
+	 */
+	public default CPDefinitionGroupedEntry fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the cp definition grouped entry where CPDefinitionId = &#63; and entryCProductId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param entryCProductId the entry c product ID
+	 * @return the matching cp definition grouped entry, or <code>null</code> if a matching cp definition grouped entry could not be found
+	 */
+	public default CPDefinitionGroupedEntry fetchByC_E(
+		long CPDefinitionId, long entryCProductId) {
+
+		return fetchByC_E(CPDefinitionId, entryCProductId, true);
+	}
+
+	/**
+	 * Returns all the cp definition grouped entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry> findByUuid(
+		String uuid) {
+
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cp definition grouped entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @return the range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CPDefinitionGroupedEntry> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @return the range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CPDefinitionGroupedEntry> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the cp definition grouped entries where CPDefinitionId = &#63;.
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry>
+		findByCPDefinitionId(long CPDefinitionId) {
+
+		return findByCPDefinitionId(
+			CPDefinitionId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cp definition grouped entries where CPDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @return the range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry>
+		findByCPDefinitionId(long CPDefinitionId, int start, int end) {
+
+		return findByCPDefinitionId(CPDefinitionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition grouped entries where CPDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionId the cp definition ID
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry>
+		findByCPDefinitionId(
+			long CPDefinitionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPDefinitionGroupedEntry> orderByComparator) {
+
+		return findByCPDefinitionId(
+			CPDefinitionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the cp definition grouped entries where entryCProductId = &#63;.
+	 *
+	 * @param entryCProductId the entry c product ID
+	 * @return the matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry>
+		findByEntryCProductId(long entryCProductId) {
+
+		return findByEntryCProductId(
+			entryCProductId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cp definition grouped entries where entryCProductId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryCProductId the entry c product ID
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @return the range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry>
+		findByEntryCProductId(long entryCProductId, int start, int end) {
+
+		return findByEntryCProductId(entryCProductId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition grouped entries where entryCProductId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param entryCProductId the entry c product ID
+	 * @param start the lower bound of the range of cp definition grouped entries
+	 * @param end the upper bound of the range of cp definition grouped entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition grouped entries
+	 */
+	public default java.util.List<CPDefinitionGroupedEntry>
+		findByEntryCProductId(
+			long entryCProductId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPDefinitionGroupedEntry> orderByComparator) {
+
+		return findByEntryCProductId(
+			entryCProductId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1597462926
+// LIFERAY-SERVICE-BUILDER-HASH:23572043

@@ -41,14 +41,6 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 		throws NoSuchReleaseException;
 
 	/**
-	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param servletContextName the servlet context name
-	 * @return the matching release, or <code>null</code> if a matching release could not be found
-	 */
-	public Release fetchByServletContextName(String servletContextName);
-
-	/**
 	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param servletContextName the servlet context name
@@ -112,5 +104,17 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	 */
 	public Release fetchByPrimaryKey(long releaseId);
 
+	/**
+	 * Returns the release where servletContextName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param servletContextName the servlet context name
+	 * @return the matching release, or <code>null</code> if a matching release could not be found
+	 */
+	public default Release fetchByServletContextName(
+		String servletContextName) {
+
+		return fetchByServletContextName(servletContextName, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1249948843
+// LIFERAY-SERVICE-BUILDER-HASH:-1574696641

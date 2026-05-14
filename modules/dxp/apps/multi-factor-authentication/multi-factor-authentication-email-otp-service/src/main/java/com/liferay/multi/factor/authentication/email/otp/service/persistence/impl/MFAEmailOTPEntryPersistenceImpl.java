@@ -103,17 +103,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the mfa email otp entry where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching mfa email otp entry, or <code>null</code> if a matching mfa email otp entry could not be found
-	 */
-	@Override
-	public MFAEmailOTPEntry fetchByUserId(long userId) {
-		return fetchByUserId(userId, true);
-	}
-
-	/**
 	 * Returns the mfa email otp entry where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -426,4 +415,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2028529029
+// LIFERAY-SERVICE-BUILDER-HASH:523919200

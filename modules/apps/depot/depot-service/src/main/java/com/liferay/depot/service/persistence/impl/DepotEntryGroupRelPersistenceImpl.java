@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -92,61 +91,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the depot entry group rels where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -264,18 +212,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the depot entry group rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the depot entry group rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -324,66 +260,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the depot entry group rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -478,63 +358,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByDepotEntryId;
 
 	/**
-	 * Returns all the depot entry group rels where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByDepotEntryId(long depotEntryId) {
-		return findByDepotEntryId(
-			depotEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where depotEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByDepotEntryId(
-		long depotEntryId, int start, int end) {
-
-		return findByDepotEntryId(depotEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where depotEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByDepotEntryId(
-		long depotEntryId, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByDepotEntryId(
-			depotEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where depotEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -624,62 +451,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByToGroupId;
 
 	/**
-	 * Returns all the depot entry group rels where toGroupId = &#63;.
-	 *
-	 * @param toGroupId the to group ID
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByToGroupId(long toGroupId) {
-		return findByToGroupId(
-			toGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where toGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param toGroupId the to group ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByToGroupId(
-		long toGroupId, int start, int end) {
-
-		return findByToGroupId(toGroupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param toGroupId the to group ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByToGroupId(
-		long toGroupId, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByToGroupId(toGroupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param toGroupId the to group ID
@@ -769,71 +544,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByDDMSA_TGI;
 
 	/**
-	 * Returns all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param ddmStructuresAvailable the ddm structures available
-	 * @param toGroupId the to group ID
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByDDMSA_TGI(
-		boolean ddmStructuresAvailable, long toGroupId) {
-
-		return findByDDMSA_TGI(
-			ddmStructuresAvailable, toGroupId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ddmStructuresAvailable the ddm structures available
-	 * @param toGroupId the to group ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByDDMSA_TGI(
-		boolean ddmStructuresAvailable, long toGroupId, int start, int end) {
-
-		return findByDDMSA_TGI(
-			ddmStructuresAvailable, toGroupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ddmStructuresAvailable the ddm structures available
-	 * @param toGroupId the to group ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByDDMSA_TGI(
-		boolean ddmStructuresAvailable, long toGroupId, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByDDMSA_TGI(
-			ddmStructuresAvailable, toGroupId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param ddmStructuresAvailable the ddm structures available
@@ -965,18 +679,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the depot entry group rel where depotEntryId = &#63; and toGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param toGroupId the to group ID
-	 * @return the matching depot entry group rel, or <code>null</code> if a matching depot entry group rel could not be found
-	 */
-	@Override
-	public DepotEntryGroupRel fetchByD_TGI(long depotEntryId, long toGroupId) {
-		return fetchByD_TGI(depotEntryId, toGroupId, true);
-	}
-
-	/**
 	 * Returns the depot entry group rel where depotEntryId = &#63; and toGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -1027,68 +729,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByS_TGI;
 
 	/**
-	 * Returns all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
-	 *
-	 * @param searchable the searchable
-	 * @param toGroupId the to group ID
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByS_TGI(
-		boolean searchable, long toGroupId) {
-
-		return findByS_TGI(
-			searchable, toGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param searchable the searchable
-	 * @param toGroupId the to group ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByS_TGI(
-		boolean searchable, long toGroupId, int start, int end) {
-
-		return findByS_TGI(searchable, toGroupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param searchable the searchable
-	 * @param toGroupId the to group ID
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByS_TGI(
-		boolean searchable, long toGroupId, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByS_TGI(
-			searchable, toGroupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param searchable the searchable
@@ -1185,66 +829,10 @@ public class DepotEntryGroupRelPersistenceImpl
 		_collectionPersistenceFinderByTGI_T;
 
 	/**
-	 * Returns all the depot entry group rels where toGroupId = &#63; and type = &#63;.
-	 *
-	 * @param toGroupId the to group ID
-	 * @param type the type
-	 * @return the matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByTGI_T(long toGroupId, int type) {
-		return findByTGI_T(
-			toGroupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels where toGroupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param toGroupId the to group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, int type, int start, int end) {
-
-		return findByTGI_T(toGroupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param toGroupId the to group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findByTGI_T(
-		long toGroupId, int type, int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findByTGI_T(
-			toGroupId, type, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param toGroupId the to group ID
@@ -1953,4 +1541,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-23965953
+// LIFERAY-SERVICE-BUILDER-HASH:-222539024

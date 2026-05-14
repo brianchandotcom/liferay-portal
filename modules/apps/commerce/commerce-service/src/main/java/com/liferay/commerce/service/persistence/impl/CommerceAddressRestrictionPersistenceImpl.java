@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -81,62 +80,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 		_collectionPersistenceFinderByCountryId;
 
 	/**
-	 * Returns all the commerce address restrictions where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @return the matching commerce address restrictions
-	 */
-	@Override
-	public List<CommerceAddressRestriction> findByCountryId(long countryId) {
-		return findByCountryId(
-			countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce address restrictions where countryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param start the lower bound of the range of commerce address restrictions
-	 * @param end the upper bound of the range of commerce address restrictions (not inclusive)
-	 * @return the range of matching commerce address restrictions
-	 */
-	@Override
-	public List<CommerceAddressRestriction> findByCountryId(
-		long countryId, int start, int end) {
-
-		return findByCountryId(countryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce address restrictions where countryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param start the lower bound of the range of commerce address restrictions
-	 * @param end the upper bound of the range of commerce address restrictions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce address restrictions
-	 */
-	@Override
-	public List<CommerceAddressRestriction> findByCountryId(
-		long countryId, int start, int end,
-		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
-
-		return findByCountryId(countryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce address restrictions where countryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param countryId the country ID
@@ -226,68 +173,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 		_collectionPersistenceFinderByC_C;
 
 	/**
-	 * Returns all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching commerce address restrictions
-	 */
-	@Override
-	public List<CommerceAddressRestriction> findByC_C(
-		long classNameId, long classPK) {
-
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of commerce address restrictions
-	 * @param end the upper bound of the range of commerce address restrictions (not inclusive)
-	 * @return the range of matching commerce address restrictions
-	 */
-	@Override
-	public List<CommerceAddressRestriction> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return findByC_C(classNameId, classPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of commerce address restrictions
-	 * @param end the upper bound of the range of commerce address restrictions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce address restrictions
-	 */
-	@Override
-	public List<CommerceAddressRestriction> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceAddressRestrictionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
@@ -413,21 +302,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		}
 
 		return commerceAddressRestriction;
-	}
-
-	/**
-	 * Returns the commerce address restriction where classNameId = &#63; and classPK = &#63; and countryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param countryId the country ID
-	 * @return the matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction fetchByC_C_C(
-		long classNameId, long classPK, long countryId) {
-
-		return fetchByC_C_C(classNameId, classPK, countryId, true);
 	}
 
 	/**
@@ -851,4 +725,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:64954193
+// LIFERAY-SERVICE-BUILDER-HASH:898928776

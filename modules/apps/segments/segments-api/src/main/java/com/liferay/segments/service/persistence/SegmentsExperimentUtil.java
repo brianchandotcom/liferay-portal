@@ -129,54 +129,6 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
-	 * Returns all the segments experiments where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the segments experiments where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiments where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiments where uuid = &#63;.
 	 *
 	 * <p>
@@ -262,17 +214,6 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
-	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public static SegmentsExperiment fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -308,60 +249,6 @@ public class SegmentsExperimentUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the segments experiments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the segments experiments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -444,55 +331,6 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
-	 * Returns all the segments experiments where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the segments experiments where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiments where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiments where groupId = &#63;.
 	 *
 	 * <p>
@@ -546,34 +384,6 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
-	 * Returns all the segments experiments that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching segments experiments that the user has permission to view
-	 */
-	public static List<SegmentsExperiment> filterFindByGroupId(long groupId) {
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the segments experiments that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments that the user has permission to view
-	 */
-	public static List<SegmentsExperiment> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().filterFindByGroupId(groupId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiments that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -621,59 +431,6 @@ public class SegmentsExperimentUtil {
 	 */
 	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
-	}
-
-	/**
-	 * Returns all the segments experiments where segmentsExperimentKey = &#63;.
-	 *
-	 * @param segmentsExperimentKey the segments experiment key
-	 * @return the matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
-		String segmentsExperimentKey) {
-
-		return getPersistence().findBySegmentsExperimentKey(
-			segmentsExperimentKey);
-	}
-
-	/**
-	 * Returns a range of all the segments experiments where segmentsExperimentKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param segmentsExperimentKey the segments experiment key
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @return the range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
-		String segmentsExperimentKey, int start, int end) {
-
-		return getPersistence().findBySegmentsExperimentKey(
-			segmentsExperimentKey, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param segmentsExperimentKey the segments experiment key
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments experiments
-	 */
-	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
-		String segmentsExperimentKey, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator) {
-
-		return getPersistence().findBySegmentsExperimentKey(
-			segmentsExperimentKey, start, end, orderByComparator);
 	}
 
 	/**
@@ -772,19 +529,6 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
-	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperimentKey the segments experiment key
-	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public static SegmentsExperiment fetchByG_S(
-		long groupId, String segmentsExperimentKey) {
-
-		return getPersistence().fetchByG_S(groupId, segmentsExperimentKey);
-	}
-
-	/**
 	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -838,21 +582,6 @@ public class SegmentsExperimentUtil {
 		throws com.liferay.segments.exception.NoSuchExperimentException {
 
 		return getPersistence().findByG_S_P(
-			groupId, segmentsExperienceId, plid);
-	}
-
-	/**
-	 * Returns the segments experiment where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
-	 */
-	public static SegmentsExperiment fetchByG_S_P(
-		long groupId, long segmentsExperienceId, long plid) {
-
-		return getPersistence().fetchByG_S_P(
 			groupId, segmentsExperienceId, plid);
 	}
 
@@ -958,6 +687,277 @@ public class SegmentsExperimentUtil {
 		return getPersistence().fetchByPrimaryKey(segmentsExperimentId);
 	}
 
+	/**
+	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment fetchByG_S(
+		long groupId, String segmentsExperimentKey) {
+
+		return getPersistence().fetchByG_S(groupId, segmentsExperimentKey);
+	}
+
+	/**
+	 * Returns the segments experiment where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param plid the plid
+	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
+	 */
+	public static SegmentsExperiment fetchByG_S_P(
+		long groupId, long segmentsExperienceId, long plid) {
+
+		return getPersistence().fetchByG_S_P(
+			groupId, segmentsExperienceId, plid);
+	}
+
+	/**
+	 * Returns all the segments experiments where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments experiments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments experiments where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the segments experiments that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching segments experiments that the user has permission to view
+	 */
+	public static List<SegmentsExperiment> filterFindByGroupId(long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments that the user has permission to view
+	 */
+	public static List<SegmentsExperiment> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @return the matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey);
+	}
+
+	/**
+	 * Returns a range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @return the range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsExperimentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsExperimentKey the segments experiment key
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments experiments
+	 */
+	public static List<SegmentsExperiment> findBySegmentsExperimentKey(
+		String segmentsExperimentKey, int start, int end,
+		OrderByComparator<SegmentsExperiment> orderByComparator) {
+
+		return getPersistence().findBySegmentsExperimentKey(
+			segmentsExperimentKey, start, end, orderByComparator);
+	}
+
 	public static SegmentsExperimentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -971,4 +971,4 @@ public class SegmentsExperimentUtil {
 	private static volatile SegmentsExperimentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:474370949
+// LIFERAY-SERVICE-BUILDER-HASH:-1354937949

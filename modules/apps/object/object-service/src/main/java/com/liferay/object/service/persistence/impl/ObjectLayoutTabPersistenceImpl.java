@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -82,59 +81,10 @@ public class ObjectLayoutTabPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object layout tabs where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object layout tabs where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @return the range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object layout tabs where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout tabs where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -222,66 +172,10 @@ public class ObjectLayoutTabPersistenceImpl
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object layout tabs where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object layout tabs where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @return the range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object layout tabs where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout tabs where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -376,63 +270,10 @@ public class ObjectLayoutTabPersistenceImpl
 		_collectionPersistenceFinderByObjectLayoutId;
 
 	/**
-	 * Returns all the object layout tabs where objectLayoutId = &#63;.
-	 *
-	 * @param objectLayoutId the object layout ID
-	 * @return the matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByObjectLayoutId(long objectLayoutId) {
-		return findByObjectLayoutId(
-			objectLayoutId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object layout tabs where objectLayoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectLayoutId the object layout ID
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @return the range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByObjectLayoutId(
-		long objectLayoutId, int start, int end) {
-
-		return findByObjectLayoutId(objectLayoutId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object layout tabs where objectLayoutId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectLayoutId the object layout ID
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByObjectLayoutId(
-		long objectLayoutId, int start, int end,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		return findByObjectLayoutId(
-			objectLayoutId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout tabs where objectLayoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectLayoutId the object layout ID
@@ -522,66 +363,10 @@ public class ObjectLayoutTabPersistenceImpl
 		_collectionPersistenceFinderByObjectRelationshipId;
 
 	/**
-	 * Returns all the object layout tabs where objectRelationshipId = &#63;.
-	 *
-	 * @param objectRelationshipId the object relationship ID
-	 * @return the matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByObjectRelationshipId(
-		long objectRelationshipId) {
-
-		return findByObjectRelationshipId(
-			objectRelationshipId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object layout tabs where objectRelationshipId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectRelationshipId the object relationship ID
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @return the range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByObjectRelationshipId(
-		long objectRelationshipId, int start, int end) {
-
-		return findByObjectRelationshipId(
-			objectRelationshipId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object layout tabs where objectRelationshipId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectRelationshipId the object relationship ID
-	 * @param start the lower bound of the range of object layout tabs
-	 * @param end the upper bound of the range of object layout tabs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object layout tabs
-	 */
-	@Override
-	public List<ObjectLayoutTab> findByObjectRelationshipId(
-		long objectRelationshipId, int start, int end,
-		OrderByComparator<ObjectLayoutTab> orderByComparator) {
-
-		return findByObjectRelationshipId(
-			objectRelationshipId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object layout tabs where objectRelationshipId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectRelationshipId the object relationship ID
@@ -1073,4 +858,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-94123944
+// LIFERAY-SERVICE-BUILDER-HASH:-1799075438

@@ -107,19 +107,6 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpSessionIndex the saml idp session index
-	 * @return the matching saml ib slo message, or <code>null</code> if a matching saml ib slo message could not be found
-	 */
-	@Override
-	public SamlIbSloMessage fetchBySamlIdpSessionIndex(
-		String samlIdpSessionIndex) {
-
-		return fetchBySamlIdpSessionIndex(samlIdpSessionIndex, true);
-	}
-
-	/**
 	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSessionIndex the saml idp session index
@@ -430,4 +417,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1023413011
+// LIFERAY-SERVICE-BUILDER-HASH:164097953

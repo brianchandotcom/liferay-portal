@@ -34,51 +34,6 @@ public interface ExpandoTablePersistence
 	 */
 
 	/**
-	 * Returns all the expando tables where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching expando tables
-	 */
-	public java.util.List<ExpandoTable> findByC_C(
-		long companyId, long classNameId);
-
-	/**
-	 * Returns a range of all the expando tables where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of expando tables
-	 * @param end the upper bound of the range of expando tables (not inclusive)
-	 * @return the range of matching expando tables
-	 */
-	public java.util.List<ExpandoTable> findByC_C(
-		long companyId, long classNameId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the expando tables where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of expando tables
-	 * @param end the upper bound of the range of expando tables (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando tables
-	 */
-	public java.util.List<ExpandoTable> findByC_C(
-		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the expando tables where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
@@ -158,17 +113,6 @@ public interface ExpandoTablePersistence
 		throws NoSuchTableException;
 
 	/**
-	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
-	 */
-	public ExpandoTable fetchByC_C_N(
-		long companyId, long classNameId, String name);
-
-	/**
 	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -239,5 +183,77 @@ public interface ExpandoTablePersistence
 	 */
 	public ExpandoTable fetchByPrimaryKey(long tableId);
 
+	/**
+	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
+	 */
+	public default ExpandoTable fetchByC_C_N(
+		long companyId, long classNameId, String name) {
+
+		return fetchByC_C_N(companyId, classNameId, name, true);
+	}
+
+	/**
+	 * Returns all the expando tables where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @return the matching expando tables
+	 */
+	public default java.util.List<ExpandoTable> findByC_C(
+		long companyId, long classNameId) {
+
+		return findByC_C(
+			companyId, classNameId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the expando tables where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of expando tables
+	 * @param end the upper bound of the range of expando tables (not inclusive)
+	 * @return the range of matching expando tables
+	 */
+	public default java.util.List<ExpandoTable> findByC_C(
+		long companyId, long classNameId, int start, int end) {
+
+		return findByC_C(companyId, classNameId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the expando tables where companyId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of expando tables
+	 * @param end the upper bound of the range of expando tables (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching expando tables
+	 */
+	public default java.util.List<ExpandoTable> findByC_C(
+		long companyId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator) {
+
+		return findByC_C(
+			companyId, classNameId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1281283275
+// LIFERAY-SERVICE-BUILDER-HASH:-419858213

@@ -142,63 +142,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 	}
 
 	/**
-	 * Returns all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @return the matching commerce shipping fixed option qualifiers
-	 */
-	public static List<CommerceShippingFixedOptionQualifier>
-		findByCommerceShippingFixedOptionId(
-			long commerceShippingFixedOptionId) {
-
-		return getPersistence().findByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
-	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
-	 * @return the range of matching commerce shipping fixed option qualifiers
-	 */
-	public static List<CommerceShippingFixedOptionQualifier>
-		findByCommerceShippingFixedOptionId(
-			long commerceShippingFixedOptionId, int start, int end) {
-
-		return getPersistence().findByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
-	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping fixed option qualifiers
-	 */
-	public static List<CommerceShippingFixedOptionQualifier>
-		findByCommerceShippingFixedOptionId(
-			long commerceShippingFixedOptionId, int start, int end,
-			OrderByComparator<CommerceShippingFixedOptionQualifier>
-				orderByComparator) {
-
-		return getPersistence().findByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
 	 *
 	 * <p>
@@ -284,66 +227,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 
 		return getPersistence().countByCommerceShippingFixedOptionId(
 			commerceShippingFixedOptionId);
-	}
-
-	/**
-	 * Returns all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @return the matching commerce shipping fixed option qualifiers
-	 */
-	public static List<CommerceShippingFixedOptionQualifier> findByC_C(
-		long classNameId, long commerceShippingFixedOptionId) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceShippingFixedOptionId);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
-	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
-	 * @return the range of matching commerce shipping fixed option qualifiers
-	 */
-	public static List<CommerceShippingFixedOptionQualifier> findByC_C(
-		long classNameId, long commerceShippingFixedOptionId, int start,
-		int end) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceShippingFixedOptionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
-	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping fixed option qualifiers
-	 */
-	public static List<CommerceShippingFixedOptionQualifier> findByC_C(
-		long classNameId, long commerceShippingFixedOptionId, int start,
-		int end,
-		OrderByComparator<CommerceShippingFixedOptionQualifier>
-			orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceShippingFixedOptionId, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -452,21 +335,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 			NoSuchShippingFixedOptionQualifierException {
 
 		return getPersistence().findByC_C_C(
-			classNameId, classPK, commerceShippingFixedOptionId);
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option qualifier where classNameId = &#63; and classPK = &#63; and commerceShippingFixedOptionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @return the matching commerce shipping fixed option qualifier, or <code>null</code> if a matching commerce shipping fixed option qualifier could not be found
-	 */
-	public static CommerceShippingFixedOptionQualifier fetchByC_C_C(
-		long classNameId, long classPK, long commerceShippingFixedOptionId) {
-
-		return getPersistence().fetchByC_C_C(
 			classNameId, classPK, commerceShippingFixedOptionId);
 	}
 
@@ -584,6 +452,138 @@ public class CommerceShippingFixedOptionQualifierUtil {
 			commerceShippingFixedOptionQualifierId);
 	}
 
+	/**
+	 * Returns the commerce shipping fixed option qualifier where classNameId = &#63; and classPK = &#63; and commerceShippingFixedOptionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @return the matching commerce shipping fixed option qualifier, or <code>null</code> if a matching commerce shipping fixed option qualifier could not be found
+	 */
+	public static CommerceShippingFixedOptionQualifier fetchByC_C_C(
+		long classNameId, long classPK, long commerceShippingFixedOptionId) {
+
+		return getPersistence().fetchByC_C_C(
+			classNameId, classPK, commerceShippingFixedOptionId);
+	}
+
+	/**
+	 * Returns all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @return the matching commerce shipping fixed option qualifiers
+	 */
+	public static List<CommerceShippingFixedOptionQualifier>
+		findByCommerceShippingFixedOptionId(
+			long commerceShippingFixedOptionId) {
+
+		return getPersistence().findByCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
+	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
+	 * @return the range of matching commerce shipping fixed option qualifiers
+	 */
+	public static List<CommerceShippingFixedOptionQualifier>
+		findByCommerceShippingFixedOptionId(
+			long commerceShippingFixedOptionId, int start, int end) {
+
+		return getPersistence().findByCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option qualifiers where commerceShippingFixedOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
+	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option qualifiers
+	 */
+	public static List<CommerceShippingFixedOptionQualifier>
+		findByCommerceShippingFixedOptionId(
+			long commerceShippingFixedOptionId, int start, int end,
+			OrderByComparator<CommerceShippingFixedOptionQualifier>
+				orderByComparator) {
+
+		return getPersistence().findByCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @return the matching commerce shipping fixed option qualifiers
+	 */
+	public static List<CommerceShippingFixedOptionQualifier> findByC_C(
+		long classNameId, long commerceShippingFixedOptionId) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceShippingFixedOptionId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
+	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
+	 * @return the range of matching commerce shipping fixed option qualifiers
+	 */
+	public static List<CommerceShippingFixedOptionQualifier> findByC_C(
+		long classNameId, long commerceShippingFixedOptionId, int start,
+		int end) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceShippingFixedOptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option qualifiers where classNameId = &#63; and commerceShippingFixedOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionQualifierModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param start the lower bound of the range of commerce shipping fixed option qualifiers
+	 * @param end the upper bound of the range of commerce shipping fixed option qualifiers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option qualifiers
+	 */
+	public static List<CommerceShippingFixedOptionQualifier> findByC_C(
+		long classNameId, long commerceShippingFixedOptionId, int start,
+		int end,
+		OrderByComparator<CommerceShippingFixedOptionQualifier>
+			orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceShippingFixedOptionId, start, end,
+			orderByComparator);
+	}
+
 	public static CommerceShippingFixedOptionQualifierPersistence
 		getPersistence() {
 
@@ -600,4 +600,4 @@ public class CommerceShippingFixedOptionQualifierUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549500571
+// LIFERAY-SERVICE-BUILDER-HASH:-1429882985

@@ -121,52 +121,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns all the modules where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching modules
-	 */
-	public static List<Module> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the modules where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public static List<Module> findByUuid(String uuid, int start, int end) {
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public static List<Module> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the modules where uuid = &#63;.
 	 *
 	 * <p>
@@ -233,58 +187,6 @@ public class ModuleUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the modules where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching modules
-	 */
-	public static List<Module> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the modules where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public static List<Module> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public static List<Module> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -366,53 +268,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns all the modules where appId = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @return the matching modules
-	 */
-	public static List<Module> findByAppId(long appId) {
-		return getPersistence().findByAppId(appId);
-	}
-
-	/**
-	 * Returns a range of all the modules where appId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param appId the app ID
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public static List<Module> findByAppId(long appId, int start, int end) {
-		return getPersistence().findByAppId(appId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where appId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param appId the app ID
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public static List<Module> findByAppId(
-		long appId, int start, int end,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().findByAppId(
-			appId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the modules where appId = &#63;.
 	 *
 	 * <p>
@@ -479,58 +334,6 @@ public class ModuleUtil {
 	 */
 	public static int countByAppId(long appId) {
 		return getPersistence().countByAppId(appId);
-	}
-
-	/**
-	 * Returns all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @return the matching modules
-	 */
-	public static List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName) {
-
-		return getPersistence().findByBundleSymbolicName(bundleSymbolicName);
-	}
-
-	/**
-	 * Returns a range of all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public static List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName, int start, int end) {
-
-		return getPersistence().findByBundleSymbolicName(
-			bundleSymbolicName, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public static List<Module> findByBundleSymbolicName(
-		String bundleSymbolicName, int start, int end,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().findByBundleSymbolicName(
-			bundleSymbolicName, start, end, orderByComparator);
 	}
 
 	/**
@@ -607,55 +410,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Returns all the modules where contextName = &#63;.
-	 *
-	 * @param contextName the context name
-	 * @return the matching modules
-	 */
-	public static List<Module> findByContextName(String contextName) {
-		return getPersistence().findByContextName(contextName);
-	}
-
-	/**
-	 * Returns a range of all the modules where contextName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param contextName the context name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public static List<Module> findByContextName(
-		String contextName, int start, int end) {
-
-		return getPersistence().findByContextName(contextName, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where contextName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param contextName the context name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public static List<Module> findByContextName(
-		String contextName, int start, int end,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().findByContextName(
-			contextName, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the modules where contextName = &#63;.
 	 *
 	 * <p>
@@ -724,58 +478,6 @@ public class ModuleUtil {
 	 */
 	public static int countByContextName(String contextName) {
 		return getPersistence().countByContextName(contextName);
-	}
-
-	/**
-	 * Returns all the modules where appId = &#63; and contextName = &#63;.
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @return the matching modules
-	 */
-	public static List<Module> findByA_CN(long appId, String contextName) {
-		return getPersistence().findByA_CN(appId, contextName);
-	}
-
-	/**
-	 * Returns a range of all the modules where appId = &#63; and contextName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @return the range of matching modules
-	 */
-	public static List<Module> findByA_CN(
-		long appId, String contextName, int start, int end) {
-
-		return getPersistence().findByA_CN(appId, contextName, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the modules where appId = &#63; and contextName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param appId the app ID
-	 * @param contextName the context name
-	 * @param start the lower bound of the range of modules
-	 * @param end the upper bound of the range of modules (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching modules
-	 */
-	public static List<Module> findByA_CN(
-		long appId, String contextName, int start, int end,
-		OrderByComparator<Module> orderByComparator) {
-
-		return getPersistence().findByA_CN(
-			appId, contextName, start, end, orderByComparator);
 	}
 
 	/**
@@ -870,21 +572,6 @@ public class ModuleUtil {
 		throws com.liferay.marketplace.exception.NoSuchModuleException {
 
 		return getPersistence().findByA_BSN_BV(
-			appId, bundleSymbolicName, bundleVersion);
-	}
-
-	/**
-	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param appId the app ID
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param bundleVersion the bundle version
-	 * @return the matching module, or <code>null</code> if a matching module could not be found
-	 */
-	public static Module fetchByA_BSN_BV(
-		long appId, String bundleSymbolicName, String bundleVersion) {
-
-		return getPersistence().fetchByA_BSN_BV(
 			appId, bundleSymbolicName, bundleVersion);
 	}
 
@@ -986,6 +673,319 @@ public class ModuleUtil {
 		return getPersistence().fetchByPrimaryKey(moduleId);
 	}
 
+	/**
+	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param appId the app ID
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param bundleVersion the bundle version
+	 * @return the matching module, or <code>null</code> if a matching module could not be found
+	 */
+	public static Module fetchByA_BSN_BV(
+		long appId, String bundleSymbolicName, String bundleVersion) {
+
+		return getPersistence().fetchByA_BSN_BV(
+			appId, bundleSymbolicName, bundleVersion);
+	}
+
+	/**
+	 * Returns all the modules where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching modules
+	 */
+	public static List<Module> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the modules where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public static List<Module> findByUuid(String uuid, int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the modules where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public static List<Module> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<Module> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the modules where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching modules
+	 */
+	public static List<Module> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the modules where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public static List<Module> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the modules where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public static List<Module> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<Module> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the modules where appId = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @return the matching modules
+	 */
+	public static List<Module> findByAppId(long appId) {
+		return getPersistence().findByAppId(appId);
+	}
+
+	/**
+	 * Returns a range of all the modules where appId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public static List<Module> findByAppId(long appId, int start, int end) {
+		return getPersistence().findByAppId(appId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the modules where appId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public static List<Module> findByAppId(
+		long appId, int start, int end,
+		OrderByComparator<Module> orderByComparator) {
+
+		return getPersistence().findByAppId(
+			appId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the modules where bundleSymbolicName = &#63;.
+	 *
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @return the matching modules
+	 */
+	public static List<Module> findByBundleSymbolicName(
+		String bundleSymbolicName) {
+
+		return getPersistence().findByBundleSymbolicName(bundleSymbolicName);
+	}
+
+	/**
+	 * Returns a range of all the modules where bundleSymbolicName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public static List<Module> findByBundleSymbolicName(
+		String bundleSymbolicName, int start, int end) {
+
+		return getPersistence().findByBundleSymbolicName(
+			bundleSymbolicName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the modules where bundleSymbolicName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param bundleSymbolicName the bundle symbolic name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public static List<Module> findByBundleSymbolicName(
+		String bundleSymbolicName, int start, int end,
+		OrderByComparator<Module> orderByComparator) {
+
+		return getPersistence().findByBundleSymbolicName(
+			bundleSymbolicName, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the modules where contextName = &#63;.
+	 *
+	 * @param contextName the context name
+	 * @return the matching modules
+	 */
+	public static List<Module> findByContextName(String contextName) {
+		return getPersistence().findByContextName(contextName);
+	}
+
+	/**
+	 * Returns a range of all the modules where contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public static List<Module> findByContextName(
+		String contextName, int start, int end) {
+
+		return getPersistence().findByContextName(contextName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the modules where contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public static List<Module> findByContextName(
+		String contextName, int start, int end,
+		OrderByComparator<Module> orderByComparator) {
+
+		return getPersistence().findByContextName(
+			contextName, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the modules where appId = &#63; and contextName = &#63;.
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @return the matching modules
+	 */
+	public static List<Module> findByA_CN(long appId, String contextName) {
+		return getPersistence().findByA_CN(appId, contextName);
+	}
+
+	/**
+	 * Returns a range of all the modules where appId = &#63; and contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @return the range of matching modules
+	 */
+	public static List<Module> findByA_CN(
+		long appId, String contextName, int start, int end) {
+
+		return getPersistence().findByA_CN(appId, contextName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the modules where appId = &#63; and contextName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.marketplace.model.impl.ModuleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param appId the app ID
+	 * @param contextName the context name
+	 * @param start the lower bound of the range of modules
+	 * @param end the upper bound of the range of modules (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching modules
+	 */
+	public static List<Module> findByA_CN(
+		long appId, String contextName, int start, int end,
+		OrderByComparator<Module> orderByComparator) {
+
+		return getPersistence().findByA_CN(
+			appId, contextName, start, end, orderByComparator);
+	}
+
 	public static ModulePersistence getPersistence() {
 		return _persistence;
 	}
@@ -997,4 +997,4 @@ public class ModuleUtil {
 	private static volatile ModulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-861541180
+// LIFERAY-SERVICE-BUILDER-HASH:4635362

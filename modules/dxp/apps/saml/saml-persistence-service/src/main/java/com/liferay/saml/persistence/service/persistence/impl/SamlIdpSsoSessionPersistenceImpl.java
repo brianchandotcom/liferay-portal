@@ -108,17 +108,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml idp sso session where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
-	 */
-	@Override
-	public SamlIdpSsoSession fetchByUserId(long userId) {
-		return fetchByUserId(userId, true);
-	}
-
-	/**
 	 * Returns the saml idp sso session where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -339,19 +328,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 		}
 
 		return samlIdpSsoSession;
-	}
-
-	/**
-	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpSsoSessionKey the saml idp sso session key
-	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
-	 */
-	@Override
-	public SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		String samlIdpSsoSessionKey) {
-
-		return fetchBySamlIdpSsoSessionKey(samlIdpSsoSessionKey, true);
 	}
 
 	/**
@@ -719,4 +695,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-362691042
+// LIFERAY-SERVICE-BUILDER-HASH:1781283886

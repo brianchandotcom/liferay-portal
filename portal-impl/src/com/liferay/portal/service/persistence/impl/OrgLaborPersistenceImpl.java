@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.model.OrgLabor;
@@ -65,63 +64,10 @@ public class OrgLaborPersistenceImpl
 		_collectionPersistenceFinderByOrganizationId;
 
 	/**
-	 * Returns all the org labors where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @return the matching org labors
-	 */
-	@Override
-	public List<OrgLabor> findByOrganizationId(long organizationId) {
-		return findByOrganizationId(
-			organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the org labors where organizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OrgLaborModelImpl</code>.
-	 * </p>
-	 *
-	 * @param organizationId the organization ID
-	 * @param start the lower bound of the range of org labors
-	 * @param end the upper bound of the range of org labors (not inclusive)
-	 * @return the range of matching org labors
-	 */
-	@Override
-	public List<OrgLabor> findByOrganizationId(
-		long organizationId, int start, int end) {
-
-		return findByOrganizationId(organizationId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the org labors where organizationId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OrgLaborModelImpl</code>.
-	 * </p>
-	 *
-	 * @param organizationId the organization ID
-	 * @param start the lower bound of the range of org labors
-	 * @param end the upper bound of the range of org labors (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching org labors
-	 */
-	@Override
-	public List<OrgLabor> findByOrganizationId(
-		long organizationId, int start, int end,
-		OrderByComparator<OrgLabor> orderByComparator) {
-
-		return findByOrganizationId(
-			organizationId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the org labors where organizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OrgLaborModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OrgLaborModelImpl</code>.
 	 * </p>
 	 *
 	 * @param organizationId the organization ID
@@ -432,4 +378,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-525793661
+// LIFERAY-SERVICE-BUILDER-HASH:-1845012404

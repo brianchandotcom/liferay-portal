@@ -86,56 +86,6 @@ public class AssetEntryPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the asset entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -226,58 +176,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the asset entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where companyId = &#63;.
@@ -372,58 +270,6 @@ public class AssetEntryPersistenceImpl
 		_collectionPersistenceFinderByClassUuid;
 
 	/**
-	 * Returns all the asset entries where classUuid = &#63;.
-	 *
-	 * @param classUuid the class uuid
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByClassUuid(String classUuid) {
-		return findByClassUuid(
-			classUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where classUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classUuid the class uuid
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByClassUuid(
-		String classUuid, int start, int end) {
-
-		return findByClassUuid(classUuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where classUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classUuid the class uuid
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByClassUuid(
-		String classUuid, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByClassUuid(classUuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset entries where classUuid = &#63;.
 	 *
 	 * <p>
@@ -514,56 +360,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByVisible;
-
-	/**
-	 * Returns all the asset entries where visible = &#63;.
-	 *
-	 * @param visible the visible
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByVisible(boolean visible) {
-		return findByVisible(
-			visible, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where visible = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param visible the visible
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByVisible(boolean visible, int start, int end) {
-		return findByVisible(visible, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where visible = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param visible the visible
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByVisible(
-		boolean visible, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByVisible(visible, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where visible = &#63;.
@@ -658,59 +454,6 @@ public class AssetEntryPersistenceImpl
 		_collectionPersistenceFinderByPublishDate;
 
 	/**
-	 * Returns all the asset entries where publishDate = &#63;.
-	 *
-	 * @param publishDate the publish date
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByPublishDate(Date publishDate) {
-		return findByPublishDate(
-			publishDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where publishDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param publishDate the publish date
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByPublishDate(
-		Date publishDate, int start, int end) {
-
-		return findByPublishDate(publishDate, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where publishDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param publishDate the publish date
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByPublishDate(
-		Date publishDate, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByPublishDate(
-			publishDate, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset entries where publishDate = &#63;.
 	 *
 	 * <p>
@@ -801,59 +544,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByExpirationDate;
-
-	/**
-	 * Returns all the asset entries where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByExpirationDate(Date expirationDate) {
-		return findByExpirationDate(
-			expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByExpirationDate(
-		Date expirationDate, int start, int end) {
-
-		return findByExpirationDate(expirationDate, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByExpirationDate(
-		Date expirationDate, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByExpirationDate(
-			expirationDate, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where expirationDate = &#63;.
@@ -947,59 +637,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByLayoutUuid;
-
-	/**
-	 * Returns all the asset entries where layoutUuid = &#63;.
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByLayoutUuid(String layoutUuid) {
-		return findByLayoutUuid(
-			layoutUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where layoutUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByLayoutUuid(
-		String layoutUuid, int start, int end) {
-
-		return findByLayoutUuid(layoutUuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where layoutUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutUuid the layout uuid
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByLayoutUuid(
-		String layoutUuid, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByLayoutUuid(
-			layoutUuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where layoutUuid = &#63;.
@@ -1123,18 +760,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the asset entry where groupId = &#63; and classUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classUuid the class uuid
-	 * @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByG_CU(long groupId, String classUuid) {
-		return fetchByG_CU(groupId, classUuid, true);
-	}
-
-	/**
 	 * Returns the asset entry where groupId = &#63; and classUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -1183,62 +808,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByC_CN;
-
-	/**
-	 * Returns all the asset entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByC_CN(long companyId, long classNameId) {
-		return findByC_CN(
-			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByC_CN(
-		long companyId, long classNameId, int start, int end) {
-
-		return findByC_CN(companyId, classNameId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByC_CN(
-		long companyId, long classNameId, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByC_CN(
-			companyId, classNameId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where companyId = &#63; and classNameId = &#63;.
@@ -1373,18 +942,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the asset entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
-	}
-
-	/**
 	 * Returns the asset entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -1433,68 +990,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByG_C_V;
-
-	/**
-	 * Returns all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByG_C_V(
-		long groupId, long classNameId, boolean visible) {
-
-		return findByG_C_V(
-			groupId, classNameId, visible, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByG_C_V(
-		long groupId, long classNameId, boolean visible, int start, int end) {
-
-		return findByG_C_V(groupId, classNameId, visible, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param visible the visible
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByG_C_V(
-		long groupId, long classNameId, boolean visible, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByG_C_V(
-			groupId, classNameId, visible, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where groupId = &#63; and classNameId = &#63; and visible = &#63;.
@@ -1603,75 +1098,6 @@ public class AssetEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<AssetEntry>
 		_collectionPersistenceFinderByG_C_P_E;
-
-	/**
-	 * Returns all the asset entries where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByG_C_P_E(
-		long groupId, long classNameId, Date publishDate, Date expirationDate) {
-
-		return findByG_C_P_E(
-			groupId, classNameId, publishDate, expirationDate,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByG_C_P_E(
-		long groupId, long classNameId, Date publishDate, Date expirationDate,
-		int start, int end) {
-
-		return findByG_C_P_E(
-			groupId, classNameId, publishDate, expirationDate, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param publishDate the publish date
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByG_C_P_E(
-		long groupId, long classNameId, Date publishDate, Date expirationDate,
-		int start, int end, OrderByComparator<AssetEntry> orderByComparator) {
-
-		return findByG_C_P_E(
-			groupId, classNameId, publishDate, expirationDate, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset entries where groupId = &#63; and classNameId = &#63; and publishDate = &#63; and expirationDate = &#63;.
@@ -2779,4 +2205,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:603111865
+// LIFERAY-SERVICE-BUILDER-HASH:-930039048

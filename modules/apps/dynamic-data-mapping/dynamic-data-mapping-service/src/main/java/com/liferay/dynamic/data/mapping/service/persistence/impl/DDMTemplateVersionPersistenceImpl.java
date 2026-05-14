@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -88,63 +87,10 @@ public class DDMTemplateVersionPersistenceImpl
 		_collectionPersistenceFinderByTemplateId;
 
 	/**
-	 * Returns all the ddm template versions where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @return the matching ddm template versions
-	 */
-	@Override
-	public List<DDMTemplateVersion> findByTemplateId(long templateId) {
-		return findByTemplateId(
-			templateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm template versions where templateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param templateId the template ID
-	 * @param start the lower bound of the range of ddm template versions
-	 * @param end the upper bound of the range of ddm template versions (not inclusive)
-	 * @return the range of matching ddm template versions
-	 */
-	@Override
-	public List<DDMTemplateVersion> findByTemplateId(
-		long templateId, int start, int end) {
-
-		return findByTemplateId(templateId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm template versions where templateId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param templateId the template ID
-	 * @param start the lower bound of the range of ddm template versions
-	 * @param end the upper bound of the range of ddm template versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm template versions
-	 */
-	@Override
-	public List<DDMTemplateVersion> findByTemplateId(
-		long templateId, int start, int end,
-		OrderByComparator<DDMTemplateVersion> orderByComparator) {
-
-		return findByTemplateId(
-			templateId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm template versions where templateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param templateId the template ID
@@ -264,18 +210,6 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param templateId the template ID
-	 * @param version the version
-	 * @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
-	 */
-	@Override
-	public DDMTemplateVersion fetchByT_V(long templateId, String version) {
-		return fetchByT_V(templateId, version, true);
-	}
-
-	/**
 	 * Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param templateId the template ID
@@ -324,66 +258,10 @@ public class DDMTemplateVersionPersistenceImpl
 		_collectionPersistenceFinderByT_S;
 
 	/**
-	 * Returns all the ddm template versions where templateId = &#63; and status = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @return the matching ddm template versions
-	 */
-	@Override
-	public List<DDMTemplateVersion> findByT_S(long templateId, int status) {
-		return findByT_S(
-			templateId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm template versions where templateId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm template versions
-	 * @param end the upper bound of the range of ddm template versions (not inclusive)
-	 * @return the range of matching ddm template versions
-	 */
-	@Override
-	public List<DDMTemplateVersion> findByT_S(
-		long templateId, int status, int start, int end) {
-
-		return findByT_S(templateId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param templateId the template ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm template versions
-	 * @param end the upper bound of the range of ddm template versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm template versions
-	 */
-	@Override
-	public List<DDMTemplateVersion> findByT_S(
-		long templateId, int status, int start, int end,
-		OrderByComparator<DDMTemplateVersion> orderByComparator) {
-
-		return findByT_S(
-			templateId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm template versions where templateId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMTemplateVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param templateId the template ID
@@ -891,4 +769,4 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1859824873
+// LIFERAY-SERVICE-BUILDER-HASH:1237305015

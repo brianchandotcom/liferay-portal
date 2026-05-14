@@ -93,55 +93,6 @@ public class ObjectEntryPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the object entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -261,18 +212,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the object entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the object entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -319,62 +258,6 @@ public class ObjectEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the object entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entries where uuid = &#63; and companyId = &#63;.
@@ -505,17 +388,6 @@ public class ObjectEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the object entry where headObjectEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param headObjectEntryId the head object entry ID
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByHeadObjectEntryId(long headObjectEntryId) {
-		return fetchByHeadObjectEntryId(headObjectEntryId, true);
-	}
-
-	/**
 	 * Returns the object entry where headObjectEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param headObjectEntryId the head object entry ID
@@ -559,59 +431,6 @@ public class ObjectEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByObjectDefinitionId;
-
-	/**
-	 * Returns all the object entries where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByObjectDefinitionId(long objectDefinitionId) {
-		return findByObjectDefinitionId(
-			objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end) {
-
-		return findByObjectDefinitionId(objectDefinitionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByObjectDefinitionId(
-			objectDefinitionId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entries where objectDefinitionId = &#63;.
@@ -707,65 +526,6 @@ public class ObjectEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByG_ODI;
-
-	/**
-	 * Returns all the object entries where groupId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_ODI(
-		long groupId, long objectDefinitionId) {
-
-		return findByG_ODI(
-			groupId, objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where groupId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_ODI(
-		long groupId, long objectDefinitionId, int start, int end) {
-
-		return findByG_ODI(groupId, objectDefinitionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where groupId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_ODI(
-		long groupId, long objectDefinitionId, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByG_ODI(
-			groupId, objectDefinitionId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entries where groupId = &#63; and objectDefinitionId = &#63;.
@@ -868,65 +628,6 @@ public class ObjectEntryPersistenceImpl
 		_collectionPersistenceFinderByG_OEFI;
 
 	/**
-	 * Returns all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_OEFI(
-		long groupId, long objectEntryFolderId) {
-
-		return findByG_OEFI(
-			groupId, objectEntryFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_OEFI(
-		long groupId, long objectEntryFolderId, int start, int end) {
-
-		return findByG_OEFI(groupId, objectEntryFolderId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_OEFI(
-		long groupId, long objectEntryFolderId, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByG_OEFI(
-			groupId, objectEntryFolderId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
 	 *
 	 * <p>
@@ -1025,63 +726,6 @@ public class ObjectEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByU_ODI;
-
-	/**
-	 * Returns all the object entries where userId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByU_ODI(long userId, long objectDefinitionId) {
-		return findByU_ODI(
-			userId, objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where userId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByU_ODI(
-		long userId, long objectDefinitionId, int start, int end) {
-
-		return findByU_ODI(userId, objectDefinitionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where userId = &#63; and objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByU_ODI(
-		long userId, long objectDefinitionId, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByU_ODI(
-			userId, objectDefinitionId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entries where userId = &#63; and objectDefinitionId = &#63;.
@@ -1502,71 +1146,6 @@ public class ObjectEntryPersistenceImpl
 		_collectionPersistenceFinderByG_C_OEFI;
 
 	/**
-	 * Returns all the object entries where groupId = &#63; and companyId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_C_OEFI(
-		long groupId, long companyId, long objectEntryFolderId) {
-
-		return findByG_C_OEFI(
-			groupId, companyId, objectEntryFolderId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where groupId = &#63; and companyId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_C_OEFI(
-		long groupId, long companyId, long objectEntryFolderId, int start,
-		int end) {
-
-		return findByG_C_OEFI(
-			groupId, companyId, objectEntryFolderId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where groupId = &#63; and companyId = &#63; and objectEntryFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param objectEntryFolderId the object entry folder ID
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_C_OEFI(
-		long groupId, long companyId, long objectEntryFolderId, int start,
-		int end, OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByG_C_OEFI(
-			groupId, companyId, objectEntryFolderId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the object entries where groupId = &#63; and companyId = &#63; and objectEntryFolderId = &#63;.
 	 *
 	 * <p>
@@ -1676,70 +1255,6 @@ public class ObjectEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<ObjectEntry>
 		_collectionPersistenceFinderByG_ODI_S;
-
-	/**
-	 * Returns all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @return the matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_ODI_S(
-		long groupId, long objectDefinitionId, int status) {
-
-		return findByG_ODI_S(
-			groupId, objectDefinitionId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @return the range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_ODI_S(
-		long groupId, long objectDefinitionId, int status, int start, int end) {
-
-		return findByG_ODI_S(
-			groupId, objectDefinitionId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param objectDefinitionId the object definition ID
-	 * @param status the status
-	 * @param start the lower bound of the range of object entries
-	 * @param end the upper bound of the range of object entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object entries
-	 */
-	@Override
-	public List<ObjectEntry> findByG_ODI_S(
-		long groupId, long objectDefinitionId, int status, int start, int end,
-		OrderByComparator<ObjectEntry> orderByComparator) {
-
-		return findByG_ODI_S(
-			groupId, objectDefinitionId, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the object entries where groupId = &#63; and objectDefinitionId = &#63; and status = &#63;.
@@ -2060,25 +1575,6 @@ public class ObjectEntryPersistenceImpl
 		}
 
 		return objectEntry;
-	}
-
-	/**
-	 * Returns the object entry where externalReferenceCode = &#63; and groupId = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object entry, or <code>null</code> if a matching object entry could not be found
-	 */
-	@Override
-	public ObjectEntry fetchByERC_G_C_ODI(
-		String externalReferenceCode, long groupId, long companyId,
-		long objectDefinitionId) {
-
-		return fetchByERC_G_C_ODI(
-			externalReferenceCode, groupId, companyId, objectDefinitionId,
-			true);
 	}
 
 	/**
@@ -2886,4 +2382,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-481277866
+// LIFERAY-SERVICE-BUILDER-HASH:196498480

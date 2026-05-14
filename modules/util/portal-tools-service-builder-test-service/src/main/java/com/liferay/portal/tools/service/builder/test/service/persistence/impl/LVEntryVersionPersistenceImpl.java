@@ -78,58 +78,6 @@ public class LVEntryVersionPersistenceImpl
 		_collectionPersistenceFinderByLvEntryId;
 
 	/**
-	 * Returns all the lv entry versions where lvEntryId = &#63;.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByLvEntryId(long lvEntryId) {
-		return findByLvEntryId(
-			lvEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByLvEntryId(
-		long lvEntryId, int start, int end) {
-
-		return findByLvEntryId(lvEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where lvEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByLvEntryId(
-		long lvEntryId, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByLvEntryId(lvEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the lv entry versions where lvEntryId = &#63;.
 	 *
 	 * <p>
@@ -253,20 +201,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param lvEntryId the lv entry ID
-	 * @param version the version
-	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByLvEntryId_Version(
-		long lvEntryId, int version) {
-
-		return fetchByLvEntryId_Version(lvEntryId, version, true);
-	}
-
-	/**
 	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param lvEntryId the lv entry ID
@@ -314,55 +248,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the lv entry versions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63;.
@@ -454,62 +339,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByUuid_Version;
-
-	/**
-	 * Returns all the lv entry versions where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_Version(String uuid, int version) {
-		return findByUuid_Version(
-			uuid, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where uuid = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_Version(
-		String uuid, int version, int start, int end) {
-
-		return findByUuid_Version(uuid, version, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_Version(
-		String uuid, int version, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByUuid_Version(
-			uuid, version, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and version = &#63;.
@@ -608,61 +437,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByUUID_G;
-
-	/**
-	 * Returns all the lv entry versions where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUUID_G(String uuid, long groupId) {
-		return findByUUID_G(
-			uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where uuid = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUUID_G(
-		String uuid, long groupId, int start, int end) {
-
-		return findByUUID_G(uuid, groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUUID_G(
-		String uuid, long groupId, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByUUID_G(uuid, groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and groupId = &#63;.
@@ -796,21 +570,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByUUID_G_Version(
-		String uuid, long groupId, int version) {
-
-		return fetchByUUID_G_Version(uuid, groupId, version, true);
-	}
-
-	/**
 	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -862,62 +621,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
@@ -1016,68 +719,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByUuid_C_Version;
-
-	/**
-	 * Returns all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_C_Version(
-		String uuid, long companyId, int version) {
-
-		return findByUuid_C_Version(
-			uuid, companyId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_C_Version(
-		String uuid, long companyId, int version, int start, int end) {
-
-		return findByUuid_C_Version(uuid, companyId, version, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByUuid_C_Version(
-		String uuid, long companyId, int version, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByUuid_C_Version(
-			uuid, companyId, version, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1187,58 +828,6 @@ public class LVEntryVersionPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the lv entry versions where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the lv entry versions where groupId = &#63;.
 	 *
 	 * <p>
@@ -1328,64 +917,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByGroupId_Version;
-
-	/**
-	 * Returns all the lv entry versions where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByGroupId_Version(
-		long groupId, int version) {
-
-		return findByGroupId_Version(
-			groupId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where groupId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByGroupId_Version(
-		long groupId, int version, int start, int end) {
-
-		return findByGroupId_Version(groupId, version, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where groupId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByGroupId_Version(
-		long groupId, int version, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByGroupId_Version(
-			groupId, version, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where groupId = &#63; and version = &#63;.
@@ -1484,65 +1015,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private CollectionPersistenceFinder<LVEntryVersion>
 		_collectionPersistenceFinderByG_UGK;
-
-	/**
-	 * Returns all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @return the matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByG_UGK(
-		long groupId, String uniqueGroupKey) {
-
-		return findByG_UGK(
-			groupId, uniqueGroupKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByG_UGK(
-		long groupId, String uniqueGroupKey, int start, int end) {
-
-		return findByG_UGK(groupId, uniqueGroupKey, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findByG_UGK(
-		long groupId, String uniqueGroupKey, int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findByG_UGK(
-			groupId, uniqueGroupKey, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1675,21 +1147,6 @@ public class LVEntryVersionPersistenceImpl
 		}
 
 		return lvEntryVersion;
-	}
-
-	/**
-	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param uniqueGroupKey the unique group key
-	 * @param version the version
-	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
-	 */
-	@Override
-	public LVEntryVersion fetchByG_UGK_Version(
-		long groupId, String uniqueGroupKey, int version) {
-
-		return fetchByG_UGK_Version(groupId, uniqueGroupKey, version, true);
 	}
 
 	/**
@@ -2698,4 +2155,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2106736456
+// LIFERAY-SERVICE-BUILDER-HASH:1193570756

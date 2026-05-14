@@ -136,62 +136,6 @@ public class NotificationQueueEntryAttachmentUtil {
 	}
 
 	/**
-	 * Returns all the notification queue entry attachments where notificationQueueEntryId = &#63;.
-	 *
-	 * @param notificationQueueEntryId the notification queue entry ID
-	 * @return the matching notification queue entry attachments
-	 */
-	public static List<NotificationQueueEntryAttachment>
-		findByNotificationQueueEntryId(long notificationQueueEntryId) {
-
-		return getPersistence().findByNotificationQueueEntryId(
-			notificationQueueEntryId);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entry attachments where notificationQueueEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationQueueEntryAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationQueueEntryId the notification queue entry ID
-	 * @param start the lower bound of the range of notification queue entry attachments
-	 * @param end the upper bound of the range of notification queue entry attachments (not inclusive)
-	 * @return the range of matching notification queue entry attachments
-	 */
-	public static List<NotificationQueueEntryAttachment>
-		findByNotificationQueueEntryId(
-			long notificationQueueEntryId, int start, int end) {
-
-		return getPersistence().findByNotificationQueueEntryId(
-			notificationQueueEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the notification queue entry attachments where notificationQueueEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationQueueEntryAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationQueueEntryId the notification queue entry ID
-	 * @param start the lower bound of the range of notification queue entry attachments
-	 * @param end the upper bound of the range of notification queue entry attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notification queue entry attachments
-	 */
-	public static List<NotificationQueueEntryAttachment>
-		findByNotificationQueueEntryId(
-			long notificationQueueEntryId, int start, int end,
-			OrderByComparator<NotificationQueueEntryAttachment>
-				orderByComparator) {
-
-		return getPersistence().findByNotificationQueueEntryId(
-			notificationQueueEntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the notification queue entry attachments where notificationQueueEntryId = &#63;.
 	 *
 	 * <p>
@@ -341,6 +285,62 @@ public class NotificationQueueEntryAttachmentUtil {
 			notificationQueueEntryAttachmentId);
 	}
 
+	/**
+	 * Returns all the notification queue entry attachments where notificationQueueEntryId = &#63;.
+	 *
+	 * @param notificationQueueEntryId the notification queue entry ID
+	 * @return the matching notification queue entry attachments
+	 */
+	public static List<NotificationQueueEntryAttachment>
+		findByNotificationQueueEntryId(long notificationQueueEntryId) {
+
+		return getPersistence().findByNotificationQueueEntryId(
+			notificationQueueEntryId);
+	}
+
+	/**
+	 * Returns a range of all the notification queue entry attachments where notificationQueueEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationQueueEntryAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationQueueEntryId the notification queue entry ID
+	 * @param start the lower bound of the range of notification queue entry attachments
+	 * @param end the upper bound of the range of notification queue entry attachments (not inclusive)
+	 * @return the range of matching notification queue entry attachments
+	 */
+	public static List<NotificationQueueEntryAttachment>
+		findByNotificationQueueEntryId(
+			long notificationQueueEntryId, int start, int end) {
+
+		return getPersistence().findByNotificationQueueEntryId(
+			notificationQueueEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification queue entry attachments where notificationQueueEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationQueueEntryAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationQueueEntryId the notification queue entry ID
+	 * @param start the lower bound of the range of notification queue entry attachments
+	 * @param end the upper bound of the range of notification queue entry attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification queue entry attachments
+	 */
+	public static List<NotificationQueueEntryAttachment>
+		findByNotificationQueueEntryId(
+			long notificationQueueEntryId, int start, int end,
+			OrderByComparator<NotificationQueueEntryAttachment>
+				orderByComparator) {
+
+		return getPersistence().findByNotificationQueueEntryId(
+			notificationQueueEntryId, start, end, orderByComparator);
+	}
+
 	public static NotificationQueueEntryAttachmentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -355,4 +355,4 @@ public class NotificationQueueEntryAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1802134043
+// LIFERAY-SERVICE-BUILDER-HASH:128923375

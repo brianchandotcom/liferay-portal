@@ -738,6 +738,7 @@ public class DBTest {
 				() -> {
 					try (Connection backgroundConnection =
 							DataAccess.getConnection();
+
 						Statement statement =
 							backgroundConnection.createStatement()) {
 

@@ -143,21 +143,10 @@ public class ObjectEntrySitemapURLProviderTest {
 	public void testVisitLayout() throws Exception {
 		Element rootElement = _getRootElement();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectField", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		ObjectEntry objectEntry = _addObjectEntry();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(),
-				_portal.getClassNameId(_objectDefinition.getClassName()), null,
-				true, WorkflowConstants.STATUS_APPROVED);
+			_addDisplayPageTemplate();
 
 		_assertRootElement(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
@@ -184,31 +173,12 @@ public class ObjectEntrySitemapURLProviderTest {
 	public void testVisitLayoutAsGuestUser() throws Exception {
 		Element rootElement = _getRootElement();
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectField", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		ObjectEntry objectEntry = _addObjectEntry();
 
-		_objectEntryLocalService.addObjectEntry(
-			0, TestPropsValues.getUserId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null,
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectField", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+		_addObjectEntry();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(),
-				_portal.getClassNameId(_objectDefinition.getClassName()), null,
-				true, WorkflowConstants.STATUS_APPROVED);
+			_addDisplayPageTemplate();
 
 		Role role = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.GUEST);
@@ -261,6 +231,25 @@ public class ObjectEntrySitemapURLProviderTest {
 		_themeDisplay.setSignedIn(true);
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
+	}
+
+	private LayoutPageTemplateEntry _addDisplayPageTemplate() throws Exception {
+		return DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			_group.getGroupId(),
+			_portal.getClassNameId(_objectDefinition.getClassName()), null,
+			true, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	private ObjectEntry _addObjectEntry() throws Exception {
+		return _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectField", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertRootElement(

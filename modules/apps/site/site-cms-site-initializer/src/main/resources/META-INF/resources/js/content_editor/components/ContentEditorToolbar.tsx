@@ -42,6 +42,7 @@ const SUCCESS_MESSAGE_SESSION_KEY =
 
 export default function ContentEditorToolbar({
 	backURL,
+	defaultLanguageId,
 	displayDate: initialDisplayDate,
 	getPreviewDataURL,
 	hasWorkflow,
@@ -50,6 +51,7 @@ export default function ContentEditorToolbar({
 	type,
 }: {
 	backURL: string;
+	defaultLanguageId: Liferay.Language.Locale;
 	displayDate: string;
 	getPreviewDataURL: string;
 	hasWorkflow: boolean;

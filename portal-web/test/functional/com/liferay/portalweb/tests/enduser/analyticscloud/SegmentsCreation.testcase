@@ -59,54 +59,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Create a dynamic segment with individuals"
-	@priority = 5
-	test CanCreateDynamicSegmentWithIndividuals {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
-				actionType = "View WC",
-				documentTitleList = "1,2,3,4",
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACUtils.setItemName(itemName = "Dynamic Segment Test");
-
-		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
-
-		ACSegments.addSegmentField(segmentField = "email");
-
-		ACSegments.editTextCriterion(textInput = "userea@liferay.com");
-
-		ACSegments.previewSegmentMembership();
-
-		ACUtils.viewNameList(nameList = "userfn userln");
-
-		ACUtils.closeModal();
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACUtils.viewNameList(nameList = "Dynamic Segment Test");
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-7962 | Test Summary: Create a segment that contains anonymous individuals"
 	@priority = 5
 	test CanCreateSegmentWithAnonymousIndividuals {

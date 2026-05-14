@@ -1798,3 +1798,83 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Create a batch segment with an email criterion and see it listed',
+	{
+		tag: '@LPD-89756',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const individualName = 'user' + getRandomString();
+		const individuals = [generateIndividual({name: individualName})];
+
+		await createIndividuals({apiHelpers, individuals});
+
+		const date = new Date();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createSessions(
+			individuals.map((individual) => ({
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			}))
+		);
+
+		// Open the editor and configure an email criterion
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		await addSegmentField({
+			criterionName: 'Email Address',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: `${individualName}@liferay.com`,
+			page,
+		});
+
+		// Dismiss the value autocomplete so it does not intercept the cancel click
+
+		await page.keyboard.press('Escape');
+
+		// Preview the membership and verify the individual appears
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Known Segment Members'),
+			trigger: page.getByTitle('View Members'),
+		});
+
+		await viewNameOnTableList({
+			itemNames: `${individualName} Smith`,
+			page,
+		});
+
+		await page.getByRole('button', {name: 'Done'}).click();
+
+		// Save the segment and verify it appears in the segments list
+
+		await saveSegment(page);
+
+		await navigateTo({page, pageName: 'Segments'});
+
+		await viewNameOnTableList({
+			itemNames: segmentName,
+			page,
+		});
+	}
+);

@@ -37,6 +37,7 @@ import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.StringLayout;
 import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.appender.OutputStreamManager;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
@@ -484,7 +485,9 @@ public class PortalLog4jTest {
 
 		// <log4j:properties>...</log4j:properties>
 
-		if (expectedLogContextMessage != null) {
+		if ((expectedLogContextMessage != null) &&
+			!Objects.equals(expectedLogContextMessage, "{}")) {
+
 			int propertiesCloseLineIndex = outputLines.length - 2;
 
 			Assert.assertEquals(
@@ -711,41 +714,77 @@ public class PortalLog4jTest {
 				},
 				new HashMapDictionary());
 
-		PatternLayout.Builder builder = PatternLayout.newBuilder();
+		PatternLayout.Builder patternLayoutBuilder = PatternLayout.newBuilder();
 
-		builder.withPattern(
+		patternLayoutBuilder.withPattern(
 			"%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n %X");
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		UnsyncStringWriter textUnsyncStringWriter = new UnsyncStringWriter();
 
-		Appender logContextWriterAppender = WriterAppender.createAppender(
-			builder.build(), null, unsyncStringWriter,
-			"logContextWriterAppender", false, false);
+		Appender textLogContextWriterAppender = WriterAppender.createAppender(
+			patternLayoutBuilder.build(), null, textUnsyncStringWriter,
+			"textLogContextWriterAppender", false, false);
 
-		logContextWriterAppender.start();
+		textLogContextWriterAppender.start();
+
+		Logger rootLogger = (Logger)LogManager.getRootLogger();
+
+		Map<String, Appender> rootAppenders = rootLogger.getAppenders();
+
+		Appender xmlFileAppender = rootAppenders.get("XML_FILE");
+
+		Class<?> liferayXmlLayoutClass = xmlFileAppender.getLayout(
+		).getClass();
+
+		Object liferayXmlLayoutBuilder = ReflectionTestUtil.invoke(
+			liferayXmlLayoutClass, "newBuilder", new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			liferayXmlLayoutBuilder, "_locationInfo", true);
+		ReflectionTestUtil.setFieldValue(
+			liferayXmlLayoutBuilder, "_properties", true);
+
+		StringLayout liferayXmlLayout = ReflectionTestUtil.invoke(
+			liferayXmlLayoutBuilder, "build", new Class<?>[0]);
+
+		UnsyncStringWriter xmlUnsyncStringWriter = new UnsyncStringWriter();
+
+		Appender xmlLogContextWriterAppender = WriterAppender.createAppender(
+			liferayXmlLayout, null, xmlUnsyncStringWriter,
+			"xmlLogContextWriterAppender", false, false);
+
+		xmlLogContextWriterAppender.start();
 
 		Logger logger = (Logger)LogManager.getLogger(PortalLog4jTest.class);
 
-		logger.addAppender(logContextWriterAppender);
+		logger.addAppender(textLogContextWriterAppender);
+		logger.addAppender(xmlLogContextWriterAppender);
 
 		try {
 			_testLogOutputWithLogContext(
-				"DEBUG", logContextMessage, unsyncStringWriter);
+				"DEBUG", logContextMessage, textUnsyncStringWriter,
+				xmlUnsyncStringWriter);
 			_testLogOutputWithLogContext(
-				"ERROR", logContextMessage, unsyncStringWriter);
+				"ERROR", logContextMessage, textUnsyncStringWriter,
+				xmlUnsyncStringWriter);
 			_testLogOutputWithLogContext(
-				"FATAL", logContextMessage, unsyncStringWriter);
+				"FATAL", logContextMessage, textUnsyncStringWriter,
+				xmlUnsyncStringWriter);
 			_testLogOutputWithLogContext(
-				"INFO", logContextMessage, unsyncStringWriter);
+				"INFO", logContextMessage, textUnsyncStringWriter,
+				xmlUnsyncStringWriter);
 			_testLogOutputWithLogContext(
-				"TRACE", logContextMessage, unsyncStringWriter);
+				"TRACE", logContextMessage, textUnsyncStringWriter,
+				xmlUnsyncStringWriter);
 			_testLogOutputWithLogContext(
-				"WARN", logContextMessage, unsyncStringWriter);
+				"WARN", logContextMessage, textUnsyncStringWriter,
+				xmlUnsyncStringWriter);
 		}
 		finally {
 			serviceRegistration.unregister();
 
-			logger.removeAppender(logContextWriterAppender);
+			logger.removeAppender(textLogContextWriterAppender);
+			logger.removeAppender(xmlLogContextWriterAppender);
 
 			_unsyncStringWriter.reset();
 
@@ -760,7 +799,8 @@ public class PortalLog4jTest {
 
 	private void _testLogOutputWithLogContext(
 		String level, String logContextMessage,
-		UnsyncStringWriter unsyncStringWriter) {
+		UnsyncStringWriter textUnsyncStringWriter,
+		UnsyncStringWriter xmlUnsyncStringWriter) {
 
 		String message = level + " message";
 
@@ -768,9 +808,13 @@ public class PortalLog4jTest {
 
 		_assertTextLog(
 			level, message, null, logContextMessage,
-			unsyncStringWriter.toString());
+			textUnsyncStringWriter.toString());
+		_assertXmlLog(
+			level, message, null, logContextMessage,
+			xmlUnsyncStringWriter.toString());
 
-		unsyncStringWriter.reset();
+		textUnsyncStringWriter.reset();
+		xmlUnsyncStringWriter.reset();
 	}
 
 	private static final int _BUFFER_SIZE = 8192;

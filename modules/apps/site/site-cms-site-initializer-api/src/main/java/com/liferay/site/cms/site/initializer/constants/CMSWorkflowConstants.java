@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
  */
 public class CMSWorkflowConstants {
 
-	public static final Integer[] WORKFLOW_STATUSES = {
+	public static final Integer[] STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
 		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_PENDING,
 		WorkflowConstants.STATUS_SCHEDULED

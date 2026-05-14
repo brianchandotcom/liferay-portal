@@ -108,7 +108,7 @@ public class AssetStatisticsResourceImpl
 					() -> _getCount(
 						groupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.in(
-							CMSWorkflowConstants.WORKFLOW_STATUSES)));
+							CMSWorkflowConstants.STATUSES)));
 			}
 		};
 	}

@@ -1149,7 +1149,7 @@ public class SectionDisplayContextHelper {
 	}
 
 	private static final String _CMS_WORKFLOW_STATUSES_STRING =
-		StringUtil.merge(CMSWorkflowConstants.WORKFLOW_STATUSES, ", ");
+		StringUtil.merge(CMSWorkflowConstants.STATUSES, ", ");
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SectionDisplayContextHelper.class);

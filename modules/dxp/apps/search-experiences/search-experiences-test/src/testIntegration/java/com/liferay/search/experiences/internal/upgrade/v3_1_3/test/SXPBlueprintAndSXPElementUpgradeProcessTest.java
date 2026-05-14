@@ -28,6 +28,7 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.search.experiences.constants.SXPBlueprintConstants;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.model.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
@@ -147,6 +148,41 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		Assert.assertEquals(
 			_readJSON("elementDefinition"),
 			sxpElement.getElementDefinitionJSON());
+	}
+
+	@Test
+	public void testUpgradeHandlesLegacyFieldMappingLabel() throws Exception {
+		String elementInstancesJSON = _readJSON("legacyFieldMappingLabel");
+
+		Assert.assertNotNull(
+			ElementInstanceUtil.toElementInstances(elementInstancesJSON));
+
+		SXPBlueprint sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+			null, TestPropsValues.getUserId(), StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			StringPool.BLANK, SXPBlueprintConstants.SCHEMA_VERSION,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			ServiceContextTestUtil.getServiceContext(
+				_group1, TestPropsValues.getUserId()));
+
+		sxpBlueprint.setElementInstancesJSON(elementInstancesJSON);
+
+		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
+			sxpBlueprint);
+
+		_runUpgrade();
+
+		sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
+			sxpBlueprint.getSXPBlueprintId());
+
+		String upgradedElementInstancesJSON =
+			sxpBlueprint.getElementInstancesJSON();
+
+		Assert.assertFalse(
+			upgradedElementInstancesJSON.contains(
+				"LegacyFieldMappingLabelSentinel"));
 	}
 
 	@Test

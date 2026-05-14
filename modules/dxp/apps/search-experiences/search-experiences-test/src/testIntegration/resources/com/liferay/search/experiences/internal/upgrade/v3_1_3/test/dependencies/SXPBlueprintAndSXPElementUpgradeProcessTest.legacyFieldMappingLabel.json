@@ -1,0 +1,25 @@
+[
+	{
+		"sxpElement": {
+			"elementDefinition": {
+				"uiConfiguration": {
+					"fieldSets": [
+						{
+							"fields": [
+								{
+									"fieldMappings": [
+										{
+											"field": "title",
+											"label": "LegacyFieldMappingLabelSentinel"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			"externalReferenceCode": "CUSTOM_ELEMENT"
+		}
+	}
+]

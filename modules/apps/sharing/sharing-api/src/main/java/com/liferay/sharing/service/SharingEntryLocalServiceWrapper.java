@@ -262,6 +262,11 @@ public class SharingEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteToTicketSharingEntries(long toTicketId) {
+		_sharingEntryLocalService.deleteToTicketSharingEntries(toTicketId);
+	}
+
+	@Override
 	public void deleteToUserGroupSharingEntries(long toUserGroupId) {
 		_sharingEntryLocalService.deleteToUserGroupSharingEntries(
 			toUserGroupId);
@@ -1002,4 +1007,4 @@ public class SharingEntryLocalServiceWrapper
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1731710970
+// LIFERAY-SERVICE-BUILDER-HASH:-612691477

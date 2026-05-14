@@ -40,8 +40,8 @@ const getTabs = (data: ProductAndOrderPayload): NavbarProps['routes'] => {
 			visible: isDXP,
 		},
 		{
-			name: i18n.translate('tokens'),
-			path: 'tokens',
+			name: i18n.translate('workspace'),
+			path: 'workspace',
 			visible: isDSR,
 		},
 	];

@@ -60,7 +60,10 @@ describe('MostActiveVisitors', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<MostActiveVisitors isAnalyticsCloudConfigured={true} namespace="test-namespace" />
+			<MostActiveVisitors
+				isAnalyticsCloudEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();

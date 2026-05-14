@@ -145,9 +145,9 @@ const formatData = (data: IActivityLogEntry[]) => {
 };
 
 function ActivityLog({
-	isAnalyticsCloudConfigured,
+	isAnalyticsEnabled,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsEnabled: boolean;
 }) {
 	const [data, setData] = useState<TActivityLog>({});
 	const [element, setElement] = useState<HTMLElement | null>(null);
@@ -155,7 +155,7 @@ function ActivityLog({
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
 		query: {paths: [{key: 'userSessions', path: '/user-sessions'}]},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsEnabled},
 		variables: {
 			entityType: 'INDIVIDUAL',
 			keywords: '',
@@ -180,7 +180,7 @@ function ActivityLog({
 			title={Liferay.Language.get('activity-log')}
 		>
 			<div ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !Object.keys(data).length ? (

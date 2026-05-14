@@ -82,7 +82,10 @@ describe('LatestActivity', () => {
 
 	it('renders the component with provided data', () => {
 		const {baseElement} = render(
-			<LatestActivity isAnalyticsCloudConfigured={true} namespace="test-namespace" />
+			<LatestActivity
+				isAnalyticsCloudEnabled={true}
+				namespace="test-namespace"
+			/>
 		);
 
 		expect(baseElement).toMatchSnapshot();
@@ -92,7 +95,12 @@ describe('LatestActivity', () => {
 	});
 
 	it('renders the correct timestamp representation from moment', () => {
-		render(<LatestActivity isAnalyticsCloudConfigured={true} namespace="test-namespace" />);
+		render(
+			<LatestActivity
+				isAnalyticsCloudEnabled={true}
+				namespace="test-namespace"
+			/>
+		);
 
 		expect(screen.getByText('2 hours ago')).toBeInTheDocument();
 	});

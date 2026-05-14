@@ -12,9 +12,9 @@ import EngagementChart from './EngagementChart';
 import Loader from './Loader';
 
 const TimelineEngagementChart = ({
-	isAnalyticsCloudConfigured,
+	isAnalyticsEnabled,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsEnabled: boolean;
 }) => {
 	const [data, setData] = useState<IEngagementChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
@@ -26,7 +26,7 @@ const TimelineEngagementChart = ({
 				{key: 'siteSessions', path: '/sessions-site-histogram-metric'},
 			],
 		},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsEnabled},
 		variables: {
 			devices: 'Any',
 			emailAddresses: [],
@@ -59,7 +59,7 @@ const TimelineEngagementChart = ({
 			title={Liferay.Language.get('engagement-timeline')}
 		>
 			<div ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

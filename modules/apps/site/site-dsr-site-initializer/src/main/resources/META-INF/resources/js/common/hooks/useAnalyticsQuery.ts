@@ -49,7 +49,7 @@ export default function useAnalyticsQuery({
 	query,
 	settings = {
 		checkViewportVisibility: true,
-		isAnalyticsCloudConfigured: false,
+		isAnalyticsEnabled: false,
 	},
 	variables,
 }: {
@@ -57,7 +57,7 @@ export default function useAnalyticsQuery({
 	query: {paths: TAnalyticsQueryPath[]};
 	settings?: {
 		checkViewportVisibility?: boolean;
-		isAnalyticsCloudConfigured?: boolean;
+		isAnalyticsEnabled?: boolean;
 	};
 	variables: Record<string, unknown>;
 }) {
@@ -84,7 +84,7 @@ export default function useAnalyticsQuery({
 
 			if (
 				(currentSettings.checkViewportVisibility && !isVisible) ||
-				!currentSettings.isAnalyticsCloudConfigured
+				!currentSettings.isAnalyticsEnabled
 			) {
 				return;
 			}

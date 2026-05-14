@@ -129,7 +129,7 @@ describe('RoomStatistics', () => {
 
 	it('matches snapshot', () => {
 		const {container} = render(
-			<RoomStatistics isAnalyticsCloudConfigured={true} />
+			<RoomStatistics isAnalyticsCloudEnabled={true} />
 		);
 
 		expect(container).toMatchSnapshot();
@@ -137,7 +137,7 @@ describe('RoomStatistics', () => {
 
 	it('renders with provided data', () => {
 		const {getByText} = render(
-			<RoomStatistics isAnalyticsCloudConfigured={true} />
+			<RoomStatistics isAnalyticsCloudEnabled={true} />
 		);
 
 		expect(getByText('0-hours 45-minutes')).toBeInTheDocument();

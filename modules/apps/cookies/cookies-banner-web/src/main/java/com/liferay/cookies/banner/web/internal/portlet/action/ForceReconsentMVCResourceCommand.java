@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -74,7 +76,8 @@ public class ForceReconsentMVCResourceCommand extends BaseMVCResourceCommand {
 			 !permissionChecker.isGroupAdmin(scopePK))) {
 
 			resourceResponse.setProperty(
-				ResourceResponse.HTTP_STATUS_CODE, "403");
+				ResourceResponse.HTTP_STATUS_CODE,
+				String.valueOf(HttpServletResponse.SC_FORBIDDEN));
 
 			return;
 		}

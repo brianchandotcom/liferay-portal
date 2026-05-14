@@ -20,6 +20,7 @@ import type {EntryCategorizationDTO} from '../services/ObjectEntryService';
 const AssetCategories = ({
 	cmsGroupId,
 	collapsable = true,
+	hasError = false,
 	hasUpdatePermission,
 	inputSize,
 	objectEntry,
@@ -27,6 +28,7 @@ const AssetCategories = ({
 }: {
 	cmsGroupId: number | string;
 	collapsable?: boolean;
+	hasError?: boolean;
 	hasUpdatePermission?: boolean;
 	inputSize?: CategorizationInputSize;
 	objectEntry: IAssetObjectEntry | EntryCategorizationDTO;
@@ -165,52 +167,54 @@ const AssetCategories = ({
 			showCollapseIcon={collapsable}
 		>
 			<ClayPanel.Body>
-				<ItemSelector<any>
-					apiURL={apiURL}
-					disabled={!hasUpdatePermission}
-					estimateSize={49}
-					locator={{
-						id: 'id',
-						label: 'name',
-						value: 'externalReferenceCode',
-					}}
-					onChange={setValue}
-					onItemsChange={(newItems: any) => {
-						if (newItems[0]) {
-							addCategory(newItems[0]);
+				<div className={hasError ? 'form-group has-error' : undefined}>
+					<ItemSelector<any>
+						apiURL={apiURL}
+						disabled={!hasUpdatePermission}
+						estimateSize={49}
+						locator={{
+							id: 'id',
+							label: 'name',
+							value: 'externalReferenceCode',
+						}}
+						onChange={setValue}
+						onItemsChange={(newItems: any) => {
+							if (newItems[0]) {
+								addCategory(newItems[0]);
 
-							// The reason for this timeout is because of react's
-							// batch rendering. Clay internals set the value of
-							// the input, but we need to wait for the next 'tick' to set the value.
+								// The reason for this timeout is because of react's
+								// batch rendering. Clay internals set the value of
+								// the input, but we need to wait for the next 'tick' to set the value.
 
-							setTimeout(() => setValue(''));
-						}
-					}}
-					placeholder={Liferay.Language.get('add-category')}
-					refetchOnActive
-					sizing={inputSize}
-					value={value}
-				>
-					{(item) => (
-						<ItemSelector.Item
-							key={item.name}
-							textValue={item.name}
-						>
-							<div>
-								<span className="font-weight-bold text-truncate">
-									{item?.name}
-								</span>
+								setTimeout(() => setValue(''));
+							}
+						}}
+						placeholder={Liferay.Language.get('add-category')}
+						refetchOnActive
+						sizing={inputSize}
+						value={value}
+					>
+						{(item) => (
+							<ItemSelector.Item
+								key={item.name}
+								textValue={item.name}
+							>
+								<div>
+									<span className="font-weight-bold text-truncate">
+										{item?.name}
+									</span>
 
-								<span
-									className="text-1 text-secondary text-truncate text-uppercase"
-									title={item?.path}
-								>
-									{item?.path}
-								</span>
-							</div>
-						</ItemSelector.Item>
-					)}
-				</ItemSelector>
+									<span
+										className="text-1 text-secondary text-truncate text-uppercase"
+										title={item?.path}
+									>
+										{item?.path}
+									</span>
+								</div>
+							</ItemSelector.Item>
+						)}
+					</ItemSelector>
+				</div>
 
 				{groupedTaxonomies.taxonomyVocabularies &&
 					Object.entries(groupedTaxonomies?.taxonomyVocabularies).map(

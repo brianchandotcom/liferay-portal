@@ -13,6 +13,7 @@ export type Individual = {
 	dataSourceId?: number;
 	familyName?: string;
 	id: string;
+	jobTitle?: string;
 	name: string;
 };
 
@@ -29,6 +30,7 @@ export async function createIndividuals({
 			dataSourceId = 0,
 			familyName = 'Smith',
 			id,
+			jobTitle,
 			name,
 		}) => ({
 			birthday: birthDate,
@@ -42,6 +44,9 @@ export async function createIndividuals({
 				},
 				{dataSourceId, name: 'firstName', value: name},
 				{dataSourceId, name: 'lastName', value: familyName},
+				...(jobTitle
+					? [{dataSourceId, name: 'jobTitle', value: jobTitle}]
+					: []),
 			],
 			firstName: name,
 			id,

@@ -47,7 +47,7 @@ definition {
 
 		Click(
 			key_nodeName = ${key_card},
-			locator1 = "Treeview#NODE_ITEM");
+			locator1 = "Treeview#NODE_ITEM_2");
 
 		SelectFrame.selectFrameTop();
 
@@ -428,7 +428,7 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM")) {
+		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM_2")) {
 			CommerceNavigator.searchEntry(entryName = ${pageName});
 
 			Click.mouseDownMouseUp(
@@ -438,7 +438,7 @@ definition {
 		else {
 			Click.mouseDownMouseUp(
 				key_nodeName = ${pageName},
-				locator1 = "Treeview#NODE_ITEM");
+				locator1 = "Treeview#NODE_ITEM_2");
 		}
 
 		SelectFrame.selectFrameTop();
@@ -476,7 +476,7 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM")) {
+		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM_2")) {
 			CommerceNavigator.searchEntry(entryName = ${pageName});
 
 			Click.mouseDownMouseUp(
@@ -486,7 +486,7 @@ definition {
 		else {
 			Click.mouseDownMouseUp(
 				key_nodeName = ${pageName},
-				locator1 = "Treeview#NODE_ITEM");
+				locator1 = "Treeview#NODE_ITEM_2");
 		}
 
 		SelectFrame.selectFrameTop();

@@ -9,5 +9,7 @@ dependencies {
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":core:petra:petra-string")
 	testImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testImplementation project(":apps:analytics:analytics-settings-api")
+	testImplementation project(":apps:analytics:analytics-settings-rest-api")
 	testImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 }

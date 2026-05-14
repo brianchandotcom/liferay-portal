@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.tax.engine.fixed.exception.DuplicateCommerceTaxFixedRateException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateLocalServiceBaseImpl;
@@ -54,7 +56,10 @@ public class CommerceTaxFixedRateLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validate(cpTaxCategoryId, commerceTaxMethodId);
+		CPTaxCategory cpTaxCategory =
+			_cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
+
+		_validate(commerceTaxMethodId, cpTaxCategory.getCPTaxCategoryId());
 
 		long commerceTaxFixedRateId = counterLocalService.increment();
 
@@ -65,7 +70,8 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		commerceTaxFixedRate.setCompanyId(user.getCompanyId());
 		commerceTaxFixedRate.setUserId(user.getUserId());
 		commerceTaxFixedRate.setUserName(user.getFullName());
-		commerceTaxFixedRate.setCPTaxCategoryId(cpTaxCategoryId);
+		commerceTaxFixedRate.setCPTaxCategoryId(
+			cpTaxCategory.getCPTaxCategoryId());
 		commerceTaxFixedRate.setCommerceTaxMethodId(commerceTaxMethodId);
 		commerceTaxFixedRate.setRate(rate);
 
@@ -135,7 +141,7 @@ public class CommerceTaxFixedRateLocalServiceImpl
 		return commerceTaxFixedRatePersistence.update(commerceTaxFixedRate);
 	}
 
-	private void _validate(long cpTaxCategoryId, long commerceTaxMethodId)
+	private void _validate(long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException {
 
 		int count = commerceTaxFixedRatePersistence.countByC_C(
@@ -145,6 +151,9 @@ public class CommerceTaxFixedRateLocalServiceImpl
 			throw new DuplicateCommerceTaxFixedRateException();
 		}
 	}
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

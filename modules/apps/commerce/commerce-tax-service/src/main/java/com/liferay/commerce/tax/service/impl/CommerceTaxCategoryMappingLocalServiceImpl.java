@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.tax.service.impl;
 
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.tax.exception.DuplicateCommerceTaxCategoryMappingExternalReferenceCodeException;
 import com.liferay.commerce.tax.model.CommerceTaxCategoryMapping;
 import com.liferay.commerce.tax.service.base.CommerceTaxCategoryMappingLocalServiceBaseImpl;
@@ -36,7 +38,10 @@ public class CommerceTaxCategoryMappingLocalServiceImpl
 			long commerceTaxMethodId, long cpTaxCategoryId)
 		throws PortalException {
 
-		_validate(commerceTaxMethodId, cpTaxCategoryId);
+		CPTaxCategory cpTaxCategory =
+			_cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
+
+		_validate(commerceTaxMethodId, cpTaxCategory.getCPTaxCategoryId());
 
 		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
 			commerceTaxCategoryMappingPersistence.create(
@@ -53,7 +58,8 @@ public class CommerceTaxCategoryMappingLocalServiceImpl
 		commerceTaxCategoryMapping.setUserName(user.getFullName());
 
 		commerceTaxCategoryMapping.setCommerceTaxMethodId(commerceTaxMethodId);
-		commerceTaxCategoryMapping.setCPTaxCategoryId(cpTaxCategoryId);
+		commerceTaxCategoryMapping.setCPTaxCategoryId(
+			cpTaxCategory.getCPTaxCategoryId());
 
 		return commerceTaxCategoryMappingPersistence.update(
 			commerceTaxCategoryMapping);
@@ -110,6 +116,9 @@ public class CommerceTaxCategoryMappingLocalServiceImpl
 			throw new DuplicateCommerceTaxCategoryMappingExternalReferenceCodeException();
 		}
 	}
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

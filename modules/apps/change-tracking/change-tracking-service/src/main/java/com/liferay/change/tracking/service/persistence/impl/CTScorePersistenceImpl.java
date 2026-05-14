@@ -100,17 +100,6 @@ public class CTScorePersistenceImpl
 	}
 
 	/**
-	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
-	 */
-	@Override
-	public CTScore fetchByCtCollectionId(long ctCollectionId) {
-		return fetchByCtCollectionId(ctCollectionId, true);
-	}
-
-	/**
 	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -396,4 +385,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1279793021
+// LIFERAY-SERVICE-BUILDER-HASH:459906940

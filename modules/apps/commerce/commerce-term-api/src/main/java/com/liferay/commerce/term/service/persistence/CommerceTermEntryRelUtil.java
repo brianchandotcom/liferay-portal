@@ -130,58 +130,6 @@ public class CommerceTermEntryRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce term entry rels where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @return the matching commerce term entry rels
-	 */
-	public static List<CommerceTermEntryRel> findByCommerceTermEntryId(
-		long commerceTermEntryId) {
-
-		return getPersistence().findByCommerceTermEntryId(commerceTermEntryId);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entry rels where commerceTermEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param start the lower bound of the range of commerce term entry rels
-	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
-	 * @return the range of matching commerce term entry rels
-	 */
-	public static List<CommerceTermEntryRel> findByCommerceTermEntryId(
-		long commerceTermEntryId, int start, int end) {
-
-		return getPersistence().findByCommerceTermEntryId(
-			commerceTermEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce term entry rels where commerceTermEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param start the lower bound of the range of commerce term entry rels
-	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce term entry rels
-	 */
-	public static List<CommerceTermEntryRel> findByCommerceTermEntryId(
-		long commerceTermEntryId, int start, int end,
-		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
-
-		return getPersistence().findByCommerceTermEntryId(
-			commerceTermEntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce term entry rels where commerceTermEntryId = &#63;.
 	 *
 	 * <p>
@@ -253,61 +201,6 @@ public class CommerceTermEntryRelUtil {
 	 */
 	public static int countByCommerceTermEntryId(long commerceTermEntryId) {
 		return getPersistence().countByCommerceTermEntryId(commerceTermEntryId);
-	}
-
-	/**
-	 * Returns all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @return the matching commerce term entry rels
-	 */
-	public static List<CommerceTermEntryRel> findByC_C(
-		long classNameId, long commerceTermEntryId) {
-
-		return getPersistence().findByC_C(classNameId, commerceTermEntryId);
-	}
-
-	/**
-	 * Returns a range of all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param start the lower bound of the range of commerce term entry rels
-	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
-	 * @return the range of matching commerce term entry rels
-	 */
-	public static List<CommerceTermEntryRel> findByC_C(
-		long classNameId, long commerceTermEntryId, int start, int end) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceTermEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param start the lower bound of the range of commerce term entry rels
-	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce term entry rels
-	 */
-	public static List<CommerceTermEntryRel> findByC_C(
-		long classNameId, long commerceTermEntryId, int start, int end,
-		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceTermEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -404,21 +297,6 @@ public class CommerceTermEntryRelUtil {
 		throws com.liferay.commerce.term.exception.NoSuchTermEntryRelException {
 
 		return getPersistence().findByC_C_C(
-			classNameId, classPK, commerceTermEntryId);
-	}
-
-	/**
-	 * Returns the commerce term entry rel where classNameId = &#63; and classPK = &#63; and commerceTermEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @return the matching commerce term entry rel, or <code>null</code> if a matching commerce term entry rel could not be found
-	 */
-	public static CommerceTermEntryRel fetchByC_C_C(
-		long classNameId, long classPK, long commerceTermEntryId) {
-
-		return getPersistence().fetchByC_C_C(
 			classNameId, classPK, commerceTermEntryId);
 	}
 
@@ -525,6 +403,128 @@ public class CommerceTermEntryRelUtil {
 		return getPersistence().fetchByPrimaryKey(commerceTermEntryRelId);
 	}
 
+	/**
+	 * Returns the commerce term entry rel where classNameId = &#63; and classPK = &#63; and commerceTermEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @return the matching commerce term entry rel, or <code>null</code> if a matching commerce term entry rel could not be found
+	 */
+	public static CommerceTermEntryRel fetchByC_C_C(
+		long classNameId, long classPK, long commerceTermEntryId) {
+
+		return getPersistence().fetchByC_C_C(
+			classNameId, classPK, commerceTermEntryId);
+	}
+
+	/**
+	 * Returns all the commerce term entry rels where commerceTermEntryId = &#63;.
+	 *
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @return the matching commerce term entry rels
+	 */
+	public static List<CommerceTermEntryRel> findByCommerceTermEntryId(
+		long commerceTermEntryId) {
+
+		return getPersistence().findByCommerceTermEntryId(commerceTermEntryId);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entry rels where commerceTermEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @param start the lower bound of the range of commerce term entry rels
+	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
+	 * @return the range of matching commerce term entry rels
+	 */
+	public static List<CommerceTermEntryRel> findByCommerceTermEntryId(
+		long commerceTermEntryId, int start, int end) {
+
+		return getPersistence().findByCommerceTermEntryId(
+			commerceTermEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce term entry rels where commerceTermEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @param start the lower bound of the range of commerce term entry rels
+	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entry rels
+	 */
+	public static List<CommerceTermEntryRel> findByCommerceTermEntryId(
+		long commerceTermEntryId, int start, int end,
+		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
+
+		return getPersistence().findByCommerceTermEntryId(
+			commerceTermEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @return the matching commerce term entry rels
+	 */
+	public static List<CommerceTermEntryRel> findByC_C(
+		long classNameId, long commerceTermEntryId) {
+
+		return getPersistence().findByC_C(classNameId, commerceTermEntryId);
+	}
+
+	/**
+	 * Returns a range of all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @param start the lower bound of the range of commerce term entry rels
+	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
+	 * @return the range of matching commerce term entry rels
+	 */
+	public static List<CommerceTermEntryRel> findByC_C(
+		long classNameId, long commerceTermEntryId, int start, int end) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceTermEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce term entry rels where classNameId = &#63; and commerceTermEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.term.model.impl.CommerceTermEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceTermEntryId the commerce term entry ID
+	 * @param start the lower bound of the range of commerce term entry rels
+	 * @param end the upper bound of the range of commerce term entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entry rels
+	 */
+	public static List<CommerceTermEntryRel> findByC_C(
+		long classNameId, long commerceTermEntryId, int start, int end,
+		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceTermEntryId, start, end, orderByComparator);
+	}
+
 	public static CommerceTermEntryRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -538,4 +538,4 @@ public class CommerceTermEntryRelUtil {
 	private static volatile CommerceTermEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1464950013
+// LIFERAY-SERVICE-BUILDER-HASH:-891631183

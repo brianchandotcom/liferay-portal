@@ -33,51 +33,6 @@ public interface ExportImportReportEntryPersistence
 	 */
 
 	/**
-	 * Returns all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @return the matching export import report entries
-	 */
-	public java.util.List<ExportImportReportEntry> findByC_E(
-		long companyId, long exportImportConfigurationId);
-
-	/**
-	 * Returns a range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.exportimport.report.model.impl.ExportImportReportEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param start the lower bound of the range of export import report entries
-	 * @param end the upper bound of the range of export import report entries (not inclusive)
-	 * @return the range of matching export import report entries
-	 */
-	public java.util.List<ExportImportReportEntry> findByC_E(
-		long companyId, long exportImportConfigurationId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.exportimport.report.model.impl.ExportImportReportEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param start the lower bound of the range of export import report entries
-	 * @param end the upper bound of the range of export import report entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching export import report entries
-	 */
-	public java.util.List<ExportImportReportEntry> findByC_E(
-		long companyId, long exportImportConfigurationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<ExportImportReportEntry> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
 	 *
 	 * <p>
@@ -159,21 +114,6 @@ public interface ExportImportReportEntryPersistence
 			long groupId, long companyId, String classExternalReferenceCode,
 			long classNameId, long exportImportConfigurationId, int type)
 		throws NoSuchExportImportReportEntryException;
-
-	/**
-	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classExternalReferenceCode the class external reference code
-	 * @param classNameId the class name ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param type the type
-	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
-	 */
-	public ExportImportReportEntry fetchByG_C_C_C_E_T(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId, int type);
 
 	/**
 	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -264,5 +204,85 @@ public interface ExportImportReportEntryPersistence
 	public ExportImportReportEntry fetchByPrimaryKey(
 		long exportImportReportEntryId);
 
+	/**
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param exportImportConfigurationId the export import configuration ID
+	 * @param type the type
+	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
+	 */
+	public default ExportImportReportEntry fetchByG_C_C_C_E_T(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId, int type) {
+
+		return fetchByG_C_C_C_E_T(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId, type, true);
+	}
+
+	/**
+	 * Returns all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param exportImportConfigurationId the export import configuration ID
+	 * @return the matching export import report entries
+	 */
+	public default java.util.List<ExportImportReportEntry> findByC_E(
+		long companyId, long exportImportConfigurationId) {
+
+		return findByC_E(
+			companyId, exportImportConfigurationId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.exportimport.report.model.impl.ExportImportReportEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param exportImportConfigurationId the export import configuration ID
+	 * @param start the lower bound of the range of export import report entries
+	 * @param end the upper bound of the range of export import report entries (not inclusive)
+	 * @return the range of matching export import report entries
+	 */
+	public default java.util.List<ExportImportReportEntry> findByC_E(
+		long companyId, long exportImportConfigurationId, int start, int end) {
+
+		return findByC_E(
+			companyId, exportImportConfigurationId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.exportimport.report.model.impl.ExportImportReportEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param exportImportConfigurationId the export import configuration ID
+	 * @param start the lower bound of the range of export import report entries
+	 * @param end the upper bound of the range of export import report entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching export import report entries
+	 */
+	public default java.util.List<ExportImportReportEntry> findByC_E(
+		long companyId, long exportImportConfigurationId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<ExportImportReportEntry> orderByComparator) {
+
+		return findByC_E(
+			companyId, exportImportConfigurationId, start, end,
+			orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2129832367
+// LIFERAY-SERVICE-BUILDER-HASH:53839931

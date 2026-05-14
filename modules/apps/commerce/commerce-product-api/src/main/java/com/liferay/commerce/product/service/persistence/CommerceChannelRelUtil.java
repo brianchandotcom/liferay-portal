@@ -129,58 +129,6 @@ public class CommerceChannelRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce channel rels where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @return the matching commerce channel rels
-	 */
-	public static List<CommerceChannelRel> findByCommerceChannelId(
-		long commerceChannelId) {
-
-		return getPersistence().findByCommerceChannelId(commerceChannelId);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel rels where commerceChannelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param start the lower bound of the range of commerce channel rels
-	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
-	 * @return the range of matching commerce channel rels
-	 */
-	public static List<CommerceChannelRel> findByCommerceChannelId(
-		long commerceChannelId, int start, int end) {
-
-		return getPersistence().findByCommerceChannelId(
-			commerceChannelId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel rels where commerceChannelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param start the lower bound of the range of commerce channel rels
-	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel rels
-	 */
-	public static List<CommerceChannelRel> findByCommerceChannelId(
-		long commerceChannelId, int start, int end,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
-
-		return getPersistence().findByCommerceChannelId(
-			commerceChannelId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce channel rels where commerceChannelId = &#63;.
 	 *
 	 * <p>
@@ -253,60 +201,6 @@ public class CommerceChannelRelUtil {
 	 */
 	public static int countByCommerceChannelId(long commerceChannelId) {
 		return getPersistence().countByCommerceChannelId(commerceChannelId);
-	}
-
-	/**
-	 * Returns all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching commerce channel rels
-	 */
-	public static List<CommerceChannelRel> findByC_C(
-		long classNameId, long classPK) {
-
-		return getPersistence().findByC_C(classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of commerce channel rels
-	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
-	 * @return the range of matching commerce channel rels
-	 */
-	public static List<CommerceChannelRel> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByC_C(classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of commerce channel rels
-	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel rels
-	 */
-	public static List<CommerceChannelRel> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<CommerceChannelRel> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -405,21 +299,6 @@ public class CommerceChannelRelUtil {
 			NoSuchChannelRelException {
 
 		return getPersistence().findByC_C_C(
-			classNameId, classPK, commerceChannelId);
-	}
-
-	/**
-	 * Returns the commerce channel rel where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @return the matching commerce channel rel, or <code>null</code> if a matching commerce channel rel could not be found
-	 */
-	public static CommerceChannelRel fetchByC_C_C(
-		long classNameId, long classPK, long commerceChannelId) {
-
-		return getPersistence().fetchByC_C_C(
 			classNameId, classPK, commerceChannelId);
 	}
 
@@ -528,6 +407,127 @@ public class CommerceChannelRelUtil {
 		return getPersistence().fetchByPrimaryKey(commerceChannelRelId);
 	}
 
+	/**
+	 * Returns the commerce channel rel where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceChannelId the commerce channel ID
+	 * @return the matching commerce channel rel, or <code>null</code> if a matching commerce channel rel could not be found
+	 */
+	public static CommerceChannelRel fetchByC_C_C(
+		long classNameId, long classPK, long commerceChannelId) {
+
+		return getPersistence().fetchByC_C_C(
+			classNameId, classPK, commerceChannelId);
+	}
+
+	/**
+	 * Returns all the commerce channel rels where commerceChannelId = &#63;.
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @return the matching commerce channel rels
+	 */
+	public static List<CommerceChannelRel> findByCommerceChannelId(
+		long commerceChannelId) {
+
+		return getPersistence().findByCommerceChannelId(commerceChannelId);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel rels where commerceChannelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param start the lower bound of the range of commerce channel rels
+	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
+	 * @return the range of matching commerce channel rels
+	 */
+	public static List<CommerceChannelRel> findByCommerceChannelId(
+		long commerceChannelId, int start, int end) {
+
+		return getPersistence().findByCommerceChannelId(
+			commerceChannelId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel rels where commerceChannelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param start the lower bound of the range of commerce channel rels
+	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel rels
+	 */
+	public static List<CommerceChannelRel> findByCommerceChannelId(
+		long commerceChannelId, int start, int end,
+		OrderByComparator<CommerceChannelRel> orderByComparator) {
+
+		return getPersistence().findByCommerceChannelId(
+			commerceChannelId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching commerce channel rels
+	 */
+	public static List<CommerceChannelRel> findByC_C(
+		long classNameId, long classPK) {
+
+		return getPersistence().findByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of commerce channel rels
+	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
+	 * @return the range of matching commerce channel rels
+	 */
+	public static List<CommerceChannelRel> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of commerce channel rels
+	 * @param end the upper bound of the range of commerce channel rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel rels
+	 */
+	public static List<CommerceChannelRel> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<CommerceChannelRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
 	public static CommerceChannelRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -541,4 +541,4 @@ public class CommerceChannelRelUtil {
 	private static volatile CommerceChannelRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1579249513
+// LIFERAY-SERVICE-BUILDER-HASH:1102570655

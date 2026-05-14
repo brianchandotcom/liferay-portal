@@ -103,17 +103,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the mfa time based otp entry where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching mfa time based otp entry, or <code>null</code> if a matching mfa time based otp entry could not be found
-	 */
-	@Override
-	public MFATimeBasedOTPEntry fetchByUserId(long userId) {
-		return fetchByUserId(userId, true);
-	}
-
-	/**
 	 * Returns the mfa time based otp entry where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -433,4 +422,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1176737711
+// LIFERAY-SERVICE-BUILDER-HASH:-957206044

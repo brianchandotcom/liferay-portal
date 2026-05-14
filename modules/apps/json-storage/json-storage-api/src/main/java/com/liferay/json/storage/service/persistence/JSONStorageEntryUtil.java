@@ -125,60 +125,6 @@ public class JSONStorageEntryUtil {
 	}
 
 	/**
-	 * Returns all the json storage entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByCN_CPK(
-		long classNameId, long classPK) {
-
-		return getPersistence().findByCN_CPK(classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the json storage entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of json storage entries
-	 * @param end the upper bound of the range of json storage entries (not inclusive)
-	 * @return the range of matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByCN_CPK(
-		long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByCN_CPK(classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the json storage entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of json storage entries
-	 * @param end the upper bound of the range of json storage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByCN_CPK(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<JSONStorageEntry> orderByComparator) {
-
-		return getPersistence().findByCN_CPK(
-			classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the json storage entries where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
@@ -257,74 +203,6 @@ public class JSONStorageEntryUtil {
 	 */
 	public static int countByCN_CPK(long classNameId, long classPK) {
 		return getPersistence().countByCN_CPK(classNameId, classPK);
-	}
-
-	/**
-	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @return the matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByC_CN_I_T_VL(
-		long companyId, long classNameId, int index, int type, long valueLong) {
-
-		return getPersistence().findByC_CN_I_T_VL(
-			companyId, classNameId, index, type, valueLong);
-	}
-
-	/**
-	 * Returns a range of all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param start the lower bound of the range of json storage entries
-	 * @param end the upper bound of the range of json storage entries (not inclusive)
-	 * @return the range of matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByC_CN_I_T_VL(
-		long companyId, long classNameId, int index, int type, long valueLong,
-		int start, int end) {
-
-		return getPersistence().findByC_CN_I_T_VL(
-			companyId, classNameId, index, type, valueLong, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param index the index
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param start the lower bound of the range of json storage entries
-	 * @param end the upper bound of the range of json storage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByC_CN_I_T_VL(
-		long companyId, long classNameId, int index, int type, long valueLong,
-		int start, int end,
-		OrderByComparator<JSONStorageEntry> orderByComparator) {
-
-		return getPersistence().findByC_CN_I_T_VL(
-			companyId, classNameId, index, type, valueLong, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -429,75 +307,6 @@ public class JSONStorageEntryUtil {
 
 		return getPersistence().countByC_CN_I_T_VL(
 			companyId, classNameId, index, type, valueLong);
-	}
-
-	/**
-	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @return the matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByC_CN_K_T_VL(
-		long companyId, long classNameId, String key, int type,
-		long valueLong) {
-
-		return getPersistence().findByC_CN_K_T_VL(
-			companyId, classNameId, key, type, valueLong);
-	}
-
-	/**
-	 * Returns a range of all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param start the lower bound of the range of json storage entries
-	 * @param end the upper bound of the range of json storage entries (not inclusive)
-	 * @return the range of matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByC_CN_K_T_VL(
-		long companyId, long classNameId, String key, int type, long valueLong,
-		int start, int end) {
-
-		return getPersistence().findByC_CN_K_T_VL(
-			companyId, classNameId, key, type, valueLong, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param key the key
-	 * @param type the type
-	 * @param valueLong the value long
-	 * @param start the lower bound of the range of json storage entries
-	 * @param end the upper bound of the range of json storage entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching json storage entries
-	 */
-	public static List<JSONStorageEntry> findByC_CN_K_T_VL(
-		long companyId, long classNameId, String key, int type, long valueLong,
-		int start, int end,
-		OrderByComparator<JSONStorageEntry> orderByComparator) {
-
-		return getPersistence().findByC_CN_K_T_VL(
-			companyId, classNameId, key, type, valueLong, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -628,24 +437,6 @@ public class JSONStorageEntryUtil {
 	}
 
 	/**
-	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param parentJSONStorageEntryId the parent json storage entry ID
-	 * @param index the index
-	 * @param key the key
-	 * @return the matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
-	 */
-	public static JSONStorageEntry fetchByCN_CPK_P_I_K(
-		long classNameId, long classPK, long parentJSONStorageEntryId,
-		int index, String key) {
-
-		return getPersistence().fetchByCN_CPK_P_I_K(
-			classNameId, classPK, parentJSONStorageEntryId, index, key);
-	}
-
-	/**
 	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -757,6 +548,215 @@ public class JSONStorageEntryUtil {
 		return getPersistence().fetchByPrimaryKey(jsonStorageEntryId);
 	}
 
+	/**
+	 * Returns the json storage entry where classNameId = &#63; and classPK = &#63; and parentJSONStorageEntryId = &#63; and index = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param parentJSONStorageEntryId the parent json storage entry ID
+	 * @param index the index
+	 * @param key the key
+	 * @return the matching json storage entry, or <code>null</code> if a matching json storage entry could not be found
+	 */
+	public static JSONStorageEntry fetchByCN_CPK_P_I_K(
+		long classNameId, long classPK, long parentJSONStorageEntryId,
+		int index, String key) {
+
+		return getPersistence().fetchByCN_CPK_P_I_K(
+			classNameId, classPK, parentJSONStorageEntryId, index, key);
+	}
+
+	/**
+	 * Returns all the json storage entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByCN_CPK(
+		long classNameId, long classPK) {
+
+		return getPersistence().findByCN_CPK(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the json storage entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of json storage entries
+	 * @param end the upper bound of the range of json storage entries (not inclusive)
+	 * @return the range of matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByCN_CPK(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByCN_CPK(classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the json storage entries where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of json storage entries
+	 * @param end the upper bound of the range of json storage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByCN_CPK(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<JSONStorageEntry> orderByComparator) {
+
+		return getPersistence().findByCN_CPK(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param index the index
+	 * @param type the type
+	 * @param valueLong the value long
+	 * @return the matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByC_CN_I_T_VL(
+		long companyId, long classNameId, int index, int type, long valueLong) {
+
+		return getPersistence().findByC_CN_I_T_VL(
+			companyId, classNameId, index, type, valueLong);
+	}
+
+	/**
+	 * Returns a range of all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param index the index
+	 * @param type the type
+	 * @param valueLong the value long
+	 * @param start the lower bound of the range of json storage entries
+	 * @param end the upper bound of the range of json storage entries (not inclusive)
+	 * @return the range of matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByC_CN_I_T_VL(
+		long companyId, long classNameId, int index, int type, long valueLong,
+		int start, int end) {
+
+		return getPersistence().findByC_CN_I_T_VL(
+			companyId, classNameId, index, type, valueLong, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the json storage entries where companyId = &#63; and classNameId = &#63; and index = &#63; and type = &#63; and valueLong = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param index the index
+	 * @param type the type
+	 * @param valueLong the value long
+	 * @param start the lower bound of the range of json storage entries
+	 * @param end the upper bound of the range of json storage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByC_CN_I_T_VL(
+		long companyId, long classNameId, int index, int type, long valueLong,
+		int start, int end,
+		OrderByComparator<JSONStorageEntry> orderByComparator) {
+
+		return getPersistence().findByC_CN_I_T_VL(
+			companyId, classNameId, index, type, valueLong, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param type the type
+	 * @param valueLong the value long
+	 * @return the matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByC_CN_K_T_VL(
+		long companyId, long classNameId, String key, int type,
+		long valueLong) {
+
+		return getPersistence().findByC_CN_K_T_VL(
+			companyId, classNameId, key, type, valueLong);
+	}
+
+	/**
+	 * Returns a range of all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param type the type
+	 * @param valueLong the value long
+	 * @param start the lower bound of the range of json storage entries
+	 * @param end the upper bound of the range of json storage entries (not inclusive)
+	 * @return the range of matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByC_CN_K_T_VL(
+		long companyId, long classNameId, String key, int type, long valueLong,
+		int start, int end) {
+
+		return getPersistence().findByC_CN_K_T_VL(
+			companyId, classNameId, key, type, valueLong, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the json storage entries where companyId = &#63; and classNameId = &#63; and key = &#63; and type = &#63; and valueLong = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.json.storage.model.impl.JSONStorageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param key the key
+	 * @param type the type
+	 * @param valueLong the value long
+	 * @param start the lower bound of the range of json storage entries
+	 * @param end the upper bound of the range of json storage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching json storage entries
+	 */
+	public static List<JSONStorageEntry> findByC_CN_K_T_VL(
+		long companyId, long classNameId, String key, int type, long valueLong,
+		int start, int end,
+		OrderByComparator<JSONStorageEntry> orderByComparator) {
+
+		return getPersistence().findByC_CN_K_T_VL(
+			companyId, classNameId, key, type, valueLong, start, end,
+			orderByComparator);
+	}
+
 	public static JSONStorageEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -768,4 +768,4 @@ public class JSONStorageEntryUtil {
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1176553842
+// LIFERAY-SERVICE-BUILDER-HASH:717101204

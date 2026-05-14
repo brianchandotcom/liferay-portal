@@ -130,54 +130,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Returns all the document library file entry metadatas where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the document library file entry metadatas where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @return the range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63;.
 	 *
 	 * <p>
@@ -247,60 +199,6 @@ public class DLFileEntryMetadataUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @return the range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -384,57 +282,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Returns all the document library file entry metadatas where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @return the matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByFileEntryId(
-		long fileEntryId) {
-
-		return getPersistence().findByFileEntryId(fileEntryId);
-	}
-
-	/**
-	 * Returns a range of all the document library file entry metadatas where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @return the range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByFileEntryId(
-		long fileEntryId, int start, int end) {
-
-		return getPersistence().findByFileEntryId(fileEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entry metadatas where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByFileEntryId(
-		long fileEntryId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		return getPersistence().findByFileEntryId(
-			fileEntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the document library file entry metadatas where fileEntryId = &#63;.
 	 *
 	 * <p>
@@ -507,57 +354,6 @@ public class DLFileEntryMetadataUtil {
 	 */
 	public static int countByFileEntryId(long fileEntryId) {
 		return getPersistence().countByFileEntryId(fileEntryId);
-	}
-
-	/**
-	 * Returns all the document library file entry metadatas where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @return the matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByFileVersionId(
-		long fileVersionId) {
-
-		return getPersistence().findByFileVersionId(fileVersionId);
-	}
-
-	/**
-	 * Returns a range of all the document library file entry metadatas where fileVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @return the range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByFileVersionId(
-		long fileVersionId, int start, int end) {
-
-		return getPersistence().findByFileVersionId(fileVersionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entry metadatas where fileVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param start the lower bound of the range of document library file entry metadatas
-	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching document library file entry metadatas
-	 */
-	public static List<DLFileEntryMetadata> findByFileVersionId(
-		long fileVersionId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
-
-		return getPersistence().findByFileVersionId(
-			fileVersionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -652,19 +448,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param DDMStructureId the ddm structure ID
-	 * @param fileVersionId the file version ID
-	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	 */
-	public static DLFileEntryMetadata fetchByD_F(
-		long DDMStructureId, long fileVersionId) {
-
-		return getPersistence().fetchByD_F(DDMStructureId, fileVersionId);
-	}
-
-	/**
 	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param DDMStructureId the ddm structure ID
@@ -719,19 +502,6 @@ public class DLFileEntryMetadataUtil {
 			NoSuchFileEntryMetadataException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the document library file entry metadata where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	 */
-	public static DLFileEntryMetadata fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -833,6 +603,236 @@ public class DLFileEntryMetadataUtil {
 		return getPersistence().fetchByPrimaryKey(fileEntryMetadataId);
 	}
 
+	/**
+	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param DDMStructureId the ddm structure ID
+	 * @param fileVersionId the file version ID
+	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	public static DLFileEntryMetadata fetchByD_F(
+		long DDMStructureId, long fileVersionId) {
+
+		return getPersistence().fetchByD_F(DDMStructureId, fileVersionId);
+	}
+
+	/**
+	 * Returns the document library file entry metadata where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	 */
+	public static DLFileEntryMetadata fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the document library file entry metadatas where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry metadatas where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @return the range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @return the range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the document library file entry metadatas where fileEntryId = &#63;.
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @return the matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByFileEntryId(
+		long fileEntryId) {
+
+		return getPersistence().findByFileEntryId(fileEntryId);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry metadatas where fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @return the range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByFileEntryId(
+		long fileEntryId, int start, int end) {
+
+		return getPersistence().findByFileEntryId(fileEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByFileEntryId(
+		long fileEntryId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().findByFileEntryId(
+			fileEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the document library file entry metadatas where fileVersionId = &#63;.
+	 *
+	 * @param fileVersionId the file version ID
+	 * @return the matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByFileVersionId(
+		long fileVersionId) {
+
+		return getPersistence().findByFileVersionId(fileVersionId);
+	}
+
+	/**
+	 * Returns a range of all the document library file entry metadatas where fileVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileVersionId the file version ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @return the range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByFileVersionId(
+		long fileVersionId, int start, int end) {
+
+		return getPersistence().findByFileVersionId(fileVersionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file entry metadatas where fileVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileVersionId the file version ID
+	 * @param start the lower bound of the range of document library file entry metadatas
+	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file entry metadatas
+	 */
+	public static List<DLFileEntryMetadata> findByFileVersionId(
+		long fileVersionId, int start, int end,
+		OrderByComparator<DLFileEntryMetadata> orderByComparator) {
+
+		return getPersistence().findByFileVersionId(
+			fileVersionId, start, end, orderByComparator);
+	}
+
 	public static DLFileEntryMetadataPersistence getPersistence() {
 		return _persistence;
 	}
@@ -846,4 +846,4 @@ public class DLFileEntryMetadataUtil {
 	private static volatile DLFileEntryMetadataPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1704767743
+// LIFERAY-SERVICE-BUILDER-HASH:1690805

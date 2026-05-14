@@ -91,19 +91,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param columnToRename the column to rename
-	 * @return the matching rename finder column entry, or <code>null</code> if a matching rename finder column entry could not be found
-	 */
-	@Override
-	public RenameFinderColumnEntry fetchByColumnToRename(
-		String columnToRename) {
-
-		return fetchByColumnToRename(columnToRename, true);
-	}
-
-	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param columnToRename the column to rename
@@ -379,4 +366,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2028443138
+// LIFERAY-SERVICE-BUILDER-HASH:625393277

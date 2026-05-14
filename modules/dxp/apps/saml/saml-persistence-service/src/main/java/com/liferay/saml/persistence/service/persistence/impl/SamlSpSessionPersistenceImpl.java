@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -83,63 +82,10 @@ public class SamlSpSessionPersistenceImpl
 		_collectionPersistenceFinderBySamlPeerBindingId;
 
 	/**
-	 * Returns all the saml sp sessions where samlPeerBindingId = &#63;.
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @return the matching saml sp sessions
-	 */
-	@Override
-	public List<SamlSpSession> findBySamlPeerBindingId(long samlPeerBindingId) {
-		return findBySamlPeerBindingId(
-			samlPeerBindingId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the saml sp sessions where samlPeerBindingId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param start the lower bound of the range of saml sp sessions
-	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
-	 * @return the range of matching saml sp sessions
-	 */
-	@Override
-	public List<SamlSpSession> findBySamlPeerBindingId(
-		long samlPeerBindingId, int start, int end) {
-
-		return findBySamlPeerBindingId(samlPeerBindingId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the saml sp sessions where samlPeerBindingId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param samlPeerBindingId the saml peer binding ID
-	 * @param start the lower bound of the range of saml sp sessions
-	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saml sp sessions
-	 */
-	@Override
-	public List<SamlSpSession> findBySamlPeerBindingId(
-		long samlPeerBindingId, int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator) {
-
-		return findBySamlPeerBindingId(
-			samlPeerBindingId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the saml sp sessions where samlPeerBindingId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param samlPeerBindingId the saml peer binding ID
@@ -259,17 +205,6 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param jSessionId the j session ID
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	@Override
-	public SamlSpSession fetchByJSessionId(String jSessionId) {
-		return fetchByJSessionId(jSessionId, true);
-	}
-
-	/**
 	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param jSessionId the j session ID
@@ -345,17 +280,6 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlSpSessionKey the saml sp session key
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	@Override
-	public SamlSpSession fetchBySamlSpSessionKey(String samlSpSessionKey) {
-		return fetchBySamlSpSessionKey(samlSpSessionKey, true);
-	}
-
-	/**
 	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlSpSessionKey the saml sp session key
@@ -401,67 +325,10 @@ public class SamlSpSessionPersistenceImpl
 		_collectionPersistenceFinderByC_SI;
 
 	/**
-	 * Returns all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @return the matching saml sp sessions
-	 */
-	@Override
-	public List<SamlSpSession> findByC_SI(long companyId, String sessionIndex) {
-		return findByC_SI(
-			companyId, sessionIndex, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param start the lower bound of the range of saml sp sessions
-	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
-	 * @return the range of matching saml sp sessions
-	 */
-	@Override
-	public List<SamlSpSession> findByC_SI(
-		long companyId, String sessionIndex, int start, int end) {
-
-		return findByC_SI(companyId, sessionIndex, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sessionIndex the session index
-	 * @param start the lower bound of the range of saml sp sessions
-	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saml sp sessions
-	 */
-	@Override
-	public List<SamlSpSession> findByC_SI(
-		long companyId, String sessionIndex, int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator) {
-
-		return findByC_SI(
-			companyId, sessionIndex, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the saml sp sessions where companyId = &#63; and sessionIndex = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -915,4 +782,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:484406860
+// LIFERAY-SERVICE-BUILDER-HASH:-1139821452

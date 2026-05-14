@@ -33,48 +33,6 @@ public interface CommerceOrderPaymentPersistence
 	 */
 
 	/**
-	 * Returns all the commerce order payments where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @return the matching commerce order payments
-	 */
-	public java.util.List<CommerceOrderPayment> findByCommerceOrderId(
-		long commerceOrderId);
-
-	/**
-	 * Returns a range of all the commerce order payments where commerceOrderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderPaymentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param start the lower bound of the range of commerce order payments
-	 * @param end the upper bound of the range of commerce order payments (not inclusive)
-	 * @return the range of matching commerce order payments
-	 */
-	public java.util.List<CommerceOrderPayment> findByCommerceOrderId(
-		long commerceOrderId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce order payments where commerceOrderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderPaymentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param start the lower bound of the range of commerce order payments
-	 * @param end the upper bound of the range of commerce order payments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order payments
-	 */
-	public java.util.List<CommerceOrderPayment> findByCommerceOrderId(
-		long commerceOrderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderPayment>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce order payments where commerceOrderId = &#63;.
 	 *
 	 * <p>
@@ -174,5 +132,60 @@ public interface CommerceOrderPaymentPersistence
 	 */
 	public CommerceOrderPayment fetchByPrimaryKey(long commerceOrderPaymentId);
 
+	/**
+	 * Returns all the commerce order payments where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @return the matching commerce order payments
+	 */
+	public default java.util.List<CommerceOrderPayment> findByCommerceOrderId(
+		long commerceOrderId) {
+
+		return findByCommerceOrderId(
+			commerceOrderId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce order payments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderPaymentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order payments
+	 * @param end the upper bound of the range of commerce order payments (not inclusive)
+	 * @return the range of matching commerce order payments
+	 */
+	public default java.util.List<CommerceOrderPayment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end) {
+
+		return findByCommerceOrderId(commerceOrderId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order payments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderPaymentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order payments
+	 * @param end the upper bound of the range of commerce order payments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order payments
+	 */
+	public default java.util.List<CommerceOrderPayment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceOrderPayment>
+			orderByComparator) {
+
+		return findByCommerceOrderId(
+			commerceOrderId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1012822310
+// LIFERAY-SERVICE-BUILDER-HASH:1675631387

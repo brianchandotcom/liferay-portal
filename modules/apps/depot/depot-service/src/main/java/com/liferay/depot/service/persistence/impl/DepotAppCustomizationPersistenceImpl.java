@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -85,63 +84,10 @@ public class DepotAppCustomizationPersistenceImpl
 		_collectionPersistenceFinderByDepotEntryId;
 
 	/**
-	 * Returns all the depot app customizations where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @return the matching depot app customizations
-	 */
-	@Override
-	public List<DepotAppCustomization> findByDepotEntryId(long depotEntryId) {
-		return findByDepotEntryId(
-			depotEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot app customizations where depotEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param start the lower bound of the range of depot app customizations
-	 * @param end the upper bound of the range of depot app customizations (not inclusive)
-	 * @return the range of matching depot app customizations
-	 */
-	@Override
-	public List<DepotAppCustomization> findByDepotEntryId(
-		long depotEntryId, int start, int end) {
-
-		return findByDepotEntryId(depotEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot app customizations where depotEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param start the lower bound of the range of depot app customizations
-	 * @param end the upper bound of the range of depot app customizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot app customizations
-	 */
-	@Override
-	public List<DepotAppCustomization> findByDepotEntryId(
-		long depotEntryId, int start, int end,
-		OrderByComparator<DepotAppCustomization> orderByComparator) {
-
-		return findByDepotEntryId(
-			depotEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot app customizations where depotEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -262,20 +208,6 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param enabled the enabled
-	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
-	 */
-	@Override
-	public DepotAppCustomization fetchByD_E(
-		long depotEntryId, boolean enabled) {
-
-		return fetchByD_E(depotEntryId, enabled, true);
-	}
-
-	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -353,20 +285,6 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 
 		return depotAppCustomization;
-	}
-
-	/**
-	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param portletId the portlet ID
-	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
-	 */
-	@Override
-	public DepotAppCustomization fetchByD_P(
-		long depotEntryId, String portletId) {
-
-		return fetchByD_P(depotEntryId, portletId, true);
 	}
 
 	/**
@@ -803,4 +721,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1524390716
+// LIFERAY-SERVICE-BUILDER-HASH:-391202167

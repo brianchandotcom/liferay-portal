@@ -125,55 +125,6 @@ public class ExpandoRowUtil {
 	}
 
 	/**
-	 * Returns all the expando rows where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @return the matching expando rows
-	 */
-	public static List<ExpandoRow> findByTableId(long tableId) {
-		return getPersistence().findByTableId(tableId);
-	}
-
-	/**
-	 * Returns a range of all the expando rows where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @return the range of matching expando rows
-	 */
-	public static List<ExpandoRow> findByTableId(
-		long tableId, int start, int end) {
-
-		return getPersistence().findByTableId(tableId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando rows where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando rows
-	 */
-	public static List<ExpandoRow> findByTableId(
-		long tableId, int start, int end,
-		OrderByComparator<ExpandoRow> orderByComparator) {
-
-		return getPersistence().findByTableId(
-			tableId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando rows where tableId = &#63;.
 	 *
 	 * <p>
@@ -242,55 +193,6 @@ public class ExpandoRowUtil {
 	 */
 	public static int countByTableId(long tableId) {
 		return getPersistence().countByTableId(tableId);
-	}
-
-	/**
-	 * Returns all the expando rows where classPK = &#63;.
-	 *
-	 * @param classPK the class pk
-	 * @return the matching expando rows
-	 */
-	public static List<ExpandoRow> findByClassPK(long classPK) {
-		return getPersistence().findByClassPK(classPK);
-	}
-
-	/**
-	 * Returns a range of all the expando rows where classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @return the range of matching expando rows
-	 */
-	public static List<ExpandoRow> findByClassPK(
-		long classPK, int start, int end) {
-
-		return getPersistence().findByClassPK(classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando rows where classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando rows
-	 */
-	public static List<ExpandoRow> findByClassPK(
-		long classPK, int start, int end,
-		OrderByComparator<ExpandoRow> orderByComparator) {
-
-		return getPersistence().findByClassPK(
-			classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -376,17 +278,6 @@ public class ExpandoRowUtil {
 		throws com.liferay.expando.kernel.exception.NoSuchRowException {
 
 		return getPersistence().findByT_C(tableId, classPK);
-	}
-
-	/**
-	 * Returns the expando row where tableId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @return the matching expando row, or <code>null</code> if a matching expando row could not be found
-	 */
-	public static ExpandoRow fetchByT_C(long tableId, long classPK) {
-		return getPersistence().fetchByT_C(tableId, classPK);
 	}
 
 	/**
@@ -477,6 +368,115 @@ public class ExpandoRowUtil {
 		return getPersistence().fetchByPrimaryKey(rowId);
 	}
 
+	/**
+	 * Returns the expando row where tableId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param tableId the table ID
+	 * @param classPK the class pk
+	 * @return the matching expando row, or <code>null</code> if a matching expando row could not be found
+	 */
+	public static ExpandoRow fetchByT_C(long tableId, long classPK) {
+		return getPersistence().fetchByT_C(tableId, classPK);
+	}
+
+	/**
+	 * Returns all the expando rows where tableId = &#63;.
+	 *
+	 * @param tableId the table ID
+	 * @return the matching expando rows
+	 */
+	public static List<ExpandoRow> findByTableId(long tableId) {
+		return getPersistence().findByTableId(tableId);
+	}
+
+	/**
+	 * Returns a range of all the expando rows where tableId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param start the lower bound of the range of expando rows
+	 * @param end the upper bound of the range of expando rows (not inclusive)
+	 * @return the range of matching expando rows
+	 */
+	public static List<ExpandoRow> findByTableId(
+		long tableId, int start, int end) {
+
+		return getPersistence().findByTableId(tableId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the expando rows where tableId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param start the lower bound of the range of expando rows
+	 * @param end the upper bound of the range of expando rows (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching expando rows
+	 */
+	public static List<ExpandoRow> findByTableId(
+		long tableId, int start, int end,
+		OrderByComparator<ExpandoRow> orderByComparator) {
+
+		return getPersistence().findByTableId(
+			tableId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the expando rows where classPK = &#63;.
+	 *
+	 * @param classPK the class pk
+	 * @return the matching expando rows
+	 */
+	public static List<ExpandoRow> findByClassPK(long classPK) {
+		return getPersistence().findByClassPK(classPK);
+	}
+
+	/**
+	 * Returns a range of all the expando rows where classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of expando rows
+	 * @param end the upper bound of the range of expando rows (not inclusive)
+	 * @return the range of matching expando rows
+	 */
+	public static List<ExpandoRow> findByClassPK(
+		long classPK, int start, int end) {
+
+		return getPersistence().findByClassPK(classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the expando rows where classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of expando rows
+	 * @param end the upper bound of the range of expando rows (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching expando rows
+	 */
+	public static List<ExpandoRow> findByClassPK(
+		long classPK, int start, int end,
+		OrderByComparator<ExpandoRow> orderByComparator) {
+
+		return getPersistence().findByClassPK(
+			classPK, start, end, orderByComparator);
+	}
+
 	public static ExpandoRowPersistence getPersistence() {
 		return _persistence;
 	}
@@ -488,4 +488,4 @@ public class ExpandoRowUtil {
 	private static volatile ExpandoRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:286583271
+// LIFERAY-SERVICE-BUILDER-HASH:1804808853

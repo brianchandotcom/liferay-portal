@@ -147,15 +147,6 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 		throws NoSuchAkismetEntryException;
 
 	/**
-	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
-	 */
-	public AkismetEntry fetchByC_C(long classNameId, long classPK);
-
-	/**
 	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -223,5 +214,16 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	 */
 	public AkismetEntry fetchByPrimaryKey(long akismetEntryId);
 
+	/**
+	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
+	 */
+	public default AkismetEntry fetchByC_C(long classNameId, long classPK) {
+		return fetchByC_C(classNameId, classPK, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2109373459
+// LIFERAY-SERVICE-BUILDER-HASH:-162883149

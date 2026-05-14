@@ -256,18 +256,6 @@ public class AkismetEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
-	 */
-	@Override
-	public AkismetEntry fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
-	}
-
-	/**
 	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -619,4 +607,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1923700522
+// LIFERAY-SERVICE-BUILDER-HASH:-1391246213

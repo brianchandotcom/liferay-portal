@@ -35,48 +35,6 @@ public interface SegmentsEntryRolePersistence
 	 */
 
 	/**
-	 * Returns all the segments entry roles where segmentsEntryId = &#63;.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @return the matching segments entry roles
-	 */
-	public java.util.List<SegmentsEntryRole> findBySegmentsEntryId(
-		long segmentsEntryId);
-
-	/**
-	 * Returns a range of all the segments entry roles where segmentsEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param start the lower bound of the range of segments entry roles
-	 * @param end the upper bound of the range of segments entry roles (not inclusive)
-	 * @return the range of matching segments entry roles
-	 */
-	public java.util.List<SegmentsEntryRole> findBySegmentsEntryId(
-		long segmentsEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the segments entry roles where segmentsEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param start the lower bound of the range of segments entry roles
-	 * @param end the upper bound of the range of segments entry roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments entry roles
-	 */
-	public java.util.List<SegmentsEntryRole> findBySegmentsEntryId(
-		long segmentsEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRole>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the segments entry roles where segmentsEntryId = &#63;.
 	 *
 	 * <p>
@@ -136,47 +94,6 @@ public interface SegmentsEntryRolePersistence
 	 * @return the number of matching segments entry roles
 	 */
 	public int countBySegmentsEntryId(long segmentsEntryId);
-
-	/**
-	 * Returns all the segments entry roles where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @return the matching segments entry roles
-	 */
-	public java.util.List<SegmentsEntryRole> findByRoleId(long roleId);
-
-	/**
-	 * Returns a range of all the segments entry roles where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of segments entry roles
-	 * @param end the upper bound of the range of segments entry roles (not inclusive)
-	 * @return the range of matching segments entry roles
-	 */
-	public java.util.List<SegmentsEntryRole> findByRoleId(
-		long roleId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the segments entry roles where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of segments entry roles
-	 * @param end the upper bound of the range of segments entry roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching segments entry roles
-	 */
-	public java.util.List<SegmentsEntryRole> findByRoleId(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRole>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments entry roles where roleId = &#63;.
@@ -251,15 +168,6 @@ public interface SegmentsEntryRolePersistence
 		throws NoSuchEntryRoleException;
 
 	/**
-	 * Returns the segments entry role where segmentsEntryId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param segmentsEntryId the segments entry ID
-	 * @param roleId the role ID
-	 * @return the matching segments entry role, or <code>null</code> if a matching segments entry role could not be found
-	 */
-	public SegmentsEntryRole fetchByS_R(long segmentsEntryId, long roleId);
-
-	/**
 	 * Returns the segments entry role where segmentsEntryId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param segmentsEntryId the segments entry ID
@@ -327,5 +235,124 @@ public interface SegmentsEntryRolePersistence
 	 */
 	public SegmentsEntryRole fetchByPrimaryKey(long segmentsEntryRoleId);
 
+	/**
+	 * Returns the segments entry role where segmentsEntryId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param roleId the role ID
+	 * @return the matching segments entry role, or <code>null</code> if a matching segments entry role could not be found
+	 */
+	public default SegmentsEntryRole fetchByS_R(
+		long segmentsEntryId, long roleId) {
+
+		return fetchByS_R(segmentsEntryId, roleId, true);
+	}
+
+	/**
+	 * Returns all the segments entry roles where segmentsEntryId = &#63;.
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @return the matching segments entry roles
+	 */
+	public default java.util.List<SegmentsEntryRole> findBySegmentsEntryId(
+		long segmentsEntryId) {
+
+		return findBySegmentsEntryId(
+			segmentsEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the segments entry roles where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entry roles
+	 * @param end the upper bound of the range of segments entry roles (not inclusive)
+	 * @return the range of matching segments entry roles
+	 */
+	public default java.util.List<SegmentsEntryRole> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end) {
+
+		return findBySegmentsEntryId(segmentsEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entry roles where segmentsEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param segmentsEntryId the segments entry ID
+	 * @param start the lower bound of the range of segments entry roles
+	 * @param end the upper bound of the range of segments entry roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entry roles
+	 */
+	public default java.util.List<SegmentsEntryRole> findBySegmentsEntryId(
+		long segmentsEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRole>
+			orderByComparator) {
+
+		return findBySegmentsEntryId(
+			segmentsEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the segments entry roles where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @return the matching segments entry roles
+	 */
+	public default java.util.List<SegmentsEntryRole> findByRoleId(long roleId) {
+		return findByRoleId(
+			roleId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the segments entry roles where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of segments entry roles
+	 * @param end the upper bound of the range of segments entry roles (not inclusive)
+	 * @return the range of matching segments entry roles
+	 */
+	public default java.util.List<SegmentsEntryRole> findByRoleId(
+		long roleId, int start, int end) {
+
+		return findByRoleId(roleId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments entry roles where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of segments entry roles
+	 * @param end the upper bound of the range of segments entry roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching segments entry roles
+	 */
+	public default java.util.List<SegmentsEntryRole> findByRoleId(
+		long roleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRole>
+			orderByComparator) {
+
+		return findByRoleId(roleId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1245223812
+// LIFERAY-SERVICE-BUILDER-HASH:-625666266

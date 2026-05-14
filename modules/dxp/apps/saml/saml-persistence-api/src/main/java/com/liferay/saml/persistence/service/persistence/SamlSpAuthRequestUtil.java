@@ -269,20 +269,6 @@ public class SamlSpAuthRequestUtil {
 	}
 
 	/**
-	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpEntityId the saml idp entity ID
-	 * @param samlSpAuthRequestKey the saml sp auth request key
-	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
-	 */
-	public static SamlSpAuthRequest fetchBySIEI_SSARK(
-		String samlIdpEntityId, String samlSpAuthRequestKey) {
-
-		return getPersistence().fetchBySIEI_SSARK(
-			samlIdpEntityId, samlSpAuthRequestKey);
-	}
-
-	/**
 	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
@@ -384,6 +370,20 @@ public class SamlSpAuthRequestUtil {
 		return getPersistence().fetchByPrimaryKey(samlSpAuthnRequestId);
 	}
 
+	/**
+	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @param samlSpAuthRequestKey the saml sp auth request key
+	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
+	 */
+	public static SamlSpAuthRequest fetchBySIEI_SSARK(
+		String samlIdpEntityId, String samlSpAuthRequestKey) {
+
+		return getPersistence().fetchBySIEI_SSARK(
+			samlIdpEntityId, samlSpAuthRequestKey);
+	}
+
 	public static SamlSpAuthRequestPersistence getPersistence() {
 		return _persistence;
 	}
@@ -397,4 +397,4 @@ public class SamlSpAuthRequestUtil {
 	private static volatile SamlSpAuthRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:447722791
+// LIFERAY-SERVICE-BUILDER-HASH:-145920249

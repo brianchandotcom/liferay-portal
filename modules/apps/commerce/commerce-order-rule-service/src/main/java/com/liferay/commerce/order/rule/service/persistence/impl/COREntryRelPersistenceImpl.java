@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -80,63 +79,10 @@ public class COREntryRelPersistenceImpl
 		_collectionPersistenceFinderByCOREntryId;
 
 	/**
-	 * Returns all the cor entry rels where COREntryId = &#63;.
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @return the matching cor entry rels
-	 */
-	@Override
-	public List<COREntryRel> findByCOREntryId(long COREntryId) {
-		return findByCOREntryId(
-			COREntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cor entry rels where COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @return the range of matching cor entry rels
-	 */
-	@Override
-	public List<COREntryRel> findByCOREntryId(
-		long COREntryId, int start, int end) {
-
-		return findByCOREntryId(COREntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cor entry rels where COREntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cor entry rels
-	 */
-	@Override
-	public List<COREntryRel> findByCOREntryId(
-		long COREntryId, int start, int end,
-		OrderByComparator<COREntryRel> orderByComparator) {
-
-		return findByCOREntryId(
-			COREntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cor entry rels where COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param COREntryId the cor entry ID
@@ -224,67 +170,10 @@ public class COREntryRelPersistenceImpl
 		_collectionPersistenceFinderByC_C;
 
 	/**
-	 * Returns all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @return the matching cor entry rels
-	 */
-	@Override
-	public List<COREntryRel> findByC_C(long classNameId, long COREntryId) {
-		return findByC_C(
-			classNameId, COREntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @return the range of matching cor entry rels
-	 */
-	@Override
-	public List<COREntryRel> findByC_C(
-		long classNameId, long COREntryId, int start, int end) {
-
-		return findByC_C(classNameId, COREntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cor entry rels
-	 */
-	@Override
-	public List<COREntryRel> findByC_C(
-		long classNameId, long COREntryId, int start, int end,
-		OrderByComparator<COREntryRel> orderByComparator) {
-
-		return findByC_C(
-			classNameId, COREntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
@@ -411,21 +300,6 @@ public class COREntryRelPersistenceImpl
 		}
 
 		return corEntryRel;
-	}
-
-	/**
-	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param COREntryId the cor entry ID
-	 * @return the matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
-	 */
-	@Override
-	public COREntryRel fetchByC_C_C(
-		long classNameId, long classPK, long COREntryId) {
-
-		return fetchByC_C_C(classNameId, classPK, COREntryId, true);
 	}
 
 	/**
@@ -817,4 +691,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:822302768
+// LIFERAY-SERVICE-BUILDER-HASH:2085641465

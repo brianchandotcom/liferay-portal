@@ -138,16 +138,6 @@ public class CTScoreUtil {
 	}
 
 	/**
-	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
-	 */
-	public static CTScore fetchByCtCollectionId(long ctCollectionId) {
-		return getPersistence().fetchByCtCollectionId(ctCollectionId);
-	}
-
-	/**
 	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -233,6 +223,16 @@ public class CTScoreUtil {
 		return getPersistence().fetchByPrimaryKey(ctScoreId);
 	}
 
+	/**
+	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
+	 */
+	public static CTScore fetchByCtCollectionId(long ctCollectionId) {
+		return getPersistence().fetchByCtCollectionId(ctCollectionId);
+	}
+
 	public static CTScorePersistence getPersistence() {
 		return _persistence;
 	}
@@ -244,4 +244,4 @@ public class CTScoreUtil {
 	private static volatile CTScorePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:514249349
+// LIFERAY-SERVICE-BUILDER-HASH:957482759

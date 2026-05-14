@@ -125,55 +125,6 @@ public class PluginSettingUtil {
 	}
 
 	/**
-	 * Returns all the plugin settings where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching plugin settings
-	 */
-	public static List<PluginSetting> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the plugin settings where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PluginSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of plugin settings
-	 * @param end the upper bound of the range of plugin settings (not inclusive)
-	 * @return the range of matching plugin settings
-	 */
-	public static List<PluginSetting> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the plugin settings where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PluginSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of plugin settings
-	 * @param end the upper bound of the range of plugin settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching plugin settings
-	 */
-	public static List<PluginSetting> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<PluginSetting> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the plugin settings where companyId = &#63;.
 	 *
 	 * <p>
@@ -261,20 +212,6 @@ public class PluginSettingUtil {
 			NoSuchPluginSettingException {
 
 		return getPersistence().findByC_P_P(companyId, pluginId, pluginType);
-	}
-
-	/**
-	 * Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param pluginId the plugin ID
-	 * @param pluginType the plugin type
-	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
-	 */
-	public static PluginSetting fetchByC_P_P(
-		long companyId, String pluginId, String pluginType) {
-
-		return getPersistence().fetchByC_P_P(companyId, pluginId, pluginType);
 	}
 
 	/**
@@ -376,6 +313,69 @@ public class PluginSettingUtil {
 		return getPersistence().fetchByPrimaryKey(pluginSettingId);
 	}
 
+	/**
+	 * Returns the plugin setting where companyId = &#63; and pluginId = &#63; and pluginType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param pluginId the plugin ID
+	 * @param pluginType the plugin type
+	 * @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
+	 */
+	public static PluginSetting fetchByC_P_P(
+		long companyId, String pluginId, String pluginType) {
+
+		return getPersistence().fetchByC_P_P(companyId, pluginId, pluginType);
+	}
+
+	/**
+	 * Returns all the plugin settings where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching plugin settings
+	 */
+	public static List<PluginSetting> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the plugin settings where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PluginSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of plugin settings
+	 * @param end the upper bound of the range of plugin settings (not inclusive)
+	 * @return the range of matching plugin settings
+	 */
+	public static List<PluginSetting> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the plugin settings where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PluginSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of plugin settings
+	 * @param end the upper bound of the range of plugin settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching plugin settings
+	 */
+	public static List<PluginSetting> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<PluginSetting> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
 	public static PluginSettingPersistence getPersistence() {
 		return _persistence;
 	}
@@ -387,4 +387,4 @@ public class PluginSettingUtil {
 	private static volatile PluginSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-885837821
+// LIFERAY-SERVICE-BUILDER-HASH:1415617005

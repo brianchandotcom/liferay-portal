@@ -44,15 +44,6 @@ public interface RedundantIndexEntryPersistence
 		throws NoSuchRedundantIndexEntryException;
 
 	/**
-	 * Returns the redundant index entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching redundant index entry, or <code>null</code> if a matching redundant index entry could not be found
-	 */
-	public RedundantIndexEntry fetchByC_N(long companyId, String name);
-
-	/**
 	 * Returns the redundant index entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -121,5 +112,16 @@ public interface RedundantIndexEntryPersistence
 	 */
 	public RedundantIndexEntry fetchByPrimaryKey(long redundantIndexEntryId);
 
+	/**
+	 * Returns the redundant index entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching redundant index entry, or <code>null</code> if a matching redundant index entry could not be found
+	 */
+	public default RedundantIndexEntry fetchByC_N(long companyId, String name) {
+		return fetchByC_N(companyId, name, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-817513391
+// LIFERAY-SERVICE-BUILDER-HASH:-191665255

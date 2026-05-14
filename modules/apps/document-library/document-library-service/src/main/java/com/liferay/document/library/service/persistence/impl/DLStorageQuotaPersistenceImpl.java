@@ -100,17 +100,6 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 	/**
-	 * Returns the dl storage quota where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching dl storage quota, or <code>null</code> if a matching dl storage quota could not be found
-	 */
-	@Override
-	public DLStorageQuota fetchByCompanyId(long companyId) {
-		return fetchByCompanyId(companyId, true);
-	}
-
-	/**
 	 * Returns the dl storage quota where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -399,4 +388,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-600788304
+// LIFERAY-SERVICE-BUILDER-HASH:1225082035

@@ -32,48 +32,6 @@ public interface PortalPreferenceValuePersistence
 	 */
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @return the matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByPortalPreferencesId(
-		long portalPreferencesId);
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByPortalPreferencesId(
-		long portalPreferencesId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByPortalPreferencesId(
-		long portalPreferencesId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;.
 	 *
 	 * <p>
@@ -120,52 +78,6 @@ public interface PortalPreferenceValuePersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesIds the portal preferences IDs
-	 * @return the matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByPortalPreferencesId(
-		long[] portalPreferencesIds);
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesIds the portal preferences IDs
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByPortalPreferencesId(
-		long[] portalPreferencesIds, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesIds the portal preferences IDs
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByPortalPreferencesId(
-		long[] portalPreferencesIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -207,51 +119,6 @@ public interface PortalPreferenceValuePersistence
 	 * @return the number of matching portal preference values
 	 */
 	public int countByPortalPreferencesId(long[] portalPreferencesIds);
-
-	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @return the matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_N(
-		long portalPreferencesId, String namespace);
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_N(
-		long portalPreferencesId, String namespace, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_N(
-		long portalPreferencesId, String namespace, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
@@ -318,56 +185,6 @@ public interface PortalPreferenceValuePersistence
 	 * @return the number of matching portal preference values
 	 */
 	public int countByP_N(long portalPreferencesId, String namespace);
-
-	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @return the matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_K_N(
-		long portalPreferencesId, String key, String namespace);
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_K_N(
-		long portalPreferencesId, String key, String namespace, int start,
-		int end);
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_K_N(
-		long portalPreferencesId, String key, String namespace, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
@@ -458,18 +275,6 @@ public interface PortalPreferenceValuePersistence
 		throws NoSuchPreferenceValueException;
 
 	/**
-	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param index the index
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @return the matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
-	 */
-	public PortalPreferenceValue fetchByP_I_K_N(
-		long portalPreferencesId, int index, String key, String namespace);
-
-	/**
 	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -507,60 +312,6 @@ public interface PortalPreferenceValuePersistence
 	 */
 	public int countByP_I_K_N(
 		long portalPreferencesId, int index, String key, String namespace);
-
-	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @return the matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_K_N_SV(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue);
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_K_N_SV(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	public java.util.List<PortalPreferenceValue> findByP_K_N_SV(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
@@ -685,5 +436,331 @@ public interface PortalPreferenceValuePersistence
 	public PortalPreferenceValue fetchByPrimaryKey(
 		long portalPreferenceValueId);
 
+	/**
+	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param index the index
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @return the matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
+	 */
+	public default PortalPreferenceValue fetchByP_I_K_N(
+		long portalPreferencesId, int index, String key, String namespace) {
+
+		return fetchByP_I_K_N(portalPreferencesId, index, key, namespace, true);
+	}
+
+	/**
+	 * Returns all the portal preference values where portalPreferencesId = &#63;.
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @return the matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue>
+		findByPortalPreferencesId(long portalPreferencesId) {
+
+		return findByPortalPreferencesId(
+			portalPreferencesId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the portal preference values where portalPreferencesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @return the range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue>
+		findByPortalPreferencesId(
+			long portalPreferencesId, int start, int end) {
+
+		return findByPortalPreferencesId(
+			portalPreferencesId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue>
+		findByPortalPreferencesId(
+			long portalPreferencesId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<PortalPreferenceValue> orderByComparator) {
+
+		return findByPortalPreferencesId(
+			portalPreferencesId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the portal preference values where portalPreferencesId = any &#63;.
+	 *
+	 * @param portalPreferencesIds the portal preferences IDs
+	 * @return the matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue>
+		findByPortalPreferencesId(long[] portalPreferencesIds) {
+
+		return findByPortalPreferencesId(
+			portalPreferencesIds,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the portal preference values where portalPreferencesId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesIds the portal preferences IDs
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @return the range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue>
+		findByPortalPreferencesId(
+			long[] portalPreferencesIds, int start, int end) {
+
+		return findByPortalPreferencesId(
+			portalPreferencesIds, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the portal preference values where portalPreferencesId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesIds the portal preferences IDs
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue>
+		findByPortalPreferencesId(
+			long[] portalPreferencesIds, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<PortalPreferenceValue> orderByComparator) {
+
+		return findByPortalPreferencesId(
+			portalPreferencesIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param namespace the namespace
+	 * @return the matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_N(
+		long portalPreferencesId, String namespace) {
+
+		return findByP_N(
+			portalPreferencesId, namespace,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param namespace the namespace
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @return the range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_N(
+		long portalPreferencesId, String namespace, int start, int end) {
+
+		return findByP_N(
+			portalPreferencesId, namespace, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param namespace the namespace
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_N(
+		long portalPreferencesId, String namespace, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
+			orderByComparator) {
+
+		return findByP_N(
+			portalPreferencesId, namespace, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @return the matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_K_N(
+		long portalPreferencesId, String key, String namespace) {
+
+		return findByP_K_N(
+			portalPreferencesId, key, namespace,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @return the range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_K_N(
+		long portalPreferencesId, String key, String namespace, int start,
+		int end) {
+
+		return findByP_K_N(
+			portalPreferencesId, key, namespace, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_K_N(
+		long portalPreferencesId, String key, String namespace, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
+			orderByComparator) {
+
+		return findByP_K_N(
+			portalPreferencesId, key, namespace, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @param smallValue the small value
+	 * @return the matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_K_N_SV(
+		long portalPreferencesId, String key, String namespace,
+		String smallValue) {
+
+		return findByP_K_N_SV(
+			portalPreferencesId, key, namespace, smallValue,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @param smallValue the small value
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @return the range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_K_N_SV(
+		long portalPreferencesId, String key, String namespace,
+		String smallValue, int start, int end) {
+
+		return findByP_K_N_SV(
+			portalPreferencesId, key, namespace, smallValue, start, end, null,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferenceValueModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portalPreferencesId the portal preferences ID
+	 * @param key the key
+	 * @param namespace the namespace
+	 * @param smallValue the small value
+	 * @param start the lower bound of the range of portal preference values
+	 * @param end the upper bound of the range of portal preference values (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching portal preference values
+	 */
+	public default java.util.List<PortalPreferenceValue> findByP_K_N_SV(
+		long portalPreferencesId, String key, String namespace,
+		String smallValue, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PortalPreferenceValue>
+			orderByComparator) {
+
+		return findByP_K_N_SV(
+			portalPreferencesId, key, namespace, smallValue, start, end,
+			orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:271753639
+// LIFERAY-SERVICE-BUILDER-HASH:380288160

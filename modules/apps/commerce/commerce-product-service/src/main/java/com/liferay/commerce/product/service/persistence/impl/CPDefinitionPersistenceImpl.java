@@ -93,55 +93,6 @@ public class CPDefinitionPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the cp definitions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definitions where uuid = &#63;.
 	 *
 	 * <p>
@@ -261,18 +212,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the cp definition where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -319,62 +258,6 @@ public class CPDefinitionPersistenceImpl
 
 	private CollectionPersistenceFinder<CPDefinition>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the cp definitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp definitions where uuid = &#63; and companyId = &#63;.
@@ -475,56 +358,6 @@ public class CPDefinitionPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the cp definitions where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definitions where groupId = &#63;.
 	 *
 	 * <p>
@@ -590,37 +423,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the cp definitions that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching cp definitions that the user has permission to view
-	 */
-	@Override
-	public List<CPDefinition> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions that the user has permission to view
-	 */
-	@Override
-	public List<CPDefinition> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definitions that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -680,58 +482,6 @@ public class CPDefinitionPersistenceImpl
 
 	private CollectionPersistenceFinder<CPDefinition>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the cp definitions where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp definitions where companyId = &#63;.
@@ -825,59 +575,6 @@ public class CPDefinitionPersistenceImpl
 		_collectionPersistenceFinderByCProductId;
 
 	/**
-	 * Returns all the cp definitions where CProductId = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCProductId(long CProductId) {
-		return findByCProductId(
-			CProductId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCProductId(
-		long CProductId, int start, int end) {
-
-		return findByCProductId(CProductId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where CProductId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCProductId(
-		long CProductId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByCProductId(
-			CProductId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definitions where CProductId = &#63;.
 	 *
 	 * <p>
@@ -967,59 +664,6 @@ public class CPDefinitionPersistenceImpl
 
 	private CollectionPersistenceFinder<CPDefinition>
 		_collectionPersistenceFinderByCPTaxCategoryId;
-
-	/**
-	 * Returns all the cp definitions where CPTaxCategoryId = &#63;.
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCPTaxCategoryId(long CPTaxCategoryId) {
-		return findByCPTaxCategoryId(
-			CPTaxCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where CPTaxCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCPTaxCategoryId(
-		long CPTaxCategoryId, int start, int end) {
-
-		return findByCPTaxCategoryId(CPTaxCategoryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where CPTaxCategoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByCPTaxCategoryId(
-		long CPTaxCategoryId, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByCPTaxCategoryId(
-			CPTaxCategoryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp definitions where CPTaxCategoryId = &#63;.
@@ -1115,65 +759,6 @@ public class CPDefinitionPersistenceImpl
 		_collectionPersistenceFinderByG_SE;
 
 	/**
-	 * Returns all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByG_SE(
-		long groupId, boolean subscriptionEnabled) {
-
-		return findByG_SE(
-			groupId, subscriptionEnabled, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByG_SE(
-		long groupId, boolean subscriptionEnabled, int start, int end) {
-
-		return findByG_SE(groupId, subscriptionEnabled, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByG_SE(
-		long groupId, boolean subscriptionEnabled, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByG_SE(
-			groupId, subscriptionEnabled, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definitions where groupId = &#63; and subscriptionEnabled = &#63;.
 	 *
 	 * <p>
@@ -1246,42 +831,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the cp definitions that the user has permission to view where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @return the matching cp definitions that the user has permission to view
-	 */
-	@Override
-	public List<CPDefinition> filterFindByG_SE(
-		long groupId, boolean subscriptionEnabled) {
-
-		return filterFindByG_SE(
-			groupId, subscriptionEnabled, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions that the user has permission to view where groupId = &#63; and subscriptionEnabled = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param subscriptionEnabled the subscription enabled
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions that the user has permission to view
-	 */
-	@Override
-	public List<CPDefinition> filterFindByG_SE(
-		long groupId, boolean subscriptionEnabled, int start, int end) {
-
-		return filterFindByG_SE(groupId, subscriptionEnabled, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp definitions that the user has permissions to view where groupId = &#63; and subscriptionEnabled = &#63;.
 	 *
 	 * <p>
@@ -1345,61 +894,6 @@ public class CPDefinitionPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<CPDefinition>
 		_collectionPersistenceFinderByG_S;
-
-	/**
-	 * Returns all the cp definitions where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByG_S(long groupId, int status) {
-		return findByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByG_S(
-		long groupId, int status, int start, int end) {
-
-		return findByG_S(groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByG_S(
-		long groupId, int status, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp definitions where groupId = &#63; and status = &#63;.
@@ -1469,39 +963,6 @@ public class CPDefinitionPersistenceImpl
 
 		return _collectionPersistenceFinderByG_S.fetchFirst(
 			finderCache, new Object[] {groupId, status}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the cp definitions that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching cp definitions that the user has permission to view
-	 */
-	@Override
-	public List<CPDefinition> filterFindByG_S(long groupId, int status) {
-		return filterFindByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions that the user has permission to view
-	 */
-	@Override
-	public List<CPDefinition> filterFindByG_S(
-		long groupId, int status, int start, int end) {
-
-		return filterFindByG_S(groupId, status, start, end, null);
 	}
 
 	/**
@@ -1599,18 +1060,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByC_V(long CProductId, int version) {
-		return fetchByC_V(CProductId, version, true);
-	}
-
-	/**
 	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CProductId the c product ID
@@ -1657,62 +1106,6 @@ public class CPDefinitionPersistenceImpl
 
 	private CollectionPersistenceFinder<CPDefinition>
 		_collectionPersistenceFinderByC_S;
-
-	/**
-	 * Returns all the cp definitions where CProductId = &#63; and status = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @return the matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByC_S(long CProductId, int status) {
-		return findByC_S(
-			CProductId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definitions where CProductId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByC_S(
-		long CProductId, int status, int start, int end) {
-
-		return findByC_S(CProductId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where CProductId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByC_S(
-		long CProductId, int status, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByC_S(
-			CProductId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp definitions where CProductId = &#63; and status = &#63;.
@@ -2705,4 +2098,4 @@ public class CPDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1502669722
+// LIFERAY-SERVICE-BUILDER-HASH:-208546334

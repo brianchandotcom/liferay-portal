@@ -32,47 +32,6 @@ public interface ResourceActionPersistence
 	 */
 
 	/**
-	 * Returns all the resource actions where name = &#63;.
-	 *
-	 * @param name the name
-	 * @return the matching resource actions
-	 */
-	public java.util.List<ResourceAction> findByName(String name);
-
-	/**
-	 * Returns a range of all the resource actions where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.ResourceActionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of resource actions
-	 * @param end the upper bound of the range of resource actions (not inclusive)
-	 * @return the range of matching resource actions
-	 */
-	public java.util.List<ResourceAction> findByName(
-		String name, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the resource actions where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.ResourceActionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of resource actions
-	 * @param end the upper bound of the range of resource actions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource actions
-	 */
-	public java.util.List<ResourceAction> findByName(
-		String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the resource actions where name = &#63;.
 	 *
 	 * <p>
@@ -145,15 +104,6 @@ public interface ResourceActionPersistence
 		throws NoSuchResourceActionException;
 
 	/**
-	 * Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @param actionId the action ID
-	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
-	 */
-	public ResourceAction fetchByN_A(String name, String actionId);
-
-	/**
 	 * Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -221,5 +171,67 @@ public interface ResourceActionPersistence
 	 */
 	public ResourceAction fetchByPrimaryKey(long resourceActionId);
 
+	/**
+	 * Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @param actionId the action ID
+	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
+	 */
+	public default ResourceAction fetchByN_A(String name, String actionId) {
+		return fetchByN_A(name, actionId, true);
+	}
+
+	/**
+	 * Returns all the resource actions where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the matching resource actions
+	 */
+	public default java.util.List<ResourceAction> findByName(String name) {
+		return findByName(
+			name, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the resource actions where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.ResourceActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of resource actions
+	 * @param end the upper bound of the range of resource actions (not inclusive)
+	 * @return the range of matching resource actions
+	 */
+	public default java.util.List<ResourceAction> findByName(
+		String name, int start, int end) {
+
+		return findByName(name, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource actions where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.ResourceActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of resource actions
+	 * @param end the upper bound of the range of resource actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching resource actions
+	 */
+	public default java.util.List<ResourceAction> findByName(
+		String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator) {
+
+		return findByName(name, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1393640238
+// LIFERAY-SERVICE-BUILDER-HASH:2101374380

@@ -125,58 +125,6 @@ public class DispatchLogUtil {
 	}
 
 	/**
-	 * Returns all the dispatch logs where dispatchTriggerId = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @return the matching dispatch logs
-	 */
-	public static List<DispatchLog> findByDispatchTriggerId(
-		long dispatchTriggerId) {
-
-		return getPersistence().findByDispatchTriggerId(dispatchTriggerId);
-	}
-
-	/**
-	 * Returns a range of all the dispatch logs where dispatchTriggerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param start the lower bound of the range of dispatch logs
-	 * @param end the upper bound of the range of dispatch logs (not inclusive)
-	 * @return the range of matching dispatch logs
-	 */
-	public static List<DispatchLog> findByDispatchTriggerId(
-		long dispatchTriggerId, int start, int end) {
-
-		return getPersistence().findByDispatchTriggerId(
-			dispatchTriggerId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the dispatch logs where dispatchTriggerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param start the lower bound of the range of dispatch logs
-	 * @param end the upper bound of the range of dispatch logs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching dispatch logs
-	 */
-	public static List<DispatchLog> findByDispatchTriggerId(
-		long dispatchTriggerId, int start, int end,
-		OrderByComparator<DispatchLog> orderByComparator) {
-
-		return getPersistence().findByDispatchTriggerId(
-			dispatchTriggerId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the dispatch logs where dispatchTriggerId = &#63;.
 	 *
 	 * <p>
@@ -248,61 +196,6 @@ public class DispatchLogUtil {
 	 */
 	public static int countByDispatchTriggerId(long dispatchTriggerId) {
 		return getPersistence().countByDispatchTriggerId(dispatchTriggerId);
-	}
-
-	/**
-	 * Returns all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @return the matching dispatch logs
-	 */
-	public static List<DispatchLog> findByDTI_S(
-		long dispatchTriggerId, int status) {
-
-		return getPersistence().findByDTI_S(dispatchTriggerId, status);
-	}
-
-	/**
-	 * Returns a range of all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param start the lower bound of the range of dispatch logs
-	 * @param end the upper bound of the range of dispatch logs (not inclusive)
-	 * @return the range of matching dispatch logs
-	 */
-	public static List<DispatchLog> findByDTI_S(
-		long dispatchTriggerId, int status, int start, int end) {
-
-		return getPersistence().findByDTI_S(
-			dispatchTriggerId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dispatchTriggerId the dispatch trigger ID
-	 * @param status the status
-	 * @param start the lower bound of the range of dispatch logs
-	 * @param end the upper bound of the range of dispatch logs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching dispatch logs
-	 */
-	public static List<DispatchLog> findByDTI_S(
-		long dispatchTriggerId, int status, int start, int end,
-		OrderByComparator<DispatchLog> orderByComparator) {
-
-		return getPersistence().findByDTI_S(
-			dispatchTriggerId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -435,6 +328,113 @@ public class DispatchLogUtil {
 		return getPersistence().fetchByPrimaryKey(dispatchLogId);
 	}
 
+	/**
+	 * Returns all the dispatch logs where dispatchTriggerId = &#63;.
+	 *
+	 * @param dispatchTriggerId the dispatch trigger ID
+	 * @return the matching dispatch logs
+	 */
+	public static List<DispatchLog> findByDispatchTriggerId(
+		long dispatchTriggerId) {
+
+		return getPersistence().findByDispatchTriggerId(dispatchTriggerId);
+	}
+
+	/**
+	 * Returns a range of all the dispatch logs where dispatchTriggerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param dispatchTriggerId the dispatch trigger ID
+	 * @param start the lower bound of the range of dispatch logs
+	 * @param end the upper bound of the range of dispatch logs (not inclusive)
+	 * @return the range of matching dispatch logs
+	 */
+	public static List<DispatchLog> findByDispatchTriggerId(
+		long dispatchTriggerId, int start, int end) {
+
+		return getPersistence().findByDispatchTriggerId(
+			dispatchTriggerId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch logs where dispatchTriggerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param dispatchTriggerId the dispatch trigger ID
+	 * @param start the lower bound of the range of dispatch logs
+	 * @param end the upper bound of the range of dispatch logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch logs
+	 */
+	public static List<DispatchLog> findByDispatchTriggerId(
+		long dispatchTriggerId, int start, int end,
+		OrderByComparator<DispatchLog> orderByComparator) {
+
+		return getPersistence().findByDispatchTriggerId(
+			dispatchTriggerId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.
+	 *
+	 * @param dispatchTriggerId the dispatch trigger ID
+	 * @param status the status
+	 * @return the matching dispatch logs
+	 */
+	public static List<DispatchLog> findByDTI_S(
+		long dispatchTriggerId, int status) {
+
+		return getPersistence().findByDTI_S(dispatchTriggerId, status);
+	}
+
+	/**
+	 * Returns a range of all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param dispatchTriggerId the dispatch trigger ID
+	 * @param status the status
+	 * @param start the lower bound of the range of dispatch logs
+	 * @param end the upper bound of the range of dispatch logs (not inclusive)
+	 * @return the range of matching dispatch logs
+	 */
+	public static List<DispatchLog> findByDTI_S(
+		long dispatchTriggerId, int status, int start, int end) {
+
+		return getPersistence().findByDTI_S(
+			dispatchTriggerId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the dispatch logs where dispatchTriggerId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dispatch.model.impl.DispatchLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param dispatchTriggerId the dispatch trigger ID
+	 * @param status the status
+	 * @param start the lower bound of the range of dispatch logs
+	 * @param end the upper bound of the range of dispatch logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching dispatch logs
+	 */
+	public static List<DispatchLog> findByDTI_S(
+		long dispatchTriggerId, int status, int start, int end,
+		OrderByComparator<DispatchLog> orderByComparator) {
+
+		return getPersistence().findByDTI_S(
+			dispatchTriggerId, status, start, end, orderByComparator);
+	}
+
 	public static DispatchLogPersistence getPersistence() {
 		return _persistence;
 	}
@@ -446,4 +446,4 @@ public class DispatchLogUtil {
 	private static volatile DispatchLogPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1811261037
+// LIFERAY-SERVICE-BUILDER-HASH:875367635

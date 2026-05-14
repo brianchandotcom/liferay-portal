@@ -103,57 +103,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the commerce tier price entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce tier price entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @return the range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tier price entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce tier price entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -245,64 +194,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceTierPriceEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the commerce tier price entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce tier price entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @return the range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tier price entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce tier price entries where uuid = &#63; and companyId = &#63;.
@@ -403,58 +294,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the commerce tier price entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce tier price entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @return the range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tier price entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce tier price entries where companyId = &#63;.
 	 *
 	 * <p>
@@ -546,62 +385,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceTierPriceEntry>
 		_collectionPersistenceFinderByCommercePriceEntryId;
-
-	/**
-	 * Returns all the commerce tier price entries where commercePriceEntryId = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @return the matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByCommercePriceEntryId(
-		long commercePriceEntryId) {
-
-		return findByCommercePriceEntryId(
-			commercePriceEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce tier price entries where commercePriceEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @return the range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByCommercePriceEntryId(
-		long commercePriceEntryId, int start, int end) {
-
-		return findByCommercePriceEntryId(
-			commercePriceEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByCommercePriceEntryId(
-		long commercePriceEntryId, int start, int end,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return findByCommercePriceEntryId(
-			commercePriceEntryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63;.
@@ -730,20 +513,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		}
 
 		return commerceTierPriceEntry;
-	}
-
-	/**
-	 * Returns the commerce tier price entry where commercePriceEntryId = &#63; and minQuantity = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param minQuantity the min quantity
-	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByC_M(
-		long commercePriceEntryId, BigDecimal minQuantity) {
-
-		return fetchByC_M(commercePriceEntryId, minQuantity, true);
 	}
 
 	/**
@@ -962,65 +731,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceTierPriceEntry>
 		_collectionPersistenceFinderByC_S;
-
-	/**
-	 * Returns all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @return the matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByC_S(
-		long commercePriceEntryId, int status) {
-
-		return findByC_S(
-			commercePriceEntryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @return the range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByC_S(
-		long commercePriceEntryId, int status, int start, int end) {
-
-		return findByC_S(commercePriceEntryId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTierPriceEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commercePriceEntryId the commerce price entry ID
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce tier price entries
-	 * @param end the upper bound of the range of commerce tier price entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tier price entries
-	 */
-	@Override
-	public List<CommerceTierPriceEntry> findByC_S(
-		long commercePriceEntryId, int status, int start, int end,
-		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-
-		return findByC_S(
-			commercePriceEntryId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce tier price entries where commercePriceEntryId = &#63; and status = &#63;.
@@ -1646,20 +1356,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		}
 
 		return commerceTierPriceEntry;
-	}
-
-	/**
-	 * Returns the commerce tier price entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -2490,4 +2186,4 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:339674225
+// LIFERAY-SERVICE-BUILDER-HASH:-933800092

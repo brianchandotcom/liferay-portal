@@ -94,17 +94,6 @@ public class CompanyInfoPersistenceImpl
 	}
 
 	/**
-	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching company info, or <code>null</code> if a matching company info could not be found
-	 */
-	@Override
-	public CompanyInfo fetchByCompanyId(long companyId) {
-		return fetchByCompanyId(companyId, true);
-	}
-
-	/**
 	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -372,4 +361,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-197627180
+// LIFERAY-SERVICE-BUILDER-HASH:1489209883

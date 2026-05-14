@@ -68,4 +68,4 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public Entry fetchByPrimaryKey(long entryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1688730805
+// LIFERAY-SERVICE-BUILDER-HASH:627224203

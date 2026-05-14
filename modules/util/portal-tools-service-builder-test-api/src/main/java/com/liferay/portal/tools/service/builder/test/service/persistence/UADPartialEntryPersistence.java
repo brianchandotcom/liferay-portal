@@ -71,4 +71,4 @@ public interface UADPartialEntryPersistence
 	public UADPartialEntry fetchByPrimaryKey(long uadPartialEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1707717828
+// LIFERAY-SERVICE-BUILDER-HASH:439215556

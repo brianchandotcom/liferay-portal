@@ -71,57 +71,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the user notification events where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where uuid = &#63;.
 	 *
 	 * <p>
@@ -214,64 +163,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the user notification events where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where uuid = &#63; and companyId = &#63;.
@@ -373,57 +264,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the user notification events where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63;.
 	 *
 	 * <p>
@@ -518,57 +358,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByType;
 
 	/**
-	 * Returns all the user notification events where type = &#63;.
-	 *
-	 * @param type the type
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByType(String type) {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByType(
-		String type, int start, int end) {
-
-		return findByType(type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByType(
-		String type, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByType(type, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where type = &#63;.
 	 *
 	 * <p>
@@ -661,64 +450,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT(
-		long userId, int deliveryType) {
-
-		return findByU_DT(
-			userId, deliveryType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT(
-		long userId, int deliveryType, int start, int end) {
-
-		return findByU_DT(userId, deliveryType, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT(
-		long userId, int deliveryType, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT(
-			userId, deliveryType, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63;.
@@ -823,64 +554,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_D;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D(
-		long userId, boolean delivered) {
-
-		return findByU_D(
-			userId, delivered, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D(
-		long userId, boolean delivered, int start, int end) {
-
-		return findByU_D(userId, delivered, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D(
-		long userId, boolean delivered, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D(
-			userId, delivered, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63;.
 	 *
 	 * <p>
@@ -980,63 +653,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_A;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_A(
-		long userId, boolean archived) {
-
-		return findByU_A(
-			userId, archived, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_A(
-		long userId, boolean archived, int start, int end) {
-
-		return findByU_A(userId, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_A(
-		long userId, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_A(userId, archived, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and archived = &#63;.
 	 *
 	 * <p>
@@ -1134,69 +750,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D(
-		long userId, int deliveryType, boolean delivered) {
-
-		return findByU_DT_D(
-			userId, deliveryType, delivered, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D(
-		long userId, int deliveryType, boolean delivered, int start, int end) {
-
-		return findByU_DT_D(userId, deliveryType, delivered, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D(
-		long userId, int deliveryType, boolean delivered, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D(
-			userId, deliveryType, delivered, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1309,69 +862,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_DT_A;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_A(
-		long userId, int deliveryType, boolean archived) {
-
-		return findByU_DT_A(
-			userId, deliveryType, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_A(
-		long userId, int deliveryType, boolean archived, int start, int end) {
-
-		return findByU_DT_A(userId, deliveryType, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_A(
-		long userId, int deliveryType, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_A(
-			userId, deliveryType, archived, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
 	 *
 	 * <p>
@@ -1480,71 +970,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_D_AR;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR(
-		long userId, boolean delivered, boolean actionRequired) {
-
-		return findByU_D_AR(
-			userId, delivered, actionRequired, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR(
-		long userId, boolean delivered, boolean actionRequired, int start,
-		int end) {
-
-		return findByU_D_AR(
-			userId, delivered, actionRequired, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR(
-		long userId, boolean delivered, boolean actionRequired, int start,
-		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D_AR(
-			userId, delivered, actionRequired, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1660,68 +1085,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_D_A;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_A(
-		long userId, boolean delivered, boolean archived) {
-
-		return findByU_D_A(
-			userId, delivered, archived, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_A(
-		long userId, boolean delivered, boolean archived, int start, int end) {
-
-		return findByU_D_A(userId, delivered, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_A(
-		long userId, boolean delivered, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D_A(
-			userId, delivered, archived, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
 	 *
 	 * <p>
@@ -1830,70 +1193,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_AR_A(
-		long userId, boolean actionRequired, boolean archived) {
-
-		return findByU_AR_A(
-			userId, actionRequired, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_AR_A(
-		long userId, boolean actionRequired, boolean archived, int start,
-		int end) {
-
-		return findByU_AR_A(userId, actionRequired, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_AR_A(
-		long userId, boolean actionRequired, boolean archived, int start,
-		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_AR_A(
-			userId, actionRequired, archived, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2194,75 +1493,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_T_DT_D;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D(
-		long userId, String type, int deliveryType, boolean delivered) {
-
-		return findByU_T_DT_D(
-			userId, type, deliveryType, delivered, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D(
-		long userId, String type, int deliveryType, boolean delivered,
-		int start, int end) {
-
-		return findByU_T_DT_D(
-			userId, type, deliveryType, delivered, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D(
-		long userId, String type, int deliveryType, boolean delivered,
-		int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_T_DT_D(
-			userId, type, deliveryType, delivered, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
 	 *
 	 * <p>
@@ -2380,76 +1610,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D_AR;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired) {
-
-		return findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, int start, int end) {
-
-		return findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -2577,75 +1737,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_DT_D_A;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_A(
-		long userId, int deliveryType, boolean delivered, boolean archived) {
-
-		return findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_A(
-		long userId, int deliveryType, boolean delivered, boolean archived,
-		int start, int end) {
-
-		return findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_A(
-		long userId, int deliveryType, boolean delivered, boolean archived,
-		int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
 	 *
 	 * <p>
@@ -2763,76 +1854,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_AR_A(
-		long userId, int deliveryType, boolean actionRequired,
-		boolean archived) {
-
-		return findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_AR_A(
-		long userId, int deliveryType, boolean actionRequired, boolean archived,
-		int start, int end) {
-
-		return findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_AR_A(
-		long userId, int deliveryType, boolean actionRequired, boolean archived,
-		int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2957,76 +1978,6 @@ public class UserNotificationEventPersistenceImpl
 		_collectionPersistenceFinderByU_D_AR_A;
 
 	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR_A(
-		long userId, boolean delivered, boolean actionRequired,
-		boolean archived) {
-
-		return findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR_A(
-		long userId, boolean delivered, boolean actionRequired,
-		boolean archived, int start, int end) {
-
-		return findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR_A(
-		long userId, boolean delivered, boolean actionRequired,
-		boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
 	 *
 	 * <p>
@@ -3148,79 +2099,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_T_DT_D_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D_A(
-		long userId, String type, int deliveryType, boolean delivered,
-		boolean archived) {
-
-		return findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D_A(
-		long userId, String type, int deliveryType, boolean delivered,
-		boolean archived, int start, int end) {
-
-		return findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D_A(
-		long userId, String type, int deliveryType, boolean delivered,
-		boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -3351,80 +2229,6 @@ public class UserNotificationEventPersistenceImpl
 
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR_A(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, boolean archived) {
-
-		return findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR_A(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, boolean archived, int start, int end) {
-
-		return findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived, start,
-			end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR_A(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived, start,
-			end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -4668,4 +3472,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1763991294
+// LIFERAY-SERVICE-BUILDER-HASH:1777434380

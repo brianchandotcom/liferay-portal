@@ -89,17 +89,6 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the null convertible entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching null convertible entry, or <code>null</code> if a matching null convertible entry could not be found
-	 */
-	@Override
-	public NullConvertibleEntry fetchByName(String name) {
-		return fetchByName(name, true);
-	}
-
-	/**
 	 * Returns the null convertible entry where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -358,4 +347,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1042443409
+// LIFERAY-SERVICE-BUILDER-HASH:1087750050

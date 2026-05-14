@@ -101,57 +101,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the cp attachment file entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp attachment file entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -275,18 +224,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the cp attachment file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
-	 */
-	@Override
-	public CPAttachmentFileEntry fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the cp attachment file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -334,64 +271,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp attachment file entries where uuid = &#63; and companyId = &#63;.
@@ -492,59 +371,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		_collectionPersistenceFinderByFileEntryId;
 
 	/**
-	 * Returns all the cp attachment file entries where fileEntryId = &#63;.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByFileEntryId(long fileEntryId) {
-		return findByFileEntryId(
-			fileEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByFileEntryId(
-		long fileEntryId, int start, int end) {
-
-		return findByFileEntryId(fileEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByFileEntryId(
-		long fileEntryId, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByFileEntryId(
-			fileEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp attachment file entries where fileEntryId = &#63;.
 	 *
 	 * <p>
@@ -636,64 +462,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C;
-
-	/**
-	 * Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C(
-		long classNameId, long classPK) {
-
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return findByC_C(classNameId, classPK, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63;.
@@ -951,69 +719,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		_collectionPersistenceFinderByG_C_F;
 
 	/**
-	 * Returns all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param fileEntryId the file entry ID
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByG_C_F(
-		long groupId, long classNameId, long fileEntryId) {
-
-		return findByG_C_F(
-			groupId, classNameId, fileEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByG_C_F(
-		long groupId, long classNameId, long fileEntryId, int start, int end) {
-
-		return findByG_C_F(groupId, classNameId, fileEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByG_C_F(
-		long groupId, long classNameId, long fileEntryId, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByG_C_F(
-			groupId, classNameId, fileEntryId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp attachment file entries where groupId = &#63; and classNameId = &#63; and fileEntryId = &#63;.
 	 *
 	 * <p>
@@ -1121,69 +826,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		_collectionPersistenceFinderByC_C_F;
 
 	/**
-	 * Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param fileEntryId the file entry ID
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_F(
-		long classNameId, long classPK, long fileEntryId) {
-
-		return findByC_C_F(
-			classNameId, classPK, fileEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_F(
-		long classNameId, long classPK, long fileEntryId, int start, int end) {
-
-		return findByC_C_F(classNameId, classPK, fileEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_F(
-		long classNameId, long classPK, long fileEntryId, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByC_C_F(
-			classNameId, classPK, fileEntryId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and fileEntryId = &#63;.
 	 *
 	 * <p>
@@ -1289,68 +931,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_C;
-
-	/**
-	 * Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and cdnURL = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param cdnURL the cdn url
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_C(
-		long classNameId, long classPK, String cdnURL) {
-
-		return findByC_C_C(
-			classNameId, classPK, cdnURL, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and cdnURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param cdnURL the cdn url
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_C(
-		long classNameId, long classPK, String cdnURL, int start, int end) {
-
-		return findByC_C_C(classNameId, classPK, cdnURL, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and cdnURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param cdnURL the cdn url
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_C(
-		long classNameId, long classPK, String cdnURL, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByC_C_C(
-			classNameId, classPK, cdnURL, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and cdnURL = &#63;.
@@ -1642,74 +1222,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_T_ST;
-
-	/**
-	 * Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_T_ST(
-		long classNameId, long classPK, int type, int status) {
-
-		return findByC_C_T_ST(
-			classNameId, classPK, type, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_T_ST(
-		long classNameId, long classPK, int type, int status, int start,
-		int end) {
-
-		return findByC_C_T_ST(
-			classNameId, classPK, type, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_T_ST(
-		long classNameId, long classPK, int type, int status, int start,
-		int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByC_C_T_ST(
-			classNameId, classPK, type, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and type = &#63; and status = &#63;.
@@ -2006,80 +1518,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_G_T_ST;
-
-	/**
-	 * Returns all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param galleryEnabled the gallery enabled
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_G_T_ST(
-		long classNameId, long classPK, boolean galleryEnabled, int type,
-		int status) {
-
-		return findByC_C_G_T_ST(
-			classNameId, classPK, galleryEnabled, type, status,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param galleryEnabled the gallery enabled
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @return the range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_G_T_ST(
-		long classNameId, long classPK, boolean galleryEnabled, int type,
-		int status, int start, int end) {
-
-		return findByC_C_G_T_ST(
-			classNameId, classPK, galleryEnabled, type, status, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPAttachmentFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param galleryEnabled the gallery enabled
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of cp attachment file entries
-	 * @param end the upper bound of the range of cp attachment file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp attachment file entries
-	 */
-	@Override
-	public List<CPAttachmentFileEntry> findByC_C_G_T_ST(
-		long classNameId, long classPK, boolean galleryEnabled, int type,
-		int status, int start, int end,
-		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
-
-		return findByC_C_G_T_ST(
-			classNameId, classPK, galleryEnabled, type, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cp attachment file entries where classNameId = &#63; and classPK = &#63; and galleryEnabled = &#63; and type = &#63; and status = &#63;.
@@ -2448,20 +1886,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 		}
 
 		return cpAttachmentFileEntry;
-	}
-
-	/**
-	 * Returns the cp attachment file entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching cp attachment file entry, or <code>null</code> if a matching cp attachment file entry could not be found
-	 */
-	@Override
-	public CPAttachmentFileEntry fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -3530,4 +2954,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-471050950
+// LIFERAY-SERVICE-BUILDER-HASH:-417680883

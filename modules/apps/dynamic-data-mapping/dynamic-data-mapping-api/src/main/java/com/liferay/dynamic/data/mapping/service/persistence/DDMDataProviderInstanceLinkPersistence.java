@@ -35,50 +35,6 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 */
 
 	/**
-	 * Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @return the matching ddm data provider instance links
-	 */
-	public java.util.List<DDMDataProviderInstanceLink>
-		findByDataProviderInstanceId(long dataProviderInstanceId);
-
-	/**
-	 * Returns a range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @return the range of matching ddm data provider instance links
-	 */
-	public java.util.List<DDMDataProviderInstanceLink>
-		findByDataProviderInstanceId(
-			long dataProviderInstanceId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm data provider instance links
-	 */
-	public java.util.List<DDMDataProviderInstanceLink>
-		findByDataProviderInstanceId(
-			long dataProviderInstanceId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<DDMDataProviderInstanceLink> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * <p>
@@ -139,48 +95,6 @@ public interface DDMDataProviderInstanceLinkPersistence
 	 * @return the number of matching ddm data provider instance links
 	 */
 	public int countByDataProviderInstanceId(long dataProviderInstanceId);
-
-	/**
-	 * Returns all the ddm data provider instance links where structureId = &#63;.
-	 *
-	 * @param structureId the structure ID
-	 * @return the matching ddm data provider instance links
-	 */
-	public java.util.List<DDMDataProviderInstanceLink> findByStructureId(
-		long structureId);
-
-	/**
-	 * Returns a range of all the ddm data provider instance links where structureId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @return the range of matching ddm data provider instance links
-	 */
-	public java.util.List<DDMDataProviderInstanceLink> findByStructureId(
-		long structureId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of ddm data provider instance links
-	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm data provider instance links
-	 */
-	public java.util.List<DDMDataProviderInstanceLink> findByStructureId(
-		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<DDMDataProviderInstanceLink> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
@@ -256,16 +170,6 @@ public interface DDMDataProviderInstanceLinkPersistence
 		throws NoSuchDataProviderInstanceLinkException;
 
 	/**
-	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param structureId the structure ID
-	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
-	 */
-	public DDMDataProviderInstanceLink fetchByD_S(
-		long dataProviderInstanceId, long structureId);
-
-	/**
 	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
@@ -337,5 +241,131 @@ public interface DDMDataProviderInstanceLinkPersistence
 	public DDMDataProviderInstanceLink fetchByPrimaryKey(
 		long dataProviderInstanceLinkId);
 
+	/**
+	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param dataProviderInstanceId the data provider instance ID
+	 * @param structureId the structure ID
+	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
+	 */
+	public default DDMDataProviderInstanceLink fetchByD_S(
+		long dataProviderInstanceId, long structureId) {
+
+		return fetchByD_S(dataProviderInstanceId, structureId, true);
+	}
+
+	/**
+	 * Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
+	 *
+	 * @param dataProviderInstanceId the data provider instance ID
+	 * @return the matching ddm data provider instance links
+	 */
+	public default java.util.List<DDMDataProviderInstanceLink>
+		findByDataProviderInstanceId(long dataProviderInstanceId) {
+
+		return findByDataProviderInstanceId(
+			dataProviderInstanceId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param dataProviderInstanceId the data provider instance ID
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @return the range of matching ddm data provider instance links
+	 */
+	public default java.util.List<DDMDataProviderInstanceLink>
+		findByDataProviderInstanceId(
+			long dataProviderInstanceId, int start, int end) {
+
+		return findByDataProviderInstanceId(
+			dataProviderInstanceId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param dataProviderInstanceId the data provider instance ID
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm data provider instance links
+	 */
+	public default java.util.List<DDMDataProviderInstanceLink>
+		findByDataProviderInstanceId(
+			long dataProviderInstanceId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DDMDataProviderInstanceLink> orderByComparator) {
+
+		return findByDataProviderInstanceId(
+			dataProviderInstanceId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ddm data provider instance links where structureId = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @return the matching ddm data provider instance links
+	 */
+	public default java.util.List<DDMDataProviderInstanceLink>
+		findByStructureId(long structureId) {
+
+		return findByStructureId(
+			structureId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm data provider instance links where structureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param structureId the structure ID
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @return the range of matching ddm data provider instance links
+	 */
+	public default java.util.List<DDMDataProviderInstanceLink>
+		findByStructureId(long structureId, int start, int end) {
+
+		return findByStructureId(structureId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param structureId the structure ID
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm data provider instance links
+	 */
+	public default java.util.List<DDMDataProviderInstanceLink>
+		findByStructureId(
+			long structureId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DDMDataProviderInstanceLink> orderByComparator) {
+
+		return findByStructureId(
+			structureId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1373188325
+// LIFERAY-SERVICE-BUILDER-HASH:902873803

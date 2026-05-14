@@ -135,58 +135,6 @@ public class AccountEntryOrganizationRelUtil {
 	}
 
 	/**
-	 * Returns all the account entry organization rels where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account entry organization rels
-	 */
-	public static List<AccountEntryOrganizationRel> findByAccountEntryId(
-		long accountEntryId) {
-
-		return getPersistence().findByAccountEntryId(accountEntryId);
-	}
-
-	/**
-	 * Returns a range of all the account entry organization rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @return the range of matching account entry organization rels
-	 */
-	public static List<AccountEntryOrganizationRel> findByAccountEntryId(
-		long accountEntryId, int start, int end) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account entry organization rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account entry organization rels
-	 */
-	public static List<AccountEntryOrganizationRel> findByAccountEntryId(
-		long accountEntryId, int start, int end,
-		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the account entry organization rels where accountEntryId = &#63;.
 	 *
 	 * <p>
@@ -259,58 +207,6 @@ public class AccountEntryOrganizationRelUtil {
 	 */
 	public static int countByAccountEntryId(long accountEntryId) {
 		return getPersistence().countByAccountEntryId(accountEntryId);
-	}
-
-	/**
-	 * Returns all the account entry organization rels where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @return the matching account entry organization rels
-	 */
-	public static List<AccountEntryOrganizationRel> findByOrganizationId(
-		long organizationId) {
-
-		return getPersistence().findByOrganizationId(organizationId);
-	}
-
-	/**
-	 * Returns a range of all the account entry organization rels where organizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param organizationId the organization ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @return the range of matching account entry organization rels
-	 */
-	public static List<AccountEntryOrganizationRel> findByOrganizationId(
-		long organizationId, int start, int end) {
-
-		return getPersistence().findByOrganizationId(
-			organizationId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param organizationId the organization ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account entry organization rels
-	 */
-	public static List<AccountEntryOrganizationRel> findByOrganizationId(
-		long organizationId, int start, int end,
-		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
-
-		return getPersistence().findByOrganizationId(
-			organizationId, start, end, orderByComparator);
 	}
 
 	/**
@@ -402,19 +298,6 @@ public class AccountEntryOrganizationRelUtil {
 			NoSuchEntryOrganizationRelException {
 
 		return getPersistence().findByA_O(accountEntryId, organizationId);
-	}
-
-	/**
-	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param organizationId the organization ID
-	 * @return the matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
-	 */
-	public static AccountEntryOrganizationRel fetchByA_O(
-		long accountEntryId, long organizationId) {
-
-		return getPersistence().fetchByA_O(accountEntryId, organizationId);
 	}
 
 	/**
@@ -519,6 +402,123 @@ public class AccountEntryOrganizationRelUtil {
 			accountEntryOrganizationRelId);
 	}
 
+	/**
+	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param organizationId the organization ID
+	 * @return the matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
+	 */
+	public static AccountEntryOrganizationRel fetchByA_O(
+		long accountEntryId, long organizationId) {
+
+		return getPersistence().fetchByA_O(accountEntryId, organizationId);
+	}
+
+	/**
+	 * Returns all the account entry organization rels where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByAccountEntryId(
+		long accountEntryId) {
+
+		return getPersistence().findByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the account entry organization rels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @return the range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * @param organizationId the organization ID
+	 * @return the matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId) {
+
+		return getPersistence().findByOrganizationId(organizationId);
+	}
+
+	/**
+	 * Returns a range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @return the range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end) {
+
+		return getPersistence().findByOrganizationId(
+			organizationId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountEntryOrganizationRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param organizationId the organization ID
+	 * @param start the lower bound of the range of account entry organization rels
+	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account entry organization rels
+	 */
+	public static List<AccountEntryOrganizationRel> findByOrganizationId(
+		long organizationId, int start, int end,
+		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
+
+		return getPersistence().findByOrganizationId(
+			organizationId, start, end, orderByComparator);
+	}
+
 	public static AccountEntryOrganizationRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -532,4 +532,4 @@ public class AccountEntryOrganizationRelUtil {
 	private static volatile AccountEntryOrganizationRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1587368771
+// LIFERAY-SERVICE-BUILDER-HASH:-1437078223

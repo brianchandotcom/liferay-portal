@@ -43,14 +43,6 @@ public interface RenameFinderColumnEntryPersistence
 		throws NoSuchRenameFinderColumnEntryException;
 
 	/**
-	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param columnToRename the column to rename
-	 * @return the matching rename finder column entry, or <code>null</code> if a matching rename finder column entry could not be found
-	 */
-	public RenameFinderColumnEntry fetchByColumnToRename(String columnToRename);
-
-	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param columnToRename the column to rename
@@ -118,5 +110,17 @@ public interface RenameFinderColumnEntryPersistence
 	public RenameFinderColumnEntry fetchByPrimaryKey(
 		long renameFinderColumnEntryId);
 
+	/**
+	 * Returns the rename finder column entry where columnToRename = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param columnToRename the column to rename
+	 * @return the matching rename finder column entry, or <code>null</code> if a matching rename finder column entry could not be found
+	 */
+	public default RenameFinderColumnEntry fetchByColumnToRename(
+		String columnToRename) {
+
+		return fetchByColumnToRename(columnToRename, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1538647586
+// LIFERAY-SERVICE-BUILDER-HASH:-55091430

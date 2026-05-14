@@ -35,47 +35,6 @@ public interface DDMFieldAttributePersistence
 	 */
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByStorageId(long storageId);
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByStorageId(
-		long storageId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByStorageId(
-		long storageId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63;.
 	 *
 	 * <p>
@@ -135,51 +94,6 @@ public interface DDMFieldAttributePersistence
 	 * @return the number of matching ddm field attributes
 	 */
 	public int countByStorageId(long storageId);
-
-	/**
-	 * Returns all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @return the matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_AN(
-		long storageId, String attributeName);
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_AN(
-		long storageId, String attributeName, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_AN(
-		long storageId, String attributeName, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
@@ -248,51 +162,6 @@ public interface DDMFieldAttributePersistence
 	public int countByS_AN(long storageId, String attributeName);
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @return the matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_L(
-		long storageId, String languageId);
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_L(
-		long storageId, String languageId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_L(
-		long storageId, String languageId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
 	 *
 	 * <p>
@@ -342,55 +211,6 @@ public interface DDMFieldAttributePersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageIds the language IDs
-	 * @return the matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_L(
-		long storageId, String[] languageIds);
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageIds the language IDs
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_L(
-		long storageId, String[] languageIds, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageIds the language IDs
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByS_L(
-		long storageId, String[] languageIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -436,51 +256,6 @@ public interface DDMFieldAttributePersistence
 	 * @return the number of matching ddm field attributes
 	 */
 	public int countByS_L(long storageId, String[] languageIds);
-
-	/**
-	 * Returns all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @return the matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByAN_SAV(
-		String attributeName, String smallAttributeValue);
-
-	/**
-	 * Returns a range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByAN_SAV(
-		String attributeName, String smallAttributeValue, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	public java.util.List<DDMFieldAttribute> findByAN_SAV(
-		String attributeName, String smallAttributeValue, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
@@ -563,17 +338,6 @@ public interface DDMFieldAttributePersistence
 		throws NoSuchFieldAttributeException;
 
 	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param fieldId the field ID
-	 * @param attributeName the attribute name
-	 * @param languageId the language ID
-	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	public DDMFieldAttribute fetchByF_AN_L(
-		long fieldId, String attributeName, String languageId);
-
-	/**
 	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fieldId the field ID
@@ -647,5 +411,306 @@ public interface DDMFieldAttributePersistence
 	 */
 	public DDMFieldAttribute fetchByPrimaryKey(long fieldAttributeId);
 
+	/**
+	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param fieldId the field ID
+	 * @param attributeName the attribute name
+	 * @param languageId the language ID
+	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
+	 */
+	public default DDMFieldAttribute fetchByF_AN_L(
+		long fieldId, String attributeName, String languageId) {
+
+		return fetchByF_AN_L(fieldId, attributeName, languageId, true);
+	}
+
+	/**
+	 * Returns all the ddm field attributes where storageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @return the matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByStorageId(
+		long storageId) {
+
+		return findByStorageId(
+			storageId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByStorageId(
+		long storageId, int start, int end) {
+
+		return findByStorageId(storageId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByStorageId(
+		long storageId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
+			orderByComparator) {
+
+		return findByStorageId(storageId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @return the matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName) {
+
+		return findByS_AN(
+			storageId, attributeName,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName, int start, int end) {
+
+		return findByS_AN(storageId, attributeName, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param attributeName the attribute name
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_AN(
+		long storageId, String attributeName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
+			orderByComparator) {
+
+		return findByS_AN(
+			storageId, attributeName, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param languageId the language ID
+	 * @return the matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_L(
+		long storageId, String languageId) {
+
+		return findByS_L(
+			storageId, languageId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageId the language ID
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_L(
+		long storageId, String languageId, int start, int end) {
+
+		return findByS_L(storageId, languageId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageId the language ID
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_L(
+		long storageId, String languageId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
+			orderByComparator) {
+
+		return findByS_L(
+			storageId, languageId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @return the matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds) {
+
+		return findByS_L(
+			storageId, languageIds,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds, int start, int end) {
+
+		return findByS_L(storageId, languageIds, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param storageId the storage ID
+	 * @param languageIds the language IDs
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByS_L(
+		long storageId, String[] languageIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
+			orderByComparator) {
+
+		return findByS_L(
+			storageId, languageIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
+	 *
+	 * @param attributeName the attribute name
+	 * @param smallAttributeValue the small attribute value
+	 * @return the matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByAN_SAV(
+		String attributeName, String smallAttributeValue) {
+
+		return findByAN_SAV(
+			attributeName, smallAttributeValue,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param attributeName the attribute name
+	 * @param smallAttributeValue the small attribute value
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @return the range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByAN_SAV(
+		String attributeName, String smallAttributeValue, int start, int end) {
+
+		return findByAN_SAV(
+			attributeName, smallAttributeValue, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFieldAttributeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param attributeName the attribute name
+	 * @param smallAttributeValue the small attribute value
+	 * @param start the lower bound of the range of ddm field attributes
+	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm field attributes
+	 */
+	public default java.util.List<DDMFieldAttribute> findByAN_SAV(
+		String attributeName, String smallAttributeValue, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFieldAttribute>
+			orderByComparator) {
+
+		return findByAN_SAV(
+			attributeName, smallAttributeValue, start, end, orderByComparator,
+			true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1120051348
+// LIFERAY-SERVICE-BUILDER-HASH:-1910770621

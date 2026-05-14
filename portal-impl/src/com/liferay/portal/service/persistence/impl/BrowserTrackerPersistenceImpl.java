@@ -91,17 +91,6 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 	/**
-	 * Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	 */
-	@Override
-	public BrowserTracker fetchByUserId(long userId) {
-		return fetchByUserId(userId, true);
-	}
-
-	/**
 	 * Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -355,4 +344,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1416309566
+// LIFERAY-SERVICE-BUILDER-HASH:-109263853

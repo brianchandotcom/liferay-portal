@@ -102,57 +102,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the layout page template collections where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template collections where uuid = &#63;.
 	 *
 	 * <p>
@@ -276,20 +225,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout page template collection where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
 	 * Returns the layout page template collection where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -338,64 +273,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 	private CollectionPersistenceFinder<LayoutPageTemplateCollection>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the layout page template collections where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template collections where uuid = &#63; and companyId = &#63;.
@@ -496,58 +373,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the layout page template collections where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template collections where groupId = &#63;.
 	 *
 	 * <p>
@@ -615,39 +440,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByGroupId(
-		long groupId) {
-
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template collections that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -707,69 +499,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateCollection>
 		_collectionPersistenceFinderByG_P;
-
-	/**
-	 * Returns all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_P(
-		long groupId, long parentLayoutPageTemplateCollectionId) {
-
-		return findByG_P(
-			groupId, parentLayoutPageTemplateCollectionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_P(
-		long groupId, long parentLayoutPageTemplateCollectionId, int start,
-		int end) {
-
-		return findByG_P(
-			groupId, parentLayoutPageTemplateCollectionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_P(
-		long groupId, long parentLayoutPageTemplateCollectionId, int start,
-		int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByG_P(
-			groupId, parentLayoutPageTemplateCollectionId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
@@ -846,44 +575,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			finderCache,
 			new Object[] {groupId, parentLayoutPageTemplateCollectionId},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @return the matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_P(
-		long groupId, long parentLayoutPageTemplateCollectionId) {
-
-		return filterFindByG_P(
-			groupId, parentLayoutPageTemplateCollectionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_P(
-		long groupId, long parentLayoutPageTemplateCollectionId, int start,
-		int end) {
-
-		return filterFindByG_P(
-			groupId, parentLayoutPageTemplateCollectionId, start, end, null);
 	}
 
 	/**
@@ -964,63 +655,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		_collectionPersistenceFinderByG_T;
 
 	/**
-	 * Returns all the layout page template collections where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_T(
-		long groupId, int type) {
-
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_T(
-		long groupId, int type, int start, int end) {
-
-		return findByG_T(groupId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_T(
-		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1091,41 +725,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_T(
-		long groupId, int type) {
-
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_T(
-		long groupId, int type, int start, int end) {
-
-		return filterFindByG_T(groupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template collections that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1189,73 +788,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateCollection>
 		_collectionPersistenceFinderByG_P_T;
-
-	/**
-	 * Returns all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_P_T(
-		long groupId, long parentLayoutPageTemplateCollectionId, int type) {
-
-		return findByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_P_T(
-		long groupId, long parentLayoutPageTemplateCollectionId, int type,
-		int start, int end) {
-
-		return findByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_P_T(
-		long groupId, long parentLayoutPageTemplateCollectionId, int type,
-		int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1337,47 +869,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 			finderCache,
 			new Object[] {groupId, parentLayoutPageTemplateCollectionId, type},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @return the matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_P_T(
-		long groupId, long parentLayoutPageTemplateCollectionId, int type) {
-
-		return filterFindByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_P_T(
-		long groupId, long parentLayoutPageTemplateCollectionId, int type,
-		int start, int end) {
-
-		return filterFindByG_P_T(
-			groupId, parentLayoutPageTemplateCollectionId, type, start, end,
-			null);
 	}
 
 	/**
@@ -1497,22 +988,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionKey the layout page template collection key
-	 * @param type the type
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_LPTCK_T(
-		long groupId, String layoutPageTemplateCollectionKey, int type) {
-
-		return fetchByG_LPTCK_T(
-			groupId, layoutPageTemplateCollectionKey, type, true);
-	}
-
-	/**
 	 * Returns the layout page template collection where groupId = &#63; and layoutPageTemplateCollectionKey = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -1570,67 +1045,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateCollection>
 		_collectionPersistenceFinderByG_N_T;
-
-	/**
-	 * Returns all the layout page template collections where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_N_T(
-		long groupId, String name, int type) {
-
-		return findByG_N_T(
-			groupId, name, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_N_T(
-		long groupId, String name, int type, int start, int end) {
-
-		return findByG_N_T(groupId, name, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template collections
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> findByG_N_T(
-		long groupId, String name, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
-
-		return findByG_N_T(
-			groupId, name, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template collections where groupId = &#63; and name = &#63; and type = &#63;.
@@ -1703,43 +1117,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		return _collectionPersistenceFinderByG_N_T.fetchFirst(
 			finderCache, new Object[] {groupId, name, type}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout page template collections that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_N_T(
-		long groupId, String name, int type) {
-
-		return filterFindByG_N_T(
-			groupId, name, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template collections that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template collections
-	 * @param end the upper bound of the range of layout page template collections (not inclusive)
-	 * @return the range of matching layout page template collections that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateCollection> filterFindByG_N_T(
-		long groupId, String name, int type, int start, int end) {
-
-		return filterFindByG_N_T(groupId, name, type, start, end, null);
 	}
 
 	/**
@@ -2091,24 +1468,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout page template collection where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param parentLayoutPageTemplateCollectionId the parent layout page template collection ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByG_P_N_T(
-		long groupId, long parentLayoutPageTemplateCollectionId, String name,
-		int type) {
-
-		return fetchByG_P_N_T(
-			groupId, parentLayoutPageTemplateCollectionId, name, type, true);
-	}
-
-	/**
 	 * Returns the layout page template collection where groupId = &#63; and parentLayoutPageTemplateCollectionId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -2207,20 +1566,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		}
 
 		return layoutPageTemplateCollection;
-	}
-
-	/**
-	 * Returns the layout page template collection where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
-	 */
-	@Override
-	public LayoutPageTemplateCollection fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -3227,4 +2572,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:766915664
+// LIFERAY-SERVICE-BUILDER-HASH:831324613

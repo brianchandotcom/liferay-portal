@@ -223,61 +223,6 @@ public class SamlIdpSpSessionPersistenceImpl
 		_collectionPersistenceFinderBySamlIdpSsoSessionId;
 
 	/**
-	 * Returns all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @return the matching saml idp sp sessions
-	 */
-	@Override
-	public List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
-		long samlIdpSsoSessionId) {
-
-		return findBySamlIdpSsoSessionId(
-			samlIdpSsoSessionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param start the lower bound of the range of saml idp sp sessions
-	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
-	 * @return the range of matching saml idp sp sessions
-	 */
-	@Override
-	public List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
-		long samlIdpSsoSessionId, int start, int end) {
-
-		return findBySamlIdpSsoSessionId(samlIdpSsoSessionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param start the lower bound of the range of saml idp sp sessions
-	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saml idp sp sessions
-	 */
-	@Override
-	public List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
-		long samlIdpSsoSessionId, int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
-
-		return findBySamlIdpSsoSessionId(
-			samlIdpSsoSessionId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.
 	 *
 	 * <p>
@@ -690,4 +635,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:687722958
+// LIFERAY-SERVICE-BUILDER-HASH:469475018

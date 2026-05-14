@@ -140,48 +140,6 @@ public interface CommerceInventoryBookedQuantityPersistence
 	public int countByLtExpirationDate(Date expirationDate);
 
 	/**
-	 * Returns all the commerce inventory booked quantities where sku = &#63;.
-	 *
-	 * @param sku the sku
-	 * @return the matching commerce inventory booked quantities
-	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findBySku(
-		String sku);
-
-	/**
-	 * Returns a range of all the commerce inventory booked quantities where sku = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sku the sku
-	 * @param start the lower bound of the range of commerce inventory booked quantities
-	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
-	 * @return the range of matching commerce inventory booked quantities
-	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findBySku(
-		String sku, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce inventory booked quantities where sku = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sku the sku
-	 * @param start the lower bound of the range of commerce inventory booked quantities
-	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory booked quantities
-	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findBySku(
-		String sku, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryBookedQuantity> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce inventory booked quantities where sku = &#63;.
 	 *
 	 * <p>
@@ -241,55 +199,6 @@ public interface CommerceInventoryBookedQuantityPersistence
 	 * @return the number of matching commerce inventory booked quantities
 	 */
 	public int countBySku(String sku);
-
-	/**
-	 * Returns all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @return the matching commerce inventory booked quantities
-	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey);
-
-	/**
-	 * Returns a range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory booked quantities
-	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
-	 * @return the range of matching commerce inventory booked quantities
-	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey, int start,
-		int end);
-
-	/**
-	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory booked quantities
-	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory booked quantities
-	 */
-	public java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceInventoryBookedQuantity> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
@@ -407,5 +316,122 @@ public interface CommerceInventoryBookedQuantityPersistence
 	public CommerceInventoryBookedQuantity fetchByPrimaryKey(
 		long commerceInventoryBookedQuantityId);
 
+	/**
+	 * Returns all the commerce inventory booked quantities where sku = &#63;.
+	 *
+	 * @param sku the sku
+	 * @return the matching commerce inventory booked quantities
+	 */
+	public default java.util.List<CommerceInventoryBookedQuantity> findBySku(
+		String sku) {
+
+		return findBySku(
+			sku, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce inventory booked quantities where sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sku the sku
+	 * @param start the lower bound of the range of commerce inventory booked quantities
+	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
+	 * @return the range of matching commerce inventory booked quantities
+	 */
+	public default java.util.List<CommerceInventoryBookedQuantity> findBySku(
+		String sku, int start, int end) {
+
+		return findBySku(sku, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce inventory booked quantities where sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sku the sku
+	 * @param start the lower bound of the range of commerce inventory booked quantities
+	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce inventory booked quantities
+	 */
+	public default java.util.List<CommerceInventoryBookedQuantity> findBySku(
+		String sku, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceInventoryBookedQuantity> orderByComparator) {
+
+		return findBySku(sku, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
+	 * @return the matching commerce inventory booked quantities
+	 */
+	public default java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return findByC_S_U(
+			companyId, sku, unitOfMeasureKey,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
+	 * @param start the lower bound of the range of commerce inventory booked quantities
+	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
+	 * @return the range of matching commerce inventory booked quantities
+	 */
+	public default java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end) {
+
+		return findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce inventory booked quantities where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryBookedQuantityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
+	 * @param start the lower bound of the range of commerce inventory booked quantities
+	 * @param end the upper bound of the range of commerce inventory booked quantities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce inventory booked quantities
+	 */
+	public default java.util.List<CommerceInventoryBookedQuantity> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceInventoryBookedQuantity> orderByComparator) {
+
+		return findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end, orderByComparator,
+			true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-508103646
+// LIFERAY-SERVICE-BUILDER-HASH:-1782762766

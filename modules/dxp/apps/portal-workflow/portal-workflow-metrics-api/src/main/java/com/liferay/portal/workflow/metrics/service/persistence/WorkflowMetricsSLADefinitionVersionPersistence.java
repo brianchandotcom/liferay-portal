@@ -33,48 +33,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 
 	/**
-	 * Returns all the workflow metrics sla definition versions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid(
-		String uuid);
-
-	/**
-	 * Returns a range of all the workflow metrics sla definition versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of workflow metrics sla definition versions
-	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
-	 * @return the range of matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of workflow metrics sla definition versions
-	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63;.
 	 *
 	 * <p>
@@ -148,16 +106,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
-	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion fetchByUUID_G(
-		String uuid, long groupId);
-
-	/**
 	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -187,51 +135,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @return the number of matching workflow metrics sla definition versions
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of workflow metrics sla definition versions
-	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
-	 * @return the range of matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of workflow metrics sla definition versions
-	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
@@ -298,51 +201,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @return the number of matching workflow metrics sla definition versions
 	 */
 	public int countByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @return the matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion>
-		findByWorkflowMetricsSLADefinitionId(
-			long workflowMetricsSLADefinitionId);
-
-	/**
-	 * Returns a range of all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param start the lower bound of the range of workflow metrics sla definition versions
-	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
-	 * @return the range of matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion>
-		findByWorkflowMetricsSLADefinitionId(
-			long workflowMetricsSLADefinitionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @param start the lower bound of the range of workflow metrics sla definition versions
-	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching workflow metrics sla definition versions
-	 */
-	public java.util.List<WorkflowMetricsSLADefinitionVersion>
-		findByWorkflowMetricsSLADefinitionId(
-			long workflowMetricsSLADefinitionId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
@@ -423,16 +281,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
-	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param version the version
-	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
-	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
-	 */
-	public WorkflowMetricsSLADefinitionVersion fetchByV_WMSLAD(
-		String version, long workflowMetricsSLADefinitionId);
-
-	/**
 	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param version the version
@@ -509,5 +357,204 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public WorkflowMetricsSLADefinitionVersion fetchByPrimaryKey(
 		long workflowMetricsSLADefinitionVersionId);
 
+	/**
+	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
+	 */
+	public default WorkflowMetricsSLADefinitionVersion fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the workflow metrics sla definition version where version = &#63; and workflowMetricsSLADefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param version the version
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
+	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
+	 */
+	public default WorkflowMetricsSLADefinitionVersion fetchByV_WMSLAD(
+		String version, long workflowMetricsSLADefinitionId) {
+
+		return fetchByV_WMSLAD(version, workflowMetricsSLADefinitionId, true);
+	}
+
+	/**
+	 * Returns all the workflow metrics sla definition versions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByUuid(String uuid) {
+
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the workflow metrics sla definition versions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of workflow metrics sla definition versions
+	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
+	 * @return the range of matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByUuid(String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of workflow metrics sla definition versions
+	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByUuid(
+			String uuid, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByUuid_C(String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of workflow metrics sla definition versions
+	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
+	 * @return the range of matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByUuid_C(String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of workflow metrics sla definition versions
+	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByUuid_C(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
+	 *
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
+	 * @return the matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByWorkflowMetricsSLADefinitionId(
+			long workflowMetricsSLADefinitionId) {
+
+		return findByWorkflowMetricsSLADefinitionId(
+			workflowMetricsSLADefinitionId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
+	 * @param start the lower bound of the range of workflow metrics sla definition versions
+	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
+	 * @return the range of matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByWorkflowMetricsSLADefinitionId(
+			long workflowMetricsSLADefinitionId, int start, int end) {
+
+		return findByWorkflowMetricsSLADefinitionId(
+			workflowMetricsSLADefinitionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.metrics.model.impl.WorkflowMetricsSLADefinitionVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
+	 * @param start the lower bound of the range of workflow metrics sla definition versions
+	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow metrics sla definition versions
+	 */
+	public default java.util.List<WorkflowMetricsSLADefinitionVersion>
+		findByWorkflowMetricsSLADefinitionId(
+			long workflowMetricsSLADefinitionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator) {
+
+		return findByWorkflowMetricsSLADefinitionId(
+			workflowMetricsSLADefinitionId, start, end, orderByComparator,
+			true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:255495473
+// LIFERAY-SERVICE-BUILDER-HASH:-1367646067

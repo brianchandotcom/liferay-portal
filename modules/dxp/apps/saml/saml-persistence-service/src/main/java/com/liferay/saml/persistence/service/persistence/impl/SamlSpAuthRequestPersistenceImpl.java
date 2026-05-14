@@ -258,20 +258,6 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpEntityId the saml idp entity ID
-	 * @param samlSpAuthRequestKey the saml sp auth request key
-	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest fetchBySIEI_SSARK(
-		String samlIdpEntityId, String samlSpAuthRequestKey) {
-
-		return fetchBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey, true);
-	}
-
-	/**
 	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
@@ -627,4 +613,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-129430445
+// LIFERAY-SERVICE-BUILDER-HASH:344870367

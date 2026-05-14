@@ -135,54 +135,6 @@ public class CommerceSubscriptionEntryUtil {
 	}
 
 	/**
-	 * Returns all the commerce subscription entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -270,19 +222,6 @@ public class CommerceSubscriptionEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public static CommerceSubscriptionEntry fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -319,60 +258,6 @@ public class CommerceSubscriptionEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -455,55 +340,6 @@ public class CommerceSubscriptionEntryUtil {
 	}
 
 	/**
-	 * Returns all the commerce subscription entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -574,57 +410,6 @@ public class CommerceSubscriptionEntryUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	 * Returns all the commerce subscription entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByCompanyId(
-		long companyId) {
-
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -716,18 +501,6 @@ public class CommerceSubscriptionEntryUtil {
 	}
 
 	/**
-	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceOrderItemId the commerce order item ID
-	 * @return the matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public static CommerceSubscriptionEntry fetchByCommerceOrderItemId(
-		long commerceOrderItemId) {
-
-		return getPersistence().fetchByCommerceOrderItemId(commerceOrderItemId);
-	}
-
-	/**
 	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param commerceOrderItemId the commerce order item ID
@@ -763,58 +536,6 @@ public class CommerceSubscriptionEntryUtil {
 	 */
 	public static int countByCommerceOrderItemId(long commerceOrderItemId) {
 		return getPersistence().countByCommerceOrderItemId(commerceOrderItemId);
-	}
-
-	/**
-	 * Returns all the commerce subscription entries where subscriptionStatus = &#63;.
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findBySubscriptionStatus(
-		int subscriptionStatus) {
-
-		return getPersistence().findBySubscriptionStatus(subscriptionStatus);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where subscriptionStatus = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findBySubscriptionStatus(
-		int subscriptionStatus, int start, int end) {
-
-		return getPersistence().findBySubscriptionStatus(
-			subscriptionStatus, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where subscriptionStatus = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param subscriptionStatus the subscription status
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findBySubscriptionStatus(
-		int subscriptionStatus, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findBySubscriptionStatus(
-			subscriptionStatus, start, end, orderByComparator);
 	}
 
 	/**
@@ -889,60 +610,6 @@ public class CommerceSubscriptionEntryUtil {
 	 */
 	public static int countBySubscriptionStatus(int subscriptionStatus) {
 		return getPersistence().countBySubscriptionStatus(subscriptionStatus);
-	}
-
-	/**
-	 * Returns all the commerce subscription entries where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByC_U(
-		long companyId, long userId) {
-
-		return getPersistence().findByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return getPersistence().findByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1022,64 +689,6 @@ public class CommerceSubscriptionEntryUtil {
 	 */
 	public static int countByC_U(long companyId, long userId) {
 		return getPersistence().countByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByG_C_U(
-		long groupId, long companyId, long userId) {
-
-		return getPersistence().findByG_C_U(groupId, companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @return the range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByG_C_U(
-		long groupId, long companyId, long userId, int start, int end) {
-
-		return getPersistence().findByG_C_U(
-			groupId, companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of commerce subscription entries
-	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce subscription entries
-	 */
-	public static List<CommerceSubscriptionEntry> findByG_C_U(
-		long groupId, long companyId, long userId, int start, int end,
-		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
-
-		return getPersistence().findByG_C_U(
-			groupId, companyId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1183,21 +792,6 @@ public class CommerceSubscriptionEntryUtil {
 		throws com.liferay.commerce.exception.NoSuchSubscriptionEntryException {
 
 		return getPersistence().findByC_C_C(
-			CPInstanceUuid, CProductId, commerceOrderItemId);
-	}
-
-	/**
-	 * Returns the commerce subscription entry where CPInstanceUuid = &#63; and CProductId = &#63; and commerceOrderItemId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPInstanceUuid the cp instance uuid
-	 * @param CProductId the c product ID
-	 * @param commerceOrderItemId the commerce order item ID
-	 * @return the matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
-	 */
-	public static CommerceSubscriptionEntry fetchByC_C_C(
-		String CPInstanceUuid, long CProductId, long commerceOrderItemId) {
-
-		return getPersistence().fetchByC_C_C(
 			CPInstanceUuid, CProductId, commerceOrderItemId);
 	}
 
@@ -1307,6 +901,412 @@ public class CommerceSubscriptionEntryUtil {
 		return getPersistence().fetchByPrimaryKey(commerceSubscriptionEntryId);
 	}
 
+	/**
+	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
+	 */
+	public static CommerceSubscriptionEntry fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commerceOrderItemId the commerce order item ID
+	 * @return the matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
+	 */
+	public static CommerceSubscriptionEntry fetchByCommerceOrderItemId(
+		long commerceOrderItemId) {
+
+		return getPersistence().fetchByCommerceOrderItemId(commerceOrderItemId);
+	}
+
+	/**
+	 * Returns the commerce subscription entry where CPInstanceUuid = &#63; and CProductId = &#63; and commerceOrderItemId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPInstanceUuid the cp instance uuid
+	 * @param CProductId the c product ID
+	 * @param commerceOrderItemId the commerce order item ID
+	 * @return the matching commerce subscription entry, or <code>null</code> if a matching commerce subscription entry could not be found
+	 */
+	public static CommerceSubscriptionEntry fetchByC_C_C(
+		String CPInstanceUuid, long CProductId, long commerceOrderItemId) {
+
+		return getPersistence().fetchByC_C_C(
+			CPInstanceUuid, CProductId, commerceOrderItemId);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByCompanyId(
+		long companyId) {
+
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where subscriptionStatus = &#63;.
+	 *
+	 * @param subscriptionStatus the subscription status
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findBySubscriptionStatus(
+		int subscriptionStatus) {
+
+		return getPersistence().findBySubscriptionStatus(subscriptionStatus);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where subscriptionStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param subscriptionStatus the subscription status
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findBySubscriptionStatus(
+		int subscriptionStatus, int start, int end) {
+
+		return getPersistence().findBySubscriptionStatus(
+			subscriptionStatus, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where subscriptionStatus = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param subscriptionStatus the subscription status
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findBySubscriptionStatus(
+		int subscriptionStatus, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findBySubscriptionStatus(
+			subscriptionStatus, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByC_U(
+		long companyId, long userId) {
+
+		return getPersistence().findByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return getPersistence().findByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findByC_U(
+			companyId, userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByG_C_U(
+		long groupId, long companyId, long userId) {
+
+		return getPersistence().findByG_C_U(groupId, companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @return the range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByG_C_U(
+		long groupId, long companyId, long userId, int start, int end) {
+
+		return getPersistence().findByG_C_U(
+			groupId, companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceSubscriptionEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of commerce subscription entries
+	 * @param end the upper bound of the range of commerce subscription entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce subscription entries
+	 */
+	public static List<CommerceSubscriptionEntry> findByG_C_U(
+		long groupId, long companyId, long userId, int start, int end,
+		OrderByComparator<CommerceSubscriptionEntry> orderByComparator) {
+
+		return getPersistence().findByG_C_U(
+			groupId, companyId, userId, start, end, orderByComparator);
+	}
+
 	public static CommerceSubscriptionEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1320,4 +1320,4 @@ public class CommerceSubscriptionEntryUtil {
 	private static volatile CommerceSubscriptionEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1164608587
+// LIFERAY-SERVICE-BUILDER-HASH:1679068045

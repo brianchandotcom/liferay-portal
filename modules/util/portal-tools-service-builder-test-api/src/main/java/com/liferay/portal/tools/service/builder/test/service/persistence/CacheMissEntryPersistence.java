@@ -72,4 +72,4 @@ public interface CacheMissEntryPersistence
 	public CacheMissEntry fetchByPrimaryKey(long cacheMissEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1421723344
+// LIFERAY-SERVICE-BUILDER-HASH:-476643536

@@ -33,48 +33,6 @@ public interface BatchPlannerMappingPersistence
 	 */
 
 	/**
-	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @return the matching batch planner mappings
-	 */
-	public java.util.List<BatchPlannerMapping> findByBatchPlannerPlanId(
-		long batchPlannerPlanId);
-
-	/**
-	 * Returns a range of all the batch planner mappings where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner mappings
-	 * @param end the upper bound of the range of batch planner mappings (not inclusive)
-	 * @return the range of matching batch planner mappings
-	 */
-	public java.util.List<BatchPlannerMapping> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the batch planner mappings where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner mappings
-	 * @param end the upper bound of the range of batch planner mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch planner mappings
-	 */
-	public java.util.List<BatchPlannerMapping> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerMapping>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the batch planner mappings where batchPlannerPlanId = &#63;.
 	 *
 	 * <p>
@@ -148,18 +106,6 @@ public interface BatchPlannerMappingPersistence
 			long batchPlannerPlanId, String externalFieldName,
 			String internalFieldName)
 		throws NoSuchMappingException;
-
-	/**
-	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param externalFieldName the external field name
-	 * @param internalFieldName the internal field name
-	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
-	 */
-	public BatchPlannerMapping fetchByBPPI_EFN_IFN(
-		long batchPlannerPlanId, String externalFieldName,
-		String internalFieldName);
 
 	/**
 	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -238,5 +184,77 @@ public interface BatchPlannerMappingPersistence
 	 */
 	public BatchPlannerMapping fetchByPrimaryKey(long batchPlannerMappingId);
 
+	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param externalFieldName the external field name
+	 * @param internalFieldName the internal field name
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	public default BatchPlannerMapping fetchByBPPI_EFN_IFN(
+		long batchPlannerPlanId, String externalFieldName,
+		String internalFieldName) {
+
+		return fetchByBPPI_EFN_IFN(
+			batchPlannerPlanId, externalFieldName, internalFieldName, true);
+	}
+
+	/**
+	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @return the matching batch planner mappings
+	 */
+	public default java.util.List<BatchPlannerMapping> findByBatchPlannerPlanId(
+		long batchPlannerPlanId) {
+
+		return findByBatchPlannerPlanId(
+			batchPlannerPlanId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the batch planner mappings where batchPlannerPlanId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param start the lower bound of the range of batch planner mappings
+	 * @param end the upper bound of the range of batch planner mappings (not inclusive)
+	 * @return the range of matching batch planner mappings
+	 */
+	public default java.util.List<BatchPlannerMapping> findByBatchPlannerPlanId(
+		long batchPlannerPlanId, int start, int end) {
+
+		return findByBatchPlannerPlanId(
+			batchPlannerPlanId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the batch planner mappings where batchPlannerPlanId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param start the lower bound of the range of batch planner mappings
+	 * @param end the upper bound of the range of batch planner mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching batch planner mappings
+	 */
+	public default java.util.List<BatchPlannerMapping> findByBatchPlannerPlanId(
+		long batchPlannerPlanId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BatchPlannerMapping>
+			orderByComparator) {
+
+		return findByBatchPlannerPlanId(
+			batchPlannerPlanId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-899281896
+// LIFERAY-SERVICE-BUILDER-HASH:-1860661767

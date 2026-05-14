@@ -43,14 +43,6 @@ public interface CacheDisabledEntryPersistence
 		throws NoSuchCacheDisabledEntryException;
 
 	/**
-	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching cache disabled entry, or <code>null</code> if a matching cache disabled entry could not be found
-	 */
-	public CacheDisabledEntry fetchByName(String name);
-
-	/**
 	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -114,5 +106,15 @@ public interface CacheDisabledEntryPersistence
 	 */
 	public CacheDisabledEntry fetchByPrimaryKey(long cacheDisabledEntryId);
 
+	/**
+	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching cache disabled entry, or <code>null</code> if a matching cache disabled entry could not be found
+	 */
+	public default CacheDisabledEntry fetchByName(String name) {
+		return fetchByName(name, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1476167898
+// LIFERAY-SERVICE-BUILDER-HASH:775664026

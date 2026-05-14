@@ -108,17 +108,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param fileEntryId the file entry ID
-	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
-	 */
-	@Override
-	public DLOpenerFileEntryReference fetchByFileEntryId(long fileEntryId) {
-		return fetchByFileEntryId(fileEntryId, true);
-	}
-
-	/**
 	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param fileEntryId the file entry ID
@@ -194,20 +183,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		}
 
 		return dlOpenerFileEntryReference;
-	}
-
-	/**
-	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param referenceType the reference type
-	 * @param fileEntryId the file entry ID
-	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
-	 */
-	@Override
-	public DLOpenerFileEntryReference fetchByR_F(
-		String referenceType, long fileEntryId) {
-
-		return fetchByR_F(referenceType, fileEntryId, true);
 	}
 
 	/**
@@ -582,4 +557,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2034839126
+// LIFERAY-SERVICE-BUILDER-HASH:1482131880

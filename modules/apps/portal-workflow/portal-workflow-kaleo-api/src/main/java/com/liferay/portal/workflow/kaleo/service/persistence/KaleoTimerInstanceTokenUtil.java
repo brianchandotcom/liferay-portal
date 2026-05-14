@@ -134,58 +134,6 @@ public class KaleoTimerInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @return the matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKaleoInstanceId(
-		long kaleoInstanceId) {
-
-		return getPersistence().findByKaleoInstanceId(kaleoInstanceId);
-	}
-
-	/**
-	 * Returns a range of all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param start the lower bound of the range of kaleo timer instance tokens
-	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
-	 * @return the range of matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKaleoInstanceId(
-		long kaleoInstanceId, int start, int end) {
-
-		return getPersistence().findByKaleoInstanceId(
-			kaleoInstanceId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceId the kaleo instance ID
-	 * @param start the lower bound of the range of kaleo timer instance tokens
-	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKaleoInstanceId(
-		long kaleoInstanceId, int start, int end,
-		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
-
-		return getPersistence().findByKaleoInstanceId(
-			kaleoInstanceId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
 	 *
 	 * <p>
@@ -278,20 +226,6 @@ public class KaleoTimerInstanceTokenUtil {
 	}
 
 	/**
-	 * Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param kaleoTimerId the kaleo timer ID
-	 * @return the matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
-	 */
-	public static KaleoTimerInstanceToken fetchByKITI_KTI(
-		long kaleoInstanceTokenId, long kaleoTimerId) {
-
-		return getPersistence().fetchByKITI_KTI(
-			kaleoInstanceTokenId, kaleoTimerId);
-	}
-
-	/**
 	 * Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
@@ -334,61 +268,6 @@ public class KaleoTimerInstanceTokenUtil {
 
 		return getPersistence().countByKITI_KTI(
 			kaleoInstanceTokenId, kaleoTimerId);
-	}
-
-	/**
-	 * Returns all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @return the matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKITI_C(
-		long kaleoInstanceTokenId, boolean completed) {
-
-		return getPersistence().findByKITI_C(kaleoInstanceTokenId, completed);
-	}
-
-	/**
-	 * Returns a range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param start the lower bound of the range of kaleo timer instance tokens
-	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
-	 * @return the range of matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKITI_C(
-		long kaleoInstanceTokenId, boolean completed, int start, int end) {
-
-		return getPersistence().findByKITI_C(
-			kaleoInstanceTokenId, completed, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param completed the completed
-	 * @param start the lower bound of the range of kaleo timer instance tokens
-	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKITI_C(
-		long kaleoInstanceTokenId, boolean completed, int start, int end,
-		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
-
-		return getPersistence().findByKITI_C(
-			kaleoInstanceTokenId, completed, start, end, orderByComparator);
 	}
 
 	/**
@@ -474,68 +353,6 @@ public class KaleoTimerInstanceTokenUtil {
 		long kaleoInstanceTokenId, boolean completed) {
 
 		return getPersistence().countByKITI_C(kaleoInstanceTokenId, completed);
-	}
-
-	/**
-	 * Returns all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @return the matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKITI_B_C(
-		long kaleoInstanceTokenId, boolean blocking, boolean completed) {
-
-		return getPersistence().findByKITI_B_C(
-			kaleoInstanceTokenId, blocking, completed);
-	}
-
-	/**
-	 * Returns a range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param start the lower bound of the range of kaleo timer instance tokens
-	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
-	 * @return the range of matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKITI_B_C(
-		long kaleoInstanceTokenId, boolean blocking, boolean completed,
-		int start, int end) {
-
-		return getPersistence().findByKITI_B_C(
-			kaleoInstanceTokenId, blocking, completed, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoInstanceTokenId the kaleo instance token ID
-	 * @param blocking the blocking
-	 * @param completed the completed
-	 * @param start the lower bound of the range of kaleo timer instance tokens
-	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo timer instance tokens
-	 */
-	public static List<KaleoTimerInstanceToken> findByKITI_B_C(
-		long kaleoInstanceTokenId, boolean blocking, boolean completed,
-		int start, int end,
-		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
-
-		return getPersistence().findByKITI_B_C(
-			kaleoInstanceTokenId, blocking, completed, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -690,6 +507,189 @@ public class KaleoTimerInstanceTokenUtil {
 		return getPersistence().fetchByPrimaryKey(kaleoTimerInstanceTokenId);
 	}
 
+	/**
+	 * Returns the kaleo timer instance token where kaleoInstanceTokenId = &#63; and kaleoTimerId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param kaleoTimerId the kaleo timer ID
+	 * @return the matching kaleo timer instance token, or <code>null</code> if a matching kaleo timer instance token could not be found
+	 */
+	public static KaleoTimerInstanceToken fetchByKITI_KTI(
+		long kaleoInstanceTokenId, long kaleoTimerId) {
+
+		return getPersistence().fetchByKITI_KTI(
+			kaleoInstanceTokenId, kaleoTimerId);
+	}
+
+	/**
+	 * Returns all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @return the matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKaleoInstanceId(
+		long kaleoInstanceId) {
+
+		return getPersistence().findByKaleoInstanceId(kaleoInstanceId);
+	}
+
+	/**
+	 * Returns a range of all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @return the range of matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKaleoInstanceId(
+		long kaleoInstanceId, int start, int end) {
+
+		return getPersistence().findByKaleoInstanceId(
+			kaleoInstanceId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKaleoInstanceId(
+		long kaleoInstanceId, int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+
+		return getPersistence().findByKaleoInstanceId(
+			kaleoInstanceId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param completed the completed
+	 * @return the matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKITI_C(
+		long kaleoInstanceTokenId, boolean completed) {
+
+		return getPersistence().findByKITI_C(kaleoInstanceTokenId, completed);
+	}
+
+	/**
+	 * Returns a range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @return the range of matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKITI_C(
+		long kaleoInstanceTokenId, boolean completed, int start, int end) {
+
+		return getPersistence().findByKITI_C(
+			kaleoInstanceTokenId, completed, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKITI_C(
+		long kaleoInstanceTokenId, boolean completed, int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+
+		return getPersistence().findByKITI_C(
+			kaleoInstanceTokenId, completed, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param blocking the blocking
+	 * @param completed the completed
+	 * @return the matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKITI_B_C(
+		long kaleoInstanceTokenId, boolean blocking, boolean completed) {
+
+		return getPersistence().findByKITI_B_C(
+			kaleoInstanceTokenId, blocking, completed);
+	}
+
+	/**
+	 * Returns a range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param blocking the blocking
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @return the range of matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKITI_B_C(
+		long kaleoInstanceTokenId, boolean blocking, boolean completed,
+		int start, int end) {
+
+		return getPersistence().findByKITI_B_C(
+			kaleoInstanceTokenId, blocking, completed, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo timer instance tokens where kaleoInstanceTokenId = &#63; and blocking = &#63; and completed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerInstanceTokenModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoInstanceTokenId the kaleo instance token ID
+	 * @param blocking the blocking
+	 * @param completed the completed
+	 * @param start the lower bound of the range of kaleo timer instance tokens
+	 * @param end the upper bound of the range of kaleo timer instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo timer instance tokens
+	 */
+	public static List<KaleoTimerInstanceToken> findByKITI_B_C(
+		long kaleoInstanceTokenId, boolean blocking, boolean completed,
+		int start, int end,
+		OrderByComparator<KaleoTimerInstanceToken> orderByComparator) {
+
+		return getPersistence().findByKITI_B_C(
+			kaleoInstanceTokenId, blocking, completed, start, end,
+			orderByComparator);
+	}
+
 	public static KaleoTimerInstanceTokenPersistence getPersistence() {
 		return _persistence;
 	}
@@ -703,4 +703,4 @@ public class KaleoTimerInstanceTokenUtil {
 	private static volatile KaleoTimerInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-389858721
+// LIFERAY-SERVICE-BUILDER-HASH:2137011285

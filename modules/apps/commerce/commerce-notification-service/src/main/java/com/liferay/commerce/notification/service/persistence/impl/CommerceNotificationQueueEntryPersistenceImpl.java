@@ -83,58 +83,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the commerce notification queue entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification queue entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @return the range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification queue entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce notification queue entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -226,68 +174,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceNotificationQueueEntry>
 		_collectionPersistenceFinderByCommerceNotificationTemplateId;
-
-	/**
-	 * Returns all the commerce notification queue entries where commerceNotificationTemplateId = &#63;.
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @return the matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry>
-		findByCommerceNotificationTemplateId(
-			long commerceNotificationTemplateId) {
-
-		return findByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification queue entries where commerceNotificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @return the range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry>
-		findByCommerceNotificationTemplateId(
-			long commerceNotificationTemplateId, int start, int end) {
-
-		return findByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification queue entries where commerceNotificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceNotificationTemplateId the commerce notification template ID
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry>
-		findByCommerceNotificationTemplateId(
-			long commerceNotificationTemplateId, int start, int end,
-			OrderByComparator<CommerceNotificationQueueEntry>
-				orderByComparator) {
-
-		return findByCommerceNotificationTemplateId(
-			commerceNotificationTemplateId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce notification queue entries where commerceNotificationTemplateId = &#63;.
@@ -396,57 +282,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceNotificationQueueEntry>
 		_collectionPersistenceFinderBySent;
-
-	/**
-	 * Returns all the commerce notification queue entries where sent = &#63;.
-	 *
-	 * @param sent the sent
-	 * @return the matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findBySent(boolean sent) {
-		return findBySent(sent, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification queue entries where sent = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sent the sent
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @return the range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findBySent(
-		boolean sent, int start, int end) {
-
-		return findBySent(sent, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification queue entries where sent = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sent the sent
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findBySent(
-		boolean sent, int start, int end,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return findBySent(sent, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce notification queue entries where sent = &#63;.
@@ -687,75 +522,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 	private CollectionPersistenceFinder<CommerceNotificationQueueEntry>
 		_collectionPersistenceFinderByG_C_C_S;
-
-	/**
-	 * Returns all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @return the matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findByG_C_C_S(
-		long groupId, long classNameId, long classPK, boolean sent) {
-
-		return findByG_C_C_S(
-			groupId, classNameId, classPK, sent, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @return the range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findByG_C_C_S(
-		long groupId, long classNameId, long classPK, boolean sent, int start,
-		int end) {
-
-		return findByG_C_C_S(
-			groupId, classNameId, classPK, sent, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param sent the sent
-	 * @param start the lower bound of the range of commerce notification queue entries
-	 * @param end the upper bound of the range of commerce notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification queue entries
-	 */
-	@Override
-	public List<CommerceNotificationQueueEntry> findByG_C_C_S(
-		long groupId, long classNameId, long classPK, boolean sent, int start,
-		int end,
-		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
-
-		return findByG_C_C_S(
-			groupId, classNameId, classPK, sent, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce notification queue entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and sent = &#63;.
@@ -1339,4 +1105,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1110156176
+// LIFERAY-SERVICE-BUILDER-HASH:268361127

@@ -135,54 +135,6 @@ public class CommerceTaxCategoryMappingUtil {
 	}
 
 	/**
-	 * Returns all the commerce tax category mappings where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the commerce tax category mappings where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce tax category mappings
-	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
-	 * @return the range of matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tax category mappings where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce tax category mappings
-	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce tax category mappings where uuid = &#63;.
 	 *
 	 * <p>
@@ -272,19 +224,6 @@ public class CommerceTaxCategoryMappingUtil {
 	}
 
 	/**
-	 * Returns the commerce tax category mapping where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	public static CommerceTaxCategoryMapping fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the commerce tax category mapping where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -322,60 +261,6 @@ public class CommerceTaxCategoryMappingUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the commerce tax category mappings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce tax category mappings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce tax category mappings
-	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
-	 * @return the range of matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tax category mappings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce tax category mappings
-	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -456,58 +341,6 @@ public class CommerceTaxCategoryMappingUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the commerce tax category mappings where commerceTaxMethodId = &#63;.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @return the matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByCommerceTaxMethodId(
-		long commerceTaxMethodId) {
-
-		return getPersistence().findByCommerceTaxMethodId(commerceTaxMethodId);
-	}
-
-	/**
-	 * Returns a range of all the commerce tax category mappings where commerceTaxMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param start the lower bound of the range of commerce tax category mappings
-	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
-	 * @return the range of matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByCommerceTaxMethodId(
-		long commerceTaxMethodId, int start, int end) {
-
-		return getPersistence().findByCommerceTaxMethodId(
-			commerceTaxMethodId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tax category mappings where commerceTaxMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param start the lower bound of the range of commerce tax category mappings
-	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tax category mappings
-	 */
-	public static List<CommerceTaxCategoryMapping> findByCommerceTaxMethodId(
-		long commerceTaxMethodId, int start, int end,
-		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
-
-		return getPersistence().findByCommerceTaxMethodId(
-			commerceTaxMethodId, start, end, orderByComparator);
 	}
 
 	/**
@@ -602,20 +435,6 @@ public class CommerceTaxCategoryMappingUtil {
 	}
 
 	/**
-	 * Returns the commerce tax category mapping where commerceTaxMethodId = &#63; and CPTaxCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceTaxMethodId the commerce tax method ID
-	 * @param CPTaxCategoryId the cp tax category ID
-	 * @return the matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	public static CommerceTaxCategoryMapping fetchByC_C(
-		long commerceTaxMethodId, long CPTaxCategoryId) {
-
-		return getPersistence().fetchByC_C(
-			commerceTaxMethodId, CPTaxCategoryId);
-	}
-
-	/**
 	 * Returns the commerce tax category mapping where commerceTaxMethodId = &#63; and CPTaxCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param commerceTaxMethodId the commerce tax method ID
@@ -675,19 +494,6 @@ public class CommerceTaxCategoryMappingUtil {
 			NoSuchTaxCategoryMappingException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the commerce tax category mapping where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
-	 */
-	public static CommerceTaxCategoryMapping fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -793,6 +599,200 @@ public class CommerceTaxCategoryMappingUtil {
 		return getPersistence().fetchByPrimaryKey(commerceTaxCategoryMappingId);
 	}
 
+	/**
+	 * Returns the commerce tax category mapping where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
+	 */
+	public static CommerceTaxCategoryMapping fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the commerce tax category mapping where commerceTaxMethodId = &#63; and CPTaxCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commerceTaxMethodId the commerce tax method ID
+	 * @param CPTaxCategoryId the cp tax category ID
+	 * @return the matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
+	 */
+	public static CommerceTaxCategoryMapping fetchByC_C(
+		long commerceTaxMethodId, long CPTaxCategoryId) {
+
+		return getPersistence().fetchByC_C(
+			commerceTaxMethodId, CPTaxCategoryId);
+	}
+
+	/**
+	 * Returns the commerce tax category mapping where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce tax category mapping, or <code>null</code> if a matching commerce tax category mapping could not be found
+	 */
+	public static CommerceTaxCategoryMapping fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the commerce tax category mappings where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce tax category mappings where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce tax category mappings
+	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
+	 * @return the range of matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax category mappings where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce tax category mappings
+	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce tax category mappings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce tax category mappings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce tax category mappings
+	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
+	 * @return the range of matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax category mappings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce tax category mappings
+	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce tax category mappings where commerceTaxMethodId = &#63;.
+	 *
+	 * @param commerceTaxMethodId the commerce tax method ID
+	 * @return the matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByCommerceTaxMethodId(
+		long commerceTaxMethodId) {
+
+		return getPersistence().findByCommerceTaxMethodId(commerceTaxMethodId);
+	}
+
+	/**
+	 * Returns a range of all the commerce tax category mappings where commerceTaxMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceTaxMethodId the commerce tax method ID
+	 * @param start the lower bound of the range of commerce tax category mappings
+	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
+	 * @return the range of matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByCommerceTaxMethodId(
+		long commerceTaxMethodId, int start, int end) {
+
+		return getPersistence().findByCommerceTaxMethodId(
+			commerceTaxMethodId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax category mappings where commerceTaxMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxCategoryMappingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceTaxMethodId the commerce tax method ID
+	 * @param start the lower bound of the range of commerce tax category mappings
+	 * @param end the upper bound of the range of commerce tax category mappings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tax category mappings
+	 */
+	public static List<CommerceTaxCategoryMapping> findByCommerceTaxMethodId(
+		long commerceTaxMethodId, int start, int end,
+		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
+
+		return getPersistence().findByCommerceTaxMethodId(
+			commerceTaxMethodId, start, end, orderByComparator);
+	}
+
 	public static CommerceTaxCategoryMappingPersistence getPersistence() {
 		return _persistence;
 	}
@@ -806,4 +806,4 @@ public class CommerceTaxCategoryMappingUtil {
 	private static volatile CommerceTaxCategoryMappingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1711172445
+// LIFERAY-SERVICE-BUILDER-HASH:-2093181647

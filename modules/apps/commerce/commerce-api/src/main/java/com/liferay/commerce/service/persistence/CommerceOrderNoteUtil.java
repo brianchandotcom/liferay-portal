@@ -127,54 +127,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns all the commerce order notes where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the commerce order notes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @return the range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order notes where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce order notes where uuid = &#63;.
 	 *
 	 * <p>
@@ -259,17 +211,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns the commerce order note where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the commerce order note where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -305,60 +246,6 @@ public class CommerceOrderNoteUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the commerce order notes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce order notes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @return the range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order notes where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -441,58 +328,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns all the commerce order notes where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @return the matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByCommerceOrderId(
-		long commerceOrderId) {
-
-		return getPersistence().findByCommerceOrderId(commerceOrderId);
-	}
-
-	/**
-	 * Returns a range of all the commerce order notes where commerceOrderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @return the range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByCommerceOrderId(
-		long commerceOrderId, int start, int end) {
-
-		return getPersistence().findByCommerceOrderId(
-			commerceOrderId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByCommerceOrderId(
-		long commerceOrderId, int start, int end,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().findByCommerceOrderId(
-			commerceOrderId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63;.
 	 *
 	 * <p>
@@ -564,61 +399,6 @@ public class CommerceOrderNoteUtil {
 	 */
 	public static int countByCommerceOrderId(long commerceOrderId) {
 		return getPersistence().countByCommerceOrderId(commerceOrderId);
-	}
-
-	/**
-	 * Returns all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @return the matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByC_R(
-		long commerceOrderId, boolean restricted) {
-
-		return getPersistence().findByC_R(commerceOrderId, restricted);
-	}
-
-	/**
-	 * Returns a range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @return the range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByC_R(
-		long commerceOrderId, boolean restricted, int start, int end) {
-
-		return getPersistence().findByC_R(
-			commerceOrderId, restricted, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param start the lower bound of the range of commerce order notes
-	 * @param end the upper bound of the range of commerce order notes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order notes
-	 */
-	public static List<CommerceOrderNote> findByC_R(
-		long commerceOrderId, boolean restricted, int start, int end,
-		OrderByComparator<CommerceOrderNote> orderByComparator) {
-
-		return getPersistence().findByC_R(
-			commerceOrderId, restricted, start, end, orderByComparator);
 	}
 
 	/**
@@ -717,19 +497,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Returns the commerce order note where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
-	 */
-	public static CommerceOrderNote fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
 	 * Returns the commerce order note where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -825,6 +592,239 @@ public class CommerceOrderNoteUtil {
 		return getPersistence().fetchByPrimaryKey(commerceOrderNoteId);
 	}
 
+	/**
+	 * Returns the commerce order note where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
+	 */
+	public static CommerceOrderNote fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the commerce order note where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
+	 */
+	public static CommerceOrderNote fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the commerce order notes where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce order notes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @return the range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order notes where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order notes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce order notes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @return the range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order notes where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order notes where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @return the matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByCommerceOrderId(
+		long commerceOrderId) {
+
+		return getPersistence().findByCommerceOrderId(commerceOrderId);
+	}
+
+	/**
+	 * Returns a range of all the commerce order notes where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @return the range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByCommerceOrderId(
+		long commerceOrderId, int start, int end) {
+
+		return getPersistence().findByCommerceOrderId(
+			commerceOrderId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByCommerceOrderId(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+
+		return getPersistence().findByCommerceOrderId(
+			commerceOrderId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @return the matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByC_R(
+		long commerceOrderId, boolean restricted) {
+
+		return getPersistence().findByC_R(commerceOrderId, restricted);
+	}
+
+	/**
+	 * Returns a range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @return the range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end) {
+
+		return getPersistence().findByC_R(
+			commerceOrderId, restricted, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order notes where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderNoteModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order notes
+	 */
+	public static List<CommerceOrderNote> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator) {
+
+		return getPersistence().findByC_R(
+			commerceOrderId, restricted, start, end, orderByComparator);
+	}
+
 	public static CommerceOrderNotePersistence getPersistence() {
 		return _persistence;
 	}
@@ -838,4 +838,4 @@ public class CommerceOrderNoteUtil {
 	private static volatile CommerceOrderNotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1104278729
+// LIFERAY-SERVICE-BUILDER-HASH:1099517401

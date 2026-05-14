@@ -71,4 +71,4 @@ public interface DataLimitEntryPersistence
 	public DataLimitEntry fetchByPrimaryKey(long dataLimitEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:205902586
+// LIFERAY-SERVICE-BUILDER-HASH:303779450

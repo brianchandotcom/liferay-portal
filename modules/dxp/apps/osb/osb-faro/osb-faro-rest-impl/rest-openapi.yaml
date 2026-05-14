@@ -273,6 +273,33 @@ components:
                     readOnly: true
                     type: string
             type: object
+        IndividualDemographicField:
+            description:
+                "A single demographic attribute attached to an individual (e.g. job title, age, country). Sourced from
+                connected data sources. Multiple attributes can share a category in `Individual.demographics`."
+            properties:
+                fieldType:
+                    description:
+                        "Logical data type of the value: (e.g. 'string', 'number', 'boolean', 'date'). Use this to
+                        interpret the `value` field."
+                    readOnly: true
+                    type: string
+                label:
+                    description:
+                        "Human-readable label for the attribute."
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Canonical attribute name. Can be used in filter expressions and OData queries."
+                    readOnly: true
+                    type: string
+                value:
+                    description:
+                        "Attribute value. Use with `fieldType` to convert to the appropriate type."
+                    readOnly: true
+                    type: string
+            type: object
         IndividualSegment:
             description:
                 "A saved audience definition that selects individuals matching a filter expression."

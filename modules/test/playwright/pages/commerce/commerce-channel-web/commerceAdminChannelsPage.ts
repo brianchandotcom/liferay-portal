@@ -20,6 +20,8 @@ export class CommerceAdminChannelsPage {
 		value: number | string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly channelActionsButton: (channelName: string) => Locator;
+	readonly channelLink: (name: string) => Locator;
 	readonly channelsTableRowLink: (channelName: string) => Promise<Locator>;
 	readonly modalAddButton: Locator;
 	readonly modalFieldName: Locator;
@@ -66,6 +68,13 @@ export class CommerceAdminChannelsPage {
 				strictEqual
 			);
 		};
+		this.channelActionsButton = (channelName: string) =>
+			page.getByRole('button', {
+				exact: true,
+				name: `${channelName} Actions`,
+			});
+		this.channelLink = (name: string) =>
+			page.getByRole('link', {exact: true, name});
 		this.channelsTableRowLink = async (channelName: string) => {
 			const channelsTableRow = await this.channelsTableRow(
 				0,

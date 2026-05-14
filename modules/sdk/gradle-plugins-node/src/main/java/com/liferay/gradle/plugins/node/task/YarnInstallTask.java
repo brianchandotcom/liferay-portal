@@ -34,6 +34,13 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 
 			setInstallArgs(installArgs.split("\\s+"));
 		}
+
+		String networkTimeout = GradleUtil.getProperty(
+			getProject(), "nodejs.yarn.install.network.timeout", (String)null);
+
+		if (Validator.isNotNull(networkTimeout)) {
+			_networkTimeout = Long.parseLong(networkTimeout);
+		}
 	}
 
 	@Override

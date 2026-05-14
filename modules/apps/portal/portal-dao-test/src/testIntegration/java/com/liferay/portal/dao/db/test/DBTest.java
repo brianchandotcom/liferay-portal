@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -736,9 +737,11 @@ public class DBTest {
 			futureTask = new FutureTask<>(
 				() -> {
 					try (Connection backgroundConnection =
-							DataAccess.getConnection()) {
+							DataAccess.getConnection();
+						Statement statement =
+							backgroundConnection.createStatement()) {
 
-						db.runSQL(backgroundConnection, slowQuery);
+						statement.execute(slowQuery);
 					}
 
 					return null;

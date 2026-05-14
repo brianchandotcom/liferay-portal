@@ -3165,6 +3165,104 @@
 			"name": "PublisherDetails",
 			"objectFields": [
 				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Publisher Name"
+					},
+					"name": "publisherName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_WEBSITE_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Website URL"
+					},
+					"name": "websiteURL",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_EMAIL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Email Address"
+					},
+					"name": "emailAddress",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_LOCATION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Location"
+					},
+					"name": "location",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_PROFILE_IMAGE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Publisher Profile Image"
+					},
+					"name": "publisherProfileImage",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
 					"externalReferenceCode": "C_PUBLISHER_DETAILS_CATALOG_ID",
@@ -3188,7 +3286,7 @@
 					"externalReferenceCode": "C_PUBLISHER_DETAILS_DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
+					"indexedLanguageId": "",
 					"label": {
 						"en_US": "Description"
 					},
@@ -3201,85 +3299,9 @@
 					"type": "Clob"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_EMAIL_ADDRESS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Email Address"
-					},
-					"name": "emailAddress",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_LOCATION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Location"
-					},
-					"name": "location",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_PUBLISHER_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Publisher Name"
-					},
-					"name": "publisherName",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_PUBLISHER_PROFILE_IMAGE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Publisher Profile Image"
-					},
-					"name": "publisherProfileImage",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
-				},
-				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_CONTACT_FORM",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_CONTACT",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -3297,7 +3319,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_ON_HOME_PAGE",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_ON_HOME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -3311,28 +3333,6 @@
 					"state": false,
 					"system": false,
 					"type": "Boolean"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_WEBSITE_URL",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Website URL"
-					},
-					"name": "websiteURL",
-					"objectFieldSettings": [
-						{
-							"name": "showCounter",
-							"value": false
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
 				}
 			],
 			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
@@ -3342,10 +3342,10 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Publisher Details"
+				"en_US": "Publishers Details"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/publisherdetails",
+			"restContextPath": "/o/c/publisherdetailses",
 			"scope": "company",
 			"status": {
 				"code": 0,

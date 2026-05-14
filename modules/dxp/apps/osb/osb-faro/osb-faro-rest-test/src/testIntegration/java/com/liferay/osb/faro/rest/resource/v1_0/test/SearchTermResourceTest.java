@@ -17,4 +17,3 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class SearchTermResourceTest extends BaseSearchTermResourceTestCase {
 }
-// LIFERAY-REST-BUILDER-HASH:1016718369

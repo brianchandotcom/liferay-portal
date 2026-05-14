@@ -18,4 +18,3 @@ import org.junit.runner.RunWith;
 public class IndividualSegmentMembershipResourceTest
 	extends BaseIndividualSegmentMembershipResourceTestCase {
 }
-// LIFERAY-REST-BUILDER-HASH:-1096275055

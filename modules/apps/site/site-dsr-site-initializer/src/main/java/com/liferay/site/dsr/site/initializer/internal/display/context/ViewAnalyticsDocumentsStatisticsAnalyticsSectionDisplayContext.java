@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.display.context;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRSiteInitializerFDSNames;
@@ -20,10 +21,13 @@ public class ViewAnalyticsDocumentsStatisticsAnalyticsSectionDisplayContext
 	extends BaseAnalyticsSectionDisplayContext {
 
 	public ViewAnalyticsDocumentsStatisticsAnalyticsSectionDisplayContext(
+		AnalyticsSettingsManager analyticsSettingsManager,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
 
-		super(null, null, null, httpServletRequest, objectDefinition);
+		super(
+			analyticsSettingsManager, null, null, null, httpServletRequest,
+			objectDefinition);
 	}
 
 	@Override

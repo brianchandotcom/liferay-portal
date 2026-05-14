@@ -73,6 +73,7 @@ public class ViewAnalyticsEngagementChartJSPSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return new ViewAnalyticsEngagementChartAnalyticsSectionDisplayContext(
+			analyticsSettingsManager,
 			getConfigurationJSONObject(fragmentRendererContext),
 			_fragmentEntryConfigurationParser,
 			fragmentRendererContext.getFragmentEntryLink(), httpServletRequest,

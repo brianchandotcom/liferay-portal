@@ -95,9 +95,9 @@ const formatData = (data: IRoomStatistics): IRoomStatisticsItem[] => {
 };
 
 const RoomStatistics = ({
-	isAnalyticsCloudConfigured,
+	isAnalyticsCloudEnabled,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsCloudEnabled: boolean;
 }) => {
 	const [data, setData] = useState<IRoomStatisticsItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
@@ -124,7 +124,7 @@ const RoomStatistics = ({
 				},
 			],
 		},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsCloudEnabled},
 		variables: {
 			rangeKey: 7,
 		},
@@ -141,7 +141,7 @@ const RoomStatistics = ({
 	return (
 		<AnalyticsFrame>
 			<div className="room-statistics-container" ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsCloudEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

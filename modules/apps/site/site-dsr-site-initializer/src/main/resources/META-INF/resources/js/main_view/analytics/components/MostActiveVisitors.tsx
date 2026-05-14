@@ -15,10 +15,10 @@ import AnalyticsFrame from './AnalyticsFrame';
 import Loader from './Loader';
 
 const MostActiveVisitors = ({
-	isAnalyticsCloudConfigured,
+	isAnalyticsCloudEnabled,
 	namespace,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsCloudEnabled: boolean;
 	namespace: string;
 }) => {
 	const [data, setData] = useState<TVisitor[]>([]);
@@ -29,7 +29,7 @@ const MostActiveVisitors = ({
 		query: {
 			paths: [{key: 'mostActiveVisitors', path: '/most-active-visitors'}],
 		},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsCloudEnabled},
 		variables: {
 			rangeKey: 7,
 			size: 10,
@@ -49,7 +49,7 @@ const MostActiveVisitors = ({
 			title={Liferay.Language.get('most-active-visitors')}
 		>
 			<div className="most-active-visitors-container" ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsCloudEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

@@ -17,10 +17,10 @@ import Loader from './Loader';
 import {TimeDataRenderer} from './data_renderers/TimeDataRenderer';
 
 const LatestActivity = ({
-	isAnalyticsCloudConfigured,
+	isAnalyticsCloudEnabled,
 	namespace,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsCloudEnabled: boolean;
 	namespace: string;
 }) => {
 	const [data, setData] = useState<TLatestActivity[]>([]);
@@ -29,7 +29,7 @@ const LatestActivity = ({
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
 		query: {paths: [{key: 'events', path: '/events'}]},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsCloudEnabled},
 		variables: {
 			includeAnonymousUsers: false,
 			page: 0,
@@ -58,10 +58,14 @@ const LatestActivity = ({
 		<AnalyticsFrame
 			icon="click"
 			title={Liferay.Language.get('latest-activity')}
-			url={`${BASE_URL}/view-timeline`}
+			url={
+				isAnalyticsCloudEnabled
+					? `${BASE_URL}/view-timeline`
+					: undefined
+			}
 		>
 			<div className="latest-activity-container" ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsCloudEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

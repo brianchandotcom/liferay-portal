@@ -5,6 +5,7 @@
 
 package com.liferay.site.dsr.site.initializer.internal.fragment.renderer;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
@@ -81,6 +82,9 @@ public abstract class BaseJSPSectionFragmentRenderer<T>
 	}
 
 	protected abstract String getLabelKey();
+
+	@Reference
+	protected AnalyticsSettingsManager analyticsSettingsManager;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.dsr.site.initializer)"

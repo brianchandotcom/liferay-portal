@@ -62,9 +62,9 @@ const formatData = (
 };
 
 function FrequencyChart({
-	isAnalyticsCloudConfigured,
+	isAnalyticsCloudEnabled,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsCloudEnabled: boolean;
 }) {
 	const [data, setData] = useState<IFrequencyChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
@@ -72,7 +72,7 @@ function FrequencyChart({
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
 		query: {paths: [{key: 'visitFrequency', path: '/visit-frequency'}]},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsCloudEnabled},
 		variables: {
 			rangeKey: 30,
 		},
@@ -92,7 +92,7 @@ function FrequencyChart({
 			title={Liferay.Language.get('visits-frequency')}
 		>
 			<div ref={setElement}>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsCloudEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

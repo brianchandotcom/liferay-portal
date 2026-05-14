@@ -16,10 +16,10 @@ import AnalyticsFrame from './AnalyticsFrame';
 import Loader from './Loader';
 
 const RoomDocumentsStatistics = ({
-	isAnalyticsCloudConfigured,
+	isAnalyticsCloudEnabled,
 	namespace,
 }: {
-	isAnalyticsCloudConfigured: boolean;
+	isAnalyticsCloudEnabled: boolean;
 	namespace: string;
 }) => {
 	const [data, setData] = useState<TRoomDocumentsStatistics[]>([]);
@@ -28,7 +28,7 @@ const RoomDocumentsStatistics = ({
 	const {isLoading, response} = useAnalyticsQuery({
 		element,
 		query: {paths: [{key: 'documents', path: '/documents-metric'}]},
-		settings: {isAnalyticsCloudConfigured},
+		settings: {isAnalyticsCloudEnabled},
 		variables: {
 			keywords: '',
 			rangeEnd: null,
@@ -83,7 +83,7 @@ const RoomDocumentsStatistics = ({
 				className="room-documents-statistics-container"
 				ref={setElement}
 			>
-				{isAnalyticsCloudConfigured ? (
+				{isAnalyticsCloudEnabled ? (
 					isLoading ? (
 						<Loader />
 					) : !data?.length ? (

@@ -56,7 +56,7 @@ describe('EngagementTimelineChart component', () => {
 
 	beforeEach(() => {
 		const view = render(
-			<TimelineEngagementChart isAnalyticsCloudConfigured={true} />
+			<TimelineEngagementChart isAnalyticsCloudEnabled={true} />
 		);
 
 		container = view.container;

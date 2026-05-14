@@ -5,10 +5,10 @@
 
 import React, {useEffect, useState} from 'react';
 
-import './HomeDashboard.scss';
 import {getAgentDefinitions} from '../agent_definition_form/services/AgentDefinitionService';
 import {getChatbots} from '../chatbot_form/services/ChatbotService';
 import DashboardCard from './components/DashboardCard';
+import DashboardCardSkeleton from './components/DashboardCardSkeleton';
 
 interface Entry {
 	active: boolean;
@@ -193,9 +193,11 @@ function HomeDashboardSection({
 					{errorLabel}
 				</p>
 			) : items === null ? (
-				<p className="home-dashboard__section-message text-secondary">
-					{Liferay.Language.get('loading')}
-				</p>
+				<div className="home-dashboard__cards">
+					{Array.from({length: take}).map((_, index) => (
+						<DashboardCardSkeleton key={index} />
+					))}
+				</div>
 			) : !items.length ? (
 				<p className="home-dashboard__section-message text-secondary">
 					{emptyLabel}

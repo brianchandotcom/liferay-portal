@@ -125,55 +125,6 @@ public class ArrayableEntryUtil {
 	}
 
 	/**
-	 * Returns all the arrayable entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching arrayable entries
-	 */
-	public static List<ArrayableEntry> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the arrayable entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.ArrayableEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of arrayable entries
-	 * @param end the upper bound of the range of arrayable entries (not inclusive)
-	 * @return the range of matching arrayable entries
-	 */
-	public static List<ArrayableEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the arrayable entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.ArrayableEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of arrayable entries
-	 * @param end the upper bound of the range of arrayable entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching arrayable entries
-	 */
-	public static List<ArrayableEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<ArrayableEntry> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the arrayable entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -383,6 +334,55 @@ public class ArrayableEntryUtil {
 		return getPersistence().fetchByPrimaryKey(arrayableEntryId);
 	}
 
+	/**
+	 * Returns all the arrayable entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching arrayable entries
+	 */
+	public static List<ArrayableEntry> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the arrayable entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.ArrayableEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of arrayable entries
+	 * @param end the upper bound of the range of arrayable entries (not inclusive)
+	 * @return the range of matching arrayable entries
+	 */
+	public static List<ArrayableEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the arrayable entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.ArrayableEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of arrayable entries
+	 * @param end the upper bound of the range of arrayable entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching arrayable entries
+	 */
+	public static List<ArrayableEntry> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<ArrayableEntry> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
 	public static ArrayableEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -394,4 +394,4 @@ public class ArrayableEntryUtil {
 	private static volatile ArrayableEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:206708577
+// LIFERAY-SERVICE-BUILDER-HASH:733067407

@@ -369,4 +369,4 @@ public interface ArrayableEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2057143353
+// LIFERAY-SERVICE-BUILDER-HASH:653062057

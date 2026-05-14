@@ -305,4 +305,4 @@ public interface WhereClauseEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-574495956
+// LIFERAY-SERVICE-BUILDER-HASH:-629508892

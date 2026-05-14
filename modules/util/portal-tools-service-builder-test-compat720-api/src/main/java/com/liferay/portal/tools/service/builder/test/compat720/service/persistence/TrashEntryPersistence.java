@@ -152,4 +152,4 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-260330591
+// LIFERAY-SERVICE-BUILDER-HASH:519682831

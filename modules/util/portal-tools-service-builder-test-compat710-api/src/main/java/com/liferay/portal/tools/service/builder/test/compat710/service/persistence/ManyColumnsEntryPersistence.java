@@ -162,4 +162,4 @@ public interface ManyColumnsEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1433881515
+// LIFERAY-SERVICE-BUILDER-HASH:-1500657445

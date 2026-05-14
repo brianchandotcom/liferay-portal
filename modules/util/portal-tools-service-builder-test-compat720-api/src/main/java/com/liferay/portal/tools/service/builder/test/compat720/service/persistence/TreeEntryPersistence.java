@@ -173,4 +173,4 @@ public interface TreeEntryPersistence extends BasePersistence<TreeEntry> {
 	public void setRebuildTreeEnabled(boolean rebuildTreeEnabled);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1111226613
+// LIFERAY-SERVICE-BUILDER-HASH:-88290075

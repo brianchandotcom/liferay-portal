@@ -46,17 +46,6 @@ public interface LikeFinderEntryPersistence
 		throws NoSuchLikeFinderEntryException;
 
 	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId);
-
-	/**
 	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param ownerId the owner ID
@@ -260,5 +249,19 @@ public interface LikeFinderEntryPersistence
 	 */
 	public LikeFinderEntry fetchByPrimaryKey(long likeFinderEntryId);
 
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	public default LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId) {
+
+		return fetchByO_O_P(ownerId, ownerType, portletId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1597207203
+// LIFERAY-SERVICE-BUILDER-HASH:1704232132

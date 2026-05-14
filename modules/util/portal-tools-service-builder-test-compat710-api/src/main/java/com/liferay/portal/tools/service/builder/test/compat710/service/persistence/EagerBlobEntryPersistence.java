@@ -357,4 +357,4 @@ public interface EagerBlobEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1098308546
+// LIFERAY-SERVICE-BUILDER-HASH:312170002

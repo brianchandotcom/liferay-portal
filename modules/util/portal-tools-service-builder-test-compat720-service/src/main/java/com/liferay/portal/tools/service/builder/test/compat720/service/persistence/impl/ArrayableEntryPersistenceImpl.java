@@ -1576,4 +1576,4 @@ public class ArrayableEntryPersistenceImpl
 		new String[] {"integer", "type"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-604980800
+// LIFERAY-SERVICE-BUILDER-HASH:-861100823

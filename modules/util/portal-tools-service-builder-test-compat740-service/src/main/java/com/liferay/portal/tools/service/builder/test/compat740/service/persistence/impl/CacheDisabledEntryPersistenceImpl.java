@@ -100,17 +100,6 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching cache disabled entry, or <code>null</code> if a matching cache disabled entry could not be found
-	 */
-	@Override
-	public CacheDisabledEntry fetchByName(String name) {
-		return fetchByName(name, true);
-	}
-
-	/**
 	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -394,4 +383,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2023289541
+// LIFERAY-SERVICE-BUILDER-HASH:1022509594

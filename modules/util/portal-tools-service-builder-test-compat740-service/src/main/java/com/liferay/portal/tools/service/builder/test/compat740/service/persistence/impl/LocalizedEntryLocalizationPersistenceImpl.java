@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -77,65 +76,10 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		_collectionPersistenceFinderByLocalizedEntryId;
 
 	/**
-	 * Returns all the localized entry localizations where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @return the matching localized entry localizations
-	 */
-	@Override
-	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
-		long localizedEntryId) {
-
-		return findByLocalizedEntryId(
-			localizedEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the localized entry localizations where localizedEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param start the lower bound of the range of localized entry localizations
-	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
-	 * @return the range of matching localized entry localizations
-	 */
-	@Override
-	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
-		long localizedEntryId, int start, int end) {
-
-		return findByLocalizedEntryId(localizedEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the localized entry localizations where localizedEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param start the lower bound of the range of localized entry localizations
-	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching localized entry localizations
-	 */
-	@Override
-	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
-		long localizedEntryId, int start, int end,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
-
-		return findByLocalizedEntryId(
-			localizedEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the localized entry localizations where localizedEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param localizedEntryId the localized entry ID
@@ -256,21 +200,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		}
 
 		return localizedEntryLocalization;
-	}
-
-	/**
-	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param languageId the language ID
-	 * @return the matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
-	 */
-	@Override
-	public LocalizedEntryLocalization fetchByLocalizedEntryId_LanguageId(
-		long localizedEntryId, String languageId) {
-
-		return fetchByLocalizedEntryId_LanguageId(
-			localizedEntryId, languageId, true);
 	}
 
 	/**
@@ -631,4 +560,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-144748551
+// LIFERAY-SERVICE-BUILDER-HASH:412304633

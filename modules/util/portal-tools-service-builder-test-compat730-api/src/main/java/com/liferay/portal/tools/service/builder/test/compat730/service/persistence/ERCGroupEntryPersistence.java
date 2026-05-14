@@ -553,4 +553,4 @@ public interface ERCGroupEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-13030015
+// LIFERAY-SERVICE-BUILDER-HASH:-403933905

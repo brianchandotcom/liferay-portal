@@ -7,16 +7,13 @@
 
 <%
 String currentPortletId = PortalUtil.getPortletId(request);
-String forceReconsentScope;
+String forceReconsentScope = "SYSTEM";
 
 if (ConfigurationAdminPortletKeys.INSTANCE_SETTINGS.equals(currentPortletId)) {
 	forceReconsentScope = "COMPANY";
 }
 else if (ConfigurationAdminPortletKeys.SITE_SETTINGS.equals(currentPortletId)) {
 	forceReconsentScope = "GROUP";
-}
-else {
-	forceReconsentScope = "SYSTEM";
 }
 
 String forceReconsentURL = ResourceURLBuilder.createResourceURL(

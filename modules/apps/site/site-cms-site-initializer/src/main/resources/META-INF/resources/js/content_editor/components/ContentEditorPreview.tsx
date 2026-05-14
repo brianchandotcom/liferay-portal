@@ -29,9 +29,11 @@ const PREVIEW_WIDTH_MIN = 500;
 const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
 export default function ContentEditorPreview({
+	defaultLanguageId,
 	getPreviewDataURL,
 	title,
 }: {
+	defaultLanguageId: Liferay.Language.Locale;
 	getPreviewDataURL: string;
 	title: string;
 }) {

@@ -330,6 +330,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				BaseObjectEntryResourceImpl.class.getMethods(),
 				objectScopeProvider);
 
+			if (objectDefinition.isRootDescendantNode() &&
+				!objectDefinition.isAllowStandaloneObjectEntry()) {
+
+				excludedOperationIds.addAll(_objectEntryCRUDOperationIds);
+			}
+
 			if (objectDefinition.isModifiableAndSystem()) {
 				ObjectEntryScopeProvider objectEntryScopeProvider =
 					_objectEntryScopeProviderRegistry.
@@ -1143,6 +1149,18 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionDeployerImpl.class);
+
+	private static final List<String> _objectEntryCRUDOperationIds =
+		Arrays.asList(
+			"deleteByExternalReferenceCode", "deleteObjectEntry",
+			"deleteScopeScopeKeyByExternalReferenceCode",
+			"getByExternalReferenceCode", "getObjectEntriesPage",
+			"getObjectEntry", "getScopeScopeKeyByExternalReferenceCode",
+			"getScopeScopeKeyPage", "patchByExternalReferenceCode",
+			"patchObjectEntry", "patchScopeScopeKeyByExternalReferenceCode",
+			"postObjectEntry", "postScopeScopeKey",
+			"putByExternalReferenceCode", "putObjectEntry",
+			"putScopeScopeKeyByExternalReferenceCode");
 
 	private final Map<String, Dictionary<String, Object>>
 		_applicationPropertiesMap = new HashMap<>();

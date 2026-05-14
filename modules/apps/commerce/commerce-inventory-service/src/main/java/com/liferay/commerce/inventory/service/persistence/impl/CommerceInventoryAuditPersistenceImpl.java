@@ -77,8 +77,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
-	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 	private CollectionPersistenceFinder<CommerceInventoryAudit>
 		_collectionPersistenceFinderByLtCreateDate;
 
@@ -225,9 +223,6 @@ public class CommerceInventoryAuditPersistenceImpl
 			finderCache, new Object[] {createDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_S_U;
-	private FinderPath _finderPathCountByC_S_U;
 	private CollectionPersistenceFinder<CommerceInventoryAudit>
 		_collectionPersistenceFinderByC_S_U;
 
@@ -624,23 +619,23 @@ public class CommerceInventoryAuditPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"createDate"}, true);
-
-		_finderPathWithPaginationCountByLtCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateDate",
-			new String[] {Date.class.getName()}, new String[] {"createDate"},
-			false);
-
 		_collectionPersistenceFinderByLtCreateDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtCreateDate, null,
-				_finderPathWithPaginationCountByLtCreateDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtCreateDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"createDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtCreateDate", new String[] {Date.class.getName()},
+					new String[] {"createDate"}, false),
 				_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE,
 				CommerceInventoryAuditModelImpl.ORDER_BY_JPQL,
@@ -650,36 +645,32 @@ public class CommerceInventoryAuditPersistenceImpl
 					FinderColumn.Type.DATE, "<", true, true,
 					CommerceInventoryAudit::getCreateDate));
 
-		_finderPathWithPaginationFindByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, true,
-			null);
-
-		_finderPathCountByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, false,
-			null);
-
 		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S_U,
-			_finderPathWithoutPaginationFindByC_S_U, _finderPathCountByC_S_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6,
+				false, null),
 			_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE,
 			CommerceInventoryAuditModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -761,4 +752,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1749146241
+// LIFERAY-SERVICE-BUILDER-HASH:1449141063

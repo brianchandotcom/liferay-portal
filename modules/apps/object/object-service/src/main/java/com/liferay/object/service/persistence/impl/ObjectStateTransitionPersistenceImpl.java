@@ -79,9 +79,6 @@ public class ObjectStateTransitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectStateTransition>
 		_collectionPersistenceFinderByUuid;
 
@@ -226,9 +223,6 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectStateTransition>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -385,9 +379,6 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectStateFlowId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectStateFlowId;
-	private FinderPath _finderPathCountByObjectStateFlowId;
 	private CollectionPersistenceFinder<ObjectStateTransition>
 		_collectionPersistenceFinderByObjectStateFlowId;
 
@@ -539,9 +530,6 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {objectStateFlowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySourceObjectStateId;
-	private FinderPath _finderPathWithoutPaginationFindBySourceObjectStateId;
-	private FinderPath _finderPathCountBySourceObjectStateId;
 	private CollectionPersistenceFinder<ObjectStateTransition>
 		_collectionPersistenceFinderBySourceObjectStateId;
 
@@ -693,9 +681,6 @@ public class ObjectStateTransitionPersistenceImpl
 			finderCache, new Object[] {sourceObjectStateId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByTargetObjectStateId;
-	private FinderPath _finderPathWithoutPaginationFindByTargetObjectStateId;
-	private FinderPath _finderPathCountByTargetObjectStateId;
 	private CollectionPersistenceFinder<ObjectStateTransition>
 		_collectionPersistenceFinderByTargetObjectStateId;
 
@@ -1079,27 +1064,23 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 			_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 			ObjectStateTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1108,30 +1089,25 @@ public class ObjectStateTransitionPersistenceImpl
 				"objectStateTransition.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectStateTransition::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
@@ -1144,29 +1120,28 @@ public class ObjectStateTransitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectStateTransition::getCompanyId));
 
-		_finderPathWithPaginationFindByObjectStateFlowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectStateFlowId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectStateFlowId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectStateFlowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectStateFlowId", new String[] {Long.class.getName()},
-			new String[] {"objectStateFlowId"}, true);
-
-		_finderPathCountByObjectStateFlowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectStateFlowId", new String[] {Long.class.getName()},
-			new String[] {"objectStateFlowId"}, false);
-
 		_collectionPersistenceFinderByObjectStateFlowId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectStateFlowId,
-				_finderPathWithoutPaginationFindByObjectStateFlowId,
-				_finderPathCountByObjectStateFlowId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectStateFlowId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectStateFlowId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectStateFlowId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectStateFlowId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectStateFlowId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectStateFlowId"}, false),
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
@@ -1176,29 +1151,28 @@ public class ObjectStateTransitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectStateTransition::getObjectStateFlowId));
 
-		_finderPathWithPaginationFindBySourceObjectStateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySourceObjectStateId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"sourceObjectStateId"}, true);
-
-		_finderPathWithoutPaginationFindBySourceObjectStateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySourceObjectStateId", new String[] {Long.class.getName()},
-			new String[] {"sourceObjectStateId"}, true);
-
-		_finderPathCountBySourceObjectStateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySourceObjectStateId", new String[] {Long.class.getName()},
-			new String[] {"sourceObjectStateId"}, false);
-
 		_collectionPersistenceFinderBySourceObjectStateId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySourceObjectStateId,
-				_finderPathWithoutPaginationFindBySourceObjectStateId,
-				_finderPathCountBySourceObjectStateId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySourceObjectStateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"sourceObjectStateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySourceObjectStateId",
+					new String[] {Long.class.getName()},
+					new String[] {"sourceObjectStateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySourceObjectStateId",
+					new String[] {Long.class.getName()},
+					new String[] {"sourceObjectStateId"}, false),
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
@@ -1208,29 +1182,28 @@ public class ObjectStateTransitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectStateTransition::getSourceObjectStateId));
 
-		_finderPathWithPaginationFindByTargetObjectStateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTargetObjectStateId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"targetObjectStateId"}, true);
-
-		_finderPathWithoutPaginationFindByTargetObjectStateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByTargetObjectStateId", new String[] {Long.class.getName()},
-			new String[] {"targetObjectStateId"}, true);
-
-		_finderPathCountByTargetObjectStateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByTargetObjectStateId", new String[] {Long.class.getName()},
-			new String[] {"targetObjectStateId"}, false);
-
 		_collectionPersistenceFinderByTargetObjectStateId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByTargetObjectStateId,
-				_finderPathWithoutPaginationFindByTargetObjectStateId,
-				_finderPathCountByTargetObjectStateId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByTargetObjectStateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"targetObjectStateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByTargetObjectStateId",
+					new String[] {Long.class.getName()},
+					new String[] {"targetObjectStateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByTargetObjectStateId",
+					new String[] {Long.class.getName()},
+					new String[] {"targetObjectStateId"}, false),
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
@@ -1306,4 +1279,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1675642567
+// LIFERAY-SERVICE-BUILDER-HASH:154412951

@@ -93,9 +93,6 @@ public class AccountGroupPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByUuid;
 
@@ -300,9 +297,6 @@ public class AccountGroupPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -527,9 +521,6 @@ public class AccountGroupPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAccountGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountGroupId;
-	private FinderPath _finderPathCountByAccountGroupId;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByAccountGroupId;
 
@@ -914,9 +905,6 @@ public class AccountGroupPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(accountGroupIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -1126,9 +1114,6 @@ public class AccountGroupPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_D;
-	private FinderPath _finderPathWithoutPaginationFindByC_D;
-	private FinderPath _finderPathCountByC_D;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByC_D;
 
@@ -1364,8 +1349,6 @@ public class AccountGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LikeN;
-	private FinderPath _finderPathWithPaginationCountByC_LikeN;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByC_LikeN;
 
@@ -1590,9 +1573,6 @@ public class AccountGroupPersistenceImpl
 			finderCache, new Object[] {companyId, name}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_T;
-	private FinderPath _finderPathCountByC_T;
 	private FilterCollectionPersistenceFinder<AccountGroup>
 		_collectionPersistenceFinderByC_T;
 
@@ -1816,7 +1796,6 @@ public class AccountGroupPersistenceImpl
 			finderCache, new Object[] {companyId, type}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<AccountGroup>
 		_uniquePersistenceFinderByERC_C;
 
@@ -2197,78 +2176,68 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountGroup.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, AccountGroup::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_ACCOUNTGROUP_WHERE,
-				_SQL_COUNT_ACCOUNTGROUP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2278,117 +2247,108 @@ public class AccountGroupPersistenceImpl
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId));
 
-		_finderPathWithPaginationFindByAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountGroupId"}, true);
-
-		_finderPathCountByAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByAccountGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountGroupId"}, false);
-
 		_collectionPersistenceFinderByAccountGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountGroupId,
-				_finderPathWithoutPaginationFindByAccountGroupId,
-				_finderPathCountByAccountGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountGroupId", new String[] {Long.class.getName()},
+					new String[] {"accountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByAccountGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountGroupId"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"accountGroup.", "accountGroupId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountGroup::getAccountGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_ACCOUNTGROUP_WHERE,
-				_SQL_COUNT_ACCOUNTGROUP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId));
 
-		_finderPathWithPaginationFindByC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_D",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "defaultAccountGroup"}, true);
-
-		_finderPathWithoutPaginationFindByC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "defaultAccountGroup"}, true);
-
-		_finderPathCountByC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "defaultAccountGroup"}, false);
-
 		_collectionPersistenceFinderByC_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_D,
-				_finderPathWithoutPaginationFindByC_D, _finderPathCountByC_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_D",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "defaultAccountGroup"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_D",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"companyId", "defaultAccountGroup"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"companyId", "defaultAccountGroup"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2399,34 +2359,31 @@ public class AccountGroupPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					AccountGroup::isDefaultAccountGroup));
 
-		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name"}, true);
-
-		_finderPathWithPaginationCountByC_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false);
-
 		_collectionPersistenceFinderByC_LikeN =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_LikeN, null,
-				_finderPathWithPaginationCountByC_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2436,39 +2393,34 @@ public class AccountGroupPersistenceImpl
 					"accountGroup.", "name", FinderColumn.Type.STRING, "LIKE",
 					false, true, AccountGroup::getName));
 
-		_finderPathWithPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_T,
-				_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "type_"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "type_"}, 0, 2, false, null),
 				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
 				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountGroupImpl.class, AccountGroup.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE,
+					AccountGroupImpl.class, AccountGroup.class, "accountGroup",
+					"AccountGroup", "accountGroup.accountGroupId",
+					"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ",
+					"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ",
+					") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId",
+					"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ",
 					AccountGroupModelImpl.ORDER_BY_SQL,
 					AccountGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2478,15 +2430,16 @@ public class AccountGroupPersistenceImpl
 					"accountGroup.", "type", FinderColumn.Type.STRING, "=",
 					true, true, AccountGroup::getType));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(AccountGroup::getExternalReferenceCode),
-			AccountGroup::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTGROUP_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(AccountGroup::getExternalReferenceCode),
+				AccountGroup::getCompanyId),
+			_SQL_SELECT_ACCOUNTGROUP_WHERE, "",
 			new FinderColumn<>(
 				"accountGroup.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2549,27 +2502,6 @@ public class AccountGroupPersistenceImpl
 	private static final String _SQL_COUNT_ACCOUNTGROUP_WHERE =
 		"SELECT COUNT(accountGroup) FROM AccountGroup accountGroup WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"accountGroup.accountGroupId";
-
-	private static final String _FILTER_SQL_SELECT_ACCOUNTGROUP_WHERE =
-		"SELECT DISTINCT {accountGroup.*} FROM AccountGroup accountGroup WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {AccountGroup.*} FROM (SELECT DISTINCT accountGroup.accountGroupId FROM AccountGroup accountGroup WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ACCOUNTGROUP_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN AccountGroup ON TEMP_TABLE.accountGroupId = AccountGroup.accountGroupId";
-
-	private static final String _FILTER_SQL_COUNT_ACCOUNTGROUP_WHERE =
-		"SELECT COUNT(DISTINCT accountGroup.accountGroupId) AS COUNT_VALUE FROM AccountGroup accountGroup WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "accountGroup";
-
-	private static final String _FILTER_ENTITY_TABLE = "AccountGroup";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountGroup exists with the key {";
 
@@ -2585,4 +2517,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1355143711
+// LIFERAY-SERVICE-BUILDER-HASH:738327531

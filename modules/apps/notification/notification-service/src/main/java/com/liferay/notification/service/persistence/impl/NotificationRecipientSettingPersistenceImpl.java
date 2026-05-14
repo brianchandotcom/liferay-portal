@@ -83,9 +83,6 @@ public class NotificationRecipientSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<NotificationRecipientSetting>
 		_collectionPersistenceFinderByUuid;
 
@@ -230,9 +227,6 @@ public class NotificationRecipientSettingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<NotificationRecipientSetting>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -389,10 +383,6 @@ public class NotificationRecipientSettingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByNotificationRecipientId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByNotificationRecipientId;
-	private FinderPath _finderPathCountByNotificationRecipientId;
 	private CollectionPersistenceFinder<NotificationRecipientSetting>
 		_collectionPersistenceFinderByNotificationRecipientId;
 
@@ -547,7 +537,6 @@ public class NotificationRecipientSettingPersistenceImpl
 			finderCache, new Object[] {notificationRecipientId});
 	}
 
-	private FinderPath _finderPathFetchByNRI_N;
 	private UniquePersistenceFinder<NotificationRecipientSetting>
 		_uniquePersistenceFinderByNRI_N;
 
@@ -889,27 +878,23 @@ public class NotificationRecipientSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 			_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 			NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
@@ -919,30 +904,25 @@ public class NotificationRecipientSettingPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				NotificationRecipientSetting::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
@@ -956,33 +936,28 @@ public class NotificationRecipientSettingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationRecipientSetting::getCompanyId));
 
-		_finderPathWithPaginationFindByNotificationRecipientId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByNotificationRecipientId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"notificationRecipientId"}, true);
-
-		_finderPathWithoutPaginationFindByNotificationRecipientId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByNotificationRecipientId",
-				new String[] {Long.class.getName()},
-				new String[] {"notificationRecipientId"}, true);
-
-		_finderPathCountByNotificationRecipientId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByNotificationRecipientId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationRecipientId"}, false);
-
 		_collectionPersistenceFinderByNotificationRecipientId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByNotificationRecipientId,
-				_finderPathWithoutPaginationFindByNotificationRecipientId,
-				_finderPathCountByNotificationRecipientId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByNotificationRecipientId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"notificationRecipientId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByNotificationRecipientId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationRecipientId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByNotificationRecipientId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationRecipientId"}, false),
 				_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
@@ -992,15 +967,14 @@ public class NotificationRecipientSettingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationRecipientSetting::getNotificationRecipientId));
 
-		_finderPathFetchByNRI_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByNRI_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"notificationRecipientId", "name"}, 0, 2, false,
-			NotificationRecipientSetting::getNotificationRecipientId,
-			convertNullFunction(NotificationRecipientSetting::getName));
-
 		_uniquePersistenceFinderByNRI_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByNRI_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByNRI_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"notificationRecipientId", "name"}, 0, 2, false,
+				NotificationRecipientSetting::getNotificationRecipientId,
+				convertNullFunction(NotificationRecipientSetting::getName)),
 			_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE, "",
 			new FinderColumn<>(
 				"notificationRecipientSetting.", "notificationRecipientId",
@@ -1081,4 +1055,4 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2086160346
+// LIFERAY-SERVICE-BUILDER-HASH:-1710583629

@@ -79,7 +79,6 @@ public class PushNotificationsDevicePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByToken;
 	private UniquePersistenceFinder<PushNotificationsDevice>
 		_uniquePersistenceFinderByToken;
 
@@ -164,9 +163,6 @@ public class PushNotificationsDevicePersistenceImpl
 			finderCache, new Object[] {token});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_P;
-	private FinderPath _finderPathWithoutPaginationFindByU_P;
-	private FinderPath _finderPathCountByU_P;
 	private CollectionPersistenceFinder<PushNotificationsDevice>
 		_collectionPersistenceFinderByU_P;
 
@@ -639,40 +635,36 @@ public class PushNotificationsDevicePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByToken = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
-			new String[] {String.class.getName()}, new String[] {"token"}, 0, 1,
-			false, convertNullFunction(PushNotificationsDevice::getToken));
-
 		_uniquePersistenceFinderByToken = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByToken,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByToken",
+				new String[] {String.class.getName()}, new String[] {"token"},
+				0, 1, false,
+				convertNullFunction(PushNotificationsDevice::getToken)),
 			_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE, "",
 			new FinderColumn<>(
 				"pushNotificationsDevice.", "token", FinderColumn.Type.STRING,
 				"=", true, true, PushNotificationsDevice::getToken));
 
-		_finderPathWithPaginationFindByU_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "platform"}, true);
-
-		_finderPathWithoutPaginationFindByU_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "platform"}, 0, 2, true, null);
-
-		_finderPathCountByU_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "platform"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByU_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_P,
-			_finderPathWithoutPaginationFindByU_P, _finderPathCountByU_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "platform"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "platform"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "platform"}, 0, 2, false, null),
 			_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE,
 			_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE,
 			PushNotificationsDeviceModelImpl.ORDER_BY_JPQL,
@@ -751,4 +743,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1302558301
+// LIFERAY-SERVICE-BUILDER-HASH:-532921950

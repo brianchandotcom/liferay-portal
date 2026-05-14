@@ -88,9 +88,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByUuid;
 
@@ -234,7 +231,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DepotEntryGroupRel>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -324,9 +320,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -481,9 +474,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByDepotEntryId;
-	private FinderPath _finderPathCountByDepotEntryId;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByDepotEntryId;
 
@@ -630,9 +620,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {depotEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByToGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByToGroupId;
-	private FinderPath _finderPathCountByToGroupId;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByToGroupId;
 
@@ -778,9 +765,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {toGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDDMSA_TGI;
-	private FinderPath _finderPathWithoutPaginationFindByDDMSA_TGI;
-	private FinderPath _finderPathCountByDDMSA_TGI;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByDDMSA_TGI;
 
@@ -946,7 +930,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {ddmStructuresAvailable, toGroupId});
 	}
 
-	private FinderPath _finderPathFetchByD_TGI;
 	private UniquePersistenceFinder<DepotEntryGroupRel>
 		_uniquePersistenceFinderByD_TGI;
 
@@ -1040,9 +1023,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {depotEntryId, toGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_TGI;
-	private FinderPath _finderPathWithoutPaginationFindByS_TGI;
-	private FinderPath _finderPathCountByS_TGI;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByS_TGI;
 
@@ -1201,9 +1181,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {searchable, toGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByTGI_T;
-	private FinderPath _finderPathWithoutPaginationFindByTGI_T;
-	private FinderPath _finderPathCountByTGI_T;
 	private CollectionPersistenceFinder<DepotEntryGroupRel>
 		_collectionPersistenceFinderByTGI_T;
 
@@ -1668,27 +1645,23 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1696,15 +1669,14 @@ public class DepotEntryGroupRelPersistenceImpl
 				"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, DepotEntryGroupRel::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DepotEntryGroupRel::getUuid),
-			DepotEntryGroupRel::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DepotEntryGroupRel::getUuid),
+				DepotEntryGroupRel::getGroupId),
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1713,30 +1685,26 @@ public class DepotEntryGroupRelPersistenceImpl
 				"depotEntryGroupRel.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, DepotEntryGroupRel::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1747,29 +1715,26 @@ public class DepotEntryGroupRelPersistenceImpl
 					"depotEntryGroupRel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getCompanyId));
 
-		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"depotEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			true);
-
-		_finderPathCountByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			false);
-
 		_collectionPersistenceFinderByDepotEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDepotEntryId,
-				_finderPathWithoutPaginationFindByDepotEntryId,
-				_finderPathCountByDepotEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDepotEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, false),
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1779,29 +1744,25 @@ public class DepotEntryGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DepotEntryGroupRel::getDepotEntryId));
 
-		_finderPathWithPaginationFindByToGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"toGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByToGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByToGroupId",
-			new String[] {Long.class.getName()}, new String[] {"toGroupId"},
-			true);
-
-		_finderPathCountByToGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToGroupId",
-			new String[] {Long.class.getName()}, new String[] {"toGroupId"},
-			false);
-
 		_collectionPersistenceFinderByToGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByToGroupId,
-				_finderPathWithoutPaginationFindByToGroupId,
-				_finderPathCountByToGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"toGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByToGroupId", new String[] {Long.class.getName()},
+					new String[] {"toGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByToGroupId", new String[] {Long.class.getName()},
+					new String[] {"toGroupId"}, false),
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1810,30 +1771,32 @@ public class DepotEntryGroupRelPersistenceImpl
 					"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getToGroupId));
 
-		_finderPathWithPaginationFindByDDMSA_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMSA_TGI",
-			new String[] {
-				Boolean.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"ddmStructuresAvailable", "toGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByDDMSA_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMSA_TGI",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"ddmStructuresAvailable", "toGroupId"}, true);
-
-		_finderPathCountByDDMSA_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMSA_TGI",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"ddmStructuresAvailable", "toGroupId"}, false);
-
 		_collectionPersistenceFinderByDDMSA_TGI =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDDMSA_TGI,
-				_finderPathWithoutPaginationFindByDDMSA_TGI,
-				_finderPathCountByDDMSA_TGI,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMSA_TGI",
+					new String[] {
+						Boolean.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ddmStructuresAvailable", "toGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDDMSA_TGI",
+					new String[] {
+						Boolean.class.getName(), Long.class.getName()
+					},
+					new String[] {"ddmStructuresAvailable", "toGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDDMSA_TGI",
+					new String[] {
+						Boolean.class.getName(), Long.class.getName()
+					},
+					new String[] {"ddmStructuresAvailable", "toGroupId"},
+					false),
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1846,16 +1809,15 @@ public class DepotEntryGroupRelPersistenceImpl
 					"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getToGroupId));
 
-		_finderPathFetchByD_TGI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByD_TGI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"depotEntryId", "toGroupId"}, 0, 0, false,
-			DepotEntryGroupRel::getDepotEntryId,
-			DepotEntryGroupRel::getToGroupId);
-
 		_uniquePersistenceFinderByD_TGI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByD_TGI, _SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByD_TGI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"depotEntryId", "toGroupId"}, 0, 0, false,
+				DepotEntryGroupRel::getDepotEntryId,
+				DepotEntryGroupRel::getToGroupId),
+			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "depotEntryId", FinderColumn.Type.LONG,
 				"=", true, true, DepotEntryGroupRel::getDepotEntryId),
@@ -1863,28 +1825,24 @@ public class DepotEntryGroupRelPersistenceImpl
 				"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG, "=",
 				true, true, DepotEntryGroupRel::getToGroupId));
 
-		_finderPathWithPaginationFindByS_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_TGI",
-			new String[] {
-				Boolean.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"searchable", "toGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByS_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_TGI",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"searchable", "toGroupId"}, true);
-
-		_finderPathCountByS_TGI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_TGI",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"searchable", "toGroupId"}, false);
-
 		_collectionPersistenceFinderByS_TGI = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_TGI,
-			_finderPathWithoutPaginationFindByS_TGI, _finderPathCountByS_TGI,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_TGI",
+				new String[] {
+					Boolean.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"searchable", "toGroupId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_TGI",
+				new String[] {Boolean.class.getName(), Long.class.getName()},
+				new String[] {"searchable", "toGroupId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_TGI",
+				new String[] {Boolean.class.getName(), Long.class.getName()},
+				new String[] {"searchable", "toGroupId"}, false),
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1895,28 +1853,24 @@ public class DepotEntryGroupRelPersistenceImpl
 				"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG, "=",
 				true, true, DepotEntryGroupRel::getToGroupId));
 
-		_finderPathWithPaginationFindByTGI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTGI_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"toGroupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByTGI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTGI_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"toGroupId", "type_"}, true);
-
-		_finderPathCountByTGI_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTGI_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"toGroupId", "type_"}, false);
-
 		_collectionPersistenceFinderByTGI_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByTGI_T,
-			_finderPathWithoutPaginationFindByTGI_T, _finderPathCountByTGI_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTGI_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"toGroupId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTGI_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"toGroupId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTGI_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"toGroupId", "type_"}, false),
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
 			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1999,4 +1953,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:591678768
+// LIFERAY-SERVICE-BUILDER-HASH:-23965953

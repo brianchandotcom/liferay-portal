@@ -84,9 +84,6 @@ public class WikiPageResourcePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<WikiPageResource>
 		_collectionPersistenceFinderByUuid;
 
@@ -227,7 +224,6 @@ public class WikiPageResourcePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<WikiPageResource>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -317,9 +313,6 @@ public class WikiPageResourcePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<WikiPageResource>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -474,7 +467,6 @@ public class WikiPageResourcePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByN_T;
 	private UniquePersistenceFinder<WikiPageResource>
 		_uniquePersistenceFinderByN_T;
 
@@ -833,27 +825,23 @@ public class WikiPageResourcePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_WIKIPAGERESOURCE_WHERE,
 			_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
 			WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -861,16 +849,15 @@ public class WikiPageResourcePersistenceImpl
 				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, WikiPageResource::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(WikiPageResource::getUuid),
-			WikiPageResource::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(WikiPageResource::getUuid),
+				WikiPageResource::getGroupId),
+			_SQL_SELECT_WIKIPAGERESOURCE_WHERE, "",
 			new FinderColumn<>(
 				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, WikiPageResource::getUuid),
@@ -878,30 +865,26 @@ public class WikiPageResourcePersistenceImpl
 				"wikiPageResource.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, WikiPageResource::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_WIKIPAGERESOURCE_WHERE,
 				_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
 				WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -912,15 +895,15 @@ public class WikiPageResourcePersistenceImpl
 					"wikiPageResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, WikiPageResource::getCompanyId));
 
-		_finderPathFetchByN_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"nodeId", "title"}, 0, 2, false,
-			WikiPageResource::getNodeId,
-			convertNullFunction(WikiPageResource::getTitle));
-
 		_uniquePersistenceFinderByN_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByN_T, _SQL_SELECT_WIKIPAGERESOURCE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"nodeId", "title"}, 0, 2, false,
+				WikiPageResource::getNodeId,
+				convertNullFunction(WikiPageResource::getTitle)),
+			_SQL_SELECT_WIKIPAGERESOURCE_WHERE, "",
 			new FinderColumn<>(
 				"wikiPageResource.", "nodeId", FinderColumn.Type.LONG, "=",
 				true, true, WikiPageResource::getNodeId),
@@ -1000,4 +983,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-602272837
+// LIFERAY-SERVICE-BUILDER-HASH:-198724240

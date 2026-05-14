@@ -77,9 +77,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<SharepointOAuth2TokenEntry>
 		_collectionPersistenceFinderByUserId;
 
@@ -224,7 +221,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByU_C;
 	private UniquePersistenceFinder<SharepointOAuth2TokenEntry>
 		_uniquePersistenceFinderByU_C;
 
@@ -530,28 +526,25 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE,
 				_SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY_WHERE,
 				SharepointOAuth2TokenEntryModelImpl.ORDER_BY_JPQL,
@@ -561,16 +554,15 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SharepointOAuth2TokenEntry::getUserId));
 
-		_finderPathFetchByU_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "configurationPid"}, 0, 2, false,
-			SharepointOAuth2TokenEntry::getUserId,
-			convertNullFunction(
-				SharepointOAuth2TokenEntry::getConfigurationPid));
-
 		_uniquePersistenceFinderByU_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "configurationPid"}, 0, 2, false,
+				SharepointOAuth2TokenEntry::getUserId,
+				convertNullFunction(
+					SharepointOAuth2TokenEntry::getConfigurationPid)),
 			_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE, "",
 			new FinderColumn<>(
 				"sharepointOAuth2TokenEntry.", "userId", FinderColumn.Type.LONG,
@@ -646,4 +638,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-495525729
+// LIFERAY-SERVICE-BUILDER-HASH:-783504785

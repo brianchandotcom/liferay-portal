@@ -75,9 +75,6 @@ public class CookiesConsentPreferencePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<CookiesConsentPreference>
 		_collectionPersistenceFinderByUserId;
 
@@ -222,9 +219,6 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByExpirationDate;
-	private FinderPath _finderPathWithoutPaginationFindByExpirationDate;
-	private FinderPath _finderPathCountByExpirationDate;
 	private CollectionPersistenceFinder<CookiesConsentPreference>
 		_collectionPersistenceFinderByExpirationDate;
 
@@ -373,9 +367,6 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {expirationDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_D;
-	private FinderPath _finderPathWithoutPaginationFindByU_D;
-	private FinderPath _finderPathCountByU_D;
 	private CollectionPersistenceFinder<CookiesConsentPreference>
 		_collectionPersistenceFinderByU_D;
 
@@ -531,7 +522,6 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {userId, domain});
 	}
 
-	private FinderPath _finderPathFetchByU_D_N;
 	private UniquePersistenceFinder<CookiesConsentPreference>
 		_uniquePersistenceFinderByU_D_N;
 
@@ -823,28 +813,25 @@ public class CookiesConsentPreferencePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
@@ -854,29 +841,27 @@ public class CookiesConsentPreferencePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CookiesConsentPreference::getUserId));
 
-		_finderPathWithPaginationFindByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"expirationDate"}, true);
-
-		_finderPathWithoutPaginationFindByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByExpirationDate",
-			new String[] {Date.class.getName()},
-			new String[] {"expirationDate"}, true);
-
-		_finderPathCountByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExpirationDate",
-			new String[] {Date.class.getName()},
-			new String[] {"expirationDate"}, false);
-
 		_collectionPersistenceFinderByExpirationDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByExpirationDate,
-				_finderPathWithoutPaginationFindByExpirationDate,
-				_finderPathCountByExpirationDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByExpirationDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"expirationDate"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByExpirationDate", new String[] {Date.class.getName()},
+					new String[] {"expirationDate"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByExpirationDate",
+					new String[] {Date.class.getName()},
+					new String[] {"expirationDate"}, false),
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
@@ -886,28 +871,24 @@ public class CookiesConsentPreferencePersistenceImpl
 					FinderColumn.Type.DATE, "=", true, true,
 					CookiesConsentPreference::getExpirationDate));
 
-		_finderPathWithPaginationFindByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "domain"}, true);
-
-		_finderPathWithoutPaginationFindByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "domain"}, 0, 2, true, null);
-
-		_finderPathCountByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "domain"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByU_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_D,
-			_finderPathWithoutPaginationFindByU_D, _finderPathCountByU_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "domain"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "domain"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "domain"}, 0, 2, false, null),
 			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 			_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 			CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
@@ -919,19 +900,18 @@ public class CookiesConsentPreferencePersistenceImpl
 				"cookiesConsentPreference.", "domain", FinderColumn.Type.STRING,
 				"=", true, true, CookiesConsentPreference::getDomain));
 
-		_finderPathFetchByU_D_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_D_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"userId", "domain", "name"}, 0, 6, false,
-			CookiesConsentPreference::getUserId,
-			convertNullFunction(CookiesConsentPreference::getDomain),
-			convertNullFunction(CookiesConsentPreference::getName));
-
 		_uniquePersistenceFinderByU_D_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_D_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_D_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"userId", "domain", "name"}, 0, 6, false,
+				CookiesConsentPreference::getUserId,
+				convertNullFunction(CookiesConsentPreference::getDomain),
+				convertNullFunction(CookiesConsentPreference::getName)),
 			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE, "",
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "userId", FinderColumn.Type.LONG,
@@ -1009,4 +989,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1680330265
+// LIFERAY-SERVICE-BUILDER-HASH:-1322319303

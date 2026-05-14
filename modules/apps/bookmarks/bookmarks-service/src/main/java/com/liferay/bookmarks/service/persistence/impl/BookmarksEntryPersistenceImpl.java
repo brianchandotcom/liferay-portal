@@ -91,9 +91,6 @@ public class BookmarksEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -234,7 +231,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<BookmarksEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -324,9 +320,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -481,9 +474,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -627,9 +617,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_F;
-	private FinderPath _finderPathCountByG_F;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_F;
 
@@ -1041,9 +1028,6 @@ public class BookmarksEntryPersistenceImpl
 			new Object[] {groupId, ArrayUtil.sortedUnique(folderIds)}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_S;
 
@@ -1267,8 +1251,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_NotS;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_NotS;
 
@@ -1493,8 +1475,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_NotS;
-	private FinderPath _finderPathWithPaginationCountByC_NotS;
 	private CollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByC_NotS;
 
@@ -1649,9 +1629,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_U_S;
-	private FinderPath _finderPathCountByG_U_S;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_U_S;
 
@@ -1896,8 +1873,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {groupId, userId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_U_NotS;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_U_NotS;
 
@@ -2142,9 +2117,6 @@ public class BookmarksEntryPersistenceImpl
 			finderCache, new Object[] {groupId, userId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_F_S;
-	private FinderPath _finderPathCountByG_F_S;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_F_S;
 
@@ -2591,8 +2563,6 @@ public class BookmarksEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_F_NotS;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_F_NotS;
 
@@ -3043,9 +3013,6 @@ public class BookmarksEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_F_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_U_F_S;
-	private FinderPath _finderPathCountByG_U_F_S;
 	private FilterCollectionPersistenceFinder<BookmarksEntry>
 		_collectionPersistenceFinderByG_U_F_S;
 
@@ -3854,43 +3821,38 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_BOOKMARKSENTRY_WHERE, _SQL_COUNT_BOOKMARKSENTRY_WHERE,
 			BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"bookmarksEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, BookmarksEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(BookmarksEntry::getUuid),
-			BookmarksEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_BOOKMARKSENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(BookmarksEntry::getUuid),
+				BookmarksEntry::getGroupId),
+			_SQL_SELECT_BOOKMARKSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"bookmarksEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, BookmarksEntry::getUuid),
@@ -3898,30 +3860,26 @@ public class BookmarksEntryPersistenceImpl
 				"bookmarksEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, BookmarksEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_BOOKMARKSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -3931,69 +3889,62 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_BOOKMARKSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"bookmarksEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BookmarksEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathCountByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, false);
-
 		_collectionPersistenceFinderByG_F =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F,
-				_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, false),
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4003,40 +3954,40 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "folderId", FinderColumn.Type.LONG, "=",
 					false, true, true, BookmarksEntry::getFolderId));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4046,35 +3997,35 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, BookmarksEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotS",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotS",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotS, null,
-				_finderPathWithPaginationCountByG_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4084,24 +4035,24 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, BookmarksEntry::getStatus));
 
-		_finderPathWithPaginationFindByC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithPaginationCountByC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_NotS, null,
-				_finderPathWithPaginationCountByC_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4112,46 +4063,43 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, BookmarksEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_U_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_U_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "userId", "status"}, true);
-
-		_finderPathCountByG_U_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "userId", "status"}, false);
-
 		_collectionPersistenceFinderByG_U_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U_S,
-				_finderPathWithoutPaginationFindByG_U_S,
-				_finderPathCountByG_U_S, _SQL_SELECT_BOOKMARKSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "userId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "userId", "status"}, false),
+				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4163,39 +4111,38 @@ public class BookmarksEntryPersistenceImpl
 				new FinderColumn<>(
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, BookmarksEntry::getStatus));
-
-		_finderPathWithPaginationFindByG_U_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_U_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "userId", "status"}, false);
 
 		_collectionPersistenceFinderByG_U_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U_NotS, null,
-				_finderPathWithPaginationCountByG_U_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4208,46 +4155,43 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, BookmarksEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_F_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_F_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, true);
-
-		_finderPathCountByG_F_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_F_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_S,
-				_finderPathWithoutPaginationFindByG_F_S,
-				_finderPathCountByG_F_S, _SQL_SELECT_BOOKMARKSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, false),
+				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4260,38 +4204,37 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, BookmarksEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_F_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_F_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_F_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_NotS, null,
-				_finderPathWithPaginationCountByG_F_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_F_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "status"}, false),
 				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4304,47 +4247,46 @@ public class BookmarksEntryPersistenceImpl
 					"bookmarksEntry.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, BookmarksEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_U_F_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "folderId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_U_F_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "userId", "folderId", "status"}, true);
-
-		_finderPathCountByG_U_F_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_F_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "userId", "folderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_U_F_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_U_F_S,
-				_finderPathWithoutPaginationFindByG_U_F_S,
-				_finderPathCountByG_U_F_S, _SQL_SELECT_BOOKMARKSENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "userId", "folderId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_F_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "userId", "folderId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_U_F_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "userId", "folderId", "status"},
+					false),
+				_SQL_SELECT_BOOKMARKSENTRY_WHERE,
 				_SQL_COUNT_BOOKMARKSENTRY_WHERE,
 				BookmarksEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					BookmarksEntryImpl.class, BookmarksEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE,
+					"bookmarksEntry", "BookmarksEntry",
+					"bookmarksEntry.entryId",
+					"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ",
+					"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ",
+					") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId",
+					"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ",
 					BookmarksEntryModelImpl.ORDER_BY_SQL,
 					BookmarksEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4417,27 +4359,6 @@ public class BookmarksEntryPersistenceImpl
 	private static final String _SQL_COUNT_BOOKMARKSENTRY_WHERE =
 		"SELECT COUNT(bookmarksEntry) FROM BookmarksEntry bookmarksEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"bookmarksEntry.entryId";
-
-	private static final String _FILTER_SQL_SELECT_BOOKMARKSENTRY_WHERE =
-		"SELECT DISTINCT {bookmarksEntry.*} FROM BookmarksEntry bookmarksEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {BookmarksEntry.*} FROM (SELECT DISTINCT bookmarksEntry.entryId FROM BookmarksEntry bookmarksEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_BOOKMARKSENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN BookmarksEntry ON TEMP_TABLE.entryId = BookmarksEntry.entryId";
-
-	private static final String _FILTER_SQL_COUNT_BOOKMARKSENTRY_WHERE =
-		"SELECT COUNT(DISTINCT bookmarksEntry.entryId) AS COUNT_VALUE FROM BookmarksEntry bookmarksEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "bookmarksEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "BookmarksEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BookmarksEntry exists with the key {";
 
@@ -4453,4 +4374,4 @@ public class BookmarksEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:387429016
+// LIFERAY-SERVICE-BUILDER-HASH:-1461621915

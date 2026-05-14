@@ -100,9 +100,6 @@ public class DDMTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByUuid;
 
@@ -242,7 +239,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DDMTemplate>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -332,9 +328,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -489,9 +482,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByGroupId;
 
@@ -699,9 +689,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByClassPK;
-	private FinderPath _finderPathWithoutPaginationFindByClassPK;
-	private FinderPath _finderPathCountByClassPK;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByClassPK;
 
@@ -843,9 +830,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByTemplateKey;
-	private FinderPath _finderPathWithoutPaginationFindByTemplateKey;
-	private FinderPath _finderPathCountByTemplateKey;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByTemplateKey;
 
@@ -991,9 +975,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {templateKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByType;
-	private FinderPath _finderPathWithoutPaginationFindByType;
-	private FinderPath _finderPathCountByType;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByType;
 
@@ -1133,9 +1114,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLanguage;
-	private FinderPath _finderPathWithoutPaginationFindByLanguage;
-	private FinderPath _finderPathCountByLanguage;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByLanguage;
 
@@ -1279,7 +1257,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {language});
 	}
 
-	private FinderPath _finderPathFetchBySmallImageId;
 	private UniquePersistenceFinder<DDMTemplate>
 		_uniquePersistenceFinderBySmallImageId;
 
@@ -1364,9 +1341,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {smallImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C;
 
@@ -1592,9 +1566,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_CPK;
-	private FinderPath _finderPathWithoutPaginationFindByG_CPK;
-	private FinderPath _finderPathCountByG_CPK;
 	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_CPK;
 
@@ -2005,9 +1976,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {groupIds, classPK}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
-	private FinderPath _finderPathCountByG_C_C;
 	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C_C;
 
@@ -2472,7 +2440,6 @@ public class DDMTemplatePersistenceImpl
 			groupIds);
 	}
 
-	private FinderPath _finderPathFetchByG_C_T;
 	private UniquePersistenceFinder<DDMTemplate>
 		_uniquePersistenceFinderByG_C_T;
 
@@ -2578,9 +2545,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, templateKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_T;
-	private FinderPath _finderPathCountByC_C_T;
 	private CollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByC_C_T;
 
@@ -2748,9 +2712,6 @@ public class DDMTemplatePersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T;
-	private FinderPath _finderPathCountByG_C_C_T;
 	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C_C_T;
 
@@ -3019,9 +2980,6 @@ public class DDMTemplatePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_T_M;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T_M;
-	private FinderPath _finderPathCountByG_C_C_T_M;
 	private FilterCollectionPersistenceFinder<DDMTemplate>
 		_collectionPersistenceFinderByG_C_C_T_M;
 
@@ -3312,7 +3270,6 @@ public class DDMTemplatePersistenceImpl
 			new Object[] {groupId, classNameId, classPK, type, mode}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<DDMTemplate>
 		_uniquePersistenceFinderByERC_G;
 
@@ -3784,41 +3741,38 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMTemplate::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DDMTemplate::getUuid), DDMTemplate::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMTEMPLATE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DDMTemplate::getUuid),
+				DDMTemplate::getGroupId),
+			_SQL_SELECT_DDMTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"ddmTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMTemplate::getUuid),
@@ -3826,31 +3780,26 @@ public class DDMTemplatePersistenceImpl
 				"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDMTemplate::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -3859,204 +3808,178 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMTemplateImpl.class, DDMTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateImpl.class, DDMTemplate.class, "ddmTemplate",
+					"DDMTemplate", "ddmTemplate.templateId",
+					"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ",
+					"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId",
+					"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ",
 					DDMTemplateModelImpl.ORDER_BY_SQL,
 					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getGroupId));
 
-		_finderPathWithPaginationFindByClassPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByClassPK",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classPK"}, true);
-
-		_finderPathWithoutPaginationFindByClassPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByClassPK",
-			new String[] {Long.class.getName()}, new String[] {"classPK"},
-			true);
-
-		_finderPathCountByClassPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
-			new String[] {Long.class.getName()}, new String[] {"classPK"},
-			false);
-
 		_collectionPersistenceFinderByClassPK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByClassPK,
-				_finderPathWithoutPaginationFindByClassPK,
-				_finderPathCountByClassPK, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByClassPK",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByClassPK",
+					new String[] {Long.class.getName()},
+					new String[] {"classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassPK",
+					new String[] {Long.class.getName()},
+					new String[] {"classPK"}, false),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getClassPK));
 
-		_finderPathWithPaginationFindByTemplateKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateKey",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"templateKey"}, true);
-
-		_finderPathWithoutPaginationFindByTemplateKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTemplateKey",
-			new String[] {String.class.getName()}, new String[] {"templateKey"},
-			0, 1, true, null);
-
-		_finderPathCountByTemplateKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTemplateKey",
-			new String[] {String.class.getName()}, new String[] {"templateKey"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByTemplateKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByTemplateKey,
-				_finderPathWithoutPaginationFindByTemplateKey,
-				_finderPathCountByTemplateKey, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateKey",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"templateKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByTemplateKey", new String[] {String.class.getName()},
+					new String[] {"templateKey"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByTemplateKey", new String[] {String.class.getName()},
+					new String[] {"templateKey"}, 0, 1, false, null),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmTemplate.", "templateKey", FinderColumn.Type.STRING,
 					"=", true, true, DDMTemplate::getTemplateKey));
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"type_"}, true);
-
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByType,
-			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, false, null),
 			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmTemplate.", "type", FinderColumn.Type.STRING, "=", true,
 				true, DDMTemplate::getType));
 
-		_finderPathWithPaginationFindByLanguage = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLanguage",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"language"}, true);
-
-		_finderPathWithoutPaginationFindByLanguage = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLanguage",
-			new String[] {String.class.getName()}, new String[] {"language"}, 0,
-			1, true, null);
-
-		_finderPathCountByLanguage = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLanguage",
-			new String[] {String.class.getName()}, new String[] {"language"}, 0,
-			1, false, null);
-
 		_collectionPersistenceFinderByLanguage =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLanguage,
-				_finderPathWithoutPaginationFindByLanguage,
-				_finderPathCountByLanguage, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLanguage",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"language"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLanguage",
+					new String[] {String.class.getName()},
+					new String[] {"language"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLanguage", new String[] {String.class.getName()},
+					new String[] {"language"}, 0, 1, false, null),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmTemplate.", "language", FinderColumn.Type.STRING, "=",
 					true, true, DDMTemplate::getLanguage));
 
-		_finderPathFetchBySmallImageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchBySmallImageId",
-			new String[] {Long.class.getName()}, new String[] {"smallImageId"},
-			0, 0, false, DDMTemplate::getSmallImageId);
-
 		_uniquePersistenceFinderBySmallImageId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchBySmallImageId, _SQL_SELECT_DDMTEMPLATE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchBySmallImageId",
+				new String[] {Long.class.getName()},
+				new String[] {"smallImageId"}, 0, 0, false,
+				DDMTemplate::getSmallImageId),
+			_SQL_SELECT_DDMTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"ddmTemplate.", "smallImageId", FinderColumn.Type.LONG, "=",
 				true, true, DDMTemplate::getSmallImageId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C,
-				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "classNameId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "classNameId"}, false),
 				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMTemplateImpl.class, DDMTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateImpl.class, DDMTemplate.class, "ddmTemplate",
+					"DDMTemplate", "ddmTemplate.templateId",
+					"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ",
+					"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId",
+					"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ",
 					DDMTemplateModelImpl.ORDER_BY_SQL,
 					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4066,40 +3989,34 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "classNameId", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getClassNameId));
 
-		_finderPathWithPaginationFindByG_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByG_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classPK"}, true);
-
-		_finderPathCountByG_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classPK"}, false);
-
 		_collectionPersistenceFinderByG_CPK =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_CPK,
-				_finderPathWithoutPaginationFindByG_CPK,
-				_finderPathCountByG_CPK, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CPK",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_CPK",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "classPK"}, false),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMTemplateImpl.class, DDMTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateImpl.class, DDMTemplate.class, "ddmTemplate",
+					"DDMTemplate", "ddmTemplate.templateId",
+					"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ",
+					"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId",
+					"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ",
 					DDMTemplateModelImpl.ORDER_BY_SQL,
 					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4109,44 +4026,41 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getClassPK));
 
-		_finderPathWithPaginationFindByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByG_C_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C,
-				_finderPathWithoutPaginationFindByG_C_C,
-				_finderPathCountByG_C_C, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK"}, false),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMTemplateImpl.class, DDMTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateImpl.class, DDMTemplate.class, "ddmTemplate",
+					"DDMTemplate", "ddmTemplate.templateId",
+					"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ",
+					"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId",
+					"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ",
 					DDMTemplateModelImpl.ORDER_BY_SQL,
 					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4159,18 +4073,18 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, DDMTemplate::getClassPK));
 
-		_finderPathFetchByG_C_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "templateKey"}, 0, 4, false,
-			DDMTemplate::getGroupId, DDMTemplate::getClassNameId,
-			convertNullFunction(DDMTemplate::getTemplateKey));
-
 		_uniquePersistenceFinderByG_C_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_T, _SQL_SELECT_DDMTEMPLATE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "templateKey"}, 0, 4,
+				false, DDMTemplate::getGroupId, DDMTemplate::getClassNameId,
+				convertNullFunction(DDMTemplate::getTemplateKey)),
+			_SQL_SELECT_DDMTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"ddmTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDMTemplate::getGroupId),
@@ -4181,35 +4095,32 @@ public class DDMTemplatePersistenceImpl
 				"ddmTemplate.", "templateKey", FinderColumn.Type.STRING, "=",
 				true, true, DDMTemplate::getTemplateKey));
 
-		_finderPathWithPaginationFindByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_"}, 0, 4, true, null);
-
-		_finderPathCountByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByC_C_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_T,
-			_finderPathWithoutPaginationFindByC_C_T, _finderPathCountByC_C_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "type_"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "type_"}, 0, 4, false,
+				null),
 			_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 			DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4222,49 +4133,44 @@ public class DDMTemplatePersistenceImpl
 				"ddmTemplate.", "type", FinderColumn.Type.STRING, "=", true,
 				true, DDMTemplate::getType));
 
-		_finderPathWithPaginationFindByG_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "type_"}, 0, 8,
-			true, null);
-
-		_finderPathCountByG_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "type_"}, 0, 8,
-			false, null);
-
 		_collectionPersistenceFinderByG_C_C_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_T,
-				_finderPathWithoutPaginationFindByG_C_C_T,
-				_finderPathCountByG_C_C_T, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK", "type_"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK", "type_"},
+					0, 8, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {"groupId", "classNameId", "classPK", "type_"},
+					0, 8, false, null),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMTemplateImpl.class, DDMTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateImpl.class, DDMTemplate.class, "ddmTemplate",
+					"DDMTemplate", "ddmTemplate.templateId",
+					"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ",
+					"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId",
+					"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ",
 					DDMTemplateModelImpl.ORDER_BY_SQL,
 					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4280,58 +4186,55 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "type", FinderColumn.Type.STRING, "=", true,
 					true, DDMTemplate::getType));
 
-		_finderPathWithPaginationFindByG_C_C_T_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classPK", "type_", "mode_"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_T_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classPK", "type_", "mode_"
-			},
-			0, 24, true, null);
-
-		_finderPathCountByG_C_C_T_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classPK", "type_", "mode_"
-			},
-			0, 24, false, null);
-
 		_collectionPersistenceFinderByG_C_C_T_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_T_M,
-				_finderPathWithoutPaginationFindByG_C_C_T_M,
-				_finderPathCountByG_C_C_T_M, _SQL_SELECT_DDMTEMPLATE_WHERE,
-				_SQL_COUNT_DDMTEMPLATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "type_", "mode_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_C_C_T_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "type_", "mode_"
+					},
+					0, 24, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_C_C_T_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "type_", "mode_"
+					},
+					0, 24, false, null),
+				_SQL_SELECT_DDMTEMPLATE_WHERE, _SQL_COUNT_DDMTEMPLATE_WHERE,
 				DDMTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMTemplateImpl.class, DDMTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMTEMPLATE_WHERE,
+					DDMTemplateImpl.class, DDMTemplate.class, "ddmTemplate",
+					"DDMTemplate", "ddmTemplate.templateId",
+					"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ",
+					"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId",
+					"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ",
 					DDMTemplateModelImpl.ORDER_BY_SQL,
 					DDMTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4350,15 +4253,15 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "mode", FinderColumn.Type.STRING, "=", true,
 					true, DDMTemplate::getMode));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(DDMTemplate::getExternalReferenceCode),
-			DDMTemplate::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_DDMTEMPLATE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(DDMTemplate::getExternalReferenceCode),
+				DDMTemplate::getGroupId),
+			_SQL_SELECT_DDMTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"ddmTemplate.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -4424,27 +4327,6 @@ public class DDMTemplatePersistenceImpl
 	private static final String _SQL_COUNT_DDMTEMPLATE_WHERE =
 		"SELECT COUNT(ddmTemplate) FROM DDMTemplate ddmTemplate WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"ddmTemplate.templateId";
-
-	private static final String _FILTER_SQL_SELECT_DDMTEMPLATE_WHERE =
-		"SELECT DISTINCT {ddmTemplate.*} FROM DDMTemplate ddmTemplate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {DDMTemplate.*} FROM (SELECT DISTINCT ddmTemplate.templateId FROM DDMTemplate ddmTemplate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DDMTEMPLATE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN DDMTemplate ON TEMP_TABLE.templateId = DDMTemplate.templateId";
-
-	private static final String _FILTER_SQL_COUNT_DDMTEMPLATE_WHERE =
-		"SELECT COUNT(DISTINCT ddmTemplate.templateId) AS COUNT_VALUE FROM DDMTemplate ddmTemplate WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "ddmTemplate";
-
-	private static final String _FILTER_ENTITY_TABLE = "DDMTemplate";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMTemplate exists with the key {";
 
@@ -4460,4 +4342,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-749911929
+// LIFERAY-SERVICE-BUILDER-HASH:1020132718

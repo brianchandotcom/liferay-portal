@@ -68,9 +68,6 @@ public class ExportImportConfigurationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<ExportImportConfiguration>
 		_collectionPersistenceFinderByGroupId;
 
@@ -217,9 +214,6 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<ExportImportConfiguration>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -366,9 +360,6 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private CollectionPersistenceFinder<ExportImportConfiguration>
 		_collectionPersistenceFinderByG_T;
 
@@ -523,9 +514,6 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private CollectionPersistenceFinder<ExportImportConfiguration>
 		_collectionPersistenceFinderByG_S;
 
@@ -680,9 +668,6 @@ public class ExportImportConfigurationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_T_S;
-	private FinderPath _finderPathCountByG_T_S;
 	private CollectionPersistenceFinder<ExportImportConfiguration>
 		_collectionPersistenceFinderByG_T_S;
 
@@ -1078,29 +1063,25 @@ public class ExportImportConfigurationPersistenceImpl
 	 * Initializes the export import configuration persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE,
 				_SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE,
 				ExportImportConfigurationModelImpl.ORDER_BY_JPQL,
@@ -1110,29 +1091,25 @@ public class ExportImportConfigurationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ExportImportConfiguration::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE,
 				_SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE,
 				ExportImportConfigurationModelImpl.ORDER_BY_JPQL,
@@ -1142,28 +1119,24 @@ public class ExportImportConfigurationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ExportImportConfiguration::getCompanyId));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, false);
-
 		_collectionPersistenceFinderByG_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_T,
-			_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "type_"}, false),
 			_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE,
 			_SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE,
 			ExportImportConfigurationModelImpl.ORDER_BY_JPQL,
@@ -1175,28 +1148,24 @@ public class ExportImportConfigurationPersistenceImpl
 				"exportImportConfiguration.", "type", FinderColumn.Type.INTEGER,
 				"=", true, true, ExportImportConfiguration::getType));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_S,
-			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "status"}, false),
 			_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE,
 			_SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE,
 			ExportImportConfigurationModelImpl.ORDER_BY_JPQL,
@@ -1209,34 +1178,30 @@ public class ExportImportConfigurationPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				ExportImportConfiguration::getStatus));
 
-		_finderPathWithPaginationFindByG_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "type_", "status"}, true);
-
-		_finderPathCountByG_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "type_", "status"}, false);
-
 		_collectionPersistenceFinderByG_T_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_T_S,
-			_finderPathWithoutPaginationFindByG_T_S, _finderPathCountByG_T_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "type_", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"groupId", "type_", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"groupId", "type_", "status"}, false),
 			_SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE,
 			_SQL_COUNT_EXPORTIMPORTCONFIGURATION_WHERE,
 			ExportImportConfigurationModelImpl.ORDER_BY_JPQL,
@@ -1286,4 +1251,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2008185392
+// LIFERAY-SERVICE-BUILDER-HASH:1290277477

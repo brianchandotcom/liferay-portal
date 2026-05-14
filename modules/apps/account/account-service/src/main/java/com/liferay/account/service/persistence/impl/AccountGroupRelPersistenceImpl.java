@@ -76,9 +76,6 @@ public class AccountGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAccountGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountGroupId;
-	private FinderPath _finderPathCountByAccountGroupId;
 	private CollectionPersistenceFinder<AccountGroupRel>
 		_collectionPersistenceFinderByAccountGroupId;
 
@@ -225,9 +222,6 @@ public class AccountGroupRelPersistenceImpl
 			finderCache, new Object[] {accountGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByA_C;
-	private FinderPath _finderPathWithoutPaginationFindByA_C;
-	private FinderPath _finderPathCountByA_C;
 	private CollectionPersistenceFinder<AccountGroupRel>
 		_collectionPersistenceFinderByA_C;
 
@@ -387,9 +381,6 @@ public class AccountGroupRelPersistenceImpl
 			finderCache, new Object[] {accountGroupId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<AccountGroupRel>
 		_collectionPersistenceFinderByC_C;
 
@@ -545,7 +536,6 @@ public class AccountGroupRelPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByA_C_C;
 	private UniquePersistenceFinder<AccountGroupRel>
 		_uniquePersistenceFinderByA_C_C;
 
@@ -853,29 +843,27 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountGroupId"}, true);
-
-		_finderPathCountByAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountGroupId"}, false);
-
 		_collectionPersistenceFinderByAccountGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountGroupId,
-				_finderPathWithoutPaginationFindByAccountGroupId,
-				_finderPathCountByAccountGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountGroupId", new String[] {Long.class.getName()},
+					new String[] {"accountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountGroupId"}, false),
 				_SQL_SELECT_ACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 				AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -885,28 +873,24 @@ public class AccountGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountGroupRel::getAccountGroupId));
 
-		_finderPathWithPaginationFindByA_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"accountGroupId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByA_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountGroupId", "classNameId"}, true);
-
-		_finderPathCountByA_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountGroupId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByA_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByA_C,
-			_finderPathWithoutPaginationFindByA_C, _finderPathCountByA_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"accountGroupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"accountGroupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"accountGroupId", "classNameId"}, false),
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -916,28 +900,24 @@ public class AccountGroupRelPersistenceImpl
 				"accountGroupRel.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassNameId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -947,18 +927,18 @@ public class AccountGroupRelPersistenceImpl
 				"accountGroupRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassPK));
 
-		_finderPathFetchByA_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"accountGroupId", "classNameId", "classPK"}, 0, 0,
-			false, AccountGroupRel::getAccountGroupId,
-			AccountGroupRel::getClassNameId, AccountGroupRel::getClassPK);
-
 		_uniquePersistenceFinderByA_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_C_C, _SQL_SELECT_ACCOUNTGROUPREL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"accountGroupId", "classNameId", "classPK"}, 0, 0,
+				false, AccountGroupRel::getAccountGroupId,
+				AccountGroupRel::getClassNameId, AccountGroupRel::getClassPK),
+			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"accountGroupRel.", "accountGroupId", FinderColumn.Type.LONG,
 				"=", true, true, AccountGroupRel::getAccountGroupId),
@@ -1035,4 +1015,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:980738400
+// LIFERAY-SERVICE-BUILDER-HASH:1553666125

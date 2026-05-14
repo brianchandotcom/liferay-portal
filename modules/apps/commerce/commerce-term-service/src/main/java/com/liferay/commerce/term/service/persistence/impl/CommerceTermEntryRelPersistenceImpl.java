@@ -77,9 +77,6 @@ public class CommerceTermEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceTermEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceTermEntryId;
-	private FinderPath _finderPathCountByCommerceTermEntryId;
 	private CollectionPersistenceFinder<CommerceTermEntryRel>
 		_collectionPersistenceFinderByCommerceTermEntryId;
 
@@ -231,9 +228,6 @@ public class CommerceTermEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceTermEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CommerceTermEntryRel>
 		_collectionPersistenceFinderByC_C;
 
@@ -394,7 +388,6 @@ public class CommerceTermEntryRelPersistenceImpl
 			finderCache, new Object[] {classNameId, commerceTermEntryId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_C;
 	private UniquePersistenceFinder<CommerceTermEntryRel>
 		_uniquePersistenceFinderByC_C_C;
 
@@ -709,29 +702,28 @@ public class CommerceTermEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTermEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceTermEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceTermEntryId", new String[] {Long.class.getName()},
-			new String[] {"commerceTermEntryId"}, true);
-
-		_finderPathCountByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTermEntryId", new String[] {Long.class.getName()},
-			new String[] {"commerceTermEntryId"}, false);
-
 		_collectionPersistenceFinderByCommerceTermEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceTermEntryId,
-				_finderPathWithoutPaginationFindByCommerceTermEntryId,
-				_finderPathCountByCommerceTermEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceTermEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceTermEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceTermEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTermEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceTermEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTermEntryId"}, false),
 				_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCETERMENTRYREL_WHERE,
 				CommerceTermEntryRelModelImpl.ORDER_BY_JPQL,
@@ -741,28 +733,24 @@ public class CommerceTermEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTermEntryRel::getCommerceTermEntryId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "commerceTermEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "commerceTermEntryId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "commerceTermEntryId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "commerceTermEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "commerceTermEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "commerceTermEntryId"}, false),
 			_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCETERMENTRYREL_WHERE,
 			CommerceTermEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -775,18 +763,18 @@ public class CommerceTermEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTermEntryRel::getCommerceTermEntryId));
 
-		_finderPathFetchByC_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "commerceTermEntryId"}, 0,
-			0, false, CommerceTermEntryRel::getClassNameId,
-			CommerceTermEntryRel::getClassPK,
-			CommerceTermEntryRel::getCommerceTermEntryId);
-
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "commerceTermEntryId"},
+				0, 0, false, CommerceTermEntryRel::getClassNameId,
+				CommerceTermEntryRel::getClassPK,
+				CommerceTermEntryRel::getCommerceTermEntryId),
 			_SQL_SELECT_COMMERCETERMENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "classNameId", FinderColumn.Type.LONG,
@@ -865,4 +853,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1065568093
+// LIFERAY-SERVICE-BUILDER-HASH:965646113

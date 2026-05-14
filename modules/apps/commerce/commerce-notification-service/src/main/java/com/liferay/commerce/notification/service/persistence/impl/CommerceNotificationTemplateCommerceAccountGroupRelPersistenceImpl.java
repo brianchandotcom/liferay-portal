@@ -85,11 +85,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceNotificationTemplateId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceNotificationTemplateId;
-	private FinderPath _finderPathCountByCommerceNotificationTemplateId;
 	private CollectionPersistenceFinder
 		<CommerceNotificationTemplateCommerceAccountGroupRel>
 			_collectionPersistenceFinderByCommerceNotificationTemplateId;
@@ -267,9 +262,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			count(finderCache, new Object[] {commerceNotificationTemplateId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceAccountGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceAccountGroupId;
-	private FinderPath _finderPathCountByCommerceAccountGroupId;
 	private CollectionPersistenceFinder
 		<CommerceNotificationTemplateCommerceAccountGroupRel>
 			_collectionPersistenceFinderByCommerceAccountGroupId;
@@ -438,7 +430,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			finderCache, new Object[] {commerceAccountGroupId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder
 		<CommerceNotificationTemplateCommerceAccountGroupRel>
 			_uniquePersistenceFinderByC_C;
@@ -821,35 +812,28 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceNotificationTemplateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceNotificationTemplateId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceNotificationTemplateId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceNotificationTemplateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceNotificationTemplateId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceNotificationTemplateId"}, true);
-
-		_finderPathCountByCommerceNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceNotificationTemplateId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceNotificationTemplateId"}, false);
-
 		_collectionPersistenceFinderByCommerceNotificationTemplateId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCommerceNotificationTemplateId,
-				_finderPathWithoutPaginationFindByCommerceNotificationTemplateId,
-				_finderPathCountByCommerceNotificationTemplateId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceNotificationTemplateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceNotificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceNotificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceNotificationTemplateId"}, false),
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
@@ -862,33 +846,28 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					CommerceNotificationTemplateCommerceAccountGroupRel::
 						getCommerceNotificationTemplateId));
 
-		_finderPathWithPaginationFindByCommerceAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCommerceAccountGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceAccountGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceAccountGroupId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceAccountGroupId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceAccountGroupId"}, true);
-
-		_finderPathCountByCommerceAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceAccountGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceAccountGroupId"}, false);
-
 		_collectionPersistenceFinderByCommerceAccountGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceAccountGroupId,
-				_finderPathWithoutPaginationFindByCommerceAccountGroupId,
-				_finderPathCountByCommerceAccountGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceAccountGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceAccountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceAccountGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceAccountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceAccountGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceAccountGroupId"}, false),
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
@@ -901,20 +880,19 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					CommerceNotificationTemplateCommerceAccountGroupRel::
 						getCommerceAccountGroupId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"commerceNotificationTemplateId", "commerceAccountGroupId"
-			},
-			0, 0, false,
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getCommerceNotificationTemplateId,
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getCommerceAccountGroupId);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"commerceNotificationTemplateId", "commerceAccountGroupId"
+				},
+				0, 0, false,
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCommerceNotificationTemplateId,
+				CommerceNotificationTemplateCommerceAccountGroupRel::
+					getCommerceAccountGroupId),
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 			"",
 			new FinderColumn<>(
@@ -1008,4 +986,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-565538688
+// LIFERAY-SERVICE-BUILDER-HASH:1628686639

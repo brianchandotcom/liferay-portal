@@ -80,9 +80,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<CommercePaymentMethodGroupRel>
 		_collectionPersistenceFinderByGroupId;
 
@@ -296,9 +293,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_A;
-	private FinderPath _finderPathCountByG_A;
 	private FilterCollectionPersistenceFinder<CommercePaymentMethodGroupRel>
 		_collectionPersistenceFinderByG_A;
 
@@ -526,7 +520,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			finderCache, new Object[] {groupId, active}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_P;
 	private UniquePersistenceFinder<CommercePaymentMethodGroupRel>
 		_uniquePersistenceFinderByG_P;
 
@@ -860,41 +853,39 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
 				CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePaymentMethodGroupRelImpl.class,
-					CommercePaymentMethodGroupRel.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
+					CommercePaymentMethodGroupRel.class,
+					"commercePaymentMethodGroupRel",
+					"CommercePaymentMethodGroupRel",
+					"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
+					"SELECT DISTINCT {commercePaymentMethodGroupRel.*} FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
+					"SELECT {CommercePaymentMethodGroupRel.*} FROM (SELECT DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePaymentMethodGroupRel ON TEMP_TABLE.CPaymentMethodGroupRelId = CommercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
+					"SELECT COUNT(DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId) AS COUNT_VALUE FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
 					CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL,
 					CommercePaymentMethodGroupRelModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -903,41 +894,43 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePaymentMethodGroupRel::getGroupId));
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, true);
-
-		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, false);
-
 		_collectionPersistenceFinderByG_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_A,
-				_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "active_"}, false),
 				_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
 				CommercePaymentMethodGroupRelModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePaymentMethodGroupRelImpl.class,
-					CommercePaymentMethodGroupRel.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE,
+					CommercePaymentMethodGroupRel.class,
+					"commercePaymentMethodGroupRel",
+					"CommercePaymentMethodGroupRel",
+					"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
+					"SELECT DISTINCT {commercePaymentMethodGroupRel.*} FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
+					"SELECT {CommercePaymentMethodGroupRel.*} FROM (SELECT DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePaymentMethodGroupRel ON TEMP_TABLE.CPaymentMethodGroupRelId = CommercePaymentMethodGroupRel.CPaymentMethodGroupRelId",
+					"SELECT COUNT(DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId) AS COUNT_VALUE FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ",
 					CommercePaymentMethodGroupRelModelImpl.ORDER_BY_SQL,
 					CommercePaymentMethodGroupRelModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -950,16 +943,15 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommercePaymentMethodGroupRel::isActive));
 
-		_finderPathFetchByG_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "paymentIntegrationKey"}, 0, 2, false,
-			CommercePaymentMethodGroupRel::getGroupId,
-			convertNullFunction(
-				CommercePaymentMethodGroupRel::getPaymentIntegrationKey));
-
 		_uniquePersistenceFinderByG_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "paymentIntegrationKey"}, 0, 2, false,
+				CommercePaymentMethodGroupRel::getGroupId,
+				convertNullFunction(
+					CommercePaymentMethodGroupRel::getPaymentIntegrationKey)),
 			_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRel.", "groupId",
@@ -1026,31 +1018,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE =
 		"SELECT COUNT(commercePaymentMethodGroupRel) FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_WHERE =
-			"SELECT DISTINCT {commercePaymentMethodGroupRel.*} FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CommercePaymentMethodGroupRel.*} FROM (SELECT DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPREL_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CommercePaymentMethodGroupRel ON TEMP_TABLE.CPaymentMethodGroupRelId = CommercePaymentMethodGroupRel.CPaymentMethodGroupRelId";
-
-	private static final String
-		_FILTER_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPREL_WHERE =
-			"SELECT COUNT(DISTINCT commercePaymentMethodGroupRel.CPaymentMethodGroupRelId) AS COUNT_VALUE FROM CommercePaymentMethodGroupRel commercePaymentMethodGroupRel WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS =
-		"commercePaymentMethodGroupRel";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"CommercePaymentMethodGroupRel";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePaymentMethodGroupRel exists with the key {";
 
@@ -1066,4 +1033,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2000264052
+// LIFERAY-SERVICE-BUILDER-HASH:-1049628361

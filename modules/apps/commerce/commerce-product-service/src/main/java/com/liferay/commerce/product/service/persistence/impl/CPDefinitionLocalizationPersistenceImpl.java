@@ -88,9 +88,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathCountByCPDefinitionId;
 	private CollectionPersistenceFinder<CPDefinitionLocalization>
 		_collectionPersistenceFinderByCPDefinitionId;
 
@@ -239,7 +236,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private FinderPath _finderPathFetchByCPDefinitionId_LanguageId;
 	private UniquePersistenceFinder<CPDefinitionLocalization>
 		_uniquePersistenceFinderByCPDefinitionId_LanguageId;
 
@@ -674,29 +670,27 @@ public class CPDefinitionLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathCountByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, false);
-
 		_collectionPersistenceFinderByCPDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPDefinitionId,
-				_finderPathWithoutPaginationFindByCPDefinitionId,
-				_finderPathCountByCPDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPDefinitionId", new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, false),
 				_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE,
 				_SQL_COUNT_CPDEFINITIONLOCALIZATION_WHERE,
 				CPDefinitionLocalizationModelImpl.ORDER_BY_JPQL,
@@ -706,16 +700,17 @@ public class CPDefinitionLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionLocalization::getCPDefinitionId));
 
-		_finderPathFetchByCPDefinitionId_LanguageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "languageId"}, 0, 2, false,
-			CPDefinitionLocalization::getCPDefinitionId,
-			convertNullFunction(CPDefinitionLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByCPDefinitionId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCPDefinitionId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByCPDefinitionId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"CPDefinitionId", "languageId"}, 0, 2, false,
+					CPDefinitionLocalization::getCPDefinitionId,
+					convertNullFunction(
+						CPDefinitionLocalization::getLanguageId)),
 				_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"cpDefinitionLocalization.", "CPDefinitionId",
@@ -795,4 +790,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-943724969
+// LIFERAY-SERVICE-BUILDER-HASH:-1680544198

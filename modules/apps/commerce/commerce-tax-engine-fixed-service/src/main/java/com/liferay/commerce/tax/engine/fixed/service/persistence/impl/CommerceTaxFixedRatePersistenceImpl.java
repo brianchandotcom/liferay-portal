@@ -77,9 +77,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCPTaxCategoryId;
-	private FinderPath _finderPathWithoutPaginationFindByCPTaxCategoryId;
-	private FinderPath _finderPathCountByCPTaxCategoryId;
 	private CollectionPersistenceFinder<CommerceTaxFixedRate>
 		_collectionPersistenceFinderByCPTaxCategoryId;
 
@@ -228,9 +225,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 			finderCache, new Object[] {CPTaxCategoryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceTaxMethodId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceTaxMethodId;
-	private FinderPath _finderPathCountByCommerceTaxMethodId;
 	private CollectionPersistenceFinder<CommerceTaxFixedRate>
 		_collectionPersistenceFinderByCommerceTaxMethodId;
 
@@ -382,7 +376,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 			finderCache, new Object[] {commerceTaxMethodId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<CommerceTaxFixedRate>
 		_uniquePersistenceFinderByC_C;
 
@@ -688,29 +681,28 @@ public class CommerceTaxFixedRatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCPTaxCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPTaxCategoryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPTaxCategoryId"}, true);
-
-		_finderPathWithoutPaginationFindByCPTaxCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPTaxCategoryId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPTaxCategoryId"}, true);
-
-		_finderPathCountByCPTaxCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPTaxCategoryId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPTaxCategoryId"}, false);
-
 		_collectionPersistenceFinderByCPTaxCategoryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPTaxCategoryId,
-				_finderPathWithoutPaginationFindByCPTaxCategoryId,
-				_finderPathCountByCPTaxCategoryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPTaxCategoryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPTaxCategoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPTaxCategoryId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPTaxCategoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPTaxCategoryId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPTaxCategoryId"}, false),
 				_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE,
 				CommerceTaxFixedRateModelImpl.ORDER_BY_JPQL,
@@ -720,29 +712,28 @@ public class CommerceTaxFixedRatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxFixedRate::getCPTaxCategoryId));
 
-		_finderPathWithPaginationFindByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTaxMethodId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceTaxMethodId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			new String[] {"commerceTaxMethodId"}, true);
-
-		_finderPathCountByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			new String[] {"commerceTaxMethodId"}, false);
-
 		_collectionPersistenceFinderByCommerceTaxMethodId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceTaxMethodId,
-				_finderPathWithoutPaginationFindByCommerceTaxMethodId,
-				_finderPathCountByCommerceTaxMethodId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceTaxMethodId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceTaxMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceTaxMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTaxMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceTaxMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTaxMethodId"}, false),
 				_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE,
 				CommerceTaxFixedRateModelImpl.ORDER_BY_JPQL,
@@ -752,16 +743,15 @@ public class CommerceTaxFixedRatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxFixedRate::getCommerceTaxMethodId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPTaxCategoryId", "commerceTaxMethodId"}, 0, 0,
-			false, CommerceTaxFixedRate::getCPTaxCategoryId,
-			CommerceTaxFixedRate::getCommerceTaxMethodId);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"CPTaxCategoryId", "commerceTaxMethodId"}, 0, 0,
+				false, CommerceTaxFixedRate::getCPTaxCategoryId,
+				CommerceTaxFixedRate::getCommerceTaxMethodId),
+			_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxFixedRate.", "CPTaxCategoryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -837,4 +827,4 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1379788497
+// LIFERAY-SERVICE-BUILDER-HASH:1413369276

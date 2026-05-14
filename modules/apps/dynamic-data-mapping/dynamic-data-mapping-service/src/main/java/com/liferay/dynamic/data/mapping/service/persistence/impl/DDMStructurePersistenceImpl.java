@@ -99,9 +99,6 @@ public class DDMStructurePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByUuid;
 
@@ -241,7 +238,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DDMStructure>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -331,9 +327,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -488,9 +481,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByGroupId;
 
@@ -869,9 +859,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {groupIds}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParentStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByParentStructureId;
-	private FinderPath _finderPathCountByParentStructureId;
 	private CollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByParentStructureId;
 
@@ -1020,9 +1007,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {parentStructureId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByStructureKey;
-	private FinderPath _finderPathWithoutPaginationFindByStructureKey;
-	private FinderPath _finderPathCountByStructureKey;
 	private CollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByStructureKey;
 
@@ -1169,9 +1153,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {structureKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P;
-	private FinderPath _finderPathCountByG_P;
 	private FilterCollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByG_P;
 
@@ -1402,9 +1383,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {groupId, parentStructureId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private FilterCollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByG_C;
 
@@ -1818,9 +1796,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {groupIds, classNameId}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByC_C;
 
@@ -1977,7 +1952,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {companyId, classNameId});
 	}
 
-	private FinderPath _finderPathFetchByERC_G_C;
 	private UniquePersistenceFinder<DDMStructure>
 		_uniquePersistenceFinderByERC_G_C;
 
@@ -2086,7 +2060,6 @@ public class DDMStructurePersistenceImpl
 			new Object[] {externalReferenceCode, groupId, classNameId});
 	}
 
-	private FinderPath _finderPathFetchByG_C_S;
 	private UniquePersistenceFinder<DDMStructure>
 		_uniquePersistenceFinderByG_C_S;
 
@@ -2192,9 +2165,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, structureKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_N_D;
-	private FinderPath _finderPathCountByG_N_D;
 	private FilterCollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByG_N_D;
 
@@ -2441,9 +2411,6 @@ public class DDMStructurePersistenceImpl
 			finderCache, new Object[] {groupId, name, description}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_N_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_N_D;
-	private FinderPath _finderPathCountByG_C_N_D;
 	private FilterCollectionPersistenceFinder<DDMStructure>
 		_collectionPersistenceFinderByG_C_N_D;
 
@@ -3302,42 +3269,38 @@ public class DDMStructurePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMStructure::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DDMStructure::getUuid),
-			DDMStructure::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMSTRUCTURE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DDMStructure::getUuid),
+				DDMStructure::getGroupId),
+			_SQL_SELECT_DDMSTRUCTURE_WHERE, "",
 			new FinderColumn<>(
 				"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMStructure::getUuid),
@@ -3345,31 +3308,26 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDMStructure::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DDMSTRUCTURE_WHERE,
-				_SQL_COUNT_DDMSTRUCTURE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=",
@@ -3378,68 +3336,62 @@ public class DDMStructurePersistenceImpl
 					"ddmStructure.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_DDMSTRUCTURE_WHERE,
-				_SQL_COUNT_DDMSTRUCTURE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE,
+					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
+					"DDMStructure", "ddmStructure.structureId",
+					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
+					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
+					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
+					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
 					DDMStructureModelImpl.ORDER_BY_SQL,
 					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId));
 
-		_finderPathWithPaginationFindByParentStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByParentStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByParentStructureId", new String[] {Long.class.getName()},
-			new String[] {"parentStructureId"}, true);
-
-		_finderPathCountByParentStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentStructureId", new String[] {Long.class.getName()},
-			new String[] {"parentStructureId"}, false);
-
 		_collectionPersistenceFinderByParentStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParentStructureId,
-				_finderPathWithoutPaginationFindByParentStructureId,
-				_finderPathCountByParentStructureId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentStructureId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentStructureId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentStructureId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -3447,68 +3399,61 @@ public class DDMStructurePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMStructure::getParentStructureId));
 
-		_finderPathWithPaginationFindByStructureKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureKey",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureKey"}, true);
-
-		_finderPathWithoutPaginationFindByStructureKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureKey",
-			new String[] {String.class.getName()},
-			new String[] {"structureKey"}, 0, 1, true, null);
-
-		_finderPathCountByStructureKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureKey",
-			new String[] {String.class.getName()},
-			new String[] {"structureKey"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByStructureKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureKey,
-				_finderPathWithoutPaginationFindByStructureKey,
-				_finderPathCountByStructureKey, _SQL_SELECT_DDMSTRUCTURE_WHERE,
-				_SQL_COUNT_DDMSTRUCTURE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByStructureKey",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureKey", new String[] {String.class.getName()},
+					new String[] {"structureKey"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureKey",
+					new String[] {String.class.getName()},
+					new String[] {"structureKey"}, 0, 1, false, null),
+				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmStructure.", "structureKey", FinderColumn.Type.STRING,
 					"=", true, true, DDMStructure::getStructureKey));
 
-		_finderPathWithPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "parentStructureId"}, true);
-
-		_finderPathCountByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "parentStructureId"}, false);
-
 		_collectionPersistenceFinderByG_P =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P,
-				_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "parentStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "parentStructureId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE,
+					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
+					"DDMStructure", "ddmStructure.structureId",
+					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
+					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
+					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
+					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
 					DDMStructureModelImpl.ORDER_BY_SQL,
 					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3519,39 +3464,34 @@ public class DDMStructurePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMStructure::getParentStructureId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C,
-				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "classNameId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "classNameId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "classNameId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE,
+					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
+					"DDMStructure", "ddmStructure.structureId",
+					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
+					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
+					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
+					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
 					DDMStructureModelImpl.ORDER_BY_SQL,
 					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -3561,28 +3501,24 @@ public class DDMStructurePersistenceImpl
 					"ddmStructure.", "classNameId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getClassNameId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 			DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -3592,19 +3528,21 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructure::getClassNameId));
 
-		_finderPathFetchByERC_G_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"externalReferenceCode", "groupId", "classNameId"}, 0,
-			1, false,
-			convertNullFunction(DDMStructure::getExternalReferenceCode),
-			DDMStructure::getGroupId, DDMStructure::getClassNameId);
-
 		_uniquePersistenceFinderByERC_G_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G_C, _SQL_SELECT_DDMSTRUCTURE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"externalReferenceCode", "groupId", "classNameId"
+				},
+				0, 1, false,
+				convertNullFunction(DDMStructure::getExternalReferenceCode),
+				DDMStructure::getGroupId, DDMStructure::getClassNameId),
+			_SQL_SELECT_DDMSTRUCTURE_WHERE, "",
 			new FinderColumn<>(
 				"ddmStructure.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -3616,18 +3554,18 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructure::getClassNameId));
 
-		_finderPathFetchByG_C_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "structureKey"}, 0, 4,
-			false, DDMStructure::getGroupId, DDMStructure::getClassNameId,
-			convertNullFunction(DDMStructure::getStructureKey));
-
 		_uniquePersistenceFinderByG_C_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_S, _SQL_SELECT_DDMSTRUCTURE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "structureKey"}, 0, 4,
+				false, DDMStructure::getGroupId, DDMStructure::getClassNameId,
+				convertNullFunction(DDMStructure::getStructureKey)),
+			_SQL_SELECT_DDMSTRUCTURE_WHERE, "",
 			new FinderColumn<>(
 				"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDMStructure::getGroupId),
@@ -3638,46 +3576,43 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "structureKey", FinderColumn.Type.STRING, "=",
 				true, true, DDMStructure::getStructureKey));
 
-		_finderPathWithPaginationFindByG_N_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "description"}, true);
-
-		_finderPathWithoutPaginationFindByG_N_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "description"}, 0, 6, true, null);
-
-		_finderPathCountByG_N_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "description"}, 0, 6, false, null);
-
 		_collectionPersistenceFinderByG_N_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_N_D,
-				_finderPathWithoutPaginationFindByG_N_D,
-				_finderPathCountByG_N_D, _SQL_SELECT_DDMSTRUCTURE_WHERE,
-				_SQL_COUNT_DDMSTRUCTURE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "description"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "name", "description"}, 0, 6, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "name", "description"}, 0, 6,
+					false, null),
+				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE,
+					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
+					"DDMStructure", "ddmStructure.structureId",
+					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
+					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
+					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
+					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
 					DDMStructureModelImpl.ORDER_BY_SQL,
 					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3690,50 +3625,50 @@ public class DDMStructurePersistenceImpl
 					"ddmStructure.", "description", FinderColumn.Type.STRING,
 					"=", true, true, DDMStructure::getDescription));
 
-		_finderPathWithPaginationFindByG_C_N_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_N_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "name", "description"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_N_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_N_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "name", "description"}, 0,
-			12, true, null);
-
-		_finderPathCountByG_C_N_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_N_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "name", "description"}, 0,
-			12, false, null);
-
 		_collectionPersistenceFinderByG_C_N_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_N_D,
-				_finderPathWithoutPaginationFindByG_C_N_D,
-				_finderPathCountByG_C_N_D, _SQL_SELECT_DDMSTRUCTURE_WHERE,
-				_SQL_COUNT_DDMSTRUCTURE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_N_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "name", "description"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_N_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "name", "description"
+					},
+					0, 12, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_N_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "name", "description"
+					},
+					0, 12, false, null),
+				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE,
+					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
+					"DDMStructure", "ddmStructure.structureId",
+					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
+					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
+					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
+					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
 					DDMStructureModelImpl.ORDER_BY_SQL,
 					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -3806,27 +3741,6 @@ public class DDMStructurePersistenceImpl
 	private static final String _SQL_COUNT_DDMSTRUCTURE_WHERE =
 		"SELECT COUNT(ddmStructure) FROM DDMStructure ddmStructure WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"ddmStructure.structureId";
-
-	private static final String _FILTER_SQL_SELECT_DDMSTRUCTURE_WHERE =
-		"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DDMSTRUCTURE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId";
-
-	private static final String _FILTER_SQL_COUNT_DDMSTRUCTURE_WHERE =
-		"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "ddmStructure";
-
-	private static final String _FILTER_ENTITY_TABLE = "DDMStructure";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMStructure exists with the key {";
 
@@ -3842,4 +3756,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1897382224
+// LIFERAY-SERVICE-BUILDER-HASH:-120687520

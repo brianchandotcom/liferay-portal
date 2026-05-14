@@ -84,9 +84,6 @@ public class PatcherAccountPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<PatcherAccount>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -296,7 +293,6 @@ public class PatcherAccountPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByAccountEntryCode;
 	private UniquePersistenceFinder<PatcherAccount>
 		_uniquePersistenceFinderByAccountEntryCode;
 
@@ -385,8 +381,6 @@ public class PatcherAccountPersistenceImpl
 			finderCache, new Object[] {accountEntryCode});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LikeA;
-	private FinderPath _finderPathWithPaginationCountByC_LikeA;
 	private FilterCollectionPersistenceFinder<PatcherAccount>
 		_collectionPersistenceFinderByC_LikeA;
 
@@ -1153,89 +1147,83 @@ public class PatcherAccountPersistenceImpl
 				"OSBPatcher_PAccounts_PBuilds", "companyId", "patcherAccountId",
 				"patcherBuildId", this, PatcherBuild.class);
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_PATCHERACCOUNT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherAccountImpl.class, PatcherAccount.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE,
-					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE,
+					"patcherAccount", "OSBPatcher_PatcherAccount",
+					"patcherAccount.patcherAccountId",
+					"SELECT DISTINCT {patcherAccount.*} FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
+					"SELECT {OSBPatcher_PatcherAccount.*} FROM (SELECT DISTINCT patcherAccount.patcherAccountId FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherAccount ON TEMP_TABLE.patcherAccountId = OSBPatcher_PatcherAccount.patcherAccountId",
+					"SELECT COUNT(DISTINCT patcherAccount.patcherAccountId) AS COUNT_VALUE FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
 					PatcherAccountModelImpl.ORDER_BY_SQL,
 					PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId));
 
-		_finderPathFetchByAccountEntryCode = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByAccountEntryCode",
-			new String[] {String.class.getName()},
-			new String[] {"accountEntryCode"}, 0, 1, false,
-			convertNullFunction(PatcherAccount::getAccountEntryCode));
-
 		_uniquePersistenceFinderByAccountEntryCode =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByAccountEntryCode,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByAccountEntryCode",
+					new String[] {String.class.getName()},
+					new String[] {"accountEntryCode"}, 0, 1, false,
+					convertNullFunction(PatcherAccount::getAccountEntryCode)),
 				_SQL_SELECT_PATCHERACCOUNT_WHERE, "",
 				new FinderColumn<>(
 					"patcherAccount.", "accountEntryCode",
 					FinderColumn.Type.STRING, "=", true, true,
 					PatcherAccount::getAccountEntryCode));
 
-		_finderPathWithPaginationFindByC_LikeA = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeA",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "accountEntryCode"}, true);
-
-		_finderPathWithPaginationCountByC_LikeA = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeA",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "accountEntryCode"}, false);
-
 		_collectionPersistenceFinderByC_LikeA =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_LikeA, null,
-				_finderPathWithPaginationCountByC_LikeA,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeA",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "accountEntryCode"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeA",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "accountEntryCode"}, false),
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherAccountImpl.class, PatcherAccount.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE,
-					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE,
+					"patcherAccount", "OSBPatcher_PatcherAccount",
+					"patcherAccount.patcherAccountId",
+					"SELECT DISTINCT {patcherAccount.*} FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
+					"SELECT {OSBPatcher_PatcherAccount.*} FROM (SELECT DISTINCT patcherAccount.patcherAccountId FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherAccount ON TEMP_TABLE.patcherAccountId = OSBPatcher_PatcherAccount.patcherAccountId",
+					"SELECT COUNT(DISTINCT patcherAccount.patcherAccountId) AS COUNT_VALUE FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
 					PatcherAccountModelImpl.ORDER_BY_SQL,
 					PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1306,28 +1294,6 @@ public class PatcherAccountPersistenceImpl
 	private static final String _SQL_COUNT_PATCHERACCOUNT_WHERE =
 		"SELECT COUNT(patcherAccount) FROM PatcherAccount patcherAccount WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"patcherAccount.patcherAccountId";
-
-	private static final String _FILTER_SQL_SELECT_PATCHERACCOUNT_WHERE =
-		"SELECT DISTINCT {patcherAccount.*} FROM OSBPatcher_PatcherAccount patcherAccount WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {OSBPatcher_PatcherAccount.*} FROM (SELECT DISTINCT patcherAccount.patcherAccountId FROM OSBPatcher_PatcherAccount patcherAccount WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PATCHERACCOUNT_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN OSBPatcher_PatcherAccount ON TEMP_TABLE.patcherAccountId = OSBPatcher_PatcherAccount.patcherAccountId";
-
-	private static final String _FILTER_SQL_COUNT_PATCHERACCOUNT_WHERE =
-		"SELECT COUNT(DISTINCT patcherAccount.patcherAccountId) AS COUNT_VALUE FROM OSBPatcher_PatcherAccount patcherAccount WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "patcherAccount";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"OSBPatcher_PatcherAccount";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherAccount exists with the key {";
 
@@ -1340,4 +1306,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:206487370
+// LIFERAY-SERVICE-BUILDER-HASH:2128638920

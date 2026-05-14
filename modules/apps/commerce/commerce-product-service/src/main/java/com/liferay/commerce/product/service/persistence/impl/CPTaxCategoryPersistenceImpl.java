@@ -96,9 +96,6 @@ public class CPTaxCategoryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<CPTaxCategory>
 		_collectionPersistenceFinderByUuid;
 
@@ -304,9 +301,6 @@ public class CPTaxCategoryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<CPTaxCategory>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -531,9 +525,6 @@ public class CPTaxCategoryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<CPTaxCategory>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -743,7 +734,6 @@ public class CPTaxCategoryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CPTaxCategory>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1201,78 +1191,70 @@ public class CPTaxCategoryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CPTaxCategoryImpl.class, CPTaxCategory.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_WHERE,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CPTAXCATEGORY_WHERE,
+					"cpTaxCategory", "CPTaxCategory",
+					"cpTaxCategory.CPTaxCategoryId",
+					"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ",
+					"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ",
+					") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId",
+					"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ",
 					CPTaxCategoryModelImpl.ORDER_BY_SQL,
 					CPTaxCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CPTaxCategory::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CPTAXCATEGORY_WHERE,
-				_SQL_COUNT_CPTAXCATEGORY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CPTaxCategoryImpl.class, CPTaxCategory.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_WHERE,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CPTAXCATEGORY_WHERE,
+					"cpTaxCategory", "CPTaxCategory",
+					"cpTaxCategory.CPTaxCategoryId",
+					"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ",
+					"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ",
+					") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId",
+					"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ",
 					CPTaxCategoryModelImpl.ORDER_BY_SQL,
 					CPTaxCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1282,54 +1264,51 @@ public class CPTaxCategoryPersistenceImpl
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_CPTAXCATEGORY_WHERE,
-				_SQL_COUNT_CPTAXCATEGORY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
 				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CPTaxCategoryImpl.class, CPTaxCategory.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_WHERE,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CPTAXCATEGORY_WHERE,
+					"cpTaxCategory", "CPTaxCategory",
+					"cpTaxCategory.CPTaxCategoryId",
+					"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ",
+					"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ",
+					") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId",
+					"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ",
 					CPTaxCategoryModelImpl.ORDER_BY_SQL,
 					CPTaxCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CPTaxCategory::getExternalReferenceCode),
-			CPTaxCategory::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CPTAXCATEGORY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(CPTaxCategory::getExternalReferenceCode),
+				CPTaxCategory::getCompanyId),
+			_SQL_SELECT_CPTAXCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"cpTaxCategory.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1395,27 +1374,6 @@ public class CPTaxCategoryPersistenceImpl
 	private static final String _SQL_COUNT_CPTAXCATEGORY_WHERE =
 		"SELECT COUNT(cpTaxCategory) FROM CPTaxCategory cpTaxCategory WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"cpTaxCategory.CPTaxCategoryId";
-
-	private static final String _FILTER_SQL_SELECT_CPTAXCATEGORY_WHERE =
-		"SELECT DISTINCT {cpTaxCategory.*} FROM CPTaxCategory cpTaxCategory WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CPTaxCategory.*} FROM (SELECT DISTINCT cpTaxCategory.CPTaxCategoryId FROM CPTaxCategory cpTaxCategory WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CPTAXCATEGORY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CPTaxCategory ON TEMP_TABLE.CPTaxCategoryId = CPTaxCategory.CPTaxCategoryId";
-
-	private static final String _FILTER_SQL_COUNT_CPTAXCATEGORY_WHERE =
-		"SELECT COUNT(DISTINCT cpTaxCategory.CPTaxCategoryId) AS COUNT_VALUE FROM CPTaxCategory cpTaxCategory WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "cpTaxCategory";
-
-	private static final String _FILTER_ENTITY_TABLE = "CPTaxCategory";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPTaxCategory exists with the key {";
 
@@ -1431,4 +1389,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-643693835
+// LIFERAY-SERVICE-BUILDER-HASH:-271503987

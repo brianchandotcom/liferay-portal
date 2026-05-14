@@ -16,7 +16,6 @@ import com.liferay.osb.patcher.service.persistence.impl.constants.OSBPatcherPers
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -73,7 +72,6 @@ public class PatcherFixComponentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByName;
 	private UniquePersistenceFinder<PatcherFixComponent>
 		_uniquePersistenceFinderByName;
 
@@ -364,14 +362,13 @@ public class PatcherFixComponentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, convertNullFunction(PatcherFixComponent::getName));
-
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByName, _SQL_SELECT_PATCHERFIXCOMPONENT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false, convertNullFunction(PatcherFixComponent::getName)),
+			_SQL_SELECT_PATCHERFIXCOMPONENT_WHERE, "",
 			new FinderColumn<>(
 				"patcherFixComponent.", "name", FinderColumn.Type.STRING, "=",
 				true, true, PatcherFixComponent::getName));
@@ -436,4 +433,4 @@ public class PatcherFixComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-75729854
+// LIFERAY-SERVICE-BUILDER-HASH:2090743756

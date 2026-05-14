@@ -73,9 +73,6 @@ public class FaroPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<FaroPreferences>
 		_collectionPersistenceFinderByGroupId;
 
@@ -219,7 +216,6 @@ public class FaroPreferencesPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathFetchByG_O;
 	private UniquePersistenceFinder<FaroPreferences>
 		_uniquePersistenceFinderByG_O;
 
@@ -486,29 +482,26 @@ public class FaroPreferencesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_FAROPREFERENCES_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_FAROPREFERENCES_WHERE,
 				_SQL_COUNT_FAROPREFERENCES_WHERE,
 				FaroPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -516,14 +509,14 @@ public class FaroPreferencesPersistenceImpl
 					"faroPreferences.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroPreferences::getGroupId));
 
-		_finderPathFetchByG_O = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "ownerId"}, 0, 0, false,
-			FaroPreferences::getGroupId, FaroPreferences::getOwnerId);
-
 		_uniquePersistenceFinderByG_O = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_O, _SQL_SELECT_FAROPREFERENCES_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "ownerId"}, 0, 0, false,
+				FaroPreferences::getGroupId, FaroPreferences::getOwnerId),
+			_SQL_SELECT_FAROPREFERENCES_WHERE, "",
 			new FinderColumn<>(
 				"faroPreferences.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FaroPreferences::getGroupId),
@@ -597,4 +590,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1984103344
+// LIFERAY-SERVICE-BUILDER-HASH:794646968

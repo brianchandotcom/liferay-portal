@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCompanyInfoException;
 import com.liferay.portal.kernel.log.Log;
@@ -63,7 +62,6 @@ public class CompanyInfoPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByCompanyId;
 	private UniquePersistenceFinder<CompanyInfo>
 		_uniquePersistenceFinderByCompanyId;
 
@@ -333,14 +331,13 @@ public class CompanyInfoPersistenceImpl
 	 * Initializes the company info persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByCompanyId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"}, 0,
-			0, false, CompanyInfo::getCompanyId);
-
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCompanyId, _SQL_SELECT_COMPANYINFO_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
+				new String[] {Long.class.getName()}, new String[] {"companyId"},
+				0, 0, false, CompanyInfo::getCompanyId),
+			_SQL_SELECT_COMPANYINFO_WHERE, "",
 			new FinderColumn<>(
 				"companyInfo.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CompanyInfo::getCompanyId));
@@ -375,4 +372,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:191148593
+// LIFERAY-SERVICE-BUILDER-HASH:-197627180

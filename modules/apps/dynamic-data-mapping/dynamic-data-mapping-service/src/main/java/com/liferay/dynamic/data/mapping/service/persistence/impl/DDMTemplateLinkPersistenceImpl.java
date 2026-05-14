@@ -80,9 +80,6 @@ public class DDMTemplateLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByTemplateId;
-	private FinderPath _finderPathWithoutPaginationFindByTemplateId;
-	private FinderPath _finderPathCountByTemplateId;
 	private CollectionPersistenceFinder<DDMTemplateLink>
 		_collectionPersistenceFinderByTemplateId;
 
@@ -228,7 +225,6 @@ public class DDMTemplateLinkPersistenceImpl
 			finderCache, new Object[] {templateId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<DDMTemplateLink>
 		_uniquePersistenceFinderByC_C;
 
@@ -563,29 +559,26 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"templateId"}, true);
-
-		_finderPathWithoutPaginationFindByTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTemplateId",
-			new String[] {Long.class.getName()}, new String[] {"templateId"},
-			true);
-
-		_finderPathCountByTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTemplateId",
-			new String[] {Long.class.getName()}, new String[] {"templateId"},
-			false);
-
 		_collectionPersistenceFinderByTemplateId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByTemplateId,
-				_finderPathWithoutPaginationFindByTemplateId,
-				_finderPathCountByTemplateId, _SQL_SELECT_DDMTEMPLATELINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"templateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByTemplateId", new String[] {Long.class.getName()},
+					new String[] {"templateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByTemplateId", new String[] {Long.class.getName()},
+					new String[] {"templateId"}, false),
+				_SQL_SELECT_DDMTEMPLATELINK_WHERE,
 				_SQL_COUNT_DDMTEMPLATELINK_WHERE,
 				DDMTemplateLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -593,14 +586,14 @@ public class DDMTemplateLinkPersistenceImpl
 					"ddmTemplateLink.", "templateId", FinderColumn.Type.LONG,
 					"=", true, true, DDMTemplateLink::getTemplateId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, 0, 0, false,
-			DDMTemplateLink::getClassNameId, DDMTemplateLink::getClassPK);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_DDMTEMPLATELINK_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, 0, 0, false,
+				DDMTemplateLink::getClassNameId, DDMTemplateLink::getClassPK),
+			_SQL_SELECT_DDMTEMPLATELINK_WHERE, "",
 			new FinderColumn<>(
 				"ddmTemplateLink.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMTemplateLink::getClassNameId),
@@ -677,4 +670,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1316288451
+// LIFERAY-SERVICE-BUILDER-HASH:563630888

@@ -94,9 +94,6 @@ public class ObjectDefinitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByUuid;
 
@@ -302,9 +299,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -531,9 +525,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -744,9 +735,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectFolderId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectFolderId;
-	private FinderPath _finderPathCountByObjectFolderId;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByObjectFolderId;
 
@@ -961,9 +949,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {objectFolderId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryRestricted;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryRestricted;
-	private FinderPath _finderPathCountByAccountEntryRestricted;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByAccountEntryRestricted;
 
@@ -1187,7 +1172,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {accountEntryRestricted});
 	}
 
-	private FinderPath _finderPathFetchByClassName;
 	private UniquePersistenceFinder<ObjectDefinition>
 		_uniquePersistenceFinderByClassName;
 
@@ -1272,9 +1256,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {className});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySystem;
-	private FinderPath _finderPathWithoutPaginationFindBySystem;
-	private FinderPath _finderPathCountBySystem;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderBySystem;
 
@@ -1483,9 +1464,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {system});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_U;
-	private FinderPath _finderPathCountByC_U;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByC_U;
 
@@ -1710,7 +1688,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<ObjectDefinition>
 		_uniquePersistenceFinderByC_C;
 
@@ -1801,7 +1778,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, className});
 	}
 
-	private FinderPath _finderPathFetchByC_N;
 	private UniquePersistenceFinder<ObjectDefinition>
 		_uniquePersistenceFinderByC_N;
 
@@ -1891,9 +1867,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_S;
-	private FinderPath _finderPathCountByC_S;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByC_S;
 
@@ -2118,9 +2091,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, status}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_S;
-	private FinderPath _finderPathWithoutPaginationFindByS_S;
-	private FinderPath _finderPathCountByS_S;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByS_S;
 
@@ -2344,9 +2314,6 @@ public class ObjectDefinitionPersistenceImpl
 			finderCache, new Object[] {system, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_A_S;
-	private FinderPath _finderPathCountByC_A_S;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByC_A_S;
 
@@ -2592,9 +2559,6 @@ public class ObjectDefinitionPersistenceImpl
 			0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_M_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_M_S;
-	private FinderPath _finderPathCountByC_M_S;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByC_M_S;
 
@@ -2849,9 +2813,6 @@ public class ObjectDefinitionPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A_S_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_A_S_S;
-	private FinderPath _finderPathCountByC_A_S_S;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByC_A_S_S;
 
@@ -3120,9 +3081,6 @@ public class ObjectDefinitionPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_OFI_A_E_S_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_OFI_A_E_S_S;
-	private FinderPath _finderPathCountByC_OFI_A_E_S_S;
 	private FilterCollectionPersistenceFinder<ObjectDefinition>
 		_collectionPersistenceFinderByC_OFI_A_E_S_S;
 
@@ -3723,7 +3681,6 @@ public class ObjectDefinitionPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<ObjectDefinition>
 		_uniquePersistenceFinderByERC_C;
 
@@ -4114,81 +4071,74 @@ public class ObjectDefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectDefinition.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, ObjectDefinition::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTDEFINITION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4198,81 +4148,76 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectDefinition::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_OBJECTDEFINITION_WHERE,
-				_SQL_COUNT_OBJECTDEFINITION_WHERE,
-				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
-				new FinderColumn<>(
-					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
-					"=", true, true, ObjectDefinition::getCompanyId));
-
-		_finderPathWithPaginationFindByObjectFolderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectFolderId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectFolderId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectFolderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByObjectFolderId",
-			new String[] {Long.class.getName()},
-			new String[] {"objectFolderId"}, true);
-
-		_finderPathCountByObjectFolderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectFolderId",
-			new String[] {Long.class.getName()},
-			new String[] {"objectFolderId"}, false);
-
-		_collectionPersistenceFinderByObjectFolderId =
-			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectFolderId,
-				_finderPathWithoutPaginationFindByObjectFolderId,
-				_finderPathCountByObjectFolderId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
+					ObjectDefinitionModelImpl.ORDER_BY_SQL,
+					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, ObjectDefinition::getCompanyId));
+
+		_collectionPersistenceFinderByObjectFolderId =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectFolderId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectFolderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectFolderId", new String[] {Long.class.getName()},
+					new String[] {"objectFolderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectFolderId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectFolderId"}, false),
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
+				_SQL_COUNT_OBJECTDEFINITION_WHERE,
+				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					ObjectDefinitionImpl.class, ObjectDefinition.class,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4280,45 +4225,40 @@ public class ObjectDefinitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectDefinition::getObjectFolderId));
 
-		_finderPathWithPaginationFindByAccountEntryRestricted = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByAccountEntryRestricted",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryRestricted"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryRestricted =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByAccountEntryRestricted",
-				new String[] {Boolean.class.getName()},
-				new String[] {"accountEntryRestricted"}, true);
-
-		_finderPathCountByAccountEntryRestricted = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAccountEntryRestricted",
-			new String[] {Boolean.class.getName()},
-			new String[] {"accountEntryRestricted"}, false);
-
 		_collectionPersistenceFinderByAccountEntryRestricted =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryRestricted,
-				_finderPathWithoutPaginationFindByAccountEntryRestricted,
-				_finderPathCountByAccountEntryRestricted,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryRestricted",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryRestricted"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryRestricted",
+					new String[] {Boolean.class.getName()},
+					new String[] {"accountEntryRestricted"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountEntryRestricted",
+					new String[] {Boolean.class.getName()},
+					new String[] {"accountEntryRestricted"}, false),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4326,93 +4266,86 @@ public class ObjectDefinitionPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					ObjectDefinition::isAccountEntryRestricted));
 
-		_finderPathFetchByClassName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByClassName",
-			new String[] {String.class.getName()}, new String[] {"className"},
-			0, 1, false, convertNullFunction(ObjectDefinition::getClassName));
-
 		_uniquePersistenceFinderByClassName = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByClassName,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByClassName",
+				new String[] {String.class.getName()},
+				new String[] {"className"}, 0, 1, false,
+				convertNullFunction(ObjectDefinition::getClassName)),
 			_SQL_SELECT_OBJECTDEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"objectDefinition.", "className", FinderColumn.Type.STRING, "=",
 				true, true, ObjectDefinition::getClassName));
 
-		_finderPathWithPaginationFindBySystem = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySystem",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"system_"}, true);
-
-		_finderPathWithoutPaginationFindBySystem = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySystem",
-			new String[] {Boolean.class.getName()}, new String[] {"system_"},
-			true);
-
-		_finderPathCountBySystem = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySystem",
-			new String[] {Boolean.class.getName()}, new String[] {"system_"},
-			false);
-
 		_collectionPersistenceFinderBySystem =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySystem,
-				_finderPathWithoutPaginationFindBySystem,
-				_finderPathCountBySystem, _SQL_SELECT_OBJECTDEFINITION_WHERE,
-				_SQL_COUNT_OBJECTDEFINITION_WHERE,
-				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
-				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL,
-					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
-				new FinderColumn<>(
-					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
-					"=", true, true, ObjectDefinition::isSystem));
-
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false);
-
-		_collectionPersistenceFinderByC_U =
-			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_U,
-				_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySystem",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"system_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySystem",
+					new String[] {Boolean.class.getName()},
+					new String[] {"system_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySystem",
+					new String[] {Boolean.class.getName()},
+					new String[] {"system_"}, false),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
+					ObjectDefinitionModelImpl.ORDER_BY_SQL,
+					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
+				new FinderColumn<>(
+					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
+					"=", true, true, ObjectDefinition::isSystem));
+
+		_collectionPersistenceFinderByC_U =
+			new FilterCollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "userId"}, false),
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
+				_SQL_COUNT_OBJECTDEFINITION_WHERE,
+				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FilterCollectionPersistenceFinder.FilterMetadata<>(
+					ObjectDefinitionImpl.class, ObjectDefinition.class,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4422,15 +4355,15 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectDefinition::getUserId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "className"}, 0, 2, false,
-			ObjectDefinition::getCompanyId,
-			convertNullFunction(ObjectDefinition::getClassName));
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_OBJECTDEFINITION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "className"}, 0, 2, false,
+				ObjectDefinition::getCompanyId,
+				convertNullFunction(ObjectDefinition::getClassName)),
+			_SQL_SELECT_OBJECTDEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"objectDefinition.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, ObjectDefinition::getCompanyId),
@@ -4438,15 +4371,15 @@ public class ObjectDefinitionPersistenceImpl
 				"objectDefinition.", "className", FinderColumn.Type.STRING, "=",
 				true, true, ObjectDefinition::getClassName));
 
-		_finderPathFetchByC_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, 0, 2, true,
-			ObjectDefinition::getCompanyId,
-			convertNullFunction(ObjectDefinition::getName));
-
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_OBJECTDEFINITION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "name"}, 0, 2, true,
+				ObjectDefinition::getCompanyId,
+				convertNullFunction(ObjectDefinition::getName)),
+			_SQL_SELECT_OBJECTDEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"objectDefinition.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, ObjectDefinition::getCompanyId),
@@ -4454,41 +4387,41 @@ public class ObjectDefinitionPersistenceImpl
 				"objectDefinition.", "name", FinderColumn.Type.STRING, "=",
 				true, true, ObjectDefinition::getName));
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathCountByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_S,
-				_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4498,41 +4431,41 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
 
-		_finderPathWithPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
-			new String[] {
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"system_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
-			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"system_", "status"}, true);
-
-		_finderPathCountByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
-			new String[] {Boolean.class.getName(), Integer.class.getName()},
-			new String[] {"system_", "status"}, false);
-
 		_collectionPersistenceFinderByS_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByS_S,
-				_finderPathWithoutPaginationFindByS_S, _finderPathCountByS_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"system_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"system_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+					new String[] {
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"system_", "status"}, false),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4542,47 +4475,44 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
 
-		_finderPathWithPaginationFindByC_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "active_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "active_", "status"}, true);
-
-		_finderPathCountByC_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "active_", "status"}, false);
-
 		_collectionPersistenceFinderByC_A_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_A_S,
-				_finderPathWithoutPaginationFindByC_A_S,
-				_finderPathCountByC_A_S, _SQL_SELECT_OBJECTDEFINITION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "active_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "active_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "active_", "status"}, false),
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4595,47 +4525,44 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
 
-		_finderPathWithPaginationFindByC_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "modifiable", "system_"}, true);
-
-		_finderPathWithoutPaginationFindByC_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "modifiable", "system_"}, true);
-
-		_finderPathCountByC_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "modifiable", "system_"}, false);
-
 		_collectionPersistenceFinderByC_M_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_M_S,
-				_finderPathWithoutPaginationFindByC_M_S,
-				_finderPathCountByC_M_S, _SQL_SELECT_OBJECTDEFINITION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "modifiable", "system_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"companyId", "modifiable", "system_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"companyId", "modifiable", "system_"}, false),
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4649,48 +4576,47 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "system", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectDefinition::isSystem));
 
-		_finderPathWithPaginationFindByC_A_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "active_", "system_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_A_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"companyId", "active_", "system_", "status"}, true);
-
-		_finderPathCountByC_A_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"companyId", "active_", "system_", "status"}, false);
-
 		_collectionPersistenceFinderByC_A_S_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_A_S_S,
-				_finderPathWithoutPaginationFindByC_A_S_S,
-				_finderPathCountByC_A_S_S, _SQL_SELECT_OBJECTDEFINITION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "active_", "system_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "active_", "system_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "active_", "system_", "status"},
+					false),
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4706,64 +4632,62 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
 
-		_finderPathWithPaginationFindByC_OFI_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_OFI_A_E_S_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "objectFolderId", "active_",
-				"enableObjectEntryDraft", "scope", "status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_OFI_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_OFI_A_E_S_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"companyId", "objectFolderId", "active_",
-				"enableObjectEntryDraft", "scope", "status"
-			},
-			0, 16, true, null);
-
-		_finderPathCountByC_OFI_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_OFI_A_E_S_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"companyId", "objectFolderId", "active_",
-				"enableObjectEntryDraft", "scope", "status"
-			},
-			0, 16, false, null);
-
 		_collectionPersistenceFinderByC_OFI_A_E_S_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_OFI_A_E_S_S,
-				_finderPathWithoutPaginationFindByC_OFI_A_E_S_S,
-				_finderPathCountByC_OFI_A_E_S_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByC_OFI_A_E_S_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "objectFolderId", "active_",
+						"enableObjectEntryDraft", "scope", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_OFI_A_E_S_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"companyId", "objectFolderId", "active_",
+						"enableObjectEntryDraft", "scope", "status"
+					},
+					0, 16, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_OFI_A_E_S_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"companyId", "objectFolderId", "active_",
+						"enableObjectEntryDraft", "scope", "status"
+					},
+					0, 16, false, null),
 				_SQL_SELECT_OBJECTDEFINITION_WHERE,
 				_SQL_COUNT_OBJECTDEFINITION_WHERE,
 				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ObjectDefinitionImpl.class, ObjectDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE,
+					"objectDefinition", "ObjectDefinition",
+					"objectDefinition.objectDefinitionId",
+					"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ",
+					"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId",
+					"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ",
 					ObjectDefinitionModelImpl.ORDER_BY_SQL,
 					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4787,16 +4711,16 @@ public class ObjectDefinitionPersistenceImpl
 					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, ObjectDefinition::getStatus));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(ObjectDefinition::getExternalReferenceCode),
-			ObjectDefinition::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_OBJECTDEFINITION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(ObjectDefinition::getExternalReferenceCode),
+				ObjectDefinition::getCompanyId),
+			_SQL_SELECT_OBJECTDEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"objectDefinition.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -4859,27 +4783,6 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _SQL_COUNT_OBJECTDEFINITION_WHERE =
 		"SELECT COUNT(objectDefinition) FROM ObjectDefinition objectDefinition WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"objectDefinition.objectDefinitionId";
-
-	private static final String _FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE =
-		"SELECT DISTINCT {objectDefinition.*} FROM ObjectDefinition objectDefinition WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {ObjectDefinition.*} FROM (SELECT DISTINCT objectDefinition.objectDefinitionId FROM ObjectDefinition objectDefinition WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN ObjectDefinition ON TEMP_TABLE.objectDefinitionId = ObjectDefinition.objectDefinitionId";
-
-	private static final String _FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE =
-		"SELECT COUNT(DISTINCT objectDefinition.objectDefinitionId) AS COUNT_VALUE FROM ObjectDefinition objectDefinition WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "objectDefinition";
-
-	private static final String _FILTER_ENTITY_TABLE = "ObjectDefinition";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectDefinition exists with the key {";
 
@@ -4897,4 +4800,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:5644871
+// LIFERAY-SERVICE-BUILDER-HASH:1682052350

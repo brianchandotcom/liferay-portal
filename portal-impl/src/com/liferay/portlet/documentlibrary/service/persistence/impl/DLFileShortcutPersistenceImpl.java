@@ -89,9 +89,6 @@ public class DLFileShortcutPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByUuid;
 
@@ -233,7 +230,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DLFileShortcut>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -324,9 +320,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -482,9 +475,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByGroupId;
 
@@ -695,9 +685,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -842,9 +829,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByToFileEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByToFileEntryId;
-	private FinderPath _finderPathCountByToFileEntryId;
 	private CollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByToFileEntryId;
 
@@ -992,9 +976,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {toFileEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_F;
-	private FinderPath _finderPathCountByG_F;
 	private FilterCollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByG_F;
 
@@ -1221,8 +1202,6 @@ public class DLFileShortcutPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_NotS;
-	private FinderPath _finderPathWithPaginationCountByC_NotS;
 	private CollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByC_NotS;
 
@@ -1378,9 +1357,6 @@ public class DLFileShortcutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_A;
-	private FinderPath _finderPathWithoutPaginationFindByG_F_A;
-	private FinderPath _finderPathCountByG_F_A;
 	private FilterCollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByG_F_A;
 
@@ -1630,9 +1606,6 @@ public class DLFileShortcutPersistenceImpl
 			new Object[] {groupId, folderId, active}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F_A_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_F_A_S;
-	private FinderPath _finderPathCountByG_F_A_S;
 	private FilterCollectionPersistenceFinder<DLFileShortcut>
 		_collectionPersistenceFinderByG_F_A_S;
 
@@ -1906,7 +1879,6 @@ public class DLFileShortcutPersistenceImpl
 			new Object[] {groupId, folderId, active, status}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<DLFileShortcut>
 		_uniquePersistenceFinderByERC_G;
 
@@ -2377,43 +2349,38 @@ public class DLFileShortcutPersistenceImpl
 	 * Initializes the document library file shortcut persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
 			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileShortcut::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DLFileShortcut::getUuid),
-			DLFileShortcut::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DLFileShortcut::getUuid),
+				DLFileShortcut::getGroupId),
+			_SQL_SELECT_DLFILESHORTCUT_WHERE, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileShortcut::getUuid),
@@ -2421,30 +2388,26 @@ public class DLFileShortcutPersistenceImpl
 				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileShortcut::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -2454,97 +2417,88 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DLFileShortcutImpl.class, DLFileShortcut.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_WHERE,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILESHORTCUT_WHERE,
+					"dlFileShortcut", "DLFileShortcut",
+					"dlFileShortcut.fileShortcutId",
+					"SELECT DISTINCT {dlFileShortcut.*} FROM DLFileShortcut dlFileShortcut WHERE ",
+					"SELECT {DLFileShortcut.*} FROM (SELECT DISTINCT dlFileShortcut.fileShortcutId FROM DLFileShortcut dlFileShortcut WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileShortcut ON TEMP_TABLE.fileShortcutId = DLFileShortcut.fileShortcutId",
+					"SELECT COUNT(DISTINCT dlFileShortcut.fileShortcutId) AS COUNT_VALUE FROM DLFileShortcut dlFileShortcut WHERE ",
 					DLFileShortcutModelImpl.ORDER_BY_SQL,
 					DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getCompanyId));
 
-		_finderPathWithPaginationFindByToFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToFileEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"toFileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByToFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByToFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"toFileEntryId"},
-			true);
-
-		_finderPathCountByToFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"toFileEntryId"},
-			false);
-
 		_collectionPersistenceFinderByToFileEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByToFileEntryId,
-				_finderPathWithoutPaginationFindByToFileEntryId,
-				_finderPathCountByToFileEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByToFileEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"toFileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByToFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"toFileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByToFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"toFileEntryId"}, false),
 				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2552,40 +2506,36 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "toFileEntryId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileShortcut::getToFileEntryId));
 
-		_finderPathWithPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathWithoutPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, true);
-
-		_finderPathCountByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "folderId"}, false);
-
 		_collectionPersistenceFinderByG_F =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F,
-				_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "folderId"}, false),
 				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DLFileShortcutImpl.class, DLFileShortcut.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_WHERE,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILESHORTCUT_WHERE,
+					"dlFileShortcut", "DLFileShortcut",
+					"dlFileShortcut.fileShortcutId",
+					"SELECT DISTINCT {dlFileShortcut.*} FROM DLFileShortcut dlFileShortcut WHERE ",
+					"SELECT {DLFileShortcut.*} FROM (SELECT DISTINCT dlFileShortcut.fileShortcutId FROM DLFileShortcut dlFileShortcut WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileShortcut ON TEMP_TABLE.fileShortcutId = DLFileShortcut.fileShortcutId",
+					"SELECT COUNT(DISTINCT dlFileShortcut.fileShortcutId) AS COUNT_VALUE FROM DLFileShortcut dlFileShortcut WHERE ",
 					DLFileShortcutModelImpl.ORDER_BY_SQL,
 					DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2595,24 +2545,24 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getFolderId));
 
-		_finderPathWithPaginationFindByC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithPaginationCountByC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_NotS, null,
-				_finderPathWithPaginationCountByC_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"companyId", "status"}, false),
 				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -2623,46 +2573,43 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, DLFileShortcut::getStatus));
 
-		_finderPathWithPaginationFindByG_F_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByG_F_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "folderId", "active_"}, true);
-
-		_finderPathCountByG_F_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "folderId", "active_"}, false);
-
 		_collectionPersistenceFinderByG_F_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_A,
-				_finderPathWithoutPaginationFindByG_F_A,
-				_finderPathCountByG_F_A, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId", "active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "folderId", "active_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "folderId", "active_"}, false),
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DLFileShortcutImpl.class, DLFileShortcut.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_WHERE,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILESHORTCUT_WHERE,
+					"dlFileShortcut", "DLFileShortcut",
+					"dlFileShortcut.fileShortcutId",
+					"SELECT DISTINCT {dlFileShortcut.*} FROM DLFileShortcut dlFileShortcut WHERE ",
+					"SELECT {DLFileShortcut.*} FROM (SELECT DISTINCT dlFileShortcut.fileShortcutId FROM DLFileShortcut dlFileShortcut WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileShortcut ON TEMP_TABLE.fileShortcutId = DLFileShortcut.fileShortcutId",
+					"SELECT COUNT(DISTINCT dlFileShortcut.fileShortcutId) AS COUNT_VALUE FROM DLFileShortcut dlFileShortcut WHERE ",
 					DLFileShortcutModelImpl.ORDER_BY_SQL,
 					DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2675,47 +2622,46 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
 					true, true, DLFileShortcut::isActive));
 
-		_finderPathWithPaginationFindByG_F_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_A_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "folderId", "active_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_F_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_A_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "active_", "status"}, true);
-
-		_finderPathCountByG_F_A_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F_A_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "folderId", "active_", "status"}, false);
-
 		_collectionPersistenceFinderByG_F_A_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_F_A_S,
-				_finderPathWithoutPaginationFindByG_F_A_S,
-				_finderPathCountByG_F_A_S, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_A_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "folderId", "active_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F_A_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "active_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F_A_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "folderId", "active_", "status"},
+					false),
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
 				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					DLFileShortcutImpl.class, DLFileShortcut.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_WHERE,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_DLFILESHORTCUT_WHERE,
+					"dlFileShortcut", "DLFileShortcut",
+					"dlFileShortcut.fileShortcutId",
+					"SELECT DISTINCT {dlFileShortcut.*} FROM DLFileShortcut dlFileShortcut WHERE ",
+					"SELECT {DLFileShortcut.*} FROM (SELECT DISTINCT dlFileShortcut.fileShortcutId FROM DLFileShortcut dlFileShortcut WHERE ",
+					") TEMP_TABLE INNER JOIN DLFileShortcut ON TEMP_TABLE.fileShortcutId = DLFileShortcut.fileShortcutId",
+					"SELECT COUNT(DISTINCT dlFileShortcut.fileShortcutId) AS COUNT_VALUE FROM DLFileShortcut dlFileShortcut WHERE ",
 					DLFileShortcutModelImpl.ORDER_BY_SQL,
 					DLFileShortcutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2731,15 +2677,15 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, DLFileShortcut::getStatus));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(DLFileShortcut::getExternalReferenceCode),
-			DLFileShortcut::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILESHORTCUT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(DLFileShortcut::getExternalReferenceCode),
+				DLFileShortcut::getGroupId),
+			_SQL_SELECT_DLFILESHORTCUT_WHERE, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2769,27 +2715,6 @@ public class DLFileShortcutPersistenceImpl
 	private static final String _SQL_COUNT_DLFILESHORTCUT_WHERE =
 		"SELECT COUNT(dlFileShortcut) FROM DLFileShortcut dlFileShortcut WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"dlFileShortcut.fileShortcutId";
-
-	private static final String _FILTER_SQL_SELECT_DLFILESHORTCUT_WHERE =
-		"SELECT DISTINCT {dlFileShortcut.*} FROM DLFileShortcut dlFileShortcut WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {DLFileShortcut.*} FROM (SELECT DISTINCT dlFileShortcut.fileShortcutId FROM DLFileShortcut dlFileShortcut WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_DLFILESHORTCUT_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN DLFileShortcut ON TEMP_TABLE.fileShortcutId = DLFileShortcut.fileShortcutId";
-
-	private static final String _FILTER_SQL_COUNT_DLFILESHORTCUT_WHERE =
-		"SELECT COUNT(DISTINCT dlFileShortcut.fileShortcutId) AS COUNT_VALUE FROM DLFileShortcut dlFileShortcut WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "dlFileShortcut";
-
-	private static final String _FILTER_ENTITY_TABLE = "DLFileShortcut";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileShortcut exists with the key {";
 
@@ -2805,4 +2730,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1820063603
+// LIFERAY-SERVICE-BUILDER-HASH:-262269726

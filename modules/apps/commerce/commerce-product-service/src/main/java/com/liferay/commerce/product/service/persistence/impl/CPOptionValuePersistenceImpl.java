@@ -96,9 +96,6 @@ public class CPOptionValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPOptionValue>
 		_collectionPersistenceFinderByUuid;
 
@@ -239,9 +236,6 @@ public class CPOptionValuePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPOptionValue>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -396,9 +390,6 @@ public class CPOptionValuePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<CPOptionValue>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -542,9 +533,6 @@ public class CPOptionValuePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPOptionId;
-	private FinderPath _finderPathWithoutPaginationFindByCPOptionId;
-	private FinderPath _finderPathCountByCPOptionId;
 	private CollectionPersistenceFinder<CPOptionValue>
 		_collectionPersistenceFinderByCPOptionId;
 
@@ -689,7 +677,6 @@ public class CPOptionValuePersistenceImpl
 			finderCache, new Object[] {CPOptionId});
 	}
 
-	private FinderPath _finderPathFetchByC_K;
 	private UniquePersistenceFinder<CPOptionValue>
 		_uniquePersistenceFinderByC_K;
 
@@ -779,7 +766,6 @@ public class CPOptionValuePersistenceImpl
 			finderCache, new Object[] {CPOptionId, key});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CPOptionValue>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1243,58 +1229,49 @@ public class CPOptionValuePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPOPTIONVALUE_WHERE, _SQL_COUNT_CPOPTIONVALUE_WHERE,
 			CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpOptionValue.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPOptionValue::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_CPOPTIONVALUE_WHERE,
-				_SQL_COUNT_CPOPTIONVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_CPOPTIONVALUE_WHERE, _SQL_COUNT_CPOPTIONVALUE_WHERE,
 				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpOptionValue.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1303,73 +1280,65 @@ public class CPOptionValuePersistenceImpl
 					"cpOptionValue.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPOptionValue::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_CPOPTIONVALUE_WHERE,
-				_SQL_COUNT_CPOPTIONVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_CPOPTIONVALUE_WHERE, _SQL_COUNT_CPOPTIONVALUE_WHERE,
 				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpOptionValue.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPOptionValue::getCompanyId));
 
-		_finderPathWithPaginationFindByCPOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPOptionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPOptionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPOptionId",
-			new String[] {Long.class.getName()}, new String[] {"CPOptionId"},
-			true);
-
-		_finderPathCountByCPOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPOptionId",
-			new String[] {Long.class.getName()}, new String[] {"CPOptionId"},
-			false);
-
 		_collectionPersistenceFinderByCPOptionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPOptionId,
-				_finderPathWithoutPaginationFindByCPOptionId,
-				_finderPathCountByCPOptionId, _SQL_SELECT_CPOPTIONVALUE_WHERE,
-				_SQL_COUNT_CPOPTIONVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPOptionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPOptionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPOptionId", new String[] {Long.class.getName()},
+					new String[] {"CPOptionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPOptionId", new String[] {Long.class.getName()},
+					new String[] {"CPOptionId"}, false),
+				_SQL_SELECT_CPOPTIONVALUE_WHERE, _SQL_COUNT_CPOPTIONVALUE_WHERE,
 				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpOptionValue.", "CPOptionId", FinderColumn.Type.LONG, "=",
 					true, true, CPOptionValue::getCPOptionId));
 
-		_finderPathFetchByC_K = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPOptionId", "key_"}, 0, 2, false,
-			CPOptionValue::getCPOptionId,
-			convertNullFunction(CPOptionValue::getKey));
-
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_K, _SQL_SELECT_CPOPTIONVALUE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"CPOptionId", "key_"}, 0, 2, false,
+				CPOptionValue::getCPOptionId,
+				convertNullFunction(CPOptionValue::getKey)),
+			_SQL_SELECT_CPOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpOptionValue.", "CPOptionId", FinderColumn.Type.LONG, "=",
 				true, true, CPOptionValue::getCPOptionId),
@@ -1377,15 +1346,16 @@ public class CPOptionValuePersistenceImpl
 				"cpOptionValue.", "key", FinderColumn.Type.STRING, "=", true,
 				true, CPOptionValue::getKey));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CPOptionValue::getExternalReferenceCode),
-			CPOptionValue::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CPOPTIONVALUE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(CPOptionValue::getExternalReferenceCode),
+				CPOptionValue::getCompanyId),
+			_SQL_SELECT_CPOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpOptionValue.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1466,4 +1436,4 @@ public class CPOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:401028532
+// LIFERAY-SERVICE-BUILDER-HASH:-1025433509

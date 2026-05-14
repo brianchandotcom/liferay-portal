@@ -80,11 +80,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
-	private FinderPath _finderPathCountByCommerceInventoryWarehouseId;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseRel>
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId;
 
@@ -252,9 +247,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			finderCache, new Object[] {commerceInventoryWarehouseId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CommerceInventoryWarehouseRel>
 		_collectionPersistenceFinderByC_C;
 
@@ -424,7 +416,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			new Object[] {classNameId, commerceInventoryWarehouseId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_CIWI;
 	private UniquePersistenceFinder<CommerceInventoryWarehouseRel>
 		_uniquePersistenceFinderByC_C_CIWI;
 
@@ -771,35 +762,28 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceInventoryWarehouseId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"CIWarehouseId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceInventoryWarehouseId",
-				new String[] {Long.class.getName()},
-				new String[] {"CIWarehouseId"}, true);
-
-		_finderPathCountByCommerceInventoryWarehouseId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceInventoryWarehouseId",
-			new String[] {Long.class.getName()}, new String[] {"CIWarehouseId"},
-			false);
-
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCommerceInventoryWarehouseId,
-				_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-				_finderPathCountByCommerceInventoryWarehouseId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceInventoryWarehouseId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CIWarehouseId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceInventoryWarehouseId",
+					new String[] {Long.class.getName()},
+					new String[] {"CIWarehouseId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceInventoryWarehouseId",
+					new String[] {Long.class.getName()},
+					new String[] {"CIWarehouseId"}, false),
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 				CommerceInventoryWarehouseRelModelImpl.ORDER_BY_JPQL,
@@ -811,28 +795,24 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 					CommerceInventoryWarehouseRel::
 						getCommerceInventoryWarehouseId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "CIWarehouseId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "CIWarehouseId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "CIWarehouseId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "CIWarehouseId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "CIWarehouseId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "CIWarehouseId"}, false),
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 			CommerceInventoryWarehouseRelModelImpl.ORDER_BY_JPQL,
@@ -848,18 +828,18 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				CommerceInventoryWarehouseRel::
 					getCommerceInventoryWarehouseId));
 
-		_finderPathFetchByC_C_CIWI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_CIWI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "CIWarehouseId"}, 0, 0,
-			false, CommerceInventoryWarehouseRel::getClassNameId,
-			CommerceInventoryWarehouseRel::getClassPK,
-			CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseId);
-
 		_uniquePersistenceFinderByC_C_CIWI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_CIWI,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_CIWI",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "CIWarehouseId"}, 0, 0,
+				false, CommerceInventoryWarehouseRel::getClassNameId,
+				CommerceInventoryWarehouseRel::getClassPK,
+				CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseId),
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.", "classNameId",
@@ -949,4 +929,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1844712046
+// LIFERAY-SERVICE-BUILDER-HASH:1819710946

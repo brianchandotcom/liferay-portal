@@ -90,9 +90,6 @@ public class ObjectValidationRulePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByUuid;
 
@@ -237,9 +234,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -396,9 +390,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
-	private FinderPath _finderPathCountByObjectDefinitionId;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByObjectDefinitionId;
 
@@ -550,9 +541,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI_A;
-	private FinderPath _finderPathWithoutPaginationFindByODI_A;
-	private FinderPath _finderPathCountByODI_A;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByODI_A;
 
@@ -712,9 +700,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI_E;
-	private FinderPath _finderPathWithoutPaginationFindByODI_E;
-	private FinderPath _finderPathCountByODI_E;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByODI_E;
 
@@ -874,9 +859,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, engine});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI_O;
-	private FinderPath _finderPathWithoutPaginationFindByODI_O;
-	private FinderPath _finderPathCountByODI_O;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByODI_O;
 
@@ -1037,9 +1019,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, outputType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByA_E;
-	private FinderPath _finderPathWithoutPaginationFindByA_E;
-	private FinderPath _finderPathCountByA_E;
 	private CollectionPersistenceFinder<ObjectValidationRule>
 		_collectionPersistenceFinderByA_E;
 
@@ -1193,7 +1172,6 @@ public class ObjectValidationRulePersistenceImpl
 			finderCache, new Object[] {active, engine});
 	}
 
-	private FinderPath _finderPathFetchByERC_C_ODI;
 	private UniquePersistenceFinder<ObjectValidationRule>
 		_uniquePersistenceFinderByERC_C_ODI;
 
@@ -1578,27 +1556,23 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1607,30 +1581,25 @@ public class ObjectValidationRulePersistenceImpl
 				"objectValidationRule.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectValidationRule::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
@@ -1643,29 +1612,28 @@ public class ObjectValidationRulePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectValidationRule::getCompanyId));
 
-		_finderPathWithPaginationFindByObjectDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId"}, true);
-
-		_finderPathCountByObjectDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId"}, false);
-
 		_collectionPersistenceFinderByObjectDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectDefinitionId,
-				_finderPathWithoutPaginationFindByObjectDefinitionId,
-				_finderPathCountByObjectDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId"}, false),
 				_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
@@ -1675,28 +1643,24 @@ public class ObjectValidationRulePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectValidationRule::getObjectDefinitionId));
 
-		_finderPathWithPaginationFindByODI_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByODI_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId", "active_"}, true);
-
-		_finderPathCountByODI_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId", "active_"}, false);
-
 		_collectionPersistenceFinderByODI_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByODI_A,
-			_finderPathWithoutPaginationFindByODI_A, _finderPathCountByODI_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"objectDefinitionId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"objectDefinitionId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"objectDefinitionId", "active_"}, false),
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1709,28 +1673,26 @@ public class ObjectValidationRulePersistenceImpl
 				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
 				"=", true, true, ObjectValidationRule::isActive));
 
-		_finderPathWithPaginationFindByODI_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId", "engine"}, true);
-
-		_finderPathWithoutPaginationFindByODI_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "engine"}, 0, 2, true, null);
-
-		_finderPathCountByODI_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "engine"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByODI_E = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByODI_E,
-			_finderPathWithoutPaginationFindByODI_E, _finderPathCountByODI_E,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_E",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"objectDefinitionId", "engine"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_E",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"objectDefinitionId", "engine"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_E",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"objectDefinitionId", "engine"}, 0, 2, false,
+				null),
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1743,30 +1705,26 @@ public class ObjectValidationRulePersistenceImpl
 				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
 				"=", true, true, ObjectValidationRule::getEngine));
 
-		_finderPathWithPaginationFindByODI_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_O",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId", "outputType"}, true);
-
-		_finderPathWithoutPaginationFindByODI_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_O",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "outputType"}, 0, 2, true,
-			null);
-
-		_finderPathCountByODI_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_O",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "outputType"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByODI_O = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByODI_O,
-			_finderPathWithoutPaginationFindByODI_O, _finderPathCountByODI_O,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_O",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"objectDefinitionId", "outputType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_O",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"objectDefinitionId", "outputType"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_O",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"objectDefinitionId", "outputType"}, 0, 2, false,
+				null),
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1779,28 +1737,24 @@ public class ObjectValidationRulePersistenceImpl
 				"objectValidationRule.", "outputType", FinderColumn.Type.STRING,
 				"=", true, true, ObjectValidationRule::getOutputType));
 
-		_finderPathWithPaginationFindByA_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_E",
-			new String[] {
-				Boolean.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"active_", "engine"}, true);
-
-		_finderPathWithoutPaginationFindByA_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_E",
-			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"active_", "engine"}, 0, 2, true, null);
-
-		_finderPathCountByA_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_E",
-			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"active_", "engine"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByA_E = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByA_E,
-			_finderPathWithoutPaginationFindByA_E, _finderPathCountByA_E,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_E",
+				new String[] {
+					Boolean.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"active_", "engine"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_E",
+				new String[] {Boolean.class.getName(), String.class.getName()},
+				new String[] {"active_", "engine"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_E",
+				new String[] {Boolean.class.getName(), String.class.getName()},
+				new String[] {"active_", "engine"}, 0, 2, false, null),
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1812,22 +1766,22 @@ public class ObjectValidationRulePersistenceImpl
 				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
 				"=", true, true, ObjectValidationRule::getEngine));
 
-		_finderPathFetchByERC_C_ODI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"externalReferenceCode", "companyId", "objectDefinitionId"
-			},
-			0, 1, false,
-			convertNullFunction(ObjectValidationRule::getExternalReferenceCode),
-			ObjectValidationRule::getCompanyId,
-			ObjectValidationRule::getObjectDefinitionId);
-
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C_ODI,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"externalReferenceCode", "companyId", "objectDefinitionId"
+				},
+				0, 1, false,
+				convertNullFunction(
+					ObjectValidationRule::getExternalReferenceCode),
+				ObjectValidationRule::getCompanyId,
+				ObjectValidationRule::getObjectDefinitionId),
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE, "",
 			new FinderColumn<>(
 				"objectValidationRule.", "externalReferenceCode",
@@ -1910,4 +1864,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2018856164
+// LIFERAY-SERVICE-BUILDER-HASH:872315291

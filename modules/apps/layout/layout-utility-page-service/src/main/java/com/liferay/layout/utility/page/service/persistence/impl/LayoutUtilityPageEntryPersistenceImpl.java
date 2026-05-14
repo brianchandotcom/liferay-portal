@@ -101,9 +101,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -248,7 +245,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -340,9 +336,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -499,9 +492,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -713,7 +703,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByPlid;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByPlid;
 
@@ -798,9 +787,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_T;
 
@@ -1210,9 +1196,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_T;
-	private FinderPath _finderPathCountByG_D_T;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_D_T;
 
@@ -1478,7 +1461,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_N_T;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByG_N_T;
 
@@ -1580,8 +1562,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN_T;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN_T;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_LikeN_T;
 
@@ -2026,7 +2006,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByERC_G;
 
@@ -2516,27 +2495,23 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 			_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 			LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2545,15 +2520,14 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(LayoutUtilityPageEntry::getUuid),
-			LayoutUtilityPageEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(LayoutUtilityPageEntry::getUuid),
+				LayoutUtilityPageEntry::getGroupId),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
@@ -2562,30 +2536,25 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, LayoutUtilityPageEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
@@ -2598,41 +2567,38 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutUtilityPageEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2641,53 +2607,49 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutUtilityPageEntry::getGroupId));
 
-		_finderPathFetchByPlid = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, 0, 0,
-			false, LayoutUtilityPageEntry::getPlid);
-
 		_uniquePersistenceFinderByPlid = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByPlid,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"}, 0,
+				0, false, LayoutUtilityPageEntry::getPlid),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutUtilityPageEntry::getPlid));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T,
-				_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "type_"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "type_"}, 0, 2, false, null),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2699,51 +2661,54 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 					"=", false, true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathWithPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultLayoutUtilityPageEntry", "type_"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultLayoutUtilityPageEntry", "type_"},
-			0, 4, true, null);
-
-		_finderPathCountByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultLayoutUtilityPageEntry", "type_"},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_D_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D_T,
-				_finderPathWithoutPaginationFindByG_D_T,
-				_finderPathCountByG_D_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultLayoutUtilityPageEntry", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultLayoutUtilityPageEntry", "type_"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultLayoutUtilityPageEntry", "type_"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2759,19 +2724,18 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 					"=", true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathFetchByG_N_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, 0, 6, false,
-			LayoutUtilityPageEntry::getGroupId,
-			convertNullFunction(LayoutUtilityPageEntry::getName),
-			convertNullFunction(LayoutUtilityPageEntry::getType));
-
 		_uniquePersistenceFinderByG_N_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N_T",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "name", "type_"}, 0, 6, false,
+				LayoutUtilityPageEntry::getGroupId,
+				convertNullFunction(LayoutUtilityPageEntry::getName),
+				convertNullFunction(LayoutUtilityPageEntry::getType)),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "groupId", FinderColumn.Type.LONG,
@@ -2783,39 +2747,39 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathWithPaginationFindByG_LikeN_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, false);
-
 		_collectionPersistenceFinderByG_LikeN_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN_T, null,
-				_finderPathWithPaginationCountByG_LikeN_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, false),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2830,16 +2794,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 					"=", false, true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(
-				LayoutUtilityPageEntry::getExternalReferenceCode),
-			LayoutUtilityPageEntry::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					LayoutUtilityPageEntry::getExternalReferenceCode),
+				LayoutUtilityPageEntry::getGroupId),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "externalReferenceCode",
@@ -2906,28 +2869,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE =
 		"SELECT COUNT(layoutUtilityPageEntry) FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"layoutUtilityPageEntry.LayoutUtilityPageEntryId";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE =
-			"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId";
-
-	private static final String _FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE =
-		"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "layoutUtilityPageEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "LayoutUtilityPageEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutUtilityPageEntry exists with the key {";
 
@@ -2943,4 +2884,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-705773159
+// LIFERAY-SERVICE-BUILDER-HASH:1883506096

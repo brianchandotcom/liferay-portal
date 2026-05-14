@@ -64,9 +64,6 @@ public class RememberMeTokenPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<RememberMeToken>
 		_collectionPersistenceFinderByUserId;
 
@@ -208,8 +205,6 @@ public class RememberMeTokenPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLteExpirationDate;
-	private FinderPath _finderPathWithPaginationCountByLteExpirationDate;
 	private CollectionPersistenceFinder<RememberMeToken>
 		_collectionPersistenceFinderByLteExpirationDate;
 
@@ -549,28 +544,26 @@ public class RememberMeTokenPersistenceImpl
 	 * Initializes the remember me token persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_REMEMBERMETOKEN_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_REMEMBERMETOKEN_WHERE,
 				_SQL_COUNT_REMEMBERMETOKEN_WHERE,
 				RememberMeTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -578,23 +571,24 @@ public class RememberMeTokenPersistenceImpl
 					"rememberMeToken.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, RememberMeToken::getUserId));
 
-		_finderPathWithPaginationFindByLteExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLteExpirationDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"expirationDate"}, true);
-
-		_finderPathWithPaginationCountByLteExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLteExpirationDate",
-			new String[] {Date.class.getName()},
-			new String[] {"expirationDate"}, false);
-
 		_collectionPersistenceFinderByLteExpirationDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLteExpirationDate, null,
-				_finderPathWithPaginationCountByLteExpirationDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLteExpirationDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"expirationDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLteExpirationDate",
+					new String[] {Date.class.getName()},
+					new String[] {"expirationDate"}, false),
 				_SQL_SELECT_REMEMBERMETOKEN_WHERE,
 				_SQL_COUNT_REMEMBERMETOKEN_WHERE,
 				RememberMeTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -634,4 +628,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-965181493
+// LIFERAY-SERVICE-BUILDER-HASH:443431796

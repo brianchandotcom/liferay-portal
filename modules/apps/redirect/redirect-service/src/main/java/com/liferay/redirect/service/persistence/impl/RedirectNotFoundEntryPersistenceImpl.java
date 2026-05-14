@@ -84,9 +84,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<RedirectNotFoundEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -232,7 +229,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathFetchByG_U;
 	private UniquePersistenceFinder<RedirectNotFoundEntry>
 		_uniquePersistenceFinderByG_U;
 
@@ -560,29 +556,25 @@ public class RedirectNotFoundEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE,
 				_SQL_COUNT_REDIRECTNOTFOUNDENTRY_WHERE,
 				RedirectNotFoundEntryModelImpl.ORDER_BY_JPQL,
@@ -591,15 +583,14 @@ public class RedirectNotFoundEntryPersistenceImpl
 					"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RedirectNotFoundEntry::getGroupId));
 
-		_finderPathFetchByG_U = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "url"}, 0, 2, false,
-			RedirectNotFoundEntry::getGroupId,
-			convertNullFunction(RedirectNotFoundEntry::getUrl));
-
 		_uniquePersistenceFinderByG_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_U,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "url"}, 0, 2, false,
+				RedirectNotFoundEntry::getGroupId,
+				convertNullFunction(RedirectNotFoundEntry::getUrl)),
 			_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
@@ -674,4 +665,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:490453945
+// LIFERAY-SERVICE-BUILDER-HASH:2109562151

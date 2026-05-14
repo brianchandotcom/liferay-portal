@@ -78,9 +78,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<OAuth2ApplicationScopeAliases>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -226,9 +223,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId;
-	private FinderPath _finderPathWithoutPaginationFindByOAuth2ApplicationId;
-	private FinderPath _finderPathCountByOAuth2ApplicationId;
 	private CollectionPersistenceFinder<OAuth2ApplicationScopeAliases>
 		_collectionPersistenceFinderByOAuth2ApplicationId;
 
@@ -605,29 +599,25 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL,
@@ -637,29 +627,28 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					OAuth2ApplicationScopeAliases::getCompanyId));
 
-		_finderPathWithPaginationFindByOAuth2ApplicationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOAuth2ApplicationId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"oAuth2ApplicationId"}, true);
-
-		_finderPathWithoutPaginationFindByOAuth2ApplicationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByOAuth2ApplicationId", new String[] {Long.class.getName()},
-			new String[] {"oAuth2ApplicationId"}, true);
-
-		_finderPathCountByOAuth2ApplicationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByOAuth2ApplicationId", new String[] {Long.class.getName()},
-			new String[] {"oAuth2ApplicationId"}, false);
-
 		_collectionPersistenceFinderByOAuth2ApplicationId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOAuth2ApplicationId,
-				_finderPathWithoutPaginationFindByOAuth2ApplicationId,
-				_finderPathCountByOAuth2ApplicationId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByOAuth2ApplicationId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"oAuth2ApplicationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOAuth2ApplicationId",
+					new String[] {Long.class.getName()},
+					new String[] {"oAuth2ApplicationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOAuth2ApplicationId",
+					new String[] {Long.class.getName()},
+					new String[] {"oAuth2ApplicationId"}, false),
 				_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL,
@@ -737,4 +726,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:443929544
+// LIFERAY-SERVICE-BUILDER-HASH:1671492624

@@ -91,9 +91,6 @@ public class BatchEngineImportTaskPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<BatchEngineImportTask>
 		_collectionPersistenceFinderByUuid;
 
@@ -238,9 +235,6 @@ public class BatchEngineImportTaskPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<BatchEngineImportTask>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -397,9 +391,6 @@ public class BatchEngineImportTaskPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<BatchEngineImportTask>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -545,9 +536,6 @@ public class BatchEngineImportTaskPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByExecuteStatus;
-	private FinderPath _finderPathWithoutPaginationFindByExecuteStatus;
-	private FinderPath _finderPathCountByExecuteStatus;
 	private CollectionPersistenceFinder<BatchEngineImportTask>
 		_collectionPersistenceFinderByExecuteStatus;
 
@@ -696,7 +684,6 @@ public class BatchEngineImportTaskPersistenceImpl
 			finderCache, new Object[] {executeStatus});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<BatchEngineImportTask>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1102,27 +1089,23 @@ public class BatchEngineImportTaskPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE,
 			_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE,
 			BatchEngineImportTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1131,30 +1114,25 @@ public class BatchEngineImportTaskPersistenceImpl
 				"batchEngineImportTask.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, BatchEngineImportTask::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE,
 				_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE,
 				BatchEngineImportTaskModelImpl.ORDER_BY_JPQL,
@@ -1167,29 +1145,25 @@ public class BatchEngineImportTaskPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					BatchEngineImportTask::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE,
 				_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE,
 				BatchEngineImportTaskModelImpl.ORDER_BY_JPQL,
@@ -1199,29 +1173,28 @@ public class BatchEngineImportTaskPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					BatchEngineImportTask::getCompanyId));
 
-		_finderPathWithPaginationFindByExecuteStatus = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExecuteStatus",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"executeStatus"}, true);
-
-		_finderPathWithoutPaginationFindByExecuteStatus = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByExecuteStatus",
-			new String[] {String.class.getName()},
-			new String[] {"executeStatus"}, 0, 1, true, null);
-
-		_finderPathCountByExecuteStatus = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExecuteStatus",
-			new String[] {String.class.getName()},
-			new String[] {"executeStatus"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByExecuteStatus =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByExecuteStatus,
-				_finderPathWithoutPaginationFindByExecuteStatus,
-				_finderPathCountByExecuteStatus,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByExecuteStatus",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"executeStatus"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByExecuteStatus",
+					new String[] {String.class.getName()},
+					new String[] {"executeStatus"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByExecuteStatus",
+					new String[] {String.class.getName()},
+					new String[] {"executeStatus"}, 0, 1, false, null),
 				_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE,
 				_SQL_COUNT_BATCHENGINEIMPORTTASK_WHERE,
 				BatchEngineImportTaskModelImpl.ORDER_BY_JPQL,
@@ -1231,16 +1204,16 @@ public class BatchEngineImportTaskPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					BatchEngineImportTask::getExecuteStatus));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				BatchEngineImportTask::getExternalReferenceCode),
-			BatchEngineImportTask::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					BatchEngineImportTask::getExternalReferenceCode),
+				BatchEngineImportTask::getCompanyId),
 			_SQL_SELECT_BATCHENGINEIMPORTTASK_WHERE, "",
 			new FinderColumn<>(
 				"batchEngineImportTask.", "externalReferenceCode",
@@ -1319,4 +1292,4 @@ public class BatchEngineImportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:776757427
+// LIFERAY-SERVICE-BUILDER-HASH:-224902698

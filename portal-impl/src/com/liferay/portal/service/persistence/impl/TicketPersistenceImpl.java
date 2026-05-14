@@ -70,7 +70,6 @@ public class TicketPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByKey;
 	private UniquePersistenceFinder<Ticket> _uniquePersistenceFinderByKey;
 
 	/**
@@ -149,9 +148,6 @@ public class TicketPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {key});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 	private CollectionPersistenceFinder<Ticket>
 		_collectionPersistenceFinderByC_C_C;
 
@@ -322,9 +318,6 @@ public class TicketPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_T;
-	private FinderPath _finderPathCountByC_C_T;
 	private CollectionPersistenceFinder<Ticket>
 		_collectionPersistenceFinderByC_C_T;
 
@@ -492,9 +485,6 @@ public class TicketPersistenceImpl
 			new Object[] {classNameId, classPK, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C_T;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
-	private FinderPath _finderPathCountByC_C_C_T;
 	private CollectionPersistenceFinder<Ticket>
 		_collectionPersistenceFinderByC_C_C_T;
 
@@ -875,43 +865,41 @@ public class TicketPersistenceImpl
 	 * Initializes the ticket persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByKey = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
-			false, convertNullFunction(Ticket::getKey));
-
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKey, _SQL_SELECT_TICKET_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByKey",
+				new String[] {String.class.getName()}, new String[] {"key_"}, 0,
+				1, false, convertNullFunction(Ticket::getKey)),
+			_SQL_SELECT_TICKET_WHERE, "",
 			new FinderColumn<>(
 				"ticket.", "key", FinderColumn.Type.STRING, "=", true, true,
 				Ticket::getKey));
 
-		_finderPathWithPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_C,
-			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
 			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -924,34 +912,30 @@ public class TicketPersistenceImpl
 				"ticket.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Ticket::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_"}, true);
-
-		_finderPathCountByC_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_"}, false);
-
 		_collectionPersistenceFinderByC_C_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_T,
-			_finderPathWithoutPaginationFindByC_C_T, _finderPathCountByC_C_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "type_"}, false),
 			_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
 			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -964,42 +948,43 @@ public class TicketPersistenceImpl
 				"ticket.", "type", FinderColumn.Type.INTEGER, "=", true, true,
 				Ticket::getType));
 
-		_finderPathWithPaginationFindByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "type_"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "type_"},
-			true);
-
-		_finderPathCountByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "type_"},
-			false);
-
 		_collectionPersistenceFinderByC_C_C_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_C_T,
-				_finderPathWithoutPaginationFindByC_C_C_T,
-				_finderPathCountByC_C_C_T, _SQL_SELECT_TICKET_WHERE,
-				_SQL_COUNT_TICKET_WHERE, TicketModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "classPK", "type_"
+					},
+					false),
+				_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
+				TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Ticket::getCompanyId),
@@ -1049,4 +1034,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:326790043
+// LIFERAY-SERVICE-BUILDER-HASH:401458067

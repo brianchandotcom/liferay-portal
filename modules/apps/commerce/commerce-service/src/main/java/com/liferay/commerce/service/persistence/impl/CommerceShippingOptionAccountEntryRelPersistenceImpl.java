@@ -81,9 +81,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
-	private FinderPath _finderPathCountByAccountEntryId;
 	private CollectionPersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_collectionPersistenceFinderByAccountEntryId;
 
@@ -237,9 +234,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceChannelId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceChannelId;
-	private FinderPath _finderPathCountByCommerceChannelId;
 	private CollectionPersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_collectionPersistenceFinderByCommerceChannelId;
 
@@ -396,10 +390,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceChannelId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceShippingOptionKey;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceShippingOptionKey;
-	private FinderPath _finderPathCountByCommerceShippingOptionKey;
 	private CollectionPersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_collectionPersistenceFinderByCommerceShippingOptionKey;
 
@@ -569,7 +559,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceShippingOptionKey});
 	}
 
-	private FinderPath _finderPathFetchByA_C;
 	private UniquePersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_uniquePersistenceFinderByA_C;
 
@@ -915,29 +904,27 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, false);
-
 		_collectionPersistenceFinderByAccountEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryId,
-				_finderPathWithoutPaginationFindByAccountEntryId,
-				_finderPathCountByAccountEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryId", new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, false),
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
@@ -947,29 +934,28 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceShippingOptionAccountEntryRel::getAccountEntryId));
 
-		_finderPathWithPaginationFindByCommerceChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceChannelId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceChannelId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceChannelId", new String[] {Long.class.getName()},
-			new String[] {"commerceChannelId"}, true);
-
-		_finderPathCountByCommerceChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceChannelId", new String[] {Long.class.getName()},
-			new String[] {"commerceChannelId"}, false);
-
 		_collectionPersistenceFinderByCommerceChannelId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceChannelId,
-				_finderPathWithoutPaginationFindByCommerceChannelId,
-				_finderPathCountByCommerceChannelId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceChannelId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceChannelId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceChannelId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceChannelId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceChannelId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceChannelId"}, false),
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
@@ -981,34 +967,30 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					CommerceShippingOptionAccountEntryRel::
 						getCommerceChannelId));
 
-		_finderPathWithPaginationFindByCommerceShippingOptionKey =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceShippingOptionKey",
-				new String[] {
-					String.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceShippingOptionKey"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceShippingOptionKey =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceShippingOptionKey",
-				new String[] {String.class.getName()},
-				new String[] {"commerceShippingOptionKey"}, 0, 1, true, null);
-
-		_finderPathCountByCommerceShippingOptionKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceShippingOptionKey",
-			new String[] {String.class.getName()},
-			new String[] {"commerceShippingOptionKey"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByCommerceShippingOptionKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceShippingOptionKey,
-				_finderPathWithoutPaginationFindByCommerceShippingOptionKey,
-				_finderPathCountByCommerceShippingOptionKey,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceShippingOptionKey",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceShippingOptionKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceShippingOptionKey",
+					new String[] {String.class.getName()},
+					new String[] {"commerceShippingOptionKey"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceShippingOptionKey",
+					new String[] {String.class.getName()},
+					new String[] {"commerceShippingOptionKey"}, 0, 1, false,
+					null),
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1020,15 +1002,14 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					CommerceShippingOptionAccountEntryRel::
 						getCommerceShippingOptionKey));
 
-		_finderPathFetchByA_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "commerceChannelId"}, 0, 0, false,
-			CommerceShippingOptionAccountEntryRel::getAccountEntryId,
-			CommerceShippingOptionAccountEntryRel::getCommerceChannelId);
-
 		_uniquePersistenceFinderByA_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"accountEntryId", "commerceChannelId"}, 0, 0,
+				false, CommerceShippingOptionAccountEntryRel::getAccountEntryId,
+				CommerceShippingOptionAccountEntryRel::getCommerceChannelId),
 			_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceShippingOptionAccountEntryRel.", "accountEntryId",
@@ -1112,4 +1093,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1635187269
+// LIFERAY-SERVICE-BUILDER-HASH:-1465327507

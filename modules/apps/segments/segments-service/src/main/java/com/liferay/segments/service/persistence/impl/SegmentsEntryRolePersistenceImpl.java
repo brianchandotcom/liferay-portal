@@ -83,9 +83,6 @@ public class SegmentsEntryRolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
-	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
-	private FinderPath _finderPathCountBySegmentsEntryId;
 	private CollectionPersistenceFinder<SegmentsEntryRole>
 		_collectionPersistenceFinderBySegmentsEntryId;
 
@@ -232,9 +229,6 @@ public class SegmentsEntryRolePersistenceImpl
 			finderCache, new Object[] {segmentsEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRoleId;
-	private FinderPath _finderPathWithoutPaginationFindByRoleId;
-	private FinderPath _finderPathCountByRoleId;
 	private CollectionPersistenceFinder<SegmentsEntryRole>
 		_collectionPersistenceFinderByRoleId;
 
@@ -377,7 +371,6 @@ public class SegmentsEntryRolePersistenceImpl
 			finderCache, new Object[] {roleId});
 	}
 
-	private FinderPath _finderPathFetchByS_R;
 	private UniquePersistenceFinder<SegmentsEntryRole>
 		_uniquePersistenceFinderByS_R;
 
@@ -749,29 +742,28 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySegmentsEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"segmentsEntryId"}, true);
-
-		_finderPathWithoutPaginationFindBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySegmentsEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"segmentsEntryId"}, true);
-
-		_finderPathCountBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySegmentsEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"segmentsEntryId"}, false);
-
 		_collectionPersistenceFinderBySegmentsEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySegmentsEntryId,
-				_finderPathWithoutPaginationFindBySegmentsEntryId,
-				_finderPathCountBySegmentsEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySegmentsEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"segmentsEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySegmentsEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySegmentsEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsEntryId"}, false),
 				_SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYROLE_WHERE,
 				SegmentsEntryRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -781,28 +773,26 @@ public class SegmentsEntryRolePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SegmentsEntryRole::getSegmentsEntryId));
 
-		_finderPathWithPaginationFindByRoleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"roleId"}, true);
-
-		_finderPathWithoutPaginationFindByRoleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"}, true);
-
-		_finderPathCountByRoleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"},
-			false);
-
 		_collectionPersistenceFinderByRoleId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRoleId,
-				_finderPathWithoutPaginationFindByRoleId,
-				_finderPathCountByRoleId, _SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"roleId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
+					new String[] {Long.class.getName()},
+					new String[] {"roleId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
+					new String[] {Long.class.getName()},
+					new String[] {"roleId"}, false),
+				_SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYROLE_WHERE,
 				SegmentsEntryRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -810,16 +800,15 @@ public class SegmentsEntryRolePersistenceImpl
 					"segmentsEntryRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRole::getRoleId));
 
-		_finderPathFetchByS_R = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"segmentsEntryId", "roleId"}, 0, 0, false,
-			SegmentsEntryRole::getSegmentsEntryId,
-			SegmentsEntryRole::getRoleId);
-
 		_uniquePersistenceFinderByS_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_R, _SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"segmentsEntryId", "roleId"}, 0, 0, false,
+				SegmentsEntryRole::getSegmentsEntryId,
+				SegmentsEntryRole::getRoleId),
+			_SQL_SELECT_SEGMENTSENTRYROLE_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntryRole.", "segmentsEntryId", FinderColumn.Type.LONG,
 				"=", true, true, SegmentsEntryRole::getSegmentsEntryId),
@@ -896,4 +885,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:357734583
+// LIFERAY-SERVICE-BUILDER-HASH:-1778189074

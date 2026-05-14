@@ -74,9 +74,6 @@ public class KaleoProcessLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByKaleoProcessId;
-	private FinderPath _finderPathWithoutPaginationFindByKaleoProcessId;
-	private FinderPath _finderPathCountByKaleoProcessId;
 	private CollectionPersistenceFinder<KaleoProcessLink>
 		_collectionPersistenceFinderByKaleoProcessId;
 
@@ -223,7 +220,6 @@ public class KaleoProcessLinkPersistenceImpl
 			finderCache, new Object[] {kaleoProcessId});
 	}
 
-	private FinderPath _finderPathFetchByKPI_WTN;
 	private UniquePersistenceFinder<KaleoProcessLink>
 		_uniquePersistenceFinderByKPI_WTN;
 
@@ -498,29 +494,27 @@ public class KaleoProcessLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByKaleoProcessId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoProcessId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoProcessId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoProcessId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoProcessId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoProcessId"}, true);
-
-		_finderPathCountByKaleoProcessId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoProcessId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoProcessId"}, false);
-
 		_collectionPersistenceFinderByKaleoProcessId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoProcessId,
-				_finderPathWithoutPaginationFindByKaleoProcessId,
-				_finderPathCountByKaleoProcessId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoProcessId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoProcessId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoProcessId", new String[] {Long.class.getName()},
+					new String[] {"kaleoProcessId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoProcessId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoProcessId"}, false),
 				_SQL_SELECT_KALEOPROCESSLINK_WHERE,
 				_SQL_COUNT_KALEOPROCESSLINK_WHERE,
 				KaleoProcessLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -530,16 +524,15 @@ public class KaleoProcessLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoProcessLink::getKaleoProcessId));
 
-		_finderPathFetchByKPI_WTN = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByKPI_WTN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoProcessId", "workflowTaskName"}, 0, 2, false,
-			KaleoProcessLink::getKaleoProcessId,
-			convertNullFunction(KaleoProcessLink::getWorkflowTaskName));
-
 		_uniquePersistenceFinderByKPI_WTN = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKPI_WTN, _SQL_SELECT_KALEOPROCESSLINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByKPI_WTN",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"kaleoProcessId", "workflowTaskName"}, 0, 2,
+				false, KaleoProcessLink::getKaleoProcessId,
+				convertNullFunction(KaleoProcessLink::getWorkflowTaskName)),
+			_SQL_SELECT_KALEOPROCESSLINK_WHERE, "",
 			new FinderColumn<>(
 				"kaleoProcessLink.", "kaleoProcessId", FinderColumn.Type.LONG,
 				"=", true, true, KaleoProcessLink::getKaleoProcessId),
@@ -614,4 +607,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1380250058
+// LIFERAY-SERVICE-BUILDER-HASH:2019355123

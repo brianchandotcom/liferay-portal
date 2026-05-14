@@ -76,8 +76,6 @@ public class DLSyncEventPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGtModifiedTime;
-	private FinderPath _finderPathWithPaginationCountByGtModifiedTime;
 	private CollectionPersistenceFinder<DLSyncEvent>
 		_collectionPersistenceFinderByGtModifiedTime;
 
@@ -222,7 +220,6 @@ public class DLSyncEventPersistenceImpl
 			finderCache, new Object[] {modifiedTime});
 	}
 
-	private FinderPath _finderPathFetchByTypePK;
 	private UniquePersistenceFinder<DLSyncEvent>
 		_uniquePersistenceFinderByTypePK;
 
@@ -484,36 +481,37 @@ public class DLSyncEventPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGtModifiedTime = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtModifiedTime",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"modifiedTime"}, true);
-
-		_finderPathWithPaginationCountByGtModifiedTime = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtModifiedTime",
-			new String[] {Long.class.getName()}, new String[] {"modifiedTime"},
-			false);
-
 		_collectionPersistenceFinderByGtModifiedTime =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGtModifiedTime, null,
-				_finderPathWithPaginationCountByGtModifiedTime,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByGtModifiedTime",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"modifiedTime"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByGtModifiedTime",
+					new String[] {Long.class.getName()},
+					new String[] {"modifiedTime"}, false),
 				_SQL_SELECT_DLSYNCEVENT_WHERE, _SQL_COUNT_DLSYNCEVENT_WHERE,
 				DLSyncEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlSyncEvent.", "modifiedTime", FinderColumn.Type.LONG, ">",
 					true, true, DLSyncEvent::getModifiedTime));
 
-		_finderPathFetchByTypePK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
-			new String[] {Long.class.getName()}, new String[] {"typePK"}, 0, 0,
-			false, DLSyncEvent::getTypePK);
-
 		_uniquePersistenceFinderByTypePK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByTypePK, _SQL_SELECT_DLSYNCEVENT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
+				new String[] {Long.class.getName()}, new String[] {"typePK"}, 0,
+				0, false, DLSyncEvent::getTypePK),
+			_SQL_SELECT_DLSYNCEVENT_WHERE, "",
 			new FinderColumn<>(
 				"dlSyncEvent.", "typePK", FinderColumn.Type.LONG, "=", true,
 				true, DLSyncEvent::getTypePK));
@@ -587,4 +585,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1067637830
+// LIFERAY-SERVICE-BUILDER-HASH:-1968218299

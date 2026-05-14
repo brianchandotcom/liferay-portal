@@ -67,9 +67,6 @@ public class PortletItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private CollectionPersistenceFinder<PortletItem>
 		_collectionPersistenceFinderByG_C;
 
@@ -228,9 +225,6 @@ public class PortletItemPersistenceImpl
 			new Object[] {groupId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_C;
-	private FinderPath _finderPathCountByG_P_C;
 	private CollectionPersistenceFinder<PortletItem>
 		_collectionPersistenceFinderByG_P_C;
 
@@ -404,7 +398,6 @@ public class PortletItemPersistenceImpl
 			new Object[] {groupId, portletId, classNameId});
 	}
 
-	private FinderPath _finderPathFetchByG_N_P_C;
 	private UniquePersistenceFinder<PortletItem>
 		_uniquePersistenceFinderByG_N_P_C;
 
@@ -714,28 +707,24 @@ public class PortletItemPersistenceImpl
 	 * Initializes the portlet item persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByG_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C,
-			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "classNameId"}, false),
 			_SQL_SELECT_PORTLETITEM_WHERE, _SQL_COUNT_PORTLETITEM_WHERE,
 			PortletItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -745,36 +734,32 @@ public class PortletItemPersistenceImpl
 				"portletItem.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, PortletItem::getClassNameId));
 
-		_finderPathWithPaginationFindByG_P_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "portletId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "portletId", "classNameId"}, 0, 2, true,
-			null);
-
-		_finderPathCountByG_P_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "portletId", "classNameId"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByG_P_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P_C,
-			_finderPathWithoutPaginationFindByG_P_C, _finderPathCountByG_P_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "portletId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "portletId", "classNameId"}, 0, 2,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "portletId", "classNameId"}, 0, 2,
+				false, null),
 			_SQL_SELECT_PORTLETITEM_WHERE, _SQL_COUNT_PORTLETITEM_WHERE,
 			PortletItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -787,20 +772,20 @@ public class PortletItemPersistenceImpl
 				"portletItem.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, PortletItem::getClassNameId));
 
-		_finderPathFetchByG_N_P_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "name", "portletId", "classNameId"}, 2, 6,
-			false, PortletItem::getGroupId,
-			convertCaseFunction(PortletItem::getName),
-			convertNullFunction(PortletItem::getPortletId),
-			PortletItem::getClassNameId);
-
 		_uniquePersistenceFinderByG_N_P_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N_P_C, _SQL_SELECT_PORTLETITEM_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Long.class.getName()
+				},
+				new String[] {"groupId", "name", "portletId", "classNameId"}, 2,
+				6, false, PortletItem::getGroupId,
+				convertCaseFunction(PortletItem::getName),
+				convertNullFunction(PortletItem::getPortletId),
+				PortletItem::getClassNameId),
+			_SQL_SELECT_PORTLETITEM_WHERE, "",
 			new FinderColumn<>(
 				"portletItem.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, PortletItem::getGroupId),
@@ -847,4 +832,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2073724376
+// LIFERAY-SERVICE-BUILDER-HASH:-840573360

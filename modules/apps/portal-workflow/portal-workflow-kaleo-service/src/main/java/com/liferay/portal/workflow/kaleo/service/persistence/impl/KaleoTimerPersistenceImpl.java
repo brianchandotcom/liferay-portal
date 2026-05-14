@@ -80,9 +80,6 @@ public class KaleoTimerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByKCN_KCPK;
-	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK;
-	private FinderPath _finderPathCountByKCN_KCPK;
 	private CollectionPersistenceFinder<KaleoTimer>
 		_collectionPersistenceFinderByKCN_KCPK;
 
@@ -242,9 +239,6 @@ public class KaleoTimerPersistenceImpl
 			finderCache, new Object[] {kaleoClassName, kaleoClassPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_Blocking;
-	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_Blocking;
-	private FinderPath _finderPathCountByKCN_KCPK_Blocking;
 	private CollectionPersistenceFinder<KaleoTimer>
 		_collectionPersistenceFinderByKCN_KCPK_Blocking;
 
@@ -696,32 +690,30 @@ public class KaleoTimerPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByKCN_KCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, true);
-
-		_finderPathWithoutPaginationFindByKCN_KCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, true, null);
-
-		_finderPathCountByKCN_KCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByKCN_KCPK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKCN_KCPK,
-				_finderPathWithoutPaginationFindByKCN_KCPK,
-				_finderPathCountByKCN_KCPK, _SQL_SELECT_KALEOTIMER_WHERE,
-				_SQL_COUNT_KALEOTIMER_WHERE, KaleoTimerModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoClassName", "kaleoClassPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKCN_KCPK",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1,
+					false, null),
+				_SQL_SELECT_KALEOTIMER_WHERE, _SQL_COUNT_KALEOTIMER_WHERE,
+				KaleoTimerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTimer.", "kaleoClassName", FinderColumn.Type.STRING,
 					"=", true, true, KaleoTimer::getKaleoClassName),
@@ -729,40 +721,38 @@ public class KaleoTimerPersistenceImpl
 					"kaleoTimer.", "kaleoClassPK", FinderColumn.Type.LONG, "=",
 					true, true, KaleoTimer::getKaleoClassPK));
 
-		_finderPathWithPaginationFindByKCN_KCPK_Blocking = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK_Blocking",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoClassName", "kaleoClassPK", "blocking"}, true);
-
-		_finderPathWithoutPaginationFindByKCN_KCPK_Blocking = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByKCN_KCPK_Blocking",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"kaleoClassName", "kaleoClassPK", "blocking"}, 0, 1,
-			true, null);
-
-		_finderPathCountByKCN_KCPK_Blocking = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByKCN_KCPK_Blocking",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"kaleoClassName", "kaleoClassPK", "blocking"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByKCN_KCPK_Blocking =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKCN_KCPK_Blocking,
-				_finderPathWithoutPaginationFindByKCN_KCPK_Blocking,
-				_finderPathCountByKCN_KCPK_Blocking,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKCN_KCPK_Blocking",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoClassName", "kaleoClassPK", "blocking"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKCN_KCPK_Blocking",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"kaleoClassName", "kaleoClassPK", "blocking"},
+					0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKCN_KCPK_Blocking",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"kaleoClassName", "kaleoClassPK", "blocking"},
+					0, 1, false, null),
 				_SQL_SELECT_KALEOTIMER_WHERE, _SQL_COUNT_KALEOTIMER_WHERE,
 				KaleoTimerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -841,4 +831,4 @@ public class KaleoTimerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1370069834
+// LIFERAY-SERVICE-BUILDER-HASH:-777075357

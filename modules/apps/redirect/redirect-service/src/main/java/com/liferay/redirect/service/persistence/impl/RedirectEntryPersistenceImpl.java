@@ -89,9 +89,6 @@ public class RedirectEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<RedirectEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -232,7 +229,6 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<RedirectEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -322,9 +318,6 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<RedirectEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -479,9 +472,6 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<RedirectEntry>
 		_collectionPersistenceFinderByGroupId;
 
@@ -689,9 +679,6 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_D;
-	private FinderPath _finderPathCountByG_D;
 	private FilterCollectionPersistenceFinder<RedirectEntry>
 		_collectionPersistenceFinderByG_D;
 
@@ -922,7 +909,6 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {groupId, destinationURL}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_S;
 	private UniquePersistenceFinder<RedirectEntry>
 		_uniquePersistenceFinderByG_S;
 
@@ -1267,42 +1253,38 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 			RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"redirectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, RedirectEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(RedirectEntry::getUuid),
-			RedirectEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_REDIRECTENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(RedirectEntry::getUuid),
+				RedirectEntry::getGroupId),
+			_SQL_SELECT_REDIRECTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"redirectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, RedirectEntry::getUuid),
@@ -1310,31 +1292,26 @@ public class RedirectEntryPersistenceImpl
 				"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, RedirectEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_REDIRECTENTRY_WHERE,
-				_SQL_COUNT_REDIRECTENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"redirectEntry.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1343,78 +1320,72 @@ public class RedirectEntryPersistenceImpl
 					"redirectEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_REDIRECTENTRY_WHERE,
-				_SQL_COUNT_REDIRECTENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					RedirectEntryImpl.class, RedirectEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_REDIRECTENTRY_WHERE,
-					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_REDIRECTENTRY_WHERE,
+					"redirectEntry", "RedirectEntry",
+					"redirectEntry.redirectEntryId",
+					"SELECT DISTINCT {redirectEntry.*} FROM RedirectEntry redirectEntry WHERE ",
+					"SELECT {RedirectEntry.*} FROM (SELECT DISTINCT redirectEntry.redirectEntryId FROM RedirectEntry redirectEntry WHERE ",
+					") TEMP_TABLE INNER JOIN RedirectEntry ON TEMP_TABLE.redirectEntryId = RedirectEntry.redirectEntryId",
+					"SELECT COUNT(DISTINCT redirectEntry.redirectEntryId) AS COUNT_VALUE FROM RedirectEntry redirectEntry WHERE ",
 					RedirectEntryModelImpl.ORDER_BY_SQL,
 					RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getGroupId));
 
-		_finderPathWithPaginationFindByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "destinationURL"}, true);
-
-		_finderPathWithoutPaginationFindByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "destinationURL"}, 0, 2, true, null);
-
-		_finderPathCountByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "destinationURL"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D,
-				_finderPathWithoutPaginationFindByG_D, _finderPathCountByG_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "destinationURL"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "destinationURL"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "destinationURL"}, 0, 2, false,
+					null),
 				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					RedirectEntryImpl.class, RedirectEntry.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_REDIRECTENTRY_WHERE,
-					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_REDIRECTENTRY_WHERE,
+					"redirectEntry", "RedirectEntry",
+					"redirectEntry.redirectEntryId",
+					"SELECT DISTINCT {redirectEntry.*} FROM RedirectEntry redirectEntry WHERE ",
+					"SELECT {RedirectEntry.*} FROM (SELECT DISTINCT redirectEntry.redirectEntryId FROM RedirectEntry redirectEntry WHERE ",
+					") TEMP_TABLE INNER JOIN RedirectEntry ON TEMP_TABLE.redirectEntryId = RedirectEntry.redirectEntryId",
+					"SELECT COUNT(DISTINCT redirectEntry.redirectEntryId) AS COUNT_VALUE FROM RedirectEntry redirectEntry WHERE ",
 					RedirectEntryModelImpl.ORDER_BY_SQL,
 					RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1425,15 +1396,15 @@ public class RedirectEntryPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					RedirectEntry::getDestinationURL));
 
-		_finderPathFetchByG_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "sourceURL"}, 0, 2, false,
-			RedirectEntry::getGroupId,
-			convertNullFunction(RedirectEntry::getSourceURL));
-
 		_uniquePersistenceFinderByG_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_S, _SQL_SELECT_REDIRECTENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "sourceURL"}, 0, 2, false,
+				RedirectEntry::getGroupId,
+				convertNullFunction(RedirectEntry::getSourceURL)),
+			_SQL_SELECT_REDIRECTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, RedirectEntry::getGroupId),
@@ -1495,27 +1466,6 @@ public class RedirectEntryPersistenceImpl
 	private static final String _SQL_COUNT_REDIRECTENTRY_WHERE =
 		"SELECT COUNT(redirectEntry) FROM RedirectEntry redirectEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"redirectEntry.redirectEntryId";
-
-	private static final String _FILTER_SQL_SELECT_REDIRECTENTRY_WHERE =
-		"SELECT DISTINCT {redirectEntry.*} FROM RedirectEntry redirectEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {RedirectEntry.*} FROM (SELECT DISTINCT redirectEntry.redirectEntryId FROM RedirectEntry redirectEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_REDIRECTENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN RedirectEntry ON TEMP_TABLE.redirectEntryId = RedirectEntry.redirectEntryId";
-
-	private static final String _FILTER_SQL_COUNT_REDIRECTENTRY_WHERE =
-		"SELECT COUNT(DISTINCT redirectEntry.redirectEntryId) AS COUNT_VALUE FROM RedirectEntry redirectEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "redirectEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "RedirectEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RedirectEntry exists with the key {";
 
@@ -1531,4 +1481,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-536401500
+// LIFERAY-SERVICE-BUILDER-HASH:-2107089260

@@ -76,9 +76,6 @@ public class OpenIdConnectUserPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_U;
-	private FinderPath _finderPathCountByC_U;
 	private CollectionPersistenceFinder<OpenIdConnectUser>
 		_collectionPersistenceFinderByC_U;
 
@@ -233,7 +230,6 @@ public class OpenIdConnectUserPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private FinderPath _finderPathFetchByC_I_S;
 	private UniquePersistenceFinder<OpenIdConnectUser>
 		_uniquePersistenceFinderByC_I_S;
 
@@ -530,28 +526,24 @@ public class OpenIdConnectUserPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false);
-
 		_collectionPersistenceFinderByC_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_U,
-			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_OPENIDCONNECTUSER_WHERE,
 			_SQL_COUNT_OPENIDCONNECTUSER_WHERE,
 			OpenIdConnectUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -562,20 +554,19 @@ public class OpenIdConnectUserPersistenceImpl
 				"openIdConnectUser.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, OpenIdConnectUser::getUserId));
 
-		_finderPathFetchByC_I_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_I_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "issuer", "subject"}, 0, 6, false,
-			OpenIdConnectUser::getCompanyId,
-			convertNullFunction(OpenIdConnectUser::getIssuer),
-			convertNullFunction(OpenIdConnectUser::getSubject));
-
 		_uniquePersistenceFinderByC_I_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_I_S, _SQL_SELECT_OPENIDCONNECTUSER_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_I_S",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "issuer", "subject"}, 0, 6, false,
+				OpenIdConnectUser::getCompanyId,
+				convertNullFunction(OpenIdConnectUser::getIssuer),
+				convertNullFunction(OpenIdConnectUser::getSubject)),
+			_SQL_SELECT_OPENIDCONNECTUSER_WHERE, "",
 			new FinderColumn<>(
 				"openIdConnectUser.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, OpenIdConnectUser::getCompanyId),
@@ -652,4 +643,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1597293616
+// LIFERAY-SERVICE-BUILDER-HASH:-1539045694

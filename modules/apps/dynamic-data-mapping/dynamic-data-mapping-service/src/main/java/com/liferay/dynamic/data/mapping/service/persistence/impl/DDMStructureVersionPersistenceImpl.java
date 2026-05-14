@@ -86,9 +86,6 @@ public class DDMStructureVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByStructureId;
-	private FinderPath _finderPathCountByStructureId;
 	private CollectionPersistenceFinder<DDMStructureVersion>
 		_collectionPersistenceFinderByStructureId;
 
@@ -235,7 +232,6 @@ public class DDMStructureVersionPersistenceImpl
 			finderCache, new Object[] {structureId});
 	}
 
-	private FinderPath _finderPathFetchByS_V;
 	private UniquePersistenceFinder<DDMStructureVersion>
 		_uniquePersistenceFinderByS_V;
 
@@ -328,9 +324,6 @@ public class DDMStructureVersionPersistenceImpl
 			finderCache, new Object[] {structureId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_S;
-	private FinderPath _finderPathWithoutPaginationFindByS_S;
-	private FinderPath _finderPathCountByS_S;
 	private CollectionPersistenceFinder<DDMStructureVersion>
 		_collectionPersistenceFinderByS_S;
 
@@ -773,29 +766,25 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			true);
-
-		_finderPathCountByStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStructureId",
-			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			false);
-
 		_collectionPersistenceFinderByStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureId,
-				_finderPathWithoutPaginationFindByStructureId,
-				_finderPathCountByStructureId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureId", new String[] {Long.class.getName()},
+					new String[] {"structureId"}, false),
 				_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
 				_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE,
 				DDMStructureVersionModelImpl.ORDER_BY_JPQL,
@@ -805,16 +794,15 @@ public class DDMStructureVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMStructureVersion::getStructureId));
 
-		_finderPathFetchByS_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_V",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"structureId", "version"}, 0, 2, false,
-			DDMStructureVersion::getStructureId,
-			convertNullFunction(DDMStructureVersion::getVersion));
-
 		_uniquePersistenceFinderByS_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_V, _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_V",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"structureId", "version"}, 0, 2, false,
+				DDMStructureVersion::getStructureId,
+				convertNullFunction(DDMStructureVersion::getVersion)),
+			_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddmStructureVersion.", "structureId", FinderColumn.Type.LONG,
 				"=", true, true, DDMStructureVersion::getStructureId),
@@ -822,28 +810,24 @@ public class DDMStructureVersionPersistenceImpl
 				"ddmStructureVersion.", "version", FinderColumn.Type.STRING,
 				"=", true, true, DDMStructureVersion::getVersion));
 
-		_finderPathWithPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"structureId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"structureId", "status"}, true);
-
-		_finderPathCountByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"structureId", "status"}, false);
-
 		_collectionPersistenceFinderByS_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_S,
-			_finderPathWithoutPaginationFindByS_S, _finderPathCountByS_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"structureId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"structureId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"structureId", "status"}, false),
 			_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
 			_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE,
 			DDMStructureVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -927,4 +911,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-566506530
+// LIFERAY-SERVICE-BUILDER-HASH:-1158052287

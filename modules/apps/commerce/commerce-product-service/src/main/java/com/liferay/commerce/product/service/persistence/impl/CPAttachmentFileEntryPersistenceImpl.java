@@ -97,9 +97,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -244,7 +241,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CPAttachmentFileEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -336,9 +332,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -495,9 +488,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFileEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByFileEntryId;
-	private FinderPath _finderPathCountByFileEntryId;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByFileEntryId;
 
@@ -644,9 +634,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {fileEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C;
 
@@ -804,8 +791,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtD_S;
-	private FinderPath _finderPathWithPaginationCountByLtD_S;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByLtD_S;
 
@@ -962,9 +947,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_F;
-	private FinderPath _finderPathCountByG_C_F;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByG_C_F;
 
@@ -1135,9 +1117,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, fileEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_F;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_F;
-	private FinderPath _finderPathCountByC_C_F;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_F;
 
@@ -1308,9 +1287,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, fileEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
-	private FinderPath _finderPathCountByC_C_C;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_C;
 
@@ -1478,8 +1454,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, cdnURL});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_LtD_S;
-	private FinderPath _finderPathWithPaginationCountByC_C_LtD_S;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_LtD_S;
 
@@ -1666,9 +1640,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			new Object[] {classNameId, classPK, displayDate, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_T_ST;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_T_ST;
-	private FinderPath _finderPathCountByC_C_T_ST;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_T_ST;
 
@@ -1851,8 +1822,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, type, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_T_NotST;
-	private FinderPath _finderPathWithPaginationCountByC_C_T_NotST;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_T_NotST;
 
@@ -2035,9 +2004,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, type, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_G_T_ST;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_G_T_ST;
-	private FinderPath _finderPathCountByC_C_G_T_ST;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_G_T_ST;
 
@@ -2243,8 +2209,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			new Object[] {classNameId, classPK, galleryEnabled, type, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_G_T_NotST;
-	private FinderPath _finderPathWithPaginationCountByC_C_G_T_NotST;
 	private CollectionPersistenceFinder<CPAttachmentFileEntry>
 		_collectionPersistenceFinderByC_C_G_T_NotST;
 
@@ -2451,7 +2415,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 			new Object[] {classNameId, classPK, galleryEnabled, type, status});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CPAttachmentFileEntry>
 		_uniquePersistenceFinderByERC_C;
 
@@ -2947,27 +2910,23 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 			_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2976,15 +2935,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPAttachmentFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CPAttachmentFileEntry::getUuid),
-			CPAttachmentFileEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CPAttachmentFileEntry::getUuid),
+				CPAttachmentFileEntry::getGroupId),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cpAttachmentFileEntry.", "uuid", FinderColumn.Type.STRING, "=",
@@ -2993,30 +2951,25 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CPAttachmentFileEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3029,29 +2982,25 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPAttachmentFileEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"fileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			true);
-
-		_finderPathCountByFileEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
-			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			false);
-
 		_collectionPersistenceFinderByFileEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFileEntryId,
-				_finderPathWithoutPaginationFindByFileEntryId,
-				_finderPathCountByFileEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"fileEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFileEntryId", new String[] {Long.class.getName()},
+					new String[] {"fileEntryId"}, false),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3061,28 +3010,24 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPAttachmentFileEntry::getFileEntryId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 			_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3094,23 +3039,21 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "classPK", FinderColumn.Type.LONG,
 				"=", true, true, CPAttachmentFileEntry::getClassPK));
 
-		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"displayDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"displayDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtD_S, null,
-			_finderPathWithPaginationCountByLtD_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"displayDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 			_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3122,32 +3065,30 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "status", FinderColumn.Type.INTEGER,
 				"=", true, true, CPAttachmentFileEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_C_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "fileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "fileEntryId"}, true);
-
-		_finderPathCountByG_C_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "fileEntryId"}, false);
-
 		_collectionPersistenceFinderByG_C_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C_F,
-			_finderPathWithoutPaginationFindByG_C_F, _finderPathCountByG_C_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "fileEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "fileEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "fileEntryId"}, false),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 			_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3162,32 +3103,30 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "fileEntryId", FinderColumn.Type.LONG,
 				"=", true, true, CPAttachmentFileEntry::getFileEntryId));
 
-		_finderPathWithPaginationFindByC_C_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "fileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "fileEntryId"}, true);
-
-		_finderPathCountByC_C_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "fileEntryId"}, false);
-
 		_collectionPersistenceFinderByC_C_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_F,
-			_finderPathWithoutPaginationFindByC_C_F, _finderPathCountByC_C_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "fileEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "fileEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "fileEntryId"}, false),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 			_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3202,36 +3141,32 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "fileEntryId", FinderColumn.Type.LONG,
 				"=", true, true, CPAttachmentFileEntry::getFileEntryId));
 
-		_finderPathWithPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "cdnURL"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "cdnURL"}, 0, 4, true,
-			null);
-
-		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "cdnURL"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_C,
-			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "cdnURL"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "cdnURL"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "cdnURL"}, 0, 4, false,
+				null),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 			_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 			CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3246,30 +3181,32 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "cdnURL", FinderColumn.Type.STRING,
 				"=", true, true, CPAttachmentFileEntry::getCDNURL));
 
-		_finderPathWithPaginationFindByC_C_LtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtD_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "displayDate", "status"},
-			true);
-
-		_finderPathWithPaginationCountByC_C_LtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_LtD_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Date.class.getName(), Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "displayDate", "status"},
-			false);
-
 		_collectionPersistenceFinderByC_C_LtD_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_LtD_S, null,
-				_finderPathWithPaginationCountByC_C_LtD_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtD_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "displayDate", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_LtD_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "displayDate", "status"
+					},
+					false),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3290,37 +3227,36 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CPAttachmentFileEntry::getStatus));
 
-		_finderPathWithPaginationFindByC_C_T_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_T_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_", "status"}, true);
-
-		_finderPathCountByC_C_T_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_T_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_", "status"}, false);
-
 		_collectionPersistenceFinderByC_C_T_ST =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_T_ST,
-				_finderPathWithoutPaginationFindByC_C_T_ST,
-				_finderPathCountByC_C_T_ST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "type_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_T_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "type_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_C_T_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "type_", "status"},
+					false),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3339,29 +3275,30 @@ public class CPAttachmentFileEntryPersistenceImpl
 					"cpAttachmentFileEntry.", "status",
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CPAttachmentFileEntry::getStatus));
-
-		_finderPathWithPaginationFindByC_C_T_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_NotST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_", "status"}, true);
-
-		_finderPathWithPaginationCountByC_C_T_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_T_NotST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "type_", "status"}, false);
 
 		_collectionPersistenceFinderByC_C_T_NotST =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_T_NotST, null,
-				_finderPathWithPaginationCountByC_C_T_NotST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_T_NotST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "type_", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_C_T_NotST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName()
+					},
+					new String[] {"classNameId", "classPK", "type_", "status"},
+					false),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3381,48 +3318,49 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "!=", true, true,
 					CPAttachmentFileEntry::getStatus));
 
-		_finderPathWithPaginationFindByC_C_G_T_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_G_T_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "galleryEnabled", "type_", "status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_C_G_T_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_G_T_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "galleryEnabled", "type_", "status"
-			},
-			true);
-
-		_finderPathCountByC_C_G_T_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_G_T_ST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "galleryEnabled", "type_", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_C_G_T_ST =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_G_T_ST,
-				_finderPathWithoutPaginationFindByC_C_G_T_ST,
-				_finderPathCountByC_C_G_T_ST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_G_T_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "galleryEnabled", "type_",
+						"status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_C_G_T_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "galleryEnabled", "type_",
+						"status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_C_G_T_ST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "galleryEnabled", "type_",
+						"status"
+					},
+					false),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3446,35 +3384,38 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CPAttachmentFileEntry::getStatus));
 
-		_finderPathWithPaginationFindByC_C_G_T_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_G_T_NotST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "galleryEnabled", "type_", "status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByC_C_G_T_NotST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_G_T_NotST",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "galleryEnabled", "type_", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_C_G_T_NotST =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_G_T_NotST, null,
-				_finderPathWithPaginationCountByC_C_G_T_NotST,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByC_C_G_T_NotST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "galleryEnabled", "type_",
+						"status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_C_G_T_NotST",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"classNameId", "classPK", "galleryEnabled", "type_",
+						"status"
+					},
+					false),
 				_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE,
 				_SQL_COUNT_CPATTACHMENTFILEENTRY_WHERE,
 				CPAttachmentFileEntryModelImpl.ORDER_BY_JPQL,
@@ -3498,16 +3439,16 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "!=", true, true,
 					CPAttachmentFileEntry::getStatus));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				CPAttachmentFileEntry::getExternalReferenceCode),
-			CPAttachmentFileEntry::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CPAttachmentFileEntry::getExternalReferenceCode),
+				CPAttachmentFileEntry::getCompanyId),
 			_SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cpAttachmentFileEntry.", "externalReferenceCode",
@@ -3589,4 +3530,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1149956079
+// LIFERAY-SERVICE-BUILDER-HASH:-471050950

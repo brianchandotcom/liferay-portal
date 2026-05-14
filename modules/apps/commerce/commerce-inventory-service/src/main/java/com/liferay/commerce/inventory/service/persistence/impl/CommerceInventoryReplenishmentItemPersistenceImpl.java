@@ -92,9 +92,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderByUuid;
 
@@ -242,9 +239,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -404,11 +398,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
-	private FinderPath _finderPathCountByCommerceInventoryWarehouseId;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId;
 
@@ -577,9 +566,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {commerceInventoryWarehouseId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAvailabilityDate;
-	private FinderPath _finderPathWithoutPaginationFindByAvailabilityDate;
-	private FinderPath _finderPathCountByAvailabilityDate;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderByAvailabilityDate;
 
@@ -732,9 +718,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {availabilityDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySku;
-	private FinderPath _finderPathWithoutPaginationFindBySku;
-	private FinderPath _finderPathCountBySku;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderBySku;
 
@@ -882,9 +865,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {sku});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_S_U;
-	private FinderPath _finderPathCountByC_S_U;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderByC_S_U;
 
@@ -1062,9 +1042,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {companyId, sku, unitOfMeasureKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAD_S_U;
-	private FinderPath _finderPathWithoutPaginationFindByAD_S_U;
-	private FinderPath _finderPathCountByAD_S_U;
 	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
 		_collectionPersistenceFinderByAD_S_U;
 
@@ -1247,7 +1224,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			new Object[] {availabilityDate, sku, unitOfMeasureKey});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommerceInventoryReplenishmentItem>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1677,27 +1653,23 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1707,30 +1679,25 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryReplenishmentItem::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1744,35 +1711,28 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceInventoryReplenishmentItem::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceInventoryWarehouseId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceInventoryWarehouseId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceInventoryWarehouseId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceInventoryWarehouseId"}, true);
-
-		_finderPathCountByCommerceInventoryWarehouseId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceInventoryWarehouseId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceInventoryWarehouseId"}, false);
-
 		_collectionPersistenceFinderByCommerceInventoryWarehouseId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByCommerceInventoryWarehouseId,
-				_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-				_finderPathCountByCommerceInventoryWarehouseId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceInventoryWarehouseId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceInventoryWarehouseId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceInventoryWarehouseId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceInventoryWarehouseId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceInventoryWarehouseId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceInventoryWarehouseId"}, false),
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1784,29 +1744,28 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					CommerceInventoryReplenishmentItem::
 						getCommerceInventoryWarehouseId));
 
-		_finderPathWithPaginationFindByAvailabilityDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAvailabilityDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"availabilityDate"}, true);
-
-		_finderPathWithoutPaginationFindByAvailabilityDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAvailabilityDate",
-			new String[] {Date.class.getName()},
-			new String[] {"availabilityDate"}, true);
-
-		_finderPathCountByAvailabilityDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAvailabilityDate", new String[] {Date.class.getName()},
-			new String[] {"availabilityDate"}, false);
-
 		_collectionPersistenceFinderByAvailabilityDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAvailabilityDate,
-				_finderPathWithoutPaginationFindByAvailabilityDate,
-				_finderPathCountByAvailabilityDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAvailabilityDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"availabilityDate"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAvailabilityDate",
+					new String[] {Date.class.getName()},
+					new String[] {"availabilityDate"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAvailabilityDate",
+					new String[] {Date.class.getName()},
+					new String[] {"availabilityDate"}, false),
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1816,27 +1775,23 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					FinderColumn.Type.DATE, "=", true, true,
 					CommerceInventoryReplenishmentItem::getAvailabilityDate));
 
-		_finderPathWithPaginationFindBySku = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySku",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"sku"}, true);
-
-		_finderPathWithoutPaginationFindBySku = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
-			new String[] {String.class.getName()}, new String[] {"sku"}, 0, 1,
-			true, null);
-
-		_finderPathCountBySku = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
-			new String[] {String.class.getName()}, new String[] {"sku"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderBySku = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindBySku,
-			_finderPathWithoutPaginationFindBySku, _finderPathCountBySku,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySku",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"sku"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
+				new String[] {String.class.getName()}, new String[] {"sku"}, 0,
+				1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
+				new String[] {String.class.getName()}, new String[] {"sku"}, 0,
+				1, false, null),
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1846,36 +1801,32 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryReplenishmentItem::getSku));
 
-		_finderPathWithPaginationFindByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, true,
-			null);
-
-		_finderPathCountByC_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, false,
-			null);
-
 		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S_U,
-			_finderPathWithoutPaginationFindByC_S_U, _finderPathCountByC_S_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6,
+				false, null),
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1893,38 +1844,41 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryReplenishmentItem::getUnitOfMeasureKey));
 
-		_finderPathWithPaginationFindByAD_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAD_S_U",
-			new String[] {
-				Date.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"availabilityDate", "sku", "unitOfMeasureKey"}, true);
-
-		_finderPathWithoutPaginationFindByAD_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAD_S_U",
-			new String[] {
-				Date.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"availabilityDate", "sku", "unitOfMeasureKey"}, 0, 6,
-			true, null);
-
-		_finderPathCountByAD_S_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAD_S_U",
-			new String[] {
-				Date.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"availabilityDate", "sku", "unitOfMeasureKey"}, 0, 6,
-			false, null);
-
 		_collectionPersistenceFinderByAD_S_U =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAD_S_U,
-				_finderPathWithoutPaginationFindByAD_S_U,
-				_finderPathCountByAD_S_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAD_S_U",
+					new String[] {
+						Date.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"availabilityDate", "sku", "unitOfMeasureKey"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAD_S_U",
+					new String[] {
+						Date.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"availabilityDate", "sku", "unitOfMeasureKey"
+					},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAD_S_U",
+					new String[] {
+						Date.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"availabilityDate", "sku", "unitOfMeasureKey"
+					},
+					0, 6, false, null),
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
@@ -1942,16 +1896,17 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryReplenishmentItem::getUnitOfMeasureKey));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				CommerceInventoryReplenishmentItem::getExternalReferenceCode),
-			CommerceInventoryReplenishmentItem::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CommerceInventoryReplenishmentItem::
+						getExternalReferenceCode),
+				CommerceInventoryReplenishmentItem::getCompanyId),
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "externalReferenceCode",
@@ -2034,4 +1989,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-733587737
+// LIFERAY-SERVICE-BUILDER-HASH:-1460986594

@@ -73,9 +73,6 @@ public class CTPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
-	private FinderPath _finderPathCountByCtCollectionId;
 	private CollectionPersistenceFinder<CTPreferences>
 		_collectionPersistenceFinderByCtCollectionId;
 
@@ -222,9 +219,6 @@ public class CTPreferencesPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPreviousCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByPreviousCtCollectionId;
-	private FinderPath _finderPathCountByPreviousCtCollectionId;
 	private CollectionPersistenceFinder<CTPreferences>
 		_collectionPersistenceFinderByPreviousCtCollectionId;
 
@@ -377,7 +371,6 @@ public class CTPreferencesPersistenceImpl
 			finderCache, new Object[] {previousCtCollectionId});
 	}
 
-	private FinderPath _finderPathFetchByC_U;
 	private UniquePersistenceFinder<CTPreferences>
 		_uniquePersistenceFinderByC_U;
 
@@ -642,62 +635,55 @@ public class CTPreferencesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false);
-
 		_collectionPersistenceFinderByCtCollectionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtCollectionId,
-				_finderPathWithoutPaginationFindByCtCollectionId,
-				_finderPathCountByCtCollectionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtCollectionId", new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTPREFERENCES_WHERE, _SQL_COUNT_CTPREFERENCES_WHERE,
 				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctPreferences.", "ctCollectionId", FinderColumn.Type.LONG,
 					"=", true, true, CTPreferences::getCtCollectionId));
 
-		_finderPathWithPaginationFindByPreviousCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPreviousCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"previousCtCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByPreviousCtCollectionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByPreviousCtCollectionId",
-				new String[] {Long.class.getName()},
-				new String[] {"previousCtCollectionId"}, true);
-
-		_finderPathCountByPreviousCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPreviousCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"previousCtCollectionId"}, false);
-
 		_collectionPersistenceFinderByPreviousCtCollectionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPreviousCtCollectionId,
-				_finderPathWithoutPaginationFindByPreviousCtCollectionId,
-				_finderPathCountByPreviousCtCollectionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPreviousCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"previousCtCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPreviousCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"previousCtCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPreviousCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"previousCtCollectionId"}, false),
 				_SQL_SELECT_CTPREFERENCES_WHERE, _SQL_COUNT_CTPREFERENCES_WHERE,
 				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -705,14 +691,14 @@ public class CTPreferencesPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTPreferences::getPreviousCtCollectionId));
 
-		_finderPathFetchByC_U = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, 0, 0, false,
-			CTPreferences::getCompanyId, CTPreferences::getUserId);
-
 		_uniquePersistenceFinderByC_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_U, _SQL_SELECT_CTPREFERENCES_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, 0, 0, false,
+				CTPreferences::getCompanyId, CTPreferences::getUserId),
+			_SQL_SELECT_CTPREFERENCES_WHERE, "",
 			new FinderColumn<>(
 				"ctPreferences.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, CTPreferences::getCompanyId),
@@ -786,4 +772,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1606951915
+// LIFERAY-SERVICE-BUILDER-HASH:1278061600

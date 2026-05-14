@@ -87,9 +87,6 @@ public class DDLRecordPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,7 +226,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DDLRecord> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -318,9 +314,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -475,9 +468,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -619,9 +609,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRecordSetId;
-	private FinderPath _finderPathWithoutPaginationFindByRecordSetId;
-	private FinderPath _finderPathCountByRecordSetId;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByRecordSetId;
 
@@ -766,9 +753,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {recordSetId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_U;
-	private FinderPath _finderPathWithoutPaginationFindByR_U;
-	private FinderPath _finderPathCountByR_U;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByR_U;
 
@@ -923,9 +907,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {recordSetId, userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_R;
-	private FinderPath _finderPathWithoutPaginationFindByR_R;
-	private FinderPath _finderPathCountByR_R;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByR_R;
 
@@ -1085,9 +1066,6 @@ public class DDLRecordPersistenceImpl
 			finderCache, new Object[] {recordSetId, recordSetVersion});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<DDLRecord>
 		_collectionPersistenceFinderByC_C;
 
@@ -1539,41 +1517,37 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DDLRecord::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DDLRecord::getUuid), DDLRecord::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDLRECORD_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DDLRecord::getUuid), DDLRecord::getGroupId),
+			_SQL_SELECT_DDLRECORD_WHERE, "",
 			new FinderColumn<>(
 				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DDLRecord::getUuid),
@@ -1581,32 +1555,27 @@ public class DDLRecordPersistenceImpl
 				"ddlRecord.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecord::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DDLRECORD_WHERE,
-				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
+				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, DDLRecord::getUuid),
@@ -1614,86 +1583,74 @@ public class DDLRecordPersistenceImpl
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_DDLRECORD_WHERE,
-				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
+				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
 
-		_finderPathWithPaginationFindByRecordSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRecordSetId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"recordSetId"}, true);
-
-		_finderPathWithoutPaginationFindByRecordSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRecordSetId",
-			new String[] {Long.class.getName()}, new String[] {"recordSetId"},
-			true);
-
-		_finderPathCountByRecordSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRecordSetId",
-			new String[] {Long.class.getName()}, new String[] {"recordSetId"},
-			false);
-
 		_collectionPersistenceFinderByRecordSetId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRecordSetId,
-				_finderPathWithoutPaginationFindByRecordSetId,
-				_finderPathCountByRecordSetId, _SQL_SELECT_DDLRECORD_WHERE,
-				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRecordSetId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"recordSetId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByRecordSetId", new String[] {Long.class.getName()},
+					new String[] {"recordSetId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByRecordSetId", new String[] {Long.class.getName()},
+					new String[] {"recordSetId"}, false),
+				_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
+				DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getRecordSetId));
 
-		_finderPathWithPaginationFindByR_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"recordSetId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByR_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"recordSetId", "userId"}, true);
-
-		_finderPathCountByR_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"recordSetId", "userId"}, false);
-
 		_collectionPersistenceFinderByR_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_U,
-			_finderPathWithoutPaginationFindByR_U, _finderPathCountByR_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"recordSetId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"recordSetId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"recordSetId", "userId"}, false),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1703,29 +1660,26 @@ public class DDLRecordPersistenceImpl
 				"ddlRecord.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				DDLRecord::getUserId));
 
-		_finderPathWithPaginationFindByR_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"recordSetId", "recordSetVersion"}, true);
-
-		_finderPathWithoutPaginationFindByR_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "recordSetVersion"}, 0, 2, true, null);
-
-		_finderPathCountByR_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "recordSetVersion"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByR_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_R,
-			_finderPathWithoutPaginationFindByR_R, _finderPathCountByR_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"recordSetId", "recordSetVersion"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"recordSetId", "recordSetVersion"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"recordSetId", "recordSetVersion"}, 0, 2, false,
+				null),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1735,28 +1689,24 @@ public class DDLRecordPersistenceImpl
 				"ddlRecord.", "recordSetVersion", FinderColumn.Type.STRING, "=",
 				true, true, DDLRecord::getRecordSetVersion));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"className", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"className", "classPK"}, 0, 1, true, null);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"className", "classPK"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"className", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"className", "classPK"}, 0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"className", "classPK"}, 0, 1, false, null),
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
 			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1838,4 +1788,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-133183531
+// LIFERAY-SERVICE-BUILDER-HASH:-487030323

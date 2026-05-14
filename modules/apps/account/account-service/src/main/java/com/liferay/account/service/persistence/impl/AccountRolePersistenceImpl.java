@@ -86,9 +86,6 @@ public class AccountRolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<AccountRole>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -298,9 +295,6 @@ public class AccountRolePersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
-	private FinderPath _finderPathCountByAccountEntryId;
 	private FilterCollectionPersistenceFinder<AccountRole>
 		_collectionPersistenceFinderByAccountEntryId;
 
@@ -684,7 +678,6 @@ public class AccountRolePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(accountEntryIds)});
 	}
 
-	private FinderPath _finderPathFetchByRoleId;
 	private UniquePersistenceFinder<AccountRole>
 		_uniquePersistenceFinderByRoleId;
 
@@ -763,9 +756,6 @@ public class AccountRolePersistenceImpl
 			finderCache, new Object[] {roleId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A;
-	private FinderPath _finderPathCountByC_A;
 	private FilterCollectionPersistenceFinder<AccountRole>
 		_collectionPersistenceFinderByC_A;
 
@@ -1184,7 +1174,6 @@ public class AccountRolePersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<AccountRole>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1515,128 +1504,115 @@ public class AccountRolePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_ACCOUNTROLE_WHERE,
-				_SQL_COUNT_ACCOUNTROLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE,
+					AccountRoleImpl.class, AccountRole.class, "accountRole",
+					"AccountRole", "accountRole.accountRoleId",
+					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
+					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
+					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
+					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
 					AccountRoleModelImpl.ORDER_BY_SQL,
 					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"accountRole.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountRole::getCompanyId));
 
-		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, false);
-
 		_collectionPersistenceFinderByAccountEntryId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryId,
-				_finderPathWithoutPaginationFindByAccountEntryId,
-				_finderPathCountByAccountEntryId, _SQL_SELECT_ACCOUNTROLE_WHERE,
-				_SQL_COUNT_ACCOUNTROLE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryId", new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByAccountEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, false),
+				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE,
+					AccountRoleImpl.class, AccountRole.class, "accountRole",
+					"AccountRole", "accountRole.accountRoleId",
+					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
+					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
+					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
+					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
 					AccountRoleModelImpl.ORDER_BY_SQL,
 					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"accountRole.", "accountEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountRole::getAccountEntryId));
 
-		_finderPathFetchByRoleId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"}, 0, 0,
-			false, AccountRole::getRoleId);
-
 		_uniquePersistenceFinderByRoleId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByRoleId, _SQL_SELECT_ACCOUNTROLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByRoleId",
+				new String[] {Long.class.getName()}, new String[] {"roleId"}, 0,
+				0, false, AccountRole::getRoleId),
+			_SQL_SELECT_ACCOUNTROLE_WHERE, "",
 			new FinderColumn<>(
 				"accountRole.", "roleId", FinderColumn.Type.LONG, "=", true,
 				true, AccountRole::getRoleId));
 
-		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "accountEntryId"}, true);
-
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "accountEntryId"}, false);
-
 		_collectionPersistenceFinderByC_A =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_A,
-				_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_A",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTROLE_WHERE, _SQL_COUNT_ACCOUNTROLE_WHERE,
 				AccountRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AccountRoleImpl.class, AccountRole.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_WHERE,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ACCOUNTROLE_WHERE,
+					AccountRoleImpl.class, AccountRole.class, "accountRole",
+					"AccountRole", "accountRole.accountRoleId",
+					"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ",
+					"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ",
+					") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId",
+					"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ",
 					AccountRoleModelImpl.ORDER_BY_SQL,
 					AccountRoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1646,15 +1622,16 @@ public class AccountRolePersistenceImpl
 					"accountRole.", "accountEntryId", FinderColumn.Type.LONG,
 					"=", false, true, true, AccountRole::getAccountEntryId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(AccountRole::getExternalReferenceCode),
-			AccountRole::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTROLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(AccountRole::getExternalReferenceCode),
+				AccountRole::getCompanyId),
+			_SQL_SELECT_ACCOUNTROLE_WHERE, "",
 			new FinderColumn<>(
 				"accountRole.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1717,27 +1694,6 @@ public class AccountRolePersistenceImpl
 	private static final String _SQL_COUNT_ACCOUNTROLE_WHERE =
 		"SELECT COUNT(accountRole) FROM AccountRole accountRole WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"accountRole.accountRoleId";
-
-	private static final String _FILTER_SQL_SELECT_ACCOUNTROLE_WHERE =
-		"SELECT DISTINCT {accountRole.*} FROM AccountRole accountRole WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {AccountRole.*} FROM (SELECT DISTINCT accountRole.accountRoleId FROM AccountRole accountRole WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ACCOUNTROLE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN AccountRole ON TEMP_TABLE.accountRoleId = AccountRole.accountRoleId";
-
-	private static final String _FILTER_SQL_COUNT_ACCOUNTROLE_WHERE =
-		"SELECT COUNT(DISTINCT accountRole.accountRoleId) AS COUNT_VALUE FROM AccountRole accountRole WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "accountRole";
-
-	private static final String _FILTER_ENTITY_TABLE = "AccountRole";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountRole exists with the key {";
 
@@ -1750,4 +1706,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1763395837
+// LIFERAY-SERVICE-BUILDER-HASH:996384424

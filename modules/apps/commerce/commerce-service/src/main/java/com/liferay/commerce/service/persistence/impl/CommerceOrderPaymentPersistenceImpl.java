@@ -74,9 +74,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceOrderId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderId;
-	private FinderPath _finderPathCountByCommerceOrderId;
 	private CollectionPersistenceFinder<CommerceOrderPayment>
 		_collectionPersistenceFinderByCommerceOrderId;
 
@@ -432,29 +429,28 @@ public class CommerceOrderPaymentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceOrderId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceOrderId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceOrderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceOrderId"}, true);
-
-		_finderPathCountByCommerceOrderId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceOrderId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceOrderId"}, false);
-
 		_collectionPersistenceFinderByCommerceOrderId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceOrderId,
-				_finderPathWithoutPaginationFindByCommerceOrderId,
-				_finderPathCountByCommerceOrderId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceOrderId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceOrderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceOrderId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceOrderId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceOrderId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceOrderId"}, false),
 				_SQL_SELECT_COMMERCEORDERPAYMENT_WHERE,
 				_SQL_COUNT_COMMERCEORDERPAYMENT_WHERE,
 				CommerceOrderPaymentModelImpl.ORDER_BY_JPQL,
@@ -527,4 +523,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2128810533
+// LIFERAY-SERVICE-BUILDER-HASH:-83607763

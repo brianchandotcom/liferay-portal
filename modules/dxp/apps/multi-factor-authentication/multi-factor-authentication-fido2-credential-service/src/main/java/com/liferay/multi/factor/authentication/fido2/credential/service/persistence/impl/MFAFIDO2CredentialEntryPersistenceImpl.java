@@ -77,9 +77,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<MFAFIDO2CredentialEntry>
 		_collectionPersistenceFinderByUserId;
 
@@ -224,9 +221,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCredentialKeyHash;
-	private FinderPath _finderPathWithoutPaginationFindByCredentialKeyHash;
-	private FinderPath _finderPathCountByCredentialKeyHash;
 	private CollectionPersistenceFinder<MFAFIDO2CredentialEntry>
 		_collectionPersistenceFinderByCredentialKeyHash;
 
@@ -378,7 +372,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			finderCache, new Object[] {credentialKeyHash});
 	}
 
-	private FinderPath _finderPathFetchByU_C;
 	private UniquePersistenceFinder<MFAFIDO2CredentialEntry>
 		_uniquePersistenceFinderByU_C;
 
@@ -689,28 +682,25 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				_SQL_COUNT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				MFAFIDO2CredentialEntryModelImpl.ORDER_BY_JPQL,
@@ -720,29 +710,28 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MFAFIDO2CredentialEntry::getUserId));
 
-		_finderPathWithPaginationFindByCredentialKeyHash = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCredentialKeyHash",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"credentialKeyHash"}, true);
-
-		_finderPathWithoutPaginationFindByCredentialKeyHash = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCredentialKeyHash", new String[] {Long.class.getName()},
-			new String[] {"credentialKeyHash"}, true);
-
-		_finderPathCountByCredentialKeyHash = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCredentialKeyHash", new String[] {Long.class.getName()},
-			new String[] {"credentialKeyHash"}, false);
-
 		_collectionPersistenceFinderByCredentialKeyHash =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCredentialKeyHash,
-				_finderPathWithoutPaginationFindByCredentialKeyHash,
-				_finderPathCountByCredentialKeyHash,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCredentialKeyHash",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"credentialKeyHash"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCredentialKeyHash",
+					new String[] {Long.class.getName()},
+					new String[] {"credentialKeyHash"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCredentialKeyHash",
+					new String[] {Long.class.getName()},
+					new String[] {"credentialKeyHash"}, false),
 				_SQL_SELECT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				_SQL_COUNT_MFAFIDO2CREDENTIALENTRY_WHERE,
 				MFAFIDO2CredentialEntryModelImpl.ORDER_BY_JPQL,
@@ -752,15 +741,14 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MFAFIDO2CredentialEntry::getCredentialKeyHash));
 
-		_finderPathFetchByU_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "credentialKeyHash"}, 0, 0, false,
-			MFAFIDO2CredentialEntry::getUserId,
-			MFAFIDO2CredentialEntry::getCredentialKeyHash);
-
 		_uniquePersistenceFinderByU_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "credentialKeyHash"}, 0, 0, false,
+				MFAFIDO2CredentialEntry::getUserId,
+				MFAFIDO2CredentialEntry::getCredentialKeyHash),
 			_SQL_SELECT_MFAFIDO2CREDENTIALENTRY_WHERE, "",
 			new FinderColumn<>(
 				"mfafido2CredentialEntry.", "userId", FinderColumn.Type.LONG,
@@ -836,4 +824,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-522149366
+// LIFERAY-SERVICE-BUILDER-HASH:1578269992

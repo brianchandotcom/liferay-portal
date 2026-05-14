@@ -83,11 +83,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath
-		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId;
-	private FinderPath _finderPathCountByOAuth2ApplicationScopeAliasesId;
 	private CollectionPersistenceFinder<OAuth2ScopeGrant>
 		_collectionPersistenceFinderByOAuth2ApplicationScopeAliasesId;
 
@@ -249,7 +244,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 			count(finderCache, new Object[] {oAuth2ApplicationScopeAliasesId});
 	}
 
-	private FinderPath _finderPathFetchByC_O_A_B_S;
 	private UniquePersistenceFinder<OAuth2ScopeGrant>
 		_uniquePersistenceFinderByC_O_A_B_S;
 
@@ -938,35 +932,28 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"OA2Auths_OA2ScopeGrants", "companyId", "oAuth2ScopeGrantId",
 				"oAuth2AuthorizationId", this, OAuth2Authorization.class);
 
-		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByOAuth2ApplicationScopeAliasesId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"oA2AScopeAliasesId"}, true);
-
-		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByOAuth2ApplicationScopeAliasesId",
-				new String[] {Long.class.getName()},
-				new String[] {"oA2AScopeAliasesId"}, true);
-
-		_finderPathCountByOAuth2ApplicationScopeAliasesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByOAuth2ApplicationScopeAliasesId",
-			new String[] {Long.class.getName()},
-			new String[] {"oA2AScopeAliasesId"}, false);
-
 		_collectionPersistenceFinderByOAuth2ApplicationScopeAliasesId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId,
-				_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId,
-				_finderPathCountByOAuth2ApplicationScopeAliasesId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByOAuth2ApplicationScopeAliasesId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"oA2AScopeAliasesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOAuth2ApplicationScopeAliasesId",
+					new String[] {Long.class.getName()},
+					new String[] {"oA2AScopeAliasesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOAuth2ApplicationScopeAliasesId",
+					new String[] {Long.class.getName()},
+					new String[] {"oA2AScopeAliasesId"}, false),
 				_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE,
 				_SQL_COUNT_OAUTH2SCOPEGRANT_WHERE,
 				OAuth2ScopeGrantModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -976,25 +963,24 @@ public class OAuth2ScopeGrantPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId));
 
-		_finderPathFetchByC_O_A_B_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"companyId", "oA2AScopeAliasesId", "applicationName",
-				"bundleSymbolicName", "scope"
-			},
-			0, 28, false, OAuth2ScopeGrant::getCompanyId,
-			OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId,
-			convertNullFunction(OAuth2ScopeGrant::getApplicationName),
-			convertNullFunction(OAuth2ScopeGrant::getBundleSymbolicName),
-			convertNullFunction(OAuth2ScopeGrant::getScope));
-
 		_uniquePersistenceFinderByC_O_A_B_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_O_A_B_S,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"companyId", "oA2AScopeAliasesId", "applicationName",
+					"bundleSymbolicName", "scope"
+				},
+				0, 28, false, OAuth2ScopeGrant::getCompanyId,
+				OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId,
+				convertNullFunction(OAuth2ScopeGrant::getApplicationName),
+				convertNullFunction(OAuth2ScopeGrant::getBundleSymbolicName),
+				convertNullFunction(OAuth2ScopeGrant::getScope)),
 			_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE, "",
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1090,4 +1076,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-893802029
+// LIFERAY-SERVICE-BUILDER-HASH:955414886

@@ -86,9 +86,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByFormInstanceId;
-	private FinderPath _finderPathWithoutPaginationFindByFormInstanceId;
-	private FinderPath _finderPathCountByFormInstanceId;
 	private CollectionPersistenceFinder<DDMFormInstanceVersion>
 		_collectionPersistenceFinderByFormInstanceId;
 
@@ -237,7 +234,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceId});
 	}
 
-	private FinderPath _finderPathFetchByF_V;
 	private UniquePersistenceFinder<DDMFormInstanceVersion>
 		_uniquePersistenceFinderByF_V;
 
@@ -334,9 +330,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByF_S;
-	private FinderPath _finderPathWithoutPaginationFindByF_S;
-	private FinderPath _finderPathCountByF_S;
 	private CollectionPersistenceFinder<DDMFormInstanceVersion>
 		_collectionPersistenceFinderByF_S;
 
@@ -786,29 +779,27 @@ public class DDMFormInstanceVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByFormInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFormInstanceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"formInstanceId"}, true);
-
-		_finderPathWithoutPaginationFindByFormInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFormInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, true);
-
-		_finderPathCountByFormInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, false);
-
 		_collectionPersistenceFinderByFormInstanceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFormInstanceId,
-				_finderPathWithoutPaginationFindByFormInstanceId,
-				_finderPathCountByFormInstanceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFormInstanceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"formInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFormInstanceId", new String[] {Long.class.getName()},
+					new String[] {"formInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFormInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"formInstanceId"}, false),
 				_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 				DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL,
@@ -818,15 +809,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMFormInstanceVersion::getFormInstanceId));
 
-		_finderPathFetchByF_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceId", "version"}, 0, 2, false,
-			DDMFormInstanceVersion::getFormInstanceId,
-			convertNullFunction(DDMFormInstanceVersion::getVersion));
-
 		_uniquePersistenceFinderByF_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_V,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"formInstanceId", "version"}, 0, 2, false,
+				DDMFormInstanceVersion::getFormInstanceId,
+				convertNullFunction(DDMFormInstanceVersion::getVersion)),
 			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "formInstanceId",
@@ -836,28 +826,24 @@ public class DDMFormInstanceVersionPersistenceImpl
 				"ddmFormInstanceVersion.", "version", FinderColumn.Type.STRING,
 				"=", true, true, DDMFormInstanceVersion::getVersion));
 
-		_finderPathWithPaginationFindByF_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"formInstanceId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByF_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"formInstanceId", "status"}, true);
-
-		_finderPathCountByF_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"formInstanceId", "status"}, false);
-
 		_collectionPersistenceFinderByF_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByF_S,
-			_finderPathWithoutPaginationFindByF_S, _finderPathCountByF_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"formInstanceId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"formInstanceId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"formInstanceId", "status"}, false),
 			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 			DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -942,4 +928,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:763591114
+// LIFERAY-SERVICE-BUILDER-HASH:-1815196429

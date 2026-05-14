@@ -82,9 +82,6 @@ public class CTSContentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByR_P;
-	private FinderPath _finderPathWithoutPaginationFindByR_P;
-	private FinderPath _finderPathCountByR_P;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByR_P;
 
@@ -239,9 +236,6 @@ public class CTSContentPersistenceImpl
 			finderCache, new Object[] {repositoryId, path});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_R_S;
-	private FinderPath _finderPathCountByC_R_S;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByC_R_S;
 
@@ -416,9 +410,6 @@ public class CTSContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, storeType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_R_P_S;
-	private FinderPath _finderPathCountByC_R_P_S;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByC_R_P_S;
 
@@ -605,8 +596,6 @@ public class CTSContentPersistenceImpl
 			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_LikeP_S;
-	private FinderPath _finderPathWithPaginationCountByC_R_LikeP_S;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByC_R_LikeP_S;
 
@@ -793,7 +782,6 @@ public class CTSContentPersistenceImpl
 			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
-	private FinderPath _finderPathFetchByC_R_P_V_S;
 	private UniquePersistenceFinder<CTSContent>
 		_uniquePersistenceFinderByC_R_P_V_S;
 
@@ -1181,28 +1169,24 @@ public class CTSContentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"repositoryId", "path_"}, true);
-
-		_finderPathWithoutPaginationFindByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "path_"}, 0, 2, true, null);
-
-		_finderPathCountByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "path_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByR_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_P,
-			_finderPathWithoutPaginationFindByR_P, _finderPathCountByR_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"repositoryId", "path_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"repositoryId", "path_"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"repositoryId", "path_"}, 0, 2, false, null),
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1212,36 +1196,32 @@ public class CTSContentPersistenceImpl
 				"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getPath));
 
-		_finderPathWithPaginationFindByC_R_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "storeType"}, true);
-
-		_finderPathWithoutPaginationFindByC_R_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "storeType"}, 0, 4, true,
-			null);
-
-		_finderPathCountByC_R_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByC_R_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_R_S,
-			_finderPathWithoutPaginationFindByC_R_S, _finderPathCountByC_R_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "storeType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
+				false, null),
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1254,42 +1234,43 @@ public class CTSContentPersistenceImpl
 				"ctsContent.", "storeType", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getStoreType));
 
-		_finderPathWithPaginationFindByC_R_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_R_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"}, 0,
-			12, true, null);
-
-		_finderPathCountByC_R_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"}, 0,
-			12, false, null);
-
 		_collectionPersistenceFinderByC_R_P_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_R_P_S,
-				_finderPathWithoutPaginationFindByC_R_P_S,
-				_finderPathCountByC_R_P_S, _SQL_SELECT_CTSCONTENT_WHERE,
-				_SQL_COUNT_CTSCONTENT_WHERE, CTSContentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					0, 12, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					0, 12, false, null),
+				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
+				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSContent::getCompanyId),
@@ -1303,30 +1284,33 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
 
-		_finderPathWithPaginationFindByC_R_LikeP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			true);
-
-		_finderPathWithPaginationCountByC_R_LikeP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			false);
-
 		_collectionPersistenceFinderByC_R_LikeP_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_R_LikeP_S, null,
-				_finderPathWithPaginationCountByC_R_LikeP_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_R_LikeP_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					false),
 				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1342,23 +1326,24 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
 
-		_finderPathFetchByC_R_P_V_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"companyId", "repositoryId", "path_", "version", "storeType"
-			},
-			0, 28, false, CTSContent::getCompanyId, CTSContent::getRepositoryId,
-			convertNullFunction(CTSContent::getPath),
-			convertNullFunction(CTSContent::getVersion),
-			convertNullFunction(CTSContent::getStoreType));
-
 		_uniquePersistenceFinderByC_R_P_V_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R_P_V_S, _SQL_SELECT_CTSCONTENT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"companyId", "repositoryId", "path_", "version", "storeType"
+				},
+				0, 28, false, CTSContent::getCompanyId,
+				CTSContent::getRepositoryId,
+				convertNullFunction(CTSContent::getPath),
+				convertNullFunction(CTSContent::getVersion),
+				convertNullFunction(CTSContent::getStoreType)),
+			_SQL_SELECT_CTSCONTENT_WHERE, "",
 			new FinderColumn<>(
 				"ctsContent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CTSContent::getCompanyId),
@@ -1447,4 +1432,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:683189703
+// LIFERAY-SERVICE-BUILDER-HASH:1042988233

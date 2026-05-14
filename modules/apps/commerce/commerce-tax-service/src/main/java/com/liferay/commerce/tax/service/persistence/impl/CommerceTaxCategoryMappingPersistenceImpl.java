@@ -91,9 +91,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceTaxCategoryMapping>
 		_collectionPersistenceFinderByUuid;
 
@@ -238,7 +235,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommerceTaxCategoryMapping>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -330,9 +326,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceTaxCategoryMapping>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -489,9 +482,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceTaxMethodId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceTaxMethodId;
-	private FinderPath _finderPathCountByCommerceTaxMethodId;
 	private CollectionPersistenceFinder<CommerceTaxCategoryMapping>
 		_collectionPersistenceFinderByCommerceTaxMethodId;
 
@@ -643,7 +633,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			finderCache, new Object[] {commerceTaxMethodId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<CommerceTaxCategoryMapping>
 		_uniquePersistenceFinderByC_C;
 
@@ -742,7 +731,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			finderCache, new Object[] {commerceTaxMethodId, CPTaxCategoryId});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommerceTaxCategoryMapping>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1152,27 +1140,23 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
 			_SQL_COUNT_COMMERCETAXCATEGORYMAPPING_WHERE,
 			CommerceTaxCategoryMappingModelImpl.ORDER_BY_JPQL,
@@ -1181,15 +1165,14 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				"commerceTaxCategoryMapping.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceTaxCategoryMapping::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommerceTaxCategoryMapping::getUuid),
-			CommerceTaxCategoryMapping::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommerceTaxCategoryMapping::getUuid),
+				CommerceTaxCategoryMapping::getGroupId),
 			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "uuid", FinderColumn.Type.STRING,
@@ -1199,30 +1182,25 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTaxCategoryMapping::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				_SQL_COUNT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				CommerceTaxCategoryMappingModelImpl.ORDER_BY_JPQL,
@@ -1236,29 +1214,28 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxCategoryMapping::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTaxMethodId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceTaxMethodId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			new String[] {"commerceTaxMethodId"}, true);
-
-		_finderPathCountByCommerceTaxMethodId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			new String[] {"commerceTaxMethodId"}, false);
-
 		_collectionPersistenceFinderByCommerceTaxMethodId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceTaxMethodId,
-				_finderPathWithoutPaginationFindByCommerceTaxMethodId,
-				_finderPathCountByCommerceTaxMethodId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceTaxMethodId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceTaxMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceTaxMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTaxMethodId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceTaxMethodId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTaxMethodId"}, false),
 				_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				_SQL_COUNT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				CommerceTaxCategoryMappingModelImpl.ORDER_BY_JPQL,
@@ -1268,15 +1245,14 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxCategoryMapping::getCommerceTaxMethodId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceTaxMethodId", "CPTaxCategoryId"}, 0, 0,
-			false, CommerceTaxCategoryMapping::getCommerceTaxMethodId,
-			CommerceTaxCategoryMapping::getCPTaxCategoryId);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"commerceTaxMethodId", "CPTaxCategoryId"}, 0, 0,
+				false, CommerceTaxCategoryMapping::getCommerceTaxMethodId,
+				CommerceTaxCategoryMapping::getCPTaxCategoryId),
 			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "commerceTaxMethodId",
@@ -1287,16 +1263,16 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTaxCategoryMapping::getCPTaxCategoryId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				CommerceTaxCategoryMapping::getExternalReferenceCode),
-			CommerceTaxCategoryMapping::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CommerceTaxCategoryMapping::getExternalReferenceCode),
+				CommerceTaxCategoryMapping::getCompanyId),
 			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "externalReferenceCode",
@@ -1376,4 +1352,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1287511214
+// LIFERAY-SERVICE-BUILDER-HASH:-207961892

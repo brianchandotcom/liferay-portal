@@ -81,9 +81,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<KaleoNotificationRecipient>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -229,10 +226,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKaleoDefinitionVersionId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
-	private FinderPath _finderPathCountByKaleoDefinitionVersionId;
 	private CollectionPersistenceFinder<KaleoNotificationRecipient>
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
@@ -390,9 +383,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByKaleoNotificationId;
-	private FinderPath _finderPathWithoutPaginationFindByKaleoNotificationId;
-	private FinderPath _finderPathCountByKaleoNotificationId;
 	private CollectionPersistenceFinder<KaleoNotificationRecipient>
 		_collectionPersistenceFinderByKaleoNotificationId;
 
@@ -844,29 +834,25 @@ public class KaleoNotificationRecipientPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				KaleoNotificationRecipientModelImpl.ORDER_BY_JPQL,
@@ -876,34 +862,28 @@ public class KaleoNotificationRecipientPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoNotificationRecipient::getCompanyId));
 
-		_finderPathWithPaginationFindByKaleoDefinitionVersionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByKaleoDefinitionVersionId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"kaleoDefinitionVersionId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoDefinitionVersionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByKaleoDefinitionVersionId",
-				new String[] {Long.class.getName()},
-				new String[] {"kaleoDefinitionVersionId"}, true);
-
-		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByKaleoDefinitionVersionId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoDefinitionVersionId"}, false);
-
 		_collectionPersistenceFinderByKaleoDefinitionVersionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoDefinitionVersionId,
-				_finderPathWithoutPaginationFindByKaleoDefinitionVersionId,
-				_finderPathCountByKaleoDefinitionVersionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoDefinitionVersionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoDefinitionVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoDefinitionVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoDefinitionVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoDefinitionVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoDefinitionVersionId"}, false),
 				_SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				KaleoNotificationRecipientModelImpl.ORDER_BY_JPQL,
@@ -913,29 +893,28 @@ public class KaleoNotificationRecipientPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoNotificationRecipient::getKaleoDefinitionVersionId));
 
-		_finderPathWithPaginationFindByKaleoNotificationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoNotificationId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoNotificationId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoNotificationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByKaleoNotificationId", new String[] {Long.class.getName()},
-			new String[] {"kaleoNotificationId"}, true);
-
-		_finderPathCountByKaleoNotificationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByKaleoNotificationId", new String[] {Long.class.getName()},
-			new String[] {"kaleoNotificationId"}, false);
-
 		_collectionPersistenceFinderByKaleoNotificationId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoNotificationId,
-				_finderPathWithoutPaginationFindByKaleoNotificationId,
-				_finderPathCountByKaleoNotificationId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoNotificationId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoNotificationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoNotificationId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoNotificationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoNotificationId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoNotificationId"}, false),
 				_SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				KaleoNotificationRecipientModelImpl.ORDER_BY_JPQL,
@@ -1011,4 +990,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1020668418
+// LIFERAY-SERVICE-BUILDER-HASH:-324998418

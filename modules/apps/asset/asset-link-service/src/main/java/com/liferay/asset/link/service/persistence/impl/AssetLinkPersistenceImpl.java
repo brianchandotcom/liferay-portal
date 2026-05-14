@@ -85,9 +85,6 @@ public class AssetLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByEntryId1;
-	private FinderPath _finderPathWithoutPaginationFindByEntryId1;
-	private FinderPath _finderPathCountByEntryId1;
 	private CollectionPersistenceFinder<AssetLink>
 		_collectionPersistenceFinderByEntryId1;
 
@@ -229,9 +226,6 @@ public class AssetLinkPersistenceImpl
 			finderCache, new Object[] {entryId1});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByEntryId2;
-	private FinderPath _finderPathWithoutPaginationFindByEntryId2;
-	private FinderPath _finderPathCountByEntryId2;
 	private CollectionPersistenceFinder<AssetLink>
 		_collectionPersistenceFinderByEntryId2;
 
@@ -373,9 +367,6 @@ public class AssetLinkPersistenceImpl
 			finderCache, new Object[] {entryId2});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByE_E;
-	private FinderPath _finderPathWithoutPaginationFindByE_E;
-	private FinderPath _finderPathCountByE_E;
 	private CollectionPersistenceFinder<AssetLink>
 		_collectionPersistenceFinderByE_E;
 
@@ -530,9 +521,6 @@ public class AssetLinkPersistenceImpl
 			finderCache, new Object[] {entryId1, entryId2});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByE1_T;
-	private FinderPath _finderPathWithoutPaginationFindByE1_T;
-	private FinderPath _finderPathCountByE1_T;
 	private CollectionPersistenceFinder<AssetLink>
 		_collectionPersistenceFinderByE1_T;
 
@@ -686,9 +674,6 @@ public class AssetLinkPersistenceImpl
 			finderCache, new Object[] {entryId1, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByE2_T;
-	private FinderPath _finderPathWithoutPaginationFindByE2_T;
-	private FinderPath _finderPathCountByE2_T;
 	private CollectionPersistenceFinder<AssetLink>
 		_collectionPersistenceFinderByE2_T;
 
@@ -842,7 +827,6 @@ public class AssetLinkPersistenceImpl
 			finderCache, new Object[] {entryId2, type});
 	}
 
-	private FinderPath _finderPathFetchByE_E_T;
 	private UniquePersistenceFinder<AssetLink> _uniquePersistenceFinderByE_E_T;
 
 	/**
@@ -1203,86 +1187,74 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByEntryId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId1",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"entryId1"}, true);
-
-		_finderPathWithoutPaginationFindByEntryId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId1",
-			new String[] {Long.class.getName()}, new String[] {"entryId1"},
-			true);
-
-		_finderPathCountByEntryId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId1",
-			new String[] {Long.class.getName()}, new String[] {"entryId1"},
-			false);
-
 		_collectionPersistenceFinderByEntryId1 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByEntryId1,
-				_finderPathWithoutPaginationFindByEntryId1,
-				_finderPathCountByEntryId1, _SQL_SELECT_ASSETLINK_WHERE,
-				_SQL_COUNT_ASSETLINK_WHERE, AssetLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId1",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"entryId1"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId1",
+					new String[] {Long.class.getName()},
+					new String[] {"entryId1"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByEntryId1", new String[] {Long.class.getName()},
+					new String[] {"entryId1"}, false),
+				_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
+				AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 					true, AssetLink::getEntryId1));
 
-		_finderPathWithPaginationFindByEntryId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId2",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"entryId2"}, true);
-
-		_finderPathWithoutPaginationFindByEntryId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId2",
-			new String[] {Long.class.getName()}, new String[] {"entryId2"},
-			true);
-
-		_finderPathCountByEntryId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId2",
-			new String[] {Long.class.getName()}, new String[] {"entryId2"},
-			false);
-
 		_collectionPersistenceFinderByEntryId2 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByEntryId2,
-				_finderPathWithoutPaginationFindByEntryId2,
-				_finderPathCountByEntryId2, _SQL_SELECT_ASSETLINK_WHERE,
-				_SQL_COUNT_ASSETLINK_WHERE, AssetLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId2",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"entryId2"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId2",
+					new String[] {Long.class.getName()},
+					new String[] {"entryId2"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByEntryId2", new String[] {Long.class.getName()},
+					new String[] {"entryId2"}, false),
+				_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
+				AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 					true, AssetLink::getEntryId2));
 
-		_finderPathWithPaginationFindByE_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_E",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"entryId1", "entryId2"}, true);
-
-		_finderPathWithoutPaginationFindByE_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"entryId1", "entryId2"}, true);
-
-		_finderPathCountByE_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"entryId1", "entryId2"}, false);
-
 		_collectionPersistenceFinderByE_E = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByE_E,
-			_finderPathWithoutPaginationFindByE_E, _finderPathCountByE_E,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_E",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"entryId1", "entryId2"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"entryId1", "entryId2"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"entryId1", "entryId2"}, false),
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
 			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1292,28 +1264,24 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId2));
 
-		_finderPathWithPaginationFindByE1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE1_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"entryId1", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByE1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE1_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"entryId1", "type_"}, true);
-
-		_finderPathCountByE1_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE1_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"entryId1", "type_"}, false);
-
 		_collectionPersistenceFinderByE1_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByE1_T,
-			_finderPathWithoutPaginationFindByE1_T, _finderPathCountByE1_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE1_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"entryId1", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE1_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"entryId1", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE1_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"entryId1", "type_"}, false),
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
 			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1323,28 +1291,24 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, AssetLink::getType));
 
-		_finderPathWithPaginationFindByE2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE2_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"entryId2", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByE2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE2_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"entryId2", "type_"}, true);
-
-		_finderPathCountByE2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE2_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"entryId2", "type_"}, false);
-
 		_collectionPersistenceFinderByE2_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByE2_T,
-			_finderPathWithoutPaginationFindByE2_T, _finderPathCountByE2_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE2_T",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"entryId2", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE2_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"entryId2", "type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE2_T",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"entryId2", "type_"}, false),
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
 			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1354,17 +1318,18 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, AssetLink::getType));
 
-		_finderPathFetchByE_E_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"entryId1", "entryId2", "type_"}, 0, 0, false,
-			AssetLink::getEntryId1, AssetLink::getEntryId2, AssetLink::getType);
-
 		_uniquePersistenceFinderByE_E_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByE_E_T, _SQL_SELECT_ASSETLINK_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"entryId1", "entryId2", "type_"}, 0, 0, false,
+				AssetLink::getEntryId1, AssetLink::getEntryId2,
+				AssetLink::getType),
+			_SQL_SELECT_ASSETLINK_WHERE, "",
 			new FinderColumn<>(
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId1),
@@ -1447,4 +1412,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:981482305
+// LIFERAY-SERVICE-BUILDER-HASH:1275613848

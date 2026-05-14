@@ -64,9 +64,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLvEntryLocalizationId;
-	private FinderPath _finderPathWithoutPaginationFindByLvEntryLocalizationId;
-	private FinderPath _finderPathCountByLvEntryLocalizationId;
 	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
 		_collectionPersistenceFinderByLvEntryLocalizationId;
 
@@ -220,7 +217,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryLocalizationId});
 	}
 
-	private FinderPath _finderPathFetchByLvEntryLocalizationId_Version;
 	private UniquePersistenceFinder<LVEntryLocalizationVersion>
 		_uniquePersistenceFinderByLvEntryLocalizationId_Version;
 
@@ -323,9 +319,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryLocalizationId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLvEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByLvEntryId;
-	private FinderPath _finderPathCountByLvEntryId;
 	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
 		_collectionPersistenceFinderByLvEntryId;
 
@@ -471,9 +464,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLvEntryId_Version;
-	private FinderPath _finderPathWithoutPaginationFindByLvEntryId_Version;
-	private FinderPath _finderPathCountByLvEntryId_Version;
 	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
 		_collectionPersistenceFinderByLvEntryId_Version;
 
@@ -633,9 +623,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLvEntryId_LanguageId;
-	private FinderPath _finderPathWithoutPaginationFindByLvEntryId_LanguageId;
-	private FinderPath _finderPathCountByLvEntryId_LanguageId;
 	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
 		_collectionPersistenceFinderByLvEntryId_LanguageId;
 
@@ -799,7 +786,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryId, languageId});
 	}
 
-	private FinderPath _finderPathFetchByLvEntryId_LanguageId_Version;
 	private UniquePersistenceFinder<LVEntryLocalizationVersion>
 		_uniquePersistenceFinderByLvEntryId_LanguageId_Version;
 
@@ -1098,32 +1084,28 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	 * Initializes the lv entry localization version persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByLvEntryLocalizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLvEntryLocalizationId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"lvEntryLocalizationId"}, true);
-
-		_finderPathWithoutPaginationFindByLvEntryLocalizationId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByLvEntryLocalizationId",
-				new String[] {Long.class.getName()},
-				new String[] {"lvEntryLocalizationId"}, true);
-
-		_finderPathCountByLvEntryLocalizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLvEntryLocalizationId", new String[] {Long.class.getName()},
-			new String[] {"lvEntryLocalizationId"}, false);
-
 		_collectionPersistenceFinderByLvEntryLocalizationId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLvEntryLocalizationId,
-				_finderPathWithoutPaginationFindByLvEntryLocalizationId,
-				_finderPathCountByLvEntryLocalizationId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLvEntryLocalizationId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"lvEntryLocalizationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLvEntryLocalizationId",
+					new String[] {Long.class.getName()},
+					new String[] {"lvEntryLocalizationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLvEntryLocalizationId",
+					new String[] {Long.class.getName()},
+					new String[] {"lvEntryLocalizationId"}, false),
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
@@ -1133,18 +1115,18 @@ public class LVEntryLocalizationVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LVEntryLocalizationVersion::getLvEntryLocalizationId));
 
-		_finderPathFetchByLvEntryLocalizationId_Version =
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY,
-				"fetchByLvEntryLocalizationId_Version",
-				new String[] {Long.class.getName(), Integer.class.getName()},
-				new String[] {"lvEntryLocalizationId", "version"}, 0, 0, false,
-				LVEntryLocalizationVersion::getLvEntryLocalizationId,
-				LVEntryLocalizationVersion::getVersion);
-
 		_uniquePersistenceFinderByLvEntryLocalizationId_Version =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByLvEntryLocalizationId_Version,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByLvEntryLocalizationId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"lvEntryLocalizationId", "version"}, 0, 0,
+					false, LVEntryLocalizationVersion::getLvEntryLocalizationId,
+					LVEntryLocalizationVersion::getVersion),
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryLocalizationId",
@@ -1155,29 +1137,25 @@ public class LVEntryLocalizationVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LVEntryLocalizationVersion::getVersion));
 
-		_finderPathWithPaginationFindByLvEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"lvEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByLvEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLvEntryId",
-			new String[] {Long.class.getName()}, new String[] {"lvEntryId"},
-			true);
-
-		_finderPathCountByLvEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLvEntryId",
-			new String[] {Long.class.getName()}, new String[] {"lvEntryId"},
-			false);
-
 		_collectionPersistenceFinderByLvEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLvEntryId,
-				_finderPathWithoutPaginationFindByLvEntryId,
-				_finderPathCountByLvEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"lvEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLvEntryId", new String[] {Long.class.getName()},
+					new String[] {"lvEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLvEntryId", new String[] {Long.class.getName()},
+					new String[] {"lvEntryId"}, false),
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
@@ -1187,32 +1165,32 @@ public class LVEntryLocalizationVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LVEntryLocalizationVersion::getLvEntryId));
 
-		_finderPathWithPaginationFindByLvEntryId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId_Version",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"lvEntryId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByLvEntryId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLvEntryId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"lvEntryId", "version"}, true);
-
-		_finderPathCountByLvEntryId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLvEntryId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"lvEntryId", "version"}, false);
-
 		_collectionPersistenceFinderByLvEntryId_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLvEntryId_Version,
-				_finderPathWithoutPaginationFindByLvEntryId_Version,
-				_finderPathCountByLvEntryId_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLvEntryId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"lvEntryId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLvEntryId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"lvEntryId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLvEntryId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"lvEntryId", "version"}, false),
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
@@ -1226,33 +1204,29 @@ public class LVEntryLocalizationVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LVEntryLocalizationVersion::getVersion));
 
-		_finderPathWithPaginationFindByLvEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLvEntryId_LanguageId",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"lvEntryId", "languageId"}, true);
-
-		_finderPathWithoutPaginationFindByLvEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLvEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"lvEntryId", "languageId"}, 0, 2, true, null);
-
-		_finderPathCountByLvEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLvEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"lvEntryId", "languageId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByLvEntryId_LanguageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLvEntryId_LanguageId,
-				_finderPathWithoutPaginationFindByLvEntryId_LanguageId,
-				_finderPathCountByLvEntryId_LanguageId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLvEntryId_LanguageId",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"lvEntryId", "languageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLvEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"lvEntryId", "languageId"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLvEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"lvEntryId", "languageId"}, 0, 2, false,
+					null),
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
@@ -1266,20 +1240,21 @@ public class LVEntryLocalizationVersionPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LVEntryLocalizationVersion::getLanguageId));
 
-		_finderPathFetchByLvEntryId_LanguageId_Version = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLvEntryId_LanguageId_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"lvEntryId", "languageId", "version"}, 0, 2, false,
-			LVEntryLocalizationVersion::getLvEntryId,
-			convertNullFunction(LVEntryLocalizationVersion::getLanguageId),
-			LVEntryLocalizationVersion::getVersion);
-
 		_uniquePersistenceFinderByLvEntryId_LanguageId_Version =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByLvEntryId_LanguageId_Version,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByLvEntryId_LanguageId_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"lvEntryId", "languageId", "version"}, 0, 2,
+					false, LVEntryLocalizationVersion::getLvEntryId,
+					convertNullFunction(
+						LVEntryLocalizationVersion::getLanguageId),
+					LVEntryLocalizationVersion::getVersion),
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
@@ -1333,4 +1308,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1330750939
+// LIFERAY-SERVICE-BUILDER-HASH:-448431946

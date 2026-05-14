@@ -82,9 +82,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,7 +226,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CPDefinitionGroupedEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -321,9 +317,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -480,9 +473,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
-	private FinderPath _finderPathCountByCPDefinitionId;
 	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
 		_collectionPersistenceFinderByCPDefinitionId;
 
@@ -631,9 +621,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByEntryCProductId;
-	private FinderPath _finderPathWithoutPaginationFindByEntryCProductId;
-	private FinderPath _finderPathCountByEntryCProductId;
 	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
 		_collectionPersistenceFinderByEntryCProductId;
 
@@ -782,7 +769,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			finderCache, new Object[] {entryCProductId});
 	}
 
-	private FinderPath _finderPathFetchByC_E;
 	private UniquePersistenceFinder<CPDefinitionGroupedEntry>
 		_uniquePersistenceFinderByC_E;
 
@@ -1116,27 +1102,23 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
 			_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
 			CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
@@ -1145,15 +1127,14 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 				"cpDefinitionGroupedEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDefinitionGroupedEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CPDefinitionGroupedEntry::getUuid),
-			CPDefinitionGroupedEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CPDefinitionGroupedEntry::getUuid),
+				CPDefinitionGroupedEntry::getGroupId),
 			_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionGroupedEntry.", "uuid", FinderColumn.Type.STRING,
@@ -1162,30 +1143,25 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 				"cpDefinitionGroupedEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CPDefinitionGroupedEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
 				_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
 				CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
@@ -1199,29 +1175,27 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionGroupedEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, true);
-
-		_finderPathCountByCPDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, false);
-
 		_collectionPersistenceFinderByCPDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPDefinitionId,
-				_finderPathWithoutPaginationFindByCPDefinitionId,
-				_finderPathCountByCPDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPDefinitionId", new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPDefinitionId"}, false),
 				_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
 				_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
 				CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
@@ -1231,29 +1205,28 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionGroupedEntry::getCPDefinitionId));
 
-		_finderPathWithPaginationFindByEntryCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryCProductId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"entryCProductId"}, true);
-
-		_finderPathWithoutPaginationFindByEntryCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryCProductId",
-			new String[] {Long.class.getName()},
-			new String[] {"entryCProductId"}, true);
-
-		_finderPathCountByEntryCProductId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryCProductId",
-			new String[] {Long.class.getName()},
-			new String[] {"entryCProductId"}, false);
-
 		_collectionPersistenceFinderByEntryCProductId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByEntryCProductId,
-				_finderPathWithoutPaginationFindByEntryCProductId,
-				_finderPathCountByEntryCProductId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByEntryCProductId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"entryCProductId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByEntryCProductId",
+					new String[] {Long.class.getName()},
+					new String[] {"entryCProductId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByEntryCProductId",
+					new String[] {Long.class.getName()},
+					new String[] {"entryCProductId"}, false),
 				_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
 				_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
 				CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
@@ -1263,15 +1236,14 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionGroupedEntry::getEntryCProductId));
 
-		_finderPathFetchByC_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPDefinitionId", "entryCProductId"}, 0, 0, false,
-			CPDefinitionGroupedEntry::getCPDefinitionId,
-			CPDefinitionGroupedEntry::getEntryCProductId);
-
 		_uniquePersistenceFinderByC_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_E,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"CPDefinitionId", "entryCProductId"}, 0, 0, false,
+				CPDefinitionGroupedEntry::getCPDefinitionId,
+				CPDefinitionGroupedEntry::getEntryCProductId),
 			_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionGroupedEntry.", "CPDefinitionId",
@@ -1351,4 +1323,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:705490305
+// LIFERAY-SERVICE-BUILDER-HASH:948510484

@@ -87,9 +87,6 @@ public class MBDiscussionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<MBDiscussion>
 		_collectionPersistenceFinderByUuid;
 
@@ -229,7 +226,6 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<MBDiscussion>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -319,9 +315,6 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<MBDiscussion>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -476,7 +469,6 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByThreadId;
 	private UniquePersistenceFinder<MBDiscussion>
 		_uniquePersistenceFinderByThreadId;
 
@@ -559,7 +551,6 @@ public class MBDiscussionPersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<MBDiscussion> _uniquePersistenceFinderByC_C;
 
 	/**
@@ -950,42 +941,38 @@ public class MBDiscussionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_MBDISCUSSION_WHERE, _SQL_COUNT_MBDISCUSSION_WHERE,
 			MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBDiscussion::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(MBDiscussion::getUuid),
-			MBDiscussion::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBDISCUSSION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(MBDiscussion::getUuid),
+				MBDiscussion::getGroupId),
+			_SQL_SELECT_MBDISCUSSION_WHERE, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBDiscussion::getUuid),
@@ -993,31 +980,26 @@ public class MBDiscussionPersistenceImpl
 				"mbDiscussion.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBDiscussion::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_MBDISCUSSION_WHERE,
-				_SQL_COUNT_MBDISCUSSION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_MBDISCUSSION_WHERE, _SQL_COUNT_MBDISCUSSION_WHERE,
 				MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1026,26 +1008,25 @@ public class MBDiscussionPersistenceImpl
 					"mbDiscussion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBDiscussion::getCompanyId));
 
-		_finderPathFetchByThreadId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByThreadId",
-			new String[] {Long.class.getName()}, new String[] {"threadId"}, 0,
-			0, false, MBDiscussion::getThreadId);
-
 		_uniquePersistenceFinderByThreadId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByThreadId, _SQL_SELECT_MBDISCUSSION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByThreadId",
+				new String[] {Long.class.getName()}, new String[] {"threadId"},
+				0, 0, false, MBDiscussion::getThreadId),
+			_SQL_SELECT_MBDISCUSSION_WHERE, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBDiscussion::getThreadId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, 0, 0, false,
-			MBDiscussion::getClassNameId, MBDiscussion::getClassPK);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_MBDISCUSSION_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, 0, 0, false,
+				MBDiscussion::getClassNameId, MBDiscussion::getClassPK),
+			_SQL_SELECT_MBDISCUSSION_WHERE, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, MBDiscussion::getClassNameId),
@@ -1125,4 +1106,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1991957789
+// LIFERAY-SERVICE-BUILDER-HASH:1445035066

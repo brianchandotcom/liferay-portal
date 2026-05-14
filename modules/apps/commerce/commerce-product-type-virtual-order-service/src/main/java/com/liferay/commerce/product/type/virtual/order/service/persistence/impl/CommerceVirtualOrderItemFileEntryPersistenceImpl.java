@@ -83,9 +83,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -233,7 +230,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommerceVirtualOrderItemFileEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -329,9 +325,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -491,11 +484,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByCommerceVirtualOrderItemId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceVirtualOrderItemId;
-	private FinderPath _finderPathCountByCommerceVirtualOrderItemId;
 	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
 		_collectionPersistenceFinderByCommerceVirtualOrderItemId;
 
@@ -664,9 +652,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			finderCache, new Object[] {commerceVirtualOrderItemId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_F;
-	private FinderPath _finderPathWithoutPaginationFindByC_F;
-	private FinderPath _finderPathCountByC_F;
 	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
 		_collectionPersistenceFinderByC_F;
 
@@ -1085,27 +1070,23 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1115,15 +1096,14 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceVirtualOrderItemFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommerceVirtualOrderItemFileEntry::getUuid),
-			CommerceVirtualOrderItemFileEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommerceVirtualOrderItemFileEntry::getUuid),
+				CommerceVirtualOrderItemFileEntry::getGroupId),
 			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceVirtualOrderItemFileEntry.", "uuid",
@@ -1134,30 +1114,25 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceVirtualOrderItemFileEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1171,34 +1146,28 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceVirtualOrderItemFileEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByCommerceVirtualOrderItemId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceVirtualOrderItemId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceVirtualOrderItemId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceVirtualOrderItemId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceVirtualOrderItemId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceVirtualOrderItemId"}, true);
-
-		_finderPathCountByCommerceVirtualOrderItemId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceVirtualOrderItemId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceVirtualOrderItemId"}, false);
-
 		_collectionPersistenceFinderByCommerceVirtualOrderItemId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceVirtualOrderItemId,
-				_finderPathWithoutPaginationFindByCommerceVirtualOrderItemId,
-				_finderPathCountByCommerceVirtualOrderItemId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceVirtualOrderItemId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceVirtualOrderItemId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceVirtualOrderItemId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceVirtualOrderItemId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceVirtualOrderItemId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceVirtualOrderItemId"}, false),
 				_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 				CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1210,28 +1179,27 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 					CommerceVirtualOrderItemFileEntry::
 						getCommerceVirtualOrderItemId));
 
-		_finderPathWithPaginationFindByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"commerceVirtualOrderItemId", "fileEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceVirtualOrderItemId", "fileEntryId"}, true);
-
-		_finderPathCountByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceVirtualOrderItemId", "fileEntryId"}, false);
-
 		_collectionPersistenceFinderByC_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_F,
-			_finderPathWithoutPaginationFindByC_F, _finderPathCountByC_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"commerceVirtualOrderItemId", "fileEntryId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"commerceVirtualOrderItemId", "fileEntryId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"commerceVirtualOrderItemId", "fileEntryId"},
+				false),
 			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
 			CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
@@ -1319,4 +1287,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1136453576
+// LIFERAY-SERVICE-BUILDER-HASH:-1820921156

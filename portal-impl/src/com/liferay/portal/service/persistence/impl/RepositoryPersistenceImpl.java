@@ -88,9 +88,6 @@ public class RepositoryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<Repository>
 		_collectionPersistenceFinderByUuid;
 
@@ -231,7 +228,6 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<Repository>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -322,9 +318,6 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<Repository>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -480,9 +473,6 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<Repository>
 		_collectionPersistenceFinderByGroupId;
 
@@ -625,9 +615,6 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPortletId;
-	private FinderPath _finderPathWithoutPaginationFindByPortletId;
-	private FinderPath _finderPathCountByPortletId;
 	private CollectionPersistenceFinder<Repository>
 		_collectionPersistenceFinderByPortletId;
 
@@ -772,7 +759,6 @@ public class RepositoryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {portletId});
 	}
 
-	private FinderPath _finderPathFetchByG_N_P;
 	private UniquePersistenceFinder<Repository> _uniquePersistenceFinderByG_N_P;
 
 	/**
@@ -871,7 +857,6 @@ public class RepositoryPersistenceImpl
 			new Object[] {groupId, name, portletId});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<Repository> _uniquePersistenceFinderByERC_G;
 
 	/**
@@ -1328,41 +1313,38 @@ public class RepositoryPersistenceImpl
 	 * Initializes the repository persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
 			RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"repository.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, Repository::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(Repository::getUuid), Repository::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_REPOSITORY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(Repository::getUuid),
+				Repository::getGroupId),
+			_SQL_SELECT_REPOSITORY_WHERE, "",
 			new FinderColumn<>(
 				"repository.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, Repository::getUuid),
@@ -1370,32 +1352,27 @@ public class RepositoryPersistenceImpl
 				"repository.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, Repository::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_REPOSITORY_WHERE,
-				_SQL_COUNT_REPOSITORY_WHERE, RepositoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
+				RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"repository.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Repository::getUuid),
@@ -1403,76 +1380,69 @@ public class RepositoryPersistenceImpl
 					"repository.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Repository::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_REPOSITORY_WHERE,
-				_SQL_COUNT_REPOSITORY_WHERE, RepositoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
+				RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"repository.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Repository::getGroupId));
 
-		_finderPathWithPaginationFindByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portletId"}, true);
-
-		_finderPathWithoutPaginationFindByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
-			new String[] {String.class.getName()}, new String[] {"portletId"},
-			0, 1, true, null);
-
-		_finderPathCountByPortletId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
-			new String[] {String.class.getName()}, new String[] {"portletId"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByPortletId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPortletId,
-				_finderPathWithoutPaginationFindByPortletId,
-				_finderPathCountByPortletId, _SQL_SELECT_REPOSITORY_WHERE,
-				_SQL_COUNT_REPOSITORY_WHERE, RepositoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portletId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPortletId", new String[] {String.class.getName()},
+					new String[] {"portletId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPortletId", new String[] {String.class.getName()},
+					new String[] {"portletId"}, 0, 1, false, null),
+				_SQL_SELECT_REPOSITORY_WHERE, _SQL_COUNT_REPOSITORY_WHERE,
+				RepositoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"repository.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, Repository::getPortletId));
 
-		_finderPathFetchByG_N_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "portletId"}, 0, 6, false,
-			Repository::getGroupId, convertNullFunction(Repository::getName),
-			convertNullFunction(Repository::getPortletId));
-
 		_uniquePersistenceFinderByG_N_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N_P, _SQL_SELECT_REPOSITORY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "name", "portletId"}, 0, 6, false,
+				Repository::getGroupId,
+				convertNullFunction(Repository::getName),
+				convertNullFunction(Repository::getPortletId)),
+			_SQL_SELECT_REPOSITORY_WHERE, "",
 			new FinderColumn<>(
 				"repository.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, Repository::getGroupId),
@@ -1483,15 +1453,15 @@ public class RepositoryPersistenceImpl
 				"repository.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, Repository::getPortletId));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(Repository::getExternalReferenceCode),
-			Repository::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_REPOSITORY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(Repository::getExternalReferenceCode),
+				Repository::getGroupId),
+			_SQL_SELECT_REPOSITORY_WHERE, "",
 			new FinderColumn<>(
 				"repository.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1536,4 +1506,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2103685513
+// LIFERAY-SERVICE-BUILDER-HASH:-1075284726

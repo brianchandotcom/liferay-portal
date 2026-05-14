@@ -77,9 +77,6 @@ public class SamlIdpSpConnectionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<SamlIdpSpConnection>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -225,7 +222,6 @@ public class SamlIdpSpConnectionPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByC_SSEI;
 	private UniquePersistenceFinder<SamlIdpSpConnection>
 		_uniquePersistenceFinderByC_SSEI;
 
@@ -529,29 +525,25 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_SAMLIDPSPCONNECTION_WHERE,
 				_SQL_COUNT_SAMLIDPSPCONNECTION_WHERE,
 				SamlIdpSpConnectionModelImpl.ORDER_BY_JPQL,
@@ -560,15 +552,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 					"samlIdpSpConnection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SamlIdpSpConnection::getCompanyId));
 
-		_finderPathFetchByC_SSEI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_SSEI",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "samlSpEntityId"}, 0, 2, false,
-			SamlIdpSpConnection::getCompanyId,
-			convertNullFunction(SamlIdpSpConnection::getSamlSpEntityId));
-
 		_uniquePersistenceFinderByC_SSEI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_SSEI,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_SSEI",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "samlSpEntityId"}, 0, 2, false,
+				SamlIdpSpConnection::getCompanyId,
+				convertNullFunction(SamlIdpSpConnection::getSamlSpEntityId)),
 			_SQL_SELECT_SAMLIDPSPCONNECTION_WHERE, "",
 			new FinderColumn<>(
 				"samlIdpSpConnection.", "companyId", FinderColumn.Type.LONG,
@@ -644,4 +635,4 @@ public class SamlIdpSpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-696690868
+// LIFERAY-SERVICE-BUILDER-HASH:-2096593761

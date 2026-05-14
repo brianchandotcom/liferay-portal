@@ -79,7 +79,6 @@ public class MemberRequestPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByKey;
 	private UniquePersistenceFinder<MemberRequest>
 		_uniquePersistenceFinderByKey;
 
@@ -162,9 +161,6 @@ public class MemberRequestPersistenceImpl
 			finderCache, new Object[] {key});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByReceiverUserId;
-	private FinderPath _finderPathWithoutPaginationFindByReceiverUserId;
-	private FinderPath _finderPathCountByReceiverUserId;
 	private CollectionPersistenceFinder<MemberRequest>
 		_collectionPersistenceFinderByReceiverUserId;
 
@@ -311,9 +307,6 @@ public class MemberRequestPersistenceImpl
 			finderCache, new Object[] {receiverUserId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_S;
-	private FinderPath _finderPathWithoutPaginationFindByR_S;
-	private FinderPath _finderPathCountByR_S;
 	private CollectionPersistenceFinder<MemberRequest>
 		_collectionPersistenceFinderByR_S;
 
@@ -470,7 +463,6 @@ public class MemberRequestPersistenceImpl
 			finderCache, new Object[] {receiverUserId, status});
 	}
 
-	private FinderPath _finderPathFetchByG_R_S;
 	private UniquePersistenceFinder<MemberRequest>
 		_uniquePersistenceFinderByG_R_S;
 
@@ -783,68 +775,62 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByKey = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
-			false, convertNullFunction(MemberRequest::getKey));
-
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKey, _SQL_SELECT_MEMBERREQUEST_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByKey",
+				new String[] {String.class.getName()}, new String[] {"key_"}, 0,
+				1, false, convertNullFunction(MemberRequest::getKey)),
+			_SQL_SELECT_MEMBERREQUEST_WHERE, "",
 			new FinderColumn<>(
 				"memberRequest.", "key", FinderColumn.Type.STRING, "=", true,
 				true, MemberRequest::getKey));
 
-		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReceiverUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"receiverUserId"}, true);
-
-		_finderPathWithoutPaginationFindByReceiverUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByReceiverUserId",
-			new String[] {Long.class.getName()},
-			new String[] {"receiverUserId"}, true);
-
-		_finderPathCountByReceiverUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByReceiverUserId",
-			new String[] {Long.class.getName()},
-			new String[] {"receiverUserId"}, false);
-
 		_collectionPersistenceFinderByReceiverUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByReceiverUserId,
-				_finderPathWithoutPaginationFindByReceiverUserId,
-				_finderPathCountByReceiverUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByReceiverUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"receiverUserId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByReceiverUserId", new String[] {Long.class.getName()},
+					new String[] {"receiverUserId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByReceiverUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"receiverUserId"}, false),
 				_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
 				MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"memberRequest.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, MemberRequest::getReceiverUserId));
 
-		_finderPathWithPaginationFindByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"receiverUserId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"receiverUserId", "status"}, true);
-
-		_finderPathCountByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"receiverUserId", "status"}, false);
-
 		_collectionPersistenceFinderByR_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_S,
-			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"receiverUserId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"receiverUserId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"receiverUserId", "status"}, false),
 			_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
 			MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -854,18 +840,18 @@ public class MemberRequestPersistenceImpl
 				"memberRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, MemberRequest::getStatus));
 
-		_finderPathFetchByG_R_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "receiverUserId", "status"}, 0, 0, false,
-			MemberRequest::getGroupId, MemberRequest::getReceiverUserId,
-			MemberRequest::getStatus);
-
 		_uniquePersistenceFinderByG_R_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_R_S, _SQL_SELECT_MEMBERREQUEST_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"groupId", "receiverUserId", "status"}, 0, 0,
+				false, MemberRequest::getGroupId,
+				MemberRequest::getReceiverUserId, MemberRequest::getStatus),
+			_SQL_SELECT_MEMBERREQUEST_WHERE, "",
 			new FinderColumn<>(
 				"memberRequest.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MemberRequest::getGroupId),
@@ -945,4 +931,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2104127632
+// LIFERAY-SERVICE-BUILDER-HASH:1393770801

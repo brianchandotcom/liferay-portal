@@ -73,9 +73,6 @@ public class SocialActivityAchievementPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<SocialActivityAchievement>
 		_collectionPersistenceFinderByGroupId;
 
@@ -222,9 +219,6 @@ public class SocialActivityAchievementPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_U;
-	private FinderPath _finderPathCountByG_U;
 	private CollectionPersistenceFinder<SocialActivityAchievement>
 		_collectionPersistenceFinderByG_U;
 
@@ -381,9 +375,6 @@ public class SocialActivityAchievementPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N;
-	private FinderPath _finderPathWithoutPaginationFindByG_N;
-	private FinderPath _finderPathCountByG_N;
 	private CollectionPersistenceFinder<SocialActivityAchievement>
 		_collectionPersistenceFinderByG_N;
 
@@ -540,9 +531,6 @@ public class SocialActivityAchievementPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_F;
-	private FinderPath _finderPathCountByG_F;
 	private CollectionPersistenceFinder<SocialActivityAchievement>
 		_collectionPersistenceFinderByG_F;
 
@@ -704,7 +692,6 @@ public class SocialActivityAchievementPersistenceImpl
 			new Object[] {groupId, firstInGroup});
 	}
 
-	private FinderPath _finderPathFetchByG_U_N;
 	private UniquePersistenceFinder<SocialActivityAchievement>
 		_uniquePersistenceFinderByG_U_N;
 
@@ -808,9 +795,6 @@ public class SocialActivityAchievementPersistenceImpl
 			new Object[] {groupId, userId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_U_F;
-	private FinderPath _finderPathWithoutPaginationFindByG_U_F;
-	private FinderPath _finderPathCountByG_U_F;
 	private CollectionPersistenceFinder<SocialActivityAchievement>
 		_collectionPersistenceFinderByG_U_F;
 
@@ -1241,29 +1225,25 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Initializes the social activity achievement persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 				SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
@@ -1273,28 +1253,24 @@ public class SocialActivityAchievementPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SocialActivityAchievement::getGroupId));
 
-		_finderPathWithPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, true);
-
-		_finderPathCountByG_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "userId"}, false);
-
 		_collectionPersistenceFinderByG_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_U,
-			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "userId"}, false),
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
@@ -1306,28 +1282,24 @@ public class SocialActivityAchievementPersistenceImpl
 				"socialActivityAchievement.", "userId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityAchievement::getUserId));
 
-		_finderPathWithPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_N,
-			_finderPathWithoutPaginationFindByG_N, _finderPathCountByG_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, false, null),
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
@@ -1339,28 +1311,24 @@ public class SocialActivityAchievementPersistenceImpl
 				"socialActivityAchievement.", "name", FinderColumn.Type.STRING,
 				"=", true, true, SocialActivityAchievement::getName));
 
-		_finderPathWithPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "firstInGroup"}, true);
-
-		_finderPathWithoutPaginationFindByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "firstInGroup"}, true);
-
-		_finderPathCountByG_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "firstInGroup"}, false);
-
 		_collectionPersistenceFinderByG_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_F,
-			_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "firstInGroup"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "firstInGroup"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "firstInGroup"}, false),
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
@@ -1373,19 +1341,18 @@ public class SocialActivityAchievementPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				SocialActivityAchievement::isFirstInGroup));
 
-		_finderPathFetchByG_U_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_N",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "userId", "name"}, 0, 4, false,
-			SocialActivityAchievement::getGroupId,
-			SocialActivityAchievement::getUserId,
-			convertNullFunction(SocialActivityAchievement::getName));
-
 		_uniquePersistenceFinderByG_U_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_U_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_U_N",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "userId", "name"}, 0, 4, false,
+				SocialActivityAchievement::getGroupId,
+				SocialActivityAchievement::getUserId,
+				convertNullFunction(SocialActivityAchievement::getName)),
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE, "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
@@ -1397,34 +1364,30 @@ public class SocialActivityAchievementPersistenceImpl
 				"socialActivityAchievement.", "name", FinderColumn.Type.STRING,
 				"=", true, true, SocialActivityAchievement::getName));
 
-		_finderPathWithPaginationFindByG_U_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "userId", "firstInGroup"}, true);
-
-		_finderPathWithoutPaginationFindByG_U_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "userId", "firstInGroup"}, true);
-
-		_finderPathCountByG_U_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_F",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "userId", "firstInGroup"}, false);
-
 		_collectionPersistenceFinderByG_U_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_U_F,
-			_finderPathWithoutPaginationFindByG_U_F, _finderPathCountByG_U_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "userId", "firstInGroup"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "userId", "firstInGroup"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U_F",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "userId", "firstInGroup"}, false),
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
@@ -1474,4 +1437,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1521870836
+// LIFERAY-SERVICE-BUILDER-HASH:-1003776259

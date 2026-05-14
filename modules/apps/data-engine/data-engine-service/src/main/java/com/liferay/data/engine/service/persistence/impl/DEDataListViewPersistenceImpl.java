@@ -87,9 +87,6 @@ public class DEDataListViewPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<DEDataListView>
 		_collectionPersistenceFinderByUuid;
 
@@ -230,7 +227,6 @@ public class DEDataListViewPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<DEDataListView>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -320,9 +316,6 @@ public class DEDataListViewPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<DEDataListView>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -477,9 +470,6 @@ public class DEDataListViewPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
-	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
-	private FinderPath _finderPathCountByDDMStructureId;
 	private CollectionPersistenceFinder<DEDataListView>
 		_collectionPersistenceFinderByDDMStructureId;
 
@@ -626,9 +616,6 @@ public class DEDataListViewPersistenceImpl
 			finderCache, new Object[] {ddmStructureId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_DDMSI;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_DDMSI;
-	private FinderPath _finderPathCountByG_C_DDMSI;
 	private CollectionPersistenceFinder<DEDataListView>
 		_collectionPersistenceFinderByG_C_DDMSI;
 
@@ -1103,43 +1090,38 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_DEDATALISTVIEW_WHERE, _SQL_COUNT_DEDATALISTVIEW_WHERE,
 			DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DEDataListView::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(DEDataListView::getUuid),
-			DEDataListView::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEDATALISTVIEW_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(DEDataListView::getUuid),
+				DEDataListView::getGroupId),
+			_SQL_SELECT_DEDATALISTVIEW_WHERE, "",
 			new FinderColumn<>(
 				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DEDataListView::getUuid),
@@ -1147,30 +1129,26 @@ public class DEDataListViewPersistenceImpl
 				"deDataListView.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DEDataListView::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_DEDATALISTVIEW_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1180,29 +1158,27 @@ public class DEDataListViewPersistenceImpl
 					"deDataListView.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DEDataListView::getCompanyId));
 
-		_finderPathWithPaginationFindByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMStructureId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ddmStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDDMStructureId",
-			new String[] {Long.class.getName()},
-			new String[] {"ddmStructureId"}, true);
-
-		_finderPathCountByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
-			new String[] {Long.class.getName()},
-			new String[] {"ddmStructureId"}, false);
-
 		_collectionPersistenceFinderByDDMStructureId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDDMStructureId,
-				_finderPathWithoutPaginationFindByDDMStructureId,
-				_finderPathCountByDDMStructureId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDDMStructureId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ddmStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDDMStructureId", new String[] {Long.class.getName()},
+					new String[] {"ddmStructureId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDDMStructureId",
+					new String[] {Long.class.getName()},
+					new String[] {"ddmStructureId"}, false),
 				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1210,34 +1186,38 @@ public class DEDataListViewPersistenceImpl
 					"deDataListView.", "ddmStructureId", FinderColumn.Type.LONG,
 					"=", true, true, DEDataListView::getDdmStructureId));
 
-		_finderPathWithPaginationFindByG_C_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_DDMSI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "ddmStructureId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_DDMSI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "companyId", "ddmStructureId"}, true);
-
-		_finderPathCountByG_C_DDMSI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_DDMSI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "companyId", "ddmStructureId"}, false);
-
 		_collectionPersistenceFinderByG_C_DDMSI =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_DDMSI,
-				_finderPathWithoutPaginationFindByG_C_DDMSI,
-				_finderPathCountByG_C_DDMSI, _SQL_SELECT_DEDATALISTVIEW_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_DDMSI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId", "ddmStructureId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_C_DDMSI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "companyId", "ddmStructureId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_C_DDMSI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "companyId", "ddmStructureId"},
+					false),
+				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
 				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1322,4 +1302,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:600099910
+// LIFERAY-SERVICE-BUILDER-HASH:1068878943

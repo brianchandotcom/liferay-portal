@@ -88,9 +88,6 @@ public class MBSuspiciousActivityPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<MBSuspiciousActivity>
 		_collectionPersistenceFinderByUuid;
 
@@ -235,7 +232,6 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<MBSuspiciousActivity>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -326,9 +322,6 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<MBSuspiciousActivity>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -485,9 +478,6 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByMessageId;
-	private FinderPath _finderPathWithoutPaginationFindByMessageId;
-	private FinderPath _finderPathCountByMessageId;
 	private CollectionPersistenceFinder<MBSuspiciousActivity>
 		_collectionPersistenceFinderByMessageId;
 
@@ -633,9 +623,6 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {messageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByThreadId;
-	private FinderPath _finderPathWithoutPaginationFindByThreadId;
-	private FinderPath _finderPathCountByThreadId;
 	private CollectionPersistenceFinder<MBSuspiciousActivity>
 		_collectionPersistenceFinderByThreadId;
 
@@ -781,7 +768,6 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private FinderPath _finderPathFetchByU_M;
 	private UniquePersistenceFinder<MBSuspiciousActivity>
 		_uniquePersistenceFinderByU_M;
 
@@ -873,7 +859,6 @@ public class MBSuspiciousActivityPersistenceImpl
 			finderCache, new Object[] {userId, messageId});
 	}
 
-	private FinderPath _finderPathFetchByU_T;
 	private UniquePersistenceFinder<MBSuspiciousActivity>
 		_uniquePersistenceFinderByU_T;
 
@@ -1270,27 +1255,23 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 			_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 			MBSuspiciousActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1299,15 +1280,14 @@ public class MBSuspiciousActivityPersistenceImpl
 				"mbSuspiciousActivity.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, MBSuspiciousActivity::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(MBSuspiciousActivity::getUuid),
-			MBSuspiciousActivity::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(MBSuspiciousActivity::getUuid),
+				MBSuspiciousActivity::getGroupId),
 			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE, "",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1316,30 +1296,25 @@ public class MBSuspiciousActivityPersistenceImpl
 				"mbSuspiciousActivity.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, MBSuspiciousActivity::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 				_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 				MBSuspiciousActivityModelImpl.ORDER_BY_JPQL,
@@ -1352,29 +1327,25 @@ public class MBSuspiciousActivityPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MBSuspiciousActivity::getCompanyId));
 
-		_finderPathWithPaginationFindByMessageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByMessageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"messageId"}, true);
-
-		_finderPathWithoutPaginationFindByMessageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByMessageId",
-			new String[] {Long.class.getName()}, new String[] {"messageId"},
-			true);
-
-		_finderPathCountByMessageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByMessageId",
-			new String[] {Long.class.getName()}, new String[] {"messageId"},
-			false);
-
 		_collectionPersistenceFinderByMessageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByMessageId,
-				_finderPathWithoutPaginationFindByMessageId,
-				_finderPathCountByMessageId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByMessageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"messageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByMessageId", new String[] {Long.class.getName()},
+					new String[] {"messageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByMessageId", new String[] {Long.class.getName()},
+					new String[] {"messageId"}, false),
 				_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 				_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 				MBSuspiciousActivityModelImpl.ORDER_BY_JPQL,
@@ -1384,29 +1355,25 @@ public class MBSuspiciousActivityPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MBSuspiciousActivity::getMessageId));
 
-		_finderPathWithPaginationFindByThreadId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByThreadId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"threadId"}, true);
-
-		_finderPathWithoutPaginationFindByThreadId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByThreadId",
-			new String[] {Long.class.getName()}, new String[] {"threadId"},
-			true);
-
-		_finderPathCountByThreadId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByThreadId",
-			new String[] {Long.class.getName()}, new String[] {"threadId"},
-			false);
-
 		_collectionPersistenceFinderByThreadId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByThreadId,
-				_finderPathWithoutPaginationFindByThreadId,
-				_finderPathCountByThreadId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByThreadId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"threadId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByThreadId",
+					new String[] {Long.class.getName()},
+					new String[] {"threadId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByThreadId", new String[] {Long.class.getName()},
+					new String[] {"threadId"}, false),
 				_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 				_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 				MBSuspiciousActivityModelImpl.ORDER_BY_JPQL,
@@ -1415,16 +1382,15 @@ public class MBSuspiciousActivityPersistenceImpl
 					"mbSuspiciousActivity.", "threadId", FinderColumn.Type.LONG,
 					"=", true, true, MBSuspiciousActivity::getThreadId));
 
-		_finderPathFetchByU_M = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_M",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "messageId"}, 0, 0, false,
-			MBSuspiciousActivity::getUserId,
-			MBSuspiciousActivity::getMessageId);
-
 		_uniquePersistenceFinderByU_M = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_M, _SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_M",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "messageId"}, 0, 0, false,
+				MBSuspiciousActivity::getUserId,
+				MBSuspiciousActivity::getMessageId),
+			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE, "",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, MBSuspiciousActivity::getUserId),
@@ -1432,15 +1398,15 @@ public class MBSuspiciousActivityPersistenceImpl
 				"mbSuspiciousActivity.", "messageId", FinderColumn.Type.LONG,
 				"=", true, true, MBSuspiciousActivity::getMessageId));
 
-		_finderPathFetchByU_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "threadId"}, 0, 0, false,
-			MBSuspiciousActivity::getUserId, MBSuspiciousActivity::getThreadId);
-
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_T, _SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"userId", "threadId"}, 0, 0, false,
+				MBSuspiciousActivity::getUserId,
+				MBSuspiciousActivity::getThreadId),
+			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE, "",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, MBSuspiciousActivity::getUserId),
@@ -1520,4 +1486,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1108070671
+// LIFERAY-SERVICE-BUILDER-HASH:-618312392

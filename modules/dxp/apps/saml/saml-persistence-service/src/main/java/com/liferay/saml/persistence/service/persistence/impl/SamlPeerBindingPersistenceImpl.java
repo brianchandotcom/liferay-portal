@@ -73,9 +73,6 @@ public class SamlPeerBindingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_D_SNIV;
-	private FinderPath _finderPathWithoutPaginationFindByC_D_SNIV;
-	private FinderPath _finderPathCountByC_D_SNIV;
 	private CollectionPersistenceFinder<SamlPeerBinding>
 		_collectionPersistenceFinderByC_D_SNIV;
 
@@ -250,9 +247,6 @@ public class SamlPeerBindingPersistenceImpl
 			finderCache, new Object[] {companyId, deleted, samlNameIdValue});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U_SPEI_D;
-	private FinderPath _finderPathWithoutPaginationFindByC_U_SPEI_D;
-	private FinderPath _finderPathCountByC_U_SPEI_D;
 	private CollectionPersistenceFinder<SamlPeerBinding>
 		_collectionPersistenceFinderByC_U_SPEI_D;
 
@@ -634,38 +628,37 @@ public class SamlPeerBindingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_D_SNIV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_D_SNIV",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "deleted", "samlNameIdValue"}, true);
-
-		_finderPathWithoutPaginationFindByC_D_SNIV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_D_SNIV",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "deleted", "samlNameIdValue"}, 0, 4,
-			true, null);
-
-		_finderPathCountByC_D_SNIV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D_SNIV",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "deleted", "samlNameIdValue"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByC_D_SNIV =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_D_SNIV,
-				_finderPathWithoutPaginationFindByC_D_SNIV,
-				_finderPathCountByC_D_SNIV, _SQL_SELECT_SAMLPEERBINDING_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_D_SNIV",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "deleted", "samlNameIdValue"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_D_SNIV",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "deleted", "samlNameIdValue"}, 0,
+					4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_D_SNIV",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "deleted", "samlNameIdValue"}, 0,
+					4, false, null),
+				_SQL_SELECT_SAMLPEERBINDING_WHERE,
 				_SQL_COUNT_SAMLPEERBINDING_WHERE,
 				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -680,40 +673,44 @@ public class SamlPeerBindingPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					SamlPeerBinding::getSamlNameIdValue));
 
-		_finderPathWithPaginationFindByC_U_SPEI_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_SPEI_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId", "samlPeerEntityId", "deleted"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_U_SPEI_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U_SPEI_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "userId", "samlPeerEntityId", "deleted"},
-			0, 4, true, null);
-
-		_finderPathCountByC_U_SPEI_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_SPEI_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "userId", "samlPeerEntityId", "deleted"},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByC_U_SPEI_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_U_SPEI_D,
-				_finderPathWithoutPaginationFindByC_U_SPEI_D,
-				_finderPathCountByC_U_SPEI_D, _SQL_SELECT_SAMLPEERBINDING_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_SPEI_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "userId", "samlPeerEntityId", "deleted"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_U_SPEI_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "userId", "samlPeerEntityId", "deleted"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_U_SPEI_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "userId", "samlPeerEntityId", "deleted"
+					},
+					0, 4, false, null),
+				_SQL_SELECT_SAMLPEERBINDING_WHERE,
 				_SQL_COUNT_SAMLPEERBINDING_WHERE,
 				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -794,4 +791,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1686710441
+// LIFERAY-SERVICE-BUILDER-HASH:-813101481

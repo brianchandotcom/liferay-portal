@@ -81,9 +81,6 @@ public class DepotAppCustomizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByDepotEntryId;
-	private FinderPath _finderPathCountByDepotEntryId;
 	private CollectionPersistenceFinder<DepotAppCustomization>
 		_collectionPersistenceFinderByDepotEntryId;
 
@@ -230,7 +227,6 @@ public class DepotAppCustomizationPersistenceImpl
 			finderCache, new Object[] {depotEntryId});
 	}
 
-	private FinderPath _finderPathFetchByD_E;
 	private UniquePersistenceFinder<DepotAppCustomization>
 		_uniquePersistenceFinderByD_E;
 
@@ -325,7 +321,6 @@ public class DepotAppCustomizationPersistenceImpl
 			finderCache, new Object[] {depotEntryId, enabled});
 	}
 
-	private FinderPath _finderPathFetchByD_P;
 	private UniquePersistenceFinder<DepotAppCustomization>
 		_uniquePersistenceFinderByD_P;
 
@@ -676,29 +671,26 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"depotEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			true);
-
-		_finderPathCountByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			false);
-
 		_collectionPersistenceFinderByDepotEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDepotEntryId,
-				_finderPathWithoutPaginationFindByDepotEntryId,
-				_finderPathCountByDepotEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDepotEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, false),
 				_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE,
 				_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE,
 				DepotAppCustomizationModelImpl.ORDER_BY_JPQL,
@@ -708,15 +700,14 @@ public class DepotAppCustomizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DepotAppCustomization::getDepotEntryId));
 
-		_finderPathFetchByD_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"depotEntryId", "enabled"}, 0, 0, false,
-			DepotAppCustomization::getDepotEntryId,
-			DepotAppCustomization::isEnabled);
-
 		_uniquePersistenceFinderByD_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByD_E,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"depotEntryId", "enabled"}, 0, 0, false,
+				DepotAppCustomization::getDepotEntryId,
+				DepotAppCustomization::isEnabled),
 			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE, "",
 			new FinderColumn<>(
 				"depotAppCustomization.", "depotEntryId",
@@ -726,15 +717,14 @@ public class DepotAppCustomizationPersistenceImpl
 				"depotAppCustomization.", "enabled", FinderColumn.Type.BOOLEAN,
 				"=", true, true, DepotAppCustomization::isEnabled));
 
-		_finderPathFetchByD_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"depotEntryId", "portletId"}, 0, 2, false,
-			DepotAppCustomization::getDepotEntryId,
-			convertNullFunction(DepotAppCustomization::getPortletId));
-
 		_uniquePersistenceFinderByD_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByD_P,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"depotEntryId", "portletId"}, 0, 2, false,
+				DepotAppCustomization::getDepotEntryId,
+				convertNullFunction(DepotAppCustomization::getPortletId)),
 			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE, "",
 			new FinderColumn<>(
 				"depotAppCustomization.", "depotEntryId",
@@ -813,4 +803,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1054755588
+// LIFERAY-SERVICE-BUILDER-HASH:1524390716

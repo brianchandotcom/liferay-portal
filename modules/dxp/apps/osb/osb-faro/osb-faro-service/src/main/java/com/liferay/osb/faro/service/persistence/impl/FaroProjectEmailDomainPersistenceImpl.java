@@ -71,9 +71,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<FaroProjectEmailDomain>
 		_collectionPersistenceFinderByGroupId;
 
@@ -219,9 +216,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFaroProjectId;
-	private FinderPath _finderPathWithoutPaginationFindByFaroProjectId;
-	private FinderPath _finderPathCountByFaroProjectId;
 	private CollectionPersistenceFinder<FaroProjectEmailDomain>
 		_collectionPersistenceFinderByFaroProjectId;
 
@@ -557,29 +551,25 @@ public class FaroProjectEmailDomainPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_FAROPROJECTEMAILDOMAIN_WHERE,
 				_SQL_COUNT_FAROPROJECTEMAILDOMAIN_WHERE,
 				FaroProjectEmailDomainModelImpl.ORDER_BY_JPQL,
@@ -589,29 +579,26 @@ public class FaroProjectEmailDomainPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FaroProjectEmailDomain::getGroupId));
 
-		_finderPathWithPaginationFindByFaroProjectId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFaroProjectId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"faroProjectId"}, true);
-
-		_finderPathWithoutPaginationFindByFaroProjectId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFaroProjectId",
-			new String[] {Long.class.getName()}, new String[] {"faroProjectId"},
-			true);
-
-		_finderPathCountByFaroProjectId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFaroProjectId",
-			new String[] {Long.class.getName()}, new String[] {"faroProjectId"},
-			false);
-
 		_collectionPersistenceFinderByFaroProjectId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFaroProjectId,
-				_finderPathWithoutPaginationFindByFaroProjectId,
-				_finderPathCountByFaroProjectId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFaroProjectId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"faroProjectId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFaroProjectId", new String[] {Long.class.getName()},
+					new String[] {"faroProjectId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFaroProjectId", new String[] {Long.class.getName()},
+					new String[] {"faroProjectId"}, false),
 				_SQL_SELECT_FAROPROJECTEMAILDOMAIN_WHERE,
 				_SQL_COUNT_FAROPROJECTEMAILDOMAIN_WHERE,
 				FaroProjectEmailDomainModelImpl.ORDER_BY_JPQL,
@@ -684,4 +671,4 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-208937819
+// LIFERAY-SERVICE-BUILDER-HASH:864743883

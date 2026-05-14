@@ -7,7 +7,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +58,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByColumnToRename;
 	private UniquePersistenceFinder<RenameFinderColumnEntry>
 		_uniquePersistenceFinderByColumnToRename;
 
@@ -333,15 +331,15 @@ public class RenameFinderColumnEntryPersistenceImpl
 	 * Initializes the rename finder column entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByColumnToRename = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByColumnToRename",
-			new String[] {String.class.getName()},
-			new String[] {"columnToRename"}, 0, 1, false,
-			convertNullFunction(RenameFinderColumnEntry::getColumnToRename));
-
 		_uniquePersistenceFinderByColumnToRename =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByColumnToRename,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByColumnToRename",
+					new String[] {String.class.getName()},
+					new String[] {"columnToRename"}, 0, 1, false,
+					convertNullFunction(
+						RenameFinderColumnEntry::getColumnToRename)),
 				_SQL_SELECT_RENAMEFINDERCOLUMNENTRY_WHERE, "",
 				new FinderColumn<>(
 					"renameFinderColumnEntry.", "columnToRename",
@@ -381,4 +379,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:57606314
+// LIFERAY-SERVICE-BUILDER-HASH:2028443138

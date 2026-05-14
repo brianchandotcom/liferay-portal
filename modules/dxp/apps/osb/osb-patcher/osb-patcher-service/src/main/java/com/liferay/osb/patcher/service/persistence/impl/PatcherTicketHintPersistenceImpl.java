@@ -16,7 +16,6 @@ import com.liferay.osb.patcher.service.persistence.impl.constants.OSBPatcherPers
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -73,7 +72,6 @@ public class PatcherTicketHintPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByPatcherProductVersionId;
 	private UniquePersistenceFinder<PatcherTicketHint>
 		_uniquePersistenceFinderByPatcherProductVersionId;
 
@@ -371,15 +369,14 @@ public class PatcherTicketHintPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByPatcherProductVersionId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPatcherProductVersionId",
-			new String[] {Long.class.getName()},
-			new String[] {"patcherProductVersionId"}, 0, 0, false,
-			PatcherTicketHint::getPatcherProductVersionId);
-
 		_uniquePersistenceFinderByPatcherProductVersionId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByPatcherProductVersionId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByPatcherProductVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"patcherProductVersionId"}, 0, 0, false,
+					PatcherTicketHint::getPatcherProductVersionId),
 				_SQL_SELECT_PATCHERTICKETHINT_WHERE, "",
 				new FinderColumn<>(
 					"patcherTicketHint.", "patcherProductVersionId",
@@ -446,4 +443,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:769640387
+// LIFERAY-SERVICE-BUILDER-HASH:800801557

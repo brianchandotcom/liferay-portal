@@ -64,9 +64,6 @@ public class PortalPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByOwnerType;
-	private FinderPath _finderPathWithoutPaginationFindByOwnerType;
-	private FinderPath _finderPathCountByOwnerType;
 	private CollectionPersistenceFinder<PortalPreferences>
 		_collectionPersistenceFinderByOwnerType;
 
@@ -212,7 +209,6 @@ public class PortalPreferencesPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {ownerType});
 	}
 
-	private FinderPath _finderPathFetchByO_O;
 	private UniquePersistenceFinder<PortalPreferences>
 		_uniquePersistenceFinderByO_O;
 
@@ -483,29 +479,25 @@ public class PortalPreferencesPersistenceImpl
 	 * Initializes the portal preferences persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByOwnerType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerType",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ownerType"}, true);
-
-		_finderPathWithoutPaginationFindByOwnerType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOwnerType",
-			new String[] {Integer.class.getName()}, new String[] {"ownerType"},
-			true);
-
-		_finderPathCountByOwnerType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOwnerType",
-			new String[] {Integer.class.getName()}, new String[] {"ownerType"},
-			false);
-
 		_collectionPersistenceFinderByOwnerType =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOwnerType,
-				_finderPathWithoutPaginationFindByOwnerType,
-				_finderPathCountByOwnerType,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerType",
+					new String[] {
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ownerType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOwnerType", new String[] {Integer.class.getName()},
+					new String[] {"ownerType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOwnerType", new String[] {Integer.class.getName()},
+					new String[] {"ownerType"}, false),
 				_SQL_SELECT_PORTALPREFERENCES_WHERE,
 				_SQL_COUNT_PORTALPREFERENCES_WHERE,
 				PortalPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -515,15 +507,14 @@ public class PortalPreferencesPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					PortalPreferences::getOwnerType));
 
-		_finderPathFetchByO_O = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ownerId", "ownerType"}, 0, 0, false,
-			PortalPreferences::getOwnerId, PortalPreferences::getOwnerType);
-
 		_uniquePersistenceFinderByO_O = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByO_O, _SQL_SELECT_PORTALPREFERENCES_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"ownerId", "ownerType"}, 0, 0, false,
+				PortalPreferences::getOwnerId, PortalPreferences::getOwnerType),
+			_SQL_SELECT_PORTALPREFERENCES_WHERE, "",
 			new FinderColumn<>(
 				"portalPreferences.", "ownerId", FinderColumn.Type.LONG, "=",
 				true, true, PortalPreferences::getOwnerId),
@@ -564,4 +555,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1166031600
+// LIFERAY-SERVICE-BUILDER-HASH:-1904375495

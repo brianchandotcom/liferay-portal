@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.log.Log;
@@ -59,7 +58,6 @@ public class ClassNamePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByValue;
 	private UniquePersistenceFinder<ClassName> _uniquePersistenceFinderByValue;
 
 	/**
@@ -308,13 +306,13 @@ public class ClassNamePersistenceImpl
 	 * Initializes the class name persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByValue = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByValue",
-			new String[] {String.class.getName()}, new String[] {"value"}, 0, 1,
-			false, convertNullFunction(ClassName::getValue));
-
 		_uniquePersistenceFinderByValue = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByValue, _SQL_SELECT_CLASSNAME_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByValue",
+				new String[] {String.class.getName()}, new String[] {"value"},
+				0, 1, false, convertNullFunction(ClassName::getValue)),
+			_SQL_SELECT_CLASSNAME_WHERE, "",
 			new FinderColumn<>(
 				"className.", "value", FinderColumn.Type.STRING, "=", true,
 				true, ClassName::getValue));
@@ -346,4 +344,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1421164223
+// LIFERAY-SERVICE-BUILDER-HASH:1178206339

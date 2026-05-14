@@ -91,9 +91,6 @@ public class ListTypeDefinitionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<ListTypeDefinition>
 		_collectionPersistenceFinderByUuid;
 
@@ -302,9 +299,6 @@ public class ListTypeDefinitionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<ListTypeDefinition>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -531,9 +525,6 @@ public class ListTypeDefinitionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_U;
-	private FinderPath _finderPathCountByC_U;
 	private FilterCollectionPersistenceFinder<ListTypeDefinition>
 		_collectionPersistenceFinderByC_U;
 
@@ -760,7 +751,6 @@ public class ListTypeDefinitionPersistenceImpl
 			finderCache, new Object[] {companyId, userId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<ListTypeDefinition>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1152,81 +1142,74 @@ public class ListTypeDefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_LISTTYPEDEFINITION_WHERE,
 				_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
 				ListTypeDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ListTypeDefinitionImpl.class, ListTypeDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
+					"listTypeDefinition", "ListTypeDefinition",
+					"listTypeDefinition.listTypeDefinitionId",
+					"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ",
+					"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId",
+					"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ",
 					ListTypeDefinitionModelImpl.ORDER_BY_SQL,
 					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"listTypeDefinition.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, ListTypeDefinition::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LISTTYPEDEFINITION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LISTTYPEDEFINITION_WHERE,
 				_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
 				ListTypeDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ListTypeDefinitionImpl.class, ListTypeDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
+					"listTypeDefinition", "ListTypeDefinition",
+					"listTypeDefinition.listTypeDefinitionId",
+					"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ",
+					"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId",
+					"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ",
 					ListTypeDefinitionModelImpl.ORDER_BY_SQL,
 					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1236,41 +1219,37 @@ public class ListTypeDefinitionPersistenceImpl
 					"listTypeDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ListTypeDefinition::getCompanyId));
 
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false);
-
 		_collectionPersistenceFinderByC_U =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_U,
-				_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "userId"}, false),
 				_SQL_SELECT_LISTTYPEDEFINITION_WHERE,
 				_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
 				ListTypeDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					ListTypeDefinitionImpl.class, ListTypeDefinition.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_WHERE,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LISTTYPEDEFINITION_WHERE,
+					"listTypeDefinition", "ListTypeDefinition",
+					"listTypeDefinition.listTypeDefinitionId",
+					"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ",
+					"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ",
+					") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId",
+					"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ",
 					ListTypeDefinitionModelImpl.ORDER_BY_SQL,
 					ListTypeDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1280,16 +1259,17 @@ public class ListTypeDefinitionPersistenceImpl
 					"listTypeDefinition.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, ListTypeDefinition::getUserId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(ListTypeDefinition::getExternalReferenceCode),
-			ListTypeDefinition::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_LISTTYPEDEFINITION_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					ListTypeDefinition::getExternalReferenceCode),
+				ListTypeDefinition::getCompanyId),
+			_SQL_SELECT_LISTTYPEDEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"listTypeDefinition.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1352,27 +1332,6 @@ public class ListTypeDefinitionPersistenceImpl
 	private static final String _SQL_COUNT_LISTTYPEDEFINITION_WHERE =
 		"SELECT COUNT(listTypeDefinition) FROM ListTypeDefinition listTypeDefinition WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"listTypeDefinition.listTypeDefinitionId";
-
-	private static final String _FILTER_SQL_SELECT_LISTTYPEDEFINITION_WHERE =
-		"SELECT DISTINCT {listTypeDefinition.*} FROM ListTypeDefinition listTypeDefinition WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {ListTypeDefinition.*} FROM (SELECT DISTINCT listTypeDefinition.listTypeDefinitionId FROM ListTypeDefinition listTypeDefinition WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LISTTYPEDEFINITION_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN ListTypeDefinition ON TEMP_TABLE.listTypeDefinitionId = ListTypeDefinition.listTypeDefinitionId";
-
-	private static final String _FILTER_SQL_COUNT_LISTTYPEDEFINITION_WHERE =
-		"SELECT COUNT(DISTINCT listTypeDefinition.listTypeDefinitionId) AS COUNT_VALUE FROM ListTypeDefinition listTypeDefinition WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "listTypeDefinition";
-
-	private static final String _FILTER_ENTITY_TABLE = "ListTypeDefinition";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ListTypeDefinition exists with the key {";
 
@@ -1388,4 +1347,4 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2075888539
+// LIFERAY-SERVICE-BUILDER-HASH:783368645

@@ -76,9 +76,6 @@ public class DispatchLogPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByDispatchTriggerId;
-	private FinderPath _finderPathWithoutPaginationFindByDispatchTriggerId;
-	private FinderPath _finderPathCountByDispatchTriggerId;
 	private CollectionPersistenceFinder<DispatchLog>
 		_collectionPersistenceFinderByDispatchTriggerId;
 
@@ -227,9 +224,6 @@ public class DispatchLogPersistenceImpl
 			finderCache, new Object[] {dispatchTriggerId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByDTI_S;
-	private FinderPath _finderPathWithoutPaginationFindByDTI_S;
-	private FinderPath _finderPathCountByDTI_S;
 	private CollectionPersistenceFinder<DispatchLog>
 		_collectionPersistenceFinderByDTI_S;
 
@@ -594,57 +588,52 @@ public class DispatchLogPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByDispatchTriggerId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDispatchTriggerId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"dispatchTriggerId"}, true);
-
-		_finderPathWithoutPaginationFindByDispatchTriggerId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByDispatchTriggerId", new String[] {Long.class.getName()},
-			new String[] {"dispatchTriggerId"}, true);
-
-		_finderPathCountByDispatchTriggerId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByDispatchTriggerId", new String[] {Long.class.getName()},
-			new String[] {"dispatchTriggerId"}, false);
-
 		_collectionPersistenceFinderByDispatchTriggerId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDispatchTriggerId,
-				_finderPathWithoutPaginationFindByDispatchTriggerId,
-				_finderPathCountByDispatchTriggerId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDispatchTriggerId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"dispatchTriggerId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDispatchTriggerId",
+					new String[] {Long.class.getName()},
+					new String[] {"dispatchTriggerId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDispatchTriggerId",
+					new String[] {Long.class.getName()},
+					new String[] {"dispatchTriggerId"}, false),
 				_SQL_SELECT_DISPATCHLOG_WHERE, _SQL_COUNT_DISPATCHLOG_WHERE,
 				DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dispatchLog.", "dispatchTriggerId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchLog::getDispatchTriggerId));
 
-		_finderPathWithPaginationFindByDTI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDTI_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"dispatchTriggerId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByDTI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDTI_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"dispatchTriggerId", "status"}, true);
-
-		_finderPathCountByDTI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDTI_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"dispatchTriggerId", "status"}, false);
-
 		_collectionPersistenceFinderByDTI_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByDTI_S,
-			_finderPathWithoutPaginationFindByDTI_S, _finderPathCountByDTI_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDTI_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"dispatchTriggerId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDTI_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"dispatchTriggerId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDTI_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"dispatchTriggerId", "status"}, false),
 			_SQL_SELECT_DISPATCHLOG_WHERE, _SQL_COUNT_DISPATCHLOG_WHERE,
 			DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -720,4 +709,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1429771128
+// LIFERAY-SERVICE-BUILDER-HASH:-760077215

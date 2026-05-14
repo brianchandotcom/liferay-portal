@@ -83,9 +83,6 @@ public class JSONStorageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCN_CPK;
-	private FinderPath _finderPathWithoutPaginationFindByCN_CPK;
-	private FinderPath _finderPathCountByCN_CPK;
 	private CollectionPersistenceFinder<JSONStorageEntry>
 		_collectionPersistenceFinderByCN_CPK;
 
@@ -241,9 +238,6 @@ public class JSONStorageEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_CN_I_T_VL;
-	private FinderPath _finderPathWithoutPaginationFindByC_CN_I_T_VL;
-	private FinderPath _finderPathCountByC_CN_I_T_VL;
 	private CollectionPersistenceFinder<JSONStorageEntry>
 		_collectionPersistenceFinderByC_CN_I_T_VL;
 
@@ -441,9 +435,6 @@ public class JSONStorageEntryPersistenceImpl
 			new Object[] {companyId, classNameId, index, type, valueLong});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_CN_K_T_VL;
-	private FinderPath _finderPathWithoutPaginationFindByC_CN_K_T_VL;
-	private FinderPath _finderPathCountByC_CN_K_T_VL;
 	private CollectionPersistenceFinder<JSONStorageEntry>
 		_collectionPersistenceFinderByC_CN_K_T_VL;
 
@@ -644,7 +635,6 @@ public class JSONStorageEntryPersistenceImpl
 			new Object[] {companyId, classNameId, key, type, valueLong});
 	}
 
-	private FinderPath _finderPathFetchByCN_CPK_P_I_K;
 	private UniquePersistenceFinder<JSONStorageEntry>
 		_uniquePersistenceFinderByCN_CPK_P_I_K;
 
@@ -1041,30 +1031,26 @@ public class JSONStorageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCN_CPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByCN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByCN_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByCN_CPK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCN_CPK,
-				_finderPathWithoutPaginationFindByCN_CPK,
-				_finderPathCountByCN_CPK, _SQL_SELECT_JSONSTORAGEENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCN_CPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"classNameId", "classPK"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"classNameId", "classPK"}, false),
+				_SQL_SELECT_JSONSTORAGEENTRY_WHERE,
 				_SQL_COUNT_JSONSTORAGEENTRY_WHERE,
 				JSONStorageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1075,48 +1061,49 @@ public class JSONStorageEntryPersistenceImpl
 					"jsonStorageEntry.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, JSONStorageEntry::getClassPK));
 
-		_finderPathWithPaginationFindByC_CN_I_T_VL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_I_T_VL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "index_", "type_", "valueLong"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_CN_I_T_VL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CN_I_T_VL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "index_", "type_", "valueLong"
-			},
-			true);
-
-		_finderPathCountByC_CN_I_T_VL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN_I_T_VL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "index_", "type_", "valueLong"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_CN_I_T_VL =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_CN_I_T_VL,
-				_finderPathWithoutPaginationFindByC_CN_I_T_VL,
-				_finderPathCountByC_CN_I_T_VL,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_I_T_VL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "index_", "type_",
+						"valueLong"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_CN_I_T_VL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "index_", "type_",
+						"valueLong"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_CN_I_T_VL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "index_", "type_",
+						"valueLong"
+					},
+					false),
 				_SQL_SELECT_JSONSTORAGEENTRY_WHERE,
 				_SQL_COUNT_JSONSTORAGEENTRY_WHERE,
 				JSONStorageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1137,48 +1124,46 @@ public class JSONStorageEntryPersistenceImpl
 					"jsonStorageEntry.", "valueLong", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getValueLong));
 
-		_finderPathWithPaginationFindByC_CN_K_T_VL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_K_T_VL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "key_", "type_", "valueLong"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_CN_K_T_VL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CN_K_T_VL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "key_", "type_", "valueLong"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByC_CN_K_T_VL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN_K_T_VL",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "key_", "type_", "valueLong"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByC_CN_K_T_VL =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_CN_K_T_VL,
-				_finderPathWithoutPaginationFindByC_CN_K_T_VL,
-				_finderPathCountByC_CN_K_T_VL,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN_K_T_VL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "key_", "type_", "valueLong"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_CN_K_T_VL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "key_", "type_", "valueLong"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByC_CN_K_T_VL",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "key_", "type_", "valueLong"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_JSONSTORAGEENTRY_WHERE,
 				_SQL_COUNT_JSONSTORAGEENTRY_WHERE,
 				JSONStorageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1199,25 +1184,24 @@ public class JSONStorageEntryPersistenceImpl
 					"jsonStorageEntry.", "valueLong", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getValueLong));
 
-		_finderPathFetchByCN_CPK_P_I_K = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK_P_I_K",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"classNameId", "classPK", "parentJSONStorageEntryId", "index_",
-				"key_"
-			},
-			0, 16, false, JSONStorageEntry::getClassNameId,
-			JSONStorageEntry::getClassPK,
-			JSONStorageEntry::getParentJSONStorageEntryId,
-			JSONStorageEntry::getIndex,
-			convertNullFunction(JSONStorageEntry::getKey));
-
 		_uniquePersistenceFinderByCN_CPK_P_I_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCN_CPK_P_I_K,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK_P_I_K",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"classNameId", "classPK", "parentJSONStorageEntryId",
+					"index_", "key_"
+				},
+				0, 16, false, JSONStorageEntry::getClassNameId,
+				JSONStorageEntry::getClassPK,
+				JSONStorageEntry::getParentJSONStorageEntryId,
+				JSONStorageEntry::getIndex,
+				convertNullFunction(JSONStorageEntry::getKey)),
 			_SQL_SELECT_JSONSTORAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"jsonStorageEntry.", "classNameId", FinderColumn.Type.LONG, "=",
@@ -1308,4 +1292,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-37370872
+// LIFERAY-SERVICE-BUILDER-HASH:-701412773

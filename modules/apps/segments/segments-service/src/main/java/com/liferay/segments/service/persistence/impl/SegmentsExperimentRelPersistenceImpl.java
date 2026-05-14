@@ -84,9 +84,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindBySegmentsExperimentId;
-	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperimentId;
-	private FinderPath _finderPathCountBySegmentsExperimentId;
 	private CollectionPersistenceFinder<SegmentsExperimentRel>
 		_collectionPersistenceFinderBySegmentsExperimentId;
 
@@ -240,9 +237,6 @@ public class SegmentsExperimentRelPersistenceImpl
 			finderCache, new Object[] {segmentsExperimentId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySegmentsExperienceId;
-	private FinderPath _finderPathWithoutPaginationFindBySegmentsExperienceId;
-	private FinderPath _finderPathCountBySegmentsExperienceId;
 	private CollectionPersistenceFinder<SegmentsExperimentRel>
 		_collectionPersistenceFinderBySegmentsExperienceId;
 
@@ -396,7 +390,6 @@ public class SegmentsExperimentRelPersistenceImpl
 			finderCache, new Object[] {segmentsExperienceId});
 	}
 
-	private FinderPath _finderPathFetchByS_S;
 	private UniquePersistenceFinder<SegmentsExperimentRel>
 		_uniquePersistenceFinderByS_S;
 
@@ -787,30 +780,28 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindBySegmentsExperimentId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySegmentsExperimentId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"segmentsExperimentId"}, true);
-
-		_finderPathWithoutPaginationFindBySegmentsExperimentId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySegmentsExperimentId", new String[] {Long.class.getName()},
-			new String[] {"segmentsExperimentId"}, true);
-
-		_finderPathCountBySegmentsExperimentId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySegmentsExperimentId", new String[] {Long.class.getName()},
-			new String[] {"segmentsExperimentId"}, false);
-
 		_collectionPersistenceFinderBySegmentsExperimentId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySegmentsExperimentId,
-				_finderPathWithoutPaginationFindBySegmentsExperimentId,
-				_finderPathCountBySegmentsExperimentId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySegmentsExperimentId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"segmentsExperimentId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySegmentsExperimentId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsExperimentId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySegmentsExperimentId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsExperimentId"}, false),
 				_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIMENTREL_WHERE,
 				SegmentsExperimentRelModelImpl.ORDER_BY_JPQL,
@@ -820,30 +811,28 @@ public class SegmentsExperimentRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SegmentsExperimentRel::getSegmentsExperimentId));
 
-		_finderPathWithPaginationFindBySegmentsExperienceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySegmentsExperienceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"segmentsExperienceId"}, true);
-
-		_finderPathWithoutPaginationFindBySegmentsExperienceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySegmentsExperienceId", new String[] {Long.class.getName()},
-			new String[] {"segmentsExperienceId"}, true);
-
-		_finderPathCountBySegmentsExperienceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySegmentsExperienceId", new String[] {Long.class.getName()},
-			new String[] {"segmentsExperienceId"}, false);
-
 		_collectionPersistenceFinderBySegmentsExperienceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySegmentsExperienceId,
-				_finderPathWithoutPaginationFindBySegmentsExperienceId,
-				_finderPathCountBySegmentsExperienceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySegmentsExperienceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"segmentsExperienceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySegmentsExperienceId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsExperienceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySegmentsExperienceId",
+					new String[] {Long.class.getName()},
+					new String[] {"segmentsExperienceId"}, false),
 				_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIMENTREL_WHERE,
 				SegmentsExperimentRelModelImpl.ORDER_BY_JPQL,
@@ -853,15 +842,14 @@ public class SegmentsExperimentRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SegmentsExperimentRel::getSegmentsExperienceId));
 
-		_finderPathFetchByS_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"segmentsExperimentId", "segmentsExperienceId"}, 0, 0,
-			false, SegmentsExperimentRel::getSegmentsExperimentId,
-			SegmentsExperimentRel::getSegmentsExperienceId);
-
 		_uniquePersistenceFinderByS_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_S,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"segmentsExperimentId", "segmentsExperienceId"},
+				0, 0, false, SegmentsExperimentRel::getSegmentsExperimentId,
+				SegmentsExperimentRel::getSegmentsExperienceId),
 			_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE, "",
 			new FinderColumn<>(
 				"segmentsExperimentRel.", "segmentsExperimentId",
@@ -941,4 +929,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1956650830
+// LIFERAY-SERVICE-BUILDER-HASH:-1826491117

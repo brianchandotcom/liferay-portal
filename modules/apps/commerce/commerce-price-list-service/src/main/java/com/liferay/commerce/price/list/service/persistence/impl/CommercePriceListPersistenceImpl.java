@@ -100,9 +100,6 @@ public class CommercePriceListPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByUuid;
 
@@ -243,7 +240,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<CommercePriceList>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -333,9 +329,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -490,9 +483,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -638,10 +628,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParentCommercePriceListId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByParentCommercePriceListId;
-	private FinderPath _finderPathCountByParentCommercePriceListId;
 	private CollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByParentCommercePriceListId;
 
@@ -801,9 +787,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {parentCommercePriceListId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_C;
 
@@ -1219,9 +1202,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {groupIds, companyId}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_CBPL;
-	private FinderPath _finderPathWithoutPaginationFindByG_CBPL;
-	private FinderPath _finderPathCountByG_CBPL;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_CBPL;
 
@@ -1455,9 +1435,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {groupId, catalogBasePriceList}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByC_C;
 
@@ -1618,8 +1595,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {companyId, commerceCurrencyCode});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtD_S;
-	private FinderPath _finderPathWithPaginationCountByLtD_S;
 	private CollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByLtD_S;
 
@@ -1774,9 +1749,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_S;
-	private FinderPath _finderPathCountByG_C_S;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_C_S;
 
@@ -2226,8 +2198,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {groupIds, companyId, status}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_C_NotS;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_C_NotS;
 
@@ -2681,9 +2651,6 @@ public class CommercePriceListPersistenceImpl
 			finderCache, new Object[] {groupIds, companyId, status}, groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_CBPL_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_CBPL_T;
-	private FinderPath _finderPathCountByG_CBPL_T;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_CBPL_T;
 
@@ -2940,9 +2907,6 @@ public class CommercePriceListPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_T_S;
-	private FinderPath _finderPathCountByG_C_T_S;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_C_T_S;
 
@@ -3445,8 +3409,6 @@ public class CommercePriceListPersistenceImpl
 			groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_T_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_C_T_NotS;
 	private FilterCollectionPersistenceFinder<CommercePriceList>
 		_collectionPersistenceFinderByG_C_T_NotS;
 
@@ -3949,7 +3911,6 @@ public class CommercePriceListPersistenceImpl
 			groupIds);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<CommercePriceList>
 		_uniquePersistenceFinderByERC_C;
 
@@ -4431,27 +4392,23 @@ public class CommercePriceListPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4459,16 +4416,15 @@ public class CommercePriceListPersistenceImpl
 				"commercePriceList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommercePriceList::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(CommercePriceList::getUuid),
-			CommercePriceList::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(CommercePriceList::getUuid),
+				CommercePriceList::getGroupId),
+			_SQL_SELECT_COMMERCEPRICELIST_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommercePriceList::getUuid),
@@ -4476,30 +4432,26 @@ public class CommercePriceListPersistenceImpl
 				"commercePriceList.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommercePriceList::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -4510,29 +4462,25 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4541,34 +4489,28 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId));
 
-		_finderPathWithPaginationFindByParentCommercePriceListId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByParentCommercePriceListId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"parentCommercePriceListId"}, true);
-
-		_finderPathWithoutPaginationFindByParentCommercePriceListId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByParentCommercePriceListId",
-				new String[] {Long.class.getName()},
-				new String[] {"parentCommercePriceListId"}, true);
-
-		_finderPathCountByParentCommercePriceListId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentCommercePriceListId",
-			new String[] {Long.class.getName()},
-			new String[] {"parentCommercePriceListId"}, false);
-
 		_collectionPersistenceFinderByParentCommercePriceListId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParentCommercePriceListId,
-				_finderPathWithoutPaginationFindByParentCommercePriceListId,
-				_finderPathCountByParentCommercePriceListId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentCommercePriceListId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentCommercePriceListId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentCommercePriceListId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentCommercePriceListId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentCommercePriceListId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentCommercePriceListId"}, false),
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4578,41 +4520,37 @@ public class CommercePriceListPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceList::getParentCommercePriceListId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "companyId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "companyId"}, false);
-
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C,
-				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "companyId"}, false),
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4622,41 +4560,41 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommercePriceList::getCompanyId));
 
-		_finderPathWithPaginationFindByG_CBPL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CBPL",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "catalogBasePriceList"}, true);
-
-		_finderPathWithoutPaginationFindByG_CBPL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CBPL",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "catalogBasePriceList"}, true);
-
-		_finderPathCountByG_CBPL = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CBPL",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "catalogBasePriceList"}, false);
-
 		_collectionPersistenceFinderByG_CBPL =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_CBPL,
-				_finderPathWithoutPaginationFindByG_CBPL,
-				_finderPathCountByG_CBPL, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CBPL",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "catalogBasePriceList"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CBPL",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "catalogBasePriceList"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CBPL",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "catalogBasePriceList"}, false),
+				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4667,30 +4605,26 @@ public class CommercePriceListPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					CommercePriceList::isCatalogBasePriceList));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "commerceCurrencyCode"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "commerceCurrencyCode"}, 0, 2, true,
-			null);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "commerceCurrencyCode"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "commerceCurrencyCode"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "commerceCurrencyCode"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "commerceCurrencyCode"}, 0, 2, false,
+				null),
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4702,23 +4636,21 @@ public class CommercePriceListPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommercePriceList::getCommerceCurrencyCode));
 
-		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"displayDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"displayDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtD_S, null,
-			_finderPathWithPaginationCountByLtD_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"displayDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"displayDate", "status"}, false),
 			_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 			_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 			CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4729,47 +4661,44 @@ public class CommercePriceListPersistenceImpl
 				"commercePriceList.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CommercePriceList::getStatus));
 
-		_finderPathWithPaginationFindByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "companyId", "status"}, true);
-
-		_finderPathCountByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "companyId", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_S,
-				_finderPathWithoutPaginationFindByG_C_S,
-				_finderPathCountByG_C_S, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "companyId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "companyId", "status"}, false),
+				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4782,39 +4711,38 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CommercePriceList::getStatus));
 
-		_finderPathWithPaginationFindByG_C_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_C_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "companyId", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_NotS, null,
-				_finderPathWithPaginationCountByG_C_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "companyId", "status"}, false),
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4827,49 +4755,48 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, CommercePriceList::getStatus));
 
-		_finderPathWithPaginationFindByG_CBPL_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CBPL_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "catalogBasePriceList", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_CBPL_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CBPL_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "catalogBasePriceList", "type_"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_CBPL_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CBPL_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "catalogBasePriceList", "type_"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_CBPL_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_CBPL_T,
-				_finderPathWithoutPaginationFindByG_CBPL_T,
-				_finderPathCountByG_CBPL_T, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_CBPL_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "catalogBasePriceList", "type_"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_CBPL_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "catalogBasePriceList", "type_"},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_CBPL_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "catalogBasePriceList", "type_"},
+					0, 4, false, null),
+				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4883,50 +4810,47 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "type", FinderColumn.Type.STRING, "=",
 					true, true, CommercePriceList::getType));
 
-		_finderPathWithPaginationFindByG_C_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "companyId", "type_", "status"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_C_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "companyId", "type_", "status"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_C_T_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_T_S,
-				_finderPathWithoutPaginationFindByG_C_T_S,
-				_finderPathCountByG_C_T_S, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId", "type_", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "companyId", "type_", "status"}, 0,
+					4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "companyId", "type_", "status"}, 0,
+					4, false, null),
+				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4942,40 +4866,40 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CommercePriceList::getStatus));
 
-		_finderPathWithPaginationFindByG_C_T_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "type_", "status"}, true);
-
-		_finderPathWithPaginationCountByG_C_T_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_T_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "companyId", "type_", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_T_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_T_NotS, null,
-				_finderPathWithPaginationCountByG_C_T_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId", "type_", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_T_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "companyId", "type_", "status"},
+					false),
 				_SQL_SELECT_COMMERCEPRICELIST_WHERE,
 				_SQL_COUNT_COMMERCEPRICELIST_WHERE,
 				CommercePriceListModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePriceListImpl.class, CommercePriceList.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE,
+					"commercePriceList", "CommercePriceList",
+					"commercePriceList.commercePriceListId",
+					"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ",
+					"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId",
+					"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ",
 					CommercePriceListModelImpl.ORDER_BY_SQL,
 					CommercePriceListModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -4991,16 +4915,17 @@ public class CommercePriceListPersistenceImpl
 					"commercePriceList.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, CommercePriceList::getStatus));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(CommercePriceList::getExternalReferenceCode),
-			CommercePriceList::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					CommercePriceList::getExternalReferenceCode),
+				CommercePriceList::getCompanyId),
+			_SQL_SELECT_COMMERCEPRICELIST_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceList.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -5066,27 +4991,6 @@ public class CommercePriceListPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEPRICELIST_WHERE =
 		"SELECT COUNT(commercePriceList) FROM CommercePriceList commercePriceList WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"commercePriceList.commercePriceListId";
-
-	private static final String _FILTER_SQL_SELECT_COMMERCEPRICELIST_WHERE =
-		"SELECT DISTINCT {commercePriceList.*} FROM CommercePriceList commercePriceList WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CommercePriceList.*} FROM (SELECT DISTINCT commercePriceList.commercePriceListId FROM CommercePriceList commercePriceList WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPRICELIST_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CommercePriceList ON TEMP_TABLE.commercePriceListId = CommercePriceList.commercePriceListId";
-
-	private static final String _FILTER_SQL_COUNT_COMMERCEPRICELIST_WHERE =
-		"SELECT COUNT(DISTINCT commercePriceList.commercePriceListId) AS COUNT_VALUE FROM CommercePriceList commercePriceList WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "commercePriceList";
-
-	private static final String _FILTER_ENTITY_TABLE = "CommercePriceList";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceList exists with the key {";
 
@@ -5102,4 +5006,4 @@ public class CommercePriceListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:179180536
+// LIFERAY-SERVICE-BUILDER-HASH:-1071192410

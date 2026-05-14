@@ -82,9 +82,6 @@ public class DLContentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_R;
-	private FinderPath _finderPathWithoutPaginationFindByC_R;
-	private FinderPath _finderPathCountByC_R;
 	private CollectionPersistenceFinder<DLContent>
 		_collectionPersistenceFinderByC_R;
 
@@ -242,9 +239,6 @@ public class DLContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_R_P;
-	private FinderPath _finderPathCountByC_R_P;
 	private CollectionPersistenceFinder<DLContent>
 		_collectionPersistenceFinderByC_R_P;
 
@@ -412,8 +406,6 @@ public class DLContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, path});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_LikeP;
-	private FinderPath _finderPathWithPaginationCountByC_R_LikeP;
 	private CollectionPersistenceFinder<DLContent>
 		_collectionPersistenceFinderByC_R_LikeP;
 
@@ -585,7 +577,6 @@ public class DLContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, path});
 	}
 
-	private FinderPath _finderPathFetchByC_R_P_V;
 	private UniquePersistenceFinder<DLContent>
 		_uniquePersistenceFinderByC_R_P_V;
 
@@ -956,28 +947,24 @@ public class DLContentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId"}, true);
-
-		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "repositoryId"}, true);
-
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "repositoryId"}, false);
-
 		_collectionPersistenceFinderByC_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_R,
-			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "repositoryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "repositoryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "repositoryId"}, false),
 			_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
 			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -987,36 +974,32 @@ public class DLContentPersistenceImpl
 				"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getRepositoryId));
 
-		_finderPathWithPaginationFindByC_R_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_"}, true);
-
-		_finderPathWithoutPaginationFindByC_R_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_"}, 0, 4, true,
-			null);
-
-		_finderPathCountByC_R_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByC_R_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_R_P,
-			_finderPathWithoutPaginationFindByC_R_P, _finderPathCountByC_R_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "path_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "path_"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "path_"}, 0, 4,
+				false, null),
 			_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
 			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1029,27 +1012,26 @@ public class DLContentPersistenceImpl
 				"dlContent.", "path", FinderColumn.Type.STRING, "=", true, true,
 				DLContent::getPath));
 
-		_finderPathWithPaginationFindByC_R_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_"}, true);
-
-		_finderPathWithPaginationCountByC_R_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_"}, false);
-
 		_collectionPersistenceFinderByC_R_LikeP =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_R_LikeP, null,
-				_finderPathWithPaginationCountByC_R_LikeP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "repositoryId", "path_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "repositoryId", "path_"}, false),
 				_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
 				DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1062,19 +1044,20 @@ public class DLContentPersistenceImpl
 					"dlContent.", "path", FinderColumn.Type.STRING, "LIKE",
 					true, true, DLContent::getPath));
 
-		_finderPathFetchByC_R_P_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "version"}, 0,
-			12, false, DLContent::getCompanyId, DLContent::getRepositoryId,
-			convertNullFunction(DLContent::getPath),
-			convertNullFunction(DLContent::getVersion));
-
 		_uniquePersistenceFinderByC_R_P_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R_P_V, _SQL_SELECT_DLCONTENT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "path_", "version"},
+				0, 12, false, DLContent::getCompanyId,
+				DLContent::getRepositoryId,
+				convertNullFunction(DLContent::getPath),
+				convertNullFunction(DLContent::getVersion)),
+			_SQL_SELECT_DLCONTENT_WHERE, "",
 			new FinderColumn<>(
 				"dlContent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getCompanyId),
@@ -1160,4 +1143,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:40932697
+// LIFERAY-SERVICE-BUILDER-HASH:-1853289307

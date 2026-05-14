@@ -74,9 +74,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommercePaymentEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCommercePaymentEntryId;
-	private FinderPath _finderPathCountByCommercePaymentEntryId;
 	private FilterCollectionPersistenceFinder<CommercePaymentEntryAudit>
 		_collectionPersistenceFinderByCommercePaymentEntryId;
 
@@ -516,45 +513,41 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommercePaymentEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCommercePaymentEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commercePaymentEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCommercePaymentEntryId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommercePaymentEntryId",
-				new String[] {Long.class.getName()},
-				new String[] {"commercePaymentEntryId"}, true);
-
-		_finderPathCountByCommercePaymentEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommercePaymentEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"commercePaymentEntryId"}, false);
-
 		_collectionPersistenceFinderByCommercePaymentEntryId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommercePaymentEntryId,
-				_finderPathWithoutPaginationFindByCommercePaymentEntryId,
-				_finderPathCountByCommercePaymentEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommercePaymentEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commercePaymentEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommercePaymentEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commercePaymentEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommercePaymentEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commercePaymentEntryId"}, false),
 				_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
 				CommercePaymentEntryAuditModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CommercePaymentEntryAuditImpl.class,
-					CommercePaymentEntryAudit.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE,
+					CommercePaymentEntryAudit.class,
+					"commercePaymentEntryAudit", "CommercePaymentEntryAudit",
+					"commercePaymentEntryAudit.commercePaymentEntryAuditId",
+					"SELECT DISTINCT {commercePaymentEntryAudit.*} FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
+					"SELECT {CommercePaymentEntryAudit.*} FROM (SELECT DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
+					") TEMP_TABLE INNER JOIN CommercePaymentEntryAudit ON TEMP_TABLE.commercePaymentEntryAuditId = CommercePaymentEntryAudit.commercePaymentEntryAuditId",
+					"SELECT COUNT(DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId) AS COUNT_VALUE FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ",
 					CommercePaymentEntryAuditModelImpl.ORDER_BY_SQL,
 					CommercePaymentEntryAuditModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -617,31 +610,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	private static final String _SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE =
 		"SELECT COUNT(commercePaymentEntryAudit) FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"commercePaymentEntryAudit.commercePaymentEntryAuditId";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_WHERE =
-			"SELECT DISTINCT {commercePaymentEntryAudit.*} FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CommercePaymentEntryAudit.*} FROM (SELECT DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_COMMERCEPAYMENTENTRYAUDIT_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CommercePaymentEntryAudit ON TEMP_TABLE.commercePaymentEntryAuditId = CommercePaymentEntryAudit.commercePaymentEntryAuditId";
-
-	private static final String
-		_FILTER_SQL_COUNT_COMMERCEPAYMENTENTRYAUDIT_WHERE =
-			"SELECT COUNT(DISTINCT commercePaymentEntryAudit.commercePaymentEntryAuditId) AS COUNT_VALUE FROM CommercePaymentEntryAudit commercePaymentEntryAudit WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS =
-		"commercePaymentEntryAudit";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"CommercePaymentEntryAudit";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePaymentEntryAudit exists with the key {";
 
@@ -651,4 +619,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1859009914
+// LIFERAY-SERVICE-BUILDER-HASH:1443704358

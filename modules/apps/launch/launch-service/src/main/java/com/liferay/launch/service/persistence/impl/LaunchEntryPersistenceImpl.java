@@ -90,9 +90,6 @@ public class LaunchEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LaunchEntry>
 		_collectionPersistenceFinderByUuid;
 
@@ -232,9 +229,6 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LaunchEntry>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -389,9 +383,6 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLaunchSetId;
-	private FinderPath _finderPathWithoutPaginationFindByLaunchSetId;
-	private FinderPath _finderPathCountByLaunchSetId;
 	private CollectionPersistenceFinder<LaunchEntry>
 		_collectionPersistenceFinderByLaunchSetId;
 
@@ -536,7 +527,6 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {launchSetId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_C;
 	private UniquePersistenceFinder<LaunchEntry>
 		_uniquePersistenceFinderByC_C_C;
 
@@ -642,7 +632,6 @@ public class LaunchEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, classVersion});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<LaunchEntry>
 		_uniquePersistenceFinderByERC_C;
 
@@ -1019,58 +1008,49 @@ public class LaunchEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAUNCHENTRY_WHERE, _SQL_COUNT_LAUNCHENTRY_WHERE,
 			LaunchEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"launchEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LaunchEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LAUNCHENTRY_WHERE,
-				_SQL_COUNT_LAUNCHENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LAUNCHENTRY_WHERE, _SQL_COUNT_LAUNCHENTRY_WHERE,
 				LaunchEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"launchEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -1079,47 +1059,43 @@ public class LaunchEntryPersistenceImpl
 					"launchEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LaunchEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByLaunchSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLaunchSetId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"launchSetId"}, true);
-
-		_finderPathWithoutPaginationFindByLaunchSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLaunchSetId",
-			new String[] {Long.class.getName()}, new String[] {"launchSetId"},
-			true);
-
-		_finderPathCountByLaunchSetId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLaunchSetId",
-			new String[] {Long.class.getName()}, new String[] {"launchSetId"},
-			false);
-
 		_collectionPersistenceFinderByLaunchSetId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLaunchSetId,
-				_finderPathWithoutPaginationFindByLaunchSetId,
-				_finderPathCountByLaunchSetId, _SQL_SELECT_LAUNCHENTRY_WHERE,
-				_SQL_COUNT_LAUNCHENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLaunchSetId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"launchSetId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLaunchSetId", new String[] {Long.class.getName()},
+					new String[] {"launchSetId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLaunchSetId", new String[] {Long.class.getName()},
+					new String[] {"launchSetId"}, false),
+				_SQL_SELECT_LAUNCHENTRY_WHERE, _SQL_COUNT_LAUNCHENTRY_WHERE,
 				LaunchEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"launchEntry.", "launchSetId", FinderColumn.Type.LONG, "=",
 					true, true, LaunchEntry::getLaunchSetId));
 
-		_finderPathFetchByC_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"classNameId", "classPK", "classVersion"}, 0, 4,
-			false, LaunchEntry::getClassNameId, LaunchEntry::getClassPK,
-			convertNullFunction(LaunchEntry::getClassVersion));
-
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C, _SQL_SELECT_LAUNCHENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"classNameId", "classPK", "classVersion"}, 0, 4,
+				false, LaunchEntry::getClassNameId, LaunchEntry::getClassPK,
+				convertNullFunction(LaunchEntry::getClassVersion)),
+			_SQL_SELECT_LAUNCHENTRY_WHERE, "",
 			new FinderColumn<>(
 				"launchEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, LaunchEntry::getClassNameId),
@@ -1130,15 +1106,16 @@ public class LaunchEntryPersistenceImpl
 				"launchEntry.", "classVersion", FinderColumn.Type.STRING, "=",
 				true, true, LaunchEntry::getClassVersion));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(LaunchEntry::getExternalReferenceCode),
-			LaunchEntry::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_LAUNCHENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(LaunchEntry::getExternalReferenceCode),
+				LaunchEntry::getCompanyId),
+			_SQL_SELECT_LAUNCHENTRY_WHERE, "",
 			new FinderColumn<>(
 				"launchEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1216,4 +1193,4 @@ public class LaunchEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1379554760
+// LIFERAY-SERVICE-BUILDER-HASH:87294406

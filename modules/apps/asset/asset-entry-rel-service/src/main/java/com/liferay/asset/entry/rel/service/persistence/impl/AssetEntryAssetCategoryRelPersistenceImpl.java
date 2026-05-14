@@ -81,9 +81,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAssetEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAssetEntryId;
-	private FinderPath _finderPathCountByAssetEntryId;
 	private CollectionPersistenceFinder<AssetEntryAssetCategoryRel>
 		_collectionPersistenceFinderByAssetEntryId;
 
@@ -232,9 +229,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			finderCache, new Object[] {assetEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAssetCategoryId;
-	private FinderPath _finderPathWithoutPaginationFindByAssetCategoryId;
-	private FinderPath _finderPathCountByAssetCategoryId;
 	private CollectionPersistenceFinder<AssetEntryAssetCategoryRel>
 		_collectionPersistenceFinderByAssetCategoryId;
 
@@ -383,7 +377,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			finderCache, new Object[] {assetCategoryId});
 	}
 
-	private FinderPath _finderPathFetchByA_A;
 	private UniquePersistenceFinder<AssetEntryAssetCategoryRel>
 		_uniquePersistenceFinderByA_A;
 
@@ -743,29 +736,26 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
-			new String[] {Long.class.getName()}, new String[] {"assetEntryId"},
-			true);
-
-		_finderPathCountByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
-			new String[] {Long.class.getName()}, new String[] {"assetEntryId"},
-			false);
-
 		_collectionPersistenceFinderByAssetEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAssetEntryId,
-				_finderPathWithoutPaginationFindByAssetEntryId,
-				_finderPathCountByAssetEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAssetEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"assetEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAssetEntryId", new String[] {Long.class.getName()},
+					new String[] {"assetEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAssetEntryId", new String[] {Long.class.getName()},
+					new String[] {"assetEntryId"}, false),
 				_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL,
@@ -775,29 +765,28 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetEntryAssetCategoryRel::getAssetEntryId));
 
-		_finderPathWithPaginationFindByAssetCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetCategoryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetCategoryId"}, true);
-
-		_finderPathWithoutPaginationFindByAssetCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetCategoryId",
-			new String[] {Long.class.getName()},
-			new String[] {"assetCategoryId"}, true);
-
-		_finderPathCountByAssetCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetCategoryId",
-			new String[] {Long.class.getName()},
-			new String[] {"assetCategoryId"}, false);
-
 		_collectionPersistenceFinderByAssetCategoryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAssetCategoryId,
-				_finderPathWithoutPaginationFindByAssetCategoryId,
-				_finderPathCountByAssetCategoryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAssetCategoryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"assetCategoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAssetCategoryId",
+					new String[] {Long.class.getName()},
+					new String[] {"assetCategoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAssetCategoryId",
+					new String[] {Long.class.getName()},
+					new String[] {"assetCategoryId"}, false),
 				_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL,
@@ -807,15 +796,14 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetEntryAssetCategoryRel::getAssetCategoryId));
 
-		_finderPathFetchByA_A = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetEntryId", "assetCategoryId"}, 0, 0, false,
-			AssetEntryAssetCategoryRel::getAssetEntryId,
-			AssetEntryAssetCategoryRel::getAssetCategoryId);
-
 		_uniquePersistenceFinderByA_A = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_A,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"assetEntryId", "assetCategoryId"}, 0, 0, false,
+				AssetEntryAssetCategoryRel::getAssetEntryId,
+				AssetEntryAssetCategoryRel::getAssetCategoryId),
 			_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE, "",
 			new FinderColumn<>(
 				"assetEntryAssetCategoryRel.", "assetEntryId",
@@ -895,4 +883,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-490348894
+// LIFERAY-SERVICE-BUILDER-HASH:-146293726

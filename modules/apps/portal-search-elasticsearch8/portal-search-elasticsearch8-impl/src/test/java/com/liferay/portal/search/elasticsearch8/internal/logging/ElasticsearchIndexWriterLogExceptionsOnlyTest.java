@@ -8,8 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.logging;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -73,7 +71,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testAddDocuments() {
+	public void testAddDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -84,15 +82,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.addDocuments(
-					createSearchContext(), Arrays.asList(document));
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.addDocuments(
+				createSearchContext(), Arrays.asList(document));
 
 			_assertLogCapture(
 				message -> Assert.assertEquals("Bulk add failed", message),
@@ -101,7 +92,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testAddDocumentsBulkExecutor() {
+	public void testAddDocumentsBulkExecutor() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -112,15 +103,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.addDocuments(
-					createSearchContext(), Arrays.asList(document));
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.addDocuments(
+				createSearchContext(), Arrays.asList(document));
 
 			String expectedMessage =
 				"failed to parse field [expirationDate] of type [date] in " +
@@ -135,7 +119,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testCommit() {
+	public void testCommit() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -146,14 +130,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.commit(searchContext);
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.commit(searchContext);
 
 			_assertLogCapture(
 				message -> Assert.assertEquals(
@@ -167,25 +144,18 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testDeleteDocument() {
+	public void testDeleteDocument() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(_COMPANY_ID);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.deleteDocument(searchContext, _UID);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
+		indexWriter.deleteDocument(searchContext, _UID);
 	}
 
 	@Test
-	public void testDeleteDocumentInfoLevel() {
+	public void testDeleteDocumentInfoLevel() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.INFO)) {
@@ -196,14 +166,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.deleteDocument(searchContext, _UID);
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.deleteDocument(searchContext, _UID);
 
 			_assertLogCapture(
 				message -> Assert.assertEquals(
@@ -217,7 +180,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testDeleteDocuments() {
+	public void testDeleteDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -228,14 +191,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.deleteDocuments(searchContext, Arrays.asList(_UID));
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.deleteDocuments(searchContext, Arrays.asList(_UID));
 
 			_assertLogCapture(
 				message -> Assert.assertEquals("Bulk delete failed", message),
@@ -244,7 +200,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testDeleteDocumentsBulkExecutor() {
+	public void testDeleteDocumentsBulkExecutor() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -255,14 +211,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.deleteDocuments(searchContext, Arrays.asList(_UID));
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.deleteDocuments(searchContext, Arrays.asList(_UID));
 
 			String expectedMessage = "no such index [" + _COMPANY_ID + "]";
 
@@ -275,7 +224,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testDeleteEntityDocuments() {
+	public void testDeleteEntityDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -286,14 +235,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.deleteEntityDocuments(searchContext, "test");
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.deleteEntityDocuments(searchContext, "test");
 
 			_assertLogCapture(
 				message -> Assert.assertEquals(
@@ -344,7 +286,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testUpdateDocument() {
+	public void testUpdateDocument() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -356,14 +298,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.updateDocument(createSearchContext(), document);
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.updateDocument(createSearchContext(), document);
 
 			_assertLogCapture(
 				message -> Assert.assertEquals("Update failed", message),
@@ -372,7 +307,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testUpdateDocumentBulkExecutor() {
+	public void testUpdateDocumentBulkExecutor() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -384,14 +319,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.updateDocument(createSearchContext(), document);
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.updateDocument(createSearchContext(), document);
 
 			String expectedMessage = StringBundler.concat(
 				"failed to parse field [expirationDate] of type [date] in ",
@@ -406,7 +334,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testUpdateDocuments() {
+	public void testUpdateDocuments() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ElasticsearchIndexWriter.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -418,15 +346,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.updateDocuments(
-					createSearchContext(), Arrays.asList(document));
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.updateDocuments(
+				createSearchContext(), Arrays.asList(document));
 
 			_assertLogCapture(
 				message -> Assert.assertEquals("Bulk update failed", message),
@@ -435,7 +356,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@Test
-	public void testUpdateDocumentsBulkExecutor() {
+	public void testUpdateDocumentsBulkExecutor() throws SearchException {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BulkDocumentRequestExecutor.class.getName(),
 				LoggerTestUtil.ERROR)) {
@@ -447,15 +368,8 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.updateDocuments(
-					createSearchContext(), Arrays.asList(document));
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.updateDocuments(
+				createSearchContext(), Arrays.asList(document));
 
 			String expectedMessage = StringBundler.concat(
 				"failed to parse field [expirationDate] of type [date] in ",
@@ -504,8 +418,5 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	private static final long _COMPANY_ID = 1;
 
 	private static final String _UID = "1";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ElasticsearchIndexWriterLogExceptionsOnlyTest.class);
 
 }

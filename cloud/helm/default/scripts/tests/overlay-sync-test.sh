@@ -56,9 +56,7 @@ function _run_test {
 }
 
 function _test_exits_with_error_when_argument_count_is_wrong {
-	local script="${1}"
-
-	if [[ "$(bash "${script}" gcs /source 2>&1)" == *"Usage:"* ]]
+	if [[ "$(bash "${1}" gcs /source 2>&1)" == *"Usage:"* ]]
 	then
 		return 0
 	fi
@@ -67,9 +65,7 @@ function _test_exits_with_error_when_argument_count_is_wrong {
 }
 
 function _test_exits_with_error_when_no_bucket_env_var_is_set {
-	local script="${1}"
-
-	if [[ "$(unset LIFERAY_OVERLAY_BUCKET_NAME; bash "${script}" gcs source/path dest/path 2>&1)" == *"Overlay bucket does not exist"* ]]
+	if [[ "$(unset LIFERAY_OVERLAY_BUCKET_NAME; bash "${1}" gcs source/path dest/path 2>&1)" == *"Overlay bucket does not exist"* ]]
 	then
 		return 0
 	fi
@@ -78,11 +74,9 @@ function _test_exits_with_error_when_no_bucket_env_var_is_set {
 }
 
 function _test_passes_plain_path_to_rclone_without_include {
-	local script="${1}"
-
 	local output
 
-	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs source/path dest/path 2>&1)
+	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs source/path dest/path 2>&1)
 
 	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" != *"--include"* ]]
 	then
@@ -93,11 +87,9 @@ function _test_passes_plain_path_to_rclone_without_include {
 }
 
 function _test_splits_glob_pattern_into_path_and_include_filter {
-	local script="${1}"
-
 	local output
 
-	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs "source/path/*.jar" dest/path 2>&1)
+	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs "source/path/*.jar" dest/path 2>&1)
 
 	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *.jar"* ]]
 	then
@@ -108,11 +100,9 @@ function _test_splits_glob_pattern_into_path_and_include_filter {
 }
 
 function _test_strips_wildcard_and_passes_include_for_wildcard_path {
-	local script="${1}"
-
 	local output
 
-	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs "source/path/*" dest/path 2>&1)
+	output=$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs "source/path/*" dest/path 2>&1)
 
 	if [[ "${output}" == *"rclone copy :gcs:test-bucket/source/path"* ]] && [[ "${output}" == *"--include *"* ]]
 	then
@@ -123,9 +113,7 @@ function _test_strips_wildcard_and_passes_include_for_wildcard_path {
 }
 
 function _test_target_path_is_prefixed_with_temp {
-	local script="${1}"
-
-	if [[ "$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs source/path osgi/configs 2>&1)" == *"/temp/osgi/configs"* ]]
+	if [[ "$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs source/path osgi/configs 2>&1)" == *"/temp/osgi/configs"* ]]
 	then
 		return 0
 	fi
@@ -134,9 +122,7 @@ function _test_target_path_is_prefixed_with_temp {
 }
 
 function _test_uses_liferay_overlay_bucket_name_when_set {
-	local script="${1}"
-
-	if [[ "$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${script}" gcs source/path dest/path 2>&1)" == *":gcs:test-bucket/source/path"* ]]
+	if [[ "$(LIFERAY_OVERLAY_BUCKET_NAME="test-bucket" bash "${1}" gcs source/path dest/path 2>&1)" == *":gcs:test-bucket/source/path"* ]]
 	then
 		return 0
 	fi

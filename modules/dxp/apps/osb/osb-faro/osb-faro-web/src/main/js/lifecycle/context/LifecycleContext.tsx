@@ -18,6 +18,7 @@ interface ILifecycleFilters extends ILifecycleFilterValues {
 
 interface ILifecycleContext {
 	filters: ILifecycleFilters;
+	lifecycleId: string;
 	updateFilters: (newFilters: Partial<ILifecycleFilterValues>) => void;
 	resetFilters: () => void;
 }
@@ -29,6 +30,7 @@ const LifecycleContext = createContext<ILifecycleContext>({
 		industryFilter: '',
 		lifecycleStageFilter: LifecycleStages.AT_RISK
 	},
+	lifecycleId: '',
 	resetFilters: () => {},
 	updateFilters: () => {}
 });
@@ -42,7 +44,15 @@ const initialValues: ILifecycleFilterValues = {
 	lifecycleStageFilter: LifecycleStages.AT_RISK
 };
 
-export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
+interface ILifecycleContextProviderProps {
+	children: ReactNode;
+	lifecycleId: string;
+}
+
+export const LifecycleContextProvider = ({
+	children,
+	lifecycleId
+}: ILifecycleContextProviderProps) => {
 	const [filterValues, setFilterValues] =
 		useState<ILifecycleFilterValues>(initialValues);
 
@@ -63,8 +73,8 @@ export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 	const resetFilters = useCallback(() => setFilterValues(initialValues), []);
 
 	const value = useMemo(
-		() => ({filters, resetFilters, updateFilters}),
-		[filters, resetFilters, updateFilters]
+		() => ({filters, lifecycleId, resetFilters, updateFilters}),
+		[filters, lifecycleId, resetFilters, updateFilters]
 	);
 
 	return (

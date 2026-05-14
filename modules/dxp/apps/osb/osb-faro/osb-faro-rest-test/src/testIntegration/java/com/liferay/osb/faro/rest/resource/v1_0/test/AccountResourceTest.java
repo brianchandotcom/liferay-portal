@@ -17,4 +17,3 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class AccountResourceTest extends BaseAccountResourceTestCase {
 }
-// LIFERAY-REST-BUILDER-HASH:-1330034101

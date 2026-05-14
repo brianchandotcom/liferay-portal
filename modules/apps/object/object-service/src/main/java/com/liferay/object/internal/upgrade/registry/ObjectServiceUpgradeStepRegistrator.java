@@ -708,6 +708,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"12.0.0", "12.1.0",
 			new com.liferay.object.internal.upgrade.v12_1_0.
 				ObjectDefinitionSettingUpgradeProcess());
+
+		registry.register(
+			"12.1.0", "12.1.1",
+			new com.liferay.object.internal.upgrade.v12_1_1.
+				ObjectEntryPicklistDefaultValueUpgradeProcess());
 	}
 
 	@Reference

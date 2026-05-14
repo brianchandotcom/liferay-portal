@@ -1,6 +1,24 @@
 import sendRequest from 'shared/util/request';
 
-export const DEFAULT_LIFECYCLE_ID = '1';
+interface ILifecycle {
+	description?: string;
+	id: string;
+	name?: string;
+	segmentId?: string;
+}
+
+interface IFetchLifecycles {
+	groupId: string;
+}
+
+export async function fetchLifecycles({
+	groupId
+}: IFetchLifecycles): Promise<ILifecycle[]> {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/account-lifecycle`
+	});
+}
 
 interface IFetchOverviewMetrics {
 	country?: string;

@@ -6,7 +6,9 @@ import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 jest.unmock('react-dom');
 
 const wrapper = ({children}: {children: React.ReactNode}) => (
-	<LifecycleContextProvider>{children}</LifecycleContextProvider>
+	<LifecycleContextProvider lifecycleId='1'>
+		{children}
+	</LifecycleContextProvider>
 );
 
 describe('LifecycleContext', () => {

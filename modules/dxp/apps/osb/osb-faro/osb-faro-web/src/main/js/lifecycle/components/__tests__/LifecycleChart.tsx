@@ -59,7 +59,7 @@ const FilterProbe = () => {
 
 const renderChart = (props: Parameters<typeof LifecycleChart>[0] = {}) =>
 	render(
-		<LifecycleContextProvider>
+		<LifecycleContextProvider lifecycleId='1'>
 			<LifecycleChart {...props} />
 			<FilterProbe />
 		</LifecycleContextProvider>

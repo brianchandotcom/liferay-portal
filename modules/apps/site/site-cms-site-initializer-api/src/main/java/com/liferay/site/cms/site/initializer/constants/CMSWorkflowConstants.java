@@ -10,9 +10,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 /**
  * @author Mikel Lorza
  */
-public class CMSConstants {
+public class CMSWorkflowConstants {
 
-	public static final Integer[] CMS_WORKFLOW_STATUSES = {
+	public static final Integer[] WORKFLOW_STATUSES = {
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
 		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_PENDING,
 		WorkflowConstants.STATUS_SCHEDULED

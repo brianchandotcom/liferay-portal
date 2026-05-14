@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.cms.site.initializer.constants.CMSConstants;
+import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -108,7 +108,7 @@ public class AssetStatisticsResourceImpl
 					() -> _getCount(
 						groupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.status.in(
-							CMSConstants.CMS_WORKFLOW_STATUSES)));
+							CMSWorkflowConstants.WORKFLOW_STATUSES)));
 			}
 		};
 	}

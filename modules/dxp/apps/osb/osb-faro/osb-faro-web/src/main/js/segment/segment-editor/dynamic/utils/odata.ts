@@ -21,8 +21,13 @@ import {fromJS, Map} from 'immutable';
 import {generateGroupId, generateRowId, isCriterionGroup} from './utils';
 import {get, invert, isFinite, isNull, isString, isUndefined} from 'lodash';
 import {getPropertyValue, setPropertyValue} from './custom-inputs';
+import {
+	getRemoteCriterionTypeByOperator,
+	REMOTE_CRITERION_TYPES
+} from '../criterion-types/registry';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {filter as oDataFilterFn} from 'odata-v4-parser';
+import {RemoteCriterionType} from '../criterion-types/RemoteCriterionType';
 
 const OPERATORS = {
 	...CustomFunctionOperators,
@@ -165,25 +170,30 @@ const PARAM_REGEX = /\s+((?:criterionGroup|operator|value)=)/g;
 export const trimSpacesBeforeParams = (queryString: string): string =>
 	queryString.replace(PARAM_REGEX, '$1');
 
-const buildVocabularyFilterString = (criterionGroup: any): string => {
+const buildRemoteFilterString = (
+	criterionGroup: any,
+	criterionType: RemoteCriterionType
+): string => {
 	const items: any[] = criterionGroup?.items ?? [];
 
 	const find = (name: string) =>
 		items.find((item: any) => item.propertyName === name);
 
-	const vocIdItem = find('vocabularies/id');
-	const vocNameItem = find('vocabularies/name');
+	const idItem = find(criterionType.idProperty);
+	const nameItem = find(criterionType.nameProperty);
 	const activityKeyItem = find('activityKey');
 	const appIdItem = find('applicationId');
 	const eventIdItem = find('eventId');
-	const categoriesItem = find('categories');
 	const dayItem = find('day');
+	const categoriesItem = criterionType.supportsCategories
+		? find('categories')
+		: undefined;
 
 	const parts: string[] = [];
 
-	if (vocIdItem && vocNameItem) {
-		parts.push(`vocabularies/id eq '${vocIdItem.value}'`);
-		parts.push(`vocabularies/name eq '${vocNameItem.value}'`);
+	if (idItem && nameItem) {
+		parts.push(`${criterionType.idProperty} eq '${idItem.value}'`);
+		parts.push(`${criterionType.nameProperty} eq '${nameItem.value}'`);
 	}
 
 	if (appIdItem && eventIdItem) {
@@ -208,51 +218,6 @@ const buildVocabularyFilterString = (criterionGroup: any): string => {
 				`(categories/id eq '${cat.id}' and categories/name eq '${cat.name}')`
 		);
 		parts.push(`(${catParts.join(' or ')})`);
-	}
-
-	if (dayItem) {
-		parts.push(
-			`${dayItem.propertyName} ${dayItem.operatorName} '${dayItem.value}'`
-		);
-	}
-
-	const result = parts.join(' and ');
-
-	return result ? `(${result})` : result;
-};
-
-const buildTagFilterString = (criterionGroup: any): string => {
-	const items: any[] = criterionGroup?.items ?? [];
-
-	const find = (name: string) =>
-		items.find((item: any) => item.propertyName === name);
-
-	const tagIdItem = find('tags/id');
-	const tagNameItem = find('tags/name');
-	const activityKeyItem = find('activityKey');
-	const appIdItem = find('applicationId');
-	const eventIdItem = find('eventId');
-	const dayItem = find('day');
-
-	const parts: string[] = [];
-
-	if (tagIdItem && tagNameItem) {
-		parts.push(`tags/id eq '${tagIdItem.value}'`);
-		parts.push(`tags/name eq '${tagNameItem.value}'`);
-	}
-
-	if (appIdItem && eventIdItem) {
-		const appIds = (appIdItem.value as string[])
-			.map((id: string) => `'${id}'`)
-			.join(',');
-		const eventIds = (eventIdItem.value as string[])
-			.map((id: string) => `'${id}'`)
-			.join(',');
-		parts.push(
-			`(applicationId in (${appIds}) and eventId in (${eventIds}))`
-		);
-	} else if (activityKeyItem) {
-		parts.push(`activityKey eq '${activityKeyItem.value}'`);
 	}
 
 	if (dayItem) {
@@ -313,19 +278,17 @@ const buildQueryString = (
 						);
 					}
 				} else if (isValueType(CustomFunctionOperators, operatorName)) {
-					if (
-						operatorName ===
-							CustomFunctionOperators.VocabulariesFilter ||
-						operatorName === CustomFunctionOperators.TagsFilter
-					) {
+					const remoteCriterionType =
+						getRemoteCriterionTypeByOperator(operatorName);
+
+					if (remoteCriterionType) {
 						const criterionGroup = value
 							.get('criterionGroup')
 							?.toJS();
-						const filterString =
-							operatorName ===
-							CustomFunctionOperators.VocabulariesFilter
-								? buildVocabularyFilterString(criterionGroup)
-								: buildTagFilterString(criterionGroup);
+						const filterString = buildRemoteFilterString(
+							criterionGroup,
+							remoteCriterionType
+						);
 						const occurrenceOperator = value.get('operator');
 						const occurrenceCount = value.get('value');
 
@@ -726,14 +689,19 @@ export const decodeValueFromCriteria = (criteria: Criteria) => {
 	return formatCriteria(criteria);
 };
 
-const tryParseFilterByCountCriteria = (
+const escapeRegExp = (value: string): string =>
+	value.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
+
+const parseRemoteFilterByCount = (
 	queryString: string
 ): CriterionGroup | null => {
 	const match = queryString.match(
 		/activities\.filterByCount\(filter='((?:[^']|'')*)'\s*(?:,operator='([^']*)')?(?:,value=(\d+))?\)/
 	);
 
-	if (!match) return null;
+	if (!match) {
+		return null;
+	}
 
 	const filterContent = match[1].replace(/''/g, "'");
 	const occurrenceOperator = match[2] ?? null;
@@ -744,26 +712,40 @@ const tryParseFilterByCountCriteria = (
 			? filterContent.slice(1, -1)
 			: filterContent;
 
-	const vocIdMatch = innerFilter.match(/vocabularies\/id eq '([^']+)'/);
-	const tagIdMatch = innerFilter.match(/tags\/id eq '([^']+)'/);
+	let matchedType: RemoteCriterionType | undefined;
+	let entityId = '';
+	let entityName = '';
 
-	if (!vocIdMatch && !tagIdMatch) return null;
+	for (const criterionType of REMOTE_CRITERION_TYPES) {
+		const idMatch = innerFilter.match(
+			new RegExp(`${escapeRegExp(criterionType.idProperty)} eq '([^']+)'`)
+		);
 
-	const isVocabulary = !!vocIdMatch;
-	const entityId = isVocabulary ? vocIdMatch![1] : tagIdMatch![1];
+		if (!idMatch) {
+			continue;
+		}
 
-	const entityNameMatch = isVocabulary
-		? innerFilter.match(/vocabularies\/name eq '([^']+)'/)
-		: innerFilter.match(/tags\/name eq '([^']+)'/);
-	const entityName = entityNameMatch?.[1] ?? entityId;
+		matchedType = criterionType;
+		entityId = idMatch[1];
 
-	const idPropName = isVocabulary ? 'vocabularies/id' : 'tags/id';
-	const namePropName = isVocabulary ? 'vocabularies/name' : 'tags/name';
+		const nameMatch = innerFilter.match(
+			new RegExp(
+				`${escapeRegExp(criterionType.nameProperty)} eq '([^']+)'`
+			)
+		);
+		entityName = nameMatch?.[1] ?? entityId;
+
+		break;
+	}
+
+	if (!matchedType) {
+		return null;
+	}
 
 	const items: Criterion[] = [
 		{
 			operatorName: RelationalOperators.EQ,
-			propertyName: idPropName,
+			propertyName: matchedType.idProperty,
 			rowId: generateRowId(),
 			touched: false,
 			valid: true,
@@ -771,7 +753,7 @@ const tryParseFilterByCountCriteria = (
 		} as unknown as Criterion,
 		{
 			operatorName: RelationalOperators.EQ,
-			propertyName: namePropName,
+			propertyName: matchedType.nameProperty,
 			rowId: generateRowId(),
 			touched: false,
 			valid: true,
@@ -818,7 +800,7 @@ const tryParseFilterByCountCriteria = (
 		}
 	}
 
-	if (isVocabulary) {
+	if (matchedType.supportsCategories) {
 		const catRegex =
 			/\(categories\/id eq '([^']+)' and categories\/name eq '([^']+)'\)/g;
 		const categoryItems: Array<{id: string; name: string}> = [];
@@ -869,9 +851,7 @@ const tryParseFilterByCountCriteria = (
 
 	return wrapInCriteriaGroup([
 		{
-			operatorName: isVocabulary
-				? CustomFunctionOperators.VocabulariesFilter
-				: CustomFunctionOperators.TagsFilter,
+			operatorName: matchedType.positiveOperator,
 			propertyName: entityId,
 			rowId: generateRowId(),
 			touched: false,
@@ -911,8 +891,14 @@ const translateQueryToCriteria = (queryString: string): Criteria => {
 		criteria = decodeValueFromCriteria(criteria);
 	} catch (e) {
 		try {
-			criteria = tryParseFilterByCountCriteria(queryString);
-		} catch {
+			criteria = parseRemoteFilterByCount(queryString);
+		} catch (innerError) {
+			// eslint-disable-next-line no-console
+			console.error(
+				'Faro: parseRemoteFilterByCount fallback failed for queryString',
+				queryString,
+				innerError
+			);
 			criteria = null;
 		}
 	}

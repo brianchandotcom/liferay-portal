@@ -758,6 +758,11 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(38, 3, 1), new UpgradeAssetEntryPublishDate());
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 3, 2),
+			UpgradeProcessFactory.addColumns(
+				"Ticket", "emailAddress VARCHAR(254) null"));
 	}
 
 }

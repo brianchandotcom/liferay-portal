@@ -20,6 +20,7 @@ export class CommerceAdminPriceListsPage extends CommerceDNDTablePage {
 	readonly page: Page;
 	readonly priceListLink: (name: string) => Locator;
 	readonly priceListRowActions: (name: string) => Promise<Locator>;
+	readonly priceListRowActionsButton: (name: string) => Locator;
 	readonly requiredFieldError: (fieldLabel: string) => Locator;
 	readonly sidebarMenuItem: (name: string) => Locator;
 
@@ -41,12 +42,12 @@ export class CommerceAdminPriceListsPage extends CommerceDNDTablePage {
 		this.addPriceListModal = page.frameLocator(
 			'iframe[src*="add_commerce_price_list"]'
 		);
-		this.addPriceListModalNameInput =
-			this.addPriceListModal.getByLabel('Name');
 		this.addPriceListModalCatalogSelect =
 			this.addPriceListModal.getByLabel('Catalog');
 		this.addPriceListModalCurrencySelect =
 			this.addPriceListModal.getByLabel('Currency');
+		this.addPriceListModalNameInput =
+			this.addPriceListModal.getByLabel('Name');
 		this.addPriceListModalSubmitButton = this.addPriceListModal.getByRole(
 			'button',
 			{
@@ -67,6 +68,8 @@ export class CommerceAdminPriceListsPage extends CommerceDNDTablePage {
 
 			return result.row.getByRole('button', {name: 'Actions'});
 		};
+		this.priceListRowActionsButton = (name: string) =>
+			page.getByRole('row').filter({hasText: name}).getByRole('button');
 		this.requiredFieldError = (fieldLabel: string) =>
 			this.addPriceListModal.getByText(
 				`The ${fieldLabel} field is required.`,

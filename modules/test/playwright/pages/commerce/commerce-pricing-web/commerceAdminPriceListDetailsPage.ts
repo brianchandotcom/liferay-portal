@@ -15,12 +15,13 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 	readonly addPriceModifierTarget: Locator;
 	readonly addPriceModifierType: Locator;
 	readonly addTierPriceButton: Locator;
-	readonly catalogSelect: Locator;
 	readonly addTierPriceEntryFrame: FrameLocator;
 	readonly addTierPriceEntryPrice: Locator;
 	readonly addTierPriceEntryQuantity: Locator;
 	readonly addTierPriceEntryQuantityNotAllowedError: Locator;
 	readonly addTierPriceEntrySaveButton: Locator;
+	readonly catalogSelect: Locator;
+	readonly currencySelect: Locator;
 	readonly editPriceTierFrame: FrameLocator;
 	readonly editPriceTierPrice: Locator;
 	readonly eligibilityEntryCell: (name: string) => Locator;
@@ -29,17 +30,18 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 	readonly eligibilityTab: Locator;
 	readonly entriesTab: Locator;
 	readonly findSkuInput: Locator;
+	readonly nameInput: Locator;
 	readonly page: Page;
+	readonly parentAutocomplete: Locator;
+	readonly parentDropdownItem: (name: string) => Locator;
 	readonly priceModifierRowActions: (title: string) => Locator;
 	readonly priceModifierRowDeleteMenuItem: Locator;
 	readonly priceModifiersTab: Locator;
+	readonly priceTypeSelect: Locator;
+	readonly priorityInput: Locator;
+	readonly publishButton: Locator;
 	readonly scheduleLabel: Locator;
 	readonly selectButton: Locator;
-	readonly publishButton: Locator;
-	readonly specificAccountGroupsRadio: Locator;
-	readonly specificAccountsRadio: Locator;
-	readonly specificChannelsRadio: Locator;
-	readonly specificOrderTypesRadio: Locator;
 	readonly sidePanelFrame: FrameLocator;
 	readonly sidePanelPriceInput: Locator;
 	readonly sidePanelSaveButton: Locator;
@@ -47,6 +49,10 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 	readonly skuRowActionsButton: (sku: string) => Locator;
 	readonly skuRowRemoveMenuItem: Locator;
 	readonly skusTableRowLink: (skuName: string) => Locator;
+	readonly specificAccountGroupsRadio: Locator;
+	readonly specificAccountsRadio: Locator;
+	readonly specificChannelsRadio: Locator;
+	readonly specificOrderTypesRadio: Locator;
 
 	constructor(page: Page) {
 		super(
@@ -62,21 +68,18 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 			.frameLocator('iframe');
 		this.addPriceModifierName =
 			this.addPriceModifierModalFrame.getByLabel('Name');
-		this.addPriceModifierTarget =
-			this.addPriceModifierModalFrame.getByLabel('Target');
-		this.addPriceModifierType =
-			this.addPriceModifierModalFrame.getByLabel('Modifier');
 		this.addPriceModifierSaveButton =
 			this.addPriceModifierModalFrame.getByRole('button', {
 				name: 'Submit',
 			});
+		this.addPriceModifierTarget =
+			this.addPriceModifierModalFrame.getByLabel('Target');
+		this.addPriceModifierType =
+			this.addPriceModifierModalFrame.getByLabel('Modifier');
 		this.addTierPriceButton = page
 			.frameLocator('iframe')
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
-		this.catalogSelect = page.locator(
-			'select[name$="commerceCatalogGroupId"]'
-		);
 		this.addTierPriceEntryFrame = page.frameLocator('iframe >> nth=1');
 		this.addTierPriceEntryPrice = this.addTierPriceEntryFrame.getByLabel(
 			'Tier Price Required'
@@ -90,6 +93,12 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 			);
 		this.addTierPriceEntrySaveButton =
 			this.addTierPriceEntryFrame.getByRole('button', {name: 'Submit'});
+		this.catalogSelect = page.locator(
+			'select[name$="commerceCatalogGroupId"]'
+		);
+		this.currencySelect = page.locator(
+			'select[name$="commerceCurrencyId"]'
+		);
 		this.editPriceTierFrame = page
 			.frameLocator('iframe')
 			.frameLocator('iframe');
@@ -111,7 +120,15 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 		});
 		this.entriesTab = page.getByRole('link', {name: 'Entries'});
 		this.findSkuInput = page.getByPlaceholder('Find a SKU');
+		this.nameInput = page.locator('input[name$="_name"]').first();
 		this.page = page;
+		this.parentAutocomplete = page
+			.locator('#autocomplete-root input[type="text"]')
+			.first();
+		this.parentDropdownItem = (name: string) =>
+			page
+				.locator('.autocomplete-dropdown-menu')
+				.getByText(name, {exact: true});
 		this.priceModifierRowActions = (title: string) =>
 			page.getByRole('row').filter({hasText: title}).getByRole('button');
 		this.priceModifierRowDeleteMenuItem = page.getByRole('menuitem', {
@@ -122,23 +139,13 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 			exact: true,
 			name: 'Price Modifiers',
 		});
+		this.priceTypeSelect = page.locator('select[name$="_netPrice"]');
+		this.priorityInput = page.locator('input[name$="_priority"]').first();
+		this.publishButton = page
+			.getByRole('button', {exact: true, name: 'Publish'})
+			.or(page.getByRole('link', {exact: true, name: 'Publish'}))
+			.first();
 		this.scheduleLabel = page.getByText('Schedule');
-		this.publishButton = page.getByRole('button', {
-			exact: true,
-			name: 'Publish',
-		});
-		this.specificAccountGroupsRadio = page.getByRole('radio', {
-			name: 'Specific Account Groups',
-		});
-		this.specificAccountsRadio = page.getByRole('radio', {
-			name: 'Specific Accounts',
-		});
-		this.specificChannelsRadio = page.getByRole('radio', {
-			name: 'Specific Channels',
-		});
-		this.specificOrderTypesRadio = page.getByRole('radio', {
-			name: 'Specific Order Types',
-		});
 		this.selectButton = page.getByRole('button', {name: 'Select'});
 		this.sidePanelFrame = page
 			.locator('.fds-side-panel')
@@ -161,6 +168,18 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 		});
 		this.skusTableRowLink = (sku: string) =>
 			page.getByRole('link', {exact: true, name: sku});
+		this.specificAccountGroupsRadio = page.getByRole('radio', {
+			name: 'Specific Account Groups',
+		});
+		this.specificAccountsRadio = page.getByRole('radio', {
+			name: 'Specific Accounts',
+		});
+		this.specificChannelsRadio = page.getByRole('radio', {
+			name: 'Specific Channels',
+		});
+		this.specificOrderTypesRadio = page.getByRole('radio', {
+			name: 'Specific Order Types',
+		});
 	}
 
 	async addEligibilityEntry(placeholder: string, entryName: string) {

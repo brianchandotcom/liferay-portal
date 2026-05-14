@@ -1428,16 +1428,13 @@ public class Main {
 		Map<String, String> existingTaxonomyCategories = new HashMap<>();
 		Map<String, Long> existingTaxonomyVocabularies = new HashMap<>();
 
-		com.liferay.headless.admin.taxonomy.client.pagination.Page
-			<TaxonomyVocabulary> taxonomyVocabulariesPage =
-				_taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					_globalSiteId, null, null, null,
-					com.liferay.headless.admin.taxonomy.client.pagination.
-						Pagination.of(-1, -1),
-					null);
+		List<Long> taxonomyVocabularyIds = List.of(
+			23488662L, 23488711L, 23488721L, 23488728L, 24938065L);
 
-		for (TaxonomyVocabulary taxonomyVocabulary :
-				taxonomyVocabulariesPage.getItems()) {
+		for (Long taxonomyVocabularyId : taxonomyVocabularyIds) {
+			TaxonomyVocabulary taxonomyVocabulary =
+				_taxonomyVocabularyResource.getTaxonomyVocabulary(
+					taxonomyVocabularyId);
 
 			if (StringUtil.equals(
 					taxonomyVocabulary.getExternalReferenceCode(),
@@ -1488,16 +1485,7 @@ public class Main {
 			Long taxonomyVocabularyId = existingTaxonomyVocabularies.get(name);
 
 			if (taxonomyVocabularyId == null) {
-				TaxonomyVocabulary taxonomyVocabulary =
-					new TaxonomyVocabulary();
-
-				taxonomyVocabulary.setName(() -> name);
-
-				taxonomyVocabulary =
-					_taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
-						_globalSiteId, taxonomyVocabulary);
-
-				taxonomyVocabularyId = taxonomyVocabulary.getId();
+				continue;
 			}
 
 			_loadTaxonomyCategories(

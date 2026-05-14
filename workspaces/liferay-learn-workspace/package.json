@@ -13,9 +13,9 @@
 	"private": true,
 	"workspaces": {
 		"packages": [
-			"client-extensions/liferay-learn-global-js",
+			"client-extensions/liferay-learn-theme-spritemap",
 			"client-extensions/liferay-learn-custom-element",
-			"client-extensions/liferay-learn-theme-spritemap"
+			"client-extensions/liferay-learn-global-js"
 		]
 	}
 }

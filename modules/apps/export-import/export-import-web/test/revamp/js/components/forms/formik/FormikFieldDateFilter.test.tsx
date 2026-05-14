@@ -11,13 +11,13 @@ import React from 'react';
 
 import {
 	DateFilterValues,
-	FilterType,
-	ModifiedLastType,
+	LastRange,
+	Range,
 } from '../../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter';
 import {FormikFieldDateFilter} from '../../../../../../src/main/resources/META-INF/resources/revamp/js/components/forms/formik/FormikFieldDateFilter';
 
 const renderFormikFieldDateFilter = ({
-	initialValue = {range: FilterType.All} as DateFilterValues,
+	initialValue = {range: Range.All} as DateFilterValues,
 	onApplyFilter = jest.fn(),
 	onSubmit = jest.fn(),
 }: {
@@ -43,8 +43,8 @@ describe('FormikFieldDateFilter', () => {
 	it('forwards the applied value to DateFilter so the alert is shown', async () => {
 		renderFormikFieldDateFilter({
 			initialValue: {
-				last: ModifiedLastType.H24,
-				range: FilterType.Last,
+				last: LastRange.H24,
+				range: Range.Last,
 			},
 		});
 
@@ -56,34 +56,34 @@ describe('FormikFieldDateFilter', () => {
 
 		await user.selectOptions(
 			screen.getByLabelText('filter-content-by'),
-			FilterType.Last
+			Range.Last
 		);
 		await user.selectOptions(
 			screen.getByLabelText('modified-last'),
-			ModifiedLastType.H48
+			LastRange.H48
 		);
 		await user.click(screen.getByText('show-results'));
 
 		expect(onApplyFilter).toHaveBeenCalledWith({
-			last: ModifiedLastType.H48,
-			range: FilterType.Last,
+			last: LastRange.H48,
+			range: Range.Last,
 		});
 
 		expect(screen.getByRole('alert')).toBeInTheDocument();
 	});
 
-	it('resets the Formik field to FilterType.All when clear is clicked', async () => {
+	it('resets the Formik field to Range.All when clear is clicked', async () => {
 		const {onApplyFilter, user} = renderFormikFieldDateFilter({
 			initialValue: {
-				last: ModifiedLastType.H12,
-				range: FilterType.Last,
+				last: LastRange.H12,
+				range: Range.Last,
 			},
 		});
 
 		await user.click(screen.getByText('clear-filters'));
 
 		expect(onApplyFilter).toHaveBeenLastCalledWith({
-			range: FilterType.All,
+			range: Range.All,
 		});
 
 		expect(screen.queryByRole('alert')).not.toBeInTheDocument();

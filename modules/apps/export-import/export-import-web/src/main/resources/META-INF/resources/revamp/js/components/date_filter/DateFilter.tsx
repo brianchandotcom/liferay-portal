@@ -11,16 +11,16 @@ import React, {useMemo, useState} from 'react';
 
 import FieldSelectWithOption from '../forms/FieldSelectWithOption';
 import DateRangeFields from './DateRangeFields';
-import ModifiedLastFields from './ModifiedLastFields';
+import LastRangeFields from './LastRangeFields';
 import {
 	DateFilterValues,
 	EditingState,
-	FilterType,
-	ModifiedLastType,
+	LastRange,
+	Range,
 	TouchedFields,
 } from './types';
 import {
-	FILTER_OPTIONS,
+	RANGE_OPTIONS,
 	editingToDateFilter,
 	getAppliedFilterSummary,
 	getIsDirty,
@@ -28,19 +28,19 @@ import {
 } from './utils';
 
 const INITIAL_EDITING: EditingState = {
-	filterType: FilterType.All,
-	fromDate: '',
-	modifiedLast: ModifiedLastType.H12,
-	toDate: '',
+	endDate: '',
+	last: LastRange.H12,
+	range: Range.All,
+	startDate: '',
 };
 
 const INITIAL_TOUCHED: TouchedFields = {
-	fromDate: false,
-	toDate: false,
+	endDate: false,
+	startDate: false,
 };
 
 export default function DateFilter({
-	appliedValue = {range: FilterType.All} as DateFilterValues,
+	appliedValue = {range: Range.All} as DateFilterValues,
 	itemsCount = 0,
 	onApplyFilter,
 }: {
@@ -73,7 +73,7 @@ export default function DateFilter({
 	};
 
 	const handleShowResults = () => {
-		setTouchedFields({fromDate: true, toDate: true});
+		setTouchedFields({endDate: true, startDate: true});
 
 		if (validation.isValid) {
 			onApplyFilter?.(editingToDateFilter(editing));
@@ -83,7 +83,7 @@ export default function DateFilter({
 	const handleClearFilters = () => {
 		setEditing(INITIAL_EDITING);
 		setTouchedFields(INITIAL_TOUCHED);
-		onApplyFilter?.({range: FilterType.All});
+		onApplyFilter?.({range: Range.All});
 	};
 
 	return (
@@ -91,27 +91,27 @@ export default function DateFilter({
 			<ClayLayout.ContentRow className="flex-column flex-lg-row" padded>
 				<ClayLayout.ContentCol>
 					<FieldSelectWithOption
-						id="filterContentBy"
+						id="range"
 						label={Liferay.Language.get('filter-content-by')}
-						name="filterContentBy"
+						name="range"
 						onChange={(event) =>
 							updateFilter({
-								filterType: event.target.value as FilterType,
+								range: event.target.value as Range,
 							})
 						}
-						options={FILTER_OPTIONS}
-						value={editing.filterType}
+						options={RANGE_OPTIONS}
+						value={editing.range}
 					/>
 				</ClayLayout.ContentCol>
 
-				{editing.filterType === FilterType.Last && (
-					<ModifiedLastFields
+				{editing.range === Range.Last && (
+					<LastRangeFields
 						handleUpdateFilter={updateFilter}
-						value={editing.modifiedLast}
+						value={editing.last}
 					/>
 				)}
 
-				{editing.filterType === FilterType.Range && (
+				{editing.range === Range.DateRange && (
 					<DateRangeFields
 						editing={editing}
 						errors={validation.errors}
@@ -126,8 +126,8 @@ export default function DateFilter({
 					expand
 				>
 					{!(
-						editing.filterType === FilterType.All &&
-						appliedValue.range === FilterType.All
+						editing.range === Range.All &&
+						appliedValue.range === Range.All
 					) && (
 						<ClayButton
 							disabled={isDirty ? !validation.isValid : true}
@@ -141,7 +141,7 @@ export default function DateFilter({
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			{appliedValue.range !== FilterType.All && (
+			{appliedValue.range !== Range.All && (
 				<ClayLayout.ContentRow padded>
 					<ClayLayout.ContentCol expand>
 						<ClayAlert

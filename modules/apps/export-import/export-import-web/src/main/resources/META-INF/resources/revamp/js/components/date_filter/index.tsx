@@ -7,8 +7,8 @@ import DateFilter from './DateFilter';
 
 export {
 	DateFilterValues,
-	FilterType,
-	ModifiedLastType,
+	Range,
+	LastRange,
 	NormalizedDateFilter,
 } from './types';
 export {normalizeDateFilter} from './utils';

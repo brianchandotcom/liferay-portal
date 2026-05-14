@@ -12,6 +12,23 @@ import React from 'react';
 
 import AssetRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/AssetRenderer';
 
+jest.mock('frontend-js-web', () => {
+	const mockedModule = jest.requireActual('frontend-js-web');
+
+	return {
+		...mockedModule,
+		sub: (str: string, ...args: string[]) => {
+			let result = str;
+
+			args.forEach((arg) => {
+				result = result.replace('x', arg);
+			});
+
+			return result;
+		},
+	};
+});
+
 const testActionBase = {
 	data: {id: 'update'},
 	href: 'http://localhost:8080/o/cms/blogs/12345',
@@ -155,5 +172,30 @@ describe('AssetRenderer. Show metadata and icons.', () => {
 		expect(screen.getByRole('presentation', {name: ''})).toHaveClass(
 			'lexicon-icon-blogs'
 		);
+	});
+});
+
+describe('AssetRenderer. Modified by user name.', () => {
+	it('falls back to the creator name when modifiedByUserName is missing', () => {
+		render(<AssetRenderer {...testBaseProps} />);
+
+		expect(screen.getByText(/by-Test Test$/)).toBeInTheDocument();
+	});
+
+	it('shows modifiedByUserName when it is provided', () => {
+		render(
+			<AssetRenderer
+				{...testBaseProps}
+				itemData={{
+					...testBaseProps.itemData,
+					embedded: {
+						...testBaseProps.itemData.embedded,
+						modifiedByUserName: 'Admin Moved',
+					},
+				}}
+			/>
+		);
+
+		expect(screen.getByText(/by-Admin Moved$/)).toBeInTheDocument();
 	});
 });

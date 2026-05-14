@@ -7477,6 +7477,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@FeatureFlag("LPD-17564")
 	@Test
+	@TestInfo("LPD-89977")
 	public void testMoveObjectEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -7527,6 +7528,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testMoveObjectEntryGroup(
 			depotEntry.getGroupId(), objectDefinitionSetting);
+		_testMoveObjectEntryUpdatesVersionUser(depotEntry.getGroupId());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -9015,6 +9017,67 @@ public class DefaultObjectEntryManagerImplTest
 					).build();
 				}
 			});
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-89977")
+	public void testUpdateObjectEntryAssignsLatestVersionToEditor()
+		throws Exception {
+
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			_objectDefinition7.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+			String.valueOf(depotEntry.getGroupId()));
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition7,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			String.valueOf(depotEntry.getGroupId()), 1);
+
+		User user = UserTestUtil.addOmniadminUser();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String principalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+				_createDTOConverterContext(user), _objectDefinition7,
+				objectEntry.getId(),
+				new ObjectEntry() {
+					{
+						properties = HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build();
+					}
+				});
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PrincipalThreadLocal.setName(principalName);
+		}
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+
+		Assert.assertEquals(
+			adminUser.getUserId(), serviceBuilderObjectEntry.getUserId());
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), serviceBuilderObjectEntry.getVersion());
+
+		Assert.assertEquals(
+			user.getFullName(), objectEntryVersion.getUserName());
+		Assert.assertEquals(user.getUserId(), objectEntryVersion.getUserId());
 	}
 
 	@Test
@@ -12689,6 +12752,90 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(
 				destinationObjectEntryFolder.getObjectEntryFolderId()),
 			String.valueOf(objectEntry2.getObjectEntryFolderId()));
+	}
+
+	private void _testMoveObjectEntryUpdatesVersionUser(long groupId)
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				RandomTestUtil.randomString(), groupId, adminUser.getUserId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, null, RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			_objectDefinition7,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			String.valueOf(groupId), 1);
+
+		User user = UserTestUtil.addOmniadminUser();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String principalName = PrincipalThreadLocal.getName();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			objectEntry = _defaultObjectEntryManager.moveObjectEntry(
+				_createDTOConverterContext(user), objectEntry.getId(),
+				objectEntryFolder.getObjectEntryFolderId(), false);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PrincipalThreadLocal.setName(principalName);
+		}
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
+
+		Assert.assertEquals(
+			adminUser.getUserId(), serviceBuilderObjectEntry.getUserId());
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getId(), serviceBuilderObjectEntry.getVersion());
+
+		Assert.assertEquals(
+			user.getFullName(), objectEntryVersion.getUserName());
+		Assert.assertEquals(user.getUserId(), objectEntryVersion.getUserId());
+
+		NestedFieldsContext originalNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		try {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				new NestedFieldsContext(
+					1, null, Arrays.asList("modifiedByUserName"), null, null,
+					null));
+
+			ObjectEntry retrievedObjectEntry =
+				_defaultObjectEntryManager.getObjectEntry(
+					_createDTOConverterContext(adminUser), _objectDefinition7,
+					objectEntry.getId());
+
+			Assert.assertEquals(
+				user.getFullName(),
+				retrievedObjectEntry.getModifiedByUserName());
+
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(null);
+
+			ObjectEntry retrievedObjectEntryWithoutNestedField =
+				_defaultObjectEntryManager.getObjectEntry(
+					_createDTOConverterContext(adminUser), _objectDefinition7,
+					objectEntry.getId());
+
+			Assert.assertNull(
+				retrievedObjectEntryWithoutNestedField.getModifiedByUserName());
+		}
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				originalNestedFieldsContext);
+		}
 	}
 
 	private void _testUpdateObjectEntryWithAccountEntryRestricted2(

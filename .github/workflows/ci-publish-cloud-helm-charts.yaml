@@ -2,6 +2,158 @@ defaults:
     run:
         shell: bash
 jobs:
+    comment-argocd-patch-commands:
+        if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal'
+        needs:
+            -   publish-aws
+            -   publish-aws-infrastructure
+            -   publish-aws-infrastructure-provider
+            -   publish-default
+            -   publish-gcp
+            -   publish-gcp-infrastructure
+            -   publish-gcp-infrastructure-provider
+        permissions:
+            pull-requests: write
+        runs-on: ubuntu-latest
+        steps:
+            -   env:
+                    GH_REPO: ${{github.repository}}
+                    GH_TOKEN: ${{github.token}}
+                    PR_NUMBER: ${{github.event.pull_request.number}}
+                    REGISTRY: ghcr.io/${{github.repository_owner}}/charts-pr/${{github.event.pull_request.number}}
+                    SHA: ${{github.sha}}
+                name: Post ArgoCD patch commands as PR comment
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    function main {
+                        local short_sha="${SHA:0:7}"
+
+                        local aws_infra_provider_version
+                        local aws_infra_version
+                        local aws_version
+                        local gcp_infra_provider_version
+                        local gcp_infra_version
+                        local gcp_version
+
+                        aws_infra_provider_version=$(_chart_version aws-infrastructure-provider)
+                        aws_infra_version=$(_chart_version aws-infrastructure)
+                        aws_version=$(_chart_version aws)
+                        gcp_infra_provider_version=$(_chart_version gcp-infrastructure-provider)
+                        gcp_infra_version=$(_chart_version gcp-infrastructure)
+                        gcp_version=$(_chart_version gcp)
+
+                        _write_aws_comment_body \
+                            "${aws_infra_provider_version}-pr-${PR_NUMBER}-g${short_sha}" \
+                            "${aws_infra_version}-pr-${PR_NUMBER}-g${short_sha}" \
+                            "${aws_version}-pr-${PR_NUMBER}-g${short_sha}" \
+                            > /tmp/aws-comment.md
+
+                        _write_gcp_comment_body \
+                            "${gcp_infra_provider_version}-pr-${PR_NUMBER}-g${short_sha}" \
+                            "${gcp_infra_version}-pr-${PR_NUMBER}-g${short_sha}" \
+                            "${gcp_version}-pr-${PR_NUMBER}-g${short_sha}" \
+                            > /tmp/gcp-comment.md
+
+                        _upsert_comment argocd-aws-charts /tmp/aws-comment.md
+                        _upsert_comment argocd-gcp-charts /tmp/gcp-comment.md
+                    }
+
+                    function _chart_version {
+                        gh api "repos/${GH_REPO}/contents/cloud/helm/${1}/Chart.yaml?ref=${SHA}" --jq '.content' \
+                            | base64 --decode \
+                            | yq .version
+                    }
+
+                    function _upsert_comment {
+                        local body_file="${2}"
+                        local marker="${1}"
+
+                        local comment_id
+
+                        comment_id=$(gh api "repos/${GH_REPO}/issues/${PR_NUMBER}/comments" \
+                            --jq ".[] | select(.body | contains(\"${marker}\")) | .id" \
+                            | head --lines=1)
+
+                        if [ -n "${comment_id}" ]
+                        then
+                            gh api "repos/${GH_REPO}/issues/comments/${comment_id}" \
+                                --method PATCH \
+                                --raw-field body="$(cat "${body_file}")"
+                        else
+                            gh pr comment "${PR_NUMBER}" --body-file "${body_file}"
+                        fi
+                    }
+
+                    function _write_aws_comment_body {
+                        local aws_infra_provider_version="${1}"
+                        local aws_infra_version="${2}"
+                        local aws_version="${3}"
+
+                        cat << EOF
+                    <!-- argocd-aws-charts -->
+                    ## AWS Helm Charts
+
+                    Charts for this PR are available at \`${REGISTRY}\`. To test on an AWS cluster, run:
+
+                    \`\`\`bash
+                    ARGOCD_NS=\$(kubectl get pods --all-namespaces --selector app.kubernetes.io/name=argocd-server --output jsonpath='{.items[0].metadata.namespace}')
+
+                    kubectl patch appproject liferay-application --namespace "\${ARGOCD_NS}" --type=json --patch='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+                    kubectl patch appproject liferay-infrastructure --namespace "\${ARGOCD_NS}" --type=json --patch='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+
+                    kubectl patch applicationset liferay-aws-applicationset --namespace "\${ARGOCD_NS}" --type=json --patch='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${aws_version}"}
+                    ]'
+                    kubectl patch applicationset liferay-aws-infrastructure-applicationset --namespace "\${ARGOCD_NS}" --type=json --patch='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${aws_infra_version}"}
+                    ]'
+                    kubectl patch application liferay-aws-infrastructure-provider --namespace "\${ARGOCD_NS}" --type=json --patch='[
+                      {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${aws_infra_provider_version}"}
+                    ]'
+                    \`\`\`
+                    EOF
+                    }
+
+                    function _write_gcp_comment_body {
+                        local gcp_infra_provider_version="${1}"
+                        local gcp_infra_version="${2}"
+                        local gcp_version="${3}"
+
+                        cat << EOF
+                    <!-- argocd-gcp-charts -->
+                    ## GCP Helm Charts
+
+                    Charts for this PR are available at \`${REGISTRY}\`. To test on a GCP cluster, run:
+
+                    \`\`\`bash
+                    ARGOCD_NS=\$(kubectl get pods --all-namespaces --selector app.kubernetes.io/name=argocd-server --output jsonpath='{.items[0].metadata.namespace}')
+
+                    kubectl patch appproject liferay-application --namespace "\${ARGOCD_NS}" --type=json --patch='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+                    kubectl patch appproject liferay-infrastructure --namespace "\${ARGOCD_NS}" --type=json --patch='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+
+                    kubectl patch applicationset liferay-applicationset --namespace "\${ARGOCD_NS}" --type=json --patch='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${gcp_version}"}
+                    ]'
+                    kubectl patch applicationset liferay-infrastructure-applicationset --namespace "\${ARGOCD_NS}" --type=json --patch='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${gcp_infra_version}"}
+                    ]'
+                    kubectl patch application liferay-infrastructure-provider --namespace "\${ARGOCD_NS}" --type=json --patch='[
+                      {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${gcp_infra_provider_version}"}
+                    ]'
+                    \`\`\`
+                    EOF
+                    }
+
+                    main "${@}"
     delete-packages-pr:
         if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal'
         runs-on: ubuntu-latest

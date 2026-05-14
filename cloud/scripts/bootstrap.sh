@@ -37,7 +37,7 @@ function _check_terraform_version {
 	local found_version
 
 	found_version=$(terraform --version | awk '/^Terraform v/ {print $2; exit}')
-	found_version="${found#v}"
+	found_version="${found_version#v}"
 
 	local required_version="${1}"
 

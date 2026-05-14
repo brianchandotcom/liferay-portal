@@ -199,11 +199,11 @@ public class TestrayProject {
 	}
 
 	public TestrayComponent getTestrayComponentByName(String componentName) {
-		synchronized (_testrayComponentsID) {
-			if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
-				return null;
-			}
+		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
+			return null;
+		}
 
+		synchronized (_testrayComponentsID) {
 			TestrayComponent testrayComponent = _testrayComponentsName.get(
 				componentName);
 

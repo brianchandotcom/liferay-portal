@@ -5,10 +5,11 @@
 
 import {useEffect, useState} from 'react';
 
-export default function useLocalizationLanguageId() {
-	const [languageId, setLanguageId] = useState<Liferay.Language.Locale>(
-		Liferay.ThemeDisplay.getDefaultLanguageId()
-	);
+export default function useLocalizationLanguageId(
+	defaultLanguageId: Liferay.Language.Locale
+) {
+	const [languageId, setLanguageId] =
+		useState<Liferay.Language.Locale>(defaultLanguageId);
 
 	useEffect(() => {
 		const handleLocaleChanged = ({

@@ -5,13 +5,23 @@
 
 package com.liferay.commerce.internal.permission;
 
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.permission.CommerceShipmentPermission;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,10 +121,59 @@ public class CommerceShipmentPermissionImpl
 			return true;
 		}
 
+		if (actionId.equals(ActionKeys.VIEW) &&
+			_containsViewCommerceOrderPermission(
+				commerceShipment.getCommerceShipmentId(), permissionChecker)) {
+
+			return true;
+		}
+
 		return permissionChecker.hasPermission(
 			null, CommerceShipment.class.getName(),
 			commerceShipment.getCommerceShipmentId(), actionId);
 	}
+
+	private boolean _containsViewCommerceOrderPermission(
+			long commerceShipmentId, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		List<CommerceShipmentItem> commerceShipmentItems =
+			_commerceShipmentItemLocalService.getCommerceShipmentItems(
+				commerceShipmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (CommerceShipmentItem commerceShipmentItem :
+				commerceShipmentItems) {
+
+			CommerceOrderItem commerceOrderItem =
+				_commerceOrderItemLocalService.fetchCommerceOrderItem(
+					commerceShipmentItem.getCommerceOrderItemId());
+
+			if (commerceOrderItem == null) {
+				continue;
+			}
+
+			if (_commerceOrderModelResourcePermission.contains(
+					permissionChecker, commerceOrderItem.getCommerceOrderId(),
+					ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
+
+	@Reference
+	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
 
 	@Reference
 	private CommerceShipmentLocalService _commerceShipmentLocalService;

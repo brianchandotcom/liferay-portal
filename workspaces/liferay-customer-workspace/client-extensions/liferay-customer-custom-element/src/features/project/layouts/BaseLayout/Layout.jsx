@@ -90,7 +90,7 @@ const Layout = () => {
 						?.map((businessEvent, businessEventIndex) => (
 							<InformationBanner
 								content={i18n.sub(
-									'the-target-go-Live-date-of-x-has-passed-please-close-this-business-event-or-update-event-details',
+									'the-planned-event-date-of-x-has-passed-please-close-this-business-event-or-update-event-details',
 									[
 										getDateCustomFormat(
 											FORMAT_DATE_TYPES.day2DMonthSYearN,

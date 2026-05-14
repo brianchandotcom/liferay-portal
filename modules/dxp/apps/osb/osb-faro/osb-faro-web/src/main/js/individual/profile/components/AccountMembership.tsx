@@ -12,7 +12,14 @@ import {formatUTCDate} from 'shared/util/date';
 import {Map} from 'immutable';
 import {SectionHeader} from 'shared/components/SectionHeader';
 
-function formatCurrency(currencyCode: string, value: string): string {
+function formatCurrency(
+	currencyCode: string | null | undefined,
+	value: string
+): string {
+	if (!currencyCode) {
+		return new Intl.NumberFormat().format(parseFloat(value));
+	}
+
 	return new Intl.NumberFormat(undefined, {
 		currency: currencyCode
 	}).format(parseFloat(value));

@@ -232,6 +232,15 @@ public class ObjectEntryVersionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryVersion fetchLatestObjectEntryVersion(
+		long objectEntryId) {
+
+		return objectEntryVersionPersistence.fetchByObjectEntryId_First(
+			objectEntryId,
+			ObjectEntryVersionVersionComparator.getInstance(false));
+	}
+
+	@Override
 	public ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryId, int version) {
 

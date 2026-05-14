@@ -328,6 +328,54 @@ test(
 );
 
 test(
+	'Upload button stays in viewport when many files are queued on a short screen',
+	{tag: '@LPD-90005'},
+	async ({assetsPage, page}) => {
+		await page.setViewportSize({height: 500, width: 1024});
+
+		await assetsPage.gotoAll();
+
+		const dataSetWrapper = page.locator('div.data-set-wrapper').first();
+		const dataTransfer = await page.evaluateHandle(
+			(data) => {
+				const dt = new DataTransfer();
+
+				for (let i = 1; i <= 10; i++) {
+					const file = new File(
+						[data.toString('hex')],
+						`file_upload_image_${i}.jpeg`,
+						{
+							type: 'image/jpg',
+						}
+					);
+					dt.items.add(file);
+				}
+
+				return dt;
+			},
+			readFileSync(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			)
+		);
+
+		await dataSetWrapper.dispatchEvent('dragstart', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragenter', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragover', {dataTransfer});
+
+		await dataSetWrapper.dispatchEvent('drop', {dataTransfer});
+		await dataSetWrapper.dispatchEvent('dragend', {dataTransfer});
+
+		await expect(assetsPage.modal.container).toBeVisible();
+
+		await expect(
+			assetsPage.modal.footer.getByRole('button', {
+				name: 'Upload (10)',
+			})
+		).toBeInViewport();
+	}
+);
+
+test(
 	'Expiration date filter allows future dates',
 	{tag: '@LPD-69189'},
 	async ({apiHelpers, assetsPage, page}) => {

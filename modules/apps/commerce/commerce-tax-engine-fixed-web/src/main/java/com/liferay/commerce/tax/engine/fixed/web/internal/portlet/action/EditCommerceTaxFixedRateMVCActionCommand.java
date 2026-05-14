@@ -66,6 +66,11 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw exception;

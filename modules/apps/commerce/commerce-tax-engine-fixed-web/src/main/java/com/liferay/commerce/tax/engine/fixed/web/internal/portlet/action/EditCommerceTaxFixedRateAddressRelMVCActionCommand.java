@@ -6,6 +6,7 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException;
 import com.liferay.commerce.tax.engine.fixed.configuration.CommerceTaxByAddressTypeConfiguration;
 import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
@@ -65,10 +66,16 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof NoSuchTaxFixedRateAddressRelException ||
+			if (exception instanceof NoSuchCPTaxCategoryException ||
+				exception instanceof NoSuchTaxFixedRateAddressRelException ||
 				exception instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw exception;

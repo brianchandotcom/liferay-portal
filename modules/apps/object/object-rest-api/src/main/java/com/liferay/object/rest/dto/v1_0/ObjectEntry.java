@@ -659,6 +659,51 @@ public class ObjectEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Optional field with the full name of the user who last modified the object entry, can be embedded with nestedFields"
+	)
+	public String getModifiedByUserName() {
+		if (_modifiedByUserNameSupplier != null) {
+			modifiedByUserName = _modifiedByUserNameSupplier.get();
+
+			_modifiedByUserNameSupplier = null;
+		}
+
+		return modifiedByUserName;
+	}
+
+	public void setModifiedByUserName(String modifiedByUserName) {
+		this.modifiedByUserName = modifiedByUserName;
+
+		_modifiedByUserNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setModifiedByUserName(
+		UnsafeSupplier<String, Exception> modifiedByUserNameUnsafeSupplier) {
+
+		_modifiedByUserNameSupplier = () -> {
+			try {
+				return modifiedByUserNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Optional field with the full name of the user who last modified the object entry, can be embedded with nestedFields"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String modifiedByUserName;
+
+	@JsonIgnore
+	private Supplier<String> _modifiedByUserNameSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getObjectEntryFolderExternalReferenceCode() {
 		if (_objectEntryFolderExternalReferenceCodeSupplier != null) {
@@ -1314,6 +1359,9 @@ public class ObjectEntry implements Serializable {
 		else if (Objects.equals(propertyName, "keywords")) {
 			return getKeywords();
 		}
+		else if (Objects.equals(propertyName, "modifiedByUserName")) {
+			return getModifiedByUserName();
+		}
 		else if (Objects.equals(
 					propertyName, "objectEntryFolderExternalReferenceCode")) {
 
@@ -1417,6 +1465,9 @@ public class ObjectEntry implements Serializable {
 		}
 		else if (Objects.equals(propertyName, "keywords")) {
 			setKeywords((String[])propertyValue);
+		}
+		else if (Objects.equals(propertyName, "modifiedByUserName")) {
+			setModifiedByUserName((String)propertyValue);
 		}
 		else if (Objects.equals(
 					propertyName, "objectEntryFolderExternalReferenceCode")) {
@@ -1735,6 +1786,22 @@ public class ObjectEntry implements Serializable {
 			sb.append("]");
 		}
 
+		String modifiedByUserName = getModifiedByUserName();
+
+		if (modifiedByUserName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"modifiedByUserName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(modifiedByUserName));
+
+			sb.append("\"");
+		}
+
 		String objectEntryFolderExternalReferenceCode =
 			getObjectEntryFolderExternalReferenceCode();
 
@@ -2041,4 +2108,4 @@ public class ObjectEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1306455185
+// LIFERAY-REST-BUILDER-HASH:1296975098

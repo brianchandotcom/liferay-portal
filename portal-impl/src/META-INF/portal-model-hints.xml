@@ -1545,6 +1545,10 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="type" type="int" />
+		<field name="emailAddress" type="String">
+			<hint-collection name="EMAIL-ADDRESS" />
+			<validator name="email" />
+		</field>
 		<field name="extraInfo" type="String">
 			<hint-collection name="CLOB" />
 		</field>

@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
+import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateAddressRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -38,6 +40,9 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		CPTaxCategory cpTaxCategory =
+			_cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
+
 		long commerceTaxFixedRateAddressRelId = counterLocalService.increment();
 
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
@@ -50,7 +55,8 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 		commerceTaxFixedRateAddressRel.setUserName(user.getFullName());
 		commerceTaxFixedRateAddressRel.setCommerceTaxMethodId(
 			commerceTaxMethodId);
-		commerceTaxFixedRateAddressRel.setCPTaxCategoryId(cpTaxCategoryId);
+		commerceTaxFixedRateAddressRel.setCPTaxCategoryId(
+			cpTaxCategory.getCPTaxCategoryId());
 		commerceTaxFixedRateAddressRel.setCountryId(countryId);
 		commerceTaxFixedRateAddressRel.setRegionId(regionId);
 		commerceTaxFixedRateAddressRel.setZip(zip);
@@ -191,6 +197,9 @@ public class CommerceTaxFixedRateAddressRelLocalServiceImpl
 		return commerceTaxFixedRateAddressRelPersistence.update(
 			commerceTaxFixedRateAddressRel);
 	}
+
+	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

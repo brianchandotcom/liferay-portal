@@ -207,7 +207,7 @@ public class AccountGroupRelLocalServiceTest {
 	}
 
 	@Test
-	public void testGetAccountGroupRelWithKeywords() throws Exception {
+	public void testGetAccountGroupRels() throws Exception {
 		String randomString = RandomTestUtil.randomString();
 
 		AccountGroup accountGroup1 = AccountGroupTestUtil.addAccountGroup(

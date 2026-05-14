@@ -55,12 +55,15 @@ describe('SpaceSummaryHeader', () => {
 			screen.getByRole('heading', {name: defaultProps.title})
 		).toBeInTheDocument();
 
-		const button = await waitFor(() =>
-			screen.getByRole('button', {name: defaultProps.label})
+		const link = await waitFor(() =>
+			screen.getByRole('link', {name: defaultProps.label})
 		);
 
-		expect(button).toBeInTheDocument();
-		expect(screen.queryByRole('link')).not.toBeInTheDocument();
+		expect(link).toBeInTheDocument();
+		expect(link).toHaveAttribute('href', '/some-url');
+		expect(
+			screen.queryByRole('button', {name: defaultProps.label})
+		).not.toBeInTheDocument();
 	});
 
 	it('renders a button instead of a link when modal props are provided and url is null', async () => {

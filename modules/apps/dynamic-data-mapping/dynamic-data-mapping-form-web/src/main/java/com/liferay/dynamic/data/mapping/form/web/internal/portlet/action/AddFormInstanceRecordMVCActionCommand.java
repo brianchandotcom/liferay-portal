@@ -138,8 +138,7 @@ public class AddFormInstanceRecordMVCActionCommand
 					"formInstanceRecordId",
 					String.valueOf(ddmFormInstanceRecordId));
 				actionResponse.setRenderParameter(
-					"redirect",
-					ParamUtil.getString(actionRequest, "redirect"));
+					"redirect", ParamUtil.getString(actionRequest, "redirect"));
 			}
 
 			return;

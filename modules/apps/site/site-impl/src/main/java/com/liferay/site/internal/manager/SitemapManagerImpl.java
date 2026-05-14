@@ -243,13 +243,13 @@ public class SitemapManagerImpl implements SitemapManager {
 		throws PortalException {
 
 		return getSitemap(
-			layoutUuid, groupId, privateLayout, themeDisplay, null);
+			null, layoutUuid, groupId, privateLayout, themeDisplay);
 	}
 
 	@Override
 	public String getSitemap(
-			String layoutUuid, long groupId, boolean privateLayout,
-			ThemeDisplay themeDisplay, String assetType)
+			String assetType, String layoutUuid, long groupId,
+			boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (Validator.isNotNull(assetType)) {
@@ -262,9 +262,8 @@ public class SitemapManagerImpl implements SitemapManager {
 				!_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
 					companyId) ||
 				!StringUtil.equals(
-					_sitemapConfigurationManager.xmlSitemapGroupingMode(
-						companyId),
-					SitemapConstants.GROUPING_MODE_ASSET_TYPE) ||
+					_sitemapConfigurationManager.xmlSitemapIndexMode(companyId),
+					SitemapConstants.INDEX_MODE_ASSET_TYPE) ||
 				!sitemapURLProvider.isInclude(companyId, groupId)) {
 
 				return null;
@@ -431,9 +430,9 @@ public class SitemapManagerImpl implements SitemapManager {
 		_initEntriesAndSize(rootElement);
 
 		if (StringUtil.equals(
-				_sitemapConfigurationManager.xmlSitemapGroupingMode(
+				_sitemapConfigurationManager.xmlSitemapIndexMode(
 					themeDisplay.getCompanyId()),
-				SitemapConstants.GROUPING_MODE_ASSET_TYPE)) {
+				SitemapConstants.INDEX_MODE_ASSET_TYPE)) {
 
 			String portalURL = themeDisplay.getPortalURL();
 

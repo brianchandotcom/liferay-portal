@@ -43,16 +43,16 @@ export default function ({
 		`${namespace}selectSiteLink`
 	) as HTMLButtonElement;
 
-	const xmlSitemapGroupingModeSelect = document.getElementById(
-		`${namespace}xmlSitemapGroupingMode`
-	) as HTMLSelectElement;
-
 	const xmlSitemapIndexEnabledCheckbox = document.getElementById(
 		`${namespace}xmlSitemapIndexEnabled`
 	) as HTMLInputElement;
 
+	const xmlSitemapIndexModeSelect = document.getElementById(
+		`${namespace}xmlSitemapIndexMode`
+	) as HTMLSelectElement;
+
 	const onXmlSitemapIndexEnabledChange = () => {
-		xmlSitemapGroupingModeSelect.disabled =
+		xmlSitemapIndexModeSelect.disabled =
 			!xmlSitemapIndexEnabledCheckbox.checked;
 	};
 

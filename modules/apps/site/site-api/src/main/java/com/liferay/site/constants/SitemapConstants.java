@@ -10,8 +10,8 @@ package com.liferay.site.constants;
  */
 public class SitemapConstants {
 
-	public static final String GROUPING_MODE_ASSET_TYPE = "asset-type";
+	public static final String INDEX_MODE_ASSET_TYPE = "asset-type";
 
-	public static final String GROUPING_MODE_PAGE_LAYOUT = "page-layout";
+	public static final String INDEX_MODE_PAGE_LAYOUT = "page-layout";
 
 }

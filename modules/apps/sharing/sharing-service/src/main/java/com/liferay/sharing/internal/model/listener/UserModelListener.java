@@ -5,7 +5,6 @@
 
 package com.liferay.sharing.internal.model.listener;
 
-import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
@@ -72,12 +71,8 @@ public class UserModelListener extends BaseModelListener<User> {
 			TicketTable.INSTANCE.type.eq(
 				TicketConstants.TYPE_INVITE_COLLABORATOR)
 		).and(
-			DSLFunctionFactoryUtil.lower(
-				DSLFunctionFactoryUtil.castClobText(
-					TicketTable.INSTANCE.extraInfo)
-			).eq(
-				StringUtil.lowerCase(user.getEmailAddress())
-			)
+			TicketTable.INSTANCE.emailAddress.eq(
+				StringUtil.lowerCase(user.getEmailAddress()))
 		).and(
 			TicketTable.INSTANCE.expirationDate.gt(new Date())
 		);

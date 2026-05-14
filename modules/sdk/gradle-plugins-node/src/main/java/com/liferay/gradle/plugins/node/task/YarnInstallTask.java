@@ -7,20 +7,34 @@ package com.liferay.gradle.plugins.node.task;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Peter Shin
  * @author David Truong
  */
 public class YarnInstallTask extends ExecutePackageManagerTask {
+
+	public YarnInstallTask() {
+		String installArgs = GradleUtil.getProperty(
+			getProject(), "nodejs.yarn.install.args", "");
+
+		if (Validator.isNotNull(installArgs)) {
+			installArgs = installArgs.trim();
+
+			setInstallArgs(installArgs.split("\\s+"));
+		}
+	}
 
 	@Override
 	public synchronized void executeNode() throws Exception {
@@ -31,6 +45,12 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		}
 
 		super.executeNode();
+	}
+
+	@Input
+	@Optional
+	public List<String> getInstallArgs() {
+		return GradleUtil.toStringList(_installArgs);
 	}
 
 	@Input
@@ -47,6 +67,18 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		_frozenLockFile = frozenLockFile;
 	}
 
+	public void setInstallArgs(Iterable<?> installArgs) {
+		_installArgs.clear();
+
+		for (Object installArg : installArgs) {
+			_installArgs.add(installArg);
+		}
+	}
+
+	public void setInstallArgs(Object... installArgs) {
+		setInstallArgs(Arrays.asList(installArgs));
+	}
+
 	public void setNetworkTimeout(long networkTimeout) {
 		_networkTimeout = networkTimeout;
 	}
@@ -55,6 +87,14 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
+
+		List<String> installArgs = getInstallArgs();
+
+		if (!installArgs.isEmpty()) {
+			completeArgs.addAll(installArgs);
+
+			return completeArgs;
+		}
 
 		completeArgs.add("install");
 
@@ -91,6 +131,7 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 	}
 
 	private Object _frozenLockFile;
+	private final List<Object> _installArgs = new ArrayList<>();
 	private long _networkTimeout = 120000;
 
 }

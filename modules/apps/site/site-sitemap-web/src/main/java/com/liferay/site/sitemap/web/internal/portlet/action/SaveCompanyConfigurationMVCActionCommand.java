@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.configuration.manager.SitemapConfigurationManager;
 
@@ -62,15 +61,6 @@ public class SaveCompanyConfigurationMVCActionCommand
 			throw new PortletException(principalException);
 		}
 
-		String xmlSitemapGroupingMode = ParamUtil.getString(
-			actionRequest, "xmlSitemapGroupingMode");
-
-		if (Validator.isNull(xmlSitemapGroupingMode)) {
-			xmlSitemapGroupingMode =
-				_sitemapConfigurationManager.xmlSitemapGroupingMode(
-					themeDisplay.getCompanyId());
-		}
-
 		_sitemapConfigurationManager.saveSitemapCompanyConfiguration(
 			themeDisplay.getCompanyId(),
 			ArrayUtil.filter(
@@ -108,8 +98,11 @@ public class SaveCompanyConfigurationMVCActionCommand
 			ParamUtil.getBoolean(actionRequest, "includeCategories"),
 			ParamUtil.getBoolean(actionRequest, "includePages"),
 			ParamUtil.getBoolean(actionRequest, "includeWebContent"),
-			xmlSitemapGroupingMode,
-			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"));
+			ParamUtil.getBoolean(actionRequest, "xmlSitemapIndexEnabled"),
+			ParamUtil.getString(
+				actionRequest, "xmlSitemapIndexMode",
+				_sitemapConfigurationManager.xmlSitemapIndexMode(
+					themeDisplay.getCompanyId())));
 
 		SessionMessages.add(
 			actionRequest, "requestProcessed",

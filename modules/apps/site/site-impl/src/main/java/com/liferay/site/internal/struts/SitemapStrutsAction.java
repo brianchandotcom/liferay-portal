@@ -123,9 +123,8 @@ public class SitemapStrutsAction implements StrutsAction {
 					httpServletRequest, "layoutUuid");
 
 				String sitemap = _sitemapManager.getSitemap(
-					layoutUuid, layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(), themeDisplay,
-					assetTypeClassName);
+					assetTypeClassName, layoutUuid, layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout(), themeDisplay);
 
 				if (sitemap == null) {
 					httpServletResponse.sendError(

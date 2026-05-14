@@ -62,7 +62,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 </clay:sheet-section>
 
 <clay:sheet-section
-	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "xmlSitemapGroupingModeTitle" %>'
+	aria-labelledby='<%= liferayPortletResponse.getNamespace() + "xmlSitemapIndexModeTitle" %>'
 	cssClass="c-mb-0"
 	role="group"
 >
@@ -73,7 +73,7 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 		<clay:content-col
 			expand="<%= true %>"
 		>
-			<span class="heading-text text-secondary" id="<portlet:namespace />xmlSitemapGroupingModeTitle"><liferay-ui:message key="xml-sitemap-grouping-mode" /></span>
+			<span class="heading-text text-secondary" id="<portlet:namespace />xmlSitemapIndexModeTitle"><liferay-ui:message key="xml-sitemap-index-mode" /></span>
 		</clay:content-col>
 	</clay:content-row>
 
@@ -84,13 +84,13 @@ SitemapCompanyConfigurationDisplayContext sitemapCompanyConfigurationDisplayCont
 			expand="<%= true %>"
 		>
 			<clay:select
-				aria-label='<%= LanguageUtil.get(request, "xml-sitemap-grouping-mode") %>'
-				data-qa-id="xmlSitemapGroupingModeSelector"
+				aria-label='<%= LanguageUtil.get(request, "xml-sitemap-index-mode") %>'
+				data-qa-id="xmlSitemapIndexModeSelector"
 				disabled="<%= !sitemapCompanyConfigurationDisplayContext.xmlSitemapIndexEnabled() %>"
-				id='<%= liferayPortletResponse.getNamespace() + "xmlSitemapGroupingMode" %>'
-				label='<%= LanguageUtil.get(request, "xml-sitemap-grouping-mode") %>'
-				name="xmlSitemapGroupingMode"
-				options="<%= sitemapCompanyConfigurationDisplayContext.getSitemapGroupingModeSelectOptions() %>"
+				id='<%= liferayPortletResponse.getNamespace() + "xmlSitemapIndexMode" %>'
+				label='<%= LanguageUtil.get(request, "xml-sitemap-index-mode") %>'
+				name="xmlSitemapIndexMode"
+				options="<%= sitemapCompanyConfigurationDisplayContext.getSitemapIndexModeSelectOptions() %>"
 			/>
 		</clay:content-col>
 	</clay:content-row>

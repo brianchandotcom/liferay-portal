@@ -18,7 +18,7 @@ Verify all of these once at the start of the run. Fail fast with a clear message
 - `${TESTRAY_CLIENT_ID}` and `${TESTRAY_CLIENT_SECRET}` must be set in the environment.
 - The current working directory is a git checkout of `liferay-portal`.
 
-## Step 1. Authenticate With Testray
+## Authenticate With Testray
 
 Fetch a bearer token once and reuse it for every Testray call:
 
@@ -33,7 +33,7 @@ export ACCESS_TOKEN=$(curl \
 	| jq --raw-output '.access_token')
 ```
 
-## Step 2. Sync Master
+## Sync Master
 
 Fetch the latest master from origin once so every subsequent ancestry check is current:
 
@@ -41,7 +41,7 @@ Fetch the latest master from origin once so every subsequent ancestry check is c
 git fetch --quiet origin master
 ```
 
-## Step 3. Fetch Open Tickets
+## Fetch Open Tickets
 
 Query Jira for all open issues labeled `claude-test-fix`, paging by incrementing `startAt` by `maxResults` until `isLast` is `true`:
 
@@ -67,11 +67,11 @@ curl \
 
 Print the total count before proceeding.
 
-## Step 4. Process Each Ticket
+## Process Each Ticket
 
-For each ticket, log `Processing <ticket> — <summary>` and run both checks below independently. The closure decision in Step 4.6 combines their results.
+For each ticket, log `Processing <ticket> — <summary>` and run both checks below independently. The closure decision in **Decide Whether to Close** combines their results.
 
-### 4.1. Resolve the Case ID
+### Resolve the Testray Case ID
 
 **Try description first.** Flatten every `.text` node in the ADF description into a single string and apply a case-insensitive regex to extract the first 7-or-more-digit number that follows `case result id` or `case result`:
 
@@ -106,7 +106,7 @@ curl \
 
 When the response contains zero items or more than one item, log `SKIP <ticket> — case not uniquely found in Testray` and move on.
 
-### 4.2. Fetch Case History
+### Fetch Case History
 
 Fetch the 5 most recent history entries for the resolved case ID, newest first:
 
@@ -129,7 +129,7 @@ The response is a paginated object; entries are under `.items`. Walk `.items` ne
 
 Record the passing entry's `gitHash`, `testrayRoutineId`, `testrayBuildId`, and `testrayCaseResultId` — all are present directly on each history item.
 
-### 4.3. Check Whether the Passing SHA Is on Master
+### Check Whether the Passing SHA Is on Master
 
 ```bash
 git merge-base --is-ancestor <gitHash> origin/master
@@ -141,7 +141,7 @@ Set `TESTRAY_PASS=true` when the command exits zero, `TESTRAY_PASS=false` otherw
 https://testray.liferay.com/#/project/35392/routines/<testrayRoutineId>/build/<testrayBuildId>/case-result/<testrayCaseResultId>
 ```
 
-### 4.4. Check for Fix Commits on Master
+### Check for Fix Commits on Master
 
 Fetch the ticket's subtasks:
 
@@ -160,7 +160,7 @@ git log origin/master --oneline --grep="<id>"
 
 Set `COMMITS_FOUND=true` when at least one commit is found for any ID; record those commits as evidence. Set `COMMITS_FOUND=false` otherwise.
 
-### 4.5. Decide Whether to Close
+### Decide Whether to Close
 
 | `COMMITS_FOUND` | `TESTRAY_PASS` | Action |
 | --- | --- | --- |
@@ -169,7 +169,7 @@ Set `COMMITS_FOUND=true` when at least one commit is found for any ID; record th
 | true | false | Log `SKIP <ticket> — fix commits on master but test still failing` and move on |
 | false | false | Log `SKIP <ticket> — no fix commits and test not passing on master` and move on |
 
-### 4.6. Close the Ticket
+### Close the Ticket
 
 1. Fetch available transitions:
 

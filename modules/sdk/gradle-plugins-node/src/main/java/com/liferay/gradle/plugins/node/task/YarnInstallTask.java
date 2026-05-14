@@ -41,6 +41,9 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		if (Validator.isNotNull(networkTimeout)) {
 			_networkTimeout = Long.parseLong(networkTimeout);
 		}
+
+		_preferOffline = GradleUtil.getProperty(
+			getProject(), "nodejs.yarn.install.prefer.offline", true);
 	}
 
 	@Override
@@ -70,6 +73,11 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 		return GradleUtil.toBoolean(_frozenLockFile);
 	}
 
+	@Input
+	public boolean isPreferOffline() {
+		return _preferOffline;
+	}
+
 	public void setFrozenLockFile(Object frozenLockFile) {
 		_frozenLockFile = frozenLockFile;
 	}
@@ -88,6 +96,10 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 
 	public void setNetworkTimeout(long networkTimeout) {
 		_networkTimeout = networkTimeout;
+	}
+
+	public void setPreferOffline(boolean preferOffline) {
+		_preferOffline = preferOffline;
 	}
 
 	@Internal
@@ -118,7 +130,9 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 			completeArgs.add(String.valueOf(networkTimeout));
 		}
 
-		completeArgs.add("--prefer-offline");
+		if (isPreferOffline()) {
+			completeArgs.add("--prefer-offline");
+		}
 
 		return completeArgs;
 	}
@@ -140,5 +154,6 @@ public class YarnInstallTask extends ExecutePackageManagerTask {
 	private Object _frozenLockFile;
 	private final List<Object> _installArgs = new ArrayList<>();
 	private long _networkTimeout = 120000;
+	private boolean _preferOffline;
 
 }

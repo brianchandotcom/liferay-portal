@@ -159,7 +159,7 @@ When that does not point to a single commit, rank candidates: files in the test'
 
 ### Iterate Through Suspects
 
-Apply candidate fixes as uncommitted changes; the `commit` skill picks them up later in **Pull Request**. For each suspect in ranked order:
+Apply candidate fixes as uncommitted changes; the **Pull Request** step commits them later. For each suspect in ranked order:
 
 1. Read its documented intent — the commit message and diff, the linked `LPD-XXXXX` ticket (summary, issue type, description) when the subject carries one, and the body of the merged pull request that introduced the commit:
 

@@ -20,7 +20,7 @@ The skill runs the dual-mode formatter (automatically applies fixable violations
 
 ## Autocommit
 
-The formatter is dual-mode: it automatically applies fixable violations and lists unfixable ones as errors. When `git status --porcelain` is nonempty after the formatter (fixable subset applied), stage all changes (`git add --all`) and invoke the `commit` skill with the hint `SF`. The commit skill produces `<TICKET> SF`.
+The formatter is dual-mode: it automatically applies fixable violations and lists unfixable ones as errors. When `git status --porcelain` is nonempty after the formatter (fixable subset applied), stage all changes (`git add --all`) and create a commit titled `<TICKET> SF`.
 
 When the commit fails, record the failure and continue to the next validation.
 

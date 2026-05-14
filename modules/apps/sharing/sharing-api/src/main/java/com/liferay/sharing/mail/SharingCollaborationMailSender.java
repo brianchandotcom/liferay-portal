@@ -11,7 +11,7 @@ import com.liferay.sharing.model.SharingEntry;
 /**
  * @author Alicia García
  */
-public interface SharingInvitationMailSender {
+public interface SharingCollaborationMailSender {
 
 	public void sendInvitation(
 			ServiceContext serviceContext, SharingEntry sharingEntry)

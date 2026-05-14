@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
-import com.liferay.sharing.mail.SharingInvitationMailSender;
+import com.liferay.sharing.mail.SharingCollaborationMailSender;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -305,7 +305,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 		try {
 			if (sharingEntry.getToTicketId() > 0) {
-				_sharingInvitationMailSender.sendInvitation(
+				_sharingCollaborationMailSender.sendInvitation(
 					serviceContext, sharingEntry);
 
 				return;
@@ -392,10 +392,10 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		NotificationsSharingEntryLocalServiceWrapper.class);
 
 	@Reference
-	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
+	private SharingCollaborationMailSender _sharingCollaborationMailSender;
 
 	@Reference
-	private SharingInvitationMailSender _sharingInvitationMailSender;
+	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

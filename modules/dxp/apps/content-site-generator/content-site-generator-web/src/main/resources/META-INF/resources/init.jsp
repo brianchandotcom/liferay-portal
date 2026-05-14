@@ -12,7 +12,7 @@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set"
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.content.site.generator.web.internal.constants.ContentSiteGeneratorFDSNames" %><%@
-page import="com.liferay.content.site.generator.web.internal.display.context.ViewContentSitesDisplayContext" %>
+page import="com.liferay.content.site.generator.web.internal.display.context.ViewGenerationsDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

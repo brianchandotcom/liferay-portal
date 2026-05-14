@@ -20,14 +20,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mylena Monte
  */
 @Component(
-	property = "frontend.data.set.name=" + ContentSiteGeneratorFDSNames.CONTENT_SITE_GENERATOR,
+	property = "frontend.data.set.name=" + ContentSiteGeneratorFDSNames.GENERATIONS,
 	service = FDSView.class
 )
 public class ContentSiteGeneratorCardsFDSView extends BaseCardsFDSView {
 
 	@Override
 	public String getDescription() {
-		return "runStatus.name";
+		return "prompt";
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ContentSiteGeneratorCardsFDSView extends BaseCardsFDSView {
 
 	@Override
 	public String getTitle() {
-		return "name";
+		return "title";
 	}
 
 	@Reference

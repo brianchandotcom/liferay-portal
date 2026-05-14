@@ -8,16 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewContentSitesDisplayContext viewContentSitesDisplayContext = (ViewContentSitesDisplayContext)request.getAttribute(ViewContentSitesDisplayContext.class.getName());
+ViewGenerationsDisplayContext viewGenerationsDisplayContext = (ViewGenerationsDisplayContext)request.getAttribute(ViewGenerationsDisplayContext.class.getName());
 %>
 
 <frontend-data-set:headless-display
-	apiURL="<%= viewContentSitesDisplayContext.getAPIURL() %>"
-	bulkActionDropdownItems="<%= viewContentSitesDisplayContext.getBulkActionDropdownItems() %>"
-	creationMenu="<%= viewContentSitesDisplayContext.getCreationMenu() %>"
-	emptyState="<%= viewContentSitesDisplayContext.getEmptyState() %>"
-	fdsActionDropdownItems="<%= viewContentSitesDisplayContext.getFDSActionDropdownItems() %>"
-	id="<%= ContentSiteGeneratorFDSNames.CONTENT_SITE_GENERATOR %>"
+	apiURL="<%= viewGenerationsDisplayContext.getAPIURL() %>"
+	bulkActionDropdownItems="<%= viewGenerationsDisplayContext.getBulkActionDropdownItems() %>"
+	creationMenu="<%= viewGenerationsDisplayContext.getCreationMenu() %>"
+	emptyState="<%= viewGenerationsDisplayContext.getEmptyState() %>"
+	fdsActionDropdownItems="<%= viewGenerationsDisplayContext.getFDSActionDropdownItems() %>"
+	id="<%= ContentSiteGeneratorFDSNames.GENERATIONS %>"
 	itemsPerPage="<%= 20 %>"
 	selectedItemsKey="id"
 	selectionType="multiple"

@@ -6,7 +6,7 @@
 import {useField, useFormikContext} from 'formik';
 import React from 'react';
 
-import DateFilter, {DateFilterValues, FilterType} from '../../date_filter';
+import DateFilter, {DateFilterValues, Range} from '../../date_filter';
 
 interface FormikFieldDateFilterProps {
 	itemsCount?: number;
@@ -24,7 +24,7 @@ export function FormikFieldDateFilter({
 
 	return (
 		<DateFilter
-			appliedValue={field.value ?? {range: FilterType.All}}
+			appliedValue={field.value ?? {range: Range.All}}
 			itemsCount={itemsCount}
 			onApplyFilter={(filterValues) => {
 				helpers.setValue(filterValues);

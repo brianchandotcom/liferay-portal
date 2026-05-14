@@ -33,18 +33,18 @@ const DateRangeFields = ({
 				<FieldDatePicker
 					dateFormat={DATE_FORMAT}
 					errorMessage={
-						touchedFields.fromDate ? errors.fromDate : undefined
+						touchedFields.startDate ? errors.startDate : undefined
 					}
-					id="fromDate"
+					id="startDate"
 					label={Liferay.Language.get('from')}
-					name="fromDate"
-					onBlur={() => handleUpdateTouched({fromDate: true})}
+					name="startDate"
+					onBlur={() => handleUpdateTouched({startDate: true})}
 					onChange={(value) =>
-						handleUpdateFilter({fromDate: value as string})
+						handleUpdateFilter({startDate: value as string})
 					}
 					placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
 					time
-					value={editing.fromDate}
+					value={editing.startDate}
 					years={{
 						end: currentYear,
 						start: currentYear - YEARS_OFFSET,
@@ -56,18 +56,18 @@ const DateRangeFields = ({
 				<FieldDatePicker
 					dateFormat={DATE_FORMAT}
 					errorMessage={
-						touchedFields.toDate ? errors.toDate : undefined
+						touchedFields.endDate ? errors.endDate : undefined
 					}
-					id="toDate"
+					id="endDate"
 					label={Liferay.Language.get('to')}
-					name="toDate"
-					onBlur={() => handleUpdateTouched({toDate: true})}
+					name="endDate"
+					onBlur={() => handleUpdateTouched({endDate: true})}
 					onChange={(value) =>
-						handleUpdateFilter({toDate: value as string})
+						handleUpdateFilter({endDate: value as string})
 					}
 					placeholder={`${DATE_FORMAT} HH:MM`.toUpperCase()}
 					time
-					value={editing.toDate}
+					value={editing.endDate}
 					years={{
 						end: currentYear,
 						start: currentYear - YEARS_OFFSET,

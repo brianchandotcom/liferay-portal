@@ -11,8 +11,8 @@ import React, {useState} from 'react';
 import DateFilter from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter';
 import {
 	DateFilterValues,
-	FilterType,
-	ModifiedLastType,
+	LastRange,
+	Range,
 } from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter/types';
 
 function ControlledDateFilter({
@@ -21,7 +21,7 @@ function ControlledDateFilter({
 	onApplyFilter: (filterValues: DateFilterValues) => void;
 }) {
 	const [appliedValue, setAppliedValue] = useState<DateFilterValues>({
-		range: FilterType.All,
+		range: Range.All,
 	});
 
 	return (
@@ -48,7 +48,7 @@ describe('DateFilter', () => {
 		renderDateFilter();
 
 		expect(screen.getByLabelText('filter-content-by')).toHaveValue(
-			FilterType.All
+			Range.All
 		);
 		expect(screen.queryByText('show-results')).not.toBeInTheDocument();
 	});
@@ -58,7 +58,7 @@ describe('DateFilter', () => {
 
 		await user.selectOptions(
 			screen.getByLabelText('filter-content-by'),
-			FilterType.Last
+			Range.Last
 		);
 
 		expect(screen.getByLabelText('modified-last')).toBeInTheDocument();
@@ -70,7 +70,7 @@ describe('DateFilter', () => {
 
 		await user.selectOptions(
 			screen.getByLabelText('filter-content-by'),
-			FilterType.Range
+			Range.DateRange
 		);
 
 		expect(screen.getByLabelText('from')).toBeInTheDocument();
@@ -82,18 +82,18 @@ describe('DateFilter', () => {
 
 		await user.selectOptions(
 			screen.getByLabelText('filter-content-by'),
-			FilterType.Last
+			Range.Last
 		);
 		await user.selectOptions(
 			screen.getByLabelText('modified-last'),
-			ModifiedLastType.H24
+			LastRange.H24
 		);
 
 		await user.click(screen.getByText('show-results'));
 
 		expect(onApplyFilter).toHaveBeenCalledWith({
-			last: ModifiedLastType.H24,
-			range: FilterType.Last,
+			last: LastRange.H24,
+			range: Range.Last,
 		});
 
 		expect(screen.getByText('show-results')).toBeDisabled();
@@ -104,7 +104,7 @@ describe('DateFilter', () => {
 
 		await user.selectOptions(
 			screen.getByLabelText('filter-content-by'),
-			FilterType.Last
+			Range.Last
 		);
 		await user.click(screen.getByText('show-results'));
 
@@ -113,11 +113,11 @@ describe('DateFilter', () => {
 		await user.click(screen.getByText('clear-filters'));
 
 		expect(onApplyFilter).toHaveBeenLastCalledWith({
-			range: FilterType.All,
+			range: Range.All,
 		});
 
 		expect(screen.getByLabelText('filter-content-by')).toHaveValue(
-			FilterType.All
+			Range.All
 		);
 		expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 	});

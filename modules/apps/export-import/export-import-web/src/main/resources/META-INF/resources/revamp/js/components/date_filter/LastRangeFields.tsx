@@ -7,29 +7,29 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import FieldSelectWithOption from '../forms/FieldSelectWithOption';
-import {EditingState, ModifiedLastType} from './types';
-import {MODIFIED_LAST_OPTIONS} from './utils';
+import {EditingState, LastRange} from './types';
+import {LAST_RANGE_OPTIONS} from './utils';
 
 type Props = {
 	handleUpdateFilter: (payload: Partial<EditingState>) => void;
-	value: ModifiedLastType;
+	value: LastRange;
 };
 
-const ModifiedLastFields = ({handleUpdateFilter, value}: Props) => (
+const LastRangeFields = ({handleUpdateFilter, value}: Props) => (
 	<ClayLayout.ContentCol>
 		<FieldSelectWithOption
-			id="modifiedLast"
+			id="last"
 			label={Liferay.Language.get('modified-last')}
-			name="modifiedLast"
+			name="last"
 			onChange={(event) =>
 				handleUpdateFilter({
-					modifiedLast: event.target.value as ModifiedLastType,
+					last: event.target.value as LastRange,
 				})
 			}
-			options={MODIFIED_LAST_OPTIONS}
+			options={LAST_RANGE_OPTIONS}
 			value={value}
 		/>
 	</ClayLayout.ContentCol>
 );
 
-export default ModifiedLastFields;
+export default LastRangeFields;

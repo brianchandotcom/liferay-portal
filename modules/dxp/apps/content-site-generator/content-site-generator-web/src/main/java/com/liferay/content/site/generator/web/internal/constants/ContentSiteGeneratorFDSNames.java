@@ -10,8 +10,7 @@ package com.liferay.content.site.generator.web.internal.constants;
  */
 public class ContentSiteGeneratorFDSNames {
 
-	public static final String CONTENT_SITE_GENERATOR =
-		ContentSiteGeneratorPortletKeys.CONTENT_SITE_GENERATOR +
-			"-contentSiteGenerator";
+	public static final String CONTENT_SITE_GENERATOR_GENERATIONS =
+		ContentSiteGeneratorPortletKeys.CONTENT_SITE_GENERATOR + "-generations";
 
 }

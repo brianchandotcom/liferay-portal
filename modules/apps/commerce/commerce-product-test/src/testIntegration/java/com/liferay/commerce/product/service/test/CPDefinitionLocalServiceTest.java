@@ -18,6 +18,7 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
@@ -31,7 +32,6 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
@@ -47,8 +47,8 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -950,23 +950,19 @@ public class CPDefinitionLocalServiceTest {
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
 
-		long companyId = TestPropsValues.getCompanyId();
 		long accountEntryId = accountEntry.getAccountEntryId();
 		long[] accountGroupIds = {accountGroup.getAccountGroupId()};
 		long[] commerceChannelGroupIds = {commerceChannel.getGroupId()};
+		long companyId = TestPropsValues.getCompanyId();
 		int[] statuses = {WorkflowConstants.STATUS_APPROVED};
-
-		// Both filters disabled
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
 				companyId, accountEntryId, accountGroupIds,
-				commerceChannelGroupIds, true, statuses,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				commerceChannelGroupIds, true, statuses, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 1, cpDefinitions.size());
-
-		// Both filters enabled and relationships exist
 
 		cpDefinition.setAccountGroupFilterEnabled(true);
 		cpDefinition.setChannelFilterEnabled(true);
@@ -986,13 +982,9 @@ public class CPDefinitionLocalServiceTest {
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 1, cpDefinitions.size());
-
-		// AccountGroupFilter enabled, ChannelFilter disabled
-		// accountGroupRel exists
 
 		cpDefinition.setChannelFilterEnabled(false);
 
@@ -1001,26 +993,18 @@ public class CPDefinitionLocalServiceTest {
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 1, cpDefinitions.size());
-
-		// AccountGroupFilter enabled, ChannelFilter disabled
-		// accountGroupRel does not exist
 
 		_accountGroupRelLocalService.deleteAccountGroupRel(
 			accountGroupRel.getAccountGroupRelId());
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 0, cpDefinitions.size());
-
-		// AccountGroupFilter disabled, ChannelFilter enabled
-		// commerceChannelRel exists
 
 		cpDefinition.setAccountGroupFilterEnabled(false);
 		cpDefinition.setChannelFilterEnabled(true);
@@ -1030,25 +1014,18 @@ public class CPDefinitionLocalServiceTest {
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 1, cpDefinitions.size());
-
-		// AccountGroupFilter disabled, ChannelFilter enabled
-		// commerceChannelRel does not exist
 
 		_commerceChannelRelLocalService.deleteCommerceChannelRel(
 			commerceChannelRel);
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 0, cpDefinitions.size());
-
-		// Both filters enabled, accountGroupRel exists
 
 		cpDefinition.setAccountGroupFilterEnabled(true);
 		cpDefinition.setChannelFilterEnabled(true);
@@ -1062,12 +1039,9 @@ public class CPDefinitionLocalServiceTest {
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 0, cpDefinitions.size());
-
-		// Both filters enabled, commerceChannelRel exists
 
 		_accountGroupRelLocalService.deleteAccountGroupRel(
 			accountGroupRel.getAccountGroupRelId());
@@ -1078,8 +1052,7 @@ public class CPDefinitionLocalServiceTest {
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
-			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+			true, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(cpDefinitions.toString(), 0, cpDefinitions.size());
 	}
@@ -1100,26 +1073,9 @@ public class CPDefinitionLocalServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				CPDefinitionModifiedDateComparator.getInstance(true));
 
-		int index1 = -1;
-		int index2 = -1;
-
-		for (int i = 0; i < cpDefinitions.size(); i++) {
-			long cpDefinitionId = cpDefinitions.get(i).getCPDefinitionId();
-
-			if (cpDefinitionId == cpDefinition1.getCPDefinitionId()) {
-				index1 = i;
-			}
-			else if (cpDefinitionId == cpDefinition2.getCPDefinitionId()) {
-				index2 = i;
-			}
-		}
-
 		Assert.assertTrue(
-			"cpDefinition1 not found in results", index1 >= 0);
-		Assert.assertTrue(
-			"cpDefinition2 not found in results", index2 >= 0);
-		Assert.assertTrue(
-			"Results not ordered by modifiedDate ASC", index1 < index2);
+			cpDefinitions.indexOf(cpDefinition1) < cpDefinitions.indexOf(
+				cpDefinition2));
 	}
 
 	@Test
@@ -1141,17 +1097,15 @@ public class CPDefinitionLocalServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (int i = 1; i < cpDefinitions.size(); i++) {
-			CPDefinition previous = cpDefinitions.get(i - 1);
-			CPDefinition current = cpDefinitions.get(i);
+			CPDefinition currentCPDefinition = cpDefinitions.get(i);
+			CPDefinition previousCPDefinition = cpDefinitions.get(i - 1);
 
-			String previousName = previous.getName(
-				previous.getDefaultLanguageId());
-			String currentName = current.getName(
-				current.getDefaultLanguageId());
+			String currentName = currentCPDefinition.getName(
+				currentCPDefinition.getDefaultLanguageId());
+			String previousName = previousCPDefinition.getName(
+				previousCPDefinition.getDefaultLanguageId());
 
 			Assert.assertTrue(
-				"Results not ordered ascending by localized name: " +
-					previousName + " > " + currentName,
 				previousName.compareToIgnoreCase(currentName) <= 0);
 		}
 	}
@@ -1165,7 +1119,8 @@ public class CPDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + "@liferay.com",
 				RandomTestUtil.randomString(),
-				new long[] {TestPropsValues.getUserId()}, null, _serviceContext);
+				new long[] {TestPropsValues.getUserId()}, null,
+				_serviceContext);
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
 			StringPool.BLANK, _serviceContext.getUserId(), null,
@@ -1175,15 +1130,14 @@ public class CPDefinitionLocalServiceTest {
 			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
 			accountEntry.getAccountEntryId());
 
-		CPDefinition cpDefinitionUnconfigured =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		cpDefinitionUnconfigured.setAccountGroupFilterEnabled(true);
+		cpDefinition.setAccountGroupFilterEnabled(true);
 
-		cpDefinitionUnconfigured = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionUnconfigured);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
@@ -1191,14 +1145,10 @@ public class CPDefinitionLocalServiceTest {
 				accountEntry.getAccountEntryId(),
 				_accountGroupLocalService.getAccountGroupIds(
 					accountEntry.getAccountEntryId()),
-				null, true,
-				new int[] {WorkflowConstants.STATUS_APPROVED},
+				null, true, new int[] {WorkflowConstants.STATUS_APPROVED},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertFalse(
-			"Product with accountGroupFilterEnabled=true but no " +
-				"AccountGroupRel must be excluded",
-			cpDefinitions.contains(cpDefinitionUnconfigured));
+		Assert.assertFalse(cpDefinitions.contains(cpDefinition));
 	}
 
 	@Test
@@ -1208,15 +1158,14 @@ public class CPDefinitionLocalServiceTest {
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_commerceCatalog.getGroupId(), null);
 
-		CPDefinition cpDefinitionUnconfigured =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		cpDefinitionUnconfigured.setChannelFilterEnabled(true);
+		cpDefinition.setChannelFilterEnabled(true);
 
-		cpDefinitionUnconfigured = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionUnconfigured);
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
@@ -1225,10 +1174,7 @@ public class CPDefinitionLocalServiceTest {
 				new int[] {WorkflowConstants.STATUS_APPROVED},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertFalse(
-			"Product with channelFilterEnabled=true but no " +
-				"CommerceChannelRel must be excluded",
-			cpDefinitions.contains(cpDefinitionUnconfigured));
+		Assert.assertFalse(cpDefinitions.contains(cpDefinition));
 	}
 
 	@Test
@@ -1245,50 +1191,41 @@ public class CPDefinitionLocalServiceTest {
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
 				TestPropsValues.getCompanyId(), 0L, null, null, true,
-				new int[] {WorkflowConstants.STATUS_DRAFT},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				new int[] {WorkflowConstants.STATUS_DRAFT}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(
-			"Draft product not returned when filtering by STATUS_DRAFT",
-			cpDefinitions.contains(cpDefinition));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition));
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			TestPropsValues.getCompanyId(), 0L, null, null, true,
 			new int[] {WorkflowConstants.STATUS_APPROVED}, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertFalse(
-			"Draft product returned when filtering by STATUS_APPROVED",
-			cpDefinitions.contains(cpDefinition));
+		Assert.assertFalse(cpDefinitions.contains(cpDefinition));
 	}
 
 	@Test
 	public void testGetCPDefinitionsWithEmptyStatuses() throws Exception {
-		CPDefinition cpDefinitionApproved =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
-
-		CPDefinition cpDefinitionDraft = CPTestUtil.addCPDefinitionFromCatalog(
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
 
-		cpDefinitionDraft.setStatus(WorkflowConstants.STATUS_DRAFT);
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		cpDefinitionDraft = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionDraft);
+		cpDefinition2.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		cpDefinition2 = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition2);
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
 				TestPropsValues.getCompanyId(), 0L, null, null, true,
 				new int[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(
-			"Approved product must be returned with empty statuses",
-			cpDefinitions.contains(cpDefinitionApproved));
-		Assert.assertTrue(
-			"Draft product must be returned with empty statuses",
-			cpDefinitions.contains(cpDefinitionDraft));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition1));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition2));
 	}
 
 	@Test
@@ -1300,14 +1237,16 @@ public class CPDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + "@liferay.com",
 				RandomTestUtil.randomString(),
-				new long[] {TestPropsValues.getUserId()}, null, _serviceContext);
+				new long[] {TestPropsValues.getUserId()}, null,
+				_serviceContext);
 
 		AccountEntry ineligibleAccountEntry =
 			CommerceAccountTestUtil.addBusinessAccountEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString() + "@liferay.com",
 				RandomTestUtil.randomString(),
-				new long[] {TestPropsValues.getUserId()}, null, _serviceContext);
+				new long[] {TestPropsValues.getUserId()}, null,
+				_serviceContext);
 
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_commerceCatalog.getGroupId(), null);
@@ -1342,29 +1281,25 @@ public class CPDefinitionLocalServiceTest {
 				new int[] {WorkflowConstants.STATUS_APPROVED},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertFalse(
-			"Product must be excluded for an ineligible account entry",
-			cpDefinitions.contains(cpDefinition));
+		Assert.assertFalse(cpDefinitions.contains(cpDefinition));
 	}
 
 	@Test
 	public void testGetCPDefinitionsWithInvalidCommerceChannelGroupId()
 		throws Exception {
 
-		CPDefinition cpDefinitionUnrestricted =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		CPDefinition cpDefinitionRestricted =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		cpDefinitionRestricted.setChannelFilterEnabled(true);
+		cpDefinition2.setChannelFilterEnabled(true);
 
-		cpDefinitionRestricted = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionRestricted);
+		cpDefinition2 = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition2);
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
@@ -1373,13 +1308,8 @@ public class CPDefinitionLocalServiceTest {
 				new int[] {WorkflowConstants.STATUS_APPROVED},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(
-			"Product with disabled filter must be returned",
-			cpDefinitions.contains(cpDefinitionUnrestricted));
-		Assert.assertFalse(
-			"Product with enabled filter must be excluded for an invalid " +
-				"channel group id",
-			cpDefinitions.contains(cpDefinitionRestricted));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition1));
+		Assert.assertFalse(cpDefinitions.contains(cpDefinition2));
 	}
 
 	@Test
@@ -1413,28 +1343,23 @@ public class CPDefinitionLocalServiceTest {
 				true, new int[] {WorkflowConstants.STATUS_APPROVED},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(
-			"Product with rel on one of the channels must be returned (OR " +
-				"semantics)",
-			cpDefinitions.contains(cpDefinition));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition));
 	}
 
 	@Test
 	public void testGetCPDefinitionsWithPublishedFalse() throws Exception {
-		CPDefinition cpDefinitionPublished =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		CPDefinition cpDefinitionUnpublished =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		cpDefinitionUnpublished.setPublished(false);
+		cpDefinition2.setPublished(false);
 
-		cpDefinitionUnpublished = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionUnpublished);
+		cpDefinition2 = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition2);
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
@@ -1442,38 +1367,31 @@ public class CPDefinitionLocalServiceTest {
 				new int[] {WorkflowConstants.STATUS_APPROVED},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(
-			"Published product must be returned when published=false",
-			cpDefinitions.contains(cpDefinitionPublished));
-		Assert.assertTrue(
-			"Unpublished product must be returned when published=false",
-			cpDefinitions.contains(cpDefinitionUnpublished));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition1));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition2));
 
 		cpDefinitions = _cpDefinitionLocalService.getCPDefinitions(
 			TestPropsValues.getCompanyId(), 0L, null, null, true,
 			new int[] {WorkflowConstants.STATUS_APPROVED}, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 
-		Assert.assertFalse(
-			"Unpublished product must be excluded when published=true",
-			cpDefinitions.contains(cpDefinitionUnpublished));
+		Assert.assertFalse(cpDefinitions.contains(cpDefinition2));
 	}
 
 	@Test
 	public void testGetCPDefinitionsWithStatusAny() throws Exception {
-		CPDefinition cpDefinitionApproved =
-			CPTestUtil.addCPDefinitionFromCatalog(
-				_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
-				false);
-
-		CPDefinition cpDefinitionDraft = CPTestUtil.addCPDefinitionFromCatalog(
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
 
-		cpDefinitionDraft.setStatus(WorkflowConstants.STATUS_DRAFT);
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
 
-		cpDefinitionDraft = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinitionDraft);
+		cpDefinition2.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		cpDefinition2 = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition2);
 
 		List<CPDefinition> cpDefinitions =
 			_cpDefinitionLocalService.getCPDefinitions(
@@ -1481,12 +1399,8 @@ public class CPDefinitionLocalServiceTest {
 				new int[] {WorkflowConstants.STATUS_ANY}, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(
-			"Approved product must be returned with STATUS_ANY",
-			cpDefinitions.contains(cpDefinitionApproved));
-		Assert.assertTrue(
-			"Draft product must be returned with STATUS_ANY",
-			cpDefinitions.contains(cpDefinitionDraft));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition1));
+		Assert.assertTrue(cpDefinitions.contains(cpDefinition2));
 	}
 
 	@Test

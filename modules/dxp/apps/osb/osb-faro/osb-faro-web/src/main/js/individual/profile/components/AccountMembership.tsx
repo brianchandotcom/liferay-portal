@@ -95,12 +95,7 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 		}
 
 		if (key === 'annualRevenue') {
-			return accountData?.get(key)
-				? formatCurrency(
-						accountData?.get('currencyCode'),
-						accountData?.get(key)
-				  )
-				: undefined;
+			return formatCurrency(accountData?.get('currencyCode'), data);
 		}
 
 		return data;

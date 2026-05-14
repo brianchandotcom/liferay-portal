@@ -7,39 +7,23 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import SectionHeader from '../../../components/SectionHeader';
 import {FormikFieldText} from '../../../components/forms/formik';
 
 export default function Setup() {
 	return (
 		<>
-			<header className="mb-1 sheet-header">
-				<div className="mb-1 sheet-title">
-					{Liferay.Language.get('setup')}
-				</div>
-
-				<p className="sheet-text text-secondary">
-					{Liferay.Language.get(
-						'name-your-export-and-configure-your-export-settings'
-					)}
-				</p>
-			</header>
+			<SectionHeader
+				subtitle={Liferay.Language.get(
+					'provide-a-descriptive-name-for-your-file'
+				)}
+				title={sub(
+					Liferay.Language.get('x-details'),
+					Liferay.Language.get('export')
+				)}
+			/>
 
 			<ClayLayout.Sheet>
-				<ClayLayout.SheetHeader className="mb-0">
-					<div className="mb-2 sheet-title">
-						{sub(
-							Liferay.Language.get('x-details'),
-							Liferay.Language.get('export')
-						)}
-					</div>
-
-					<div className="sheet-text text-3">
-						{Liferay.Language.get(
-							'provide-a-descriptive-name-for-your-export'
-						)}
-					</div>
-				</ClayLayout.SheetHeader>
-
 				<FormikFieldText
 					label={Liferay.Language.get('file-name')}
 					name="fileName"

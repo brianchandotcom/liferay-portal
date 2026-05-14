@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.logging;
 
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch._types.ErrorCause;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -319,14 +320,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 		Consumer<String> consumer,
 		ElasticsearchException elasticsearchException, String expectedType) {
 
-		Assert.assertEquals(
-			expectedType,
-			elasticsearchException.error(
-			).type());
+		ErrorCause errorCause = elasticsearchException.error();
 
-		consumer.accept(
-			elasticsearchException.error(
-			).reason());
+		Assert.assertEquals(expectedType, errorCause.type());
+		consumer.accept(errorCause.reason());
 	}
 
 	private void _assertLogCapture(

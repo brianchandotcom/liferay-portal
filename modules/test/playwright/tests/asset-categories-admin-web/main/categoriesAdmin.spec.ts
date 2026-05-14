@@ -174,9 +174,9 @@ test('Add, edit and delete a vocabulary', async ({
 }) => {
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
-	const vocabularyDescription = 'Vocabulary Description';
-	const vocabularyExternalReferenceCode = 'vocabulary-erc-vocabulary-1';
-	const vocabularyName = 'Vocabulary 1';
+	const vocabularyDescription = getRandomString();
+	const vocabularyExternalReferenceCode = getRandomString();
+	const vocabularyName = getRandomString();
 
 	await test.step('Add a vocabulary with description', async () => {
 		await assetCategoriesAdminPage.newVocabularyButton.click();
@@ -194,7 +194,7 @@ test('Add, edit and delete a vocabulary', async ({
 		await expect(page.getByText(vocabularyDescription)).toBeVisible();
 	});
 
-	const newVocabularyName = 'Vocabulary Changed';
+	const newVocabularyName = getRandomString();
 
 	await test.step('Edit the vocabulary', async () => {
 		await vocabulariesEditPage.goto(vocabularyName);
@@ -217,7 +217,7 @@ test('Add, edit and delete a vocabulary', async ({
 	await test.step('Add a vocabulary with existing external reference code', async () => {
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
-		await vocabulariesEditPage.fillName('Vocabulary 2');
+		await vocabulariesEditPage.fillName(getRandomString());
 		await vocabulariesEditPage.fillExternalReferenceCode(
 			vocabularyExternalReferenceCode
 		);
@@ -247,7 +247,7 @@ test('Add, edit and delete a vocabulary', async ({
 	});
 });
 
-assetTypes.forEach(async (assetType, index) => {
+assetTypes.forEach(async (assetType) => {
 	test(`Add a vocabulary for ${assetType}`, async ({
 		assetCategoriesAdminPage,
 		page,
@@ -256,7 +256,7 @@ assetTypes.forEach(async (assetType, index) => {
 	}) => {
 		await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
-		const vocabularyName = `Vocabulary ${index + 1}`;
+		const vocabularyName = getRandomString();
 
 		await assetCategoriesAdminPage.newVocabularyButton.click();
 
@@ -281,7 +281,7 @@ test('Delete an associated asset type of vocabulary', async ({
 }) => {
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
-	const vocabularyName = 'Vocabulary 1';
+	const vocabularyName = getRandomString();
 	const assetTypes = ['Basic Web Content', 'Object Entry Folder'];
 
 	await test.step('Add a vocabulary with 2 asset types', async () => {
@@ -325,9 +325,9 @@ test('Delete all categories of a vocabulary', async ({
 	await test.step('Add a vocabulary with 2 categories', async () => {
 		await createCategories({
 			apiHelpers,
-			categoryNames: [{name: 'Category 1'}, {name: 'Category 2'}],
+			categoryNames: [{name: getRandomString()}, {name: getRandomString()}],
 			siteId: site.id,
-			vocabularyName: 'Vocabulary 1',
+			vocabularyName: getRandomString(),
 		});
 	});
 

@@ -1827,6 +1827,8 @@
 			"titleObjectFieldName": "name"
 		},
 		{
+			"accountEntryRestricted": true,
+			"accountEntryRestrictedObjectFieldName": "r_accountEntryToLicenseKey_accountEntryId",
 			"active": true,
 			"enableCategorization": false,
 			"enableComments": false,
@@ -1962,6 +1964,228 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_ACCOUNT_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Account Name"
+					},
+					"name": "accountName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"defaultValue": "true",
+					"externalReferenceCode": "C_LICENSE_KEY_ACTIVE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Active"
+					},
+					"name": "active",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_LICENSE_KEY_ADDITIONAL_INFO",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Additional Info"
+					},
+					"name": "additionalInfo",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_LICENSE_KEY_CLUSTER_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Cluster ID"
+					},
+					"name": "clusterId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"defaultValue": "false",
+					"externalReferenceCode": "C_LICENSE_KEY_COMPLIMENTARY",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Complimentary"
+					},
+					"name": "complimentary",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Boolean"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Description"
+					},
+					"name": "description",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_DOMAINS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Domains"
+					},
+					"name": "domains",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_LICENSE_KEY_ENTITLEMENT_ID",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Entitlement ID"
+					},
+					"name": "entitlementId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "DateTime",
+					"externalReferenceCode": "C_LICENSE_KEY_EXPIRATION_DATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Expiration Date"
+					},
+					"name": "expirationDate",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Date"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_HOST_NAME",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Host Name"
+					},
+					"name": "hostName",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_LICENSE_KEY_IP_ADDRESSES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "IP Addresses"
+					},
+					"name": "ipAddresses",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_LICENSE_KEY_KEY",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Key"
+					},
+					"name": "key",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "C_LICENSE_KEY_LICENSE_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -2014,16 +2238,160 @@
 					"type": "Integer"
 				},
 				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_LICENSE_KEY_MAC_ADDRESSES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "MAC Addresses"
+					},
+					"name": "macAddresses",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Clob"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "C_LICENSE_KEY_MAX_CLUSTER_NODES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Max Cluster Nodes"
+					},
+					"name": "maxClusterNodes",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_LICENSE_KEY_MAX_CONCURRENT_USERS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Max Concurrent Users"
+					},
+					"name": "maxConcurrentUsers",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "C_LICENSE_KEY_MAX_HTTP_SESSIONS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Max HTTP Sessions"
+					},
+					"name": "maxHttpSessions",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "C_LICENSE_KEY_MAX_SERVERS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Max Servers"
+					},
+					"name": "maxServers",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"externalReferenceCode": "C_LICENSE_KEY_MAX_USERS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Max Users"
+					},
+					"name": "maxUsers",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_LICENSE_KEY_PRODUCT_NAME",
+					"externalReferenceCode": "C_LICENSE_KEY_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Product Name"
+						"en_US": "Name"
 					},
-					"name": "productName",
+					"name": "name",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_ORDER_ID",
+					"indexed": true,
+					"indexedAsKeyword": true,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Order ID"
+					},
+					"name": "orderId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_OWNER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Owner"
+					},
+					"name": "owner",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -2042,6 +2410,24 @@
 						"en_US": "Product External ID"
 					},
 					"name": "productExternalId",
+					"objectFieldSettings": [
+					],
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "C_LICENSE_KEY_PRODUCT_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Product Name"
+					},
+					"name": "productName",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -2086,130 +2472,22 @@
 					"type": "String"
 				},
 				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "C_LICENSE_KEY_CLUSTER_ID",
-					"indexed": true,
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "C_LICENSE_KEY_SERVER_ID",
+					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Cluster ID"
+						"en_US": "Server ID"
 					},
-					"name": "clusterId",
+					"name": "serverId",
 					"objectFieldSettings": [
 					],
 					"required": false,
 					"state": false,
 					"system": false,
-					"type": "Long"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_LICENSE_KEY_OWNER",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Owner"
-					},
-					"name": "owner",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "C_LICENSE_KEY_MAX_SERVERS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Max Servers"
-					},
-					"name": "maxServers",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Integer"
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "C_LICENSE_KEY_MAX_CONCURRENT_USERS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Max Concurrent Users"
-					},
-					"name": "maxConcurrentUsers",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Long"
-				},
-				{
-					"DBType": "Long",
-					"businessType": "LongInteger",
-					"externalReferenceCode": "C_LICENSE_KEY_MAX_USERS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Max Users"
-					},
-					"name": "maxUsers",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Long"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "C_LICENSE_KEY_MAX_HTTP_SESSIONS",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Max HTTP Sessions"
-					},
-					"name": "maxHttpSessions",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Integer"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"externalReferenceCode": "C_LICENSE_KEY_MAX_CLUSTER_NODES",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Max Cluster Nodes"
-					},
-					"name": "maxClusterNodes",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Integer"
+					"type": "Clob"
 				},
 				{
 					"DBType": "String",
@@ -2228,60 +2506,6 @@
 					"state": false,
 					"system": false,
 					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_LICENSE_KEY_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Name"
-					},
-					"name": "name",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "C_LICENSE_KEY_DESCRIPTION",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Description"
-					},
-					"name": "description",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_LICENSE_KEY_LICENSE_KEY",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "License Key"
-					},
-					"name": "licenseKey",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
 				},
 				{
 					"DBType": "Date",
@@ -2304,84 +2528,6 @@
 					"state": false,
 					"system": false,
 					"type": "Date"
-				},
-				{
-					"DBType": "Date",
-					"businessType": "DateTime",
-					"externalReferenceCode": "C_LICENSE_KEY_EXPIRATION_DATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Expiration Date"
-					},
-					"name": "licenseExpirationDate",
-					"objectFieldSettings": [
-						{
-							"name": "timeStorage",
-							"value": "convertToUTC"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Date"
-				},
-				{
-					"DBType": "Clob",
-					"businessType": "LongText",
-					"externalReferenceCode": "C_LICENSE_KEY_ADDITIONAL_INFO",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Additional Info"
-					},
-					"name": "additionalInfo",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Clob"
-				},
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"defaultValue": "false",
-					"externalReferenceCode": "C_LICENSE_KEY_COMPLIMENTARY",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Complimentary"
-					},
-					"name": "complimentary",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Boolean"
-				},
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"defaultValue": "true",
-					"externalReferenceCode": "C_LICENSE_KEY_ACTIVE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "",
-					"label": {
-						"en_US": "Active"
-					},
-					"name": "licenseKeyActive",
-					"objectFieldSettings": [
-					],
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "Boolean"
 				}
 			],
 			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",

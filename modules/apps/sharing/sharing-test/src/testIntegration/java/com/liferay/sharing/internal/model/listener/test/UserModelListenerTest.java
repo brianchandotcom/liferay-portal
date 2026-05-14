@@ -81,8 +81,8 @@ public class UserModelListenerTest {
 	public void testAddUser() throws Exception {
 		_testAddUserWithDuplicatePendingInvitations();
 		_testAddUserWithExpiredInvitationTicket();
-		_testAddUserWithInvalidExtraInfo();
-		_testAddUserWithMixedCaseExtraInfo();
+		_testAddUserWithInvalidEmailAddress();
+		_testAddUserWithMixedCaseEmailAddress();
 		_testAddUserWithPendingInvitations();
 	}
 
@@ -188,23 +188,22 @@ public class UserModelListenerTest {
 	}
 
 	private Ticket _addInviteCollaboratorTicket(
-			long classPK, Date expirationDate, String extraInfo)
-		throws Exception {
-
-		return _ticketLocalService.addTicket(
-			TestPropsValues.getCompanyId(), Group.class.getName(), classPK,
-			TicketConstants.TYPE_INVITE_COLLABORATOR, extraInfo, expirationDate,
-			new ServiceContext());
-	}
-
-	private Ticket _addInviteCollaboratorTicket(
 			long classPK, String emailAddress)
 		throws Exception {
 
 		return _addInviteCollaboratorTicket(
-			classPK,
-			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
-			_normalizeEmailAddress(emailAddress));
+			classPK, _normalizeEmailAddress(emailAddress),
+			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)));
+	}
+
+	private Ticket _addInviteCollaboratorTicket(
+			long classPK, String emailAddress, Date expirationDate)
+		throws Exception {
+
+		return _ticketLocalService.addTicket(
+			TestPropsValues.getCompanyId(), Group.class.getName(), classPK,
+			TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress, null,
+			expirationDate, new ServiceContext());
 	}
 
 	private SharingEntry _addTicketSharingEntry(long classPK, long toTicketId)
@@ -328,9 +327,8 @@ public class UserModelListenerTest {
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket = _addInviteCollaboratorTicket(
-			_group1.getGroupId(),
-			new Date(System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1)),
-			_normalizeEmailAddress(emailAddress));
+			_group1.getGroupId(), _normalizeEmailAddress(emailAddress),
+			new Date(System.currentTimeMillis() - TimeUnit.HOURS.toMillis(1)));
 
 		SharingEntry sharingEntry = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket.getTicketId());
@@ -343,7 +341,7 @@ public class UserModelListenerTest {
 		_assertSharingEntryToTicketId(sharingEntry, ticket);
 	}
 
-	private void _testAddUserWithInvalidExtraInfo() throws Exception {
+	private void _testAddUserWithInvalidEmailAddress() throws Exception {
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket1 = _addInviteCollaboratorTicket(
@@ -374,23 +372,22 @@ public class UserModelListenerTest {
 		_assertSharingEntryToUserId(sharingEntry3, user);
 	}
 
-	private void _testAddUserWithMixedCaseExtraInfo() throws Exception {
+	private void _testAddUserWithMixedCaseEmailAddress() throws Exception {
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket = _addInviteCollaboratorTicket(
-			_group1.getGroupId(),
-			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
-			StringUtil.toUpperCase(emailAddress));
+			_group1.getGroupId(), StringUtil.toUpperCase(emailAddress),
+			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)));
 
 		SharingEntry sharingEntry = _addTicketSharingEntry(
 			_group1.getGroupId(), ticket.getTicketId());
 
-		User user = _addUser(emailAddress);
+		_addUser(emailAddress);
 
-		Assert.assertNull(
+		Assert.assertNotNull(
 			_ticketLocalService.fetchTicket(ticket.getTicketId()));
 
-		_assertSharingEntryToUserId(sharingEntry, user);
+		_assertSharingEntryToTicketId(sharingEntry, ticket);
 	}
 
 	private void _testAddUserWithPendingInvitations() throws Exception {

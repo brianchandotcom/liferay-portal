@@ -17,6 +17,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.net.URLEncoder;
+
+import java.nio.charset.StandardCharsets;
+
 import java.util.Map;
 
 /**
@@ -36,7 +40,20 @@ public class HomeDashboardDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getCreateAgentURL() throws Exception {
+		Map<String, Object> reactData = getReactData();
+
+		String encodedBackURL = URLEncoder.encode(
+			(String)reactData.get("backURL"), StandardCharsets.UTF_8);
+
+		return reactData.get("agentURL") + "?backURL=" + encodedBackURL;
+	}
+
 	public Map<String, Object> getReactData() throws Exception {
+		if (_reactData != null) {
+			return _reactData;
+		}
+
 		Company company = _themeDisplay.getCompany();
 		Group group = _groupLocalService.getGroup(
 			_themeDisplay.getScopeGroupId());
@@ -45,7 +62,7 @@ public class HomeDashboardDisplayContext {
 			company.getPortalURL(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			"/web", group.getFriendlyURL());
 
-		return HashMapBuilder.<String, Object>put(
+		_reactData = HashMapBuilder.<String, Object>put(
 			"agentBuilderURL", aiHubURL + "/agent-builder"
 		).put(
 			"agentURL", aiHubURL + "/agent"
@@ -58,11 +75,14 @@ public class HomeDashboardDisplayContext {
 		).put(
 			"chatbotURL", aiHubURL + "/chatbot"
 		).build();
+
+		return _reactData;
 	}
 
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
+	private Map<String, Object> _reactData;
 	private final ThemeDisplay _themeDisplay;
 
 }

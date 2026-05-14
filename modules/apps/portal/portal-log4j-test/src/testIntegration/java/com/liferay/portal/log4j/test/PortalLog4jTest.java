@@ -268,6 +268,16 @@ public class PortalLog4jTest {
 		String expectedLevel, String expectedMessage,
 		Throwable expectedThrowable, String actualOutput) {
 
+		_assertTextLog(
+			expectedLevel, expectedMessage, expectedThrowable, null,
+			actualOutput);
+	}
+
+	private void _assertTextLog(
+		String expectedLevel, String expectedMessage,
+		Throwable expectedThrowable, String expectedLogContextMessage,
+		String actualOutput) {
+
 		String[] outputLines = StringUtil.splitLines(actualOutput);
 
 		Assert.assertTrue(
@@ -334,6 +344,17 @@ public class PortalLog4jTest {
 		Assert.assertEquals(
 			String.valueOf(expectedMessage), messageLine.trim());
 
+		int outputLineIndex = 1;
+
+		// Log context
+
+		if (expectedLogContextMessage != null) {
+			Assert.assertEquals(
+				expectedLogContextMessage, outputLines[outputLineIndex].trim());
+
+			outputLineIndex++;
+		}
+
 		// Throwable
 
 		if (expectedThrowable != null) {
@@ -342,9 +363,10 @@ public class PortalLog4jTest {
 			Assert.assertEquals(
 				expectedThrowableClass.getName() + ": " +
 					expectedThrowable.getMessage(),
-				outputLines[1]);
+				outputLines[outputLineIndex]);
 
-			String actualFirstPrefixStackTraceElement = outputLines[2].trim();
+			String actualFirstPrefixStackTraceElement =
+				outputLines[outputLineIndex + 1].trim();
 
 			Assert.assertTrue(
 				"A throwable should be logged and the first stack should be " +
@@ -357,6 +379,16 @@ public class PortalLog4jTest {
 	private void _assertXmlLog(
 		String expectedLevel, String expectedMessage,
 		Throwable expectedThrowable, String actualOutput) {
+
+		_assertXmlLog(
+			expectedLevel, expectedMessage, expectedThrowable, null,
+			actualOutput);
+	}
+
+	private void _assertXmlLog(
+		String expectedLevel, String expectedMessage,
+		Throwable expectedThrowable, String expectedLogContextMessage,
+		String actualOutput) {
 
 		String[] outputLines = StringUtil.splitLines(actualOutput);
 
@@ -442,9 +474,68 @@ public class PortalLog4jTest {
 					"at " + PortalLog4jTest.class.getName()));
 		}
 
+		int locationInfoLineIndex = outputLines.length - 2;
+
+		// <log4j:properties>...</log4j:properties>
+
+		if (expectedLogContextMessage != null) {
+			int propertiesCloseLineIndex = outputLines.length - 2;
+
+			Assert.assertEquals(
+				"</log4j:properties>", outputLines[propertiesCloseLineIndex]);
+
+			int propertiesOpenLineIndex = -1;
+
+			for (int i = propertiesCloseLineIndex - 1; i >= 0; i--) {
+				if (Objects.equals(outputLines[i], "<log4j:properties>")) {
+					propertiesOpenLineIndex = i;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				"<log4j:properties> should be present",
+				propertiesOpenLineIndex >= 0);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+
+			for (int i = propertiesOpenLineIndex + 1;
+				 i < propertiesCloseLineIndex; i++) {
+
+				String dataLine = outputLines[i];
+
+				int nameStart =
+					dataLine.indexOf("name=\"") + "name=\"".length();
+
+				int nameEnd = dataLine.indexOf(StringPool.QUOTE, nameStart);
+
+				int valueStart =
+					dataLine.indexOf("value=\"", nameEnd) + "value=\"".length();
+
+				int valueEnd = dataLine.indexOf(StringPool.QUOTE, valueStart);
+
+				if (i > (propertiesOpenLineIndex + 1)) {
+					sb.append(", ");
+				}
+
+				sb.append(dataLine.substring(nameStart, nameEnd));
+				sb.append(StringPool.EQUAL);
+				sb.append(dataLine.substring(valueStart, valueEnd));
+			}
+
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			Assert.assertEquals(expectedLogContextMessage, sb.toString());
+
+			locationInfoLineIndex = propertiesOpenLineIndex - 1;
+		}
+
 		// <log4j:locationInfo />
 
-		String log4JLocationInfoLine = outputLines[outputLines.length - 2];
+		String log4JLocationInfoLine = outputLines[locationInfoLineIndex];
 
 		String log4JLocationInfo = log4JLocationInfoLine.substring(
 			log4JLocationInfoLine.indexOf(StringPool.SPACE),

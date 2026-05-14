@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '9afbb0761949ff911a34e939b79dd3b16fb628acb945a33160a73e498e4a4b67',
+	hash: '5fa062d41a6b1b034a7f3c4311b7f4bc285eebba4fd95a0dbd33736a920d78b1',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -170,6 +170,7 @@ module.exports = {
 			'highlight.js/lib/languages/java',
 			'highlight.js/lib/languages/javascript',
 			'highlight.js/lib/languages/plaintext',
+			'libphonenumber-js',
 			'liferay-ckeditor',
 			'moment',
 			'moment/min/moment-with-locales',

@@ -71,6 +71,14 @@ public class AccountGroupRelServiceWrapper
 			accountGroupId, className, classPK);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroupRel getAccountGroupRel(
+			long accountGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupRelService.getAccountGroupRel(accountGroupRelId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -96,4 +104,4 @@ public class AccountGroupRelServiceWrapper
 	private AccountGroupRelService _accountGroupRelService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2087676286
+// LIFERAY-SERVICE-BUILDER-HASH:-698966744

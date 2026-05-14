@@ -55,7 +55,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 				DocumentCreationHelpers.singleKeyword(
 					Field.EXPIRATION_DATE, "text"));
 
-			Assert.fail("Expected ElasticsearchException was not thrown");
+			Assert.fail();
 		}
 		catch (ElasticsearchException elasticsearchException) {
 			String expectedMessage =
@@ -117,7 +117,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.commit(searchContext);
 
-			Assert.fail("Expected ElasticsearchException was not thrown");
+			Assert.fail();
 		}
 		catch (ElasticsearchException elasticsearchException) {
 			_assertElasticsearchException(
@@ -204,7 +204,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 		try {
 			indexWriter.deleteEntityDocuments(searchContext, "test");
 
-			Assert.fail("Expected ElasticsearchException was not thrown");
+			Assert.fail();
 		}
 		catch (ElasticsearchException elasticsearchException) {
 			_assertElasticsearchException(

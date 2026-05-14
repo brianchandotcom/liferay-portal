@@ -39,6 +39,7 @@ public class TicketWrapper
 		attributes.put("classPK", getClassPK());
 		attributes.put("key", getKey());
 		attributes.put("type", getType());
+		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("extraInfo", getExtraInfo());
 		attributes.put("expirationDate", getExpirationDate());
 
@@ -93,6 +94,12 @@ public class TicketWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String emailAddress = (String)attributes.get("emailAddress");
+
+		if (emailAddress != null) {
+			setEmailAddress(emailAddress);
 		}
 
 		String extraInfo = (String)attributes.get("extraInfo");
@@ -161,6 +168,16 @@ public class TicketWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the email address of this ticket.
+	 *
+	 * @return the email address of this ticket
+	 */
+	@Override
+	public String getEmailAddress() {
+		return model.getEmailAddress();
 	}
 
 	/**
@@ -289,6 +306,16 @@ public class TicketWrapper
 	}
 
 	/**
+	 * Sets the email address of this ticket.
+	 *
+	 * @param emailAddress the email address of this ticket
+	 */
+	@Override
+	public void setEmailAddress(String emailAddress) {
+		model.setEmailAddress(emailAddress);
+	}
+
+	/**
 	 * Sets the expiration date of this ticket.
 	 *
 	 * @param expirationDate the expiration date of this ticket
@@ -369,4 +396,4 @@ public class TicketWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1378583455
+// LIFERAY-SERVICE-BUILDER-HASH:777544895

@@ -37,6 +37,17 @@ public class TicketLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Ticket addDistinctTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+
+		return _ticketLocalService.addDistinctTicket(
+			companyId, className, classPK, type, emailAddress, extraInfo,
+			expirationDate, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Ticket addTicket(
 		long companyId, String className, long classPK, int type,
 		String extraInfo, java.util.Date expirationDate,
@@ -45,6 +56,17 @@ public class TicketLocalServiceWrapper
 		return _ticketLocalService.addTicket(
 			companyId, className, classPK, type, extraInfo, expirationDate,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Ticket addTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+
+		return _ticketLocalService.addTicket(
+			companyId, className, classPK, type, emailAddress, extraInfo,
+			expirationDate, serviceContext);
 	}
 
 	/**
@@ -406,4 +428,4 @@ public class TicketLocalServiceWrapper
 	private TicketLocalService _ticketLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-338077197
+// LIFERAY-SERVICE-BUILDER-HASH:-1128514709

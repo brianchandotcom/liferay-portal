@@ -1469,6 +1469,7 @@ create table Ticket (
 	classPK LONG,
 	key_ VARCHAR(255) null,
 	type_ INTEGER,
+	emailAddress VARCHAR(254) null,
 	extraInfo TEXT null,
 	expirationDate DATE null
 );

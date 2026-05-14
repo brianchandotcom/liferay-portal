@@ -48,6 +48,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
@@ -333,6 +334,29 @@ public class ObjectEntryDTOConverter
 						serviceBuilderObjectEntry.getObjectEntryId()),
 					AssetTag.NAME_ACCESSOR);
 			});
+		objectEntry.setModifiedByUserName(
+			() -> NestedFieldsSupplier.supply(
+				"modifiedByUserName",
+				nestedFieldNames -> {
+					ObjectEntryVersion latestObjectEntryVersion =
+						_fetchLatestObjectEntryVersion(
+							objectDefinition,
+							serviceBuilderObjectEntry.getObjectEntryId(),
+							objectEntryVersion);
+
+					if (latestObjectEntryVersion == null) {
+						return null;
+					}
+
+					User user = _userLocalService.fetchUser(
+						latestObjectEntryVersion.getUserId());
+
+					if (user == null) {
+						return null;
+					}
+
+					return user.getFullName();
+				}));
 		objectEntry.setObjectEntryFolderExternalReferenceCode(
 			() -> {
 				ObjectEntryFolder objectEntryFolder =
@@ -649,6 +673,22 @@ public class ObjectEntryDTOConverter
 				unsafeSuppliers.put(manyToOneRelationshipName, entry::getValue);
 			}
 		}
+	}
+
+	private ObjectEntryVersion _fetchLatestObjectEntryVersion(
+		ObjectDefinition objectDefinition, long objectEntryId,
+		ObjectEntryVersion objectEntryVersion) {
+
+		if (objectEntryVersion != null) {
+			return objectEntryVersion;
+		}
+
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+			return null;
+		}
+
+		return _objectEntryVersionLocalService.fetchLatestObjectEntryVersion(
+			objectEntryId);
 	}
 
 	private <T> T _getAttribute(
@@ -1378,6 +1418,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectEntryService _objectEntryService;
+
+	@Reference
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;

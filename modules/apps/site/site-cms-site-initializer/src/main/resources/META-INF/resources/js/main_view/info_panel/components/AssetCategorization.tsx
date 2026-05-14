@@ -29,6 +29,7 @@ export default function AssetCategorization({
 	categorization,
 	cmsGroupId,
 	getObjectEntryURL,
+	hasCategoriesError = false,
 	hasUpdatePermission,
 	inputSize,
 	onUpdateCategorization,
@@ -37,6 +38,7 @@ export default function AssetCategorization({
 	categorization: Categorization;
 	cmsGroupId: number | string;
 	getObjectEntryURL: string;
+	hasCategoriesError?: boolean;
 	hasUpdatePermission: boolean;
 	inputSize?: CategorizationInputSize;
 	onUpdateCategorization?: (data: IAssetObjectEntry) => void;
@@ -151,6 +153,7 @@ export default function AssetCategorization({
 		<>
 			<AssetCategories
 				cmsGroupId={cmsGroupId}
+				hasError={hasCategoriesError}
 				hasUpdatePermission={hasUpdatePermission}
 				inputSize={inputSize}
 				objectEntry={objectEntry}

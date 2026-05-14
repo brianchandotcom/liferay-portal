@@ -287,25 +287,8 @@ public class UpdateLanguageActionTest {
 
 		impersonatedUser = _userLocalService.updateUser(impersonatedUser);
 
-		User user = TestPropsValues.getUser();
-
-		String userLanguageId = user.getLanguageId();
-
-		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		String languageId = LocaleUtil.toLanguageId(_targetLocale);
-
-		mockHttpServletRequest.setParameter("languageId", languageId);
-
-		mockHttpServletRequest.setParameter(
-			"redirect",
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				_group.getFriendlyURL() + StringPool.SLASH);
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
@@ -326,12 +309,28 @@ public class UpdateLanguageActionTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
+		String languageId = LocaleUtil.toLanguageId(_targetLocale);
+
+		mockHttpServletRequest.setParameter("languageId", languageId);
+
+		mockHttpServletRequest.setParameter(
+			"redirect",
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + StringPool.SLASH);
+
+		User user = TestPropsValues.getUser();
+
+		String userLanguageId = user.getLanguageId();
+
+		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
 		updateLanguageAction.execute(
 			null, mockHttpServletRequest, mockHttpServletResponse);
 
 		String redirectedUrl = mockHttpServletResponse.getRedirectedUrl();
 
-		Assert.assertNotNull(redirectedUrl);
 		Assert.assertTrue(
 			redirectedUrl.contains("doAsUserLanguageId=" + languageId));
 

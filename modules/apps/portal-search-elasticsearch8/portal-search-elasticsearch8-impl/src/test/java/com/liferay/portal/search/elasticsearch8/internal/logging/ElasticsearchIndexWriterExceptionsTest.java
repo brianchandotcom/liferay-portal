@@ -10,8 +10,6 @@ import co.elastic.clients.elasticsearch._types.ErrorCause;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -139,14 +137,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			try {
-				indexWriter.deleteDocument(searchContext, _UID);
-			}
-			catch (SearchException searchException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(searchException);
-				}
-			}
+			indexWriter.deleteDocument(searchContext, _UID);
 
 			_assertLogCapture(
 				message -> Assert.assertEquals(
@@ -337,8 +328,5 @@ public class ElasticsearchIndexWriterExceptionsTest
 	private static final long _COMPANY_ID = 1;
 
 	private static final String _UID = "1";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ElasticsearchIndexWriterExceptionsTest.class);
 
 }

@@ -40,8 +40,9 @@ function _run_test {
 	local script="${1}"
 	local test_function="${2}"
 
-	local description="${test_function#_test_}"
-	description="${description//_/ }"
+	local description
+
+	description=$(echo "${test_function}" | sed "s/^_test_//; s/_/ /g")
 
 	if "${test_function}" "${script}"
 	then

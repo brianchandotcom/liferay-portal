@@ -157,9 +157,10 @@ public class RegionLocalServiceTest {
 
 	@Test
 	public void testGetOrAddEmptyRegion() throws Exception {
-		Country country = _addCountry();
 
 		// Lazy referencing disabled
+
+		Country country = _addCountry();
 
 		try {
 			_regionLocalService.getOrAddEmptyRegion(

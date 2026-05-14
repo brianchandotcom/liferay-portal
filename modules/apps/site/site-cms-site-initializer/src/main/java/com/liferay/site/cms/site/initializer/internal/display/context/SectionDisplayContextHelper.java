@@ -136,7 +136,7 @@ public class SectionDisplayContextHelper {
 			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM),
 			rootObjectEntryFolderExternalReferenceCode);
 
-		StringBundler sb = new StringBundler(12);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("emptySearch=true&filter=");
 
@@ -162,7 +162,8 @@ public class SectionDisplayContextHelper {
 
 		sb.append("&nestedFields=embedded,embeddedTaxonomyCategory,");
 		sb.append("file.metadata,file.previewURL,file.thumbnailURL,");
-		sb.append("numberOfObjectEntries,numberOfObjectEntryFolders,");
+		sb.append("modifiedByUserName,numberOfObjectEntries,");
+		sb.append("numberOfObjectEntryFolders,");
 		sb.append("systemProperties.collaboratorBrief,");
 		sb.append("systemProperties.objectDefinitionBrief");
 		sb.append("&sort=dateModified:desc");

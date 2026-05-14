@@ -75,7 +75,7 @@
 				"en_US": "Description"
 			},
 			"name": "description",
-			"readOnly": "false",
+			"readOnly": false,
 			"readOnlyConditionExpression": "",
 			"system": true,
 			"type": "Clob"
@@ -92,7 +92,7 @@
 			},
 			"localized": true,
 			"name": "introMessage",
-			"readOnly": "false",
+			"readOnly": false,
 			"readOnlyConditionExpression": "",
 			"system": true,
 			"type": "Clob"
@@ -109,7 +109,7 @@
 			},
 			"localized": true,
 			"name": "notificationMessage",
-			"readOnly": "false",
+			"readOnly": false,
 			"readOnlyConditionExpression": "",
 			"system": true,
 			"type": "String"
@@ -126,7 +126,7 @@
 			},
 			"localized": true,
 			"name": "placeholderMessage",
-			"readOnly": "false",
+			"readOnly": false,
 			"readOnlyConditionExpression": "",
 			"system": true,
 			"type": "String"
@@ -156,7 +156,7 @@
 			},
 			"localized": true,
 			"name": "title",
-			"readOnly": "false",
+			"readOnly": false,
 			"system": true,
 			"type": "String"
 		},
@@ -183,7 +183,7 @@
 				}
 			],
 			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_CHATBOTS",
-			"readOnly": "false",
+			"readOnly": false,
 			"relationshipType": "oneToMany",
 			"required": true,
 			"system": true,

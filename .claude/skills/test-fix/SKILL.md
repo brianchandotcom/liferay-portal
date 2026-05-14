@@ -24,22 +24,22 @@ Verify all of these once at the start of the run. Fail fast with a clear message
 
 ### Case Result ID
 
-A positive integer. Used directly as the Testray case result ID. Get it from `${ARGUMENTS}` based on its type:
+When `${ARGUMENTS}` is a positive integer, use it directly as the Testray case result ID.
 
-#### Testray Build URL
+### Testray Build URL
 
-A URL of the form `https://testray.liferay.com/#/project/<projectId>/routines/<routineId>/build/<buildId>?filter=<urlencoded-json>`. Resolved to a case result ID by following [`references/testray.md`](references/testray.md). The procedure returns a case result ID that the rest of the workflow consumes identically to a user-supplied one.
+When `${ARGUMENTS}` is a URL of the form `https://testray.liferay.com/#/project/<projectId>/routines/<routineId>/build/<buildId>?filter=<urlencoded-json>`, resolve it to a case result ID by following [`references/testray.md`](references/testray.md). The procedure returns a case result ID that the rest of the workflow consumes identically to a user-supplied one.
 
-#### Test Name
+### Test Name
 
-Anything else. Resolved to a case result ID by following [`references/testray.md`](references/testray.md). When the resolution aborts, surface the reason and ask the user to retry with the case result ID directly.
+When `${ARGUMENTS}` is anything else, resolve it to a case result ID by following [`references/testray.md`](references/testray.md). When the resolution aborts, surface the reason and ask the user to retry with the case result ID directly.
 
 ### Failure Data
 
 Fetched at the start of the run by following [`references/testray.md`](references/testray.md), which covers authentication, name-to-ID resolution, and how to derive each field. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise, the procedure returns these fields:
 
 - **errorTrace** — error trace produced by the test framework.
-- **failureDate** — timestamp the case result was recorded, used to scope the duplicate-ticket check in **Claim the Failure**.
+- **failureDate** — timestamp when the case result was recorded, used to scope the duplicate-ticket check in **Claim the Failure**.
 - **firstFailSha** — first commit where the test failed (may be `null` when the case has no recorded failure history).
 - **lastPassSha** — commit where the test last passed (may be `null` when the case has no recent pass on record).
 - **name** — test name (class, spec, or method).
@@ -80,7 +80,7 @@ The elapsed time of the run, formatted as `<minutes>m <seconds>s`.
 
 The Task created in **Claim the Failure** is the persistent ticket of record for every verdict. Update it at the end of the run based on the verdict:
 
-- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. Title summarises the regression, description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Link the Bug to the Task with the **Fix** issue link type so the Task surfaces it as **is fixed by**. Return the Bug URL alongside the Task URL.
+- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. The title summarizes the regression. The description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Link the Bug to the Task with the **Fix** issue link type so the Task surfaces it as **is fixed by**. Return the Bug URL alongside the Task URL.
 
 - **Outdated test** — return the Task URL.
 

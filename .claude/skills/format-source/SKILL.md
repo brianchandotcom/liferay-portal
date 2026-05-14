@@ -964,7 +964,7 @@ This is the complement of Rule 14: intermediate input variables move down (next 
 
 **Examples:**
 
-When a local will be passed as a specific named parameter, adopt the parameter's name rather than an alternative description of the same value.
+When a local is passed as a specific named parameter, adopt the parameter's name rather than an alternative description of the same value.
 
 ```diff
 -boolean httpsEnabled = _isHttpsEnabled();

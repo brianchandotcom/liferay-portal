@@ -25,7 +25,7 @@ export ACCESS_TOKEN=$(curl \
 
 Skip when the input is not a test name. Otherwise, resolve the name through the master project's team routine. Every step that fails aborts the resolution — surface the reason and ask the user to retry with a case result ID directly. Do not silently fall back to a different project or routine.
 
-1. Use the canonical master project ID `35392` as `<masterProjectId>`. This is the project that hosts every team routine, browseable at https://testray.liferay.com/#/project/35392/routines. Do not derive it from the most recent `[master]` build — fork and sandbox projects also publish `[master]` builds, and routine names like `[master] ci:test:stable` exist on both, so the most recent build may belong to a fork.
+1. Use the canonical master project ID `35392` as `<masterProjectId>`. This is the project that hosts every team routine, browsable at `https://testray.liferay.com/#/project/35392/routines`. Do not derive it from the most recent `[master]` build — fork and sandbox projects also publish `[master]` builds, and routine names like `[master] ci:test:stable` exist on both, so the most recent build may belong to a fork.
 
 1. Fetch every Case with that exact name and keep the single one whose `r_projectToCases_c_projectId` equals `<masterProjectId>`. When zero or more than one match, abort.
 
@@ -73,9 +73,9 @@ Skip when the input is not a test name. Otherwise, resolve the name through the 
 
 ## Resolve a Build URL to a Case Result ID
 
-Skip when the input is not a Testray build URL. Otherwise pick the first unclaimed failure automatically from the build.
+Skip when the input is not a Testray build URL. Otherwise, pick the first unclaimed failure automatically from the build.
 
-Parse `<buildId>` from the URL path, read `<teamIds>` from `filter.testrayTeamIds` when present in the query string. Print the resulting `<buildId>` and `<teamIds>` before running any query, so the parse is auditable rather than asserted.
+Parse `<buildId>` from the URL path and read `<teamIds>` from `filter.testrayTeamIds` when present in the query string. Print the resulting `<buildId>` and `<teamIds>` before running any query, so the parse is auditable rather than asserted.
 
 1. List failed case results on the build, newest first. Append the team predicate only when `<teamIds>` is non-empty, joining multiple IDs with `or`:
 

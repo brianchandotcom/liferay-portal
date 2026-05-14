@@ -4,7 +4,7 @@ Use these procedures whenever a task requires creating or modifying a Liferay RE
 
 ## Module Bundle Layout
 
-A REST Builder feature lives in four sibling modules under `modules/apps/<area>/`:
+A REST Builder feature lives in four sibling modules under `modules/apps/<area>`:
 
 - `<name>-rest-api` — generated public API.
 - `<name>-rest-impl` — implementation. Hand-written `rest-config.yaml` and `rest-openapi.yaml` drive everything else.
@@ -110,7 +110,7 @@ Endpoints land at `/o/<baseURI>/v1.0/...` — do not collide with existing servl
 
 Standard OpenAPI 3.0.1. Minimum shape:
 
-- `info`: set `title`, `description`, `version: "v1.0"`. Title and description are not validator-required but tooling (including the MCP `/discover` endpoint) relies on them.
+- `info`: set `title`, `description`, `version: "v1.0"`. Title and description are not validator-required, but tooling (including the MCP `/discover` endpoint) relies on them.
 - `paths`: each operation needs `operationId`, `description`, and `tags: [<Tag>]`. The first tag becomes the resource name (`<Tag>Resource`); use one tag per resource.
 - `components.schemas`: each schema needs `description`, typed `properties`, and `required`.
 
@@ -183,13 +183,13 @@ Run every step without asking for confirmation, including the commits.
 
 ## Editing an Existing API
 
-Use this workflow when changing `rest-config.yaml` or `rest-openapi.yaml` on a REST Builder module bundle that already exists. Every yaml edit must be regenerated and committed before any implementation work continues.
+Use this workflow when changing `rest-config.yaml` or `rest-openapi.yaml` on a REST Builder module bundle that already exists. Every YAML edit must be regenerated and committed before any implementation work continues.
 
 ### Workflow
 
 Run every step without asking for confirmation, including the commits.
 
-1. Commit the hand-written files to the yaml files.
+1. Commit the hand-written YAML files.
 
 1. Run `<gradlew> buildREST` from the impl module.
 

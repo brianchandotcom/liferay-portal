@@ -281,6 +281,19 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		List<ObjectField> objectFields, List<ObjectLayout> objectLayouts,
 		Map<Long, List<ObjectRelationship>> objectRelationshipsMap) {
 
+		List<ObjectRelationship> objectRelationships = null;
+
+		if (objectRelationshipsMap != null) {
+			objectRelationships = objectRelationshipsMap.getOrDefault(
+				objectDefinition.getObjectDefinitionId(),
+				Collections.emptyList());
+		}
+
+		_objectRelationshipLocalService.
+			registerObjectRelationshipsRelatedInfoCollectionProviders(
+				objectDefinition, _objectDefinitionLocalService,
+				objectRelationships);
+
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			return Collections.emptyList();
 		}
@@ -535,19 +548,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				registerObjectLayoutTabScreenNavigationCategories(
 					objectDefinition, objectLayout.getObjectLayoutTabs());
 		}
-
-		List<ObjectRelationship> objectRelationships = null;
-
-		if (objectRelationshipsMap != null) {
-			objectRelationships = objectRelationshipsMap.getOrDefault(
-				objectDefinition.getObjectDefinitionId(),
-				Collections.emptyList());
-		}
-
-		_objectRelationshipLocalService.
-			registerObjectRelationshipsRelatedInfoCollectionProviders(
-				objectDefinition, _objectDefinitionLocalService,
-				objectRelationships);
 
 		try {
 			if (ArrayUtil.isNotEmpty(

@@ -37,9 +37,9 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 			assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 		}
 	}
-	catch (Exception e) {
+	catch (Exception exception) {
 		if (_log.isWarnEnabled()) {
-			_log.warn(e);
+			_log.warn(exception);
 		}
 	}
 
@@ -408,8 +408,8 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 
 <%
 	}
-	catch (Exception e) {
-		_log.error(e.getMessage());
+	catch (Exception exception) {
+		_log.error(exception);
 	}
 }
 %>

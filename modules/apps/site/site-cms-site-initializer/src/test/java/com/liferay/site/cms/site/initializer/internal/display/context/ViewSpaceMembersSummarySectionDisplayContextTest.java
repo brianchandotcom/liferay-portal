@@ -41,8 +41,13 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 	@Test
 	@TestInfo("LPD-89584")
 	public void testGetCreationMenu() throws Exception {
-		_testGetCreationMenuWithAssignMembersPermission();
-		_testGetCreationMenuWithoutAssignMembersPermission();
+		CreationMenu creationMenu = _getCreationMenu(false);
+
+		Assert.assertTrue(creationMenu.isEmpty());
+
+		CreationMenu creationMenu = _getCreationMenu(true);
+
+		Assert.assertFalse(creationMenu.isEmpty());
 	}
 
 	private CreationMenu _getCreationMenu(boolean hasAssignMembersPermission)
@@ -84,22 +89,6 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 					Mockito.mock(UserLocalService.class));
 
 		return viewSpaceMembersSummarySectionDisplayContext.getCreationMenu();
-	}
-
-	private void _testGetCreationMenuWithAssignMembersPermission()
-		throws Exception {
-
-		CreationMenu creationMenu = _getCreationMenu(true);
-
-		Assert.assertFalse(creationMenu.isEmpty());
-	}
-
-	private void _testGetCreationMenuWithoutAssignMembersPermission()
-		throws Exception {
-
-		CreationMenu creationMenu = _getCreationMenu(false);
-
-		Assert.assertTrue(creationMenu.isEmpty());
 	}
 
 }

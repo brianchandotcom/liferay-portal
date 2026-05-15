@@ -52,8 +52,6 @@ public class ViewCountEntryFinderImpl
 			else {
 				viewCountEntry.setViewCount(
 					viewCountEntry.getViewCount() + increment);
-
-				session.saveOrUpdate(viewCountEntry);
 			}
 
 			_entityCache.putResult(

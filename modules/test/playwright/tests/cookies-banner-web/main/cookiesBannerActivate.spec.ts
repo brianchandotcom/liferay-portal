@@ -24,26 +24,6 @@ export const test = mergeTests(
 	systemSettingsPageTest
 );
 
-async function toggleActiveAndWait(
-	consentManagerConfigurationPage: ConsentManagerConfigurationPage
-) {
-	const {page, toggleActivateButton, toggleDeactivateButton} =
-		consentManagerConfigurationPage;
-
-	if (await toggleDeactivateButton.isVisible()) {
-		page.once('dialog', async (dialogWindow) => {
-			await dialogWindow.accept();
-		});
-
-		await toggleDeactivateButton.click();
-	}
-	else {
-		await toggleActivateButton.click();
-	}
-
-	await waitForAlert(page);
-}
-
 test.afterEach(async ({systemSettingsPage}) => {
 	await test.step('Reset Consent Manager Configuration', async () => {
 		await resetConsentManagerConfiguration(systemSettingsPage);
@@ -55,15 +35,13 @@ test.afterEach(async ({systemSettingsPage}) => {
 });
 
 test(
-	'Enabling alone does not render the Cookies Banner',
+	'Activation notice is visible on Consent Manager, Cookie Banner, and Cookie Panel pages',
 	{tag: '@LPD-87281'},
-	async ({
-		browser,
-		consentManagerConfigurationPage,
-		page,
-		systemSettingsPage,
-	}) => {
-		await test.step('Enable Consent Manager leaving active off', async () => {
+	async ({page, systemSettingsPage}) => {
+		const noticeText =
+			/The consent management elements are not shown for end users by default/i;
+
+		await test.step('Enable Consent Manager so the sub-tabs become available', async () => {
 			await updateConsentManagerConfiguration(page, {
 				active: false,
 				enabled: true,
@@ -71,47 +49,89 @@ test(
 			});
 		});
 
-		await test.step('Verify the Cookies Banner is not rendered for a guest user', async () => {
-			const guestPage = await browser.newPage();
-
-			await guestPage.goto('/');
-
-			await expect(
-				guestPage.locator('.cookies-banner')
-			).not.toBeVisible();
-
-			await guestPage.close();
-		});
-
-		await test.step('Verify the Activate button is visible on the Consent Manager tab', async () => {
-			await consentManagerConfigurationPage.goTo();
-
-			await expect(
-				consentManagerConfigurationPage.toggleActivateButton
-			).toBeVisible();
-		});
-
-		await test.step('Verify Cookie Banner and Cookie Panel sub-tabs are visible under Privacy', async () => {
+		await test.step('Verify notice on Consent Manager page', async () => {
 			await systemSettingsPage.goToSystemSetting(
 				'Privacy',
 				'Consent Manager'
 			);
 
-			const privacyMenu =
-				systemSettingsPage.page.locator('#main-content');
+			await expect(page.getByText(noticeText).first()).toBeVisible();
+		});
+
+		await test.step('Verify notice on Cookie Banner page', async () => {
+			await page
+				.locator('#main-content')
+				.getByRole('menuitem', {exact: true, name: 'Cookie Banner'})
+				.click();
+
+			await expect(page.getByText(noticeText).first()).toBeVisible();
+		});
+
+		await test.step('Verify notice on Cookie Panel page', async () => {
+			await page
+				.locator('#main-content')
+				.getByRole('menuitem', {exact: true, name: 'Cookie Panel'})
+				.click();
+
+			await expect(page.getByText(noticeText).first()).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Changing the renewal period auto-checks and disables the force re-consent checkbox',
+	{tag: '@LPD-87281'},
+	async ({consentManagerConfigurationPage, page}) => {
+		await test.step('Enable and activate Consent Manager', async () => {
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				forceReload: true,
+			});
 
 			await expect(
-				privacyMenu.getByRole('menuitem', {
-					exact: true,
-					name: 'Cookie Banner',
-				})
+				consentManagerConfigurationPage.toggleDeactivateButton
 			).toBeVisible();
-			await expect(
-				privacyMenu.getByRole('menuitem', {
-					exact: true,
-					name: 'Cookie Panel',
-				})
-			).toBeVisible();
+		});
+
+		await test.step('Decline cookies banner so it stops covering the form', async () => {
+			const banner = page.locator('.cookies-banner');
+
+			await banner.waitFor({state: 'visible'});
+
+			await banner.getByRole('button', {name: 'Decline All'}).click();
+
+			await banner.waitFor({state: 'hidden'});
+		});
+
+		await test.step('Change renewal period and verify the checkbox is checked and disabled', async () => {
+			await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
+				'6'
+			);
+
+			await consentManagerConfigurationPage.updateButton.click();
+
+			const modal = page.getByRole('alertdialog');
+
+			await expect(modal).toContainText(
+				'These changes will take effect immediately'
+			);
+
+			const checkbox = modal.getByRole('checkbox', {
+				name: /force re-consent/i,
+			});
+
+			await expect(checkbox).toBeChecked();
+			await expect(checkbox).toBeDisabled();
+
+			await modal.getByRole('button', {name: 'OK'}).click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Verify cookies banner reappears after re-consent', async () => {
+			await page.goto('/');
+
+			await expect(page.locator('.cookies-banner')).toBeVisible();
 		});
 	}
 );
@@ -240,132 +260,6 @@ test(
 );
 
 test(
-	'Saving while active shows a confirmation modal that can be cancelled or confirmed',
-	{tag: '@LPD-87281'},
-	async ({consentManagerConfigurationPage, page}) => {
-		await test.step('Enable and activate Consent Manager', async () => {
-			await updateConsentManagerConfiguration(page, {
-				enabled: true,
-				forceReload: true,
-				storeConsent: false,
-			});
-
-			await expect(
-				consentManagerConfigurationPage.toggleDeactivateButton
-			).toBeVisible();
-		});
-
-		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.locator('.cookies-banner');
-
-			await banner.waitFor({state: 'visible'});
-
-			await banner.getByRole('button', {name: 'Decline All'}).click();
-
-			await banner.waitFor({state: 'hidden'});
-		});
-
-		await test.step('Cancel the confirmation modal and verify Store Consent is not persisted', async () => {
-			await consentManagerConfigurationPage.storeConsentCheckbox.setChecked(
-				true
-			);
-
-			await consentManagerConfigurationPage.updateButton.click();
-
-			const modal = page.getByRole('alertdialog');
-
-			await expect(modal).toContainText(
-				'These changes will take effect immediately'
-			);
-
-			await modal.getByRole('button', {name: 'Cancel'}).click();
-
-			await modal.waitFor({state: 'hidden'});
-
-			await consentManagerConfigurationPage.goTo();
-
-			await expect(
-				consentManagerConfigurationPage.storeConsentCheckbox
-			).not.toBeChecked();
-		});
-
-		await test.step('Confirm the modal with the force re-consent checkbox marked and verify Store Consent is persisted', async () => {
-			await consentManagerConfigurationPage.storeConsentCheckbox.setChecked(
-				true
-			);
-
-			await consentManagerConfigurationPage.updateButton.click();
-
-			const modal = page.getByRole('alertdialog');
-
-			await modal
-				.getByRole('checkbox', {name: /force re-consent/i})
-				.check();
-
-			await modal.getByRole('button', {name: 'OK'}).click();
-
-			await waitForAlert(page);
-
-			await consentManagerConfigurationPage.goTo();
-
-			await expect(
-				consentManagerConfigurationPage.storeConsentCheckbox
-			).toBeChecked();
-		});
-
-		await test.step('Verify the cookies banner is shown again after force re-consent', async () => {
-			await page.goto('/');
-
-			await expect(page.locator('.cookies-banner')).toBeVisible();
-		});
-	}
-);
-
-test(
-	'Activation notice is visible on Consent Manager, Cookie Banner, and Cookie Panel pages',
-	{tag: '@LPD-87281'},
-	async ({page, systemSettingsPage}) => {
-		const noticeText =
-			/The consent management elements are not shown for end users by default/i;
-
-		await test.step('Enable Consent Manager so the sub-tabs become available', async () => {
-			await updateConsentManagerConfiguration(page, {
-				active: false,
-				enabled: true,
-				forceReload: true,
-			});
-		});
-
-		await test.step('Verify notice on Consent Manager page', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Privacy',
-				'Consent Manager'
-			);
-
-			await expect(page.getByText(noticeText).first()).toBeVisible();
-		});
-
-		await test.step('Verify notice on Cookie Banner page', async () => {
-			await page
-				.locator('#main-content')
-				.getByRole('menuitem', {exact: true, name: 'Cookie Banner'})
-				.click();
-
-			await expect(page.getByText(noticeText).first()).toBeVisible();
-		});
-
-		await test.step('Verify notice on Cookie Panel page', async () => {
-			await page
-				.locator('#main-content')
-				.getByRole('menuitem', {exact: true, name: 'Cookie Panel'})
-				.click();
-
-			await expect(page.getByText(noticeText).first()).toBeVisible();
-		});
-	}
-);
-
-test(
 	'Clicking Deactivate shows a confirmation dialog that can be cancelled or confirmed',
 	{tag: '@LPD-87281'},
 	async ({consentManagerConfigurationPage, page}) => {
@@ -415,96 +309,63 @@ test(
 );
 
 test(
-	'Saving without changes does not show the confirmation modal',
+	'Enabling alone does not render the Cookies Banner',
 	{tag: '@LPD-87281'},
-	async ({consentManagerConfigurationPage, page}) => {
-		await test.step('Enable and activate Consent Manager', async () => {
+	async ({
+		browser,
+		consentManagerConfigurationPage,
+		page,
+		systemSettingsPage,
+	}) => {
+		await test.step('Enable Consent Manager leaving active off', async () => {
 			await updateConsentManagerConfiguration(page, {
+				active: false,
 				enabled: true,
 				forceReload: true,
 			});
+		});
+
+		await test.step('Verify the Cookies Banner is not rendered for a guest user', async () => {
+			const guestPage = await browser.newPage();
+
+			await guestPage.goto('/');
 
 			await expect(
-				consentManagerConfigurationPage.toggleDeactivateButton
+				guestPage.locator('.cookies-banner')
+			).not.toBeVisible();
+
+			await guestPage.close();
+		});
+
+		await test.step('Verify the Activate button is visible on the Consent Manager tab', async () => {
+			await consentManagerConfigurationPage.goTo();
+
+			await expect(
+				consentManagerConfigurationPage.toggleActivateButton
 			).toBeVisible();
 		});
 
-		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.locator('.cookies-banner');
+		await test.step('Verify Cookie Banner and Cookie Panel sub-tabs are visible under Privacy', async () => {
+			await systemSettingsPage.goToSystemSetting(
+				'Privacy',
+				'Consent Manager'
+			);
 
-			await banner.waitFor({state: 'visible'});
-
-			await banner.getByRole('button', {name: 'Decline All'}).click();
-
-			await banner.waitFor({state: 'hidden'});
-		});
-
-		await test.step('Click Update without changes and verify no modal appears', async () => {
-			await consentManagerConfigurationPage.updateButton.click();
-
-			const modal = page.getByRole('alertdialog');
-
-			await expect(modal).not.toBeVisible();
-
-			await waitForAlert(page);
-		});
-	}
-);
-
-test(
-	'Changing the renewal period auto-checks and disables the force re-consent checkbox',
-	{tag: '@LPD-87281'},
-	async ({consentManagerConfigurationPage, page}) => {
-		await test.step('Enable and activate Consent Manager', async () => {
-			await updateConsentManagerConfiguration(page, {
-				enabled: true,
-				forceReload: true,
-			});
+			const privacyMenu =
+				systemSettingsPage.page.locator('#main-content');
 
 			await expect(
-				consentManagerConfigurationPage.toggleDeactivateButton
+				privacyMenu.getByRole('menuitem', {
+					exact: true,
+					name: 'Cookie Banner',
+				})
 			).toBeVisible();
-		});
-
-		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.locator('.cookies-banner');
-
-			await banner.waitFor({state: 'visible'});
-
-			await banner.getByRole('button', {name: 'Decline All'}).click();
-
-			await banner.waitFor({state: 'hidden'});
-		});
-
-		await test.step('Change renewal period and verify the checkbox is checked and disabled', async () => {
-			await consentManagerConfigurationPage.consentRenewalPeriodInput.fill(
-				'6'
-			);
-
-			await consentManagerConfigurationPage.updateButton.click();
-
-			const modal = page.getByRole('alertdialog');
-
-			await expect(modal).toContainText(
-				'These changes will take effect immediately'
-			);
-
-			const checkbox = modal.getByRole('checkbox', {
-				name: /force re-consent/i,
-			});
-
-			await expect(checkbox).toBeChecked();
-			await expect(checkbox).toBeDisabled();
-
-			await modal.getByRole('button', {name: 'OK'}).click();
-
-			await waitForAlert(page);
-		});
-
-		await test.step('Verify cookies banner reappears after re-consent', async () => {
-			await page.goto('/');
-
-			await expect(page.locator('.cookies-banner')).toBeVisible();
+			await expect(
+				privacyMenu.getByRole('menuitem', {
+					exact: true,
+					name: 'Cookie Panel',
+				})
+			).toBeVisible();
 		});
 	}
 );
@@ -719,3 +580,142 @@ test(
 		});
 	}
 );
+
+test(
+	'Saving while active shows a confirmation modal that can be cancelled or confirmed',
+	{tag: '@LPD-87281'},
+	async ({consentManagerConfigurationPage, page}) => {
+		await test.step('Enable and activate Consent Manager', async () => {
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				forceReload: true,
+				storeConsent: false,
+			});
+
+			await expect(
+				consentManagerConfigurationPage.toggleDeactivateButton
+			).toBeVisible();
+		});
+
+		await test.step('Decline cookies banner so it stops covering the form', async () => {
+			const banner = page.locator('.cookies-banner');
+
+			await banner.waitFor({state: 'visible'});
+
+			await banner.getByRole('button', {name: 'Decline All'}).click();
+
+			await banner.waitFor({state: 'hidden'});
+		});
+
+		await test.step('Cancel the confirmation modal and verify Store Consent is not persisted', async () => {
+			await consentManagerConfigurationPage.storeConsentCheckbox.setChecked(
+				true
+			);
+
+			await consentManagerConfigurationPage.updateButton.click();
+
+			const modal = page.getByRole('alertdialog');
+
+			await expect(modal).toContainText(
+				'These changes will take effect immediately'
+			);
+
+			await modal.getByRole('button', {name: 'Cancel'}).click();
+
+			await modal.waitFor({state: 'hidden'});
+
+			await consentManagerConfigurationPage.goTo();
+
+			await expect(
+				consentManagerConfigurationPage.storeConsentCheckbox
+			).not.toBeChecked();
+		});
+
+		await test.step('Confirm the modal with the force re-consent checkbox marked and verify Store Consent is persisted', async () => {
+			await consentManagerConfigurationPage.storeConsentCheckbox.setChecked(
+				true
+			);
+
+			await consentManagerConfigurationPage.updateButton.click();
+
+			const modal = page.getByRole('alertdialog');
+
+			await modal
+				.getByRole('checkbox', {name: /force re-consent/i})
+				.check();
+
+			await modal.getByRole('button', {name: 'OK'}).click();
+
+			await waitForAlert(page);
+
+			await consentManagerConfigurationPage.goTo();
+
+			await expect(
+				consentManagerConfigurationPage.storeConsentCheckbox
+			).toBeChecked();
+		});
+
+		await test.step('Verify the cookies banner is shown again after force re-consent', async () => {
+			await page.goto('/');
+
+			await expect(page.locator('.cookies-banner')).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Saving without changes does not show the confirmation modal',
+	{tag: '@LPD-87281'},
+	async ({consentManagerConfigurationPage, page}) => {
+		await test.step('Enable and activate Consent Manager', async () => {
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				forceReload: true,
+			});
+
+			await expect(
+				consentManagerConfigurationPage.toggleDeactivateButton
+			).toBeVisible();
+		});
+
+		await test.step('Decline cookies banner so it stops covering the form', async () => {
+			const banner = page.locator('.cookies-banner');
+
+			await banner.waitFor({state: 'visible'});
+
+			await banner.getByRole('button', {name: 'Decline All'}).click();
+
+			await banner.waitFor({state: 'hidden'});
+		});
+
+		await test.step('Click Update without changes and verify no modal appears', async () => {
+			await consentManagerConfigurationPage.updateButton.click();
+
+			const modal = page.getByRole('alertdialog');
+
+			await expect(modal).not.toBeVisible();
+
+			await waitForAlert(page);
+		});
+	}
+);
+
+async function toggleActiveAndWait(
+	consentManagerConfigurationPage: ConsentManagerConfigurationPage
+) {
+	const {page, toggleActivateButton, toggleDeactivateButton} =
+		consentManagerConfigurationPage;
+
+	if (await toggleDeactivateButton.isVisible()) {
+		page.once('dialog', async (dialogWindow) => {
+			await dialogWindow.accept();
+		});
+
+		await toggleDeactivateButton.click();
+	}
+	else {
+		await toggleActivateButton.click();
+	}
+
+	await waitForAlert(page);
+}

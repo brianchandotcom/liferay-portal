@@ -189,7 +189,7 @@ export type Props = {
 	 * Flag indicating if the caret icon should be displayed on the right side.
 	 */
 	triggerIcon?: string | null;
-};
+} & Omit<React.HTMLAttributes<HTMLDivElement | HTMLLIElement>, 'children'>;
 
 type History = {
 	id: string;
@@ -226,6 +226,7 @@ export function ClayDropDownWithDrilldown({
 	spritemap,
 	trigger,
 	triggerIcon = null,
+	...otherProps
 }: Props) {
 	const [activeMenu, setActiveMenu] = useState(
 		defaultActiveMenu ?? initialActiveMenu
@@ -302,6 +303,7 @@ export function ClayDropDownWithDrilldown({
 
 	return (
 		<DropDown
+			{...otherProps}
 			active={active}
 			alignmentByViewport={alignmentByViewport}
 			alignmentPosition={alignmentPosition}

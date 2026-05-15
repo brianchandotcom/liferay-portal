@@ -242,6 +242,7 @@ export function ClayDropDownWithItems({
 	if (hasContextual && isMobile) {
 		return (
 			<ClayDropDownWithDrilldown
+				{...otherProps}
 				active={internalActive}
 				alignmentByViewport={alignmentByViewport}
 				alignmentPosition={alignmentPosition}

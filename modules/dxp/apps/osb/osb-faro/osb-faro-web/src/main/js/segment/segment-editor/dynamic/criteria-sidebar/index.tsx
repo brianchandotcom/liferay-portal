@@ -1,6 +1,7 @@
 import ClayDropDown from '@clayui/drop-down';
 import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
+import Loading from 'shared/components/Loading';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import {extractRemoteCriterionEntries} from '../criterion-types/extract';
@@ -70,6 +71,7 @@ export default function CriteriaSidebar({
 		page: number;
 	}>({keywords: '', page: 1});
 	const [remoteItems, setRemoteItems] = useState<List<Property>>(List());
+	const [remoteLoading, setRemoteLoading] = useState(false);
 
 	const [remoteTotalCount, setRemoteTotalCount] = useState(0);
 
@@ -111,6 +113,8 @@ export default function CriteriaSidebar({
 			return;
 		}
 
+		setRemoteLoading(true);
+
 		selectedRemoteCriterionType
 			.api({
 				channelId,
@@ -134,7 +138,8 @@ export default function CriteriaSidebar({
 						property => property && addProperty(property)
 					);
 				}
-			});
+			})
+			.finally(() => setRemoteLoading(false));
 	}, [channelId, groupId, type, selectedRemoteCriterionType, remoteQuery]);
 
 	const effectivePropertyGroupsIList = useMemo(
@@ -217,11 +222,15 @@ export default function CriteriaSidebar({
 			</div>
 
 			<div className='sidebar-collapse'>
-				<CriteriaSidebarCollapse
-					propertyGroupsIList={effectivePropertyGroupsIList}
-					propertyKey={selectedPropertyKey ?? ''}
-					searchValue={isRemoteSection ? '' : searchValue}
-				/>
+				{isRemoteSection && remoteLoading ? (
+					<Loading overlay />
+				) : (
+					<CriteriaSidebarCollapse
+						propertyGroupsIList={effectivePropertyGroupsIList}
+						propertyKey={selectedPropertyKey ?? ''}
+						searchValue={isRemoteSection ? '' : searchValue}
+					/>
+				)}
 			</div>
 
 			{isRemoteSection && remoteTotalCount > 0 && (

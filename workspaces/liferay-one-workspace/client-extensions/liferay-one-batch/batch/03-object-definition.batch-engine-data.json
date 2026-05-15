@@ -1465,9 +1465,9 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Publisher Profile Image"
+						"en_US": "Publisher Profile Image URL"
 					},
-					"name": "publisherProfileImage",
+					"name": "publisherProfileImageURL",
 					"objectFieldSettings": [
 						{
 							"name": "showCounter",
@@ -1518,7 +1518,7 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_CONTACT",
+					"externalReferenceCode": "C_PUBLISHER_DETAILS_SHOW_CONTACT_FORM",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
@@ -1559,7 +1559,7 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Publishers Details"
+				"en_US": "Publisher Details"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/publisherdetailses",

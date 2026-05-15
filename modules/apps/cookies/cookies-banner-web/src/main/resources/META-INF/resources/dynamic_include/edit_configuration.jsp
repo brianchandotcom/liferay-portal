@@ -84,13 +84,13 @@
 			Liferay.Util.openModal({
 				bodyHTML:
 					'<p><liferay-ui:message key="these-changes-will-take-effect-immediately-do-you-want-to-continue" /></p>' +
-					'<div class="custom-control custom-checkbox">' +
+					'<div class="c-mt-2 custom-control custom-checkbox">' +
 					'<input class="custom-control-input" id="' +
 					checkboxId +
 					'" type="checkbox" ' +
 					checkboxAttributes +
 					' />' +
-					'<label class="custom-control-label" for="' +
+					'<label class="c-pl-2 custom-control-label" for="' +
 					checkboxId +
 					'"><liferay-ui:message key="check-if-you-want-to-force-re-consent-to-the-users" /></label>' +
 					'</div>',

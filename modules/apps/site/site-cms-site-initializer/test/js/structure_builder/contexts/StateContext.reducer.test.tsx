@@ -57,6 +57,7 @@ function buildInitialState({
 	};
 
 	return {
+		clipboard: null,
 		history: {
 			deletedChildren: [],
 			deletedGroupERCs: [],

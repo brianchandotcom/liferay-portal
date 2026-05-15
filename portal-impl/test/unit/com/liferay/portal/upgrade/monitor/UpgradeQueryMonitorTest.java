@@ -240,24 +240,24 @@ public class UpgradeQueryMonitorTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query1, "\" with ID ", id1,
-				" in schema \"", schema1, "\" has been running for 300 seconds"),
+				"Locked query \"", query1, "\" with ID ", id1, " in schema \"",
+				schema1, "\" has been running for 300 seconds"),
 			logEntry1.getMessage());
 
 		LogEntry logEntry2 = logEntries.get(2);
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query2, "\" with ID ", id2,
-				" in schema \"", schema2, "\" has been running for 600 seconds"),
+				"Locked query \"", query2, "\" with ID ", id2, " in schema \"",
+				schema2, "\" has been running for 600 seconds"),
 			logEntry2.getMessage());
 
 		LogEntry logEntry3 = logEntries.get(3);
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query3, "\" with ID ", id3,
-				" in schema \"", schema3, "\" has been running for 900 seconds"),
+				"Locked query \"", query3, "\" with ID ", id3, " in schema \"",
+				schema3, "\" has been running for 900 seconds"),
 			logEntry3.getMessage());
 	}
 

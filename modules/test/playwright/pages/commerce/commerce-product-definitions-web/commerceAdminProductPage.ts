@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
@@ -67,9 +68,7 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 				name: menuItemName,
 			});
 		this.creationMenuNewButton = page
-			.locator(
-				'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fm'
-			)
+			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
 		this.deleteMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -174,7 +173,7 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 
 		await this.creationMenuNewButton.click();
 		await this.creationMenuItem('Generate All SKU Combinations').click();
-		await this.page.waitForLoadState('load');
+		await waitForAlert(this.page);
 	}
 
 	async addSku(skuName: string, option = {name: '', value: ''}) {

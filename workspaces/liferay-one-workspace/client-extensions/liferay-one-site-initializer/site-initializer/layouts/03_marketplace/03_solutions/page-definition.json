@@ -62,20 +62,6 @@
 								"pageElements": [
 									{
 										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_SIDE_NAV",
-													"siteNavigationMenuExternalReferenceCode": "LO_MARKETPLACE_NAV",
-													"siteNavigationMenuName": "Marketplace Navigation",
-													"siteNavigationMenuType": "-1"
-												},
-												"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-											}
-										},
-										"type": "Widget"
-									},
-									{
-										"definition": {
 											"fragmentStyle": {
 												"hidden": true
 											},

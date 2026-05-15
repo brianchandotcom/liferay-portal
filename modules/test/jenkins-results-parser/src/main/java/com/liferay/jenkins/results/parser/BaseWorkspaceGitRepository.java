@@ -1455,7 +1455,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		String jobName = _getJobName();
 
-		if (!jobName.contains("-batch") && !jobName.contains("-downstream")) {
+		if (JenkinsResultsParserUtil.isTopLevelJobName(jobName)) {
 			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 			File archiveFile = gitWorkingDirectory.archive(

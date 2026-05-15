@@ -527,16 +527,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		try {
 			long currentRow = RandomTestUtil.randomLong();
 
-			String upgradeProcessClassName =
-				"com.liferay.test.SampleUpgradeProcess";
-
-			lastKnownProgresses.put(upgradeProcessClassName, currentRow);
+			lastKnownProgresses.put(_UPGRADE_PROCESS_CLASS_NAME, currentRow);
 
 			_appender.stop();
 
 			_assertReportDiagnostics(
 				StringBundler.concat(
-					upgradeProcessClassName, " processed approximately ",
+					_UPGRADE_PROCESS_CLASS_NAME, " processed approximately ",
 					currentRow, " rows"));
 		}
 		finally {
@@ -561,20 +558,17 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_appender.start();
 
 		try {
-			long currentRow = 50000L;
-			long totalRows = 200000L;
+			long currentRow = RandomTestUtil.randomLong();
+			long totalRows = RandomTestUtil.randomLong();
 
-			String upgradeProcessClassName =
-				"com.liferay.test.SampleUpgradeProcess";
-
-			lastKnownProgresses.put(upgradeProcessClassName, currentRow);
-			lastKnownTotalCounts.put(upgradeProcessClassName, totalRows);
+			lastKnownProgresses.put(_UPGRADE_PROCESS_CLASS_NAME, currentRow);
+			lastKnownTotalCounts.put(_UPGRADE_PROCESS_CLASS_NAME, totalRows);
 
 			_appender.stop();
 
 			_assertReportDiagnostics(
 				StringBundler.concat(
-					upgradeProcessClassName, " processed approximately ",
+					_UPGRADE_PROCESS_CLASS_NAME, " processed approximately ",
 					currentRow, " of ", totalRows, " rows"));
 		}
 		finally {
@@ -1462,6 +1456,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	private static final String _DELETE_DUPLICATES_FINDER_WARNING_MESSAGE =
 		RandomTestUtil.randomString();
+
+	private static final String _UPGRADE_PROCESS_CLASS_NAME =
+		"com.liferay.test.SampleUpgradeProcess";
 
 	private static DB _db;
 	private static Appender _logContextAppender;

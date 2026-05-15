@@ -927,6 +927,11 @@
 			<message key="parameter.incorrect" value="Do not pass &quot;DataAccess.getConnection()&quot; directly as parameter, use variable instead" />
 			<message key="try.with.resources.use" value="Use try-with-resources statement to declare variable &quot;{0}&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.TestClassHardcodedPortCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Finds cases where `PortalUtil.getPortalServerPort` should be used." />
+			<message key="mehtod.use" value="Use &quot;PortalUtil.getPortalServerPort&quot; instead of the hard-coded port &quot;8080&quot;" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.TestClassMissingLiferayUnitTestRuleCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing LiferayUnitTestRule." />

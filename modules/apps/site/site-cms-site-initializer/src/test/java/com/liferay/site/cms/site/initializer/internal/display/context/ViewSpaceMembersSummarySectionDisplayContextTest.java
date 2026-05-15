@@ -45,9 +45,7 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 		_testGetCreationMenuWithoutAssignMembersPermission();
 	}
 
-	private ViewSpaceMembersSummarySectionDisplayContext
-			_getViewSpaceMembersSummarySectionDisplayContext(
-				boolean hasAssignMembersPermission)
+	private CreationMenu _getCreationMenu(boolean hasAssignMembersPermission)
 		throws Exception {
 
 		GroupLocalService groupLocalService = Mockito.mock(
@@ -75,24 +73,23 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
-		return new ViewSpaceMembersSummarySectionDisplayContext(
-			Mockito.mock(DepotEntryLocalService.class),
-			RandomTestUtil.randomLong(), groupLocalService,
-			groupModelResourcePermission, mockHttpServletRequest,
-			Mockito.mock(Language.class),
-			Mockito.mock(UserGroupLocalService.class),
-			Mockito.mock(UserLocalService.class));
+		ViewSpaceMembersSummarySectionDisplayContext
+			viewSpaceMembersSummarySectionDisplayContext =
+				new ViewSpaceMembersSummarySectionDisplayContext(
+					Mockito.mock(DepotEntryLocalService.class),
+					RandomTestUtil.randomLong(), groupLocalService,
+					groupModelResourcePermission, mockHttpServletRequest,
+					Mockito.mock(Language.class),
+					Mockito.mock(UserGroupLocalService.class),
+					Mockito.mock(UserLocalService.class));
+
+		return viewSpaceMembersSummarySectionDisplayContext.getCreationMenu();
 	}
 
 	private void _testGetCreationMenuWithAssignMembersPermission()
 		throws Exception {
 
-		ViewSpaceMembersSummarySectionDisplayContext
-			viewSpaceMembersSummarySectionDisplayContext =
-				_getViewSpaceMembersSummarySectionDisplayContext(true);
-
-		CreationMenu creationMenu =
-			viewSpaceMembersSummarySectionDisplayContext.getCreationMenu();
+		CreationMenu creationMenu = _getCreationMenu(true);
 
 		Assert.assertFalse(creationMenu.isEmpty());
 	}
@@ -100,12 +97,7 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 	private void _testGetCreationMenuWithoutAssignMembersPermission()
 		throws Exception {
 
-		ViewSpaceMembersSummarySectionDisplayContext
-			viewSpaceMembersSummarySectionDisplayContext =
-				_getViewSpaceMembersSummarySectionDisplayContext(false);
-
-		CreationMenu creationMenu =
-			viewSpaceMembersSummarySectionDisplayContext.getCreationMenu();
+		CreationMenu creationMenu = _getCreationMenu(false);
 
 		Assert.assertTrue(creationMenu.isEmpty());
 	}

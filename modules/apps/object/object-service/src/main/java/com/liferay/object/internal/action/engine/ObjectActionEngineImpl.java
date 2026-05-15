@@ -76,7 +76,15 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			objectDefinition, payloadJSONObject,
 			_userLocalService.getUser(userId));
 
+		boolean clearObjectEntryIdsMap =
+			ObjectActionThreadLocal.isClearObjectEntryIdsMap();
+
 		try {
+			if (clearObjectEntryIdsMap) {
+				ObjectActionThreadLocal.clearObjectEntryIdsMap();
+			}
+
+			ObjectActionThreadLocal.setClearObjectEntryIdsMap(false);
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 			_executeObjectAction(
@@ -86,6 +94,8 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 					_systemObjectDefinitionManagerRegistry));
 		}
 		finally {
+			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
+				clearObjectEntryIdsMap);
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
 	}

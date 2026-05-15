@@ -92,6 +92,8 @@ public class EditCountryMVCActionCommand
 			else if (cmd.equals(Constants.UPDATE)) {
 				long countryId = ParamUtil.getLong(actionRequest, "countryId");
 
+				country = _countryService.getCountry(countryId);
+
 				country = _countryService.updateCountry(
 					country.getExternalReferenceCode(), countryId, a2, a3,
 					active, billingAllowed, idd, name, number, position,

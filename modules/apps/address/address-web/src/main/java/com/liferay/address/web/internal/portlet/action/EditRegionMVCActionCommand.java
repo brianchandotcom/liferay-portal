@@ -81,6 +81,8 @@ public class EditRegionMVCActionCommand
 						region.getRegionId()));
 			}
 			else {
+				region = _regionService.getRegion(regionId);
+
 				region = _regionService.updateRegion(
 					region.getExternalReferenceCode(), regionId, active, name,
 					position, regionCode);

@@ -7,7 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
-import {getDefaultLanguageLabel} from '../../common/utils/defaultLanguageLabels';
+import buildLocalizedValue from '../../common/utils/buildLocalizedValue';
 import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructure from '../selectors/selectStructure';
@@ -68,12 +68,7 @@ export default function AddChildDropdown({
 		dispatch({
 			relatedContent: {
 				erc: getRandomId(),
-				label: {
-					[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-						getDefaultLanguageLabel('select-related-content'),
-					[Liferay.ThemeDisplay.getLanguageId()]:
-						Liferay.Language.get('select-related-content'),
-				},
+				label: buildLocalizedValue('select-related-content'),
 				multiselection: false,
 				name: getRandomName(),
 				parent: parentUuid ?? structure.uuid,

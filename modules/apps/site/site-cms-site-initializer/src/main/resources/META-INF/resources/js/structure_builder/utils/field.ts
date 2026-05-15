@@ -4,6 +4,7 @@
  */
 
 import {ObjectField} from '../../common/types/ObjectDefinition';
+import buildLocalizedValue from '../../common/utils/buildLocalizedValue';
 import {getDefaultLanguageLabel} from '../../common/utils/defaultLanguageLabels';
 import {Uuid} from '../types/Uuid';
 import getRandomId from './getRandomId';
@@ -270,11 +271,7 @@ export function getDefaultField({
 			indexedAsKeyword: false,
 			indexedLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
 		},
-		label: {
-			[Liferay.ThemeDisplay.getDefaultLanguageId()]: defaultLocaleLabel,
-			[Liferay.ThemeDisplay.getLanguageId()]:
-				Liferay.Language.get(resolvedLanguageKey),
-		},
+		label: buildLocalizedValue(resolvedLanguageKey),
 		localized: true,
 		locked,
 		name: name ?? normalizeString(defaultLocaleLabel, {style: 'camel'}),

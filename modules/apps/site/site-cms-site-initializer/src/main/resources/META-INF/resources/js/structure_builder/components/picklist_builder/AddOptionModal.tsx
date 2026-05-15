@@ -12,20 +12,12 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {Option} from '../../../common/types/Picklist';
-import {getDefaultLanguageLabel} from '../../../common/utils/defaultLanguageLabels';
+import buildLocalizedValue from '../../../common/utils/buildLocalizedValue';
 import getLocalizedValue from '../../../common/utils/getLocalizedValue';
 import {useAddOption} from '../../contexts/PicklistBuilderContext';
 import getRandomId from '../../utils/getRandomId';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
-
-function getDefaultName(): Liferay.Language.LocalizedValue<string> {
-	return {
-		[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-			getDefaultLanguageLabel('option'),
-		[Liferay.ThemeDisplay.getLanguageId()]: Liferay.Language.get('option'),
-	};
-}
 
 export default function AddOptionModal({
 	onCloseModal,
@@ -37,7 +29,7 @@ export default function AddOptionModal({
 	const [erc, setErc] = useState<string>(option?.erc || getRandomId());
 	const [key, setKey] = useState<string>(option?.key || getRandomKey());
 	const [name, setName] = useState<Liferay.Language.LocalizedValue<string>>(
-		option?.name || getDefaultName()
+		option?.name || buildLocalizedValue('option')
 	);
 	const addOption = useAddOption();
 
@@ -56,7 +48,7 @@ export default function AddOptionModal({
 
 		setKey(getRandomKey());
 		setErc(getRandomId());
-		setName(getDefaultName());
+		setName(buildLocalizedValue('option'));
 	};
 
 	return (

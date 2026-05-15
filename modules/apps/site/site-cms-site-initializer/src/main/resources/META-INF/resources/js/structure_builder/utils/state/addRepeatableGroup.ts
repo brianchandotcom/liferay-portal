@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getDefaultLanguageLabel} from '../../../common/utils/defaultLanguageLabels';
+import buildLocalizedValue from '../../../common/utils/buildLocalizedValue';
 import {
 	RepeatableGroup,
 	Structure,
@@ -68,12 +68,7 @@ export default function addRepeatableGroup({
 				])
 			),
 			erc: getRandomId(),
-			label: {
-				[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-					getDefaultLanguageLabel('repeatable-group'),
-				[Liferay.ThemeDisplay.getLanguageId()]:
-					Liferay.Language.get('repeatable-group'),
-			},
+			label: buildLocalizedValue('repeatable-group'),
 			name: getRandomName({capitalize: true}),
 			parent: groupParent,
 			relationshipERC: getRandomId(),

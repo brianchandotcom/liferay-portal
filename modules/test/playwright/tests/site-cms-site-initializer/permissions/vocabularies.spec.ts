@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {addRoleMemberAndSwitch} from '../main/spaces/helpers/roleMembership';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -48,5 +49,81 @@ test(
 		await expect(
 			page.getByRole('heading', {name: 'Categorization'})
 		).toBeHidden();
+	}
+);
+
+test(
+	'A Space Content Reviewer does not see the Vocabulary Quick Action on the CMS Home Page',
+	{tag: '@LPD-90072'},
+	async ({apiHelpers, homePage, page, spaceSummaryPage}) => {
+		const spaceName = getRandomString();
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		await addRoleMemberAndSwitch({
+			apiHelpers,
+			page,
+			role: 'Space Content Reviewer',
+			spaceName,
+			spaceSummaryPage,
+		});
+
+		await homePage.goto();
+
+		await expect(
+			page.getByRole('heading', {name: 'Quick Actions'})
+		).toBeVisible();
+
+		await expect(homePage.vocabularyButton).toBeHidden();
+	}
+);
+
+test(
+	'A CMS Administrator sees the Vocabulary Quick Action on the CMS Home Page',
+	{tag: '@LPD-90072'},
+	async ({apiHelpers, homePage, page, spaceSummaryPage}) => {
+		const spaceName = getRandomString();
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const cmsAdministratorRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'CMS Administrator'
+			);
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			cmsAdministratorRole.id,
+			Number(user.id)
+		);
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+
+		await performUserSwitch(page, user.alternateName);
+
+		await homePage.goto();
+
+		await expect(
+			page.getByRole('heading', {name: 'Quick Actions'})
+		).toBeVisible();
+
+		await expect(homePage.vocabularyButton).toBeVisible();
 	}
 );

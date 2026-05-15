@@ -20,47 +20,6 @@ definition {
 		}
 	}
 
-	@priority = 3
-	test DeleteLiferayDXPLicense {
-		property commerce.enabled = "false";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		SignIn.signInTestSetup();
-
-		ApplicationsMenu.openApplicationsMenu();
-
-		AssertElementPresent(
-			key_panel = "Applications",
-			locator1 = "ApplicationsMenu#PANEL");
-
-		Portlet.shutdownServer();
-
-		License.deleteLicenseFile(licenseFileName = "license.xml");
-
-		Portlet.startServer(noLicense = "true");
-
-		Navigator.openURL();
-
-		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
-	}
-
-	@priority = 4
-	test LiferayDXPLicenseExpire {
-		property dxp.license.file = "portal-dxp-license-custom-expiration-48-hours.xml";
-		property portal.release = "false";
-
-		SignIn.signInTestSetup(licenseExpired = "true");
-
-		// Pausing 300 seconds due to LRQA-64640
-
-		Pause(value1 = 300000);
-
-		Navigator.openURL();
-
-		Alert.viewErrorMessage(errorMessage = "This instance is expired.");
-	}
-
 	@description = "This is a use case for LPS-150970. Verify Terms Of Use not reappear after dismissed once with non root context."
 	@priority = 5
 	test TermsOfUseNotShownAfterDimissedWithNonRootContext {

@@ -71,6 +71,41 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
+	public void testEnterpriseLicense() throws Exception {
+		assertLicensePropertiesNotExisted(getPortalProductId());
+
+		assertBundlesExisted(
+			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
+
+		assertPortalLicenseNotRegistered();
+
+		assertBundlesExisted(
+			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
+
+		File binaryFile = deployEnterprisePortalLicense(Time.HOUR);
+
+		assertLicensePropertiesExisted(getPortalProductId());
+
+		assertPortalLicenseRegistered();
+
+		assertBundlesExisted(
+			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
+
+		binaryFile.delete();
+
+		checkLicense(getPortalProductId());
+
+		assertLicensePropertiesNotExisted(getPortalProductId());
+
+		resetLifecycleAction();
+
+		assertBundlesExisted(
+			_getDxpOnlyModuleSymbolicName(), _getEnterpriseAppSymbolicName());
+
+		assertPortalLicenseNotRegistered();
+	}
+
+	@Test
 	public void testFreeTierLicense() throws Exception {
 		assertLicensePropertiesNotExisted(getPortalProductId());
 

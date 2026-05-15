@@ -43,4 +43,4 @@ Create the issue in the LPD project with the gathered summary, description, and 
 
 ## Output
 
-Return the ticket key and the browse URL: `https://liferay.atlassian.net/browse/<KEY>`.
+The ticket key and the browse URL: `https://liferay.atlassian.net/browse/<KEY>`.

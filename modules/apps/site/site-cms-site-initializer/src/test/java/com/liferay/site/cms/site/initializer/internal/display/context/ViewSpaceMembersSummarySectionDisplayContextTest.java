@@ -59,7 +59,6 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 			Mockito.mock(Group.class)
 		);
 
-		@SuppressWarnings("unchecked")
 		ModelResourcePermission<Group> groupModelResourcePermission =
 			Mockito.mock(ModelResourcePermission.class);
 

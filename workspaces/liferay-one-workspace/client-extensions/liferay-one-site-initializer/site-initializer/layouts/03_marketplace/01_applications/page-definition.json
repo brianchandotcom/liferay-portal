@@ -3,6 +3,88 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "whiteColor",
+						"paddingBottom": "5",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": false,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h1"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Applications Marketplace"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
 					"indexed": true,
 					"layout": {
 						"widthType": "Fluid"
@@ -60,20 +142,6 @@
 									"size": 3
 								},
 								"pageElements": [
-									{
-										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_SIDE_NAV",
-													"siteNavigationMenuExternalReferenceCode": "LO_MARKETPLACE_NAV",
-													"siteNavigationMenuName": "Marketplace Navigation",
-													"siteNavigationMenuType": "-1"
-												},
-												"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-											}
-										},
-										"type": "Widget"
-									},
 									{
 										"definition": {
 											"fragmentStyle": {

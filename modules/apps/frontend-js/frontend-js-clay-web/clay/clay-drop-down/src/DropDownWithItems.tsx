@@ -150,7 +150,7 @@ export type Props = {
 	 * Flag indicating if the caret icon should be displayed on the right side.
 	 */
 	triggerIcon?: string | null;
-};
+} & Omit<React.HTMLAttributes<HTMLDivElement | HTMLLIElement>, 'children'>;
 
 let counter = 0;
 
@@ -208,6 +208,7 @@ export function ClayDropDownWithItems({
 	triggerIcon = null,
 	spritemap,
 	trigger,
+	...otherProps
 }: Props) {
 	const triggerElementRef = useRef<HTMLButtonElement | null>(null);
 	const [internalActive, setInternalActive] = useControlledState({
@@ -269,6 +270,7 @@ export function ClayDropDownWithItems({
 	else {
 		return (
 			<ClayDropDown
+				{...otherProps}
 				active={internalActive}
 				alignmentByViewport={alignmentByViewport}
 				alignmentPosition={alignmentPosition}

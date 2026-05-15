@@ -77,9 +77,7 @@ public class PortletDataContextExpandoTest {
 	}
 
 	@Test
-	public void testReportEntryAddedWhenDefaultLocaleMissing()
-		throws Exception {
-
+	public void test() throws Exception {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.GERMANY);
 
 		PortletDataContext portletDataContext =
@@ -101,7 +99,7 @@ public class PortletDataContextExpandoTest {
 			HashMapBuilder.<String, Serializable>put(
 				"greeting",
 				(Serializable)HashMapBuilder.<Locale, String>put(
-					LocaleUtil.US, "Hello"
+					LocaleUtil.US, RandomTestUtil.randomString()
 				).build()
 			).build());
 

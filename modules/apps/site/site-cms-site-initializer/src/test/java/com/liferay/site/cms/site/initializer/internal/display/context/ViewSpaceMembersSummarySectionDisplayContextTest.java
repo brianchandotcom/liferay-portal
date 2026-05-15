@@ -15,11 +15,8 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -52,24 +49,13 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 				boolean hasAssignMembersPermission)
 		throws Exception {
 
-		DepotEntryLocalService depotEntryLocalService = Mockito.mock(
-			DepotEntryLocalService.class);
-
-		Group group = Mockito.mock(Group.class);
-
-		Mockito.when(
-			group.getExternalReferenceCode()
-		).thenReturn(
-			StringUtil.randomString()
-		);
-
 		GroupLocalService groupLocalService = Mockito.mock(
 			GroupLocalService.class);
 
 		Mockito.when(
 			groupLocalService.getGroup(Mockito.anyLong())
 		).thenReturn(
-			group
+			Mockito.mock(Group.class)
 		);
 
 		@SuppressWarnings("unchecked")
@@ -89,18 +75,10 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
-		Language language = Mockito.mock(Language.class);
-
-		Mockito.when(
-			language.get(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString())
-		).thenReturn(
-			StringUtil.randomString()
-		);
-
 		return new ViewSpaceMembersSummarySectionDisplayContext(
-			depotEntryLocalService, _GROUP_ID, groupLocalService,
-			groupModelResourcePermission, mockHttpServletRequest, language,
+			Mockito.mock(DepotEntryLocalService.class), _GROUP_ID,
+			groupLocalService, groupModelResourcePermission,
+			mockHttpServletRequest, Mockito.mock(Language.class),
 			Mockito.mock(UserGroupLocalService.class),
 			Mockito.mock(UserLocalService.class));
 	}

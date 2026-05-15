@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.character.encoding.test.servlet.filter.CharacterEncodingFilter;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -52,7 +53,8 @@ public class CharacterEncodingTest {
 	private String _testCharacterEncoding(boolean addCharacterEncoding)
 		throws IOException {
 
-		URL url = new URL("http://localhost:8080");
+		URL url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();

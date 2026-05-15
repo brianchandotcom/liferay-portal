@@ -156,9 +156,10 @@ public class ExportImportTaskResourceTestUtil {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 		String path = StringBundler.concat(
-			"http://", host, ":8080/o/headless-batch-engine/v1.0/import-task/",
-			className, "?createStrategy=", createStrategy,
-			"&importCreatorStrategy=", importCreatorStrategy);
+			"http://", host, ":", PortalUtil.getPortalServerPort(false),
+			"/o/headless-batch-engine/v1.0/import-task/", className,
+			"?createStrategy=", createStrategy, "&importCreatorStrategy=",
+			importCreatorStrategy);
 
 		if (MapUtil.isNotEmpty(parameters)) {
 			for (Map.Entry<String, String> entry : parameters.entrySet()) {
@@ -195,8 +196,10 @@ public class ExportImportTaskResourceTestUtil {
 				_invoke(
 					host,
 					StringBundler.concat(
-						"http://", host, ":8080/o/headless-batch-engine/v1.0",
-						"/import-task/by-external-reference-code/",
+						"http://", host, ":",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-batch-engine/v1.0/import-task",
+						"/by-external-reference-code/",
 						externalReferenceCode)));
 
 			if (Objects.equals(

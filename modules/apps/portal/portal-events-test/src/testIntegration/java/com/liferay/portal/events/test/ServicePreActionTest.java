@@ -128,8 +128,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE_ERROR_PAGE",
 					"/portal/portlet_error.jsp")) {
 
-			_testErrorPage(true, false, false, "http://localhost:8080");
-			_testErrorPage(true, false, false, "http://localhost:8080/c");
+			_testErrorPage(
+				true, false, false,
+				"http://localhost:" + _portal.getPortalServerPort(false));
+			_testErrorPage(
+				true, false, false,
+				"http://localhost:" + _portal.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 
@@ -144,8 +149,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE_ERROR_PAGE",
 					"/portal/portlet_error.jsp")) {
 
-			_testErrorPage(false, true, false, "http://localhost:8080");
-			_testErrorPage(false, true, false, "http://localhost:8080/c");
+			_testErrorPage(
+				false, true, false,
+				"http://localhost:" + _portal.getPortalServerPort(false));
+			_testErrorPage(
+				false, true, false,
+				"http://localhost:" + _portal.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 
@@ -156,8 +166,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE",
 					new String[] {TestLifecycleAction.class.getName()})) {
 
-			_testErrorPage(false, false, false, "http://localhost:8080");
-			_testErrorPage(false, false, false, "http://localhost:8080/c");
+			_testErrorPage(
+				false, false, false,
+				"http://localhost:" + _portal.getPortalServerPort(false));
+			_testErrorPage(
+				false, false, false,
+				"http://localhost:" + _portal.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 
@@ -170,8 +185,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE",
 					new String[] {TestLifecycleAction.class.getName()})) {
 
-			_testErrorPage(false, false, true, "http://localhost:8080");
-			_testErrorPage(false, false, true, "http://localhost:8080/c");
+			_testErrorPage(
+				false, false, true,
+				"http://localhost:" + _portal.getPortalServerPort(false));
+			_testErrorPage(
+				false, false, true,
+				"http://localhost:" + _portal.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 

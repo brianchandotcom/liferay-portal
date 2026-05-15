@@ -377,9 +377,9 @@ public class JspPrecompileTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:8080/web", _group.getFriendlyURL(),
-				"?p_p_id=", JspPrecompilePortlet.PORTLET_NAME,
-				StringPool.AMPERSAND,
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/web", _group.getFriendlyURL(), "?p_p_id=",
+				JspPrecompilePortlet.PORTLET_NAME, StringPool.AMPERSAND,
 				JspPrecompilePortlet.getJspFileNameParameterName(), "=/",
 				jspFileName));
 

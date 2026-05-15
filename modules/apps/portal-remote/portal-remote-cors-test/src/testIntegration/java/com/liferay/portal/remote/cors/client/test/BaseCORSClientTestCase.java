@@ -136,8 +136,10 @@ public abstract class BaseCORSClientTestCase {
 		ProcessChannel<String[]> processChannel = processExecutor.execute(
 			builder.build(),
 			new AllowRestrictedHeadersCallable(
-				"http://localhost:8080/api/jsonws" + urlString, allowedOrigin,
-				method, true));
+				StringBundler.concat(
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/api/jsonws", urlString),
+				allowedOrigin, method, true));
 
 		Future<String[]> future = processChannel.getProcessNoticeableFuture();
 

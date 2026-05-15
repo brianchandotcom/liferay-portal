@@ -10,6 +10,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -196,7 +197,9 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
 
-		return client.target(uriBuilder.uri("http://localhost:8080"));
+		return client.target(
+			uriBuilder.uri(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	private WebTarget _getWebTarget(String... paths) {

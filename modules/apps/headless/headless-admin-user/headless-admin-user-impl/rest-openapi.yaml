@@ -576,6 +576,10 @@ components:
                                 The organization's country isocode.
                             readOnly: true
                             type: string
+                        addressCountryExternalReferenceCode:
+                            description:
+                                The organization's country external reference code.
+                            type: string
                         addressCountry_i18n:
                             additionalProperties:
                                 type: string
@@ -589,6 +593,10 @@ components:
                             description:
                                 The organization's region code.
                             readOnly: true
+                            type: string
+                        addressRegionExternalReferenceCode:
+                            description:
+                                The organization's region external reference code.
                             type: string
                         id:
                             description:
@@ -792,7 +800,7 @@ components:
                     type: string
                 addressCountryExternalReferenceCode:
                     description:
-                        The external reference code of the address's country.
+                        The address' country external reference code.
                     type: string
                 addressCountry_i18n:
                     additionalProperties:
@@ -808,7 +816,7 @@ components:
                     type: string
                 addressRegionExternalReferenceCode:
                     description:
-                        The external reference code of the address's region.
+                        The address' region external reference code.
                     type: string
                 addressSubtype:
                     description:

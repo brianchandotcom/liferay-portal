@@ -692,26 +692,20 @@ export const decodeValueFromCriteria = (criteria: Criteria) => {
 const escapeRegExp = (value: string): string =>
 	value.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 
-const parseRemoteFilterByCount = (
-	queryString: string
-): CriterionGroup | null => {
-	const match = queryString.match(
-		/activities\.filterByCount\(filter='((?:[^']|'')*)'\s*(?:,operator='([^']*)')?(?:,value=(\d+))?\)/
-	);
-
-	if (!match) {
-		return null;
-	}
-
-	const filterContent = match[1].replace(/''/g, "'");
-	const occurrenceOperator = match[2] ?? null;
-	const occurrenceValue = match[3] !== undefined ? parseInt(match[3]) : null;
-
-	const innerFilter =
-		filterContent.startsWith('(') && filterContent.endsWith(')')
-			? filterContent.slice(1, -1)
-			: filterContent;
-
+/**
+ * Parses an already-extracted inner filter string (the content of the
+ * `filter='...'` parameter, with OData `''` escaping already resolved) into a
+ * flat list of criterion items plus the matched RemoteCriterionType and entity
+ * id.  Returns null when the filter does not match any registered remote
+ * criterion type (e.g. vocabulary, tag).
+ */
+const buildInnerFilterItems = (
+	innerFilter: string
+): {
+	entityId: string;
+	items: Criterion[];
+	matchedType: RemoteCriterionType;
+} | null => {
 	let matchedType: RemoteCriterionType | undefined;
 	let entityId = '';
 	let entityName = '';
@@ -834,6 +828,37 @@ const parseRemoteFilterByCount = (
 			value: dayMatch[2]
 		} as unknown as Criterion);
 	}
+
+	return {entityId, items, matchedType};
+};
+
+const parseRemoteFilterByCount = (
+	queryString: string
+): CriterionGroup | null => {
+	const match = queryString.match(
+		/activities\.filterByCount\(filter='((?:[^']|'')*)'\s*(?:,operator='([^']*)')?(?:,value=(\d+))?\)/
+	);
+
+	if (!match) {
+		return null;
+	}
+
+	const filterContent = match[1].replace(/''/g, "'");
+	const occurrenceOperator = match[2] ?? null;
+	const occurrenceValue = match[3] !== undefined ? parseInt(match[3]) : null;
+
+	const innerFilter =
+		filterContent.startsWith('(') && filterContent.endsWith(')')
+			? filterContent.slice(1, -1)
+			: filterContent;
+
+	const result = buildInnerFilterItems(innerFilter);
+
+	if (!result) {
+		return null;
+	}
+
+	const {entityId, items, matchedType} = result;
 
 	const criterionGroup: CriterionGroup = {
 		conjunctionName: Conjunctions.And,
@@ -1192,6 +1217,20 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 					rawFilterFull.startsWith('(') && rawFilterFull.endsWith(')')
 						? rawFilterFull.slice(1, -1)
 						: rawFilterFull;
+
+				const innerResult = buildInnerFilterItems(rawFilter);
+
+				if (innerResult) {
+					return accIMap.set(
+						'criterionGroup',
+						fromJS({
+							conjunctionName: Conjunctions.And,
+							criteriaGroupId: generateGroupId(),
+							items: innerResult.items
+						})
+					);
+				}
+
 				const parsed = translateQueryToCriteria(rawFilter);
 				const criterionGroupIMap = fromJS(parsed);
 

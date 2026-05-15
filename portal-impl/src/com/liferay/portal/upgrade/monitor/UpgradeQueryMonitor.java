@@ -116,10 +116,6 @@ public final class UpgradeQueryMonitor {
 			for (DB.QueryInfo longRunningQueryInfo : longRunningQueryInfos) {
 				String id = longRunningQueryInfo.getId();
 
-				if (id == null) {
-					continue;
-				}
-
 				currentLongRunningQueryIds.add(id);
 
 				if (!_loggedLongRunningQueryIds.add(id)) {

@@ -34,15 +34,21 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 	readonly page: Page;
 	readonly parentAutocomplete: Locator;
 	readonly parentDropdownItem: (name: string) => Locator;
+	readonly priceModifierActiveToggle: Locator;
+	readonly priceModifierAmountInput: Locator;
+	readonly priceModifierLink: (title: string) => Locator;
 	readonly priceModifierRowActions: (title: string) => Locator;
 	readonly priceModifierRowDeleteMenuItem: Locator;
+	readonly priceModifierSaveButton: Locator;
 	readonly priceModifiersTab: Locator;
 	readonly priceTypeSelect: Locator;
 	readonly priorityInput: Locator;
 	readonly publishButton: Locator;
 	readonly scheduleLabel: Locator;
 	readonly selectButton: Locator;
+	readonly sidePanelDiscountLevel1Input: Locator;
 	readonly sidePanelFrame: FrameLocator;
+	readonly sidePanelOverrideDiscountToggle: Locator;
 	readonly sidePanelPriceInput: Locator;
 	readonly sidePanelSaveButton: Locator;
 	readonly skuLink: (price: string) => Locator;
@@ -129,11 +135,25 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 			page
 				.locator('.autocomplete-dropdown-menu')
 				.getByText(name, {exact: true});
+		this.sidePanelFrame = page
+			.locator('.fds-side-panel')
+			.frameLocator('iframe');
+		this.priceModifierActiveToggle =
+			this.sidePanelFrame.getByLabel('Active');
+		this.priceModifierAmountInput = this.sidePanelFrame.locator(
+			'input[name$="_modifierAmount"]'
+		);
+		this.priceModifierLink = (title: string) =>
+			page.getByRole('link', {exact: true, name: title});
 		this.priceModifierRowActions = (title: string) =>
 			page.getByRole('row').filter({hasText: title}).getByRole('button');
 		this.priceModifierRowDeleteMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Delete',
+		});
+		this.priceModifierSaveButton = this.sidePanelFrame.getByRole('button', {
+			exact: true,
+			name: 'Save',
 		});
 		this.priceModifiersTab = page.getByRole('link', {
 			exact: true,
@@ -147,11 +167,14 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 			.first();
 		this.scheduleLabel = page.getByText('Schedule');
 		this.selectButton = page.getByRole('button', {name: 'Select'});
-		this.sidePanelFrame = page
-			.locator('.fds-side-panel')
-			.frameLocator('iframe');
-		this.sidePanelPriceInput =
-			this.sidePanelFrame.getByLabel('Price List Price');
+		this.sidePanelDiscountLevel1Input = this.sidePanelFrame.locator(
+			'input[name$="_discountLevel1"]'
+		);
+		this.sidePanelOverrideDiscountToggle =
+			this.sidePanelFrame.getByLabel('Override Discount');
+		this.sidePanelPriceInput = this.sidePanelFrame
+			.getByLabel('Price List Price')
+			.or(this.sidePanelFrame.getByLabel('Promotion Price'));
 		this.sidePanelSaveButton = this.sidePanelFrame.getByRole('button', {
 			name: 'Save',
 		});

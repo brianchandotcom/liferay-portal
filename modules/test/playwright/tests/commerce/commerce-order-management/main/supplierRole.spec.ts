@@ -897,6 +897,357 @@ test(
 	}
 );
 
+for (const variant of [
+	{
+		label: 'price list',
+		tag: '@COMMERCE-11840',
+		type: 'price-list' as const,
+	},
+	{
+		label: 'promotion',
+		tag: '@COMMERCE-11843',
+		type: 'promotion' as const,
+	},
+]) {
+	test(
+		`Supplier user can add tier prices on a ${variant.label}`,
+		{tag: [variant.tag, '@COMMERCE-11841', '@LPD-88485']},
+		async ({
+			apiHelpers,
+			commerceAdminPriceListDetailsPage,
+			commerceAdminPriceListsPage,
+			commerceAdminPromotionsPage,
+			page,
+		}) => {
+			const randomSuffix = getRandomString().slice(0, 8);
+
+			const {account, supplierUser} = await createAccountWithSupplierUser(
+				apiHelpers,
+				site.id
+			);
+
+			const linkedCatalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					accountId: account.id,
+					name: `Linked Catalog ${randomSuffix}`,
+				});
+
+			const skuName = `TIER-SKU-${randomSuffix}`;
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					active: true,
+					catalogId: linkedCatalog.id,
+					name: {en_US: `Tier Product ${randomSuffix}`},
+					skus: [
+						{
+							cost: 0,
+							price: 10,
+							published: true,
+							purchasable: true,
+							sku: skuName,
+						},
+					],
+				});
+
+			const entryName = `Test ${variant.label} ${randomSuffix}`;
+
+			const entry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+					catalogId: linkedCatalog.id,
+					currencyCode: 'USD',
+					name: entryName,
+					type: variant.type,
+				});
+
+			const priceEntry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+					price: 50,
+					priceListId: entry.id,
+					skuId: product.skus[0].id,
+				});
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			if (variant.type === 'price-list') {
+				await commerceAdminPriceListsPage.goto();
+
+				await commerceAdminPriceListsPage
+					.priceListLink(entryName)
+					.click();
+			}
+			else {
+				await commerceAdminPromotionsPage.goto();
+
+				await commerceAdminPromotionsPage
+					.promotionLink(entryName)
+					.click();
+			}
+
+			await commerceAdminPriceListDetailsPage.entriesTab.click();
+
+			await commerceAdminPriceListDetailsPage
+				.skusTableRowLink(skuName)
+				.click();
+
+			await commerceAdminPriceListDetailsPage.addTierPriceButton.click();
+
+			await commerceAdminPriceListDetailsPage.addTierPriceEntryQuantity.fill(
+				'2'
+			);
+			await commerceAdminPriceListDetailsPage.addTierPriceEntryPrice.fill(
+				'1000'
+			);
+
+			await commerceAdminPriceListDetailsPage.addTierPriceEntrySaveButton.click();
+
+			await commerceAdminPriceListDetailsPage.addTierPriceEntryQuantity.waitFor(
+				{state: 'hidden'}
+			);
+
+			const tierPrices =
+				await apiHelpers.headlessCommerceAdminPricing.getTierPrices(
+					priceEntry.priceEntryId
+				);
+
+			const tierPrice = (tierPrices.items ?? []).find(
+				(tier: {minimumQuantity: number; price: number}) =>
+					tier.minimumQuantity === 2 && Number(tier.price) === 1000
+			);
+
+			expect(tierPrice).toBeDefined();
+		}
+	);
+}
+
+for (const variant of [
+	{
+		label: 'price list',
+		tag: '@COMMERCE-11842',
+		type: 'price-list' as const,
+	},
+	{
+		label: 'promotion',
+		tag: '@COMMERCE-11843',
+		type: 'promotion' as const,
+	},
+]) {
+	test(
+		`Supplier user can edit a price entry on a ${variant.label}`,
+		{tag: [variant.tag, '@LPD-88485']},
+		async ({
+			apiHelpers,
+			commerceAdminPriceListDetailsPage,
+			commerceAdminPriceListsPage,
+			commerceAdminPromotionsPage,
+			page,
+		}) => {
+			const randomSuffix = getRandomString().slice(0, 8);
+
+			const {account, supplierUser} = await createAccountWithSupplierUser(
+				apiHelpers,
+				site.id
+			);
+
+			const linkedCatalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					accountId: account.id,
+					name: `Linked Catalog ${randomSuffix}`,
+				});
+
+			const skuName = `EDIT-SKU-${randomSuffix}`;
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					active: true,
+					catalogId: linkedCatalog.id,
+					name: {en_US: `Edit Product ${randomSuffix}`},
+					skus: [
+						{
+							cost: 0,
+							price: 10,
+							published: true,
+							purchasable: true,
+							sku: skuName,
+						},
+					],
+				});
+
+			const entryName = `Test ${variant.label} ${randomSuffix}`;
+
+			const entry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+					catalogId: linkedCatalog.id,
+					currencyCode: 'USD',
+					name: entryName,
+					type: variant.type,
+				});
+
+			let priceEntry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+					price: 100,
+					priceListId: entry.id,
+					skuId: product.skus[0].id,
+				});
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			if (variant.type === 'price-list') {
+				await commerceAdminPriceListsPage.goto();
+
+				await commerceAdminPriceListsPage
+					.priceListLink(entryName)
+					.click();
+			}
+			else {
+				await commerceAdminPromotionsPage.goto();
+
+				await commerceAdminPromotionsPage
+					.promotionLink(entryName)
+					.click();
+			}
+
+			await commerceAdminPriceListDetailsPage.entriesTab.click();
+
+			await commerceAdminPriceListDetailsPage
+				.skusTableRowLink(skuName)
+				.click();
+
+			await commerceAdminPriceListDetailsPage.sidePanelPriceInput.fill(
+				'80'
+			);
+			await commerceAdminPriceListDetailsPage.sidePanelSaveButton.click();
+
+			await waitForAlert(
+				commerceAdminPriceListDetailsPage.sidePanelFrame
+			);
+
+			priceEntry =
+				await apiHelpers.headlessCommerceAdminPricing.getPriceEntry(
+					priceEntry.priceEntryId
+				);
+
+			expect(Number(priceEntry.price)).toBe(80);
+		}
+	);
+}
+
+for (const variant of [
+	{
+		label: 'price list',
+		tag: '@COMMERCE-11868',
+		type: 'price-list' as const,
+	},
+	{
+		label: 'promotion',
+		tag: '@COMMERCE-11868',
+		type: 'promotion' as const,
+	},
+]) {
+	test(
+		`Supplier user can set an override discount on a ${variant.label} entry`,
+		{tag: [variant.tag, '@LPD-88485']},
+		async ({
+			apiHelpers,
+			commerceAdminPriceListDetailsPage,
+			commerceAdminPriceListsPage,
+			commerceAdminPromotionsPage,
+			page,
+		}) => {
+			const randomSuffix = getRandomString().slice(0, 8);
+
+			const {account, supplierUser} = await createAccountWithSupplierUser(
+				apiHelpers,
+				site.id
+			);
+
+			const linkedCatalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					accountId: account.id,
+					name: `Linked Catalog ${randomSuffix}`,
+				});
+
+			const skuName = `DISC-SKU-${randomSuffix}`;
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					active: true,
+					catalogId: linkedCatalog.id,
+					name: {en_US: `Discount Product ${randomSuffix}`},
+					skus: [
+						{
+							cost: 0,
+							price: 100,
+							published: true,
+							purchasable: true,
+							sku: skuName,
+						},
+					],
+				});
+
+			const entryName = `Test ${variant.label} ${randomSuffix}`;
+
+			const entry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+					catalogId: linkedCatalog.id,
+					currencyCode: 'USD',
+					name: entryName,
+					type: variant.type,
+				});
+
+			let priceEntry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+					price: 100,
+					priceListId: entry.id,
+					skuId: product.skus[0].id,
+				});
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			if (variant.type === 'price-list') {
+				await commerceAdminPriceListsPage.goto();
+
+				await commerceAdminPriceListsPage
+					.priceListLink(entryName)
+					.click();
+			}
+			else {
+				await commerceAdminPromotionsPage.goto();
+
+				await commerceAdminPromotionsPage
+					.promotionLink(entryName)
+					.click();
+			}
+
+			await commerceAdminPriceListDetailsPage.entriesTab.click();
+
+			await commerceAdminPriceListDetailsPage
+				.skusTableRowLink(skuName)
+				.click();
+
+			await commerceAdminPriceListDetailsPage.sidePanelOverrideDiscountToggle.click();
+
+			await commerceAdminPriceListDetailsPage.sidePanelDiscountLevel1Input.fill(
+				'20'
+			);
+
+			await commerceAdminPriceListDetailsPage.sidePanelSaveButton.click();
+
+			await waitForAlert(
+				commerceAdminPriceListDetailsPage.sidePanelFrame
+			);
+
+			priceEntry =
+				await apiHelpers.headlessCommerceAdminPricing.getPriceEntry(
+					priceEntry.priceEntryId
+				);
+
+			expect(priceEntry.discountDiscovery).toBe(false);
+			expect(Number(priceEntry.discountLevel1)).toBe(20);
+		}
+	);
+}
+
 test(
 	'Supplier user can manage products only on their linked catalog',
 	{tag: ['@COMMERCE-11611', '@LPD-88485']},
@@ -986,15 +1337,15 @@ test(
 			).toHaveCount(0);
 		});
 
+		const newProductName = `Probe ${randomSuffix}`;
+
 		await test.step('Add Product modal Catalog autocomplete shows only linked catalogs', async () => {
 			await commerceAdminProductPage.addButton.click();
 			await commerceAdminProductPage
 				.menuItemProductType('Simple')
 				.click();
 
-			await commerceAdminProductPage.modalFieldName.fill(
-				`Probe ${randomSuffix}`
-			);
+			await commerceAdminProductPage.modalFieldName.fill(newProductName);
 			await commerceAdminProductPage.modalPlaceHolder.fill(
 				`Catalog ${randomSuffix}`
 			);
@@ -1012,6 +1363,114 @@ test(
 				commerceAdminProductPage.modalMenuItem('Master')
 			).toHaveCount(0);
 		});
+
+		await test.step('Supplier user submits the modal and creates the product on the linked catalog', async () => {
+			await commerceAdminProductPage.modalPlaceHolder.fill(
+				`Catalog ${randomSuffix}`
+			);
+			await commerceAdminProductPage
+				.modalMenuItem(linkedCatalog.name)
+				.click();
+
+			await commerceAdminProductPage.modalSubmitButton.click();
+
+			await commerceAdminProductPage.modalBody.waitFor({
+				state: 'detached',
+			});
+
+			const products =
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `catalogId eq ${linkedCatalog.id}`,
+					})
+				);
+
+			const product = (products.items ?? []).find(
+				(item: {name: {en_US: string}}) =>
+					item.name?.en_US === newProductName
+			);
+
+			expect(product).toBeDefined();
+		});
+	}
+);
+
+test(
+	'Supplier user can delete a product on their linked catalog',
+	{tag: ['@COMMERCE-11610', '@LPD-88485']},
+	async ({apiHelpers, commerceAdminProductPage, page}) => {
+		const randomSuffix = getRandomString().slice(0, 8);
+
+		page.on('dialog', (dialog) => dialog.accept());
+
+		const {account, supplierUser} = await createAccountWithSupplierUser(
+			apiHelpers,
+			site.id
+		);
+
+		const linkedCatalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				accountId: account.id,
+				name: `Linked Catalog ${randomSuffix}`,
+			});
+
+		const productName = `Delete Product ${randomSuffix}`;
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				active: true,
+				catalogId: linkedCatalog.id,
+				name: {en_US: productName},
+				skus: [
+					{
+						cost: 0,
+						price: 10,
+						published: true,
+						purchasable: true,
+						sku: `DEL-SKU-${randomSuffix}`,
+					},
+				],
+			});
+
+		await performUserSwitch(page, supplierUser.alternateName);
+
+		await commerceAdminProductPage.goto();
+
+		await expect(async () => {
+			await commerceAdminProductPage.managementToolbarSearchInput.fill(
+				productName
+			);
+			await commerceAdminProductPage.managementToolbarSearchInput.press(
+				'Enter'
+			);
+
+			await expect(
+				commerceAdminProductPage.managementToolbarItemLink(productName)
+			).toBeVisible({timeout: 2000});
+		}).toPass({timeout: 30000});
+
+		await commerceAdminProductPage
+			.productRowActionsButton(productName)
+			.click();
+
+		await commerceAdminProductPage.deleteMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceAdminProductPage.managementToolbarItemLink(productName)
+		).toHaveCount(0);
+
+		await performLoginViaApi({page, screenName: 'test'});
+
+		const products =
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({
+					filter: `productId eq ${product.productId}`,
+				})
+			);
+
+		expect(products.items ?? []).toHaveLength(0);
 	}
 );
 
@@ -1501,6 +1960,109 @@ for (const variant of [
 
 			expect(linkedProducts.items).toHaveLength(1);
 			expect(linkedProducts.items[0].productId).toBe(product.productId);
+		}
+	);
+}
+
+for (const variant of [
+	{
+		label: 'price list',
+		tag: '@COMMERCE-11772',
+		type: 'price-list' as const,
+	},
+	{
+		label: 'promotion',
+		tag: '@COMMERCE-11843',
+		type: 'promotion' as const,
+	},
+]) {
+	test(
+		`Supplier user can edit a price modifier on a ${variant.label}`,
+		{tag: [variant.tag, '@LPD-88485']},
+		async ({
+			apiHelpers,
+			commerceAdminPriceListDetailsPage,
+			commerceAdminPriceListsPage,
+			commerceAdminPromotionsPage,
+			page,
+		}) => {
+			const randomSuffix = getRandomString().slice(0, 8);
+
+			const {account, supplierUser} = await createAccountWithSupplierUser(
+				apiHelpers,
+				site.id
+			);
+
+			const linkedCatalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+					accountId: account.id,
+					name: `Linked Catalog ${randomSuffix}`,
+				});
+
+			const entryName = `Test ${variant.label} ${randomSuffix}`;
+			const modifierName = `Test Modifier ${randomSuffix}`;
+
+			const entry =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceList({
+					catalogId: linkedCatalog.id,
+					currencyCode: 'USD',
+					name: entryName,
+					type: variant.type,
+				});
+
+			const modifier =
+				await apiHelpers.headlessCommerceAdminPricing.postPriceModifier(
+					entry.id,
+					{
+						active: false,
+						modifierAmount: 0,
+						modifierType: 'fixed-amount',
+						target: 'products',
+						title: modifierName,
+					}
+				);
+
+			await performUserSwitch(page, supplierUser.alternateName);
+
+			if (variant.type === 'price-list') {
+				await commerceAdminPriceListsPage.goto();
+
+				await commerceAdminPriceListsPage
+					.priceListLink(entryName)
+					.click();
+			}
+			else {
+				await commerceAdminPromotionsPage.goto();
+
+				await commerceAdminPromotionsPage
+					.promotionLink(entryName)
+					.click();
+			}
+
+			await commerceAdminPriceListDetailsPage.priceModifiersTab.click();
+
+			await commerceAdminPriceListDetailsPage
+				.priceModifierLink(modifierName)
+				.click();
+
+			await commerceAdminPriceListDetailsPage.priceModifierAmountInput.fill(
+				'-22'
+			);
+			await commerceAdminPriceListDetailsPage.priceModifierActiveToggle.click();
+
+			await commerceAdminPriceListDetailsPage.priceModifierSaveButton.click();
+
+			await waitForAlert(
+				commerceAdminPriceListDetailsPage.sidePanelFrame
+			);
+
+			const priceModifier =
+				await apiHelpers.headlessCommerceAdminPricing.getPriceModifier(
+					modifier.id
+				);
+
+			expect(priceModifier.active).toBe(true);
+			expect(Number(priceModifier.modifierAmount)).toBe(-22);
 		}
 	);
 }

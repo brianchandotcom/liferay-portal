@@ -47,7 +47,7 @@ public class PageMetricResourceImpl extends BasePageMetricResourceImpl {
 			_faroGraphQLClient.execute(
 				GetWorkspaceGroupPagesPageResponse.class,
 				_faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				"getWorkspaceGroupPagesPageResponse",
+				"getWorkspaceGroupPagesPage",
 				HashMapBuilder.<String, Object>put(
 					"channelId", channelId
 				).put(

@@ -15,10 +15,10 @@ export default function importTranslationAction(
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			ImportTranslationModalContent({
 				actionLink,
-				itemId: data.embedded.id,
 				itemName: data.embedded.title,
 				loadData,
 				onModalClose: closeModal,
+				translationsAPIURL: `${data.actions.get.href}/translations`,
 			}),
 		size: 'md',
 	});

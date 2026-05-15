@@ -115,8 +115,6 @@ public class SQLDateTest {
 
 			release.setModifiedDate(new Timestamp(time));
 
-			session.saveOrUpdate(release);
-
 			session.flush();
 
 			session.clear();

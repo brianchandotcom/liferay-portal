@@ -197,8 +197,6 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 				}
 
 				ctScore.setScore(score);
-
-				session.saveOrUpdate(ctScore);
 			}
 
 			_entityCache.putResult(CTScoreImpl.class, ctScore, false, true);

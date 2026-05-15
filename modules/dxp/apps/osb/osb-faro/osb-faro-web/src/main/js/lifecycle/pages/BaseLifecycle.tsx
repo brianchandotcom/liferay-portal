@@ -96,7 +96,7 @@ const BaseLifecycle = () => {
 		variables: {groupId: groupId!}
 	});
 
-	const lifecycleId = lifecycles?.[0]?.id ?? '';
+	const lifecycleId = lifecycles?.[0]?.id ?? '1';
 
 	return (
 		<LifecycleContextProvider lifecycleId={lifecycleId}>

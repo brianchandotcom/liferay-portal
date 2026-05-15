@@ -143,7 +143,7 @@ describe('AccountsDataSet', () => {
 
 		expect(lifecycleStatusFilter?.preloadedData).toEqual({
 			exclude: false,
-			selectedItems: [{label: 'At Risk', value: 'atRisk'}]
+			selectedItems: [{label: 'At Risk', value: 'AT_RISK'}]
 		});
 	});
 

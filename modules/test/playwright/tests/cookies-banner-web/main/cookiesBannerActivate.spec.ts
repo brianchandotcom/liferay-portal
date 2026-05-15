@@ -77,7 +77,7 @@ test(
 			await guestPage.goto('/');
 
 			await expect(
-				guestPage.getByRole('dialog', {name: 'banner cookies'})
+				guestPage.locator('.cookies-banner')
 			).not.toBeVisible();
 
 			await guestPage.close();
@@ -146,9 +146,7 @@ test(
 
 			await guestPage.goto('/');
 
-			await expect(
-				guestPage.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(guestPage.locator('.cookies-banner')).toBeVisible();
 
 			await guestPage.close();
 		});
@@ -200,7 +198,7 @@ test(
 			await guestPage.goto('/');
 
 			await expect(
-				guestPage.getByRole('dialog', {name: 'banner cookies'})
+				guestPage.locator('.cookies-banner')
 			).not.toBeVisible();
 
 			await guestPage.close();
@@ -258,9 +256,7 @@ test(
 		});
 
 		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const banner = page.locator('.cookies-banner');
 
 			await banner.waitFor({state: 'visible'});
 
@@ -320,9 +316,7 @@ test(
 		await test.step('Verify the cookies banner is shown again after force re-consent', async () => {
 			await page.goto('/');
 
-			await expect(
-				page.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(page.locator('.cookies-banner')).toBeVisible();
 		});
 	}
 );
@@ -436,9 +430,7 @@ test(
 		});
 
 		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const banner = page.locator('.cookies-banner');
 
 			await banner.waitFor({state: 'visible'});
 
@@ -475,9 +467,7 @@ test(
 		});
 
 		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const banner = page.locator('.cookies-banner');
 
 			await banner.waitFor({state: 'visible'});
 
@@ -514,9 +504,7 @@ test(
 		await test.step('Verify cookies banner reappears after re-consent', async () => {
 			await page.goto('/');
 
-			await expect(
-				page.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(page.locator('.cookies-banner')).toBeVisible();
 		});
 	}
 );
@@ -598,9 +586,7 @@ test(
 		});
 
 		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const banner = page.locator('.cookies-banner');
 
 			await banner.waitFor({state: 'visible'});
 
@@ -675,9 +661,7 @@ test(
 		});
 
 		await test.step('Decline cookies banner so it stops covering the form', async () => {
-			const banner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const banner = page.locator('.cookies-banner');
 
 			await banner.waitFor({state: 'visible'});
 

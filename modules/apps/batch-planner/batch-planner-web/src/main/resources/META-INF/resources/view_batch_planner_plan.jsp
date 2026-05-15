@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+String backURL = PortalUtil.escapeRedirect(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 
 BatchPlannerPlanDisplay batchPlannerPlanDisplay = (BatchPlannerPlanDisplay)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>

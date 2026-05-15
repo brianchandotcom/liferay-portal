@@ -352,8 +352,8 @@ public class DataSourceFactoryUtil {
 	}
 
 	private static String _rewriteJDBCURL(
-		Map<String, String> defaultParameters, boolean keepTrailingDelimiter,
-		char parameterDelimiter, int searchFrom, String url,
+		Map<String, String> defaultParameters, char parameterDelimiter,
+		int searchFrom, boolean trimTrailingDelimiter, String url,
 		char urlDelimiter) {
 
 		Map<String, String> existingParameters = new TreeMap<>();
@@ -423,7 +423,7 @@ public class DataSourceFactoryUtil {
 				sb.append(parameterDelimiter);
 			}
 
-			if (!keepTrailingDelimiter) {
+			if (trimTrailingDelimiter) {
 				sb.setIndex(sb.index() - 1);
 			}
 
@@ -444,8 +444,8 @@ public class DataSourceFactoryUtil {
 		String url, char urlDelimiter) {
 
 		return _rewriteJDBCURL(
-			defaultParameters, false, parameterDelimiter,
-			url.indexOf("://") + "://".length(), url, urlDelimiter);
+			defaultParameters, parameterDelimiter,
+			url.indexOf("://") + "://".length(), true, url, urlDelimiter);
 	}
 
 	private static String _rewriteJDBCURL(String url) {
@@ -461,7 +461,7 @@ public class DataSourceFactoryUtil {
 				HashMapBuilder.put(
 					"queryTimeoutInterruptProcessingMode", "1"
 				).build(),
-				true, CharPool.SEMICOLON, index, url, CharPool.COLON);
+				CharPool.SEMICOLON, index, false, url, CharPool.COLON);
 		}
 
 		if (url.startsWith("jdbc:mariadb://") ||

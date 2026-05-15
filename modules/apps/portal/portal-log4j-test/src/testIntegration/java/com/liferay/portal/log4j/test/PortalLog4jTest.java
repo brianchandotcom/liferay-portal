@@ -238,6 +238,75 @@ public class PortalLog4jTest {
 			"TestLogContext");
 	}
 
+	@Test
+	public void testXMLLogOutputWithCDATAClosingSequence() throws Exception {
+		_testLogOutput(
+			"INFO", "before]]>after", null, "before]]>]]&gt;<![CDATA[after",
+			null);
+	}
+
+	@Test
+	public void testXMLLogOutputWithForbiddenXML10Chars() throws Exception {
+		String forbiddenCharString = String.valueOf((char)1);
+
+		String originalThreadNameString = Thread.currentThread(
+		).getName();
+
+		Thread.currentThread(
+		).setName(
+			"thread:" + forbiddenCharString
+		);
+
+		ThreadContext.push("ndc:" + forbiddenCharString);
+
+		String key = "key:" + forbiddenCharString;
+		String logContextName = "ForbiddenCharsLogContext";
+		String value = "value:" + forbiddenCharString;
+
+		try {
+			_testLogOutputWithLogContext(
+				HashMapBuilder.put(
+					key, value
+				).build(),
+				StringBundler.concat(
+					StringPool.OPEN_CURLY_BRACE, logContextName,
+					StringPool.PERIOD, key, StringPool.EQUAL, value,
+					StringPool.CLOSE_CURLY_BRACE),
+				"{ForbiddenCharsLogContext.key: =value: }", "ndc:", "thread: ",
+				logContextName);
+		}
+		finally {
+			Thread.currentThread(
+			).setName(
+				originalThreadNameString
+			);
+
+			ThreadContext.pop();
+		}
+	}
+
+	@Test
+	public void testXMLLogOutputWithHTMLSpecialChars() throws Exception {
+		String originalThreadNameString = Thread.currentThread(
+		).getName();
+
+		Thread.currentThread(
+		).setName(
+			"thread:<>&\""
+		);
+
+		try {
+			_testLogOutput(
+				"INFO", "message", null, null, "thread:&lt;&gt;&amp;&quot;");
+		}
+		finally {
+			Thread.currentThread(
+			).setName(
+				originalThreadNameString
+			);
+		}
+	}
+
 	private static Path _initFileAppender(
 		Logger logger, Appender appender, String tempLogDir) {
 
@@ -476,7 +545,11 @@ public class PortalLog4jTest {
 				}
 			}
 
-			Assert.assertTrue(found);
+			Assert.assertTrue(
+				StringBundler.concat(
+					"<log4j:NDC><![CDATA[", expectedXmlNdc,
+					"]]></log4j:NDC> not found in XML output"),
+				found);
 		}
 
 		// <log4j:throwable>...</log4j:throwable>

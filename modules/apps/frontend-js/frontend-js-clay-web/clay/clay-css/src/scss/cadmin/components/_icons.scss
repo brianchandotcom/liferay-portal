@@ -3,7 +3,7 @@
 }
 
 .lexicon-icon-arrows-all {
-	background-color: hsl(from #{$cadmin-white} h s l / 0.6);
+	background-color: unquote('hsl(from #{$cadmin-white} h s l / 0.6)');
 	border: 1px solid $cadmin-border-color;
 	border-radius: 0.1413em; // 6.5/46
 	height: 0.73913em; // 34/46 aspect ratio

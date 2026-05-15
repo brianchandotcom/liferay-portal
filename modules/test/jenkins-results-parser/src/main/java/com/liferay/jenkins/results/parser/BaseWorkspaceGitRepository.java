@@ -404,6 +404,8 @@ public abstract class BaseWorkspaceGitRepository
 			prepareGitWorkingDirectory();
 
 			setUpAdditionalCaches();
+
+			_uploadGitArchive();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -669,8 +671,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		_initializeGitWorkingDirectory();
-
-		_uploadGitArchive();
 	}
 
 	protected void setSetUp(boolean setUp) {
@@ -1447,7 +1447,9 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private void _uploadGitArchive() throws IOException {
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+		if (!_isGitArchiveEnabled() || _snapshot ||
+			!JenkinsResultsParserUtil.isCloudCINode()) {
+
 			return;
 		}
 

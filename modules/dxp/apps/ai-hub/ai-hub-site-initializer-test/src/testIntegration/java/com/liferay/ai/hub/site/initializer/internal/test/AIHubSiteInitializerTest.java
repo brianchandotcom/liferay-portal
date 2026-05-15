@@ -79,6 +79,14 @@ public class AIHubSiteInitializerTest {
 		_assertListTypeDefinitionExists(
 			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES", "clickToChat", "cms",
 			"everywhere");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_CONFIDENCE_LEVELS", "high",
+			"lowAndAbove", "mediumAndAbove");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_GUARDRAIL_TYPES", "input", "output");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE_RAI_LEVELS", "high", "lowAndAbove",
+			"mediumAndAbove", "none");
 
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
@@ -86,6 +94,7 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_CRAWLER_JOB");
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
+		_assertObjectDefinitionExists("L_AI_HUB_MODEL_ARMOR_TEMPLATE");
 
 		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -104,8 +113,17 @@ public class AIHubSiteInitializerTest {
 			"L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS", "L_ACCOUNT",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES", "L_ACCOUNT",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
 			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
+			"L_AI_HUB_AGENT_DEFINITION",
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES",
 			"L_AI_HUB_AGENT_DEFINITION",
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		_assertObjectRelationshipExists(

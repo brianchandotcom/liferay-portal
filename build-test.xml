@@ -10978,14 +10978,6 @@ org.apache.catalina.ha.session.level=INFO]]>
 		</if>
 	</target>
 
-	<target name="delete-license-file">
-		<fail message="Please set the property ${license.xml.file}." unless="license.xml.file" />
-
-		<delete file="${liferay.home}/osgi/modules/${license.xml.file}" />
-
-		<delete dir="${liferay.home}/data/license" />
-	</target>
-
 	<target name="delete-liferay-home">
 		<if>
 			<not>

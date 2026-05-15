@@ -40,9 +40,9 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 				assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e);
+				_log.warn(exception);
 			}
 		}
 

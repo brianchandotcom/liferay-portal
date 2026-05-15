@@ -259,11 +259,17 @@ public class OfflineOpenIdConnectSessionManager {
 						String.valueOf(
 							oidcProviderMetadata.getTokenEndpointURI()));
 
+			int tokenConnectionTimeout = 0;
+
+			if (properties != null) {
+				tokenConnectionTimeout = GetterUtil.getInteger(
+					properties.get("tokenConnectionTimeout"));
+			}
+
 			OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 				OIDCClientInformation.parse(
 					JSONObjectUtils.parse(oAuthClientEntry.getInfoJSON())),
-				oidcProviderMetadata, refreshToken,
-				GetterUtil.getInteger(properties.get("tokenConnectionTimeout")),
+				oidcProviderMetadata, refreshToken, tokenConnectionTimeout,
 				oAuthClientEntry.getTokenRequestParametersJSON());
 
 			_updateOpenIdConnectSessionIdToken(

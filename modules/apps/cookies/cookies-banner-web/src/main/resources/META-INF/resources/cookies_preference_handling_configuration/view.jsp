@@ -364,7 +364,18 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 								method: 'POST',
 							}).then((response) => {
 								if (response.ok) {
-									location.reload();
+									var modifiedDateField = document.getElementById(
+										'<portlet:namespace />modifiedDate'
+									);
+
+									if (modifiedDateField) {
+										modifiedDateField.value =
+											new Date().getTime();
+									}
+
+									form.dataset.skipActiveWarning = 'true';
+
+									form.requestSubmit();
 								}
 								else {
 									Liferay.Util.openToast({
@@ -461,6 +472,41 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			}
 			else {
 				delete form.dataset.renewalPeriodChanged;
+			}
+
+			if (
+				renewalPeriodChanged &&
+				activeInput &&
+				activeInput.value !== 'true'
+			) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+
+				Liferay.Util.openConfirmModal({
+					message:
+						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period-when-active" />',
+					onConfirm: function (isConfirmed) {
+						if (isConfirmed) {
+							Liferay.Util.fetch('<%= forceReconsentURL %>', {
+								method: 'POST',
+							}).then((response) => {
+								if (response.ok) {
+									form.dataset.skipActiveWarning = 'true';
+
+									form.requestSubmit();
+								}
+								else {
+									Liferay.Util.openToast({
+										message: Liferay.Language.get(
+											'your-request-failed-to-complete'
+										),
+										type: 'danger',
+									});
+								}
+							});
+						}
+					},
+				});
 			}
 		});
 	}

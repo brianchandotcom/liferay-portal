@@ -121,9 +121,21 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		);
 
 		Mockito.when(
+			oAuthClientEntry.getInfoJSON()
+		).thenReturn(
+			"{\"client_id\": \"test-client\"}"
+		);
+
+		Mockito.when(
 			oAuthClientEntry.getMetadataCacheInSeconds()
 		).thenReturn(
 			3600
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getTokenRequestParametersJSON()
+		).thenReturn(
+			"{}"
 		);
 
 		OAuthClientEntryLocalService oAuthClientEntryLocalService =
@@ -186,9 +198,40 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			"_openIdConnectSessionLocalService",
 			openIdConnectSessionLocalService);
 
-		ReflectionTestUtil.invoke(
-			offlineOpenIdConnectSessionManager, "_extendOpenIdConnectSession",
-			new Class<?>[] {OpenIdConnectSession.class}, openIdConnectSession);
+		OIDCTokens oidcTokens = new OIDCTokens(
+			RandomTestUtil.randomString(),
+			new AccessToken(
+				new AccessTokenType("Bearer"), RandomTestUtil.randomString(),
+				60, new Scope("openid")) {
+
+				@Override
+				public String toAuthorizationHeader() {
+					return null;
+				}
+
+			},
+			null);
+
+		try (MockedStatic<OpenIdConnectTokenRequestUtil>
+				openIdConnectTokenRequestUtilMockedStatic = Mockito.mockStatic(
+					OpenIdConnectTokenRequestUtil.class)) {
+
+			openIdConnectTokenRequestUtilMockedStatic.when(
+				() -> OpenIdConnectTokenRequestUtil.request(
+					Mockito.any(OIDCClientInformation.class),
+					Mockito.any(OIDCProviderMetadata.class),
+					Mockito.any(RefreshToken.class), Mockito.anyInt(),
+					Mockito.anyString())
+			).thenReturn(
+				oidcTokens
+			);
+
+			ReflectionTestUtil.invoke(
+				offlineOpenIdConnectSessionManager,
+				"_extendOpenIdConnectSession",
+				new Class<?>[] {OpenIdConnectSession.class},
+				openIdConnectSession);
+		}
 
 		ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(
 			String.class);
@@ -205,6 +248,12 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		Assert.assertTrue(
 			filterString.contains(
 				"(companyId=" + oAuthClientEntryCompanyId + ")"));
+
+		Mockito.verify(
+			openIdConnectSessionLocalService, Mockito.never()
+		).deleteOpenIdConnectSession(
+			openIdConnectSession
+		);
 	}
 
 	@Test
@@ -437,6 +486,226 @@ public class OfflineOpenIdConnectSessionManagerTest {
 			openIdConnectSession
 		).setSessionId(
 			refreshedSessionId
+		);
+	}
+
+	@Test
+	public void testExtendOpenIdConnectSessionWhenNoMatchingProviderConfiguration()
+		throws Exception {
+
+		OpenIdConnectSession openIdConnectSession = Mockito.mock(
+			OpenIdConnectSession.class);
+
+		long companyId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			openIdConnectSession.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		String authServerWellKnownURI = RandomTestUtil.randomString();
+
+		Mockito.when(
+			openIdConnectSession.getAuthServerWellKnownURI()
+		).thenReturn(
+			authServerWellKnownURI
+		);
+
+		String clientId = RandomTestUtil.randomString();
+
+		Mockito.when(
+			openIdConnectSession.getClientId()
+		).thenReturn(
+			clientId
+		);
+
+		Mockito.when(
+			openIdConnectSession.getRefreshToken()
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		OAuthClientEntry oAuthClientEntry = Mockito.mock(
+			OAuthClientEntry.class);
+
+		Mockito.when(
+			oAuthClientEntry.getOAuthClientEntryId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getAuthServerWellKnownURI()
+		).thenReturn(
+			authServerWellKnownURI
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getClientId()
+		).thenReturn(
+			clientId
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getInfoJSON()
+		).thenReturn(
+			"{\"client_id\": \"test-client\"}"
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getMetadataCacheInSeconds()
+		).thenReturn(
+			3600
+		);
+
+		Mockito.when(
+			oAuthClientEntry.getTokenRequestParametersJSON()
+		).thenReturn(
+			"{}"
+		);
+
+		OAuthClientEntryLocalService oAuthClientEntryLocalService =
+			Mockito.mock(OAuthClientEntryLocalService.class);
+
+		Mockito.when(
+			oAuthClientEntryLocalService.fetchOAuthClientEntry(
+				companyId, authServerWellKnownURI, clientId)
+		).thenReturn(
+			oAuthClientEntry
+		);
+
+		OIDCProviderMetadata oidcProviderMetadata = new OIDCProviderMetadata(
+			new Issuer(RandomTestUtil.randomString()),
+			List.of(SubjectType.PUBLIC),
+			new URI(RandomTestUtil.randomString()));
+
+		oidcProviderMetadata.setTokenEndpointURI(
+			new URI(RandomTestUtil.randomString()));
+
+		AuthorizationServerMetadataResolver
+			authorizationServerMetadataResolver = Mockito.mock(
+				AuthorizationServerMetadataResolver.class);
+
+		Mockito.when(
+			authorizationServerMetadataResolver.resolveOIDCProviderMetadata(
+				Mockito.anyString(), Mockito.anyLong(), Mockito.anyInt(),
+				Mockito.anyLong())
+		).thenReturn(
+			oidcProviderMetadata
+		);
+
+		OpenIdConnectSessionLocalService openIdConnectSessionLocalService =
+			Mockito.mock(OpenIdConnectSessionLocalService.class);
+
+		OfflineOpenIdConnectSessionManager offlineOpenIdConnectSessionManager =
+			new OfflineOpenIdConnectSessionManager();
+
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager,
+			"_authorizationServerMetadataResolver",
+			authorizationServerMetadataResolver);
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager, "_configurationAdmin",
+			Mockito.mock(ConfigurationAdmin.class));
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager, "_oAuthClientEntryLocalService",
+			oAuthClientEntryLocalService);
+		ReflectionTestUtil.setFieldValue(
+			offlineOpenIdConnectSessionManager,
+			"_openIdConnectSessionLocalService",
+			openIdConnectSessionLocalService);
+
+		AccessToken refreshedAccessToken = new AccessToken(
+			new AccessTokenType("Bearer"), RandomTestUtil.randomString(), 60,
+			new Scope("openid")) {
+
+			@Override
+			public String toAuthorizationHeader() {
+				return null;
+			}
+
+		};
+
+		PlainJWT plainJWT = new PlainJWT(
+			new JWTClaimsSet.Builder(
+			).claim(
+				"sid", RandomTestUtil.randomString()
+			).issuer(
+				RandomTestUtil.randomString()
+			).build());
+
+		OIDCTokens oidcTokens = new OIDCTokens(
+			plainJWT.serialize(), refreshedAccessToken,
+			new RefreshToken(RandomTestUtil.randomString()));
+
+		try (MockedStatic<OpenIdConnectProviderUtil>
+				openIdConnectProviderUtilMockedStatic = Mockito.mockStatic(
+					OpenIdConnectProviderUtil.class);
+			MockedStatic<OpenIdConnectTokenRequestUtil>
+				openIdConnectTokenRequestUtilMockedStatic = Mockito.mockStatic(
+					OpenIdConnectTokenRequestUtil.class)) {
+
+			openIdConnectProviderUtilMockedStatic.when(
+				() ->
+					OpenIdConnectProviderUtil.
+						getOpenIdConnectProviderConfigurationProperties(
+							Mockito.anyString(), Mockito.anyString(),
+							Mockito.anyLong(),
+							Mockito.any(ConfigurationAdmin.class),
+							Mockito.anyString(), Mockito.anyString())
+			).thenReturn(
+				null
+			);
+
+			openIdConnectTokenRequestUtilMockedStatic.when(
+				() -> OpenIdConnectTokenRequestUtil.request(
+					Mockito.any(OIDCClientInformation.class),
+					Mockito.any(OIDCProviderMetadata.class),
+					Mockito.any(RefreshToken.class), Mockito.anyInt(),
+					Mockito.anyString())
+			).thenReturn(
+				oidcTokens
+			);
+
+			ReflectionTestUtil.invoke(
+				offlineOpenIdConnectSessionManager,
+				"_extendOpenIdConnectSession",
+				new Class<?>[] {OpenIdConnectSession.class},
+				openIdConnectSession);
+
+			ArgumentCaptor<Integer> tokenConnectionTimeoutArgumentCaptor =
+				ArgumentCaptor.forClass(Integer.class);
+
+			openIdConnectTokenRequestUtilMockedStatic.verify(
+				() -> OpenIdConnectTokenRequestUtil.request(
+					Mockito.any(OIDCClientInformation.class),
+					Mockito.any(OIDCProviderMetadata.class),
+					Mockito.any(RefreshToken.class),
+					tokenConnectionTimeoutArgumentCaptor.capture(),
+					Mockito.anyString()));
+
+			Assert.assertEquals(
+				Integer.valueOf(0),
+				tokenConnectionTimeoutArgumentCaptor.getValue());
+		}
+
+		Mockito.verify(
+			openIdConnectSession
+		).setAccessToken(
+			refreshedAccessToken.toJSONString()
+		);
+
+		Mockito.verify(
+			openIdConnectSessionLocalService, Mockito.never()
+		).deleteOpenIdConnectSession(
+			openIdConnectSession
 		);
 	}
 

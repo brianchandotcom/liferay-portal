@@ -81,6 +81,4 @@ public interface Session {
 
 	public Serializable save(Object object) throws ORMException;
 
-	public void saveOrUpdate(Object object) throws ORMException;
-
 }

@@ -87,16 +87,31 @@ public final class UpgradeQueryMonitor {
 		try (Connection connection = dataSource.getConnection()) {
 			DB db = DBManagerUtil.getDB();
 
+			String defaultSchema = connection.getCatalog();
+
+			if (defaultSchema == null) {
+				defaultSchema = connection.getSchema();
+			}
+
 			List<DB.QueryInfo> lockedQueryInfos = db.getLockedQueryInfos(
 				connection);
 
 			for (DB.QueryInfo lockedQueryInfo : lockedQueryInfos) {
 				if (_log.isWarnEnabled()) {
+					String schema = lockedQueryInfo.getSchema();
+
+					String schemaClause = "";
+
+					if ((schema != null) && !schema.equals(defaultSchema)) {
+						schemaClause = StringBundler.concat(
+							" in schema \"", schema, "\"");
+					}
+
 					_log.warn(
 						StringBundler.concat(
 							"Locked query \"", lockedQueryInfo.getQuery(),
 							"\" with ID ", lockedQueryInfo.getId(),
-							" has been running for ",
+							schemaClause, " has been running for ",
 							TimeUnit.MILLISECONDS.toSeconds(
 								lockedQueryInfo.getDuration()),
 							" seconds"));
@@ -109,12 +124,20 @@ public final class UpgradeQueryMonitor {
 			for (DB.QueryInfo longRunningQueryInfo : longRunningQueryInfos) {
 				if (_log.isInfoEnabled()) {
 					String id = longRunningQueryInfo.getId();
+					String schema = longRunningQueryInfo.getSchema();
+
+					String schemaClause = "";
+
+					if ((schema != null) && !schema.equals(defaultSchema)) {
+						schemaClause = StringBundler.concat(
+							" in schema \"", schema, "\"");
+					}
 
 					_log.info(
 						StringBundler.concat(
 							"Long-running query \"",
 							longRunningQueryInfo.getQuery(), "\" with ID ", id,
-							" has been running for ",
+							schemaClause, " has been running for ",
 							TimeUnit.MILLISECONDS.toSeconds(
 								longRunningQueryInfo.getDuration()),
 							" seconds"));

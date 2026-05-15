@@ -260,14 +260,14 @@ public class EmailObjectFieldBusinessTypeTest {
 				_objectField, "user@example.com"));
 
 		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
+			ObjectEntryValuesException.InvalidEmail.class,
 			StringBundler.concat(
 				"The email address \"not-an-email\" is invalid for object ",
 				"field \"", _OBJECT_FIELD_NAME, "\""),
 			() -> _objectFieldBusinessType.processValue(
 				_objectField, "not-an-email"));
 		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
+			ObjectEntryValuesException.InvalidEmail.class,
 			StringBundler.concat(
 				"The email address \"missing@\" is invalid for object field \"",
 				_OBJECT_FIELD_NAME, "\""),

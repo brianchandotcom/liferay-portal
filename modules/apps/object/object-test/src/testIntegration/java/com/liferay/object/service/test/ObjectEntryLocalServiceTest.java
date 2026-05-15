@@ -1917,7 +1917,7 @@ public class ObjectEntryLocalServiceTest {
 		String emailPrefix = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
+			ObjectEntryValuesException.InvalidEmail.class,
 			StringBundler.concat(
 				"The email address \"", emailPrefix,
 				"\" is invalid for object field \"", objectFieldName, "\""),
@@ -7462,17 +7462,17 @@ public class ObjectEntryLocalServiceTest {
 		long objectEntryFolderId = objectEntry.getObjectEntryFolderId();
 		long objectEntryId = objectEntry.getObjectEntryId();
 
-		String invalidEmailAddress = RandomTestUtil.randomString();
+		String invalidEmail = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
-			ObjectEntryValuesException.InvalidEmailAddress.class,
+			ObjectEntryValuesException.InvalidEmail.class,
 			StringBundler.concat(
-				"The email address \"", invalidEmailAddress,
+				"The email address \"", invalidEmail,
 				"\" is invalid for object field \"", objectFieldName, "\""),
 			() -> _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntryId, objectEntryFolderId,
 				HashMapBuilder.<String, Serializable>put(
-					objectFieldName, invalidEmailAddress
+					objectFieldName, invalidEmail
 				).build(),
 				ServiceContextTestUtil.getServiceContext()));
 

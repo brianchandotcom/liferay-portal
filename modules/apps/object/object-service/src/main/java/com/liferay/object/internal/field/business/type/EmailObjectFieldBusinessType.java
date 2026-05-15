@@ -138,7 +138,7 @@ public class EmailObjectFieldBusinessType extends BaseObjectFieldBusinessType {
 		}
 
 		if (!Validator.isEmailAddress(normalizedValue)) {
-			throw new ObjectEntryValuesException.InvalidEmailAddress(
+			throw new ObjectEntryValuesException.InvalidEmail(
 				objectField.getName(), value);
 		}
 

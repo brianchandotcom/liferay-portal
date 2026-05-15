@@ -202,31 +202,29 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
-	public static class InvalidEmailAddress extends ObjectEntryValuesException {
+	public static class InvalidEmail extends ObjectEntryValuesException {
 
-		public InvalidEmailAddress(
-			String objectFieldName, String emailAddress) {
-
+		public InvalidEmail(String objectFieldName, String email) {
 			super(
-				Arrays.asList(emailAddress, objectFieldName),
+				Arrays.asList(email, objectFieldName),
 				StringBundler.concat(
-					"The email address \"", emailAddress,
+					"The email address \"", email,
 					"\" is invalid for object field \"", objectFieldName, "\""),
 				"please-enter-a-valid-email-address");
 
 			_objectFieldName = objectFieldName;
-			_emailAddress = emailAddress;
+			_email = email;
 		}
 
-		public String getEmailAddress() {
-			return _emailAddress;
+		public String getEmail() {
+			return _email;
 		}
 
 		public String getObjectFieldName() {
 			return _objectFieldName;
 		}
 
-		private final String _emailAddress;
+		private final String _email;
 		private final String _objectFieldName;
 
 	}

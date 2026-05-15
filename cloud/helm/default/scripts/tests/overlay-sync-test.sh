@@ -44,7 +44,11 @@ function _run_test {
 
 	description=$(echo "${test_function}" | sed "s/^_test_//; s/_/ /g")
 
-	if "${test_function}" "${script}"
+	local exit_code=0
+
+	"${test_function}" "${script}" || exit_code="${?}"
+
+	if [ "${exit_code}" -eq 0 ]
 	then
 		echo "PASS: ${description}."
 

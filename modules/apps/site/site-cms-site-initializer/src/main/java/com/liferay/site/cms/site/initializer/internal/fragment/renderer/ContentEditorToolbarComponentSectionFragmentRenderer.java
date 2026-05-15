@@ -193,6 +193,11 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 					themeDisplay.getLocale(), "edit-x", title);
 			}
 		).put(
+			"isNew",
+			Objects.equals(
+				Constants.ADD,
+				ParamUtil.getString(httpServletRequest, Constants.CMD))
+		).put(
 			"title", title
 		).put(
 			"type",

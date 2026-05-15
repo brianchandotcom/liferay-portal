@@ -7,6 +7,8 @@ package com.liferay.portal.kernel.internal.log4j;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.xml.XMLUtil;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -95,14 +97,14 @@ public final class LiferayXmlLayout extends AbstractStringLayout {
 
 	private void _generateXMLLog(LogEvent logEvent, StringBuilder sb) {
 		sb.append("<log4j:event logger=\"");
-		sb.append(Transform.escapeHtmlTags(logEvent.getLoggerName()));
+		sb.append(HtmlUtil.escapeAttribute(logEvent.getLoggerName()));
 		sb.append("\" timestamp=\"");
 		sb.append(logEvent.getTimeMillis());
 		sb.append("\" level=\"");
 		sb.append(
-			Transform.escapeHtmlTags(String.valueOf(logEvent.getLevel())));
+			HtmlUtil.escapeAttribute(String.valueOf(logEvent.getLevel())));
 		sb.append("\" thread=\"");
-		sb.append(Transform.escapeHtmlTags(logEvent.getThreadName()));
+		sb.append(HtmlUtil.escapeAttribute(logEvent.getThreadName()));
 		sb.append("\">");
 		sb.append(StringPool.RETURN_NEW_LINE);
 		sb.append("<log4j:message>");
@@ -110,7 +112,8 @@ public final class LiferayXmlLayout extends AbstractStringLayout {
 
 		Message message = logEvent.getMessage();
 
-		Transform.appendEscapingCData(sb, message.getFormattedMessage());
+		Transform.appendEscapingCData(
+			sb, XMLUtil.stripInvalidChars(message.getFormattedMessage()));
 
 		sb.append(StringPool.CDATA_CLOSE);
 		sb.append("</log4j:message>");
@@ -125,7 +128,8 @@ public final class LiferayXmlLayout extends AbstractStringLayout {
 			sb.append(StringPool.CDATA_OPEN);
 
 			Transform.appendEscapingCData(
-				sb, Strings.join(ndc, CharPool.SPACE));
+				sb,
+				XMLUtil.stripInvalidChars(Strings.join(ndc, CharPool.SPACE)));
 
 			sb.append(StringPool.CDATA_CLOSE);
 			sb.append("</log4j:NDC>");
@@ -142,7 +146,8 @@ public final class LiferayXmlLayout extends AbstractStringLayout {
 
 			throwable.printStackTrace(new PrintWriter(stringWriter));
 
-			Transform.appendEscapingCData(sb, stringWriter.toString());
+			Transform.appendEscapingCData(
+				sb, XMLUtil.stripInvalidChars(stringWriter.toString()));
 
 			sb.append(StringPool.CDATA_CLOSE);
 			sb.append("</log4j:throwable>");
@@ -155,14 +160,14 @@ public final class LiferayXmlLayout extends AbstractStringLayout {
 			if (stackTraceElement != null) {
 				sb.append("<log4j:locationInfo class=\"");
 				sb.append(
-					Transform.escapeHtmlTags(stackTraceElement.getClassName()));
+					HtmlUtil.escapeAttribute(stackTraceElement.getClassName()));
 				sb.append("\" method=\"");
 				sb.append(
-					Transform.escapeHtmlTags(
+					HtmlUtil.escapeAttribute(
 						stackTraceElement.getMethodName()));
 				sb.append("\" file=\"");
 				sb.append(
-					Transform.escapeHtmlTags(stackTraceElement.getFileName()));
+					HtmlUtil.escapeAttribute(stackTraceElement.getFileName()));
 				sb.append("\" line=\"");
 				sb.append(stackTraceElement.getLineNumber());
 				sb.append("\"/>");
@@ -181,10 +186,10 @@ public final class LiferayXmlLayout extends AbstractStringLayout {
 					(key, value) -> {
 						if (value != null) {
 							sb.append("<log4j:data name=\"");
-							sb.append(Transform.escapeHtmlTags(key));
+							sb.append(HtmlUtil.escapeAttribute(key));
 							sb.append("\" value=\"");
 							sb.append(
-								Transform.escapeHtmlTags(
+								HtmlUtil.escapeAttribute(
 									String.valueOf(value)));
 							sb.append("\"/>");
 							sb.append(StringPool.RETURN_NEW_LINE);

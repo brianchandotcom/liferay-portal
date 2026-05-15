@@ -253,6 +253,8 @@ export async function setSegmentName({
 
 		await expect(input).toHaveValue(segmentName);
 	}).toPass();
+
+	await page.keyboard.press('Tab');
 }
 
 export async function viewSegmentCriteriaCard({

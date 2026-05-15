@@ -1,6 +1,6 @@
 <#assign
 	filteredCount = 0
-	title = assetCategoriesSearchFacetDisplayContext.getParameterName()?upper_case
+	title = assetCategoriesSearchFacetDisplayContext.getParameterName()
 />
 
 <#list entries as entry>
@@ -62,6 +62,8 @@
 							<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 								<span class="custom-control-label-text">
 									${htmlUtil.escape(entry.getDisplayName())}
+
+									<span class="facet-frequency">(${entry.getFrequency()})</span>
 								</span>
 							</span>
 						</label>

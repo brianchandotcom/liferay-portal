@@ -1,6 +1,6 @@
 <#assign
 	filteredCount = 0
-	title = cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-',' ')
+	title = cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace("-", " ")?cap_first
 />
 
 <#list entries?sort_by("displayName") as entry>
@@ -69,6 +69,8 @@
 											<#else>
 												${htmlUtil.escape(displayName)?capitalize}
 											</#if>
+
+											<span class="facet-frequency">(${entry.getFrequency()})</span>
 										</span>
 									</span>
 								</label>

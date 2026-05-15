@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,10 +72,27 @@ public abstract class BaseSectionDisplayContextTestCase {
 		Assert.assertEquals(expectedLabel, fdsFilter.getLabel());
 	}
 
+	protected Map<String, Object> getAdditionalProps(AssetEntry assetEntry)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
+			"getAdditionalProps", new Class<?>[0]);
+	}
+
 	protected String getAPIURL(AssetEntry assetEntry) throws Exception {
 		return ReflectionTestUtil.invoke(
 			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
 			"getAPIURL", new Class<?>[0]);
+	}
+
+	protected List<DropdownItem> getBulkActionDropdownItems(
+			AssetEntry assetEntry)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(_getHttpServletRequest(assetEntry)),
+			"getBulkActionDropdownItems", new Class<?>[0]);
 	}
 
 	protected CreationMenu getCreationMenu(AssetEntry assetEntry)

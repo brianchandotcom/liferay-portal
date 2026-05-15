@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -37,8 +34,8 @@ import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,14 +47,14 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
- * @author Pedro Leite
+ * @author Fábio Alves
  */
 @FeatureFlags(
 	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-58677")}
 )
 @RunWith(Arquillian.class)
 @Sync
-public class ViewTasksSectionDisplayContextTest
+public abstract class BaseTasksSectionDisplayContextTestCase
 	extends BaseSectionDisplayContextTestCase {
 
 	@ClassRule
@@ -71,7 +68,7 @@ public class ViewTasksSectionDisplayContextTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_projectObjectDefinition =
+		projectObjectDefinition =
 			objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", TestPropsValues.getCompanyId());
@@ -84,39 +81,52 @@ public class ViewTasksSectionDisplayContextTest
 			projectObjectEntry.getValues(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assetEntry = _assetEntryLocalService.getEntry(
-			_projectObjectDefinition.getClassName(),
+		assetEntry = _assetEntryLocalService.getEntry(
+			projectObjectDefinition.getClassName(),
 			projectObjectEntry.getObjectEntryId());
 	}
 
 	@Test
-	public void testGetAPIURL() throws Exception {
-		Assert.assertTrue(
-			StringUtil.equals(
-				getAPIURL(null),
-				StringBundler.concat(
-					"/o/search/v1.0/search?emptySearch=true&entryClassNames=",
-					HtmlUtil.escapeURL(objectDefinition.getClassName()), ",",
-					_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN,
-					"&filter=(objectDefinitionId eq ",
-					objectDefinition.getObjectDefinitionId(),
-					" or keywords/any(k:startswith(k, 'L_CMP_TASK')))",
-					"&nestedFields=cmpProjectToCMPTasks,embedded")));
-		Assert.assertTrue(
-			StringUtil.equals(
-				getAPIURL(_assetEntry),
-				StringBundler.concat(
-					"/o/search/v1.0/search?emptySearch=true&filter=",
-					"(objectDefinitionId eq ",
-					objectDefinition.getObjectDefinitionId(),
-					" and scopeGroupId eq ", _assetEntry.getGroupId(),
-					")&nestedFields=cmpProjectToCMPTasks,embedded")));
+	public void testGetAdditionalProps() throws Exception {
+		Map<String, Object> additionalProps = getAdditionalProps(null);
+
+		Assert.assertNull(additionalProps.get("projectId"));
+		Assert.assertNotNull(additionalProps.get("states"));
+
+		additionalProps = getAdditionalProps(assetEntry);
+
+		Assert.assertEquals(
+			assetEntry.getClassPK(), additionalProps.get("projectId"));
+		Assert.assertNotNull(additionalProps.get("states"));
+	}
+
+	@Test
+	public void testGetBulkActionDropdownItems() throws Exception {
+		List<DropdownItem> bulkActionDropdownItems = getBulkActionDropdownItems(
+			null);
+
+		Assert.assertEquals(
+			bulkActionDropdownItems.toString(), 4,
+			bulkActionDropdownItems.size());
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"date-time", "update-due-date", "Update Due Date", "post",
+			(FDSActionDropdownItem)bulkActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"user", "assign-to", "Assign to...", null,
+			(FDSActionDropdownItem)bulkActionDropdownItems.get(1));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"arrow-start", "update-state", "Update State", "post",
+			(FDSActionDropdownItem)bulkActionDropdownItems.get(2));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"trash", "delete", "Delete", null,
+			(FDSActionDropdownItem)bulkActionDropdownItems.get(3));
 	}
 
 	@Test
 	public void testGetCreationMenu() throws Exception {
 		DropdownItem dropdownItem = _getDropdownItem(
-			getCreationMenu(_assetEntry));
+			getCreationMenu(assetEntry));
 
 		Assert.assertEquals("createTask", getValue(dropdownItem, "action"));
 		Assert.assertEquals(
@@ -124,7 +134,7 @@ public class ViewTasksSectionDisplayContextTest
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 				GroupConstants.CMS_FRIENDLY_URL,
 				"/add_project?objectDefinitionId=",
-				_projectObjectDefinition.getObjectDefinitionId(), "&plid=",
+				projectObjectDefinition.getObjectDefinitionId(), "&plid=",
 				themeDisplay.getPlid(), "&redirect=",
 				themeDisplay.getURLCurrent(),
 				"&action=createProjectGlobalTask"),
@@ -150,9 +160,8 @@ public class ViewTasksSectionDisplayContextTest
 				"/add_task?objectDefinitionId=",
 				objectDefinition.getObjectDefinitionId(), "&plid=",
 				themeDisplay.getPlid(), "&projectGroupId=",
-				_assetEntry.getGroupId(), "&projectId=",
-				_assetEntry.getClassPK(), "&redirect=",
-				themeDisplay.getURLCurrent()),
+				assetEntry.getGroupId(), "&projectId=", assetEntry.getClassPK(),
+				"&redirect=", themeDisplay.getURLCurrent()),
 			getValue(dropdownItem, "redirect"));
 		Assert.assertEquals("Task", getValue(dropdownItem, "title"));
 
@@ -160,97 +169,6 @@ public class ViewTasksSectionDisplayContextTest
 
 		Assert.assertEquals("New", dropdownItem.get("label"));
 		Assert.assertTrue(Validator.isNull(getValue(dropdownItem, "redirect")));
-	}
-
-	@Test
-	public void testGetFDSActionDropdownItems() throws Exception {
-		List<FDSActionDropdownItem> groupFDSActionDropdownItems =
-			getFDSActionDropdownItems(_assetEntry);
-
-		Assert.assertEquals(
-			groupFDSActionDropdownItems.toString(), 2,
-			groupFDSActionDropdownItems.size());
-
-		FDSActionDropdownItem fdsActionDropdownItem =
-			groupFDSActionDropdownItems.get(0);
-
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			(List<FDSActionDropdownItem>)fdsActionDropdownItem.get("items");
-
-		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 1,
-			fdsActionDropdownItems.size());
-
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			null, "workflow-transition", null, null,
-			fdsActionDropdownItems.get(0));
-
-		fdsActionDropdownItem = groupFDSActionDropdownItems.get(1);
-
-		fdsActionDropdownItems =
-			(List<FDSActionDropdownItem>)fdsActionDropdownItem.get("items");
-
-		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 10,
-			fdsActionDropdownItems.size());
-
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"pencil", "edit", "Edit", "get",
-			Collections.singletonMap(
-				"entryClassName", objectDefinition.getClassName()),
-			fdsActionDropdownItems.get(0));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"view", "actionLink", "View", null,
-			Collections.singletonMap(
-				"entryClassName", objectDefinition.getClassName()),
-			fdsActionDropdownItems.get(1));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"bell-on", "subscribe", "Watch Task", "post",
-			fdsActionDropdownItems.get(2));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"bell-off", "unsubscribe", "Stop Watching Task", "post",
-			fdsActionDropdownItems.get(3));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			null, "assign-to", "Assign to...", "get",
-			Collections.singletonMap(
-				"entryClassName", objectDefinition.getClassName()),
-			fdsActionDropdownItems.get(4));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"trash", "delete", "Delete", null,
-			Collections.singletonMap(
-				"entryClassName", objectDefinition.getClassName()),
-			fdsActionDropdownItems.get(5));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"view", "actionLinkWorkflowTask", "View", null,
-			Collections.singletonMap(
-				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN),
-			fdsActionDropdownItems.get(6));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			null, "assignToMeWorkflowTask", "Assign to Me", null,
-			HashMapBuilder.<String, Object>put(
-				"embedded.assignedToMe", false
-			).put(
-				"embedded.completed", false
-			).put(
-				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
-			).build(),
-			fdsActionDropdownItems.get(7));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			null, "assignToWorkflowTask", "Assign to...", null,
-			HashMapBuilder.<String, Object>put(
-				"embedded.completed", false
-			).put(
-				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
-			).build(),
-			fdsActionDropdownItems.get(8));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"date-time", "updateDueDateWorkflowTask", "Update Due Date", null,
-			HashMapBuilder.<String, Object>put(
-				"embedded.completed", false
-			).put(
-				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
-			).build(),
-			fdsActionDropdownItems.get(9));
 	}
 
 	@Test
@@ -276,7 +194,7 @@ public class ViewTasksSectionDisplayContextTest
 		assertFDSFilter(
 			FDSEntityFieldTypes.STRING, "keywords", "tag", fdsFilters.get(5));
 
-		fdsFilters = getFDSFilters(_assetEntry);
+		fdsFilters = getFDSFilters(assetEntry);
 
 		Assert.assertEquals(fdsFilters.toString(), 5, fdsFilters.size());
 
@@ -310,8 +228,14 @@ public class ViewTasksSectionDisplayContextTest
 
 		return httpServletRequest.getAttribute(
 			"com.liferay.site.cmp.site.initializer.internal.display.context." +
-				"ViewTasksSectionDisplayContext");
+				"ViewProjectTasksSectionDisplayContext");
 	}
+
+	protected static final String CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
+		"com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken";
+
+	protected AssetEntry assetEntry;
+	protected ObjectDefinition projectObjectDefinition;
 
 	private DropdownItem _getDropdownItem(CreationMenu creationMenu) {
 		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
@@ -322,22 +246,15 @@ public class ViewTasksSectionDisplayContextTest
 		return dropdownItems.get(0);
 	}
 
-	private static final String _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
-		"com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken";
-
-	private AssetEntry _assetEntry;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewTasksJSPSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewProjectTasksJSPSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	private ObjectDefinition _projectObjectDefinition;
 
 }

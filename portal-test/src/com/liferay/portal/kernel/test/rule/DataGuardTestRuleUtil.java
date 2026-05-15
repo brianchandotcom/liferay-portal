@@ -711,13 +711,6 @@ public class DataGuardTestRuleUtil {
 			return super.save(object);
 		}
 
-		@Override
-		public void saveOrUpdate(Object object) throws ORMException {
-			_record(object);
-
-			super.saveOrUpdate(object);
-		}
-
 		private RecordingSessionWrapper(
 			Session session, Map<String, Map<Serializable, String>> records) {
 

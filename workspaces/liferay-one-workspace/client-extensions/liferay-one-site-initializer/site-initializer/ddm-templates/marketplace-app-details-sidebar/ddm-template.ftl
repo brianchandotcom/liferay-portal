@@ -252,11 +252,8 @@
 		return `
 			<#if appDocumentationURL?has_content>
 				<div class="d-flex flex-row align-items-center mb-3">
-					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
-						<@clay["icon"]
-							style="fill:#6B6C7E;"
-							symbol="document-code"
-						/>
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3">
+						<@clay["icon"] symbol="document-code" />
 					</span>
 
 					<div class="d-flex flex-column">
@@ -271,11 +268,8 @@
 
 			<#if appInstallationGuideURL?has_content>
 				<div class="d-flex flex-row align-items-center mb-4">
-					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
-						<@clay["icon"]
-							style="fill:#6B6C7E;"
-							symbol="document"
-						/>
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3">
+						<@clay["icon"] symbol="document" />
 					</span>
 
 					<div class="d-flex flex-column">
@@ -293,14 +287,11 @@
 	function publisherSupportModalBody() {
 		return `
 			<div class="align-items-center d-flex flex-row mb-3">
-				<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
+				<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3">
 					<#if profileImageURL?? && profileImageURL?length gt 0>
-						<img src="${profileImageURL}" alt="Publisher Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+						<img alt="Publisher Image" class="publisher-profile-image" src="${profileImageURL}" />
 					<#else>
-						<@clay["icon"]
-							style="fill:#6B6C7E;"
-							symbol="picture"
-						/>
+						<@clay["icon"] symbol="picture" />
 					</#if>
 				</span>
 
@@ -313,11 +304,8 @@
 
 			<#if publisherURL?has_content>
 				<div class="align-items-center d-flex flex-row mb-3">
-				<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
-						<@clay["icon"]
-							style="fill:#6B6C7E;"
-							symbol="globe"
-						/>
+				<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3">
+						<@clay["icon"] symbol="globe" />
 					</span>
 
 					<div class="d-flex flex-column">
@@ -332,8 +320,8 @@
 
 			<#if supportEmail?has_content>
 				<div class="align-items-center d-flex flex-row mb-3">
-					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
-						<@clay["icon"] style="fill:#6B6C7E;"symbol="envelope-closed" />
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3">
+						<@clay["icon"] symbol="envelope-closed" />
 					</span>
 
 					<div class="d-flex flex-column">
@@ -348,11 +336,8 @@
 
 			<#if supportPhone?has_content>
 				<div class="d-flex flex-row align-items-center mb-3">
-					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3" style="background: #E2E2E4; border-radius:50%; height:40px; overflow:hidden; width:40px;">
-						<@clay["icon"]
-							style="fill:#6B6C7E;"
-							symbol="phone"
-						/>
+					<span class="align-items-center d-flex justify-content-center modal-icon-background mr-3">
+						<@clay["icon"] symbol="phone" />
 					</span>
 
 					<div class="d-flex flex-column">
@@ -395,43 +380,3 @@
 		}
 	}
 </script>
-
-<style ${nonceAttribute}>
-	.support-link,
-	.support-modal {
-		font-size: 16px;
-	}
-
-	.support-link-icon {
-		color: #0B5FFF;
-	}
-
-	.support-link-icon-arrow {
-		height: 12px !important;
-		width: 12px !important;
-	}
-
-	.support-link:hover,
-	.support-modal:hover {
-		transform: translateY(-0.75px);
-	}
-
-	.support-link:hover .support-link-icon-arrow-container {
-		display: inline-block !important;
-		transform: rotate(90deg);
-	}
-
-	.support-modal-icon,
-	.support-modal {
-		color: #54555F;
-	}
-
-	.support-modal:hover {
-		color: #272833;
-	}
-
-	.support-svg mask,
-	.link-arrow mask {
-		mask-type: alpha;
-	}
-</style>

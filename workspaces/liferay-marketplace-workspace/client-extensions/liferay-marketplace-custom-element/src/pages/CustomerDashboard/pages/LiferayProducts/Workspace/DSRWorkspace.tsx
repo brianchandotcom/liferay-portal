@@ -17,9 +17,9 @@ import analyticsOAuth2 from '../../../../../services/oauth/Analytics';
 import {copyToClipboard} from '../../../../../utils/browser';
 import {safeJSONParse} from '../../../../../utils/util';
 
-import './DSRWorkspace.scss';
 import { DetailedCard } from '../../../../../components/DetailedCard/DetailedCard';
 import QATable from '../../../../../components/QATable';
+import './DSRWorkspace.scss';
 
 type OutletContext = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
@@ -30,10 +30,10 @@ const DSRWorkspace = () => {
 
 	const orderMetadata = safeJSONParse<any>(
 		placedOrder.customFields[OrderCustomFields.ORDER_METADATA],
-		{analyticsForm: {groupId: ''}}
+		{analyticsProject: {groupId: ''}}
 	);
-	const groupId = orderMetadata?.analyticsForm?.groupId
-		? String(orderMetadata.analyticsForm.groupId)
+	const groupId = orderMetadata?.analyticsProject?.groupId
+		? String(orderMetadata.analyticsProject.groupId)
 		: '';
 
 	const {data: token = '', isLoading} = useSWR(
@@ -103,17 +103,17 @@ const DSRWorkspace = () => {
 					items={[
 						{
 							title: i18n.translate('workspace-name'),
-							value: orderMetadata?.analyticsForm
+							value: orderMetadata?.analyticsProject
 								?.corpProjectName,
 						},
 						{
 							title: i18n.translate('workspace-owner-email'),
-							value: orderMetadata?.analyticsForm
+							value: orderMetadata?.analyticsProject
 								?.ownerEmailAddress,
 						},
 						{
 							title: i18n.translate('data-center-location'),
-							value: orderMetadata?.analyticsForm
+							value: orderMetadata?.analyticsProject
 								?.serverLocation,
 						},
 					]}

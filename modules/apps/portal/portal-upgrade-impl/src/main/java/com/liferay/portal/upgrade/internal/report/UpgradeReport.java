@@ -635,13 +635,13 @@ public class UpgradeReport {
 				return TransformUtil.transform(
 					lastKnownProgresses.entrySet(),
 					entry -> {
-						long total = GetterUtil.getLong(
+						long totalCount = GetterUtil.getLong(
 							lastKnownTotalCounts.get(entry.getKey()));
 
-						if (total > 0) {
+						if (totalCount > 0) {
 							return StringBundler.concat(
 								entry.getKey(), " processed approximately ",
-								entry.getValue(), " of ", total, " rows");
+								entry.getValue(), " of ", totalCount, " rows");
 						}
 
 						return StringBundler.concat(

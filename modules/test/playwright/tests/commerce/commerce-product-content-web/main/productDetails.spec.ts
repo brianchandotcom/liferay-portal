@@ -348,77 +348,76 @@ test(
 				catalogId: catalog.id,
 				name: {en_US: getRandomString()},
 			});
-		const productBundle =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-				name: {en_US: 'ProductBundle'},
-				productOptions: [
-					{
-						fieldType: 'select',
-						key: 'color',
-						name: {
-							en_US: 'Color',
-						},
-						optionId: option1.id,
-						priceType: 'static',
-						priority: 1,
-						productOptionValues: [
-							{
-								deltaPrice: 10.0,
-								key: 'black',
-								name: {
-									en_US: 'Black',
-								},
-								priority: 1,
-								quantity: 1,
-								skuId: product1.skus[0].id,
-							},
-							{
-								deltaPrice: 20.0,
-								key: 'white',
-								name: {
-									en_US: 'White',
-								},
-								priority: 2,
-								quantity: 1,
-							},
-						],
-						skuContributor: true,
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'ProductBundle'},
+			productOptions: [
+				{
+					fieldType: 'select',
+					key: 'color',
+					name: {
+						en_US: 'Color',
 					},
-					{
-						fieldType: 'select',
-						key: 'size',
-						name: {
-							en_US: 'Size',
+					optionId: option1.id,
+					priceType: 'static',
+					priority: 1,
+					productOptionValues: [
+						{
+							deltaPrice: 10.0,
+							key: 'black',
+							name: {
+								en_US: 'Black',
+							},
+							priority: 1,
+							quantity: 1,
+							skuId: product1.skus[0].id,
 						},
-						optionId: option2.id,
-						priceType: 'static',
-						priority: 2,
-						productOptionValues: [
-							{
-								deltaPrice: 30.0,
-								key: 'xs',
-								name: {
-									en_US: 'XS',
-								},
-								priority: 1,
-								quantity: 1,
+						{
+							deltaPrice: 20.0,
+							key: 'white',
+							name: {
+								en_US: 'White',
 							},
-							{
-								deltaPrice: 40.0,
-								key: 'xl',
-								name: {
-									en_US: 'XL',
-								},
-								priority: 2,
-								quantity: 1,
-								skuId: product2.skus[0].id,
-							},
-						],
-						skuContributor: true,
+							priority: 2,
+							quantity: 1,
+						},
+					],
+					skuContributor: true,
+				},
+				{
+					fieldType: 'select',
+					key: 'size',
+					name: {
+						en_US: 'Size',
 					},
-				],
-			});
+					optionId: option2.id,
+					priceType: 'static',
+					priority: 2,
+					productOptionValues: [
+						{
+							deltaPrice: 30.0,
+							key: 'xs',
+							name: {
+								en_US: 'XS',
+							},
+							priority: 1,
+							quantity: 1,
+						},
+						{
+							deltaPrice: 40.0,
+							key: 'xl',
+							name: {
+								en_US: 'XL',
+							},
+							priority: 2,
+							quantity: 1,
+							skuId: product2.skus[0].id,
+						},
+					],
+					skuContributor: true,
+				},
+			],
+		});
 
 		await globalMenuPage.goToCommerce('Products');
 
@@ -433,58 +432,6 @@ test(
 			.productsTableRowLink('ProductBundle')
 			.click();
 		await commerceAdminProductPage.generateSkus();
-
-		const productBundleSkus = await apiHelpers.headlessCommerceAdminCatalog
-			.getProduct(productBundle.productId)
-			.then((product) => {
-				return product.skus;
-			});
-
-		const sku1 = productBundleSkus.find(
-			(sku) => sku.sku === 'WHITEXL' || sku.sku === 'XLWHITE'
-		);
-
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku1.id,
-			{
-				incrementalOrderQuantity: 2,
-				name: {en_US: 'Pallet'},
-				priority: 2,
-				rate: 3,
-			}
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku1.id,
-			{
-				incrementalOrderQuantity: 3,
-				name: {en_US: 'Box'},
-				primary: true,
-				priority: 1,
-				rate: 1,
-			}
-		);
-		const sku2 = productBundleSkus.find(
-			(sku) => sku.sku === 'BLACKXL' || sku.sku === 'XLBLACK'
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku2.id,
-			{
-				incrementalOrderQuantity: 3,
-				name: {en_US: 'Box'},
-				primary: true,
-				priority: 1,
-				rate: 1,
-			}
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku2.id,
-			{
-				incrementalOrderQuantity: 2,
-				name: {en_US: 'Package'},
-				priority: 2,
-				rate: 0.5,
-			}
-		);
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
@@ -509,9 +456,132 @@ test(
 			.optionSelector('Size')
 			.selectOption({label: 'XL + $ 10.00'});
 
-		await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
 		await expect(
 			await productDetailsPage.priceField('$ 50.00')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Unit of measure table is rendered for the resolved combination SKU on the product details page',
+	{tag: '@COMMERCE-12167'},
+	async ({
+		apiHelpers,
+		commerceAdminProductPage,
+		globalMenuPage,
+		page,
+		productDetailsPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			siteGroupId: site.id,
+		});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'UoM combo SKU',
+			});
+
+		const option1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'color',
+				'Color',
+				1
+			);
+
+		const productBundle =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'UoMBundle'},
+				productOptions: [
+					{
+						fieldType: 'select',
+						key: 'color',
+						name: {en_US: 'Color'},
+						optionId: option1.id,
+						priceType: 'static',
+						priority: 1,
+						productOptionValues: [
+							{
+								key: 'black',
+								name: {en_US: 'Black'},
+								priority: 1,
+								quantity: 1,
+							},
+							{
+								key: 'white',
+								name: {en_US: 'White'},
+								priority: 2,
+								quantity: 1,
+							},
+						],
+						skuContributor: true,
+					},
+				],
+			});
+
+		await globalMenuPage.goToCommerce('Products');
+
+		await commerceAdminProductPage.managementToolbarSearchInput.fill(
+			'UoMBundle'
+		);
+		await commerceAdminProductPage.managementToolbarSearchInput.press(
+			'Enter'
+		);
+
+		await commerceAdminProductPage
+			.productsTableRowLink('UoMBundle')
+			.click();
+		await commerceAdminProductPage.generateSkus();
+
+		const skus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(productBundle.productId)
+			.then((product) => product.skus);
+
+		const sku1 = skus.find((sku) => sku.sku === 'BLACK');
+
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku1.id,
+			{
+				basePrice: 150,
+				incrementalOrderQuantity: 3,
+				name: {en_US: 'Box'},
+				primary: true,
+				priority: 1,
+				rate: 1,
+			}
+		);
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku1.id,
+			{
+				basePrice: 50,
+				incrementalOrderQuantity: 2,
+				name: {en_US: 'Package'},
+				priority: 2,
+				rate: 0.5,
+			}
+		);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Product Details');
+
+		await page.goto(`/web/${site.name}/p/uombundle`);
+
+		await productDetailsPage
+			.optionSelector('Color')
+			.selectOption({label: 'Black'});
+
+		await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
+		await expect(
+			await productDetailsPage.priceField('$ 50.00 / Box')
 		).toBeVisible();
 	}
 );

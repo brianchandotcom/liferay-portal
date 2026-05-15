@@ -100,3 +100,342 @@
 	gap: var(--spacer-2);
 }
 
+/* ── Marketplace Detail Body ── */
+
+.marketplace-description-content {
+	font-size: 1.125rem;
+	line-height: 2rem;
+}
+
+.marketplace-section-title {
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+/* ── Marketplace App Categories ── */
+
+.app-container {
+	border-color: var(--primary);
+	color: var(--primary);
+}
+
+.app-category {
+	flex: 1;
+	font-size: 0.6875rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.app-container .app-category {
+	background-color: var(--primary-l3);
+	color: var(--primary-d2);
+	font-weight: 600;
+	height: 1.25rem;
+	padding: 0.1875rem 0.5rem;
+}
+
+.app-container .app-product-type {
+	font-size: 0.6875rem;
+	font-weight: 600;
+	height: 1.25rem;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.app-details-category-badge .app-type-badge {
+	position: relative;
+	right: 2px;
+	top: 0;
+}
+
+.diamond-icon-container {
+	color: var(--neutral-5);
+	height: 4px;
+	width: 4px;
+}
+
+@media screen and (max-width: 768px) {
+	.app-container {
+		font-size: small;
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.app-container {
+		font-size: x-small;
+	}
+
+	.app-container .app-category,
+	.app-container .app-product-type {
+		padding: 2px 4px;
+	}
+}
+
+/* ── Marketplace App Image Gallery ── */
+
+.carousel-container img {
+	cursor: pointer;
+	object-fit: contain;
+}
+
+.custom-gallery-modal {
+	background-color: var(--dark);
+	border-bottom: none;
+	color: var(--white);
+	height: 80%;
+}
+
+.custom-gallery-modal button:disabled {
+	cursor: default;
+	opacity: 0.4;
+	pointer-events: none;
+}
+
+.custom-gallery-modal .close {
+	color: var(--white);
+	margin-right: 1rem;
+}
+
+.custom-gallery-modal .liferay-modal-body {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	position: relative;
+}
+
+.lexicon-icon-overwide .lexicon-icon {
+	height: 2em;
+	margin: 0;
+}
+
+.main-image-wrapper {
+	align-items: center;
+	display: flex;
+	height: 454px;
+	justify-content: center;
+	position: relative;
+	width: 902px;
+}
+
+.main-image-wrapper img {
+	border-radius: 8px;
+	max-height: 100%;
+}
+
+.main-image-wrapper:hover .nav-button {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.main-image-wrapper:hover .nav-button:disabled {
+	cursor: default;
+	opacity: 0.4;
+}
+
+.modal-gallery-header {
+	padding: 1rem;
+}
+
+.modal-gallery-header .lexicon-icon {
+	fill: var(--warning);
+	margin-right: 0.5rem;
+	width: 1rem;
+}
+
+.modal-image {
+	aspect-ratio: 16/9;
+	border-radius: 8px;
+	max-width: 100vh;
+	object-fit: contain;
+}
+
+.modal-next,
+.modal-prev {
+	align-items: center;
+	background: rgba(105, 102, 102, 0.4);
+	border: none;
+	border-radius: 50%;
+	display: flex;
+	font-size: 1.6rem;
+	justify-content: center;
+	padding: 14px;
+	position: absolute;
+	top: 45%;
+}
+
+.modal-next {
+	right: 24px;
+}
+
+.modal-next .lexicon-icon,
+.modal-prev .lexicon-icon {
+	margin-top: 0;
+}
+
+.modal-prev {
+	left: 24px;
+}
+
+.nav-button {
+	background: rgba(0, 0, 0, 0.4);
+	border: none;
+	border-radius: 50%;
+	color: var(--white);
+	cursor: pointer;
+	font-size: 1rem;
+	opacity: 0;
+	padding: 0 8px;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: opacity 0.3s ease;
+	user-select: none;
+}
+
+.nav-button.next {
+	right: 10px;
+}
+
+.nav-button.prev {
+	left: 10px;
+}
+
+.thumbnail {
+	border: 2px solid transparent;
+	border-radius: 12px;
+	cursor: pointer;
+	height: 86px;
+	object-fit: cover;
+	opacity: 0.6;
+	transition:
+		border-color 250ms ease-out,
+		opacity 250ms ease-out;
+	width: 142px;
+}
+
+.thumbnail.selected,
+.thumbnail:hover {
+	border-color: var(--primary-l2);
+	opacity: 1;
+}
+
+.thumbnail.selected {
+	height: 102px;
+}
+
+.thumbnails {
+	display: flex;
+	gap: 8px;
+	overflow-x: auto;
+}
+
+.thumbnails-wrapper {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	margin-top: 1.5rem;
+	max-height: 86px;
+	max-width: 902px;
+}
+
+.view-full-gallery {
+	background-color: var(--white);
+	border: 1px solid var(--neutral-5);
+	border-radius: 12px;
+	color: var(--primary);
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	height: 86px;
+	justify-content: center;
+	margin-left: 8px;
+	min-width: 152px;
+	transition:
+		background-color 0.3s ease,
+		border-color 250ms ease-out,
+		box-shadow 0.3s ease;
+}
+
+.view-full-gallery .subtitle {
+	color: var(--secondary);
+	font-size: 0.75rem;
+	font-weight: 400;
+	line-height: 1;
+}
+
+.view-full-gallery .title {
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1;
+	margin-bottom: 4px;
+}
+
+.view-full-gallery:hover {
+	background-color: var(--light);
+	border: 2px solid var(--primary-l2);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ── Marketplace App Sidebar ── */
+
+.modal-icon-background {
+	background-color: var(--neutral-5);
+	border-radius: var(--border-radius-circle);
+	flex-shrink: 0;
+	height: 2.5rem;
+	overflow: hidden;
+	width: 2.5rem;
+}
+
+.modal-icon-background .lexicon-icon {
+	fill: var(--secondary);
+}
+
+.publisher-profile-image {
+	border-radius: var(--border-radius-circle);
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.support-link,
+.support-modal {
+	font-size: 1rem;
+}
+
+.support-link-icon {
+	color: var(--primary);
+}
+
+.support-link-icon-arrow {
+	height: 0.75rem;
+	width: 0.75rem;
+}
+
+.support-link:hover,
+.support-modal:hover {
+	transform: translateY(-0.75px);
+}
+
+.support-link:hover .support-link-icon-arrow-container {
+	display: inline-block;
+	transform: rotate(90deg);
+}
+
+.support-modal-icon,
+.support-modal {
+	color: var(--secondary);
+}
+
+.support-modal:hover {
+	color: var(--dark);
+}
+
+.support-svg mask,
+.link-arrow mask {
+	mask-type: alpha;
+}
+

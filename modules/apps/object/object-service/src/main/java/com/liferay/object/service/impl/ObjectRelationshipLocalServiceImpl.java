@@ -904,10 +904,12 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		List<ObjectRelationship> objectRelationships) {
 
+		long objectDefinitionId = objectDefinition1.getObjectDefinitionId();
+
 		if (objectRelationships == null) {
 			objectRelationships =
-				objectRelationshipLocalService.getObjectRelationships(
-					objectDefinition1.getObjectDefinitionId());
+				objectRelationshipLocalService.getAllObjectRelationships(
+					objectDefinitionId);
 		}
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
@@ -918,22 +920,37 @@ public class ObjectRelationshipLocalServiceImpl
 			}
 
 			try {
-				ObjectDefinition objectDefinition2 =
-					objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2());
+				if (objectRelationship.getObjectDefinitionId1() ==
+						objectDefinitionId) {
 
-				_registerRelatedInfoItemCollectionProvider(
-					objectDefinition1, objectDefinition2, objectRelationship);
-
-				if (Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+					ObjectDefinition objectDefinition2 =
+						objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId2());
 
 					_registerRelatedInfoItemCollectionProvider(
-						objectDefinition2, objectDefinition1,
-						objectRelationshipLocalService.getObjectRelationship(
-							objectRelationship.getObjectDefinitionId2(),
-							objectRelationship.getName()));
+						objectDefinition1, objectDefinition2,
+						objectRelationship);
+
+					if (Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+						_registerRelatedInfoItemCollectionProvider(
+							objectDefinition2, objectDefinition1,
+							objectRelationshipLocalService.
+								getObjectRelationship(
+									objectRelationship.getObjectDefinitionId2(),
+									objectRelationship.getName()));
+					}
+				}
+				else if (!Objects.equals(
+							objectRelationship.getType(),
+							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+					_registerRelatedInfoItemCollectionProvider(
+						objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId1()),
+						objectDefinition1, objectRelationship);
 				}
 			}
 			catch (PortalException portalException) {

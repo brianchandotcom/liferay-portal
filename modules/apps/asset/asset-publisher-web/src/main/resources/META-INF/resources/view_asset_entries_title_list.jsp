@@ -58,6 +58,10 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		).put(
 			"fragments-editor-item-type", "fragments-editor-mapped-item"
 		).build();
+
+		boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
+
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 	%>
 
 		<li class="list-group-item list-group-item-flex <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
@@ -74,7 +78,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<p class="h4 list-group-title text-truncate">
+				<p class="h4 list-group-title text-truncate" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_TITLE) : StringPool.BLANK %>>
 					<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 					<aui:a href="<%= assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()) %>"> <%= HtmlUtil.escape(assetEntry.getTitle(locale)) %>
@@ -117,7 +121,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 				}
 				%>
 
-				<p class="list-group-subtitle text-truncate">
+				<p class="list-group-subtitle text-truncate" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, "subtitle") : StringPool.BLANK %>>
 					<%= sb.toString() %>
 				</p>
 

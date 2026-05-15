@@ -58,11 +58,15 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 		).put(
 			"fragments-editor-item-type", "fragments-editor-mapped-item"
 		).build();
+
+		boolean viewMode = Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW);
+
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale);
 %>
 
 		<div class="asset-abstract mb-5 <%= assetPublisherWebHelper.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) ? "default-asset-publisher" : StringPool.BLANK %> <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "p-1 preview-asset-entry" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 			<div class="align-items-center d-flex mb-2">
-				<p class="component-title h4">
+				<p class="component-title h4" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_TITLE) : StringPool.BLANK %>>
 					<c:choose>
 						<c:when test="<%= assetPublisherDisplayContext.isShowContextLink() %>">
 							<a class="asset-title d-inline" href="<%= viewURL %>">
@@ -110,7 +114,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						expand="<%= true %>"
 					>
 						<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
-							<div class="text-truncate-inline">
+							<div class="text-truncate-inline" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_AUTHOR) : StringPool.BLANK %>>
 								<span class="text-truncate user-info"><strong><%= HtmlUtil.escape(AssetRendererUtil.getAssetRendererUserFullName(assetRenderer, request)) %></strong></span>
 							</div>
 						</c:if>
@@ -151,7 +155,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						}
 						%>
 
-						<div class="asset-user-info text-secondary">
+						<div class="asset-user-info text-secondary" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_DATE) : StringPool.BLANK %>>
 							<span class="date-info"><%= sb.toString() %></span>
 						</div>
 
@@ -164,7 +168,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 				</clay:content-row>
 			</c:if>
 
-			<div class="asset-content mb-3">
+			<div class="asset-content mb-3" <%= viewMode ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_VIEW, AssetAnalyticsAttributesProvider.FIELD_CONTENT) : StringPool.BLANK %>>
 				<liferay-asset:asset-display
 					abstractLength="<%= assetPublisherDisplayContext.getAbstractLength() %>"
 					assetEntry="<%= assetEntry %>"

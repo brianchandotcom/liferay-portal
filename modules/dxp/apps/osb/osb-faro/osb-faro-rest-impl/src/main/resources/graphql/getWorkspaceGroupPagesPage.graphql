@@ -9,7 +9,7 @@ query getWorkspaceGroupPagesPage(
     $sort: Sort!
     $start: Int!
 ) {
-    pages(
+    pageMetricBag: pages(
         channelId: $channelId
         dataSourceId: $dataSourceId
         keywords: $keywords

@@ -8,7 +8,7 @@ query getWorkspaceGroupChannelEventsPage(
     $rangeStart: String
     $size: Int!
 ) {
-    events(
+    eventBag: events(
         channelId: $channelId
         includeAnonymousUsers: $includeAnonymousUsers
         keywords: $keywords

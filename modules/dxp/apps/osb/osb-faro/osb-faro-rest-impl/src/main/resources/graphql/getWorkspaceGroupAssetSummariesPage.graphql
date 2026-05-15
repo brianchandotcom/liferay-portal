@@ -8,7 +8,7 @@ query getWorkspaceGroupAssetSummariesPage(
     $sort: Sort!
     $start: Int!
 ) {
-    assetSummaries(
+    assetSummaryMetricBag: assetSummaries(
         channelId: $channelId
         keywords: $keywords
         rangeEnd: $rangeEnd

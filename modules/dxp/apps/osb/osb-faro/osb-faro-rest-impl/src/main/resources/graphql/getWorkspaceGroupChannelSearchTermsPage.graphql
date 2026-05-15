@@ -6,7 +6,7 @@ query getWorkspaceGroupChannelSearchTermsPage(
     $size: Int!
     $start: Int!
 ) {
-    searchTerms(
+    compositionBag: searchTerms(
     	channelId: $channelId
         rangeEnd: $rangeEnd
         rangeKey: $rangeKey

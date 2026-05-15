@@ -194,6 +194,15 @@ public class CommerceShipmentLocalServiceImpl
 		return commerceShipment;
 	}
 
+	@Override
+	public CommerceShipment deleteCommerceShipment(
+			CommerceShipment commerceShipment)
+		throws PortalException {
+
+		return commerceShipmentLocalService.deleteCommerceShipment(
+			commerceShipment, false);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)

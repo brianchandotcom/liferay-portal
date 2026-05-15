@@ -134,11 +134,13 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceShipment deleteCommerceShipment(
-		CommerceShipment commerceShipment) {
+			CommerceShipment commerceShipment)
+		throws PortalException {
 
 		return commerceShipmentPersistence.remove(commerceShipment);
 	}
@@ -618,4 +620,4 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 		CommerceShipmentLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:846911284
+// LIFERAY-SERVICE-BUILDER-HASH:1690026498

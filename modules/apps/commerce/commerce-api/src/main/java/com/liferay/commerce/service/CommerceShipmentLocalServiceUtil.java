@@ -114,9 +114,11 @@ public class CommerceShipmentLocalServiceUtil {
 	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was removed
+	 * @throws PortalException
 	 */
 	public static CommerceShipment deleteCommerceShipment(
-		CommerceShipment commerceShipment) {
+			CommerceShipment commerceShipment)
+		throws PortalException {
 
 		return getService().deleteCommerceShipment(commerceShipment);
 	}
@@ -628,4 +630,4 @@ public class CommerceShipmentLocalServiceUtil {
 			CommerceShipmentLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-196440095
+// LIFERAY-SERVICE-BUILDER-HASH:-600379210

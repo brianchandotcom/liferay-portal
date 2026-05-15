@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
@@ -271,7 +272,8 @@ public class ObjectEntryPerformanceTest {
 
 	private String _getPath(String pathSuffix) {
 		return StringBundler.concat(
-			"http://", _VIRTUAL_HOST_NAME, ":8080", pathSuffix);
+			"http://", _VIRTUAL_HOST_NAME, ":",
+			PortalUtil.getPortalServerPort(false), pathSuffix);
 	}
 
 	private HttpInvoker.HttpResponse _invoke(

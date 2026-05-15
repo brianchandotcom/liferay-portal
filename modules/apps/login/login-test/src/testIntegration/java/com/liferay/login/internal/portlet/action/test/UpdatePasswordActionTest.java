@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -197,16 +198,17 @@ public class UpdatePasswordActionTest {
 		if (usePlid) {
 			url = new URL(
 				StringBundler.concat(
-					"http://", _company.getVirtualHostname(),
-					":8080/c/portal/update_password?p_l_id=",
-					_layout1.getPlid(), "&ticketId=", ticketId, "&ticketId=",
-					ticketKey));
+					"http://", _company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false),
+					"/c/portal/update_password?p_l_id=", _layout1.getPlid(),
+					"&ticketId=", ticketId, "&ticketId=", ticketKey));
 		}
 		else {
 			url = new URL(
 				StringBundler.concat(
-					"http://", _company.getVirtualHostname(),
-					":8080/c/portal/update_password?ticketId=", ticketId,
+					"http://", _company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false),
+					"/c/portal/update_password?ticketId=", ticketId,
 					"&ticketId=", ticketKey));
 		}
 

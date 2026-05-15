@@ -106,7 +106,9 @@ public class MCPServerServletTest {
 			).header(
 				"Authorization", _getAuthorization()
 			).uri(
-				URI.create("http://localhost:8080/o/mcp")
+				URI.create(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) + "/o/mcp")
 			).build(),
 			HttpResponse.BodyHandlers.discarding()
 		);
@@ -254,7 +256,9 @@ public class MCPServerServletTest {
 		Http.Options options = new Http.Options();
 
 		options.addHeader("Authorization", _getAuthorization());
-		options.setLocation("http://localhost:8080/o/mcp");
+		options.setLocation(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/mcp");
 
 		_http.URLtoString(options);
 
@@ -291,7 +295,9 @@ public class MCPServerServletTest {
 				)
 			).toString(),
 			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
-		options.setLocation("http://localhost:8080/o/mcp");
+		options.setLocation(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/mcp");
 		options.setPost(true);
 
 		_http.URLtoString(options);

@@ -437,7 +437,11 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				new String(
 					FileUtil.getBytes(
 						getClass(), "dependencies/expected_openapi.json")),
-				"${BASE_URL}", "c/" + _API_BASE_URL),
+				new String[] {"${BASE_URL}", "${PORT}"},
+				new String[] {
+					"c/" + _API_BASE_URL,
+					String.valueOf(PortalUtil.getPortalServerPort(false))
+				}),
 			jsonObject.toString(), JSONCompareMode.STRICT);
 	}
 

@@ -7,6 +7,7 @@ package com.liferay.portal.error.code.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -39,7 +40,11 @@ public class PortalErrorCodeTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.WARN)) {
 
-			URLUtil.toString(new URL("http://localhost:8080/errors/code.jsp"));
+			URLUtil.toString(
+				new URL(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/errors/code.jsp"));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

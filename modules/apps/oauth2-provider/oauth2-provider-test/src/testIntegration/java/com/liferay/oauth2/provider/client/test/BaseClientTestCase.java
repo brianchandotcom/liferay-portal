@@ -8,6 +8,7 @@ package com.liferay.oauth2.provider.client.test;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
@@ -141,7 +143,9 @@ public abstract class BaseClientTestCase {
 
 			return client.target(
 				uriBuilder.uri(
-					"http://" + company.getVirtualHostname() + ":8080"));
+					StringBundler.concat(
+						"http://", company.getVirtualHostname(), ":",
+						PortalUtil.getPortalServerPort(false))));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

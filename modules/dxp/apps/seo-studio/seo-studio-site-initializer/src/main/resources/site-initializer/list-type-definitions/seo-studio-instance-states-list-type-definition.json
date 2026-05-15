@@ -1,0 +1,25 @@
+{
+	"externalReferenceCode": "L_SEO_STUDIO_INSTANCE_STATES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "SEO_STUDIO_INSTANCE_STATE_ACTIVE",
+			"key": "active",
+			"name": "Active",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_INSTANCE_STATE_INACTIVE",
+			"key": "inactive",
+			"name": "Inactive",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_INSTANCE_STATE_SUSPENDED",
+			"key": "suspended",
+			"name": "Suspended",
+			"system": true
+		}
+	],
+	"name": "SEO Studio Instance States",
+	"system": true
+}

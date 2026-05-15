@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Liferay} from '../liferay/liferay';
+import { Liferay } from '../liferay/liferay';
 
 export default {
 	'a-license-key-for-the-entered-domain-already-exists':
@@ -372,7 +372,7 @@ export default {
 	'i-have-read-and-agree-to-the-liferay-end-user-agreement':
 		'I have read and agree to the Liferay End User Agreement',
 	'i-have-read-and-agree-to-the-terms-and-conditions-above':
-		'I have read and agree to the terms and conditions above:',
+		'I have read and agree to the terms and conditions above',
 	'id': 'ID',
 	'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-the-compatibility-range':
 		'If the app is compatible with different updates of 7.4, please upload multiple packages for each update or update the compatibility range.',

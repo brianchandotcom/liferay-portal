@@ -186,8 +186,8 @@ public interface ContactsEngineClient {
 		String query, int cur, int delta);
 
 	public Results<Individual> getAccountIndividuals(
-		FaroProject faroProject, String accountId, int cur, int delta,
-		String sortString);
+		FaroProject faroProject, String accountId, String query, int cur,
+		int delta, String sortString);
 
 	public Results<IndividualSegment> getAccountIndividualSegments(
 		FaroProject faroProject, String accountId, String channelId,

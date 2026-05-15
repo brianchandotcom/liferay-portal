@@ -11,19 +11,19 @@
 	storefrontVideoURLValue = (storefrontVideoURLSpecifications[0].value)!""
 />
 
-<span class="title">${languageUtil.get(locale, "description")}</span>
+<span class="marketplace-section-title">${languageUtil.get(locale, "description")}</span>
 
 <#if description.getData()?has_content>
-	<div class="description-content mt-4">
+	<div class="marketplace-description-content mt-4">
 		${description.getData()}
 	</div>
 </#if>
 
 <div>
 	<#if licenseSpecifications?has_content>
-		<span class="title">${languageUtil.get(locale, "license")}</span>
+		<span class="marketplace-section-title">${languageUtil.get(locale, "license")}</span>
 
-		<div class="description-content mt-4">
+		<div class="marketplace-description-content mt-4">
 			${licenseValue}
 		</div>
 	</#if>
@@ -36,16 +36,3 @@
 		}, 300);
 	</script>
 </#if>
-
-<style ${nonceAttribute}>
-	.description-content {
-		font-size: 18px;
-		line-height: 32px;
-	}
-
-	.title {
-	 	font-size: 24px;
-		font-weight: 600;
-	}
-
-</style>

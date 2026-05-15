@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 
 import {Option, Options, Picklist} from '../../common/types/Picklist';
-import {getDefaultLanguageLabel} from '../../common/utils/defaultLanguageLabels';
+import buildLocalizedValue from '../../common/utils/buildLocalizedValue';
 import getRandomId from '../utils/getRandomId';
 import normalizeI18nValue from '../utils/normalizeI18nValue';
 
@@ -36,12 +36,7 @@ function getInitialState(): State {
 	return {
 		...INITIAL_STATE,
 		erc: getRandomId(),
-		name: {
-			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-				getDefaultLanguageLabel('untitled-picklist'),
-			[Liferay.ThemeDisplay.getLanguageId()]:
-				Liferay.Language.get('untitled-picklist'),
-		},
+		name: buildLocalizedValue('untitled-picklist'),
 	};
 }
 

@@ -62,7 +62,7 @@
 		"description": "Sample Marketplace app used to verify the App Detail Display Page Template renders end-to-end.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "ONE-SAMPLE-APP",
+		"externalReferenceCode": "LO_PRODUCT_SAMPLE_APP",
 		"images": [
 			"sample-marketplace-app.png"
 		],
@@ -76,7 +76,7 @@
 			}
 		],
 		"price": 0,
-		"sku": "ONE-SAMPLE-APP-SKU",
+		"sku": "LO_PRODUCT_SAMPLE_APP",
 		"specificationOptions": [
 		]
 	}

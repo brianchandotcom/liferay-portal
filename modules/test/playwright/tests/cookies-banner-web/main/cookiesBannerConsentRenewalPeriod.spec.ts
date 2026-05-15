@@ -140,9 +140,7 @@ test(
 	'Verify confirmation modal only appears if changing the value',
 	{tag: ['@LPD-79710', '@LPD-87281']},
 	async ({consentManagerConfigurationPage, page}) => {
-		const cookiesBanner = page.getByRole('dialog', {
-			name: 'banner cookies',
-		});
+		const cookiesBanner = page.locator('.cookies-banner');
 		const modal = page.getByRole('alertdialog');
 
 		await test.step('Save without changes does not show the confirmation modal', async () => {
@@ -493,9 +491,7 @@ async function validateConsentRenewalPeriodValue(
 
 			await waitForAlert(page);
 
-			const cookiesBanner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const cookiesBanner = page.locator('.cookies-banner');
 
 			await cookiesBanner.waitFor({state: 'visible'});
 

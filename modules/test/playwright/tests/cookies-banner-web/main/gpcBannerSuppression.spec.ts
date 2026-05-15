@@ -46,9 +46,7 @@ test.describe('with Sec-GPC: 1 header and admin honoring GPC', () => {
 
 			await page.goto('/');
 
-			await expect(
-				page.getByRole('dialog', {name: 'banner cookies'})
-			).toHaveCount(0);
+			await expect(page.locator('.cookies-banner')).not.toBeVisible();
 
 			await expect(
 				page.locator(
@@ -70,9 +68,7 @@ test.describe('with Sec-GPC: 1 header and admin honoring GPC', () => {
 
 			await page.goto('/');
 
-			await expect(
-				page.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(page.locator('.cookies-banner')).toBeVisible();
 		}
 	);
 });
@@ -90,9 +86,7 @@ test.describe('without Sec-GPC header', () => {
 
 			await page.goto('/');
 
-			await expect(
-				page.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(page.locator('.cookies-banner')).toBeVisible();
 		}
 	);
 });

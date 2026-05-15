@@ -113,12 +113,24 @@
 
 							form.dataset.skipActiveWarning = 'true';
 
+							var modifiedDateField = document.getElementById(
+								'<portlet:namespace />modifiedDate'
+							);
+
+							var submitForm = function () {
+								if (modifiedDateField) {
+									modifiedDateField.value = new Date().getTime();
+								}
+
+								form.requestSubmit();
+							};
+
 							if (forceReconsent) {
 								Liferay.Util.fetch('<%= forceReconsentURL %>', {
 									method: 'POST',
 								}).then((response) => {
 									if (response.ok) {
-										form.requestSubmit();
+										submitForm();
 									}
 									else {
 										Liferay.Util.openToast({
@@ -131,7 +143,7 @@
 								});
 							}
 							else {
-								form.requestSubmit();
+								submitForm();
 							}
 						},
 					},

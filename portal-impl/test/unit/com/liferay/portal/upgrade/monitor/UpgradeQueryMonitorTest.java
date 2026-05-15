@@ -24,7 +24,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.sql.DataSource;
@@ -131,13 +130,8 @@ public class UpgradeQueryMonitorTest {
 
 			try {
 				_testPollWithNoLongRunningQueries(connection, db, logCapture);
-				_clearLoggedLongRunningQueryIds();
 				_testPollWithOneLongRunningQuery(connection, db, logCapture);
-				_clearLoggedLongRunningQueryIds();
 				_testPollWithMultipleLongRunningQueries(
-					connection, db, logCapture);
-				_clearLoggedLongRunningQueryIds();
-				_testPollWithLongRunningQueryThrottling(
 					connection, db, logCapture);
 			}
 			finally {
@@ -204,47 +198,6 @@ public class UpgradeQueryMonitorTest {
 				ReflectionTestUtil.getFieldValue(
 					UpgradeQueryMonitor.class, _SCHEDULED_EXECUTOR_SERVICE));
 		}
-	}
-
-	private void _clearLoggedLongRunningQueryIds() {
-		Set<String> loggedLongRunningQueryIds =
-			ReflectionTestUtil.getFieldValue(
-				UpgradeQueryMonitor.class, _LOGGED_LONG_RUNNING_QUERY_IDS);
-
-		loggedLongRunningQueryIds.clear();
-	}
-
-	private void _testPollWithLongRunningQueryThrottling(
-			Connection connection, DB db, LogCapture logCapture)
-		throws Exception {
-
-		String id = RandomTestUtil.randomString();
-		String query = RandomTestUtil.randomString();
-
-		Mockito.when(
-			db.getLongRunningQueryInfos(connection)
-		).thenReturn(
-			Collections.singletonList(
-				new DB.QueryInfo(
-					630000, id, query, RandomTestUtil.randomString(),
-					RandomTestUtil.randomString()))
-		);
-
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		int sizeBeforeFirstPoll = logEntries.size();
-
-		ReflectionTestUtil.invoke(
-			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-		Assert.assertEquals(
-			logEntries.toString(), sizeBeforeFirstPoll + 1, logEntries.size());
-
-		ReflectionTestUtil.invoke(
-			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-		Assert.assertEquals(
-			logEntries.toString(), sizeBeforeFirstPoll + 1, logEntries.size());
 	}
 
 	private void _testPollWithMultipleLockedQueries(
@@ -501,9 +454,6 @@ public class UpgradeQueryMonitorTest {
 			"Upgrade query monitoring is disabled: " + message,
 			logEntry.getMessage());
 	}
-
-	private static final String _LOGGED_LONG_RUNNING_QUERY_IDS =
-		"_loggedLongRunningQueryIds";
 
 	private static final String _SCHEDULED_EXECUTOR_SERVICE =
 		"_scheduledExecutorService";

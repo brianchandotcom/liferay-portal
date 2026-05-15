@@ -2352,3 +2352,137 @@ test(
 		}
 	}
 );
+
+test(
+	'Save, edit, and delete a batch segment with a Viewed Blog Web Behavior criterion',
+	{
+		tag: '@LRAC-8588 @LRAC-8598',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+
+		// Seed an individual and a blogViewed event so the viewed blog criterion has matching data
+
+		const assetTitle = 'Blogs AC Title';
+
+		const individual = generateIndividual({
+			name: 'blogreader' + getRandomString(),
+		});
+
+		await createIndividuals({apiHelpers, individuals: [individual]});
+
+		const date = new Date();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Blog',
+				assetId: '1905',
+				assetTitle,
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'blogViewed',
+				title: assetTitle,
+				userId: individual.id,
+			},
+		]);
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Create a batch segment with a viewed blog criterion at least 4 times
+
+		await createBatchSegment(page);
+
+		const segmentName = getRandomString();
+
+		await setSegmentName({page, segmentName});
+
+		await addSegmentField({
+			criterionName: 'Viewed Blog',
+			criterionType: 'Events',
+			page,
+		});
+
+		await selectAsset({assetName: assetTitle, page});
+
+		await page.locator('input[type="number"]').fill('4');
+
+		await saveSegment(page);
+
+		// The saved segment shows the criterion with the matching asset and count
+
+		await expect(page.locator('.criteria-card-root')).toContainText(
+			assetTitle
+		);
+
+		await expect(page.locator('.criteria-card-root')).toContainText('4');
+
+		// Navigate back to the segments list and assert the kebab offers Edit and Delete
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: page.locator('.dropdown-action'),
+		});
+
+		// Edit via the kebab Edit action, change the count to 5, and rename
+
+		await expect(
+			page.getByRole('button', {name: 'Save Segment'})
+		).toBeVisible();
+
+		await page.locator('input[type="number"]').fill('5');
+
+		const renamedSegment = getRandomString();
+
+		await setSegmentName({page, segmentName: renamedSegment});
+
+		await saveSegment(page);
+
+		// The edited segment shows the updated count and the renamed name in the list
+
+		await expect(page.locator('.criteria-card-root')).toContainText('5');
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await viewNameOnTableList({itemNames: renamedSegment, page});
+
+		// Delete via the kebab delete action and confirm
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: page.locator('.dropdown-action'),
+		});
+
+		await page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Delete'})
+			.click();
+
+		await waitForAlert(page, 'Success:The segment has been deleted.', {
+			autoClose: false,
+		});
+
+		await expect(
+			page.getByText('There are no segments found.')
+		).toBeVisible();
+	}
+);

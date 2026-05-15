@@ -158,7 +158,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		Element parentElement = element.parent();
 
-		int elementIndex = element.siblingIndex();
+		int index = element.siblingIndex();
 
 		if (!reuseExistingLink) {
 			_replaceLinkContent(element, empty, linkElement);
@@ -176,7 +176,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 				element.replaceWith(linkElement);
 			}
 			else {
-				parentElement.insertChildren(elementIndex, linkElement);
+				parentElement.insertChildren(index, linkElement);
 			}
 		}
 	}

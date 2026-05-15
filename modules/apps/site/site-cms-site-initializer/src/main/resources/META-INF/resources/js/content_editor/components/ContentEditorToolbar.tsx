@@ -47,6 +47,7 @@ export default function ContentEditorToolbar({
 	getPreviewDataURL,
 	hasWorkflow,
 	headerTitle,
+	isNew,
 	title,
 	type,
 }: {
@@ -56,6 +57,7 @@ export default function ContentEditorToolbar({
 	getPreviewDataURL: string;
 	hasWorkflow: boolean;
 	headerTitle: string;
+	isNew: boolean;
 	title: string;
 	type: string;
 }) {
@@ -138,9 +140,11 @@ export default function ContentEditorToolbar({
 		setSuccessMessage(
 			hasWorkflow
 				? Liferay.Language.get('x-was-submitted-for-workflow')
-				: Liferay.Language.get('x-was-published-successfully')
+				: isNew
+					? Liferay.Language.get('x-was-created-successfully')
+					: Liferay.Language.get('x-was-updated-successfully')
 		);
-	}, [backURL, hasWorkflow, setSuccessMessage]);
+	}, [backURL, hasWorkflow, isNew, setSuccessMessage]);
 
 	useEffect(() => {
 		const form = getForm();

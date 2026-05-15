@@ -125,6 +125,8 @@ public class EditorToolbarComponentSectionFragmentRenderer
 				return null;
 			}
 		).put(
+			"isNew", objectEntry.isDraft()
+		).put(
 			"title",
 			() -> {
 				if (Objects.equals(

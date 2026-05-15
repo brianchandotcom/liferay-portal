@@ -66,6 +66,10 @@ describe('AddOptionModal', () => {
 			locale: 'en_US',
 		});
 
+		const getLanguageIdSpy = jest
+			.spyOn(Liferay.ThemeDisplay, 'getLanguageId')
+			.mockReturnValue('es_ES');
+
 		const getLanguageSpy = jest
 			.spyOn(Liferay.Language, 'get')
 			.mockImplementation((key: string) =>
@@ -92,6 +96,7 @@ describe('AddOptionModal', () => {
 					expect.objectContaining({
 						name: expect.objectContaining({
 							en_US: 'Option',
+							es_ES: 'Opción',
 						}),
 					})
 				);
@@ -99,6 +104,7 @@ describe('AddOptionModal', () => {
 		}
 		finally {
 			getLanguageSpy.mockRestore();
+			getLanguageIdSpy.mockRestore();
 		}
 	});
 

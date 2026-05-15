@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -171,10 +172,11 @@ public class AssetEntryInfoItemFieldValuesProviderTest {
 		themeDisplay.setRequest(httpServletRequest);
 
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		return themeDisplay;

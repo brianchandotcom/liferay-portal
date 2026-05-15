@@ -1,0 +1,43 @@
+{
+	"externalReferenceCode": "L_SEO_STUDIO_SCAN_SCOPES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_CONTENT_TYPE",
+			"key": "contentType",
+			"name": "Content Type",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_ENTIRE_DOMAIN",
+			"key": "entireDomain",
+			"name": "Entire Domain",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_SITEMAP",
+			"key": "sitemap",
+			"name": "Sitemap",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_SPECIFIC_SITES",
+			"key": "specificSites",
+			"name": "Specific Sites",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_TEMPLATE",
+			"key": "template",
+			"name": "Template",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_SCOPE_URL_PATTERN",
+			"key": "urlPattern",
+			"name": "URL Pattern",
+			"system": true
+		}
+	],
+	"name": "SEO Studio Scan Scopes",
+	"system": true
+}

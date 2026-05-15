@@ -940,6 +940,35 @@ public class ObjectRelationshipLocalServiceImpl
 				_log.error(portalException);
 			}
 		}
+
+		for (ObjectRelationship objectRelationship :
+				objectRelationshipPersistence.findByObjectDefinitionId2(
+					objectDefinition1.getObjectDefinitionId())) {
+
+			String type = objectRelationship.getType();
+
+			if (!objectRelationship.isAllowedObjectRelationshipType(type) ||
+				Objects.equals(
+					type, ObjectRelationshipConstants.TYPE_MANY_TO_MANY) ||
+				Objects.equals(
+					type, ObjectRelationshipConstants.TYPE_ONE_TO_ONE)) {
+
+				continue;
+			}
+
+			try {
+				ObjectDefinition parentObjectDefinition =
+					objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship.getObjectDefinitionId1());
+
+				_registerRelatedInfoItemCollectionProvider(
+					parentObjectDefinition, objectDefinition1,
+					objectRelationship);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+		}
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

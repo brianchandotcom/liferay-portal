@@ -30,7 +30,7 @@ public class RelatedInfoCollectionProviderFactory {
 			ObjectRelationship objectRelationship)
 		throws PortalException {
 
-		if (objectDefinition1.isSystem() || objectDefinition2.isSystem()) {
+		if (objectDefinition2.isSystem()) {
 			return null;
 		}
 

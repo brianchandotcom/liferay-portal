@@ -13,13 +13,17 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -47,23 +51,59 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	public InfoPage<ObjectEntry> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		Object relatedItem = collectionQuery.getRelatedItem();
-
-		if (!(relatedItem instanceof ObjectEntry)) {
-			return InfoPage.of(
-				Collections.emptyList(), collectionQuery.getPagination(), 0);
-		}
+		Pagination pagination = collectionQuery.getPagination();
 
 		try {
-			return getCollectionInfoPage(
-				(ObjectEntry)relatedItem, collectionQuery.getPagination());
+			Object relatedItem = collectionQuery.getRelatedItem();
+
+			if (relatedItem instanceof ObjectEntry) {
+				ObjectEntry objectEntry = (ObjectEntry)relatedItem;
+
+				long primaryKey = objectEntry.getObjectEntryId();
+
+				if (_objectDefinition1.isSystem()) {
+					primaryKey = GetterUtil.getLong(
+						objectEntry.getValues(
+						).get(
+							_objectDefinition1.getPKObjectFieldName()
+						),
+						primaryKey);
+				}
+
+				return getCollectionInfoPage(
+					objectEntry.getGroupId(), primaryKey, pagination);
+			}
+			else if (relatedItem instanceof SystemObjectEntry) {
+				SystemObjectEntry systemObjectEntry =
+					(SystemObjectEntry)relatedItem;
+
+				return getCollectionInfoPage(
+					systemObjectEntry.getGroupId(),
+					systemObjectEntry.getClassPK(), pagination);
+			}
+			else if (_objectDefinition1.isSystem() &&
+					 (relatedItem instanceof BaseModel)) {
+
+				BaseModel<?> baseModel = (BaseModel<?>)relatedItem;
+
+				long groupId = 0L;
+
+				if (relatedItem instanceof GroupedModel) {
+					GroupedModel groupedModel = (GroupedModel)relatedItem;
+
+					groupId = groupedModel.getGroupId();
+				}
+
+				return getCollectionInfoPage(
+					groupId, GetterUtil.getLong(baseModel.getPrimaryKeyObj()),
+					pagination);
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
 
-		return InfoPage.of(
-			Collections.emptyList(), collectionQuery.getPagination(), 0);
+		return InfoPage.of(Collections.emptyList(), pagination, 0);
 	}
 
 	@Override
@@ -110,7 +150,7 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	}
 
 	protected InfoPage<ObjectEntry> getCollectionInfoPage(
-			ObjectEntry objectEntry, Pagination pagination)
+			long groupId, long primaryKey, Pagination pagination)
 		throws PortalException {
 
 		return null;

@@ -277,11 +277,6 @@ public class SearchResultsPortletTest {
 			}
 
 			@Override
-			protected String getCurrentURL(RenderRequest renderRequest) {
-				return RandomTestUtil.randomString();
-			}
-
-			@Override
 			protected HttpServletRequest getHttpServletRequest(
 				RenderRequest renderRequest) {
 

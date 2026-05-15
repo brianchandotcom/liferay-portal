@@ -13,7 +13,8 @@ export interface IOverviewMetric extends Metric {
 
 export interface ILifecycleStage {
 	accountCount: number;
-	averageDaysInStage: number;
+	averageStageDuration: number;
+	conversionRateToNextStage: number | null;
 	description: string;
 	percentage: number;
 	stageType: LifecycleStages;

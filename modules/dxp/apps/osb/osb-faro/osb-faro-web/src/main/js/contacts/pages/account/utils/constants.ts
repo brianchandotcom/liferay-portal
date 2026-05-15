@@ -1,10 +1,10 @@
 export enum LifecycleStages {
-	AT_RISK = 'atRisk',
-	AWARE = 'aware',
-	ENGAGED = 'engaged',
-	ESTABLISHED = 'established',
-	ONBOARDING = 'onboarding',
-	PIPELINE = 'pipeline'
+	AT_RISK = 'AT_RISK',
+	AWARE = 'AWARE',
+	ENGAGED = 'ENGAGED',
+	ESTABLISHED = 'ESTABLISHED',
+	ONBOARDING = 'ONBOARDING',
+	PIPELINE = 'PIPELINE'
 }
 
 type DisplayType = 'danger' | 'info' | 'secondary' | 'success' | 'warning';

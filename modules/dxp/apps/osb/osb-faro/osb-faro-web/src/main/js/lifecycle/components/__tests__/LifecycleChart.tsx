@@ -13,35 +13,40 @@ jest.unmock('react-dom');
 const sampleStages: ILifecycleStage[] = [
 	{
 		accountCount: 13,
-		averageDaysInStage: 9.8,
+		averageStageDuration: 9.8,
+		conversionRateToNextStage: 492,
 		description: 'Aware description.',
 		percentage: 43.6,
 		stageType: LifecycleStages.AWARE
 	},
 	{
 		accountCount: 64,
-		averageDaysInStage: 4.6,
+		averageStageDuration: 4.6,
+		conversionRateToNextStage: 64,
 		description: 'Engaged description.',
 		percentage: 28.4,
 		stageType: LifecycleStages.ENGAGED
 	},
 	{
 		accountCount: 41,
-		averageDaysInStage: 4.5,
+		averageStageDuration: 4.5,
+		conversionRateToNextStage: 54,
 		description: 'Pipeline description.',
 		percentage: 18.2,
 		stageType: LifecycleStages.PIPELINE
 	},
 	{
 		accountCount: 22,
-		averageDaysInStage: 12,
+		averageStageDuration: 12,
+		conversionRateToNextStage: 0,
 		description: 'Onboarding description.',
 		percentage: 9.8,
 		stageType: LifecycleStages.ONBOARDING
 	},
 	{
 		accountCount: 0,
-		averageDaysInStage: 0,
+		averageStageDuration: 0,
+		conversionRateToNextStage: null,
 		description: 'Established description.',
 		percentage: 0,
 		stageType: LifecycleStages.ESTABLISHED
@@ -130,7 +135,7 @@ describe('LifecycleChart', () => {
 		expect(getByText('no activity')).toBeInTheDocument();
 	});
 
-	it('should compute progression labels from adjacent accountCounts', () => {
+	it('should render progression labels from conversionRateToNextStage', () => {
 		const {container} = renderChart({stages: sampleStages});
 
 		const labels = Array.from(

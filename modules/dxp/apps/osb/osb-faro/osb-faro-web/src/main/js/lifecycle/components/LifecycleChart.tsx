@@ -21,7 +21,8 @@ const EMPTY_STAGES: ILifecycleStage[] = [
 	LifecycleStages.ESTABLISHED
 ].map(stageType => ({
 	accountCount: 0,
-	averageDaysInStage: 0,
+	averageStageDuration: 0,
+	conversionRateToNextStage: 0,
 	description: '',
 	percentage: 0,
 	stageType
@@ -37,9 +38,6 @@ const getBarHeight = (percentage: number, referencePercentage: number) => {
 		MIN_BAR_HEIGHT
 	);
 };
-
-const getProgressionPercentage = (current: number, next: number) =>
-	current === 0 ? 0 : Math.round((next / current) * 100);
 
 interface IStageMetricsProps {
 	accountCount: number;
@@ -101,7 +99,7 @@ const StageMetrics = ({
 								Liferay.Language.get(
 									'x-percent-of-all-accounts'
 								),
-								[percentage]
+								[percentage.toFixed(2)]
 							) as string
 						).toLowerCase()}
 					</Text>
@@ -161,7 +159,7 @@ const StageProgression = ({
 		<div className='align-items-center align-items-lg-stretch border-light col-12 col-lg-auto d-flex flex-lg-column flex-row justify-content-center justify-content-lg-start px-2 py-3 stage-progression'>
 			<Label className='mt-lg-auto p-0' displayType='info'>
 				<span className='inline-item ml-1'>
-					{`${percentage}%`}
+					{`${percentage.toFixed(0)}%`}
 					<span className='d-lg-none ml-1'>
 						{Liferay.Language.get(
 							'conversion-to-next-stage'
@@ -237,7 +235,7 @@ const LifecycleChart = ({error, loading, stages}: ILifecycleChartProps) => {
 													stage.accountCount
 												}
 												averageDaysInStage={
-													stage.averageDaysInStage
+													stage.averageStageDuration
 												}
 												description={stage.description}
 												onFilterClick={onFilterClick}
@@ -252,10 +250,10 @@ const LifecycleChart = ({error, loading, stages}: ILifecycleChartProps) => {
 														nextStage.percentage,
 														refPct
 													)}
-													percentage={getProgressionPercentage(
-														stage.accountCount,
-														nextStage.accountCount
-													)}
+													percentage={
+														stage.conversionRateToNextStage ??
+														0
+													}
 													placeholder={isEmpty}
 													previousBarHeight={getBarHeight(
 														stage.percentage,

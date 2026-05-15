@@ -447,8 +447,6 @@ public class CounterFinderImpl implements CacheRegistryItem, CounterFinder {
 
 			CounterHolder counterHolder = new CounterHolder(newValue, rangeMax);
 
-			session.saveOrUpdate(counter);
-
 			session.flush();
 
 			connection.commit();

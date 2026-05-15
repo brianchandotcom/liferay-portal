@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import java.util.ArrayList;
@@ -217,24 +218,29 @@ public class ViewHomeQuickActionsDisplayContext {
 					depotEntriesJSONArray, actionIcon, objectDefinition));
 		}
 
-		quickActions.add(
-			HashMapBuilder.<String, Object>put(
-				"action", "createVocabulary"
-			).put(
-				"icon", _icons.get("L_CMS_VOCABULARY")
-			).put(
-				"redirect",
-				StringBundler.concat(
-					PortalUtil.getLayoutFullURL(
-						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
-							_themeDisplay.getScopeGroupId(), false,
-							"/categorization/new-vocabulary"),
-						_themeDisplay),
-					"?backURL=", _themeDisplay.getURLCurrent())
-			).put(
-				"title",
-				LanguageUtil.get(_themeDisplay.getLocale(), "vocabulary")
-			).build());
+		if (AssetCategoriesPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_VOCABULARY)) {
+
+			quickActions.add(
+				HashMapBuilder.<String, Object>put(
+					"action", "createVocabulary"
+				).put(
+					"icon", _icons.get("L_CMS_VOCABULARY")
+				).put(
+					"redirect",
+					StringBundler.concat(
+						PortalUtil.getLayoutFullURL(
+							LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+								_themeDisplay.getScopeGroupId(), false,
+								"/categorization/new-vocabulary"),
+							_themeDisplay),
+						"?backURL=", _themeDisplay.getURLCurrent())
+				).put(
+					"title",
+					LanguageUtil.get(_themeDisplay.getLocale(), "vocabulary")
+				).build());
+		}
 
 		return quickActions;
 	}

@@ -1,4 +1,9 @@
 {
+	"description": "Fragments",
+	"description_i18n": {
+		"en_US": "Fragments"
+	},
+	"externalReferenceCode": "MARKETPLACE_CATEGORY_FRAGMENTS",
 	"name": "Fragments",
 	"name_i18n": {
 		"en_US": "Fragments"

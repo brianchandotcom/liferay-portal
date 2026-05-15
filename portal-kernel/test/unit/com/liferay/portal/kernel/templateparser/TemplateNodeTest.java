@@ -21,32 +21,32 @@ public class TemplateNodeTest {
 
 	@Test
 	public void testGetDataNumericFormatsAcrossLocales() {
-		_assertNumericData("123.456", LocaleUtil.US, "123.456");
-		_assertNumericData("123.456", LocaleUtil.SPAIN, "123,456");
-		_assertNumericData("123.456", LocaleUtil.GERMANY, "123,456");
-		_assertNumericData("123.456", LocaleUtil.FRANCE, "123,456");
+		_testGetDataNumeric("123.456", LocaleUtil.US, "123.456");
+		_testGetDataNumeric("123.456", LocaleUtil.SPAIN, "123,456");
+		_testGetDataNumeric("123.456", LocaleUtil.GERMANY, "123,456");
+		_testGetDataNumeric("123.456", LocaleUtil.FRANCE, "123,456");
 	}
 
 	@Test
 	public void testGetDataNumericParsesJavaCanonicalDataWithSiteLocale() {
-		_assertNumericData("20.3", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "20,3");
-		_assertNumericData(
+		_testGetDataNumeric("20.3", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "20,3");
+		_testGetDataNumeric(
 			"20.3", LocaleUtil.SPAIN, LocaleUtil.GERMANY, "20,3");
-		_assertNumericData("20.3", LocaleUtil.SPAIN, LocaleUtil.US, "20.3");
+		_testGetDataNumeric("20.3", LocaleUtil.SPAIN, LocaleUtil.US, "20.3");
 	}
 
 	@Test
 	public void testGetDataNumericPreservesNegativeNumbers() {
-		_assertNumericData("-123.45", LocaleUtil.US, "-123.45");
-		_assertNumericData("-123.45", LocaleUtil.SPAIN, "-123,45");
-		_assertNumericData("-123.45", LocaleUtil.GERMANY, "-123,45");
-		_assertNumericData("-123.45", LocaleUtil.FRANCE, "-123,45");
+		_testGetDataNumeric("-123.45", LocaleUtil.US, "-123.45");
+		_testGetDataNumeric("-123.45", LocaleUtil.SPAIN, "-123,45");
+		_testGetDataNumeric("-123.45", LocaleUtil.GERMANY, "-123,45");
+		_testGetDataNumeric("-123.45", LocaleUtil.FRANCE, "-123,45");
 	}
 
 	@Test
 	public void testGetDataNumericPreservesSmallFractions() {
-		_assertNumericData("0.0000012345", LocaleUtil.US, "0.0000012345");
-		_assertNumericData("0.0000012345", LocaleUtil.SPAIN, "0,0000012345");
+		_testGetDataNumeric("0.0000012345", LocaleUtil.US, "0.0000012345");
+		_testGetDataNumeric("0.0000012345", LocaleUtil.SPAIN, "0,0000012345");
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class TemplateNodeTest {
 		}
 	}
 
-	private void _assertNumericData(
+	private void _testGetDataNumeric(
 		String data, Locale siteDefaultLocale, Locale locale, String expected) {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -80,10 +80,10 @@ public class TemplateNodeTest {
 		Assert.assertEquals(expected, templateNode.getData());
 	}
 
-	private void _assertNumericData(
+	private void _testGetDataNumeric(
 		String data, Locale locale, String expected) {
 
-		_assertNumericData(data, LocaleUtil.US, locale, expected);
+		_testGetDataNumeric(data, LocaleUtil.US, locale, expected);
 	}
 
 }

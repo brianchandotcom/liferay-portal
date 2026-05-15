@@ -163,11 +163,6 @@ public class SessionWrapper implements Session {
 		return session.save(object);
 	}
 
-	@Override
-	public void saveOrUpdate(Object object) throws ORMException {
-		session.saveOrUpdate(object);
-	}
-
 	protected final Session session;
 
 }

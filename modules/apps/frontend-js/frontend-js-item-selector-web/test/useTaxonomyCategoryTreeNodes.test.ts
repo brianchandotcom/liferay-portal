@@ -120,4 +120,33 @@ describe('useTaxonomyCategoryTreeNodes', () => {
 		expect(mockedFetch).not.toHaveBeenCalled();
 		expect(result.current.nodes).toEqual([]);
 	});
+
+	it('swallows AbortError when the hook unmounts mid-fetch', async () => {
+		mockedFetch.mockImplementation(
+			(_url: string, options: {signal?: AbortSignal}) =>
+				new Promise((_resolve, reject) => {
+					options.signal?.addEventListener('abort', () => {
+						reject(
+							new DOMException(
+								'The user aborted a request.',
+								'AbortError'
+							)
+						);
+					});
+				})
+		);
+
+		const {result, unmount} = renderHook(() =>
+			useTaxonomyCategoryTreeNodes(['42'])
+		);
+
+		expect(result.current.loading).toBe(true);
+
+		unmount();
+
+		await new Promise((resolve) => setTimeout(resolve, 0));
+
+		expect(result.current.error).toBeNull();
+		expect(result.current.nodes).toEqual([]);
+	});
 });

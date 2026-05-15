@@ -115,4 +115,114 @@ describe('filterBulkActions', () => {
 			});
 		});
 	});
+
+	describe('when isDisabled is not defined', () => {
+		it('returns the action without stamping data.disabled', () => {
+			const bulkActions: IBulkActionItem[] = [
+				{data: {highlighted: true}},
+			];
+
+			const result = filterBulkActions({
+				allItemsSelectedActive: false,
+				bulkActions,
+				globalFDSState,
+				selectedItems,
+			});
+
+			expect(result).toHaveLength(1);
+			expect(result[0].data).not.toHaveProperty('disabled');
+		});
+	});
+
+	describe('when isDisabled is defined', () => {
+		it('evaluates isDisabled callback and stamps data.disabled if it returns true', () => {
+			const isDisabledFn = jest.fn().mockReturnValue(true);
+			const bulkActions: IBulkActionItem[] = [
+				{
+					data: {highlighted: true, id: 'update'},
+					isDisabled: isDisabledFn,
+				},
+			];
+
+			const result = filterBulkActions({
+				allItemsSelectedActive: false,
+				bulkActions,
+				globalFDSState,
+				selectedItems,
+			});
+
+			expect(result).toHaveLength(1);
+			expect(result[0].data).toEqual({
+				disabled: true,
+				highlighted: true,
+				id: 'update',
+			});
+			expect(isDisabledFn).toHaveBeenCalledWith({
+				activeFilters: [],
+				activeSearch: {
+					query: '',
+				},
+				allItemsSelectedActive: false,
+				selectedItems,
+			});
+		});
+
+		it('stamps data.disabled to false when isDisabled returns false', () => {
+			const bulkActions: IBulkActionItem[] = [
+				{
+					data: {id: 'evaluated-action'},
+					isDisabled: () => false,
+				},
+			];
+
+			const result = filterBulkActions({
+				allItemsSelectedActive: false,
+				bulkActions,
+				globalFDSState,
+				selectedItems,
+			});
+
+			expect(result[0].data?.disabled).toBe(false);
+		});
+
+		it('drops a not-visible action without invoking isDisabled', () => {
+			const isDisabledFn = jest.fn().mockReturnValue(true);
+			const bulkActions: IBulkActionItem[] = [
+				{
+					data: {id: 'hidden'},
+					isDisabled: isDisabledFn,
+					isVisible: () => false,
+				},
+			];
+
+			const result = filterBulkActions({
+				allItemsSelectedActive: false,
+				bulkActions,
+				globalFDSState,
+				selectedItems,
+			});
+
+			expect(result).toHaveLength(0);
+			expect(isDisabledFn).not.toHaveBeenCalled();
+		});
+
+		it('does not mutate the input bulkActions array or its data objects', () => {
+			const original: IBulkActionItem = {
+				data: {id: 'mutable-check'},
+				isDisabled: () => true,
+			};
+			const originalDataReference = original.data;
+			const bulkActions: IBulkActionItem[] = [original];
+
+			filterBulkActions({
+				allItemsSelectedActive: false,
+				bulkActions,
+				globalFDSState,
+				selectedItems,
+			});
+
+			expect(original.data).toBe(originalDataReference);
+			expect(original.data).not.toHaveProperty('disabled');
+		});
+	});
 });

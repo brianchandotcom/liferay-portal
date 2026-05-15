@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -76,9 +77,10 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
 		return new ViewSpaceMembersSummarySectionDisplayContext(
-			Mockito.mock(DepotEntryLocalService.class), _GROUP_ID,
-			groupLocalService, groupModelResourcePermission,
-			mockHttpServletRequest, Mockito.mock(Language.class),
+			Mockito.mock(DepotEntryLocalService.class),
+			RandomTestUtil.randomLong(), groupLocalService,
+			groupModelResourcePermission, mockHttpServletRequest,
+			Mockito.mock(Language.class),
 			Mockito.mock(UserGroupLocalService.class),
 			Mockito.mock(UserLocalService.class));
 	}
@@ -108,7 +110,5 @@ public class ViewSpaceMembersSummarySectionDisplayContextTest {
 
 		Assert.assertTrue(creationMenu.isEmpty());
 	}
-
-	private static final long _GROUP_ID = 1L;
 
 }

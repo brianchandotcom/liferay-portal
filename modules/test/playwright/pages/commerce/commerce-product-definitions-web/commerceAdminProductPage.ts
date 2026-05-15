@@ -15,9 +15,12 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly creationMenuItem: (menuItemName: string) => Locator;
 	readonly creationMenuNewButton: Locator;
+	readonly deleteMenuItem: Locator;
 	readonly managementToolbarItemLink: (productName: string) => Locator;
+	readonly productRowActionsButton: (productName: string) => Locator;
 	readonly managementToolbarSearchInput: Locator;
 	readonly modalAddButton: Locator;
+	readonly modalBody: Locator;
 	readonly modalCancelButton: Locator;
 	readonly page: Page;
 	readonly menuItemProductType: (productType: string) => Locator;
@@ -68,12 +71,22 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 				'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fm'
 			)
 			.locator('[data-testid="fdsCreationActionButton"]');
+		this.deleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.managementToolbarItemLink = (productName: string) =>
 			page.getByRole('link', {exact: true, name: productName});
+		this.productRowActionsButton = (productName: string) =>
+			page
+				.getByRole('row')
+				.filter({hasText: productName})
+				.getByRole('button');
 		this.managementToolbarSearchInput = page
 			.getByTestId('managementToolbar')
 			.getByPlaceholder('Search', {exact: true});
 		this.modalAddButton = page.getByRole('button', {name: 'Add'});
+		this.modalBody = page.locator('.fds-modal-body');
 		this.modalCancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.page = page;
 		this.menuItemProductType = (productType: string) =>

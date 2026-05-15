@@ -58,12 +58,17 @@ type TDiscountSku = {
 };
 
 class TPriceEntry {
-	skuId: number;
+	discountDiscovery?: boolean;
+	discountLevel1?: number;
+	discountLevel2?: number;
+	discountLevel3?: number;
+	discountLevel4?: number;
 	price: number;
 	priceEntryId?: number;
 	priceFormatted?: string;
 	priceListId: number;
 	priceOnApplication?: boolean;
+	skuId: number;
 }
 
 class TPriceList {
@@ -180,9 +185,21 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
+	async getPriceModifier(priceModifierId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-modifiers/${priceModifierId}`
+		);
+	}
+
 	async getPriceModifierProducts(priceModifierId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/price-modifiers/${priceModifierId}/price-modifier-products`
+		);
+	}
+
+	async getTierPrices(priceEntryId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-entries/${priceEntryId}/tier-prices`
 		);
 	}
 

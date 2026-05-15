@@ -379,16 +379,6 @@ public class SessionImpl implements Session {
 	}
 
 	@Override
-	public void saveOrUpdate(Object object) throws ORMException {
-		try {
-			_session.saveOrUpdate(object);
-		}
-		catch (Exception exception) {
-			throw ExceptionTranslator.translate(exception, _session, object);
-		}
-	}
-
-	@Override
 	public String toString() {
 		return StringBundler.concat("{_session=", _session, "}");
 	}

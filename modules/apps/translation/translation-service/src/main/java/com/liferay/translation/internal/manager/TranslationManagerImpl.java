@@ -79,15 +79,8 @@ public class TranslationManagerImpl implements TranslationManager {
 			String sourceLanguageId, String targetLanguageId)
 		throws IOException, PortalException {
 
-		if (!_language.isAvailableLocale(sourceLanguageId)) {
-			throw new XLIFFFileException.MustBeSupportedLanguage(
-				sourceLanguageId);
-		}
-
-		if (!_language.isAvailableLocale(targetLanguageId)) {
-			throw new XLIFFFileException.MustBeSupportedLanguage(
-				targetLanguageId);
-		}
+		_validateLanguageId(sourceLanguageId);
+		_validateLanguageId(targetLanguageId);
 
 		String fileName = _getXLIFFFileName(
 			className, classPK, locale, sourceLanguageId, targetLanguageId);
@@ -120,16 +113,10 @@ public class TranslationManagerImpl implements TranslationManager {
 				"targetLanguageIds");
 		}
 
-		if (!_language.isAvailableLocale(sourceLanguageId)) {
-			throw new XLIFFFileException.MustBeSupportedLanguage(
-				sourceLanguageId);
-		}
+		_validateLanguageId(sourceLanguageId);
 
 		for (String targetLanguageId : targetLanguageIds) {
-			if (!_language.isAvailableLocale(targetLanguageId)) {
-				throw new XLIFFFileException.MustBeSupportedLanguage(
-					targetLanguageId);
-			}
+			_validateLanguageId(targetLanguageId);
 		}
 
 		String fileName = StringBundler.concat(
@@ -364,6 +351,12 @@ public class TranslationManagerImpl implements TranslationManager {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+		}
+	}
+
+	private void _validateLanguageId(String languageId) throws PortalException {
+		if (!_language.isAvailableLocale(languageId)) {
+			throw new XLIFFFileException.MustBeSupportedLanguage(languageId);
 		}
 	}
 

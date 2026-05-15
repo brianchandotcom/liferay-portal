@@ -11,7 +11,6 @@ import {consentManagerConfigurationPageTest} from '../../../fixtures/consentMana
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetAllConsentManagerConfigurations,
@@ -79,9 +78,7 @@ test(
 		await page.getByLabel('Privacy Policy Link').fill(script);
 		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
 
-		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
-
-		await waitForAlert(page);
+		await saveOrUpdateConfiguration(false, page);
 	}
 );
 
@@ -118,9 +115,7 @@ test(
 			.getByLabel('Personalization Cookies Description', {exact: true})
 			.fill(script);
 
-		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
-
-		await waitForAlert(page);
+		await saveOrUpdateConfiguration(false, page);
 
 		const cookiesBanner = page.locator(
 			'div[role="dialog"][aria-modal="true"]'
@@ -317,14 +312,8 @@ test(
 			})
 			.click();
 
-		await systemSettingsPage.page
-			.getByRole('button', {name: 'Update'})
-			.click();
+		await saveOrUpdateConfiguration(false, systemSettingsPage.page);
 
-		await waitForAlert(
-			systemSettingsPage.page,
-			`Success:Your request completed successfully.`
-		);
 		const imageButton = systemSettingsPage.page.locator(
 			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton'
 		);

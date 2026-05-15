@@ -167,6 +167,15 @@ export async function updateConsentManagerConfiguration(
 		state: 'visible',
 	});
 
+	let desiredActive: boolean | undefined;
+
+	if (active !== undefined) {
+		desiredActive = active;
+	}
+	else if (enabled === true) {
+		desiredActive = true;
+	}
+
 	let dialog = false;
 
 	if (enabled === false) {
@@ -229,16 +238,20 @@ export async function updateConsentManagerConfiguration(
 		}
 	}
 
+	if (desiredActive === true) {
+		const activeInput =
+			consentManagerConfigurationPage.systemSettingsPortletForm.locator(
+				'input[name$="active"]'
+			);
+
+		if ((await activeInput.count()) > 0) {
+			await activeInput.evaluate((element: HTMLInputElement) => {
+				element.value = 'true';
+			});
+		}
+	}
+
 	await saveOrUpdateConfiguration(dialog, page);
-
-	let desiredActive;
-
-	if (active !== undefined) {
-		desiredActive = active;
-	}
-	else if (enabled === true) {
-		desiredActive = true;
-	}
 
 	if (desiredActive !== undefined && enabled !== false) {
 		const {toggleActivateButton, toggleDeactivateButton} =

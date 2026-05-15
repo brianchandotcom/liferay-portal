@@ -10,7 +10,6 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
-import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -54,10 +52,7 @@ public class CommerceInventoryWarehouseServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_commerceInventoryWarehouse1 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
-		_commerceInventoryWarehouse2 =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(true);
+		_commerceInventoryWarehouse = _addCommerceInventoryWarehouse();
 
 		_role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
@@ -86,10 +81,7 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
 			CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
 			CommerceInventoryActionKeys.ADD_WAREHOUSE);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -105,7 +97,7 @@ public class CommerceInventoryWarehouseServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.deleteCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId());
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 			Assert.fail();
 		}
@@ -115,43 +107,107 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			_commerceInventoryWarehouse1.getCompanyId(),
-			CommerceInventoryWarehouse.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId()),
-			ActionKeys.DELETE);
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.DELETE);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.deleteCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId());
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 		}
+	}
 
+	@Test
+	public void testFetchByCommerceInventoryWarehouse() throws Exception {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			_commerceInventoryWarehouseService.deleteCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
+			_commerceInventoryWarehouseService.
+				fetchByCommerceInventoryWarehouse(
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
+
 			Assert.fail();
 		}
 		catch (Exception exception) {
 			_assertMessage(
-				ActionKeys.DELETE, exception.getMessage(), _user.getUserId());
+				ActionKeys.VIEW, exception.getMessage(), _user.getUserId());
 		}
 
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
-			CommerceInventoryWarehouse.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.DELETE);
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.VIEW);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			_commerceInventoryWarehouseService.deleteCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
+			_commerceInventoryWarehouseService.
+				fetchByCommerceInventoryWarehouse(
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
+		}
+	}
+
+	@Test
+	public void testFetchCommerceInventoryWarehouseByExternalReferenceCode()
+		throws Exception {
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					_commerceInventoryWarehouse.getExternalReferenceCode(),
+					_commerceInventoryWarehouse.getCompanyId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.VIEW, exception.getMessage(), _user.getUserId());
+		}
+
+		_setResourcePermissions(
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.VIEW);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					_commerceInventoryWarehouse.getExternalReferenceCode(),
+					_commerceInventoryWarehouse.getCompanyId());
+		}
+	}
+
+	@Test
+	public void testGeolocateCommerceInventoryWarehouse() throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
+				geolocateCommerceInventoryWarehouse(
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId(),
+					RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.UPDATE, exception.getMessage(), _user.getUserId());
+		}
+
+		_setResourcePermissions(
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.UPDATE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
+				geolocateCommerceInventoryWarehouse(
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId(),
+					RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble());
 		}
 	}
 
@@ -161,7 +217,7 @@ public class CommerceInventoryWarehouseServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId());
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 			Assert.fail();
 		}
@@ -171,44 +227,13 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			_commerceInventoryWarehouse1.getCompanyId(),
-			CommerceInventoryWarehouse.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId()),
-			ActionKeys.VIEW);
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.VIEW);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId());
-		}
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, PermissionCheckerFactoryUtil.create(_user))) {
-
-			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			_assertMessage(
-				ActionKeys.VIEW, exception.getMessage(), _user.getUserId());
-		}
-
-		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
-			CommerceInventoryWarehouse.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, PermissionCheckerFactoryUtil.create(_user))) {
-
-			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
-				_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId());
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 		}
 	}
 
@@ -218,6 +243,21 @@ public class CommerceInventoryWarehouseServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				_user.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceInventoryActionKeys.VIEW_INVENTORIES,
+				exception.getMessage(), _user.getUserId());
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
 				_user.getCompanyId(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -229,19 +269,53 @@ public class CommerceInventoryWarehouseServiceTest {
 				exception.getMessage(), _user.getUserId());
 		}
 
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				_user.getCompanyId(), false, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceInventoryActionKeys.VIEW_INVENTORIES,
+				exception.getMessage(), _user.getUserId());
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				_user.getCompanyId(), 0, 0, false);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceInventoryActionKeys.VIEW_INVENTORIES,
+				exception.getMessage(), _user.getUserId());
+		}
+
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
 			CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
 			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				_user.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
 				_user.getCompanyId(), false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				_user.getCompanyId(), false, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+			_commerceInventoryWarehouseService.getCommerceInventoryWarehouses(
+				_user.getCompanyId(), 0, 0, false);
 		}
 	}
 
@@ -251,6 +325,20 @@ public class CommerceInventoryWarehouseServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.
+				getCommerceInventoryWarehousesCount(_user.getCompanyId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				CommerceInventoryActionKeys.VIEW_INVENTORIES,
+				exception.getMessage(), _user.getUserId());
+		}
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
 				getCommerceInventoryWarehousesCount(
 					_user.getCompanyId(), false, null);
 
@@ -263,52 +351,17 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
 			CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
 			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
+			_commerceInventoryWarehouseService.
+				getCommerceInventoryWarehousesCount(_user.getCompanyId());
 			_commerceInventoryWarehouseService.
 				getCommerceInventoryWarehousesCount(
 					_user.getCompanyId(), false, null);
-		}
-
-		RoleTestUtil.removeResourcePermission(
-			_role.getName(), CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			CommerceInventoryActionKeys.VIEW_INVENTORIES);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, PermissionCheckerFactoryUtil.create(_user))) {
-
-			_commerceInventoryWarehouseService.
-				getCommerceInventoryWarehousesCount(_user.getCompanyId());
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			_assertMessage(
-				CommerceInventoryActionKeys.VIEW_INVENTORIES,
-				exception.getMessage(), _user.getUserId());
-		}
-
-		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
-			CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			CommerceInventoryActionKeys.VIEW_INVENTORIES);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, PermissionCheckerFactoryUtil.create(_user))) {
-
-			_commerceInventoryWarehouseService.
-				getCommerceInventoryWarehousesCount(_user.getCompanyId());
 		}
 	}
 
@@ -330,10 +383,7 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
 			CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
 			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -363,10 +413,7 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
 			CommerceInventoryConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
 			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
@@ -384,7 +431,7 @@ public class CommerceInventoryWarehouseServiceTest {
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.setActive(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				false);
 
 			Assert.fail();
@@ -395,27 +442,33 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			_commerceInventoryWarehouse1.getCompanyId(),
-			CommerceInventoryWarehouse.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId()),
-			ActionKeys.UPDATE);
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.UPDATE);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_commerceInventoryWarehouseService.setActive(
-				_commerceInventoryWarehouse1.getCommerceInventoryWarehouseId(),
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				false);
 		}
+	}
 
+	@Test
+	public void testUpdateCommerceInventoryWarehouse() throws Exception {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			_commerceInventoryWarehouseService.setActive(
-				_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId(),
-				false);
+			_commerceInventoryWarehouseService.updateCommerceInventoryWarehouse(
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, null,
+				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
+				_commerceInventoryWarehouse.getMvccVersion(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
 			Assert.fail();
 		}
@@ -425,17 +478,56 @@ public class CommerceInventoryWarehouseServiceTest {
 		}
 
 		_setResourcePermissions(
-			TestPropsValues.getCompanyId(),
-			CommerceInventoryWarehouse.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE);
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.UPDATE);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			_commerceInventoryWarehouseService.setActive(
-				_commerceInventoryWarehouse2.getCommerceInventoryWarehouseId(),
-				false);
+			_commerceInventoryWarehouseService.updateCommerceInventoryWarehouse(
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), null, null,
+				RandomTestUtil.nextDouble(), RandomTestUtil.nextDouble(),
+				_commerceInventoryWarehouse.getMvccVersion(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		}
+	}
+
+	@Test
+	public void testUpdateCommerceInventoryWarehouseExternalReferenceCode()
+		throws Exception {
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
+				updateCommerceInventoryWarehouseExternalReferenceCode(
+					RandomTestUtil.randomString(),
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.UPDATE, exception.getMessage(), _user.getUserId());
+		}
+
+		_setResourcePermissions(
+			CommerceInventoryWarehouse.class.getName(), ActionKeys.UPDATE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceInventoryWarehouseService.
+				updateCommerceInventoryWarehouseExternalReferenceCode(
+					RandomTestUtil.randomString(),
+					_commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId());
 		}
 	}
 
@@ -443,7 +535,8 @@ public class CommerceInventoryWarehouseServiceTest {
 		throws Exception {
 
 		return _commerceInventoryWarehouseService.addCommerceInventoryWarehouse(
-			null, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -461,18 +554,17 @@ public class CommerceInventoryWarehouseServiceTest {
 					" permission for")));
 	}
 
-	private void _setResourcePermissions(
-			long companyId, String name, int scope, String primKey,
-			String actionId)
+	private void _setResourcePermissions(String name, String actionId)
 		throws Exception {
 
 		_resourcePermissionLocalService.setResourcePermissions(
-			companyId, name, scope, primKey, _role.getRoleId(),
+			TestPropsValues.getCompanyId(), name,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), _role.getRoleId(),
 			new String[] {actionId});
 	}
 
-	private CommerceInventoryWarehouse _commerceInventoryWarehouse1;
-	private CommerceInventoryWarehouse _commerceInventoryWarehouse2;
+	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
 
 	@Inject
 	private CommerceInventoryWarehouseService

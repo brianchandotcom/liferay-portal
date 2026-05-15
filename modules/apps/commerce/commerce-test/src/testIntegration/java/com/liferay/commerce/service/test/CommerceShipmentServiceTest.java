@@ -84,8 +84,8 @@ public class CommerceShipmentServiceTest {
 	public void setUp() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(group.getCompanyId());
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
@@ -93,14 +93,14 @@ public class CommerceShipmentServiceTest {
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
 			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, group.getGroupId(),
 			"Test Channel", CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			commerceCurrency.getCode(), _serviceContext);
+			_commerceCurrency.getCode(), _serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
 			group.getGroupId());
 
 		_commerceOrder = CommerceTestUtil.createCommerceOrderForShipping(
 			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
-			commerceCurrency.getCommerceCurrencyId(),
+			_commerceCurrency.getCommerceCurrencyId(),
 			cpInstance.getCPInstanceId(),
 			BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE, 1);
 
@@ -276,6 +276,53 @@ public class CommerceShipmentServiceTest {
 			_commerceShipmentService.getCommerceShipment(
 				_commerceShipment.getCommerceShipmentId());
 		}
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
+			_commerceChannel.getGroupId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CommerceOrderItem commerceOrderItem =
+			CommerceTestUtil.addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+
+		_commerceShipmentItemLocalService.addCommerceShipmentItem(
+			null, _commerceShipment.getCommerceShipmentId(),
+			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			commerceOrderItem.getQuantity(), null, false, _serviceContext);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceShipmentService.getCommerceShipment(
+				_commerceShipment.getCommerceShipmentId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_assertMessage(
+				ActionKeys.VIEW, exception.getMessage(), _user.getUserId());
+		}
+
+		RoleTestUtil.addResourcePermission(
+			_role, CommerceOrderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_commerceShipmentService.getCommerceShipment(
+				_commerceShipment.getCommerceShipmentId());
+		}
 	}
 
 	@Test
@@ -381,6 +428,7 @@ public class CommerceShipmentServiceTest {
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
+	private CommerceCurrency _commerceCurrency;
 	private CommerceOrder _commerceOrder;
 
 	@Inject

@@ -17,10 +17,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 
 import java.sql.Connection;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -78,8 +75,6 @@ public final class UpgradeQueryMonitor {
 		}
 
 		_scheduledExecutorService = null;
-
-		_loggedLongRunningQueryIds.clear();
 	}
 
 	private static void _poll() {
@@ -111,18 +106,10 @@ public final class UpgradeQueryMonitor {
 			List<DB.QueryInfo> longRunningQueryInfos =
 				db.getLongRunningQueryInfos(connection);
 
-			Set<String> currentLongRunningQueryIds = new HashSet<>();
-
 			for (DB.QueryInfo longRunningQueryInfo : longRunningQueryInfos) {
-				String id = longRunningQueryInfo.getId();
-
-				currentLongRunningQueryIds.add(id);
-
-				if (!_loggedLongRunningQueryIds.add(id)) {
-					continue;
-				}
-
 				if (_log.isInfoEnabled()) {
+					String id = longRunningQueryInfo.getId();
+
 					_log.info(
 						StringBundler.concat(
 							"Long-running query \"",
@@ -133,8 +120,6 @@ public final class UpgradeQueryMonitor {
 							" seconds"));
 				}
 			}
-
-			_loggedLongRunningQueryIds.retainAll(currentLongRunningQueryIds);
 		}
 		catch (Exception exception) {
 			Thread currentThread = Thread.currentThread();
@@ -167,8 +152,6 @@ public final class UpgradeQueryMonitor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeQueryMonitor.class);
 
-	private static final Set<String> _loggedLongRunningQueryIds =
-		ConcurrentHashMap.newKeySet();
 	private static ScheduledExecutorService _scheduledExecutorService;
 
 }

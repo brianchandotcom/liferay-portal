@@ -148,10 +148,21 @@ public class PortalLog4jTest {
 
 	@Test
 	public void testLogOutputWithCDATAClosingSequence() throws Exception {
-		for (String level : _LEVELS) {
-			_testLogOutput(
-				level, "before]]>after", null, "before]]>]]&gt;<![CDATA[after",
-				null);
+		String cdataClose = "]]>";
+		String escapedCdataClose = "]]>]]&gt;<![CDATA[";
+
+		try {
+			ThreadContext.push("ndc:" + cdataClose);
+
+			for (String level : _LEVELS) {
+				_testLogOutput(
+					level, "before" + cdataClose + "after", null,
+					"before" + escapedCdataClose + "after",
+					"ndc:" + escapedCdataClose, null);
+			}
+		}
+		finally {
+			ThreadContext.pop();
 		}
 	}
 
@@ -728,12 +739,13 @@ public class PortalLog4jTest {
 			String level, String message, Throwable throwable)
 		throws Exception {
 
-		_testLogOutput(level, message, throwable, null, null);
+		_testLogOutput(level, message, throwable, null, null, null);
 	}
 
 	private void _testLogOutput(
 			String level, String message, Throwable throwable,
-			String expectedXmlMessage, String expectedXmlThread)
+			String expectedXmlMessage, String expectedXmlNdc,
+			String expectedXmlThread)
 		throws Exception {
 
 		_outputLog(level, message, throwable);
@@ -747,8 +759,8 @@ public class PortalLog4jTest {
 				new String(Files.readAllBytes(_textLogFilePath)));
 
 			_assertXmlLog(
-				level, message, throwable, null, expectedXmlMessage, null,
-				expectedXmlThread,
+				level, message, throwable, null, expectedXmlMessage,
+				expectedXmlNdc, expectedXmlThread,
 				new String(Files.readAllBytes(_xmlLogFilePath)));
 		}
 		finally {

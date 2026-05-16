@@ -65,13 +65,6 @@ public class NotificationsPortletTest {
 
 	@Before
 	public void setUp() {
-		_serviceContextFactoryMockedStatic = Mockito.mockStatic(
-			ServiceContextFactory.class);
-		_userNotificationManagerUtilMockedStatic = Mockito.mockStatic(
-			UserNotificationManagerUtil.class);
-
-		_notificationsPortlet = new NotificationsPortlet();
-
 		ReflectionTestUtil.setFieldValue(
 			_notificationsPortlet, "_language", Mockito.mock(Language.class));
 		ReflectionTestUtil.setFieldValue(
@@ -85,8 +78,6 @@ public class NotificationsPortletTest {
 		ReflectionTestUtil.setFieldValue(
 			_notificationsPortlet, "_userNotificationEventLocalService",
 			_userNotificationEventLocalService);
-
-		_user = new UserImpl();
 
 		_user.setUserId(RandomTestUtil.randomLong());
 
@@ -413,11 +404,13 @@ public class NotificationsPortletTest {
 		);
 	}
 
-	private NotificationsPortlet _notificationsPortlet;
+	private final NotificationsPortlet _notificationsPortlet =
+		new NotificationsPortlet();
 	private final Portal _portal = Mockito.mock(Portal.class);
-	private MockedStatic<ServiceContextFactory>
-		_serviceContextFactoryMockedStatic;
-	private User _user;
+	private final MockedStatic<ServiceContextFactory>
+		_serviceContextFactoryMockedStatic = Mockito.mockStatic(
+			ServiceContextFactory.class);
+	private final User _user = new UserImpl();
 	private final UserNotificationDeliveryLocalService
 		_userNotificationDeliveryLocalService = Mockito.mock(
 			UserNotificationDeliveryLocalService.class);
@@ -427,7 +420,8 @@ public class NotificationsPortletTest {
 	private final UserNotificationEventLocalService
 		_userNotificationEventLocalService = Mockito.mock(
 			UserNotificationEventLocalService.class);
-	private MockedStatic<UserNotificationManagerUtil>
-		_userNotificationManagerUtilMockedStatic;
+	private final MockedStatic<UserNotificationManagerUtil>
+		_userNotificationManagerUtilMockedStatic = Mockito.mockStatic(
+			UserNotificationManagerUtil.class);
 
 }

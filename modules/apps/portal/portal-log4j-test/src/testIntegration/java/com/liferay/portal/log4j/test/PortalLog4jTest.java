@@ -193,17 +193,34 @@ public class PortalLog4jTest {
 
 	@Test
 	public void testLogOutputWithHTMLSpecialChars() throws Exception {
+		String htmlSpecialChars = "<>&\"";
+		String escapedHtmlSpecialChars = "&lt;&gt;&amp;&quot;";
+
+		String key = "key:" + htmlSpecialChars;
+		String value = "value:" + htmlSpecialChars;
+
+		String logContextName = "HTMLSpecialCharsLogContext";
+
 		Thread currentThread = Thread.currentThread();
 
 		String originalThreadName = currentThread.getName();
 
 		try {
-			currentThread.setName("thread:<>&\"");
+			currentThread.setName("thread:" + htmlSpecialChars);
 
-			for (String level : _LEVELS) {
-				_testLogOutput(
-					level, "message", null, null, "thread:&lt;&gt;&amp;&quot;");
-			}
+			_testLogOutputWithLogContext(
+				HashMapBuilder.put(
+					key, value
+				).build(),
+				StringBundler.concat(
+					StringPool.OPEN_CURLY_BRACE, logContextName,
+					StringPool.PERIOD, key, StringPool.EQUAL, value,
+					StringPool.CLOSE_CURLY_BRACE),
+				StringBundler.concat(
+					StringPool.OPEN_CURLY_BRACE, logContextName, ".key:",
+					escapedHtmlSpecialChars, "=value:", escapedHtmlSpecialChars,
+					StringPool.CLOSE_CURLY_BRACE),
+				null, "thread:" + escapedHtmlSpecialChars, logContextName);
 		}
 		finally {
 			currentThread.setName(originalThreadName);

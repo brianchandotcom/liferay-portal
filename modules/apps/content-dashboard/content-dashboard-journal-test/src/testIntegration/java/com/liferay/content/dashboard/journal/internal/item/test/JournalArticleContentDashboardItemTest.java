@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -448,7 +449,8 @@ public class JournalArticleContentDashboardItemTest {
 		httpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG, _getLiferayPortletConfig());
 		httpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080");
+			WebKeys.CURRENT_URL,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		httpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
 		httpServletRequest.setAttribute(

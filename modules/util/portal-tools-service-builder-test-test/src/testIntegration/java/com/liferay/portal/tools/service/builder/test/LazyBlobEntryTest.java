@@ -9,13 +9,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -31,6 +30,7 @@ import org.hibernate.engine.spi.PersistenceContext;
 import org.hibernate.engine.spi.SessionImplementor;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,38 +52,42 @@ public class LazyBlobEntryTest {
 				Propagation.REQUIRED,
 				"com.liferay.portal.tools.service.builder.test.service"));
 
+	@Before
+	public void setUp() throws Exception {
+		_blobContent = RandomTestUtil.randomString();
+
+		_lazyBlobEntry = _lazyBlobEntryLocalService.addLazyBlobEntry(
+			TestPropsValues.getGroupId(), _blobContent.getBytes(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
+
+		_assertLazyBlobEntry(_blobContent, _lazyBlobEntry);
+	}
+
 	@Test
-	public void testLazyBlobLoadedValueIsNull() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		LazyBlobEntry addedLazyBlobEntry =
-			_lazyBlobEntryLocalService.addLazyBlobEntry(
-				_group.getGroupId(), _BYTES,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
+	public void testLazyBlobLoadedValueIsNull() {
 		_lazyBlobEntryPersistence.clearCache();
 
 		Session session = _lazyBlobEntryPersistence.openSession();
 
 		try {
+			LazyBlobEntry loadedLazyBlobEntry = (LazyBlobEntry)session.load(
+				_lazyBlobEntry.getClass(), _lazyBlobEntry.getLazyBlobEntryId());
+
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(
+					loadedLazyBlobEntry, "_blob1BlobModel"));
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(
+					loadedLazyBlobEntry, "_blob2BlobModel"));
+
 			SessionImplementor hibernateSession = _unwrapSession(session);
-
-			LazyBlobEntry fetchedLazyBlobEntry = (LazyBlobEntry)session.load(
-				addedLazyBlobEntry.getClass(),
-				addedLazyBlobEntry.getLazyBlobEntryId());
-
-			Assert.assertNull(
-				ReflectionTestUtil.getFieldValue(
-					fetchedLazyBlobEntry, "_blob1BlobModel"));
-			Assert.assertNull(
-				ReflectionTestUtil.getFieldValue(
-					fetchedLazyBlobEntry, "_blob2BlobModel"));
 
 			PersistenceContext persistenceContext =
 				hibernateSession.getPersistenceContext();
 
 			EntityEntry entityEntry = persistenceContext.getEntry(
-				fetchedLazyBlobEntry);
+				loadedLazyBlobEntry);
 
 			Assert.assertNull(
 				"Loaded value of lazy blob property should be null.",
@@ -95,38 +99,21 @@ public class LazyBlobEntryTest {
 		finally {
 			_lazyBlobEntryPersistence.closeSession(session);
 		}
-
-		_lazyBlobEntryLocalService.deleteLazyBlobEntry(
-			addedLazyBlobEntry.getLazyBlobEntryId());
 	}
 
 	@Test
 	public void testSerialize() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		String blobContent = RandomTestUtil.randomString();
-
-		LazyBlobEntry lazyBlobEntry =
-			_lazyBlobEntryLocalService.addLazyBlobEntry(
-				_group.getGroupId(), blobContent.getBytes(),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		_assertLazyBlobEntry(blobContent, lazyBlobEntry);
-
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(lazyBlobEntry);
+		serializer.writeObject(_lazyBlobEntry);
 
 		Deserializer deserializer = new Deserializer(serializer.toByteBuffer());
 
 		LazyBlobEntry serializedLazyBlobEntry = deserializer.readObject();
 
-		Assert.assertEquals(lazyBlobEntry, serializedLazyBlobEntry);
+		Assert.assertEquals(_lazyBlobEntry, serializedLazyBlobEntry);
 
-		_assertLazyBlobEntry(blobContent, serializedLazyBlobEntry);
-
-		_lazyBlobEntryLocalService.deleteLazyBlobEntry(
-			lazyBlobEntry.getLazyBlobEntryId());
+		_assertLazyBlobEntry(_blobContent, serializedLazyBlobEntry);
 	}
 
 	private void _assertLazyBlobEntry(
@@ -167,10 +154,10 @@ public class LazyBlobEntryTest {
 		return (SessionImplementor)wrapped;
 	}
 
-	private static final byte[] _BYTES = "Data abc xyz".getBytes();
+	private String _blobContent;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private LazyBlobEntry _lazyBlobEntry;
 
 	@Inject
 	private LazyBlobEntryLocalService _lazyBlobEntryLocalService;

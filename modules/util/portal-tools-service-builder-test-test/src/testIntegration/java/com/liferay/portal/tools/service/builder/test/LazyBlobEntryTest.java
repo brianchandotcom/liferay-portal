@@ -81,10 +81,11 @@ public class LazyBlobEntryTest {
 				ReflectionTestUtil.getFieldValue(
 					loadedLazyBlobEntry, "_blob2BlobModel"));
 
-			SessionImplementor hibernateSession = _unwrapSession(session);
+			SessionImplementor sessionImplementor =
+				(SessionImplementor)session.getWrappedSession();
 
 			PersistenceContext persistenceContext =
-				hibernateSession.getPersistenceContext();
+				sessionImplementor.getPersistenceContext();
 
 			EntityEntry entityEntry = persistenceContext.getEntry(
 				loadedLazyBlobEntry);
@@ -143,15 +144,6 @@ public class LazyBlobEntryTest {
 
 		Assert.assertNotNull(
 			ReflectionTestUtil.getFieldValue(lazyBlobEntry, "_blob2BlobModel"));
-	}
-
-	private SessionImplementor _unwrapSession(Session session) {
-		Object wrapped = null;
-
-		while (!((wrapped = session.getWrappedSession()) instanceof
-					SessionImplementor));
-
-		return (SessionImplementor)wrapped;
 	}
 
 	private String _blobContent;

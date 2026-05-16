@@ -1,0 +1,59 @@
+.liferay-one-hero-banner .hero-banner-background {
+	pointer-events: none;
+	right: 0;
+	top: 0;
+	z-index: 0;
+}
+
+.liferay-one-hero-banner .hero-banner-inner {
+	gap: var(--spacer-5, 3rem);
+	max-width: 1440px;
+	z-index: 1;
+}
+
+.liferay-one-hero-banner .hero-banner-headline {
+	font-size: 2.25rem;
+	line-height: 1.15;
+}
+
+.liferay-one-hero-banner .hero-banner-copy {
+	max-width: 560px;
+}
+
+.liferay-one-hero-banner .hero-banner-cta-row {
+	gap: var(--spacer-2, 0.5rem);
+}
+
+.liferay-one-hero-banner .hero-banner-illustration {
+	min-height: 280px;
+}
+
+.liferay-one-hero-banner .hero-banner-illustration-image {
+	object-fit: contain;
+	object-position: center;
+}
+
+.liferay-one-hero-banner .hero-banner-cta-edit-only {
+	opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+	.liferay-one-hero-banner .hero-banner-inner > * {
+		flex: 1 1 50%;
+		min-width: 0;
+	}
+
+	.liferay-one-hero-banner .hero-banner-headline {
+		font-size: 3rem;
+	}
+
+	.liferay-one-hero-banner .hero-banner-copy {
+		font-size: 1.125rem;
+	}
+}
+
+@media (min-width: 1200px) {
+	.liferay-one-hero-banner .hero-banner-headline {
+		font-size: 3.5rem;
+	}
+}

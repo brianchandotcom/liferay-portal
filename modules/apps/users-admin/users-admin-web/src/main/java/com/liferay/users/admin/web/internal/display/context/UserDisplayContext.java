@@ -53,8 +53,10 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -345,21 +347,17 @@ public class UserDisplayContext {
 			List<Organization> organizations)
 		throws PortalException {
 
-		List<Organization> parentOrganizations = new ArrayList<>();
+		Set<Organization> parentOrganizations = new LinkedHashSet<>();
 
 		for (Organization organization : organizations) {
-			Organization parentOrganization =
-				organization.getParentOrganization();
+			List<Organization> ancestorOrganizations =
+				OrganizationLocalServiceUtil.getParentOrganizations(
+					organization.getOrganizationId());
 
-			if ((parentOrganization != null) &&
-				!organizations.contains(parentOrganization) &&
-				!parentOrganizations.contains(parentOrganization)) {
-
-				parentOrganizations.add(parentOrganization);
-			}
+			parentOrganizations.addAll(ancestorOrganizations);
 		}
 
-		return parentOrganizations;
+		return new ArrayList<>(parentOrganizations);
 	}
 
 	private long[] _getSelectedOrganizationIds() throws PortalException {

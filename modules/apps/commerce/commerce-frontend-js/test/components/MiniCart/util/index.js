@@ -208,5 +208,43 @@ describe('MiniCart tests_utilities', () => {
 				{label: 'total', style: 'big', value: '$ 1,858.50'},
 			]);
 		});
+
+		describe('discount-to-subtotal and discount-to-total rows', () => {
+			it('surfaces the subtotal discount value in the subtotal-discount row', () => {
+				const rows = summaryDataMapper({
+					...SUMMARY_SAMPLE,
+					subtotalDiscountValue: 25.0,
+					subtotalDiscountValueFormatted: '$ 25.00',
+					total: 1833.5,
+					totalFormatted: '$ 1,833.50',
+				});
+
+				const subtotalDiscountRow = rows.find(
+					(row) => row.label === 'subtotal-discount'
+				);
+				const totalRow = rows.find((row) => row.label === 'total');
+
+				expect(subtotalDiscountRow.value).toBe('$ 25.00');
+				expect(totalRow.value).toBe('$ 1,833.50');
+			});
+
+			it('surfaces the order-level discount value in the order-discount row', () => {
+				const rows = summaryDataMapper({
+					...SUMMARY_SAMPLE,
+					total: 1758.5,
+					totalDiscountValue: 100.0,
+					totalDiscountValueFormatted: '$ 100.00',
+					totalFormatted: '$ 1,758.50',
+				});
+
+				const orderDiscountRow = rows.find(
+					(row) => row.label === 'order-discount'
+				);
+				const totalRow = rows.find((row) => row.label === 'total');
+
+				expect(orderDiscountRow.value).toBe('$ 100.00');
+				expect(totalRow.value).toBe('$ 1,758.50');
+			});
+		});
 	});
 });

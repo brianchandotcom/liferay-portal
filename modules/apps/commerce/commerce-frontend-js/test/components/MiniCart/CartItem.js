@@ -17,6 +17,11 @@ import {
 	REMOVAL_TIMEOUT,
 } from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 import {CART_PRODUCT_QUANTITY_CHANGED} from '../../../src/main/resources/META-INF/resources/utilities/eventsDefinitions';
+import {
+	mockCartItem,
+	mockCartItemWithBulkPrice,
+	mockCartItemWithTierPrice,
+} from '../fixtures/cartFixtures';
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/ServiceProvider/index',
@@ -171,6 +176,25 @@ describe('MiniCart Item', () => {
 
 			expect(CartItemThumbnailElement).toBeInTheDocument();
 			expect(CartItemElement.innerHTML).toMatchSnapshot();
+		});
+
+		it('renders the product image with its alt attribute in the thumbnail', () => {
+			const WITH_IMAGE_ALT_PROPS = {
+				...BASE_PROPS,
+				item: {
+					...BASE_PROPS.item,
+					adaptiveMediaImageHTMLTag:
+						'<picture><img alt="An Item" src="http://some.url/thumbnail.png" /></picture>',
+				},
+			};
+
+			const {container} = renderCartItem(WITH_IMAGE_ALT_PROPS);
+
+			const thumbnailImage = container.querySelector(
+				`${COMPONENT_SELECTOR}-thumbnail img`
+			);
+
+			expect(thumbnailImage).toHaveAttribute('alt', 'An Item');
 		});
 
 		it('redirects to the product page when the cart item is clicked', () => {
@@ -429,6 +453,74 @@ describe('MiniCart Item', () => {
 					[false],
 				]);
 			});
+		});
+	});
+
+	describe('with various price shapes and item interactions', () => {
+		const renderWithItem = (item, contextOverrides = {}) =>
+			render(
+				<MiniCartContext.Provider
+					value={{...BASE_CONTEXT_MOCK, ...contextOverrides}}
+				>
+					<CartItem {...item} updateCartItem={jest.fn()} />
+				</MiniCartContext.Provider>
+			);
+
+		it('renders the item name, SKU, list price, and quantity selector', () => {
+			const item = mockCartItem({
+				name: 'Sample Product',
+				quantity: 3,
+				sku: 'SKU-VISIBLE',
+			});
+
+			const {container, getByRole, getByText} = renderWithItem(item);
+
+			expect(getByText('Sample Product')).toBeInTheDocument();
+			expect(getByText('SKU-VISIBLE')).toBeInTheDocument();
+
+			const priceWrapper = container.querySelector(
+				`${COMPONENT_SELECTOR}-price`
+			);
+
+			expect(priceWrapper).toHaveTextContent(item.price.priceFormatted);
+			expect(getByRole('spinbutton').value).toBe('3');
+			expect(
+				container.querySelector(`${COMPONENT_SELECTOR}-actions button`)
+			).toBeInTheDocument();
+		});
+
+		it('renders the tier-discounted final price when quantity reaches the tier', () => {
+			const item = mockCartItemWithTierPrice();
+
+			const {container, getByRole} = renderWithItem(item);
+
+			const priceWrapper = container.querySelector(
+				`${COMPONENT_SELECTOR}-price`
+			);
+
+			expect(priceWrapper).toBeInTheDocument();
+			expect(
+				priceWrapper.querySelector('.price-value-promo')
+			).toHaveTextContent(item.price.promoPriceFormatted);
+			expect(getByRole('spinbutton').value).toBe(String(item.quantity));
+		});
+
+		it('renders the bulk-discounted price and reflects the bulk multipleQuantity in the quantity input step', () => {
+			const item = mockCartItemWithBulkPrice();
+
+			const {container, getByRole} = renderWithItem(item);
+
+			const priceWrapper = container.querySelector(
+				`${COMPONENT_SELECTOR}-price`
+			);
+			const quantityInput = getByRole('spinbutton');
+
+			expect(
+				priceWrapper.querySelector('.price-value-promo')
+			).toHaveTextContent(item.price.promoPriceFormatted);
+			expect(quantityInput.step).toBe(
+				String(item.settings.multipleQuantity)
+			);
 		});
 	});
 });

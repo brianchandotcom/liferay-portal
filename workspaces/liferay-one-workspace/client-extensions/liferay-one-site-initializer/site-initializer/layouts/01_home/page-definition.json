@@ -3,243 +3,140 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"paddingBottom": "7",
-						"paddingLeft": "5",
-						"paddingRight": "5",
-						"paddingTop": "7"
+					"fragment": {
+						"key": "liferay-one-hero-banner",
+						"siteKey": "One"
 					},
-					"indexed": true,
-					"layout": {
-					},
-					"name": "Hero"
-				},
-				"pageElements": [
-					{
-						"definition": {
-							"indexed": true,
-							"layout": {
-								"widthType": "Fixed"
+					"fragmentConfig": {
+						"backgroundImageUrl": "/documents/d/one/hero-banner-background-png",
+						"illustrationImageUrl": "/documents/d/one/hero-banner-illustration-image-svg",
+						"primaryButtonUrl": {
+							"en_US": {
+								"href": "/marketplace"
+							},
+							"es_ES": {
+								"href": "/marketplace"
+							},
+							"ja_JP": {
+								"href": "/marketplace"
+							},
+							"pt_BR": {
+								"href": "/marketplace"
 							}
 						},
-						"pageElements": [
-							{
-								"definition": {
-									"gutters": true,
-									"indexed": true,
-									"modulesPerRow": 2,
-									"numberOfColumns": 2,
-									"reverseOrder": false,
-									"verticalAlignment": "middle"
-								},
-								"pageElements": [
-									{
-										"definition": {
-											"size": 7
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"indexed": true,
-													"layout": {
-														"contentDisplay": "FlexColumn",
-														"paddingRight": 4
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-heading"
-															},
-															"fragmentConfig": {
-																"headingLevel": "h1"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "One Portal. Every Liferay Service"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "3"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-paragraph"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "<p>Marketplace, Support, Account, and Admin, all unified into one experience. Browse the catalogue freely, or sign in to manage everything you've bought.</p>"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"marginBottom": "5",
-																"marginTop": "0"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													},
-													{
-														"definition": {
-															"indexed": true,
-															"layout": {
-																"align": "Center",
-																"contentDisplay": "FlexRow",
-																"gap": 3
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-button"
-																	},
-																	"fragmentConfig": {
-																		"buttonSize": "nm",
-																		"buttonType": "primary",
-																		"type": "link"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "link",
-																			"value": {
-																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"value_i18n": {
-																								"en_US": "/web/one/marketplace"
-																							}
-																						}
-																					}
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "Browse Marketplace"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-button"
-																	},
-																	"fragmentConfig": {
-																		"buttonSize": "nm",
-																		"buttonType": "secondary",
-																		"type": "link"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "link",
-																			"value": {
-																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"value_i18n": {
-																								"en_US": "/web/one/my-account"
-																							}
-																						}
-																					}
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"en_US": "View Account"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"size": 5
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-														"imageSize": "w-100"
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/hero-illustration.png#]"
-																			}
-																		}
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"indexed": true
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Column"
-									}
-								],
-								"type": "Row"
+						"secondaryButtonSignedOutUrl": {
+							"en_US": {
+								"href": "/c/portal/login"
+							},
+							"es_ES": {
+								"href": "/c/portal/login"
+							},
+							"ja_JP": {
+								"href": "/c/portal/login"
+							},
+							"pt_BR": {
+								"href": "/c/portal/login"
 							}
-						],
-						"type": "Section"
-					}
-				],
-				"type": "Section"
+						},
+						"secondaryButtonUrl": {
+							"en_US": {
+								"href": "/my-account"
+							},
+							"es_ES": {
+								"href": "/my-account"
+							},
+							"ja_JP": {
+								"href": "/my-account"
+							},
+							"pt_BR": {
+								"href": "/my-account"
+							}
+						},
+						"showSecondaryButton": true
+					},
+					"fragmentFields": [
+						{
+							"id": "headlineTop",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "One Portal.",
+										"es_ES": "Un Portal.",
+										"ja_JP": "ひとつのポータル。",
+										"pt_BR": "Um Portal."
+									}
+								}
+							}
+						},
+						{
+							"id": "headlineBottom",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "Every Liferay Service",
+										"es_ES": "Todos los servicios de Liferay",
+										"ja_JP": "すべてのLiferayサービス",
+										"pt_BR": "Todos os serviços Liferay"
+									}
+								}
+							}
+						},
+						{
+							"id": "supportingCopy",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "Marketplace, Support, Subscriptions and Account unified into one experience. Browse the catalogue freely or manage your Account.",
+										"es_ES": "Marketplace, Soporte, Suscripciones y Cuenta unificados en una sola experiencia. Explora el catálogo libremente o gestiona tu Cuenta.",
+										"ja_JP": "Marketplace、サポート、サブスクリプション、アカウントをひとつの体験に統合。カタログを自由に閲覧、またはアカウントを管理できます。",
+										"pt_BR": "Marketplace, Suporte, Assinaturas e Conta unificados em uma única experiência. Explore o catálogo livremente ou gerencie sua Conta."
+									}
+								}
+							}
+						},
+						{
+							"id": "primaryButtonLabel",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "Browse Marketplace",
+										"es_ES": "Explorar Marketplace",
+										"ja_JP": "Marketplaceを見る",
+										"pt_BR": "Explorar Marketplace"
+									}
+								}
+							}
+						},
+						{
+							"id": "secondaryButtonLabel",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "View Account",
+										"es_ES": "Ver mi cuenta",
+										"ja_JP": "アカウントを表示",
+										"pt_BR": "Ver minha conta"
+									}
+								}
+							}
+						},
+						{
+							"id": "secondaryButtonSignedOutLabel",
+							"value": {
+								"text": {
+									"value_i18n": {
+										"en_US": "Sign In",
+										"es_ES": "Iniciar sesión",
+										"ja_JP": "サインイン",
+										"pt_BR": "Entrar"
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
 			},
 			{
 				"definition": {
@@ -1127,5 +1024,6 @@
 		"masterPage": {
 			"key": "liferay-one"
 		}
-	}
+	},
+	"version": 1.1
 }

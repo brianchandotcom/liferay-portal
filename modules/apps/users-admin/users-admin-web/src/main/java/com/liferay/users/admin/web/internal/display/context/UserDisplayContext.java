@@ -357,6 +357,8 @@ public class UserDisplayContext {
 			parentOrganizations.addAll(ancestorOrganizations);
 		}
 
+		parentOrganizations.removeAll(organizations);
+
 		return new ArrayList<>(parentOrganizations);
 	}
 

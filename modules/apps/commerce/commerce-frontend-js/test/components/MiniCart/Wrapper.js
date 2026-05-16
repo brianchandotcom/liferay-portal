@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import MiniCartContext from '../../../src/main/resources/META-INF/resources/components/mini_cart/MiniCartContext';
@@ -15,21 +15,27 @@ import {
 	ORDER_BUTTON,
 } from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 
-describe.skip('MiniCart Wrapper', () => {
+describe('MiniCart Wrapper', () => {
 	const BASE_CONTEXT_MOCK = {
 		CartViews: {
 			[HEADER]: () => <div>{HEADER}</div>,
 			[ORDER_BUTTON]: () => <div>{ORDER_BUTTON}</div>,
 		},
+		actionURLs: {},
+		cartState: {
+			cartItems: [],
+			summary: {itemsCount: 0},
+		},
+		editedItem: null,
 		isOpen: false,
+		isUpdating: false,
+		requestQuoteEnabled: false,
 	};
 
 	const COMPONENT_SELECTOR = '.mini-cart-wrapper';
 
 	afterEach(() => {
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	describe('by default', () => {

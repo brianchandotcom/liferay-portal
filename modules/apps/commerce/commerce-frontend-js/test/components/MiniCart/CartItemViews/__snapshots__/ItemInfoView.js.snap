@@ -1,21 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 1`] = `"1 × Child Item 1"`;
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items resolved through their related options 1`] = `"<div class=\\"h6 item-name\\">Variant 1</div><p class=\\"item-sku\\"><span><span>V1</span><span class=\\"pl-2\\">(1 × Child Item 1 )</span></span></p>"`;
 
-exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 2`] = `"3 × Child Item 2"`;
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items resolved through their related options 2`] = `"<div class=\\"h6 item-name\\">Variant 2</div><p class=\\"item-sku\\"><span><span>V2</span><span class=\\"pl-2\\">(3 × Child Item 2 )</span></span></p>"`;
 
-exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 3`] = `"5 × Child Item 3"`;
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items resolved through their related options 3`] = `"<div class=\\"h6 item-name\\">Variant 3</div><p class=\\"item-sku\\"><span><span>V3</span><span class=\\"pl-2\\">(5 × Child Item 3 )</span></span></p>"`;
 
-exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 4`] = `
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items resolved through their related options 4`] = `
 <DocumentFragment>
   <div
     class="item-info-base"
   >
-    <h5
-      class="item-name"
+    <div
+      class="h5 item-name"
     >
       An Item
-    </h5>
+    </div>
     <p
       class="item-sku"
     >
@@ -23,56 +23,146 @@ exports[`MiniCart Item Info View Base + Bundle + Options renders the name and th
     </p>
   </div>
   <div
-    class="child-items"
+    class="panel item-info-collapse mb-0 panel-secondary"
   >
-    <div
-      class="child-item"
+    <button
+      aria-controls="clay-id-2"
+      aria-expanded="false"
+      class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
+      type="button"
     >
-      <span>
-        1 × Child Item 1
+      <span
+        class="panel-title"
+      >
+        x-options
       </span>
-    </div>
-    <div
-      class="child-item"
-    >
-      <span>
-        3 × Child Item 2
+      <span
+        class="collapse-icon-closed"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right"
+          role="presentation"
+        >
+          <use
+            href="#angle-right"
+          />
+        </svg>
       </span>
-    </div>
-    <div
-      class="child-item"
-    >
-      <span>
-        5 × Child Item 3
+      <span
+        class="collapse-icon-open"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-angle-down"
+          role="presentation"
+        >
+          <use
+            href="#angle-down"
+          />
+        </svg>
       </span>
-    </div>
-  </div>
-  <div
-    class="item-info-extra mt-3"
-  >
-    <h6
-      class="options"
+    </button>
+    <div
+      aria-labelledby="clay-id-2"
+      class="panel-collapse collapse"
+      id="clay-id-2"
+      role="region"
     >
-      XL
-    </h6>
+      <div
+        class="panel-body"
+      >
+        <div
+          class="child-items"
+        >
+          <div
+            class="item-info-extra pt-2"
+          >
+            <div
+              class="h6 item-name"
+            >
+              Variant 1
+            </div>
+            <p
+              class="item-sku"
+            >
+              <span>
+                <span>
+                  V1
+                </span>
+                <span
+                  class="pl-2"
+                >
+                  (1 × Child Item 1 )
+                </span>
+              </span>
+            </p>
+          </div>
+          <div
+            class="item-info-extra pt-2"
+          >
+            <div
+              class="h6 item-name"
+            >
+              Variant 2
+            </div>
+            <p
+              class="item-sku"
+            >
+              <span>
+                <span>
+                  V2
+                </span>
+                <span
+                  class="pl-2"
+                >
+                  (3 × Child Item 2 )
+                </span>
+              </span>
+            </p>
+          </div>
+          <div
+            class="item-info-extra pt-2"
+          >
+            <div
+              class="h6 item-name"
+            >
+              Variant 3
+            </div>
+            <p
+              class="item-sku"
+            >
+              <span>
+                <span>
+                  V3
+                </span>
+                <span
+                  class="pl-2"
+                >
+                  (5 × Child Item 3 )
+                </span>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 1`] = `"1 × Child Item 1"`;
+exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 1`] = `"1 × Child Item 1 "`;
 
-exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 2`] = `"3 × Child Item 2"`;
+exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 2`] = `"3 × Child Item 2 "`;
 
 exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 3`] = `
 <DocumentFragment>
   <div
     class="item-info-base"
   >
-    <h5
-      class="item-name"
+    <div
+      class="h5 item-name"
     >
       An Item
-    </h5>
+    </div>
     <p
       class="item-sku"
     >
@@ -86,14 +176,14 @@ exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a
       class="child-item"
     >
       <span>
-        1 × Child Item 1
+        1 × Child Item 1 
       </span>
     </div>
     <div
       class="child-item"
     >
       <span>
-        3 × Child Item 2
+        3 × Child Item 2 
       </span>
     </div>
   </div>
@@ -105,11 +195,11 @@ exports[`MiniCart Item Info View Base + Options renders the name and the SKU of 
   <div
     class="item-info-base"
   >
-    <h5
-      class="item-name"
+    <div
+      class="h5 item-name"
     >
       An Item
-    </h5>
+    </div>
     <p
       class="item-sku"
     >
@@ -117,15 +207,75 @@ exports[`MiniCart Item Info View Base + Options renders the name and the SKU of 
     </p>
   </div>
   <div
-    class="item-info-extra mt-3"
+    class="panel item-info-collapse mb-0 panel-secondary"
   >
-    <h6
-      class="options"
+    <button
+      aria-controls="clay-id-1"
+      aria-expanded="false"
+      class="panel-header panel-header-link collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
+      type="button"
     >
-      XL
-    </h6>
+      <span
+        class="panel-title"
+      >
+        x-options
+      </span>
+      <span
+        class="collapse-icon-closed"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-angle-right"
+          role="presentation"
+        >
+          <use
+            href="#angle-right"
+          />
+        </svg>
+      </span>
+      <span
+        class="collapse-icon-open"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-angle-down"
+          role="presentation"
+        >
+          <use
+            href="#angle-down"
+          />
+        </svg>
+      </span>
+    </button>
+    <div
+      aria-labelledby="clay-id-1"
+      class="panel-collapse collapse"
+      id="clay-id-1"
+      role="region"
+    >
+      <div
+        class="panel-body"
+      >
+        <div
+          class="child-items"
+        >
+          <div
+            class="item-info-extra pt-2"
+          >
+            <div
+              class="h6 item-name"
+            >
+              Size
+            </div>
+            <p
+              class="item-sku"
+            >
+              XL
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`MiniCart Item Info View Base renders the name and the SKU of an item 1`] = `"<h5 class=\\"item-name\\">An Item</h5><p class=\\"item-sku\\">ITEM001</p>"`;
+exports[`MiniCart Item Info View Base renders the name and the SKU of an item 1`] = `"<div class=\\"h5 item-name\\">An Item</div><p class=\\"item-sku\\">ITEM001</p>"`;

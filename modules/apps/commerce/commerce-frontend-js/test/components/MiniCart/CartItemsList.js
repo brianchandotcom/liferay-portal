@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import '../../tests_utilities/polyfills';
+
 import '@testing-library/jest-dom';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import CartItemsList from '../../../src/main/resources/META-INF/resources/components/mini_cart/CartItemsList';
@@ -18,21 +20,24 @@ import {
 } from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/labels';
 
-describe.skip('MiniCart Items List', () => {
+describe('MiniCart Items List', () => {
 	const BASE_CONTEXT_MOCK = {
 		CartViews: {
 			[ITEMS_LIST_ACTIONS]: () => <div>{ITEMS_LIST_ACTIONS}</div>,
 		},
+		cartItemsPagination: {lastPage: 1, page: 1, pageSize: 20},
 		cartState: {},
+		getCartItems: jest.fn(),
 		labels: DEFAULT_LABELS,
+		replacementSKUList: [],
+		setCartState: jest.fn(),
+		summaryDataMapper: jest.fn(),
 	};
 
 	const COMPONENT_SELECTOR = '.mini-cart-items-list';
 
 	afterEach(() => {
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	describe('by default', () => {
@@ -75,7 +80,7 @@ describe.skip('MiniCart Items List', () => {
 				...BASE_CONTEXT_MOCK,
 				CartViews: {
 					...BASE_CONTEXT_MOCK.CartViews,
-					[ITEM]: (props) => <div>{props.item.name}</div>,
+					[ITEM]: (props) => <div>{props.name}</div>,
 					[SUMMARY]: ({dataMapper, isLoading, summaryData}) => {
 						dataMapper();
 
@@ -119,17 +124,15 @@ describe.skip('MiniCart Items List', () => {
 
 					expect(getByText(ITEMS_LIST_ACTIONS)).toBeInTheDocument();
 
-					const CartItemsListElement =
-						container.querySelector(COMPONENT_SELECTOR);
-					const CartItemElements =
-						CartItemsListElement.querySelectorAll(
-							'.mini-cart-cart-items div'
-						);
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument();
 
-					expect(CartItemElements.length).toEqual(1);
-					expect(CartItemElements[0].innerHTML).toEqual(
-						WITH_ITEMS_CONTEXT_MOCK.cartState.cartItems[0].name
-					);
+					expect(
+						getByText(
+							WITH_ITEMS_CONTEXT_MOCK.cartState.cartItems[0].name
+						)
+					).toBeInTheDocument();
 
 					expect(
 						getByText(

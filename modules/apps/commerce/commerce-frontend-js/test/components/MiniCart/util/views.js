@@ -4,7 +4,8 @@
  */
 
 import '@testing-library/jest-dom';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
+import * as FrontendJsWeb from 'frontend-js-web';
 import React from 'react';
 
 import {
@@ -21,13 +22,13 @@ import {
 	DEFAULT_VIEWS,
 	resolveCartViews,
 } from '../../../../src/main/resources/META-INF/resources/components/mini_cart/util/views';
-import * as Moduletests_utilities from '../../../../src/main/resources/META-INF/resources/utilities/modules';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/utilities/modules'
-);
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	loadModule: jest.fn(),
+}));
 
-describe.skip('MiniCart tests_utilities -> Views', () => {
+describe('MiniCart tests_utilities -> Views', () => {
 	const VIEW_TYPES = [
 		CART,
 		HEADER,
@@ -46,8 +47,6 @@ describe.skip('MiniCart tests_utilities -> Views', () => {
 
 	afterEach(() => {
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	describe('resolveCartViews', () => {
@@ -112,10 +111,9 @@ describe.skip('MiniCart tests_utilities -> Views', () => {
 			});
 
 			it('resolved custom Liferay module component implementations', async () => {
-				jest.spyOn(
-					Moduletests_utilities,
-					'getJsModule'
-				).mockImplementation(() => Promise.resolve(CustomView));
+				jest.spyOn(FrontendJsWeb, 'loadModule').mockImplementation(() =>
+					Promise.resolve(CustomView)
+				);
 
 				const customViews = {
 					[OPENER]: {
@@ -160,10 +158,9 @@ describe.skip('MiniCart tests_utilities -> Views', () => {
 			});
 
 			it('fallback default MiniCart views if Liferay modules fail to resolve', async () => {
-				jest.spyOn(
-					Moduletests_utilities,
-					'getJsModule'
-				).mockImplementation(() => Promise.reject());
+				jest.spyOn(FrontendJsWeb, 'loadModule').mockImplementation(() =>
+					Promise.reject()
+				);
 
 				const customViews = {
 					[OPENER]: {

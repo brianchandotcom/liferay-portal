@@ -5,13 +5,14 @@ exports[`MiniCart Opener by data flow if there are cart items if "displayTotalIt
   <button
     class="has-badge mini-cart-opener"
     data-badge-count="8"
+    data-qa-id="miniCartButton"
   >
     <svg
       class="lexicon-icon lexicon-icon-shopping-cart"
       role="presentation"
     >
       <use
-        xlink:href="#shopping-cart"
+        href="#shopping-cart"
       />
     </svg>
   </button>
@@ -23,17 +24,18 @@ exports[`MiniCart Opener by data flow if there are cart items renders a badge wi
   <button
     class="has-badge mini-cart-opener"
     data-badge-count="2"
+    data-qa-id="miniCartButton"
   >
     <svg
       class="lexicon-icon lexicon-icon-shopping-cart"
       role="presentation"
     >
       <use
-        xlink:href="#shopping-cart"
+        href="#shopping-cart"
       />
     </svg>
   </button>
 </DocumentFragment>
 `;
 
-exports[`MiniCart Opener by default renders a clickable button with a shopping cart icon to open the MiniCart 1`] = `"<svg class=\\"lexicon-icon lexicon-icon-shopping-cart\\" role=\\"presentation\\"><use xlink:href=\\"#shopping-cart\\"></use></svg>"`;
+exports[`MiniCart Opener by default renders a clickable button with a shopping cart icon to open the MiniCart 1`] = `"<svg class=\\"lexicon-icon lexicon-icon-shopping-cart\\" role=\\"presentation\\"><use href=\\"#shopping-cart\\"></use></svg>"`;

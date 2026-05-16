@@ -12,6 +12,9 @@ import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
+import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 import {searchByTerm} from './utils/utils';
@@ -114,3 +117,162 @@ test('View all blogs in the property in assets', async ({
 		).toBeVisible();
 	});
 });
+
+test(
+	'Blog overview surfaces appears-on, cards, comments, and audience metrics',
+	{
+		tag: ['@LRAC-8387', '@LRAC-8374', '@LRAC-8113', '@LRAC-12347'],
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+
+		// Seed two known individuals and one anonymous identity so the audience card splits 2 known / 1 anonymous (66.67% / 33.33%)
+
+		const knownIndividualA = generateIndividual({name: 'ac'});
+		const knownIndividualB = generateIndividual({name: 'liferay'});
+
+		await createIndividuals({
+			apiHelpers,
+			individuals: [knownIndividualA, knownIndividualB],
+		});
+
+		const date = new Date();
+		const anonymousIdentityId = getRandomString();
+
+		await apiHelpers.jsonWebServicesOSBAsah.createIdentities([
+			{createDate: date.toISOString(), id: anonymousIdentityId},
+		]);
+
+		// Four blogViewed events from three distinct viewers (views = 4) plus one blogCommented (comments = 1)
+
+		await apiHelpers.jsonWebServicesOSBAsah.createEvents([
+			{
+				applicationId: 'Blog',
+				assetId: '1',
+				assetTitle: 'Blogs AC Title',
+				canonicalUrl: '/web/site-name/ac-page/-/blogs/blogs-ac-title',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'blogViewed',
+				title: pageTitle,
+				userId: knownIndividualA.id,
+			},
+			{
+				applicationId: 'Blog',
+				assetId: '1',
+				assetTitle: 'Blogs AC Title',
+				canonicalUrl: '/web/site-name/ac-page/-/blogs/blogs-ac-title',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'blogViewed',
+				title: pageTitle,
+				userId: knownIndividualB.id,
+			},
+			{
+				applicationId: 'Blog',
+				assetId: '1',
+				assetTitle: 'Blogs AC Title',
+				canonicalUrl: '/web/site-name/ac-page/-/blogs/blogs-ac-title',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'blogViewed',
+				title: pageTitle,
+				userId: anonymousIdentityId,
+			},
+			{
+				applicationId: 'Blog',
+				assetId: '1',
+				assetTitle: 'Blogs AC Title',
+				canonicalUrl: '/web/site-name/ac-page/-/blogs/blogs-ac-title',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'blogViewed',
+				title: pageTitle,
+				userId: anonymousIdentityId,
+			},
+			{
+				applicationId: 'Comment',
+				assetId: '1',
+				assetTitle: 'Blogs AC Title',
+				canonicalUrl: '/web/site-name/ac-page/-/blogs/blogs-ac-title',
+				channelId: channel.id,
+				dataSourceId: 0,
+				eventDate: date.toISOString(),
+				eventId: 'posted',
+				eventProperties:
+					'{"className":"com.liferay.blogs.model.BlogsEntry"}',
+				properties: [
+					{
+						name: 'className',
+						value: 'com.liferay.blogs.model.BlogsEntry',
+					},
+				],
+				title: pageTitle,
+				userId: knownIndividualA.id,
+			},
+		]);
+
+		// Open the blog overview
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.assetBlogsPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Last 24 hours'}),
+			trigger: page.getByRole('button', {name: 'Last 30 days'}),
+		});
+
+		await page
+			.getByRole('link', {exact: true, name: 'Blogs AC Title'})
+			.click();
+
+		// The overview lists the five expected cards
+
+		for (const cardTitle of [
+			'Visitors Behavior',
+			'Audience',
+			'Views by Location',
+			'Views by Technology',
+			'Asset Appears On',
+		]) {
+			await expect(page.getByText(cardTitle)).toBeVisible();
+		}
+
+		// Visitors behavior shows views = 4 and comments = 1
+
+		await expect(
+			page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.filter({hasText: 'Views'})
+				.locator('.metric-value')
+		).toHaveText('4');
+
+		await expect(
+			page
+				.locator('.analytics-metrics-tabs .card-tab')
+				.filter({hasText: 'Comments'})
+				.locator('.metric-value')
+		).toHaveText('1');
+
+		// Asset appears on lists the seeded blog page URL
+
+		await expect(
+			page.getByRole('cell', {
+				name: '/web/site-name/ac-page/-/blogs/blogs-ac-title',
+			})
+		).toBeVisible();
+
+		// Audience card splits 66.67% known / 33.33% anonymous
+
+		await expect(page.getByText('66.67%')).toBeVisible();
+		await expect(page.getByText('33.33%')).toBeVisible();
+	}
+);

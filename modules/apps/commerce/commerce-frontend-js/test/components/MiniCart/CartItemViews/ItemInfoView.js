@@ -4,12 +4,12 @@
  */
 
 import '@testing-library/jest-dom';
-import {cleanup, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import ItemInfoView from '../../../../src/main/resources/META-INF/resources/components/mini_cart/CartItemViews/ItemInfoView';
 
-describe.skip('MiniCart Item Info View', () => {
+describe('MiniCart Item Info View', () => {
 	const BASE_PROPS = {
 		name: 'An Item',
 		sku: 'ITEM001',
@@ -19,10 +19,16 @@ describe.skip('MiniCart Item Info View', () => {
 	const COMPONENT_SELECTOR_BUNDLE = '.child-items';
 	const COMPONENT_SELECTOR_OPTIONS = '.item-info-extra';
 
+	beforeEach(() => {
+		window.Liferay = {
+			Language: {
+				get: jest.fn((text) => text),
+			},
+		};
+	});
+
 	afterEach(() => {
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	describe('Base', () => {
@@ -99,7 +105,14 @@ describe.skip('MiniCart Item Info View', () => {
 		describe('+ Options', () => {
 			const OPTIONS_PROPS = {
 				...BASE_PROPS,
-				options: 'XL',
+				options: [
+					{
+						skuId: '0',
+						skuOptionName: 'Size',
+						skuOptionValueNames: 'XL',
+						value: 'XL',
+					},
+				],
 			};
 
 			it('renders the name and the SKU of an item, plus its options', () => {
@@ -125,11 +138,18 @@ describe.skip('MiniCart Item Info View', () => {
 				const OptionsViewElement = container.querySelector(
 					COMPONENT_SELECTOR_OPTIONS
 				);
-				const OptionsText =
-					OptionsViewElement.querySelector('.options');
+				const OptionNameElement =
+					OptionsViewElement.querySelector('.item-name');
+				const OptionValueElement =
+					OptionsViewElement.querySelector('.item-sku');
 
 				expect(OptionsViewElement).toBeInTheDocument();
-				expect(OptionsText.innerHTML).toEqual(OPTIONS_PROPS.options);
+				expect(OptionNameElement.innerHTML).toEqual(
+					OPTIONS_PROPS.options[0].skuOptionName
+				);
+				expect(OptionValueElement.innerHTML).toEqual(
+					OPTIONS_PROPS.options[0].skuOptionValueNames
+				);
 
 				expect(asFragment()).toMatchSnapshot();
 			});
@@ -142,20 +162,42 @@ describe.skip('MiniCart Item Info View', () => {
 					{
 						name: 'Child Item 1',
 						quantity: 1,
+						skuId: 1,
 					},
 					{
 						name: 'Child Item 2',
 						quantity: 3,
+						skuId: 2,
 					},
 					{
 						name: 'Child Item 3',
 						quantity: 5,
+						skuId: 3,
 					},
 				],
-				options: 'XL',
+				options: [
+					{
+						skuId: '1',
+						skuOptionName: 'Variant 1',
+						skuOptionValueNames: 'V1',
+						value: 'V1',
+					},
+					{
+						skuId: '2',
+						skuOptionName: 'Variant 2',
+						skuOptionValueNames: 'V2',
+						value: 'V2',
+					},
+					{
+						skuId: '3',
+						skuOptionName: 'Variant 3',
+						skuOptionValueNames: 'V3',
+						value: 'V3',
+					},
+				],
 			};
 
-			it('renders the name and the SKU of an item, plus its child items with their related quantities, plus its options', () => {
+			it('renders the name and the SKU of an item, plus its child items resolved through their related options', () => {
 				const {asFragment, container} = render(
 					<ItemInfoView {...BUNDLE_OPTIONS_PROPS} />
 				);
@@ -175,29 +217,17 @@ describe.skip('MiniCart Item Info View', () => {
 				expect(ItemNameElement.innerHTML).toEqual(BASE_PROPS.name);
 				expect(ItemSKUElement.innerHTML).toEqual(BASE_PROPS.sku);
 
-				const BundleViewElement = container.querySelector(
-					COMPONENT_SELECTOR_BUNDLE
-				);
-				const ChildItemsElements =
-					BundleViewElement.querySelectorAll('.child-item span');
-
-				expect(BundleViewElement).toBeInTheDocument();
-				expect(ChildItemsElements.length).toEqual(3);
-
-				Array.from(ChildItemsElements).forEach((element) => {
-					expect(element.innerHTML).toMatchSnapshot();
-				});
-
-				const OptionsViewElement = container.querySelector(
+				const OptionElements = container.querySelectorAll(
 					COMPONENT_SELECTOR_OPTIONS
 				);
-				const OptionsText =
-					OptionsViewElement.querySelector('.options');
 
-				expect(OptionsViewElement).toBeInTheDocument();
-				expect(OptionsText.innerHTML).toEqual(
-					BUNDLE_OPTIONS_PROPS.options
+				expect(OptionElements.length).toEqual(
+					BUNDLE_OPTIONS_PROPS.options.length
 				);
+
+				Array.from(OptionElements).forEach((element) => {
+					expect(element.innerHTML).toMatchSnapshot();
+				});
 
 				expect(asFragment()).toMatchSnapshot();
 			});

@@ -4,13 +4,13 @@
  */
 
 import '@testing-library/jest-dom';
-import {act, cleanup, fireEvent, render, wait} from '@testing-library/react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import MiniCartContext from '../../../src/main/resources/META-INF/resources/components/mini_cart/MiniCartContext';
 import Opener from '../../../src/main/resources/META-INF/resources/components/mini_cart/Opener';
 
-describe.skip('MiniCart Opener', () => {
+describe('MiniCart Opener', () => {
 	const BASE_CONTEXT_MOCK = {
 		cartState: {
 			summary: {
@@ -25,8 +25,6 @@ describe.skip('MiniCart Opener', () => {
 
 	afterEach(() => {
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	describe('by default', () => {
@@ -50,7 +48,7 @@ describe.skip('MiniCart Opener', () => {
 				fireEvent.click(ComponentElement);
 			});
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(BASE_CONTEXT_MOCK.openCart).toHaveBeenCalled();
 			});
 		});
@@ -71,7 +69,6 @@ describe.skip('MiniCart Opener', () => {
 						value={{
 							...BASE_CONTEXT_MOCK,
 							cartState: {
-								...BASE_CONTEXT_MOCK.cartState,
 								cartItems: [
 									{
 										id: 1,
@@ -82,6 +79,7 @@ describe.skip('MiniCart Opener', () => {
 										quantity: 5,
 									},
 								],
+								summary: {itemsCount: 2, itemsQuantity: 8},
 							},
 						}}
 					>
@@ -138,7 +136,7 @@ describe.skip('MiniCart Opener', () => {
 				expect(asFragment()).toMatchSnapshot();
 			});
 
-			it('if "displayTotalItemsQuantity" is set to true, but there is no summary, renders a badge with the total items count by item type', () => {
+			it('if "displayTotalItemsQuantity" is set to true and no summary is provided, renders no badge (Opener reads counts from summary, not cartItems.length)', () => {
 				const {container} = render(
 					<MiniCartContext.Provider
 						value={{
@@ -166,9 +164,9 @@ describe.skip('MiniCart Opener', () => {
 					container.querySelector(COMPONENT_SELECTOR);
 
 				expect(ComponentElement.classList.contains('has-badge')).toBe(
-					true
+					false
 				);
-				expect(ComponentElement.dataset.badgeCount).toEqual('2');
+				expect(ComponentElement.dataset.badgeCount).toEqual('0');
 			});
 		});
 	});

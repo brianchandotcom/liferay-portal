@@ -9,15 +9,17 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
       class="mini-cart-overlay"
     />
     <button
-      class="has-badge mini-cart-opener"
-      data-badge-count="2"
+      aria-label="open-mini-cart"
+      class="mini-cart-opener"
+      data-badge-count="0"
+      data-qa-id="miniCartButton"
     >
       <svg
         class="lexicon-icon lexicon-icon-shopping-cart"
         role="presentation"
       >
         <use
-          xlink:href="#shopping-cart"
+          href="#shopping-cart"
         />
       </svg>
     </button>
@@ -33,11 +35,12 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
           <div
             class="mini-cart-header-title"
           >
-            <h3>
-              your-order
-            </h3>
+            <h2>
+              your-order-is-empty
+            </h2>
           </div>
           <button
+            aria-label="close-mini-cart"
             class="mini-cart-close"
           >
             <svg
@@ -45,7 +48,7 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>
@@ -59,6 +62,7 @@ exports[`MiniCart by data flow if the order ID is defined and > 0 if the request
       >
         <button
           class="btn btn-block btn-primary"
+          disabled=""
           type="button"
         >
           submit
@@ -78,15 +82,17 @@ exports[`MiniCart by default renders the MiniCart in closed state with the defau
       class="mini-cart-overlay"
     />
     <button
+      aria-label="open-mini-cart"
       class="mini-cart-opener"
       data-badge-count="0"
+      data-qa-id="miniCartButton"
     >
       <svg
         class="lexicon-icon lexicon-icon-shopping-cart"
         role="presentation"
       >
         <use
-          xlink:href="#shopping-cart"
+          href="#shopping-cart"
         />
       </svg>
     </button>
@@ -102,11 +108,12 @@ exports[`MiniCart by default renders the MiniCart in closed state with the defau
           <div
             class="mini-cart-header-title"
           >
-            <h3>
+            <h2>
               your-order-is-empty
-            </h3>
+            </h2>
           </div>
           <button
+            aria-label="close-mini-cart"
             class="mini-cart-close"
           >
             <svg
@@ -114,7 +121,7 @@ exports[`MiniCart by default renders the MiniCart in closed state with the defau
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>

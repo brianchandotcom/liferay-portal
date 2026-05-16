@@ -10,6 +10,7 @@ import {
 	ORDER_UUID_PARAMETER,
 } from '../../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 import {
+	filterOptions,
 	hasErrors,
 	parseOptions,
 	summaryDataMapper,
@@ -39,25 +40,19 @@ describe('MiniCart tests_utilities', () => {
 		});
 	});
 
-	describe.skip('parseOptions', () => {
-		it('parses and formats a JSON string input to an options list string', () => {
-			const VALID_JSON_INPUT = `[
-				{
-					"key": "package-quantity", 
-					"value": "24"
-				},
-				{
-					"key": "size", 
-					"value": "L"
-				}
-			]`;
+	describe('parseOptions', () => {
+		it('parses and formats an array of {value} entries to a comma-separated options list string', () => {
+			const PARSED_OPTIONS = [
+				{key: 'package-quantity', value: '24'},
+				{key: 'size', value: 'L'},
+			];
 
-			expect(parseOptions(VALID_JSON_INPUT)).toEqual('24, L');
+			expect(parseOptions(PARSED_OPTIONS)).toEqual('24, L');
 		});
 
-		it('returns an empty string when input is neither valid JSON nor a JSON-parsed array', () => {
-			expect(parseOptions(null)).toEqual('');
-			expect(parseOptions('/fail]')).toEqual('');
+		it('passes a non-array input through unchanged (graceful fall-through)', () => {
+			expect(parseOptions(null)).toBeNull();
+			expect(parseOptions('/fail]')).toEqual('/fail]');
 		});
 	});
 

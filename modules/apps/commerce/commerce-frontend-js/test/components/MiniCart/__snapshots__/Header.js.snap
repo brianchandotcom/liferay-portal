@@ -11,9 +11,9 @@ exports[`MiniCart Header by data flow if MiniCart is not toggleable, will not re
       <div
         class="mini-cart-header-title"
       >
-        <h3>
+        <h2>
           your-order-is-empty
-        </h3>
+        </h2>
       </div>
     </div>
   </div>
@@ -30,11 +30,12 @@ exports[`MiniCart Header by default renders the MiniCart header which includes a
     <div
       class="mini-cart-header-title"
     >
-      <h3>
+      <h2>
         your-order-is-empty
-      </h3>
+      </h2>
     </div>
     <button
+      aria-label="close-mini-cart"
       class="mini-cart-close"
     >
       <svg
@@ -42,7 +43,7 @@ exports[`MiniCart Header by default renders the MiniCart header which includes a
         role="presentation"
       >
         <use
-          xlink:href="#times"
+          href="#times"
         />
       </svg>
     </button>

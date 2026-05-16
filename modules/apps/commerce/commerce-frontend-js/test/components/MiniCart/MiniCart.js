@@ -6,14 +6,7 @@
 import '../../tests_utilities/polyfills';
 
 import '@testing-library/jest-dom';
-import {
-	act,
-	cleanup,
-	fireEvent,
-	render,
-	wait,
-	waitForElement,
-} from '@testing-library/react';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import ServiceProvider from '../../../src/main/resources/META-INF/resources/ServiceProvider';
@@ -29,16 +22,42 @@ import {
 import * as Notificationtests_utilities from '../../../src/main/resources/META-INF/resources/utilities/notifications';
 import {getMockedCart} from '../../tests_utilities/fake_data/carts';
 
-jest.mock('../../../src/main/resources/META-INF/resources/ServiceProvider');
+jest.mock('../../../src/main/resources/META-INF/resources/ServiceProvider', () => {
+	const cartApi = {
+		getCartById: jest.fn(),
+		getCartItemsByCartId: jest.fn(),
+	};
 
-describe.skip('MiniCart', () => {
+	const cache = {DeliveryCartAPI: jest.fn(() => cartApi)};
+
+	return {
+		__esModule: true,
+		default: new Proxy(
+			{},
+			{
+				get: (_, prop) => {
+					if (!cache[prop]) {
+						cache[prop] = jest.fn(() => ({}));
+					}
+
+					return cache[prop];
+				},
+			}
+		),
+	};
+});
+
+describe('MiniCart', () => {
 	const BASE_PROPS = {
 		cartActionURLs: {
+			baseOrderDetailURL:
+				'http://site-default.url/com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet',
 			checkoutURL: 'http://checkout.url',
 			orderDetailURL: '',
 			productURLSeparator: 'p',
 			siteDefaultURL: 'http://site-default.url',
 		},
+		channel: {id: 42},
 		onAddToCart: jest.fn(),
 	};
 
@@ -46,17 +65,23 @@ describe.skip('MiniCart', () => {
 
 	const COMPONENT_SELECTOR = '.mini-cart';
 
+	const CartResource = ServiceProvider.DeliveryCartAPI('v1');
+
 	let onCurrentOrderUpdated = () => {};
 	let onCurrentAccountUpdated = () => {};
 
 	beforeEach(() => {
-		jest.spyOn(Notificationtests_utilities, 'showErrorNotification');
+		jest.spyOn(
+			Notificationtests_utilities,
+			'showErrorNotification'
+		).mockImplementation(() => {});
 
-		ServiceProvider.DeliveryCartAPI = jest.fn().mockReturnValue({
-			getCartByIdWithItems: jest.fn(() =>
-				Promise.resolve(CART_WITH_ITEMS_MOCK)
-			),
-		});
+		CartResource.getCartById.mockImplementation(() =>
+			Promise.resolve(CART_WITH_ITEMS_MOCK)
+		);
+		CartResource.getCartItemsByCartId.mockImplementation(() =>
+			Promise.resolve({items: [], lastPage: 1})
+		);
 
 		window.Liferay = {
 			Language: {
@@ -77,8 +102,6 @@ describe.skip('MiniCart', () => {
 
 	afterEach(() => {
 		jest.resetAllMocks();
-
-		cleanup();
 	});
 
 	describe('by default', () => {
@@ -90,8 +113,10 @@ describe.skip('MiniCart', () => {
 					<MiniCart {...BASE_PROPS} />
 				);
 
-				await waitForElement(() =>
-					container.querySelector(COMPONENT_SELECTOR)
+				await waitFor(() =>
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument()
 				);
 
 				const MiniCartElement =
@@ -132,8 +157,10 @@ describe.skip('MiniCart', () => {
 				<MiniCart {...MIGRATING_PROPS_TO_CONTEXT} />
 			);
 
-			await waitForElement(() =>
-				container.querySelector(COMPONENT_SELECTOR)
+			await waitFor(() =>
+				expect(
+					container.querySelector(COMPONENT_SELECTOR)
+				).toBeInTheDocument()
 			);
 
 			expect(Context).not.toEqual(DEFAULT_MINI_CART_CONTEXT_VALUE);
@@ -147,8 +174,10 @@ describe.skip('MiniCart', () => {
 			it('click on the Opener button opens and the MiniCart', async () => {
 				const {container} = render(<MiniCart {...BASE_PROPS} />);
 
-				await waitForElement(() =>
-					container.querySelector(COMPONENT_SELECTOR)
+				await waitFor(() =>
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument()
 				);
 
 				await act(async () => {
@@ -159,7 +188,7 @@ describe.skip('MiniCart', () => {
 					fireEvent.click(MiniCartOpenerButton);
 				});
 
-				await wait(() => {
+				await waitFor(() => {
 					const MiniCartElement =
 						container.querySelector(COMPONENT_SELECTOR);
 
@@ -172,8 +201,10 @@ describe.skip('MiniCart', () => {
 			it('if the MiniCart is open, click on the overlay closes the MiniCart', async () => {
 				const {container} = render(<MiniCart {...BASE_PROPS} />);
 
-				await waitForElement(() =>
-					container.querySelector(COMPONENT_SELECTOR)
+				await waitFor(() =>
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument()
 				);
 
 				await act(async () => {
@@ -184,7 +215,7 @@ describe.skip('MiniCart', () => {
 					fireEvent.click(MiniCartOverlayElement);
 				});
 
-				await wait(() => {
+				await waitFor(() => {
 					const MiniCartElement =
 						container.querySelector(COMPONENT_SELECTOR);
 
@@ -204,8 +235,10 @@ describe.skip('MiniCart', () => {
 
 				const {container} = render(<MiniCart {...PROPS} />);
 
-				await waitForElement(() =>
-					container.querySelector(COMPONENT_SELECTOR)
+				await waitFor(() =>
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument()
 				);
 
 				const MiniCartElement =
@@ -237,21 +270,23 @@ describe.skip('MiniCart', () => {
 
 				const {container} = render(<MiniCart {...PROPS} />);
 
-				await waitForElement(() =>
-					container.querySelector(COMPONENT_SELECTOR)
+				await waitFor(() =>
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument()
 				);
 
 				expect(
-					ServiceProvider.DeliveryCartAPI('v1').getCartByIdWithItems
+					CartResource.getCartById
 				).toHaveBeenCalledWith(PROPS.orderId);
 			});
 
 			it('if the request fails, displays an error via Liferay Notification', async () => {
 				const ERROR = 'error';
 
-				ServiceProvider.DeliveryCartAPI = jest.fn().mockReturnValue({
-					getCartByIdWithItems: jest.fn(() => Promise.reject(ERROR)),
-				});
+				CartResource.getCartById.mockImplementation(() =>
+					Promise.reject(ERROR)
+				);
 
 				const PROPS = {
 					...BASE_PROPS,
@@ -261,12 +296,14 @@ describe.skip('MiniCart', () => {
 
 				const {container} = render(<MiniCart {...PROPS} />);
 
-				await waitForElement(() =>
-					container.querySelector(COMPONENT_SELECTOR)
+				await waitFor(() =>
+					expect(
+						container.querySelector(COMPONENT_SELECTOR)
+					).toBeInTheDocument()
 				);
 
 				expect(
-					ServiceProvider.DeliveryCartAPI('v1').getCartByIdWithItems
+					CartResource.getCartById
 				).toHaveBeenCalledWith(PROPS.orderId);
 
 				expect(
@@ -294,14 +331,15 @@ describe.skip('MiniCart', () => {
 
 					const {container} = render(<MiniCart {...PROPS} />);
 
-					await waitForElement(() =>
-						container.querySelector(COMPONENT_SELECTOR)
+					await waitFor(() =>
+						expect(
+							container.querySelector(COMPONENT_SELECTOR)
+						).toBeInTheDocument()
 					);
 
-					expect(
-						ServiceProvider.DeliveryCartAPI('v1')
-							.getCartByIdWithItems
-					).toHaveBeenCalledWith(PROPS.orderId);
+					expect(CartResource.getCartById).toHaveBeenCalledWith(
+						PROPS.orderId
+					);
 
 					expect(
 						Context.actionURLs.orderDetailURL.includes(
@@ -329,14 +367,15 @@ describe.skip('MiniCart', () => {
 
 					const {container} = render(<MiniCart {...PROPS} />);
 
-					await waitForElement(() =>
-						container.querySelector(COMPONENT_SELECTOR)
+					await waitFor(() =>
+						expect(
+							container.querySelector(COMPONENT_SELECTOR)
+						).toBeInTheDocument()
 					);
 
-					expect(
-						ServiceProvider.DeliveryCartAPI('v1')
-							.getCartByIdWithItems
-					).toHaveBeenCalledWith(PROPS.orderId);
+					expect(CartResource.getCartById).toHaveBeenCalledWith(
+						PROPS.orderId
+					);
 
 					expect(PROPS.onAddToCart).toHaveBeenCalledWith(
 						Context.actionURLs,
@@ -354,8 +393,10 @@ describe.skip('MiniCart', () => {
 						<MiniCart {...PROPS} />
 					);
 
-					await waitForElement(() =>
-						container.querySelector(COMPONENT_SELECTOR)
+					await waitFor(() =>
+						expect(
+							container.querySelector(COMPONENT_SELECTOR)
+						).toBeInTheDocument()
 					);
 
 					expect(asFragment()).toMatchSnapshot();
@@ -366,22 +407,26 @@ describe.skip('MiniCart', () => {
 
 	describe('by event', () => {
 		it(`on "${CURRENT_ORDER_UPDATED}" event, calls the API with the ID of the order and updates the MiniCart`, async () => {
-			const INCOMING_ORDER_ID = {id: 999};
+			const INCOMING_ORDER_UPDATED_PAYLOAD = {order: {id: 999}};
 
 			const {container} = render(<MiniCart {...BASE_PROPS} />);
 
-			await waitForElement(() =>
-				container.querySelector(COMPONENT_SELECTOR)
+			await waitFor(() =>
+				expect(
+					container.querySelector(COMPONENT_SELECTOR)
+				).toBeInTheDocument()
 			);
 
 			await act(async () => {
-				onCurrentOrderUpdated(INCOMING_ORDER_ID);
+				onCurrentOrderUpdated(INCOMING_ORDER_UPDATED_PAYLOAD);
 			});
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(
-					ServiceProvider.DeliveryCartAPI('v1').getCartByIdWithItems
-				).toHaveBeenCalledWith(INCOMING_ORDER_ID.id);
+					CartResource.getCartById
+				).toHaveBeenCalledWith(
+					INCOMING_ORDER_UPDATED_PAYLOAD.order.id
+				);
 			});
 		});
 
@@ -406,19 +451,25 @@ describe.skip('MiniCart', () => {
 				<MiniCart {...MIGRATING_PROPS_TO_CONTEXT} />
 			);
 
-			await waitForElement(() =>
-				container.querySelector(COMPONENT_SELECTOR)
+			await waitFor(() =>
+				expect(
+					container.querySelector(COMPONENT_SELECTOR)
+				).toBeInTheDocument()
 			);
 
 			await act(async () => {
-				expect(Context.cartState).toEqual(CART_WITH_ITEMS_MOCK);
+				expect(Context.cartState).toEqual({
+					...CART_WITH_ITEMS_MOCK,
+					channel: {channel: BASE_PROPS.channel},
+				});
 
 				onCurrentAccountUpdated({});
 			});
 
-			await wait(() => {
+			await waitFor(() => {
 				expect(Context.cartState).toEqual({
 					accountId: 0,
+					channel: {channel: BASE_PROPS.channel},
 					id: 0,
 					summary: {
 						itemsQuantity: 0,

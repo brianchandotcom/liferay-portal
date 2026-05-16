@@ -147,6 +147,70 @@ public class PortalLog4jTest {
 	}
 
 	@Test
+	public void testLogOutputWithCDATAClosingSequence() throws Exception {
+		for (String level : _LEVELS) {
+			_testLogOutput(
+				level, "before]]>after", null, "before]]>]]&gt;<![CDATA[after",
+				null);
+		}
+	}
+
+	@Test
+	public void testLogOutputWithForbiddenXML10Chars() throws Exception {
+		String forbiddenCharString = String.valueOf((char)1);
+
+		String key = "key:" + forbiddenCharString;
+		String value = "value:" + forbiddenCharString;
+
+		String logContextName = "ForbiddenCharsLogContext";
+
+		Thread currentThread = Thread.currentThread();
+
+		String originalThreadName = currentThread.getName();
+
+		try {
+			currentThread.setName("thread:" + forbiddenCharString);
+
+			ThreadContext.push("ndc:" + forbiddenCharString);
+
+			_testLogOutputWithLogContext(
+				HashMapBuilder.put(
+					key, value
+				).build(),
+				StringBundler.concat(
+					StringPool.OPEN_CURLY_BRACE, logContextName,
+					StringPool.PERIOD, key, StringPool.EQUAL, value,
+					StringPool.CLOSE_CURLY_BRACE),
+				"{ForbiddenCharsLogContext.key: =value: }", "ndc:", "thread: ",
+				logContextName);
+		}
+		finally {
+			currentThread.setName(originalThreadName);
+
+			ThreadContext.pop();
+		}
+	}
+
+	@Test
+	public void testLogOutputWithHTMLSpecialChars() throws Exception {
+		Thread currentThread = Thread.currentThread();
+
+		String originalThreadName = currentThread.getName();
+
+		try {
+			currentThread.setName("thread:<>&\"");
+
+			for (String level : _LEVELS) {
+				_testLogOutput(
+					level, "message", null, null, "thread:&lt;&gt;&amp;&quot;");
+			}
+		}
+		finally {
+			currentThread.setName(originalThreadName);
+		}
+	}
+
+	@Test
 	public void testLogOutputWithLogContext() throws Exception {
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
@@ -234,75 +298,6 @@ public class PortalLog4jTest {
 			Collections.emptyMap(),
 			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE,
 			"TestLogContext");
-	}
-
-	@Test
-	public void testXMLLogOutputWithCDATAClosingSequence() throws Exception {
-		_testLogOutput(
-			"INFO", "before]]>after", null, "before]]>]]&gt;<![CDATA[after",
-			null);
-	}
-
-	@Test
-	public void testXMLLogOutputWithForbiddenXML10Chars() throws Exception {
-		String forbiddenCharString = String.valueOf((char)1);
-
-		String originalThreadNameString = Thread.currentThread(
-		).getName();
-
-		Thread.currentThread(
-		).setName(
-			"thread:" + forbiddenCharString
-		);
-
-		ThreadContext.push("ndc:" + forbiddenCharString);
-
-		String key = "key:" + forbiddenCharString;
-		String logContextName = "ForbiddenCharsLogContext";
-		String value = "value:" + forbiddenCharString;
-
-		try {
-			_testLogOutputWithLogContext(
-				HashMapBuilder.put(
-					key, value
-				).build(),
-				StringBundler.concat(
-					StringPool.OPEN_CURLY_BRACE, logContextName,
-					StringPool.PERIOD, key, StringPool.EQUAL, value,
-					StringPool.CLOSE_CURLY_BRACE),
-				"{ForbiddenCharsLogContext.key: =value: }", "ndc:", "thread: ",
-				logContextName);
-		}
-		finally {
-			Thread.currentThread(
-			).setName(
-				originalThreadNameString
-			);
-
-			ThreadContext.pop();
-		}
-	}
-
-	@Test
-	public void testXMLLogOutputWithHTMLSpecialChars() throws Exception {
-		String originalThreadNameString = Thread.currentThread(
-		).getName();
-
-		Thread.currentThread(
-		).setName(
-			"thread:<>&\""
-		);
-
-		try {
-			_testLogOutput(
-				"INFO", "message", null, null, "thread:&lt;&gt;&amp;&quot;");
-		}
-		finally {
-			Thread.currentThread(
-			).setName(
-				originalThreadNameString
-			);
-		}
 	}
 
 	private static Path _initFileAppender(
@@ -576,17 +571,18 @@ public class PortalLog4jTest {
 			for (int i = propertiesOpenLineIndex + 1;
 				 i < propertiesCloseLineIndex; i++) {
 
-				Matcher dataMatcher = _dataPattern.matcher(outputLines[i]);
+				Matcher nameValueMatcher = _nameValuePattern.matcher(
+					outputLines[i]);
 
-				Assert.assertTrue(dataMatcher.find());
+				Assert.assertTrue(nameValueMatcher.find());
 
 				if (i > (propertiesOpenLineIndex + 1)) {
 					sb.append(", ");
 				}
 
-				sb.append(dataMatcher.group(1));
+				sb.append(nameValueMatcher.group(1));
 				sb.append(StringPool.EQUAL);
-				sb.append(dataMatcher.group(2));
+				sb.append(nameValueMatcher.group(2));
 			}
 
 			sb.append(StringPool.CLOSE_CURLY_BRACE);
@@ -893,10 +889,10 @@ public class PortalLog4jTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalLog4jTest.class);
 
-	private static final Pattern _dataPattern = Pattern.compile(
-		"name=\"([^\"]*)\" value=\"([^\"]*)\"");
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
+	private static final Pattern _nameValuePattern = Pattern.compile(
+		"name=\"([^\"]*)\" value=\"([^\"]*)\"");
 	private static Path _tempLogFileDirPath;
 	private static TestOutputStream _testOutputStream;
 	private static Path _textLogFilePath;

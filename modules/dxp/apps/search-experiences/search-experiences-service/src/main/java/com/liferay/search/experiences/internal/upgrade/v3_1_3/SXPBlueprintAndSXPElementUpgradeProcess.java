@@ -185,6 +185,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
 			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
 
+			if (fieldSetJSONObject == null) {
+				continue;
+			}
+
 			JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
 				"fields");
 
@@ -194,6 +198,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			for (int j = 0; j < fieldsJSONArray.length(); j++) {
 				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
+
+				if (fieldJSONObject == null) {
+					continue;
+				}
 
 				JSONArray fieldMappingsJSONArray = fieldJSONObject.getJSONArray(
 					"fieldMappings");
@@ -206,7 +214,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					JSONObject fieldMappingJSONObject =
 						fieldMappingsJSONArray.getJSONObject(k);
 
-					if (fieldMappingJSONObject.has("label")) {
+					if ((fieldMappingJSONObject != null) &&
+						fieldMappingJSONObject.has("label")) {
+
 						fieldMappingJSONObject.remove("label");
 
 						changed = true;
@@ -304,6 +314,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
+		long sxpBlueprintId = resultSet.getLong("sxpBlueprintId");
+
 		try {
 			JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
 				elementInstancesJSON);
@@ -325,7 +337,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			}
 
 			preparedStatement2.setString(1, elementInstancesJSON);
-			preparedStatement2.setLong(2, resultSet.getLong("sxpBlueprintId"));
+			preparedStatement2.setLong(2, sxpBlueprintId);
 
 			preparedStatement2.addBatch();
 		}
@@ -333,7 +345,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to upgrade search experiences blueprint " +
-						resultSet.getLong("sxpBlueprintId"),
+						sxpBlueprintId,
 					exception);
 			}
 		}
@@ -350,6 +362,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
+		long sxpElementId = resultSet.getLong("sxpElementId");
+
 		try {
 			JSONObject elementDefinitionJSONObject =
 				_jsonFactory.createJSONObject(elementDefinitionJSON);
@@ -360,7 +374,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement2.setString(
 				1, elementDefinitionJSONObject.toString());
-			preparedStatement2.setLong(2, resultSet.getLong("sxpElementId"));
+			preparedStatement2.setLong(2, sxpElementId);
 
 			preparedStatement2.addBatch();
 		}
@@ -368,7 +382,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to upgrade search experiences element " +
-						resultSet.getLong("sxpElementId"),
+						sxpElementId,
 					exception);
 			}
 		}

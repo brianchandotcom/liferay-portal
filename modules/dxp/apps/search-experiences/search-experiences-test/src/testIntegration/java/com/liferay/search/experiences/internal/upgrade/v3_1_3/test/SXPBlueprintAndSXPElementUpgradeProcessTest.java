@@ -152,6 +152,9 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Test
 	public void testUpgradeHandlesLegacyFieldMappingLabel() throws Exception {
+		String elementDefinitionJSON = _readJSON(
+			"legacyFieldMappingLabelElementDefinition");
+
 		String elementInstancesJSON = _readJSON("legacyFieldMappingLabel");
 
 		Assert.assertNotNull(
@@ -172,17 +175,37 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
 			sxpBlueprint);
 
+		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
+			elementDefinitionJSON, StringPool.BLANK, StringPool.BLANK, true,
+			StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			0,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				TestPropsValues.getUserId()));
+
 		_runUpgrade();
 
 		sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
 			sxpBlueprint.getSXPBlueprintId());
 
-		String upgradedElementInstancesJSON =
-			sxpBlueprint.getElementInstancesJSON();
+		Assert.assertFalse(
+			sxpBlueprint.getElementInstancesJSON(
+			).contains(
+				"LegacyFieldMappingLabelSentinel"
+			));
+
+		sxpElement = _sxpElementLocalService.fetchSXPElement(
+			sxpElement.getSXPElementId());
 
 		Assert.assertFalse(
-			upgradedElementInstancesJSON.contains(
-				"LegacyFieldMappingLabelSentinel"));
+			sxpElement.getElementDefinitionJSON(
+			).contains(
+				"LegacyFieldMappingLabelSentinel"
+			));
 	}
 
 	@Test

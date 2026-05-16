@@ -53,4 +53,25 @@ describe('Quantity Selector', () => {
 			quantitySelector.container.querySelector('select')
 		).not.toBeInTheDocument();
 	});
+
+	describe('product-configuration quantity rules', () => {
+		it('renders exactly the allowed quantities as <option> values', () => {
+			const allowedQuantities = [1, 4, 5, 7, 11];
+
+			const {container} = render(
+				<QuantitySelector
+					{...defaultProps}
+					allowedQuantities={allowedQuantities}
+				/>
+			);
+
+			const options = container.querySelectorAll('option');
+
+			expect(options).toHaveLength(allowedQuantities.length);
+
+			Array.from(options).forEach((option, index) => {
+				expect(option.value).toBe(String(allowedQuantities[index]));
+			});
+		});
+	});
 });

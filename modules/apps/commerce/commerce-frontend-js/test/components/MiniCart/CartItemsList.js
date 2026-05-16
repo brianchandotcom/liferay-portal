@@ -9,6 +9,7 @@ import '@testing-library/jest-dom';
 import {render} from '@testing-library/react';
 import React from 'react';
 
+import CartItem from '../../../src/main/resources/META-INF/resources/components/mini_cart/CartItem';
 import CartItemsList from '../../../src/main/resources/META-INF/resources/components/mini_cart/CartItemsList';
 import MiniCartContext from '../../../src/main/resources/META-INF/resources/components/mini_cart/MiniCartContext';
 import {
@@ -19,6 +20,20 @@ import {
 	SUMMARY,
 } from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
 import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/labels';
+import {mockCartItem} from '../fixtures/cartFixtures';
+
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/ServiceProvider/index',
+	() => ({
+		__esModule: true,
+		default: {
+			DeliveryCartAPI: jest.fn(() => ({
+				deleteItemById: jest.fn(),
+				updateItemById: jest.fn(),
+			})),
+		},
+	})
+);
 
 describe('MiniCart Items List', () => {
 	const BASE_CONTEXT_MOCK = {
@@ -155,6 +170,56 @@ describe('MiniCart Items List', () => {
 				);
 
 				expect(getByText(`${SUMMARY} is loading`)).toBeInTheDocument();
+			});
+		});
+
+		describe('with multiple cart items', () => {
+			it('renders each cart item linking to its own product details page', () => {
+				const TWO_ITEMS_CONTEXT_MOCK = {
+					...BASE_CONTEXT_MOCK,
+					CartViews: {
+						...BASE_CONTEXT_MOCK.CartViews,
+						[ITEM]: CartItem,
+						[SUMMARY]: () => null,
+					},
+					actionURLs: {
+						productURLSeparator: 'p',
+						siteDefaultURL: 'http://site-default.url',
+					},
+					cartState: {
+						cartItems: [
+							mockCartItem({
+								id: 1,
+								productURLs: {en_US: 'first-product'},
+								sku: 'SKU-1',
+								skuId: 11,
+							}),
+							mockCartItem({
+								id: 2,
+								productURLs: {en_US: 'second-product'},
+								sku: 'SKU-2',
+								skuId: 22,
+							}),
+						],
+						summary: {itemsCount: 2, itemsQuantity: 2},
+					},
+					displayDiscountLevels: false,
+					isUpdating: false,
+				};
+
+				const {container} = render(
+					<MiniCartContext.Provider value={TWO_ITEMS_CONTEXT_MOCK}>
+						<CartItemsList />
+					</MiniCartContext.Provider>
+				);
+
+				const productLinks = container.querySelectorAll(
+					'.mini-cart-item-anchor'
+				);
+
+				expect(productLinks).toHaveLength(2);
+				expect(productLinks[0].href).toContain('first-product');
+				expect(productLinks[1].href).toContain('second-product');
 			});
 		});
 	});

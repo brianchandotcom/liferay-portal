@@ -96,9 +96,12 @@ public class ViewBlogsEntryContentDashboardItemActionProviderTest {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(LocaleUtil.US);
 
-		themeDisplay.setURLCurrent(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/currentURL");
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
+		String urlCurrent =
+			"http://localhost:" + portalServerPort + "/currentURL";
+
+		themeDisplay.setURLCurrent(urlCurrent);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -111,12 +114,8 @@ public class ViewBlogsEntryContentDashboardItemActionProviderTest {
 
 		Assert.assertTrue(
 			url.contains(StringUtil.toLowerCase(blogsEntry.getTitle())));
-
-		String escapeURL = HtmlUtil.escapeURL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/currentURL");
-
-		Assert.assertTrue(url.contains("p_l_back_url=" + escapeURL));
+		Assert.assertTrue(
+			url.contains("p_l_back_url=" + HtmlUtil.escapeURL(urlCurrent)));
 	}
 
 	@Test

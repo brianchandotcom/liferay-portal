@@ -117,9 +117,11 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			themeDisplay.setRequest(mockHttpServletRequest);
 
-			themeDisplay.setURLCurrent(
+			String urlCurrent =
 				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/currentURL");
+					"/currentURL";
+
+			themeDisplay.setURLCurrent(urlCurrent);
 
 			serviceContext.setRequest(mockHttpServletRequest);
 
@@ -137,12 +139,8 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 				url.contains(
 					StringUtil.toLowerCase(
 						journalArticle.getTitle(LocaleUtil.US))));
-
-			String escapeURL = HtmlUtil.escapeURL(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/currentURL");
-
-			Assert.assertTrue(url.contains("p_l_back_url=" + escapeURL));
+			Assert.assertTrue(
+				url.contains("p_l_back_url=" + HtmlUtil.escapeURL(urlCurrent)));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

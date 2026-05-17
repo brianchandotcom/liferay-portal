@@ -5,6 +5,7 @@
 
 package com.liferay.captcha.test.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -91,7 +93,9 @@ public class CaptchaTestUtil {
 			TestPropsValues.getCompanyId());
 
 		themeDisplay.setPortalURL(
-			"http://" + company.getVirtualHostname() + ":8080");
+			StringBundler.concat(
+				"http://", company.getVirtualHostname(), ":",
+				PortalUtil.getPortalServerPort(false)));
 
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());

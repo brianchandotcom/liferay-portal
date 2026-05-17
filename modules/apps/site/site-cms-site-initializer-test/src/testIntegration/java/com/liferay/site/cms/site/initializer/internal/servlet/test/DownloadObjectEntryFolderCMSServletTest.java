@@ -96,9 +96,9 @@ public class DownloadObjectEntryFolderCMSServletTest
 
 	@Test
 	public void testDownloadFolder() throws Exception {
-		_testDownloadEmptyFolder();
-		_testDownloadFolderWithPermissions();
+		_testDownloadFolderEmpty();
 		_testDownloadFolderWithoutPermissions();
+		_testDownloadFolderWithPermissions();
 	}
 
 	private long _addFileEntry() throws Exception {
@@ -318,7 +318,7 @@ public class DownloadObjectEntryFolderCMSServletTest
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
-	private void _testDownloadEmptyFolder() throws Exception {
+	private void _testDownloadFolderEmpty() throws Exception {
 		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 

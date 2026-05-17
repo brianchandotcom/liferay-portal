@@ -97,8 +97,8 @@ public class DownloadObjectEntryFolderCMSServletTest
 	@Test
 	public void testDownloadFolder() throws Exception {
 		_testDownloadEmptyFolder();
-		_testDownloadFolderWithPermissions();
 		_testDownloadFolderWithoutPermissions();
+		_testDownloadFolderWithPermissions();
 	}
 
 	private long _addFileEntry() throws Exception {

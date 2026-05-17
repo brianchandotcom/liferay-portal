@@ -481,40 +481,35 @@ public class UserModelListenerTest {
 				WorkflowConstants.DEFAULT_GROUP_ID, User.class.getName(), 0, 0,
 				"Single Approver", 1);
 
-		try {
-			String emailAddress =
-				RandomTestUtil.randomString() + "@liferay.com";
+		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
-			Ticket ticket = _addInviteCollaboratorTicket(
-				_group1.getGroupId(), emailAddress);
+		Ticket ticket = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), emailAddress);
 
-			SharingEntry sharingEntry = _addTicketSharingEntry(
-				_group1.getGroupId(), ticket.getTicketId());
+		SharingEntry sharingEntry = _addTicketSharingEntry(
+			_group1.getGroupId(), ticket.getTicketId());
 
-			User user = _addUserWithWorkflow(emailAddress);
+		User user = _addUserWithWorkflow(emailAddress);
 
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_PENDING, user.getStatus());
+		Assert.assertEquals(WorkflowConstants.STATUS_PENDING, user.getStatus());
 
-			Assert.assertNotNull(
-				_ticketLocalService.fetchTicket(ticket.getTicketId()));
+		Assert.assertNotNull(
+			_ticketLocalService.fetchTicket(ticket.getTicketId()));
 
-			_assertSharingEntryToTicketId(sharingEntry, ticket);
+		_assertSharingEntryToTicketId(sharingEntry, ticket);
 
-			_userLocalService.updateStatus(
-				user.getUserId(), WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext(
-					_group1.getGroupId(), TestPropsValues.getUserId()));
+		_userLocalService.updateStatus(
+			user.getUserId(), WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				_group1.getGroupId(), TestPropsValues.getUserId()));
 
-			Assert.assertNull(
-				_ticketLocalService.fetchTicket(ticket.getTicketId()));
+		Assert.assertNull(
+			_ticketLocalService.fetchTicket(ticket.getTicketId()));
 
-			_assertSharingEntryToUserId(sharingEntry, user);
-		}
-		finally {
-			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-				workflowDefinitionLink);
-		}
+		_assertSharingEntryToUserId(sharingEntry, user);
+
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+			workflowDefinitionLink);
 	}
 
 	@Inject

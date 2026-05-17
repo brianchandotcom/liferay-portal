@@ -88,9 +88,10 @@ public class UserModelListener extends BaseModelListener<User> {
 						_log.info(
 							StringBundler.concat(
 								"A sharing entry already exists for user ",
-								user.getUserId(), " with classNameId ",
+								user.getUserId(), " with class name ID ",
 								pendingSharingEntry.getClassNameId(),
-								" and classPK ", pendingSharingEntry.getClassPK()));
+								" and class primary key ",
+								pendingSharingEntry.getClassPK()));
 					}
 
 					_sharingEntryLocalService.deleteSharingEntry(

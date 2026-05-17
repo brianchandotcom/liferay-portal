@@ -82,8 +82,8 @@ public class UserModelListenerTest {
 		_testAddUserWithDuplicatePendingInvitations();
 		_testAddUserWithExpiredInvitationTicket();
 		_testAddUserWithInvalidEmailAddress();
-		_testAddUserWithMixedCaseEmailAddress();
 		_testAddUserWithPendingInvitations();
+		_testAddUserWithUpperCaseEmail();
 	}
 
 	@Test
@@ -372,24 +372,6 @@ public class UserModelListenerTest {
 		_assertSharingEntryToUserId(sharingEntry3, user);
 	}
 
-	private void _testAddUserWithMixedCaseEmailAddress() throws Exception {
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-
-		Ticket ticket = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), StringUtil.toUpperCase(emailAddress),
-			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)));
-
-		SharingEntry sharingEntry = _addTicketSharingEntry(
-			_group1.getGroupId(), ticket.getTicketId());
-
-		_addUser(emailAddress);
-
-		Assert.assertNotNull(
-			_ticketLocalService.fetchTicket(ticket.getTicketId()));
-
-		_assertSharingEntryToTicketId(sharingEntry, ticket);
-	}
-
 	private void _testAddUserWithPendingInvitations() throws Exception {
 		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
 		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
@@ -420,6 +402,24 @@ public class UserModelListenerTest {
 		_assertSharingEntryToUserId(sharingEntry1, user);
 		_assertSharingEntryToUserId(sharingEntry2, user);
 		_assertSharingEntryToTicketId(sharingEntry3, ticket3);
+	}
+
+	private void _testAddUserWithUpperCaseEmail() throws Exception {
+		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+
+		Ticket ticket = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), StringUtil.toUpperCase(emailAddress),
+			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)));
+
+		SharingEntry sharingEntry = _addTicketSharingEntry(
+			_group1.getGroupId(), ticket.getTicketId());
+
+		User user = _addUser(emailAddress);
+
+		Assert.assertNull(
+			_ticketLocalService.fetchTicket(ticket.getTicketId()));
+
+		_assertSharingEntryToUserId(sharingEntry, user);
 	}
 
 	private void _testUpdateUserStatusWithExistingUserSharingEntry()

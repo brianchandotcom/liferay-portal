@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -60,7 +61,10 @@ public class ConsentManagementPlatformTopHeadDynamicIncludeTest {
 			).build());
 
 		Matcher matcher = _pattern.matcher(
-			URLUtil.toString(new URL("http://localhost:8080")));
+			URLUtil.toString(
+				new URL(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false))));
 
 		Assert.assertTrue(matcher.find());
 

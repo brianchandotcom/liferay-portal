@@ -98,6 +98,15 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 
 	@Override
 	public List<Ticket> getTickets(
+		long companyId, int type, String emailAddress) {
+
+		return ticketPersistence.findByC_T_EA(
+			companyId, type,
+			StringUtil.toLowerCase(StringUtil.trim(emailAddress)));
+	}
+
+	@Override
+	public List<Ticket> getTickets(
 		long companyId, String className, long classPK) {
 
 		return ticketPersistence.findByC_C_C(

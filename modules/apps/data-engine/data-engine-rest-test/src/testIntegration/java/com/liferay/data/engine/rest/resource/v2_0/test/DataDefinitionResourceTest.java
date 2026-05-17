@@ -31,6 +31,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -829,15 +830,15 @@ public class DataDefinitionResourceTest
 
 				customProperties.put("ddmStructureId", dataDefinition1.getId());
 
+				Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
 				DataDefinitionResource dataDefinitionResource =
 					DataDefinitionResource.builder(
 					).authentication(
 						user.getEmailAddress(),
 						PropsValues.DEFAULT_ADMIN_PASSWORD
 					).endpoint(
-						CompanyLocalServiceUtil.getCompany(
-							companyId
-						).getVirtualHostname(),
+						company.getVirtualHostname(),
 						PortalUtil.getPortalServerPort(false), "http"
 					).locale(
 						LocaleUtil.getDefault()

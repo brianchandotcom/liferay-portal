@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -14,7 +13,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -53,6 +51,7 @@ public class ViewHomeQuickActionsDisplayContext {
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
+		SectionDisplayContextHelper sectionDisplayContextHelper,
 		ThemeDisplay themeDisplay) {
 
 		_depotEntryLocalService = depotEntryLocalService;
@@ -61,6 +60,7 @@ public class ViewHomeQuickActionsDisplayContext {
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_objectEntryFolderModelResourcePermission =
 			objectEntryFolderModelResourcePermission;
+		_sectionDisplayContextHelper = sectionDisplayContextHelper;
 		_themeDisplay = themeDisplay;
 	}
 
@@ -178,11 +178,6 @@ public class ViewHomeQuickActionsDisplayContext {
 	private List<Map<String, Object>> _getQuickActions() throws Exception {
 		List<Map<String, Object>> quickActions = new ArrayList<>();
 
-		List<Long> depotEntryGroupIds = TransformUtil.transform(
-			_depotEntryLocalService.getDepotEntries(
-				_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE),
-			DepotEntry::getGroupId);
-
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionService.getCMSObjectDefinitions(
 				_themeDisplay.getCompanyId(),
@@ -195,7 +190,12 @@ public class ViewHomeQuickActionsDisplayContext {
 		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
 				ActionUtil.getAcceptedDepotEntryGroupIds(
-					depotEntryGroupIds,
+					_sectionDisplayContextHelper.getDepotEntryGroupIds(
+						ActionKeys.ADD_ENTRY,
+						_sectionDisplayContextHelper.getObjectEntryFolderIdsMap(
+							_themeDisplay.getCompanyId(), null,
+							_themeDisplay.getUserId()),
+						_themeDisplay),
 					objectDefinition.getObjectDefinitionId()));
 
 			if (depotEntriesJSONArray.length() == 0) {
@@ -270,6 +270,7 @@ public class ViewHomeQuickActionsDisplayContext {
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ModelResourcePermission<ObjectEntryFolder>
 		_objectEntryFolderModelResourcePermission;
+	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
 	private final ThemeDisplay _themeDisplay;
 
 }

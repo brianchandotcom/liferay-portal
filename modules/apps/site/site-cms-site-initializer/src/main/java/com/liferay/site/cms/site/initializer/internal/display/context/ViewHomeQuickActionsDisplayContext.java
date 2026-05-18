@@ -5,7 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -14,14 +13,11 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -30,6 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
@@ -70,34 +67,8 @@ public class ViewHomeQuickActionsDisplayContext {
 		).build();
 	}
 
-	public boolean hasAddEntryPermission() {
-		List<ObjectEntryFolder> objectEntryFolders =
-			_objectEntryFolderLocalService.
-				getObjectEntryFoldersByExternalReferenceCode(
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-					_depotEntryLocalService.getDepotEntryGroupIds(
-						_themeDisplay.getCompanyId(),
-						DepotConstants.TYPE_SPACE),
-					_themeDisplay.getCompanyId());
-
-		for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
-			try {
-				if (_objectEntryFolderModelResourcePermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						objectEntryFolder.getObjectEntryFolderId(),
-						ActionKeys.ADD_ENTRY)) {
-
-					return true;
-				}
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
-		}
-
-		return false;
+	public boolean hasAddEntryPermission() throws Exception {
+		return ListUtil.isNotEmpty(_getQuickActions());
 	}
 
 	private Map<String, Object> _createQuickAction(
@@ -176,7 +147,11 @@ public class ViewHomeQuickActionsDisplayContext {
 	}
 
 	private List<Map<String, Object>> _getQuickActions() throws Exception {
-		List<Map<String, Object>> quickActions = new ArrayList<>();
+		if (_quickActions != null) {
+			return _quickActions;
+		}
+
+		_quickActions = new ArrayList<>();
 
 		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionService.getCMSObjectDefinitions(
@@ -213,7 +188,7 @@ public class ViewHomeQuickActionsDisplayContext {
 				actionIcon = _icons.getOrDefault(entryFolderERC, "forms");
 			}
 
-			quickActions.add(
+			_quickActions.add(
 				_createQuickAction(
 					depotEntriesJSONArray, actionIcon, objectDefinition));
 		}
@@ -222,7 +197,7 @@ public class ViewHomeQuickActionsDisplayContext {
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_VOCABULARY)) {
 
-			quickActions.add(
+			_quickActions.add(
 				HashMapBuilder.<String, Object>put(
 					"action", "createVocabulary"
 				).put(
@@ -242,11 +217,8 @@ public class ViewHomeQuickActionsDisplayContext {
 				).build());
 		}
 
-		return quickActions;
+		return _quickActions;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ViewHomeQuickActionsDisplayContext.class);
 
 	private static final Map<String, String> _icons = HashMapBuilder.put(
 		"L_CMS_BASIC_DOCUMENT", "documents-and-media"
@@ -270,6 +242,7 @@ public class ViewHomeQuickActionsDisplayContext {
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ModelResourcePermission<ObjectEntryFolder>
 		_objectEntryFolderModelResourcePermission;
+	private List<Map<String, Object>> _quickActions;
 	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
 	private final ThemeDisplay _themeDisplay;
 

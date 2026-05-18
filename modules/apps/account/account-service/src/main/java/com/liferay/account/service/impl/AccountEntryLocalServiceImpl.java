@@ -11,11 +11,15 @@ import com.liferay.account.exception.AccountEntryEmailAddressException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelTable;
 import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
+import com.liferay.account.service.persistence.AccountEntryOrganizationRelPersistence;
+import com.liferay.account.service.persistence.AccountEntryUserRelPersistence;
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -30,7 +34,6 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
@@ -50,7 +53,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -75,6 +77,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -390,59 +393,51 @@ public class AccountEntryLocalServiceImpl
 	public AccountEntry fetchUserAccountEntry(
 		long userId, long accountEntryId) {
 
-		JoinStep joinStep = DSLQueryFactoryUtil.selectDistinct(
-			AccountEntryTable.INSTANCE
-		).from(
-			UserTable.INSTANCE
-		).leftJoinOn(
-			AccountEntryUserRelTable.INSTANCE,
-			AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
-				UserTable.INSTANCE.userId)
-		);
+		AccountEntry accountEntry = accountEntryPersistence.fetchByPrimaryKey(
+			accountEntryId);
 
-		Predicate accountEntryTablePredicate =
-			AccountEntryTable.INSTANCE.accountEntryId.eq(
-				AccountEntryUserRelTable.INSTANCE.accountEntryId
-			).or(
-				AccountEntryTable.INSTANCE.userId.eq(UserTable.INSTANCE.userId)
-			);
+		if ((accountEntry == null) ||
+			Objects.equals(
+				accountEntry.getType(),
+				AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)) {
 
-		Long[] organizationIds = _getOrganizationIds(userId);
-
-		if (ArrayUtil.isNotEmpty(organizationIds)) {
-			joinStep = joinStep.leftJoinOn(
-				AccountEntryOrganizationRelTable.INSTANCE,
-				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
-					organizationIds));
-
-			accountEntryTablePredicate = accountEntryTablePredicate.or(
-				AccountEntryTable.INSTANCE.accountEntryId.eq(
-					AccountEntryOrganizationRelTable.INSTANCE.accountEntryId));
-		}
-
-		joinStep = joinStep.leftJoinOn(
-			AccountEntryTable.INSTANCE, accountEntryTablePredicate);
-
-		DSLQuery dslQuery = joinStep.where(
-			UserTable.INSTANCE.userId.eq(
-				userId
-			).and(
-				AccountEntryTable.INSTANCE.type.neq(
-					AccountConstants.ACCOUNT_ENTRY_TYPE_GUEST)
-			).and(
-				AccountEntryTable.INSTANCE.accountEntryId.eq(accountEntryId)
-			)
-		).limit(
-			0, 1
-		);
-
-		List<AccountEntry> accountEntries = dslQuery(dslQuery);
-
-		if (accountEntries.isEmpty()) {
 			return null;
 		}
 
-		return accountEntries.get(0);
+		if (accountEntry.getUserId() == userId) {
+			return accountEntry;
+		}
+
+		AccountEntryUserRel accountEntryUserRel =
+			_accountEntryUserRelPersistence.fetchByAEI_AUI(
+				accountEntryId, userId);
+
+		if (accountEntryUserRel != null) {
+			return accountEntry;
+		}
+
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+			_accountEntryOrganizationRelPersistence.findByAccountEntryId(
+				accountEntryId);
+
+		if (accountEntryOrganizationRels.isEmpty()) {
+			return null;
+		}
+
+		Set<Long> userOrganizationIds = SetUtil.fromArray(
+			_getOrganizationIds(userId));
+
+		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
+				accountEntryOrganizationRels) {
+
+			if (userOrganizationIds.contains(
+					accountEntryOrganizationRel.getOrganizationId())) {
+
+				return accountEntry;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -1294,6 +1289,13 @@ public class AccountEntryLocalServiceImpl
 	@Reference
 	private AccountEntryEmailAddressValidatorFactory
 		_accountEntryEmailAddressValidatorFactory;
+
+	@Reference
+	private AccountEntryOrganizationRelPersistence
+		_accountEntryOrganizationRelPersistence;
+
+	@Reference
+	private AccountEntryUserRelPersistence _accountEntryUserRelPersistence;
 
 	@Reference
 	private AddressLocalService _addressLocalService;

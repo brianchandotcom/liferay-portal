@@ -166,17 +166,6 @@
 			"type": "oneToMany"
 		},
 		{
-			"deletionType": "disassociate",
-			"externalReferenceCode": "R_USER_TO_LICENSE_KEY_CREATED_BY",
-			"label": {
-				"en_US": "Created By User to License Key"
-			},
-			"name": "createdByUser",
-			"objectDefinitionExternalReferenceCode1": "L_USER",
-			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
-			"type": "oneToMany"
-		},
-		{
 			"deletionType": "cascade",
 			"externalReferenceCode": "R_ENTITLEMENT_DEFINITION_TO_ENTITLEMENT",
 			"label": {
@@ -195,17 +184,6 @@
 			},
 			"name": "entitlementToLicenseKey",
 			"objectDefinitionExternalReferenceCode1": "C_ENTITLEMENT",
-			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
-			"type": "oneToMany"
-		},
-		{
-			"deletionType": "disassociate",
-			"externalReferenceCode": "R_USER_TO_LICENSE_KEY_MODIFIED_BY",
-			"label": {
-				"en_US": "Modified By User to License Key"
-			},
-			"name": "modifiedByUser",
-			"objectDefinitionExternalReferenceCode1": "L_USER",
 			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
 			"type": "oneToMany"
 		},
@@ -306,6 +284,28 @@
 			"name": "publisherToCommerceOrder",
 			"objectDefinitionExternalReferenceCode1": "C_PUBLISHER_SALES_SUMMARY",
 			"objectDefinitionExternalReferenceCode2": "L_COMMERCE_ORDER",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "disassociate",
+			"externalReferenceCode": "R_USER_TO_LICENSE_KEY_CREATED_BY",
+			"label": {
+				"en_US": "Created By User to License Key"
+			},
+			"name": "createdByUser",
+			"objectDefinitionExternalReferenceCode1": "L_USER",
+			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "disassociate",
+			"externalReferenceCode": "R_USER_TO_LICENSE_KEY_MODIFIED_BY",
+			"label": {
+				"en_US": "Modified By User to License Key"
+			},
+			"name": "modifiedByUser",
+			"objectDefinitionExternalReferenceCode1": "L_USER",
+			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
 			"type": "oneToMany"
 		}
 	]

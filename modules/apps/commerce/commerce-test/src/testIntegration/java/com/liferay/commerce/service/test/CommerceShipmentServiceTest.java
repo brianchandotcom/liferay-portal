@@ -169,7 +169,6 @@ public class CommerceShipmentServiceTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
-
 		RoleTestUtil.addResourcePermission(
 			_role, CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT,
 			ResourceConstants.SCOPE_COMPANY,

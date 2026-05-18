@@ -155,15 +155,14 @@ public class ObjectEntrySynonymSearchTest {
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap("Title")
 					).name(
-						_TITLE_FIELD_NAME
+						"title"
 					).build()),
 				Collections.emptyList(),
 				ServiceContextTestUtil.getServiceContext());
 
 		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
 
-		ObjectField titleField = objectFieldBag.getObjectField(
-			_TITLE_FIELD_NAME);
+		ObjectField titleField = objectFieldBag.getObjectField("title");
 
 		_objectDefinitionLocalService.updateTitleObjectFieldId(
 			objectDefinition.getObjectDefinitionId(),
@@ -180,12 +179,12 @@ public class ObjectEntrySynonymSearchTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				_TITLE_FIELD_NAME, "title"
-			).put(
 				Field.CONTENT + "_i18n",
 				HashMapBuilder.put(
 					LocaleUtil.toLanguageId(LocaleUtil.US), content
 				).build()
+			).put(
+				"title", "title"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -200,7 +199,8 @@ public class ObjectEntrySynonymSearchTest {
 		ReflectionTestUtil.invoke(
 			_editSynonymSetsMVCActionCommand, "updateSynonymSets",
 			new Class<?>[] {ActionRequest.class, String[].class},
-			mockLiferayPortletActionRequest, _SYNONYM_SETS);
+			mockLiferayPortletActionRequest,
+			new String[] {"product delivery,PD", "query,uqb"});
 	}
 
 	private static void _deleteSynonymSets() {
@@ -237,12 +237,6 @@ public class ObjectEntrySynonymSearchTest {
 		Assert.assertEquals(
 			searchResponse.getRequestString(), 2, documents.size());
 	}
-
-	private static final String[] _SYNONYM_SETS = {
-		"product delivery,PD", "query,uqb"
-	};
-
-	private static final String _TITLE_FIELD_NAME = "title";
 
 	private static Long _companyId;
 

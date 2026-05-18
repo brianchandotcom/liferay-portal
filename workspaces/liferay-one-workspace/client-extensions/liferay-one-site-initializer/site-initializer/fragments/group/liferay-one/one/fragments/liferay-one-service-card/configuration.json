@@ -1,0 +1,21 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"label": "Card URL",
+					"localizable": true,
+					"name": "cardUrl",
+					"type": "url"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "Icon URL",
+					"name": "iconUrl",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

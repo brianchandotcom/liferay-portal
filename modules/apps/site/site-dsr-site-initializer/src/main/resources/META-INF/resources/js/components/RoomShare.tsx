@@ -76,7 +76,6 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 	const [loading, setLoading] = useState(false);
 	const [roleKey, setRoleKey] = useState('Site Member');
 	const [users, setUsers] = useState<IUserAccount[]>([]);
-
 	const currentUserId = Number(Liferay.ThemeDisplay.getUserId());
 
 	const isOwner =
@@ -262,16 +261,15 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 		loadUsers();
 	}, [loadUsers]);
 
-	const canEditRow = (user: IUserAccount): boolean => {
+	const canEditMember = (user: IUserAccount): boolean => {
 		if (user.roleKey === OWNER_ROLE_KEY) {
 			return false;
 		}
 
-		if (isOwner) {
-			return true;
-		}
-
-		if (user.isInvitedMember && user.ownerId === currentUserId) {
+		if (
+			isOwner ||
+			(user.isInvitedMember && user.ownerId === currentUserId)
+		) {
 			return true;
 		}
 
@@ -402,7 +400,7 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 										<span className="text-secondary">
 											{Liferay.Language.get('owner')}
 										</span>
-									) : canEditRow(user) ? (
+									) : canEditMember(user) ? (
 										<DropDown
 											closeOnClick
 											trigger={
@@ -455,7 +453,7 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 										</span>
 									)}
 
-									{canEditRow(user) && (
+									{canEditMember(user) && (
 										<ClayButton
 											className="ml-3 text-secondary"
 											disabled={loading}

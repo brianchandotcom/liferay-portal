@@ -152,8 +152,7 @@ public class ShareTag extends IncludeTag {
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
-		if ((modelResourcePermission != null) &&
-			modelResourcePermission.contains(
+		if (modelResourcePermission.contains(
 				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
 
 			return true;

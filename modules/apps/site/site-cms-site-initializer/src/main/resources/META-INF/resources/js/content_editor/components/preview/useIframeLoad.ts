@@ -23,6 +23,7 @@ export default function useIframeLoad(
 	isExternalURL: boolean
 ) {
 	const [iframeError, setIframeError] = useState<boolean>(false);
+	const [isIframeLoading, setIsIframeLoading] = useState<boolean>(false);
 	const [iframeKey, setIframeKey] = useState<number>(0);
 	const loadStartRef = useRef<number>(0);
 	const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -41,13 +42,18 @@ export default function useIframeLoad(
 		setIframeError(false);
 
 		if (!previewURL) {
+			setIsIframeLoading(false);
+
 			return;
 		}
+
+		setIsIframeLoading(true);
 
 		loadStartRef.current = performance.now();
 
 		loadTimeoutRef.current = setTimeout(() => {
 			setIframeError(true);
+			setIsIframeLoading(false);
 		}, IFRAME_LOAD_TIMEOUT_MS);
 
 		return clearLoadTimeout;
@@ -65,11 +71,19 @@ export default function useIframeLoad(
 		if (loadTime < IFRAME_LOAD_BLOCKED_MS) {
 			setIframeError(true);
 		}
+
+		setIsIframeLoading(false);
 	};
 
 	const reloadIframe = () => {
 		setIframeKey((key) => key + 1);
 	};
 
-	return {handleIframeLoad, iframeError, iframeKey, reloadIframe};
+	return {
+		handleIframeLoad,
+		iframeError,
+		iframeKey,
+		isIframeLoading,
+		reloadIframe,
+	};
 }

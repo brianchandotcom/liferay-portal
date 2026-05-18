@@ -10,6 +10,7 @@ import {v4 as uuidv4} from 'uuid';
 import {ConditionBuilder} from './ConditionBuilder';
 import {Config, initializeConfig} from './config';
 import {RELATIVE_DATE_VALUES} from './operators';
+import {getPropertyKey} from './types';
 
 import type {
 	FilterCondition,
@@ -130,19 +131,32 @@ export default function CollectionFilterBuilder({
 		[properties]
 	);
 
-	const flatProperties = useMemo(
-		() => propertiesWithAssetFields.flatMap((group) => group.items),
+	const propertiesMap = useMemo(
+		() =>
+			new Map(
+				propertiesWithAssetFields
+					.flatMap((group) => group.items)
+					.map((property) => [
+						getPropertyKey(
+							property.classNameId,
+							property.classTypeId,
+							property.name
+						),
+						property,
+					])
+			),
 		[propertiesWithAssetFields]
 	);
 
 	const filterValuesAndOmitID = (conditions: FilterCondition[]) =>
 		conditions
 			.map(({id: _id, ...props}) => {
-				const property = flatProperties.find(
-					(p) =>
-						p.name === props.propertyName &&
-						p.classNameId === props.classNameId &&
-						p.classTypeId === props.classTypeId
+				const property = propertiesMap.get(
+					getPropertyKey(
+						props.classNameId,
+						props.classTypeId,
+						props.propertyName
+					)
 				);
 
 				return {...props, value: serializeValue(property, props.value)};
@@ -274,6 +288,7 @@ export default function CollectionFilterBuilder({
 				conditions={conditions}
 				onChange={handleChange}
 				properties={propertiesWithAssetFields}
+				propertiesMap={propertiesMap}
 			/>
 
 			<input

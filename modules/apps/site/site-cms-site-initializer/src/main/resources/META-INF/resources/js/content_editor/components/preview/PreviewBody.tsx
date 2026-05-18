@@ -22,8 +22,8 @@ export default function PreviewBody({
 }) {
 	const {
 		displayPageTemplates,
+		isDisplayPageTemplatesListEmpty,
 		previewURL,
-		showDisplayPageTemplateAlert,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
@@ -50,7 +50,7 @@ export default function PreviewBody({
 				</ClayAlert>
 			) : null}
 
-			{showDisplayPageTemplateAlert ? (
+			{isDisplayPageTemplatesListEmpty ? (
 				<ClayAlert
 					className="m-3"
 					displayType="info"

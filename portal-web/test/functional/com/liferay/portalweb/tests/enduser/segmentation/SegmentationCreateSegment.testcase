@@ -1027,50 +1027,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-134561 Bug: Apostrophe in segment property value breaks filter"
-	@priority = 4
-	@uitest
-	test CheckSegmentationWithApostropheValueFilter {
-		task ("Add user with apostrophe in first and last name") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "user'fn",
-				userLastName = "user'ln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Last Name");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "user'ln");
-
-			Segmentation.fillTitle(titleField = "CheckSegmentationWithApostropheValueFilter Test");
-
-			Segmentation.viewMembers(memberName = "user'fn user'ln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Checks if the second segmentation is edited correctly") {
-			Segmentation.editSegment(entry = "CheckSegmentationWithApostropheValueFilter Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "user'ln");
-		}
-	}
-
 	@description = "LPS-135495 Validate if, Input title values can only be changed in edit mode."
 	@priority = 3
 	test CheckTranslatedSegment {

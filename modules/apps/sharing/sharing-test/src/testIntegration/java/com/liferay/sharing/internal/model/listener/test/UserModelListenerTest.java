@@ -78,7 +78,7 @@ public class UserModelListenerTest {
 		_testAddUserWithExpiredInviteCollaboratorTicket();
 		_testAddUserWithInvalidEmailAddress();
 		_testAddUserWithInviteCollaboratorTickets();
-		_testAddUserWithUpperCaseEmail();
+		_testAddUserWithUpperCaseEmailAddress();
 	}
 
 	@Test
@@ -348,7 +348,7 @@ public class UserModelListenerTest {
 		_assertSharingEntryToTicketId(sharingEntry3, ticket3);
 	}
 
-	private void _testAddUserWithUpperCaseEmail() throws Exception {
+	private void _testAddUserWithUpperCaseEmailAddress() throws Exception {
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket = _addInviteCollaboratorTicket(
@@ -369,7 +369,10 @@ public class UserModelListenerTest {
 	private void _testDeleteUserWithoutToUserSharingEntries() throws Exception {
 		User toUser = UserTestUtil.addGroupUser(
 			_group1, RoleConstants.POWER_USER);
-		User otherUser = UserTestUtil.addGroupUser(
+
+		_users.add(toUser);
+
+		User unrelatedUser = UserTestUtil.addGroupUser(
 			_group1, RoleConstants.POWER_USER);
 
 		_sharingEntryLocalService.addSharingEntry(
@@ -387,7 +390,7 @@ public class UserModelListenerTest {
 		Assert.assertEquals(
 			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
 
-		_userLocalService.deleteUser(otherUser.getUserId());
+		_userLocalService.deleteUser(unrelatedUser.getUserId());
 
 		toUserSharingEntries =
 			_sharingEntryLocalService.getToUserSharingEntries(

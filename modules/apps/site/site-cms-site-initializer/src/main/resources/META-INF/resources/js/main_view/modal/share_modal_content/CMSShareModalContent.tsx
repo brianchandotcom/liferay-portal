@@ -143,7 +143,7 @@ export default function CMSShareModalContent({
 		];
 	};
 
-	const transformSubmitPayload = ({
+	const mapCollaboratorToPayload = ({
 		actionIds,
 		dateExpired,
 		share,
@@ -320,10 +320,10 @@ export default function CMSShareModalContent({
 				initialCollaborators as unknown as GenericCollaborator[]
 			}
 			itemId={itemId}
+			mapCollaboratorToPayload={mapCollaboratorToPayload}
 			permissionOptions={resolvePermissionOptions}
 			title={title}
 			transformSourceItems={transformSourceItems}
-			transformSubmitPayload={transformSubmitPayload}
 		/>
 	);
 }

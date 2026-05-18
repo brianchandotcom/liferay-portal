@@ -46,7 +46,7 @@ const _passthroughFilterCollaborators = (_collaborator: Collaborator) => true;
 
 const noop = () => {};
 
-const _defaultTransformSubmitPayload = ({
+const _defaultMapCollaboratorToPayload = ({
 	actionIds,
 	dateExpired,
 	share,
@@ -332,13 +332,13 @@ export default function ShareModalContent({
 	filterCollaborators = _passthroughFilterCollaborators,
 	initialCollaborators = [],
 	itemId,
+	mapCollaboratorToPayload = _defaultMapCollaboratorToPayload,
 	onAutocompleteChange = noop,
 	permissionOptions,
 	showAllowResharing = true,
 	showExpirationDate = true,
 	title = '',
 	transformSourceItems = _identityTransformSourceItems,
-	transformSubmitPayload = _defaultTransformSubmitPayload,
 }: ShareModalContentProps) {
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
@@ -428,7 +428,7 @@ export default function ShareModalContent({
 			itemId,
 			collaborators
 				.filter(filterCollaborators)
-				.map(transformSubmitPayload)
+				.map(mapCollaboratorToPayload)
 		);
 
 		setLoading(false);

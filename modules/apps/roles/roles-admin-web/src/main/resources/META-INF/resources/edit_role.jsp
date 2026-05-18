@@ -65,6 +65,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RequiredRoleException.class %>" message="old-role-name-is-a-required-system-role" />
+	<liferay-ui:error exception="<%= RoleSubtypeException.class %>" message="please-enter-a-valid-subtype" />
 
 	<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 

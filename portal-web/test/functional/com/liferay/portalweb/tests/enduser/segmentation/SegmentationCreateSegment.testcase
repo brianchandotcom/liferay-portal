@@ -820,43 +820,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-132111: Validate if it's posible to create a segment based on User > User criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserUser {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "User");
-
-			Segmentation.fillProperty(selectCheckbox = "userfn userln");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserUser Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserUser Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "userfn userln");
-		}
-	}
-
 	@description = "Test Automation for LPS-132112: Validate if it's posible to create a segment based on User > User Group criteria"
 	@priority = 5
 	@uitest

@@ -318,15 +318,15 @@ public class SectionDisplayContextHelper {
 		}
 		else {
 			Map<Long, List<Long>> objectEntryFolderIdsMap =
-				_getObjectEntryFolderIdsMap(
+				getObjectEntryFolderIdsMap(
 					themeDisplay.getCompanyId(),
 					rootObjectEntryFolderExternalReferenceCode,
 					themeDisplay.getUserId());
 
-			objectEntryDepotEntryGroupIds = _getDepotEntryGroupIds(
+			objectEntryDepotEntryGroupIds = getDepotEntryGroupIds(
 				ActionKeys.ADD_ENTRY, objectEntryFolderIdsMap, themeDisplay);
 
-			objectEntryFolderDepotEntryGroupIds = _getDepotEntryGroupIds(
+			objectEntryFolderDepotEntryGroupIds = getDepotEntryGroupIds(
 				ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
 				objectEntryFolderIdsMap, themeDisplay);
 		}
@@ -406,6 +406,29 @@ public class SectionDisplayContextHelper {
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				DepotConstants.TYPE_SPACE),
 			themeDisplay.getLocale());
+	}
+
+	public List<Long> getDepotEntryGroupIds(
+		String actionId, Map<Long, List<Long>> objectEntryFolderIdsMap,
+		ThemeDisplay themeDisplay) {
+
+		List<Long> depotEntryGroupIds = new ArrayList<>();
+
+		for (Map.Entry<Long, List<Long>> entry :
+				objectEntryFolderIdsMap.entrySet()) {
+
+			for (long objectEntryFolderId : entry.getValue()) {
+				if (_modelResourcePermissionContains(
+						actionId, objectEntryFolderId, themeDisplay)) {
+
+					depotEntryGroupIds.add(entry.getKey());
+
+					break;
+				}
+			}
+		}
+
+		return depotEntryGroupIds;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
@@ -706,6 +729,40 @@ public class SectionDisplayContextHelper {
 		return fdsActionDropdownItems;
 	}
 
+	public Map<Long, List<Long>> getObjectEntryFolderIdsMap(
+		long companyId, String rootObjectEntryFolderExternalReferenceCode,
+		long userId) {
+
+		Map<Long, List<Long>> objectEntryFolderIdsMap = new HashMap<>();
+
+		for (long depotEntryGroupId :
+				DepotEntryServiceUtil.getDepotEntryGroupIds(
+					companyId, userId, DepotConstants.TYPE_SPACE)) {
+
+			for (String objectEntryFolderExternalReferenceCode :
+					_getRootObjectEntryFolderExternalReferenceCodes(
+						rootObjectEntryFolderExternalReferenceCode)) {
+
+				ObjectEntryFolder objectEntryFolder =
+					ObjectEntryFolderLocalServiceUtil.
+						fetchObjectEntryFolderByExternalReferenceCode(
+							objectEntryFolderExternalReferenceCode,
+							depotEntryGroupId, companyId);
+
+				if (objectEntryFolder != null) {
+					List<Long> objectEntryFolderIds =
+						objectEntryFolderIdsMap.computeIfAbsent(
+							depotEntryGroupId, key -> new ArrayList<>());
+
+					objectEntryFolderIds.add(
+						objectEntryFolder.getObjectEntryFolderId());
+				}
+			}
+		}
+
+		return objectEntryFolderIdsMap;
+	}
+
 	private void _addEditCategoriesAndTagsBulkActions(
 		List<DropdownItem> bulkActionDropdownItems,
 		HttpServletRequest httpServletRequest) {
@@ -927,29 +984,6 @@ public class SectionDisplayContextHelper {
 		return jsonArray;
 	}
 
-	private List<Long> _getDepotEntryGroupIds(
-		String actionId, Map<Long, List<Long>> objectEntryFolderIdsMap,
-		ThemeDisplay themeDisplay) {
-
-		List<Long> depotEntryGroupIds = new ArrayList<>();
-
-		for (Map.Entry<Long, List<Long>> entry :
-				objectEntryFolderIdsMap.entrySet()) {
-
-			for (long objectEntryFolderId : entry.getValue()) {
-				if (_modelResourcePermissionContains(
-						actionId, objectEntryFolderId, themeDisplay)) {
-
-					depotEntryGroupIds.add(entry.getKey());
-
-					break;
-				}
-			}
-		}
-
-		return depotEntryGroupIds;
-	}
-
 	private JSONObject _getJSONObject(long groupId, Locale locale) {
 		Group group = _groupLocalService.fetchGroup(groupId);
 
@@ -983,40 +1017,6 @@ public class SectionDisplayContextHelper {
 		}
 
 		return null;
-	}
-
-	private Map<Long, List<Long>> _getObjectEntryFolderIdsMap(
-		long companyId, String rootObjectEntryFolderExternalReferenceCode,
-		long userId) {
-
-		Map<Long, List<Long>> objectEntryFolderIdsMap = new HashMap<>();
-
-		for (long depotEntryGroupId :
-				DepotEntryServiceUtil.getDepotEntryGroupIds(
-					companyId, userId, DepotConstants.TYPE_SPACE)) {
-
-			for (String objectEntryFolderExternalReferenceCode :
-					_getRootObjectEntryFolderExternalReferenceCodes(
-						rootObjectEntryFolderExternalReferenceCode)) {
-
-				ObjectEntryFolder objectEntryFolder =
-					ObjectEntryFolderLocalServiceUtil.
-						fetchObjectEntryFolderByExternalReferenceCode(
-							objectEntryFolderExternalReferenceCode,
-							depotEntryGroupId, companyId);
-
-				if (objectEntryFolder != null) {
-					List<Long> objectEntryFolderIds =
-						objectEntryFolderIdsMap.computeIfAbsent(
-							depotEntryGroupId, key -> new ArrayList<>());
-
-					objectEntryFolderIds.add(
-						objectEntryFolder.getObjectEntryFolderId());
-				}
-			}
-		}
-
-		return objectEntryFolderIdsMap;
 	}
 
 	private FDSActionDropdownItem _getPermissionsFDSActionDropdownItem(

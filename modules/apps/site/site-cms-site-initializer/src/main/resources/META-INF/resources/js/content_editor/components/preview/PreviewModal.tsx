@@ -29,8 +29,8 @@ export default function PreviewModal({
 }: Props) {
 	const {
 		displayPageTemplates,
+		isDisplayPageTemplatesListEmpty,
 		previewURL,
-		showDisplayPageTemplateAlert,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
@@ -52,7 +52,7 @@ export default function PreviewModal({
 					vertical
 				/>
 
-				{showDisplayPageTemplateAlert ? (
+				{isDisplayPageTemplatesListEmpty ? (
 					<ClayAlert
 						className="mb-0 mt-3"
 						displayType="info"

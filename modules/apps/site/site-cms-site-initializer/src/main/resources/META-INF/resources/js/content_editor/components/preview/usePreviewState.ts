@@ -126,13 +126,14 @@ export default function usePreviewState(
 		[setExternalURL, setSelectedChannelKey, setSelectedDisplayPageKey]
 	);
 
-	const showDisplayPageTemplateAlert =
+	const isDisplayPageTemplatesListEmpty =
 		displayPageTemplates !== undefined && !displayPageTemplates.length;
 
 	return {
 		channels,
 		displayPageTemplates,
 		externalURL,
+		isDisplayPageTemplatesListEmpty,
 		isExternalURL,
 		loadSites,
 		previewURL,
@@ -141,7 +142,6 @@ export default function usePreviewState(
 		selectedDisplayPageKey,
 		setExternalURL,
 		setSelectedDisplayPageKey,
-		showDisplayPageTemplateAlert,
 		sitesStatus,
 	};
 }

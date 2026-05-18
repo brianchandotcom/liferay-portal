@@ -56,6 +56,12 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 		</aui:button-row>
 	</aui:form>
 
+	<div class="hide p-4 text-center" id="<portlet:namespace />loadingContainer">
+		<span aria-hidden="true" class="loading-animation"></span>
+
+		<p><liferay-ui:message key="importing-order-items.-please-do-not-close-this-tab" /></p>
+	</div>
+
 	<liferay-frontend:component
 		module="{preview} from commerce-order-content-web"
 	/>

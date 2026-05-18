@@ -12,10 +12,14 @@ export default function ({namespace}) {
 		importButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			const openerWindow = getOpener();
 			const form = document.getElementById(`${namespace}fm`);
+			const loadingContainer = document.getElementById(
+				`${namespace}loadingContainer`
+			);
+			const openerWindow = getOpener();
 
 			form.classList.add('hide');
+			loadingContainer.classList.remove('hide');
 
 			openerWindow.document.body.appendChild(form);
 			openerWindow.submitForm(form);

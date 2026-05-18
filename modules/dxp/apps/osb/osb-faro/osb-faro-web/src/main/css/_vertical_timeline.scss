@@ -76,6 +76,7 @@
 					}
 
 					.timeline-panel-body-content-details {
+						max-width: none;
 						width: auto;
 					}
 
@@ -88,6 +89,7 @@
 						line-height: 1;
 
 						.text-truncate {
+							line-height: normal;
 							margin-bottom: 8px;
 						}
 					}
@@ -142,7 +144,7 @@
 				display: flex;
 				justify-content: space-between;
 				margin-left: auto;
-				width: 30%;
+				max-width: 30%;
 
 				.icon-group {
 					display: flex;
@@ -168,7 +170,7 @@
 			}
 
 			.timeline-panel-body-content-text {
-				overflow-x: hidden;
+				overflow-x: clip;
 
 				.event-icon {
 					margin-left: 40px;

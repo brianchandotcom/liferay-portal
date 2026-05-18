@@ -84,7 +84,7 @@ public class ImportProcessResourceTest
 
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.addBackgroundTask(
-				TestPropsValues.getUserId(), groupId, importProcess.getTitle(),
+				TestPropsValues.getUserId(), groupId, importProcess.getName(),
 				BackgroundTaskExecutorNames.
 					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR,
 				HashMapBuilder.<String, Serializable>put(
@@ -99,7 +99,7 @@ public class ImportProcessResourceTest
 				setDateCreated(backgroundTask.getCreateDate());
 				setDateModified(backgroundTask.getModifiedDate());
 				setId(backgroundTask.getBackgroundTaskId());
-				setTitle(backgroundTask.getName());
+				setName(backgroundTask.getName());
 			}
 		};
 	}

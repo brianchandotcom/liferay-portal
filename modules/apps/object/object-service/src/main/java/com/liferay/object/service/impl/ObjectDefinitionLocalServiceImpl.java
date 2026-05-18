@@ -3644,9 +3644,11 @@ public class ObjectDefinitionLocalServiceImpl
 					continue;
 				}
 
-				if (Objects.equals(allowStandaloneObjectEntry, "false") &&
+				if (FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-69877") &&
+					objectDefinition.isAllowStandaloneObjectEntry() &&
 					objectDefinition.isApproved() &&
-					objectDefinition.isAllowStandaloneObjectEntry()) {
+					Objects.equals(allowStandaloneObjectEntry, "false")) {
 
 					long count = _objectEntryLocalService.getObjectEntriesCount(
 						0, null, objectDefinition,

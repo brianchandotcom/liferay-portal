@@ -771,7 +771,7 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Contacts Sales"
+				"en_US": "Contact Sales"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/contactsales",
@@ -1865,7 +1865,7 @@
 					"label": {
 						"en_US": "Order ID"
 					},
-					"name": "orderID",
+					"name": "orderId",
 					"objectFieldSettings": [
 					],
 					"required": false,
@@ -1946,7 +1946,7 @@
 				"label_i18n": "Approved"
 			},
 			"system": false,
-			"titleObjectFieldName": "orderID"
+			"titleObjectFieldName": "orderId"
 		},
 		{
 			"active": true,
@@ -2459,7 +2459,7 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "License Types Description"
+				"en_US": "License Types Descriptions"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/licensetypesdescriptions",
@@ -3342,7 +3342,7 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Publishers Details"
+				"en_US": "Publisher Details"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/publisherdetails",
@@ -3730,7 +3730,7 @@
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Request Publisher Account"
+				"en_US": "Request Publisher Accounts"
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/requestpublisheraccounts",

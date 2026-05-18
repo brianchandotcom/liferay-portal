@@ -76,6 +76,15 @@ public class FormRelationshipStyledLayoutStructureItem
 				return _contentType;
 			}
 		).put(
+			"indexed",
+			() -> {
+				if (_indexed) {
+					return null;
+				}
+
+				return false;
+			}
+		).put(
 			"repeatable", _repeatable
 		);
 	}
@@ -90,6 +99,10 @@ public class FormRelationshipStyledLayoutStructureItem
 		return HashUtil.hash(0, getItemId());
 	}
 
+	public boolean isIndexed() {
+		return _indexed;
+	}
+
 	public boolean isRepeatable() {
 		return _repeatable;
 	}
@@ -100,6 +113,10 @@ public class FormRelationshipStyledLayoutStructureItem
 
 	public void setContentType(String contentType) {
 		_contentType = contentType;
+	}
+
+	public void setIndexed(boolean indexed) {
+		_indexed = indexed;
 	}
 
 	public void setRepeatable(boolean repeatable) {
@@ -119,6 +136,10 @@ public class FormRelationshipStyledLayoutStructureItem
 			setContentType(itemConfigJSONObject.getString("contentType"));
 		}
 
+		if (itemConfigJSONObject.has("indexed")) {
+			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
+		}
+
 		if (itemConfigJSONObject.has("repeatable")) {
 			setRepeatable(itemConfigJSONObject.getBoolean("repeatable"));
 		}
@@ -126,6 +147,7 @@ public class FormRelationshipStyledLayoutStructureItem
 
 	private JSONObject _buttonLabelJSONObject;
 	private String _contentType = "";
+	private boolean _indexed = true;
 	private boolean _repeatable = true;
 
 }

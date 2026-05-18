@@ -139,7 +139,33 @@ async function postFormDataWithProgress<T>(
 	});
 }
 
+async function post<T>(url: string, body: unknown): Promise<RequestResult<T>> {
+	try {
+		const response = await fetch(url, {
+			body: JSON.stringify(body),
+			headers: {...HEADERS, 'Content-Type': 'application/json'},
+			method: 'POST',
+		});
+
+		const responseData = await response.json();
+
+		if (response.ok) {
+			return {data: responseData as T, error: null};
+		}
+
+		return {
+			data: null,
+			error: getErrorMessage(responseData as ApiErrorResponse),
+			status: response.status.toString(),
+		};
+	}
+	catch (error) {
+		return {data: null, error: UNEXPECTED_ERROR_MESSAGE};
+	}
+}
+
 export default {
 	get,
+	post,
 	postFormDataWithProgress,
 };

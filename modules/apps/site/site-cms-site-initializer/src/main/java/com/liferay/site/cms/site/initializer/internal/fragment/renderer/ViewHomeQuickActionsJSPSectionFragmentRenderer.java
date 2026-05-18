@@ -9,10 +9,14 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextHelper;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeQuickActionsDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,6 +44,10 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 			_depotEntryLocalService, groupLocalService,
 			_objectDefinitionService, _objectEntryFolderLocalService,
 			_objectEntryFolderModelResourcePermission,
+			new SectionDisplayContextHelper(
+				_depotEntryLocalService, groupLocalService, _language,
+				_objectDefinitionSettingLocalService,
+				_objectEntryFolderModelResourcePermission, _portal),
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -53,7 +61,14 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Reference
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
@@ -63,5 +78,8 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 	)
 	private ModelResourcePermission<ObjectEntryFolder>
 		_objectEntryFolderModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

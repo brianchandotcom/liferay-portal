@@ -47,13 +47,7 @@ export const ASSET_TYPE_OPTIONS = [
 		label: Liferay.Language.get('documents-and-media'),
 		value: 'documents-and-media'
 	},
-	{label: Liferay.Language.get('web-content'), value: 'web-content'},
-	{
-		label: Liferay.Language.get('basic-web-content'),
-		value: 'basic-web-content'
-	},
-	{label: Liferay.Language.get('basic-document'), value: 'basic-document'},
-	{label: Liferay.Language.get('knowledge-base'), value: 'knowledge-base'}
+	{label: Liferay.Language.get('web-content'), value: 'web-content'}
 ];
 
 export const DEFAULT_CONJUNCTION_CRITERION = {

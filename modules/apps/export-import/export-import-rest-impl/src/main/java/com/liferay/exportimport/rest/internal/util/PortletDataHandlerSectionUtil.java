@@ -47,7 +47,7 @@ public class PortletDataHandlerSectionUtil {
 				previewPortletDataHandlersMap)
 		throws Exception {
 
-		if ((portletDataHandler == null) || portletDataHandler.isHidden() ||
+		if ((portletDataHandler == null) ||
 			!portletDataHandler.isEnabled(companyId)) {
 
 			return;

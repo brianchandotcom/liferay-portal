@@ -125,7 +125,7 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                     2
                   </span>
                   <span
-                    class="device-icon"
+                    class="device-icon mr-2"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Unknown Device
@@ -444,7 +444,7 @@ Firefox"
                     2
                   </span>
                   <span
-                    class="device-icon"
+                    class="device-icon mr-2"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Mobile
@@ -730,7 +730,7 @@ Firefox"
                     2
                   </span>
                   <span
-                    class="device-icon"
+                    class="device-icon mr-2"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Desktop

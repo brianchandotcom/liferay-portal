@@ -84,7 +84,7 @@ public class CreateAccountUserMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testCreateAccountUserFromInviteCollaboratorTicket()
+	public void testCreateAccountUserWithInviteCollaboratorTicket()
 		throws Exception {
 
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";

@@ -1,6 +1,26 @@
 [
 	{
 		"actionIds": [
+			"DELETE",
+			"UPDATE",
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AIHubAgentDefinition$]",
+		"roleName": "AI Hub Agent Manager",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"ADD_OBJECT_ENTRY"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AIHubAgentDefinition$]",
+		"roleName": "AI Hub Agent Manager",
+		"scope": "3"
+	},
+	{
+		"actionIds": [
 			"VIEW"
 		],
 		"primKey": "0",

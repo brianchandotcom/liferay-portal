@@ -48,7 +48,7 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 	@Override
 	public String[] getUniqueIndexColumnNames() {
 		return new String[] {
-			"groupId", "classNameId", "languageId", "urlTitle"
+			"groupId", "classNameId", "parentClassPK", "languageId", "urlTitle"
 		};
 	}
 
@@ -65,6 +65,7 @@ public class FriendlyURLEntryLocalizationConstraintResolver
 			() -> _friendlyURLEntryLocalService.getUniqueUrlTitle(
 				friendlyURLEntryLocalization.getGroupId(),
 				friendlyURLEntryLocalization.getClassNameId(),
+				friendlyURLEntryLocalization.getParentClassPK(),
 				friendlyURLEntryLocalization.getClassPK(),
 				friendlyURLEntryLocalization.getUrlTitle(),
 				friendlyURLEntryLocalization.getLanguageId()));

@@ -216,6 +216,46 @@ export class SpaceSummaryPage {
 		await this.closeButton.click();
 	}
 
+	async connectSiteTemplate(siteTemplateName: string) {
+		await this.openConnectSitesDialog();
+
+		await this.page
+			.getByLabel('Sites', {exact: true})
+			.selectOption('site-templates');
+
+		await this.page
+			.getByPlaceholder('Select a Site Template', {exact: true})
+			.click();
+		await this.page.getByRole('option', {name: siteTemplateName}).click();
+		await this.page
+			.getByRole('button', {exact: true, name: 'Connect'})
+			.click();
+
+		await this.page
+			.getByLabel('Connected Sites')
+			.getByText(`${siteTemplateName} (Site Template)`, {exact: true})
+			.waitFor();
+
+		await this.closeButton.click();
+	}
+
+	async disconnectSiteFromModal(name: string) {
+		await this.page
+			.getByLabel('Connected Sites')
+			.getByRole('listitem')
+			.filter({has: this.page.getByText(name, {exact: true})})
+			.getByRole('button', {name: /Actions/i})
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Disconnect'}).click();
+	}
+
+	async openConnectedSitesModal() {
+		await this.viewAllSitesLink.click();
+
+		await this.page.getByRole('dialog').waitFor();
+	}
+
 	private async openConnectSitesDialog() {
 		await this.page
 			.getByRole('button', {name: 'Connect Sites'})

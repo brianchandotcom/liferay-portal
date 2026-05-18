@@ -226,7 +226,7 @@
 		},
 		{
 			"DBType": "Long",
-			"businessType": "Long",
+			"businessType": "LongInteger",
 			"externalReferenceCode": "TRIGGERING_USER_ID",
 			"indexed": true,
 			"indexedAsKeyword": true,

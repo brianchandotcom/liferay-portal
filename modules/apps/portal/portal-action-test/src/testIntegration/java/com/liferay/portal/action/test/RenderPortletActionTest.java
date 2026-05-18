@@ -240,22 +240,22 @@ public class RenderPortletActionTest {
 		mockHttpServletRequest.setParameter(
 			"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));
 
-		String renderPortletColumnId = RandomTestUtil.randomString();
+		String columnId = RandomTestUtil.randomString();
 
 		mockHttpServletRequest.setParameter(
-			"p_p_col_id", renderPortletColumnId);
+			"p_p_col_id", columnId);
 
-		String renderPortletColumnPos = String.valueOf(
+		String columnPos = String.valueOf(
 			RandomTestUtil.randomInt());
 
 		mockHttpServletRequest.setParameter(
-			"p_p_col_pos", renderPortletColumnPos);
+			"p_p_col_pos", columnPos);
 
-		String renderPortletColumnCount = String.valueOf(
+		String columnCount = String.valueOf(
 			RandomTestUtil.randomInt());
 
 		mockHttpServletRequest.setParameter(
-			"p_p_col_count", renderPortletColumnCount);
+			"p_p_col_count", columnCount);
 
 		String renderPortletBoundary = String.valueOf(
 			RandomTestUtil.randomBoolean());
@@ -281,8 +281,8 @@ public class RenderPortletActionTest {
 				"\n<link rel=\"stylesheet\" href=\"",
 				Arrays.asList(
 					portletDecorate, null, renderPortletBoundary,
-					renderPortletColumnCount, renderPortletColumnId,
-					renderPortletColumnPos),
+					columnCount, columnId,
+					columnPos),
 				".css\">"),
 			String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
 
@@ -294,8 +294,8 @@ public class RenderPortletActionTest {
 				String.valueOf(
 					Arrays.asList(
 						null, null, renderPortletBoundary,
-						renderPortletColumnCount, renderPortletColumnId,
-						renderPortletColumnPos))));
+						columnCount, columnId,
+						columnPos))));
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout, Group group)

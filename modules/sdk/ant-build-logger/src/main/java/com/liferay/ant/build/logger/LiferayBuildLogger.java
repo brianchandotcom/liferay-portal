@@ -35,7 +35,7 @@ public class LiferayBuildLogger extends DefaultLogger implements BuildListener {
 		PrintStream errorPrintStream = _getPrintStream(defaultLogger, "err");
 
 		if (errorPrintStream != null) {
-			defaultLogger.setOutputPrintStream(
+			defaultLogger.setErrorPrintStream(
 				new SecurePrintStream(errorPrintStream));
 		}
 

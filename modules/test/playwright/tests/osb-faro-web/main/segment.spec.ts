@@ -2286,7 +2286,7 @@ test(
 test(
 	'Segment name uniqueness is enforced on create and on edit',
 	{
-		tag: '@LRAC-14041 @LRAC-14043',
+		tag: ['@LRAC-14041', '@LRAC-14043'],
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const segmentIds: string[] = [];
@@ -2448,7 +2448,7 @@ test(
 test(
 	'Save, edit, and delete a batch segment with a Viewed Blog Web Behavior criterion',
 	{
-		tag: '@LRAC-8588 @LRAC-8597 @LRAC-8598',
+		tag: ['@LRAC-8588', '@LRAC-8597', '@LRAC-8598'],
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 
@@ -2719,7 +2719,7 @@ test.skip(
 
 	'Segment Membership tab lists all known individuals, shows the legend counts, and supports search',
 	{
-		tag: '@LRAC-8510 @LRAC-8512 @LRAC-8523',
+		tag: ['@LRAC-8510', '@LRAC-8512', '@LRAC-8523'],
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const runId = getRandomString();

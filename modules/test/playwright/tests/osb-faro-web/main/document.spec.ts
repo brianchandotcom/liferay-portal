@@ -177,7 +177,7 @@ test('Documents visitor behavior card shows expected amount of views', async ({
 test(
 	'Document overview surfaces appears-on, technology, and audience metrics',
 	{
-		tag: '@LRAC-8419 @LRAC-8403 @LRAC-8414',
+		tag: ['@LRAC-8419', '@LRAC-8403', '@LRAC-8414'],
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 

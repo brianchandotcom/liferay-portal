@@ -121,7 +121,7 @@ test('View all blogs in the property in assets', async ({
 test(
 	'Blog overview surfaces appears-on, cards, comments, and audience metrics',
 	{
-		tag: '@LRAC-8387 @LRAC-8374 @LRAC-8113 @LRAC-12347',
+		tag: ['@LRAC-8387', '@LRAC-8374', '@LRAC-8113', '@LRAC-12347'],
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 

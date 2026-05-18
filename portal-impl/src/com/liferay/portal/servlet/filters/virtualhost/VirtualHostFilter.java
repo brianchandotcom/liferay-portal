@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -261,7 +260,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		if (layoutSet == null) {
-			Group group = _fetchGroupByFriendlyURLPrefix(
+			Group group = PortalUtil.fetchFriendlyURLGroup(
 				CompanyThreadLocal.getCompanyId(), friendlyURL);
 
 			if (!PropsValues.
@@ -280,6 +279,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 				if (_log.isDebugEnabled()) {
 					_log.debug("Forward to " + sb.toString());
 				}
+
+				httpServletRequest.setAttribute(WebKeys.GROUP, group);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher(sb.toString());
@@ -346,8 +347,12 @@ public class VirtualHostFilter extends BasePortalFilter {
 					StringPool.BLANK);
 			}
 
-			Group group = _fetchGroupByFriendlyURLPrefix(
+			Group group = PortalUtil.fetchFriendlyURLGroup(
 				companyId, friendlyURL);
+
+			if (group != null) {
+				httpServletRequest.setAttribute(WebKeys.GROUP, group);
+			}
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
@@ -445,28 +450,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 				VirtualHostFilter.class.getName(), httpServletRequest,
 				httpServletResponse, filterChain);
 		}
-	}
-
-	private Group _fetchGroupByFriendlyURLPrefix(
-		long companyId, String friendlyURL) {
-
-		if (friendlyURL.equals(StringPool.SLASH)) {
-			return null;
-		}
-
-		int index = friendlyURL.indexOf(CharPool.SLASH, 1);
-
-		String groupFriendlyURL;
-
-		if (index != -1) {
-			groupFriendlyURL = friendlyURL.substring(0, index);
-		}
-		else {
-			groupFriendlyURL = friendlyURL;
-		}
-
-		return GroupLocalServiceUtil.fetchFriendlyURLGroup(
-			companyId, groupFriendlyURL);
 	}
 
 	private String _findLanguageId(String friendlyURL) {

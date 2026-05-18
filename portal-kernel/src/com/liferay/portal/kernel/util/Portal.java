@@ -231,6 +231,25 @@ public interface Portal {
 	public String fetchClassName(long classNameId);
 
 	/**
+	 * Resolves the friendly URL group implied by the given path.
+	 *
+	 * <p>
+	 * Splits the path on the first slash and uses the first segment as the
+	 * candidate group friendly URL. If the remainder begins with the document
+	 * library path prefix (<code>/documents/d/</code>), the segment immediately
+	 * after that prefix is used instead. When no matching group is found, the
+	 * candidate is treated as a user screen name and the user's personal site
+	 * group is returned.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  path the request path beginning with a slash
+	 * @return the matching group, or <code>null</code> if the path is just a
+	 *         slash or no group nor user matches
+	 */
+	public Group fetchFriendlyURLGroup(long companyId, String path);
+
+	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *
 	 * @param  httpServletRequest the servlet request for the page

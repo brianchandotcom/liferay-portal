@@ -150,7 +150,25 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
-		Group group = _getGroup(path, groupFriendlyURL, companyId);
+		Group group = (Group)httpServletRequest.getAttribute(WebKeys.GROUP);
+
+		if (group == null) {
+			group = portal.fetchFriendlyURLGroup(companyId, path);
+		}
+
+		if ((group == null) ||
+			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&
+			 !inactiveRequestHandler.isShowInactiveRequestMessage() &&
+			 !path.startsWith(GroupConstants.CONTROL_PANEL_FRIENDLY_URL) &&
+			 !path.startsWith(
+				 groupFriendlyURL +
+					 VirtualLayoutConstants.CANONICAL_URL_SEPARATOR))) {
+
+			throw new NoSuchGroupException(
+				StringBundler.concat(
+					"{companyId=", companyId, ", friendlyURL=",
+					groupFriendlyURL, "}"));
+		}
 
 		if (!group.isActive() && groupLocalService.isMaintenanceMode(group)) {
 			User user = _getUser(httpServletRequest);
@@ -967,43 +985,6 @@ public class FriendlyURLServlet extends HttpServlet {
 					getCompanyFriendlyURLRedirectionConfiguration(companyId);
 
 		return friendlyURLRedirectionConfiguration.redirectionType();
-	}
-
-	private Group _getGroup(String path, String friendlyURL, long companyId)
-		throws NoSuchGroupException {
-
-		Group group = groupLocalService.fetchFriendlyURLGroup(
-			companyId, friendlyURL);
-
-		if (group == null) {
-			String screenName = friendlyURL.substring(1);
-
-			User user = userLocalService.fetchUserByScreenName(
-				companyId, screenName);
-
-			if (user != null) {
-				group = user.getGroup();
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("No user exists with friendly URL " + screenName);
-			}
-		}
-
-		if ((group == null) ||
-			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&
-			 !inactiveRequestHandler.isShowInactiveRequestMessage() &&
-			 !path.startsWith(GroupConstants.CONTROL_PANEL_FRIENDLY_URL) &&
-			 !path.startsWith(
-				 friendlyURL +
-					 VirtualLayoutConstants.CANONICAL_URL_SEPARATOR))) {
-
-			throw new NoSuchGroupException(
-				StringBundler.concat(
-					"{companyId=", companyId, ", friendlyURL=", friendlyURL,
-					"}"));
-		}
-
-		return group;
 	}
 
 	private LastPath _getLastPath(

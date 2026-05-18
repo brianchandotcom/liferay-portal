@@ -34,10 +34,8 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sites.kernel.util.Sites;
@@ -95,10 +93,8 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 			_mergeLayoutPrototypeLayouts(layoutSetPrototype);
 
-			boolean importData = MapUtil.getBoolean(parameterMap, "importData");
-
 			String cacheFileName = StringBundler.concat(
-				_TEMP_DIR, layoutSetPrototype.getUuid(), importData, ".v",
+				_TEMP_DIR, layoutSetPrototype.getUuid(), ".v",
 				layoutSetPrototype.getMvccVersion(), ".lar");
 
 			File cacheFile = new File(cacheFileName);
@@ -138,12 +134,6 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			User user = _userLocalService.getDefaultUser(
 				layoutSet.getCompanyId());
 
-			parameterMap.put(
-				"lastMergeVersion",
-				new String[] {
-					String.valueOf(layoutSetPrototype.getMvccVersion())
-				});
-
 			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactoryUtil.
 					buildImportLayoutSettingsMap(
@@ -168,32 +158,9 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			return BackgroundTaskResult.SUCCESS;
 		}
 		catch (Throwable throwable) {
-			LayoutSetPrototype layoutSetPrototype =
-				_layoutSetPrototypeLocalService.getLayoutSetPrototype(
-					layoutSetPrototypeId);
-
-			LayoutSet layoutSetPrototypeLayoutSet =
-				layoutSetPrototype.getLayoutSet();
-
-			UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-				layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-			int mergeFailCount = GetterUtil.getInteger(
-				layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-					Sites.MERGE_FAIL_COUNT));
-
-			mergeFailCount++;
-
-			layoutSetPrototypeSettingsUnicodeProperties.setProperty(
-				Sites.MERGE_FAIL_COUNT, String.valueOf(mergeFailCount));
-
-			_layoutSetLocalService.updateLayoutSet(layoutSetPrototypeLayoutSet);
-
 			_log.error(
-				StringBundler.concat(
-					"Merge fail count increased to ", mergeFailCount,
-					" for layout set prototype ",
-					layoutSetPrototype.getLayoutSetPrototypeId()),
+				"The sync process failed for layout set prototype " +
+					layoutSetPrototypeId,
 				throwable);
 
 			throw new SystemException(throwable);

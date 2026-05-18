@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.BufferableThreadLocal;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableAware;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -86,7 +87,9 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 		}
 
 		if (PortalInstances.isCurrentCompanyInDeletionProcess() ||
-			IndexWriterHelperUtil.isIndexReadOnly()) {
+			IndexWriterHelperUtil.isIndexReadOnly() ||
+			((result instanceof IndexableAware indexableAware) &&
+			 !indexableAware.shouldIndex())) {
 
 			if (_log.isDebugEnabled()) {
 				if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
@@ -95,6 +98,9 @@ public class IndexableAdvice extends ChainableMethodAdvice {
 				}
 				else if (IndexWriterHelperUtil.isIndexReadOnly()) {
 					_log.debug("Skip indexing because the index is read only");
+				}
+				else {
+					_log.debug("Skip indexing because the result opts out");
 				}
 			}
 

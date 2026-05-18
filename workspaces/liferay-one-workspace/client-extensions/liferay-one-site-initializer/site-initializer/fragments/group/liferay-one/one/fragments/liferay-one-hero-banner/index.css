@@ -1,4 +1,5 @@
 .liferay-one-hero-banner .hero-banner-background {
+	object-fit: cover;
 	pointer-events: none;
 	right: 0;
 	top: 0;

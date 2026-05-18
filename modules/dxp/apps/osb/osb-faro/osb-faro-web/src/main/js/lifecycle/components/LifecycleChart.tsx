@@ -198,12 +198,17 @@ const LifecycleChart = ({error, loading, stages}: ILifecycleChartProps) => {
 
 	const isEmpty = error || !stages?.length;
 
-	const resolvedStages: ILifecycleStage[] = isEmpty ? EMPTY_STAGES : stages!;
+	const resolvedStages: ILifecycleStage[] = isEmpty
+		? EMPTY_STAGES
+		: stages.filter(stage => stage.stageType !== LifecycleStages.AT_RISK)!;
 
 	const onFilterClick = (stageType: LifecycleStages) =>
 		updateFilters({lifecycleStageFilter: stageType});
 
-	const refPct = resolvedStages[0]?.percentage ?? 0;
+	const refPct = Math.max(
+		...resolvedStages.map(stage => stage.percentage),
+		0
+	);
 
 	return (
 		<>

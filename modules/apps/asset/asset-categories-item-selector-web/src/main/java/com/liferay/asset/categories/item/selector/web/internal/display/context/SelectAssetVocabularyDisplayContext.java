@@ -8,6 +8,9 @@ package com.liferay.asset.categories.item.selector.web.internal.display.context;
 import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryTreeNodeConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
@@ -15,7 +18,9 @@ import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
@@ -110,6 +115,58 @@ public class SelectAssetVocabularyDisplayContext {
 		).build();
 	}
 
+	private void _addAssetVocabulariesByGroupRels(
+		List<AssetVocabulary> assetVocabularies, long groupId,
+		int[] visibilityTypes) {
+
+		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
+				AssetVocabularyGroupRelLocalServiceUtil.
+					getAssetVocabularyGroupRelsByGroupId(groupId)) {
+
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					assetVocabularyGroupRel.getVocabularyId());
+
+			if ((assetVocabulary == null) ||
+				!ArrayUtil.contains(
+					visibilityTypes, assetVocabulary.getVisibilityType()) ||
+				assetVocabularies.contains(assetVocabulary)) {
+
+				continue;
+			}
+
+			assetVocabularies.add(assetVocabulary);
+		}
+	}
+
+	private void _addCMSAssetVocabularies(
+		List<AssetVocabulary> assetVocabularies, List<DepotEntry> depotEntries,
+		long companyId, int[] visibilityTypes) {
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			return;
+		}
+
+		boolean hasConnectedSpace = false;
+
+		for (DepotEntry depotEntry : depotEntries) {
+			if (depotEntry.getType() != DepotConstants.TYPE_SPACE) {
+				continue;
+			}
+
+			hasConnectedSpace = true;
+
+			_addAssetVocabulariesByGroupRels(
+				assetVocabularies, depotEntry.getGroupId(), visibilityTypes);
+		}
+
+		if (hasConnectedSpace) {
+			_addAssetVocabulariesByGroupRels(
+				assetVocabularies, GroupConstants.ANY_PARENT_GROUP_ID,
+				visibilityTypes);
+		}
+	}
+
 	private List<AssetVocabulary> _getAssetVocabularies()
 		throws PortalException {
 
@@ -127,9 +184,19 @@ public class SelectAssetVocabularyDisplayContext {
 			groupIds.add(depotEntry.getGroupId());
 		}
 
-		return AssetVocabularyServiceUtil.getGroupVocabularies(
-			ArrayUtil.toLongArray(groupIds),
-			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
+		int[] visibilityTypes = {
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
+		};
+
+		List<AssetVocabulary> assetVocabularies = new ArrayList<>(
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				ArrayUtil.toLongArray(groupIds), visibilityTypes));
+
+		_addCMSAssetVocabularies(
+			assetVocabularies, depotEntries, _themeDisplay.getCompanyId(),
+			visibilityTypes);
+
+		return assetVocabularies;
 	}
 
 	private String _getAssetVocabularyURL(long assetVocabularyId)

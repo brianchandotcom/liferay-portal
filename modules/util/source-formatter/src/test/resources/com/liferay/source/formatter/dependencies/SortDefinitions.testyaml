@@ -17,6 +17,8 @@ components:
                     format: date-time
                     description:
                         The external link's creation date.
+                p-10-: a
+                p-9-: b
         CollectionType:
             type: string
             default: all

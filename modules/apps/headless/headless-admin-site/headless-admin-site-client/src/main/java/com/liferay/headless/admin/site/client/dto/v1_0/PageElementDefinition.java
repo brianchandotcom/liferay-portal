@@ -90,8 +90,8 @@ public abstract class PageElementDefinition implements Cloneable, Serializable {
 		COLLECTION_DISPLAY("CollectionDisplay"),
 		COLLECTION_ITEM("CollectionItem"), CONTAINER("Container"),
 		DROP_ZONE("DropZone"), FORM_CONTAINER("FormContainer"),
-		FORM_FRAGMENT("FormFragment"), FORM_STEP("FormStep"),
-		FORM_STEP_CONTAINER("FormStepContainer"),
+		FORM_FRAGMENT("FormFragment"), FORM_RELATIONSHIP("FormRelationship"),
+		FORM_STEP("FormStep"), FORM_STEP_CONTAINER("FormStepContainer"),
 		FRAGMENT_DROP_ZONE("FragmentDropZone"), GRID("Grid"), MODULE("Module"),
 		WIDGET("Widget");
 
@@ -125,4 +125,4 @@ public abstract class PageElementDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1543641396
+// LIFERAY-REST-BUILDER-HASH:-538673071

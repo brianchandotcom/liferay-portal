@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefin
 import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormFragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormRelationshipPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
@@ -95,6 +96,12 @@ public class PageElementDefinitionSerDes {
 			if (typeString.equals("FormFragment")) {
 				return FormFragmentInstancePageElementDefinitionSerDes.toJSON(
 					(FormFragmentInstancePageElementDefinition)
+						pageElementDefinition);
+			}
+
+			if (typeString.equals("FormRelationship")) {
+				return FormRelationshipPageElementDefinitionSerDes.toJSON(
+					(FormRelationshipPageElementDefinition)
 						pageElementDefinition);
 			}
 
@@ -224,6 +231,10 @@ public class PageElementDefinitionSerDes {
 						json);
 				}
 
+				if (typeString.equals("FormRelationship")) {
+					return FormRelationshipPageElementDefinition.toDTO(json);
+				}
+
 				if (typeString.equals("FormStep")) {
 					return FormStepPageElementDefinition.toDTO(json);
 				}
@@ -349,4 +360,4 @@ public class PageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1275309391
+// LIFERAY-REST-BUILDER-HASH:1789464001

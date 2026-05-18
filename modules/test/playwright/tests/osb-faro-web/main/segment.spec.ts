@@ -2486,3 +2486,70 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Preview the membership of a batch segment with a First Name criterion',
+	{
+		tag: '@LRAC-8490',
+	},
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
+		const runId = getRandomString();
+		const baseName = `user${runId}`;
+		const individualNames = [
+			`${baseName}1`,
+			`${baseName}2`,
+			`${baseName}3`,
+		];
+
+		const individuals: Individual[] = individualNames.map((name) =>
+			generateIndividual({name})
+		);
+
+		await createIndividuals({apiHelpers, individuals});
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		// Create a batch segment with `First Name contains <runId>` to match the three seeded individuals
+
+		await createBatchSegment(page);
+
+		await setSegmentName({
+			page,
+			segmentName: `Preview Membership ${runId}`,
+		});
+
+		await addSegmentField({
+			criterionName: 'First Name',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: runId,
+			page,
+		});
+
+		// Open the in-editor View Members preview and assert the three seeded individuals appear
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('Known Segment Members'),
+			trigger: page.getByTitle('View Members'),
+		});
+
+		await viewNameOnTableList({
+			itemNames: individualNames.map((name) => `${name} Smith`),
+			page,
+		});
+	}
+);

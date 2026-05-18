@@ -153,44 +153,50 @@ public class ViewHomeQuickActionsDisplayContext {
 
 		_quickActions = new ArrayList<>();
 
-		List<ObjectDefinition> objectDefinitions =
-			_objectDefinitionService.getCMSObjectDefinitions(
-				_themeDisplay.getCompanyId(),
-				new String[] {
-					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-					ObjectFolderConstants.
-						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
-				});
+		List<Long> depotEntryGroupIds =
+			_sectionDisplayContextHelper.getDepotEntryGroupIds(
+				ActionKeys.ADD_ENTRY,
+				_sectionDisplayContextHelper.getObjectEntryFolderIdsMap(
+					_themeDisplay.getCompanyId(), null,
+					_themeDisplay.getUserId()),
+				_themeDisplay);
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
-				ActionUtil.getAcceptedDepotEntryGroupIds(
-					_sectionDisplayContextHelper.getDepotEntryGroupIds(
-						ActionKeys.ADD_ENTRY,
-						_sectionDisplayContextHelper.getObjectEntryFolderIdsMap(
-							_themeDisplay.getCompanyId(), null,
-							_themeDisplay.getUserId()),
-						_themeDisplay),
-					objectDefinition.getObjectDefinitionId()));
+		if (ListUtil.isNotEmpty(depotEntryGroupIds)) {
+			List<ObjectDefinition> objectDefinitions =
+				_objectDefinitionService.getCMSObjectDefinitions(
+					_themeDisplay.getCompanyId(),
+					new String[] {
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+					});
 
-			if (depotEntriesJSONArray.length() == 0) {
-				continue;
+			for (ObjectDefinition objectDefinition : objectDefinitions) {
+				JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
+					ActionUtil.getAcceptedDepotEntryGroupIds(
+						depotEntryGroupIds,
+						objectDefinition.getObjectDefinitionId()));
+
+				if (depotEntriesJSONArray.length() == 0) {
+					continue;
+				}
+
+				String actionIcon = _icons.get(
+					objectDefinition.getExternalReferenceCode());
+
+				if (actionIcon == null) {
+					String entryFolderERC =
+						_getObjectEntryFolderExternalReferenceCode(
+							objectDefinition);
+
+					actionIcon = _icons.getOrDefault(entryFolderERC, "forms");
+				}
+
+				_quickActions.add(
+					_createQuickAction(
+						depotEntriesJSONArray, actionIcon, objectDefinition));
 			}
-
-			String actionIcon = _icons.get(
-				objectDefinition.getExternalReferenceCode());
-
-			if (actionIcon == null) {
-				String entryFolderERC =
-					_getObjectEntryFolderExternalReferenceCode(
-						objectDefinition);
-
-				actionIcon = _icons.getOrDefault(entryFolderERC, "forms");
-			}
-
-			_quickActions.add(
-				_createQuickAction(
-					depotEntriesJSONArray, actionIcon, objectDefinition));
 		}
 
 		if (AssetCategoriesPermission.contains(

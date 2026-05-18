@@ -224,41 +224,24 @@ export default function CMSShareModalContent({
 		</div>
 	);
 
-	const collaboratorBadge = ({
+	const collaboratorBadgeText = ({
 		toBeShared,
 		type,
 	}: {
 		toBeShared?: boolean;
 		type: CollaboratorType;
 		user: ShareModalUserAccount | ShareModalUserGroup;
-	}) => {
-		const isExternalUser =
+	}): string | null => {
+		if (
 			externalUserSharingEnabled &&
-			type === COLLABORATOR_TYPE.EXTERNAL_USER;
-
-		if (isExternalUser) {
-			return (
-				<span className="inline-item inline-item-after label label-inverse-light">
-					<span className="label-item label-item-expand text-nowrap">
-						{toBeShared
-							? Liferay.Language.get('pending')
-							: Liferay.Language.get('invited')}
-					</span>
-				</span>
-			);
+			type === COLLABORATOR_TYPE.EXTERNAL_USER
+		) {
+			return toBeShared
+				? Liferay.Language.get('pending')
+				: Liferay.Language.get('invited');
 		}
 
-		if (toBeShared) {
-			return (
-				<span className="inline-item inline-item-after label label-inverse-light">
-					<span className="label-item label-item-expand text-nowrap">
-						{Liferay.Language.get('to-be-shared')}
-					</span>
-				</span>
-			);
-		}
-
-		return null;
+		return toBeShared ? Liferay.Language.get('to-be-shared') : null;
 	};
 
 	const collaboratorStickerIcon = ({
@@ -311,7 +294,7 @@ export default function CMSShareModalContent({
 			autocompleteURL={autocompleteURL}
 			canManageCollaborators={canManageCollaborators}
 			closeModal={closeModal}
-			collaboratorBadge={collaboratorBadge}
+			collaboratorBadgeText={collaboratorBadgeText}
 			collaboratorStickerIcon={collaboratorStickerIcon}
 			collaboratorURL={collaboratorURL}
 			creator={creator}

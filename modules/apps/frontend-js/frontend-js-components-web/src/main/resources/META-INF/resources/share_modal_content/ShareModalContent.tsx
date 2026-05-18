@@ -87,14 +87,10 @@ const _defaultCollaboratorStickerIcon = ({
 	<CollaboratorStickerIcon type={type} user={user} />
 );
 
-const _defaultCollaboratorBadge = ({toBeShared}: CollaboratorBadgeProps) =>
-	toBeShared ? (
-		<span className="inline-item inline-item-after label label-inverse-light">
-			<span className="label-item label-item-expand text-nowrap">
-				{Liferay.Language.get('to-be-shared')}
-			</span>
-		</span>
-	) : null;
+const _defaultCollaboratorBadgeText = ({
+	toBeShared,
+}: CollaboratorBadgeProps): string | null =>
+	toBeShared ? Liferay.Language.get('to-be-shared') : null;
 
 const _defaultAutocompleteItem = ({type, user}: CollaboratorIconProps) => (
 	<div className="autofit-row autofit-row-center">
@@ -132,7 +128,7 @@ function CollaboratorListItem({
 	actionIds,
 	alwaysShowPermissionSelector = false,
 	canManageCollaborators = true,
-	collaboratorBadge,
+	collaboratorBadgeText,
 	collaboratorStickerIcon,
 	dateExpired,
 	error,
@@ -149,7 +145,7 @@ function CollaboratorListItem({
 	actionIds: string;
 	alwaysShowPermissionSelector?: boolean;
 	canManageCollaborators?: boolean;
-	collaboratorBadge: (props: CollaboratorBadgeProps) => React.ReactNode;
+	collaboratorBadgeText: (props: CollaboratorBadgeProps) => string | null;
 	collaboratorStickerIcon: (props: CollaboratorIconProps) => React.ReactNode;
 	dateExpired?: string;
 	error?: string;
@@ -170,6 +166,8 @@ function CollaboratorListItem({
 		onChangeUser(user, propertyObj);
 	};
 
+	const badgeText = collaboratorBadgeText({toBeShared, type, user});
+
 	return (
 		<li
 			className="border-0 c-px-0 c-py-1 list-group-item list-group-item-flex"
@@ -188,7 +186,13 @@ function CollaboratorListItem({
 							{user.name}
 						</span>
 
-						{collaboratorBadge({toBeShared, type, user})}
+						{badgeText ? (
+							<span className="inline-item inline-item-after label label-inverse-light">
+								<span className="label-item label-item-expand text-nowrap">
+									{badgeText}
+								</span>
+							</span>
+						) : null}
 					</div>
 
 					{alwaysShowPermissionSelector ||
@@ -324,7 +328,7 @@ export default function ShareModalContent({
 	autocompleteURL = '',
 	canManageCollaborators = true,
 	closeModal,
-	collaboratorBadge = _defaultCollaboratorBadge,
+	collaboratorBadgeText = _defaultCollaboratorBadgeText,
 	collaboratorStickerIcon = _defaultCollaboratorStickerIcon,
 	collaboratorURL = '',
 	collaboratorsListTitle = Liferay.Language.get('who-has-access'),
@@ -600,7 +604,7 @@ export default function ShareModalContent({
 										canManageCollaborators={
 											canManageCollaborators
 										}
-										collaboratorBadge={collaboratorBadge}
+										collaboratorBadgeText={collaboratorBadgeText}
 										collaboratorStickerIcon={
 											collaboratorStickerIcon
 										}

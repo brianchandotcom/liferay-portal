@@ -73,12 +73,12 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 
 	@Test
 	public void testEnterpriseLicense() throws Exception {
-		_runLicenseTest(() -> deployEnterprisePortalLicense(Time.HOUR), true);
+		_testLicense(() -> deployEnterprisePortalLicense(Time.HOUR), true);
 	}
 
 	@Test
 	public void testFreeTierLicense() throws Exception {
-		_runLicenseTest(() -> deployFreeTierPortalLicense(Time.HOUR), false);
+		_testLicense(() -> deployFreeTierPortalLicense(Time.HOUR), false);
 	}
 
 	@Test
@@ -172,7 +172,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		return getProperty("enterprise.app.symbolic.name");
 	}
 
-	private void _runLicenseTest(
+	private void _testLicense(
 			UnsafeSupplier<File, Exception> deployPortalLicenseUnsafeSupplier,
 			boolean dxpModulesAllowed)
 		throws Exception {

@@ -878,7 +878,7 @@ public class CustomFDSSerializer
 	@Reference
 	protected FDSFilterRegistry fdsFilterRegistry;
 
-	private Object _convertListTypeEntryKey(
+	private Object _getListTypeEntryKey(
 		String entityFieldType, ListTypeEntry listTypeEntry) {
 
 		String key = listTypeEntry.getKey();
@@ -890,7 +890,7 @@ public class CustomFDSSerializer
 			catch (NumberFormatException numberFormatException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Invalid integer listTypeEntry key: " + key,
+						"Invalid list type entry key: " + key,
 						numberFormatException);
 				}
 			}
@@ -1293,7 +1293,7 @@ public class CustomFDSSerializer
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
 					"value",
-					() -> _convertListTypeEntryKey(
+					() -> _getListTypeEntryKey(
 						entityFieldType, listTypeEntry)
 				))
 		).put(
@@ -1326,7 +1326,7 @@ public class CustomFDSSerializer
 									PortalUtil.getLocale(httpServletRequest))
 							).put(
 								"value",
-								() -> _convertListTypeEntryKey(
+								() -> _getListTypeEntryKey(
 									entityFieldType, listTypeEntry)
 							));
 					}

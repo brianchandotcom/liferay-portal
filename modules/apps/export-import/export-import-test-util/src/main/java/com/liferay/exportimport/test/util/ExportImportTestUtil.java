@@ -8,20 +8,60 @@ package com.liferay.exportimport.test.util;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.io.InputStream;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * @author Máté Thurzó
  */
 public class ExportImportTestUtil {
+
+	public static String getBatchFileNameWithPath(
+		String fileName, long groupId) {
+
+		return StringBundler.concat(
+			"group/", groupId, StringPool.FORWARD_SLASH, fileName);
+	}
+
+	public static JSONArray getExportedObjectEntriesJSONArray(
+			String fileNamePrefix, InputStream inputStream, long groupId)
+		throws Exception {
+
+		String batchFileNameWithPath = getBatchFileNameWithPath(
+			fileNamePrefix + ".json", groupId);
+
+		try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+			ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+			while (zipEntry != null) {
+				if (Objects.equals(zipEntry.getName(), batchFileNameWithPath)) {
+					return JSONFactoryUtil.createJSONArray(
+						StringUtil.read(zipInputStream));
+				}
+
+				zipEntry = zipInputStream.getNextEntry();
+			}
+		}
+
+		return null;
+	}
 
 	public static PortletDataContext getExportPortletDataContext()
 		throws Exception {

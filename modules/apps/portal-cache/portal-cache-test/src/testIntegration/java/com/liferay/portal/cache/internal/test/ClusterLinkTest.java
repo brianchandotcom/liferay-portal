@@ -85,25 +85,13 @@ public class ClusterLinkTest implements Serializable {
 
 	@Test
 	public void testCustomizeChannelNames() throws Exception {
-		TomcatNode.ClusterExecutable<ArrayList<ClusterNode>>
-			getClusterNodesClusterExecutable = () -> new ArrayList<>(
-				ClusterExecutorUtil.getClusterNodes());
-
 		ClusterNode clusterNode1 = _tomcatNode1.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
 
 		ClusterNode clusterNode2 = _tomcatNode2.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
 
-		List<ClusterNode> clusterNodes = _tomcatNode1.syncExecute(
-			getClusterNodesClusterExecutable);
-
-		Assert.assertTrue(clusterNodes.contains(clusterNode2));
-
-		clusterNodes = _tomcatNode2.syncExecute(
-			getClusterNodesClusterExecutable);
-
-		Assert.assertTrue(clusterNodes.contains(clusterNode1));
+		_assertMutualVisibility(true, clusterNode1, clusterNode2);
 
 		try (Closeable closeable = _applyPortalExtPropertiesLines(
 				true, _tomcatNode2,
@@ -115,29 +103,13 @@ public class ClusterLinkTest implements Serializable {
 			ClusterNode isolatedClusterNode2 = _tomcatNode2.syncExecute(
 				ClusterExecutorUtil::getLocalClusterNode);
 
-			clusterNodes = _tomcatNode1.syncExecute(
-				getClusterNodesClusterExecutable);
-
-			Assert.assertFalse(clusterNodes.contains(isolatedClusterNode2));
-
-			clusterNodes = _tomcatNode2.syncExecute(
-				getClusterNodesClusterExecutable);
-
-			Assert.assertFalse(clusterNodes.contains(clusterNode1));
+			_assertMutualVisibility(false, clusterNode1, isolatedClusterNode2);
 		}
 
 		ClusterNode reconnectedClusterNode2 = _tomcatNode2.syncExecute(
 			ClusterExecutorUtil::getLocalClusterNode);
 
-		clusterNodes = _tomcatNode1.syncExecute(
-			getClusterNodesClusterExecutable);
-
-		Assert.assertTrue(clusterNodes.contains(reconnectedClusterNode2));
-
-		clusterNodes = _tomcatNode2.syncExecute(
-			getClusterNodesClusterExecutable);
-
-		Assert.assertTrue(clusterNodes.contains(clusterNode1));
+		_assertMutualVisibility(true, clusterNode1, reconnectedClusterNode2);
 	}
 
 	@Test
@@ -223,6 +195,21 @@ public class ClusterLinkTest implements Serializable {
 				throw new IOException(exception);
 			}
 		};
+	}
+
+	private void _assertMutualVisibility(
+			boolean visible, ClusterNode clusterNode1, ClusterNode clusterNode2)
+		throws Exception {
+
+		List<ClusterNode> clusterNodes = _tomcatNode1.syncExecute(
+			() -> new ArrayList<>(ClusterExecutorUtil.getClusterNodes()));
+
+		Assert.assertEquals(visible, clusterNodes.contains(clusterNode2));
+
+		clusterNodes = _tomcatNode2.syncExecute(
+			() -> new ArrayList<>(ClusterExecutorUtil.getClusterNodes()));
+
+		Assert.assertEquals(visible, clusterNodes.contains(clusterNode1));
 	}
 
 	private void _testChannelProperties(

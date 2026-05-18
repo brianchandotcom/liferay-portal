@@ -2582,7 +2582,7 @@ test(
 test(
 	'Delete a batch segment via the in-editor Delete Segment button',
 	{
-		tag: '@LRAC-11536',
+		tag: ['@LPD-90772', '@LRAC-11536'],
 	},
 	async ({analyticsChannel: channel, page, project}) => {
 		await navigateToACPageViaURL({

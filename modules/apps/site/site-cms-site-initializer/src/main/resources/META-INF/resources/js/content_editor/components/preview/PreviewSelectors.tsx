@@ -23,11 +23,11 @@ type PreviewSelectorsProps = {
 	externalURL: string;
 	isExternalURL: Boolean;
 	loadSites: () => Promise<Site[]>;
+	onBlurExternalURLInput: (value: string) => void;
 	previewURL: string | undefined;
 	selectChannel: (key: React.Key) => void;
 	selectedChannelKey: React.Key | undefined;
 	selectedDisplayPageKey: React.Key | undefined;
-	setExternalURL: (value: string) => void;
 	setSelectedDisplayPageKey: (key: React.Key) => void;
 	showPreviewInNewTabLink?: boolean;
 	sitesStatus: Status;
@@ -40,11 +40,11 @@ export default function PreviewSelectors({
 	externalURL,
 	isExternalURL,
 	loadSites,
+	onBlurExternalURLInput,
 	previewURL,
 	selectChannel,
 	selectedChannelKey,
 	selectedDisplayPageKey,
-	setExternalURL,
 	setSelectedDisplayPageKey,
 	showPreviewInNewTabLink,
 	sitesStatus,
@@ -87,8 +87,8 @@ export default function PreviewSelectors({
 			>
 				{isExternalURL ? (
 					<ExternalURLInput
-						externalURL={externalURL}
-						setExternalURL={setExternalURL}
+						onBlur={onBlurExternalURLInput}
+						value={externalURL}
 						vertical={vertical}
 					/>
 				) : displayPageTemplates?.length ? (
@@ -143,17 +143,17 @@ export default function PreviewSelectors({
 }
 
 type ExternalURLInputProps = {
-	externalURL: string;
-	setExternalURL: (value: string) => void;
+	onBlur: (url: string) => void;
+	value: string;
 	vertical: boolean;
 };
 
 function ExternalURLInput({
-	externalURL,
-	setExternalURL,
+	onBlur,
+	value: initialValue,
 	vertical,
 }: ExternalURLInputProps) {
-	const [value, setValue] = useState<string>(externalURL);
+	const [value, setValue] = useState<string>(initialValue);
 
 	return (
 		<ClayInput.Group>
@@ -165,7 +165,7 @@ function ExternalURLInput({
 						const absoluteURL = toAbsoluteURL(event.target.value);
 
 						setValue(absoluteURL);
-						setExternalURL(absoluteURL);
+						onBlur(absoluteURL);
 					}}
 					onChange={(event) => setValue(event.target.value)}
 					sizing={!vertical ? 'sm' : undefined}

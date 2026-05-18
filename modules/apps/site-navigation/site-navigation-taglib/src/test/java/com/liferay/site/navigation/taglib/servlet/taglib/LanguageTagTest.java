@@ -62,6 +62,12 @@ public class LanguageTagTest {
 	private LanguageTag _getLanguageTag(String doAsUserId) {
 		LanguageTag languageTag = new LanguageTag();
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
+
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -78,11 +84,6 @@ public class LanguageTagTest {
 			layout
 		);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

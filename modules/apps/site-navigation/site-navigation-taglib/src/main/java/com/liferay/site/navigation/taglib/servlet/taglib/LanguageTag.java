@@ -235,7 +235,6 @@ public class LanguageTag extends IncludeTag {
 
 		formAction = HttpComponentsUtil.setParameter(
 			formAction, "privateLayout", layout.isPrivateLayout());
-
 		formAction = HttpComponentsUtil.setParameter(
 			formAction, "layoutId", layout.getLayoutId());
 

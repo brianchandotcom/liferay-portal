@@ -323,16 +323,17 @@ public class UpdateLanguageActionTest {
 		String userLanguageId = user.getLanguageId();
 
 		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		updateLanguageAction.execute(
 			null, mockHttpServletRequest, mockHttpServletResponse);
 
-		String redirectedUrl = mockHttpServletResponse.getRedirectedUrl();
+		String redirectedURL = mockHttpServletResponse.getRedirectedUrl();
 
 		Assert.assertTrue(
-			redirectedUrl.contains("doAsUserLanguageId=" + languageId));
+			redirectedURL.contains("doAsUserLanguageId=" + languageId));
 
 		Assert.assertEquals(
 			_sourceLocale, httpSession.getAttribute(WebKeys.LOCALE));

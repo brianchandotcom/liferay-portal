@@ -7,10 +7,58 @@ function _atomic_write {
 	mv "${file}.tmp" "${file}"
 }
 
+function _derive_db_name {
+	local dir_name="${1}"
+	local suffix="${dir_name#liferay-portal}"
+	suffix="${suffix#-}"
+
+	if [[ -z "${suffix}" ]]
+	then
+		echo "lportal"
+
+		return
+	fi
+
+	suffix="$(echo "${suffix}" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/_/g; s/^_+|_+$//g')"
+	suffix="${suffix:0:56}"
+
+	echo "lportal_${suffix}"
+}
+
 function _die {
 	echo "${*}" >&2
 
 	exit 1
+}
+
+function _drop_database {
+	local worktree_path="${1}"
+	local bundles_dir="${2:-}"
+
+	command -v mysql >/dev/null 2>&1 || return 0
+
+	local db_name
+	db_name="$(_derive_db_name "$(basename "${worktree_path}")")"
+
+	[[ "${db_name}" != "lportal" ]] || return 0
+
+	local user="root"
+	local password=""
+
+	if [[ -n "${bundles_dir}" && -f "${bundles_dir}/portal-ext.properties" ]]
+	then
+		user="$(_get_property "${bundles_dir}/portal-ext.properties" 'jdbc\.default\.username' 'root')"
+		password="$(_get_property "${bundles_dir}/portal-ext.properties" 'jdbc\.default\.password')"
+	fi
+
+	local mysql_args=(--user "${user}")
+
+	if [[ -n "${password}" ]]
+	then
+		mysql_args+=(--password="${password}")
+	fi
+
+	mysql "${mysql_args[@]}" --execute "DROP DATABASE IF EXISTS ${db_name};" >&2 || true
 }
 
 function _find_app_server_parent_dir {
@@ -53,4 +101,19 @@ function _find_tomcat_dir {
 	[[ -n "${latest}" ]] || return 1
 
 	echo "${latest}"
+}
+
+function _get_property {
+	local file="${1}"
+	local key="${2}"
+	local default="${3:-}"
+
+	local value="${default}"
+
+	if [[ -f "${file}" ]] && grep -Eq "^[[:space:]]*${key}=" "${file}"
+	then
+		value="$(grep -E "^[[:space:]]*${key}=" "${file}" | tail -1 | sed -E "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//")"
+	fi
+
+	echo "${value}"
 }

@@ -77,39 +77,6 @@ function _create_worktree {
 	WORKTREE_DIR="${target_path}"
 }
 
-function _derive_db_name {
-	local dir_name="${1}"
-	local suffix="${dir_name#liferay-portal}"
-	suffix="${suffix#-}"
-
-	if [[ -z "${suffix}" ]]
-	then
-		echo "lportal"
-
-		return
-	fi
-
-	suffix="$(echo "${suffix}" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/_/g; s/^_+|_+$//g')"
-	suffix="${suffix:0:56}"
-
-	echo "lportal_${suffix}"
-}
-
-function _get_property {
-	local file="${1}"
-	local key="${2}"
-	local default="${3:-}"
-
-	local value="${default}"
-
-	if [[ -f "${file}" ]] && grep -Eq "^[[:space:]]*${key}=" "${file}"
-	then
-		value="$(grep -E "^[[:space:]]*${key}=" "${file}" | tail -1 | sed -E "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//")"
-	fi
-
-	echo "${value}"
-}
-
 function _resolve_main_worktree_dir {
 	local repo_dir
 	repo_dir="$(git -C "${WORKTREE_DIR}" rev-parse --show-toplevel)"

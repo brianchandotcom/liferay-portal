@@ -5,15 +5,15 @@
 
 import {ContentSelection} from '../components/forms/content_selector/ContentSelector';
 import {
-	PortletDataHandlerControl,
-	PortletDataHandlerSection,
+	PreviewPortletDataHandlerControl,
+	PreviewPortletDataHandlerSection,
 } from '../types/portletDataHandler';
 import {HandlerSelection} from './contentSelection';
 
 interface FlattenContentSelectionInput {
 	additionalFields?: Record<string, string>;
 	contentSelection?: ContentSelection;
-	sections: PortletDataHandlerSection[];
+	sections: PreviewPortletDataHandlerSection[];
 }
 
 export function flattenContentSelection({
@@ -24,24 +24,28 @@ export function flattenContentSelection({
 	const flatValues: Record<string, string> = {...additionalFields};
 	const checkboxNames: string[] = [];
 
-	const collectCheckboxNames = (controls: PortletDataHandlerControl[]) => {
+	const collectCheckboxNames = (
+		controls: PreviewPortletDataHandlerControl[]
+	) => {
 		controls.forEach((control) => {
 			if (control.type === 'Boolean') {
 				checkboxNames.push(control.name);
 
-				if (control.portletDataHandlerControls) {
-					collectCheckboxNames(control.portletDataHandlerControls);
+				if (control.previewPortletDataHandlerControls) {
+					collectCheckboxNames(
+						control.previewPortletDataHandlerControls
+					);
 				}
 			}
 		});
 	};
 
 	sections.forEach((section) => {
-		section.portletDataHandlers.forEach((handler) => {
+		section.previewPortletDataHandlers.forEach((handler) => {
 			checkboxNames.push(handler.name);
 
-			if (handler.portletDataHandlerControls) {
-				collectCheckboxNames(handler.portletDataHandlerControls);
+			if (handler.previewPortletDataHandlerControls) {
+				collectCheckboxNames(handler.previewPortletDataHandlerControls);
 			}
 		});
 	});

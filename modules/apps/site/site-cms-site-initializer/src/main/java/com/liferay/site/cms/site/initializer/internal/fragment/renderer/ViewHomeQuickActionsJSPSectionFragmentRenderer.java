@@ -10,7 +10,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,9 +40,7 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewHomeQuickActionsDisplayContext(
-			_depotEntryLocalService, groupLocalService,
-			_objectDefinitionService, _objectEntryFolderLocalService,
-			_objectEntryFolderModelResourcePermission,
+			groupLocalService, _objectDefinitionService,
 			new SectionDisplayContextHelper(
 				_depotEntryLocalService, groupLocalService, _language,
 				_objectDefinitionSettingLocalService,
@@ -69,9 +66,6 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 	@Reference
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
-
-	@Reference
-	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"

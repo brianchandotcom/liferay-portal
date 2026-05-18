@@ -409,8 +409,6 @@ public class DownloadObjectEntryFolderCMSServletTest
 				List<String> zipEntryNames = zipReader.getEntries();
 
 				Assert.assertFalse(
-					"Subfolder contents unexpectedly present in ZIP: " +
-						zipEntryNames,
 					ListUtil.exists(
 						zipEntryNames,
 						zipEntryName -> zipEntryName.startsWith(
@@ -473,7 +471,6 @@ public class DownloadObjectEntryFolderCMSServletTest
 			List<String> zipEntryNames = zipReader.getEntries();
 
 			Assert.assertTrue(
-				"Subfolder contents missing from ZIP: " + zipEntryNames,
 				ListUtil.exists(
 					zipEntryNames,
 					zipEntryName -> zipEntryName.startsWith(subfolderPrefix)));

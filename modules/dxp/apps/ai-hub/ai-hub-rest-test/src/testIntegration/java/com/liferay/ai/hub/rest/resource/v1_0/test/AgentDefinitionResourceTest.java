@@ -187,7 +187,7 @@ public class AgentDefinitionResourceTest
 	@Test
 	public void testGetAgentDefinitionsPage() throws Exception {
 		_testGetAgentDefinitionsPage();
-		_testGetAgentDefinitionsPagePermissionsActions();
+		_testGetAgentDefinitionsPageWithPermissions();
 		_testGetAgentDefinitionsPageWithFilter();
 	}
 
@@ -452,7 +452,26 @@ public class AgentDefinitionResourceTest
 			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
 	}
 
-	private void _testGetAgentDefinitionsPagePermissionsActions()
+	private void _testGetAgentDefinitionsPageWithFilter() throws Exception {
+
+		// Active as false
+
+		Page<AgentDefinition> page =
+			agentDefinitionResource.getAgentDefinitionsPage(
+				null, "(active eq false)", Pagination.of(1, 10), null);
+
+		assertEquals(List.of(), (List<AgentDefinition>)page.getItems());
+
+		// Active as true
+
+		page = agentDefinitionResource.getAgentDefinitionsPage(
+			null, "(active eq true)", Pagination.of(1, 10), null);
+
+		assertEquals(
+			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
+	}
+
+	private void _testGetAgentDefinitionsPageWithPermissions()
 		throws Exception {
 
 		String password = RandomTestUtil.randomString();
@@ -520,25 +539,6 @@ public class AgentDefinitionResourceTest
 
 			Assert.assertTrue(actions.containsKey("permissions"));
 		}
-	}
-
-	private void _testGetAgentDefinitionsPageWithFilter() throws Exception {
-
-		// Active as false
-
-		Page<AgentDefinition> page =
-			agentDefinitionResource.getAgentDefinitionsPage(
-				null, "(active eq false)", Pagination.of(1, 10), null);
-
-		assertEquals(List.of(), (List<AgentDefinition>)page.getItems());
-
-		// Active as true
-
-		page = agentDefinitionResource.getAgentDefinitionsPage(
-			null, "(active eq true)", Pagination.of(1, 10), null);
-
-		assertEquals(
-			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
 	}
 
 	private static AccountEntry _accountEntry;
@@ -719,6 +719,34 @@ public class AgentDefinitionResourceTest
 					version = 1;
 					workflowDefinitionName =
 						WorkflowDefinitionConstants.NAME_MAKE_SHORTER;
+				}
+			},
+			new AgentDefinition() {
+				{
+					active = true;
+					externalReferenceCode = "L_PAGE_BUILDER";
+					inputVariables = new Variable[] {
+						new Variable() {
+							{
+								name = "instruction";
+								type = "string";
+							}
+						},
+						new Variable() {
+							{
+								name = "current_page";
+								type = "string";
+							}
+						}
+					};
+					outputVariable = new Variable() {
+						{
+							name = "response";
+							type = "string";
+						}
+					};
+					version = 1;
+					workflowDefinitionName = "Page Builder";
 				}
 			});
 

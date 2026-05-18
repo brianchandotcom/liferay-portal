@@ -29,13 +29,19 @@ jobs:
                 run: |
                     set -o errexit
 
-                    for test in scripts/tests/*-test.sh tests/*_test.sh
-                    do
-                        if [ -f "${test}" ]
-                        then
-                            bash "${test}"
-                        fi
-                    done
+                    function main {
+                        local test
+
+                        for test in scripts/tests/*-test.sh tests/*_test.sh
+                        do
+                            if [ -f "${test}" ]
+                            then
+                                bash "${test}"
+                            fi
+                        done
+                    }
+
+                    main
                 working-directory: ./cloud/helm/${{matrix.chart}}
             -   name: Render and validate Helm chart
                 run: |

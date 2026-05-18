@@ -417,6 +417,14 @@ $cadmin-form-check-card: map-deep-merge(
 			),
 		),
 
+		disabled: (
+			card: (
+				box-shadow: none,
+				border-color: $cadmin-card-border-color,
+				outline-color: transparent,
+			),
+		),
+
 		card: (
 			margin-bottom: 0px,
 		),
@@ -661,6 +669,10 @@ $cadmin-card-type-asset: map-deep-merge(
 
 		card-row: (
 			align-items: flex-start,
+		),
+
+		disabled: (
+			transform: none,
 		),
 
 		dropdown-action: (

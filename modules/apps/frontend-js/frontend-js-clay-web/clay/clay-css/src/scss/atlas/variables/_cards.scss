@@ -124,6 +124,14 @@ $form-check-card: map-deep-merge(
 				outline-color: $primary,
 			),
 		),
+
+		disabled: (
+			card: (
+				box-shadow: none,
+				border-color: $card-border-color,
+				outline-color: transparent,
+			),
+		),
 	),
 	$form-check-card
 );
@@ -217,6 +225,10 @@ $card-type-asset: map-deep-merge(
 
 		card-body: (
 			padding-top: 0.75rem,
+		),
+
+		disabled: (
+			transform: none,
 		),
 	),
 	$card-type-asset

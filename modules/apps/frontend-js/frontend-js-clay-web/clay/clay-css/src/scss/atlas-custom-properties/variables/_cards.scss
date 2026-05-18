@@ -438,6 +438,14 @@ $form-check-card: map-deep-merge(
 			),
 		),
 
+		disabled: (
+			card: (
+				box-shadow: none,
+				border-color: $card-border-color,
+				outline-color: transparent,
+			),
+		),
+
 		card: (
 			margin-bottom: 0rem,
 		),
@@ -913,6 +921,10 @@ $card-type-asset: map-deep-merge(
 
 		card-row: (
 			align-items: flex-start,
+		),
+
+		disabled: (
+			transform: none,
 		),
 
 		dropdown-action: (

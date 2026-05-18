@@ -237,6 +237,13 @@ export default function Comments({
 							'the-message-could-not-be-found'
 						);
 					}
+					else if (
+						exception.indexOf('MustHaveSessionCSRFToken') > -1
+					) {
+						errorKey = Liferay.Language.get(
+							'your-session-has-expired'
+						);
+					}
 					else if (exception.indexOf('PrincipalException') > -1) {
 						errorKey = Liferay.Language.get(
 							'you-do-not-have-the-required-permissions'

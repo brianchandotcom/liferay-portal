@@ -15,9 +15,11 @@ import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionConte
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -54,6 +56,24 @@ public class KaleoDefinitionVersionImpl extends KaleoDefinitionVersionBaseImpl {
 	}
 
 	@Override
+	public boolean isBlockingKaleoTimerExists() {
+		if (_blockingKaleoTimerExists == null) {
+			_computeKaleoTimerExists();
+		}
+
+		return _blockingKaleoTimerExists;
+	}
+
+	@Override
+	public boolean isKaleoTimerExists() {
+		if (_kaleoTimerExists == null) {
+			_computeKaleoTimerExists();
+		}
+
+		return _kaleoTimerExists;
+	}
+
+	@Override
 	public boolean isLatest() throws PortalException {
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			KaleoDefinitionVersionLocalServiceUtil.
@@ -68,18 +88,45 @@ public class KaleoDefinitionVersionImpl extends KaleoDefinitionVersionBaseImpl {
 		return false;
 	}
 
-	@Override
-	public void setContentAsXML(String contentAsXML) {
-		_contentAsXML = contentAsXML;
-	}
-
 	protected int getVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return versionParts[0];
 	}
 
-	@CacheField(propagateToInterface = true)
+	private void _computeKaleoTimerExists() {
+		boolean blockingKaleoTimerExists = false;
+		boolean kaleoTimerExists = false;
+
+		for (KaleoTimer kaleoTimer :
+				KaleoTimerLocalServiceUtil.getKaleoDefinitionVersionKaleoTimers(
+					KaleoNode.class.getName(), getKaleoDefinitionVersionId())) {
+
+			kaleoTimerExists = true;
+
+			if (kaleoTimer.isBlocking()) {
+				blockingKaleoTimerExists = true;
+
+				break;
+			}
+		}
+
+		_blockingKaleoTimerExists = blockingKaleoTimerExists;
+		_kaleoTimerExists = kaleoTimerExists;
+
+		blockingKaleoTimerExistsUpdateEntityCacheBiConsumer.accept(
+			this, _blockingKaleoTimerExists);
+		kaleoTimerExistsUpdateEntityCacheBiConsumer.accept(
+			this, _kaleoTimerExists);
+	}
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private Boolean _blockingKaleoTimerExists;
+
+	@CacheField(permanent = true, propagateToInterface = true)
 	private String _contentAsXML;
+
+	@CacheField(permanent = true, propagateToInterface = true)
+	private Boolean _kaleoTimerExists;
 
 }

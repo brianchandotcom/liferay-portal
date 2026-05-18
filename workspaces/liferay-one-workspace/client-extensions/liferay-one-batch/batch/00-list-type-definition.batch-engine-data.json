@@ -11,94 +11,6 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "LT_ACCOUNT_REGION",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "LT_ACCOUNT_REGION_AMERICAS",
-					"key": "americas",
-					"name": "Americas"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_REGION_EMEA",
-					"key": "eMEA",
-					"name": "EMEA"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_REGION_APAC",
-					"key": "aPAC",
-					"name": "APAC"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_REGION_LATAM",
-					"key": "lATAM",
-					"name": "LATAM"
-				}
-			],
-			"name": "Account Region"
-		},
-		{
-			"externalReferenceCode": "LT_ACCOUNT_TIER",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "LT_ACCOUNT_TIER_PLATINUM",
-					"key": "platinum",
-					"name": "Platinum"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_TIER_GOLD",
-					"key": "gold",
-					"name": "Gold"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_TIER_SILVER",
-					"key": "silver",
-					"name": "Silver"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_TIER_BRONZE",
-					"key": "bronze",
-					"name": "Bronze"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_TIER_TRIAL",
-					"key": "trial",
-					"name": "Trial"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_TIER_COMMUNITY",
-					"key": "community",
-					"name": "Community"
-				}
-			],
-			"name": "Account Tier"
-		},
-		{
-			"externalReferenceCode": "LT_ACCOUNT_STATUS",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "LT_ACCOUNT_STATUS_ACTIVE",
-					"key": "active",
-					"name": "Active"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_STATUS_SUSPENDED",
-					"key": "suspended",
-					"name": "Suspended"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_STATUS_CANCELLED",
-					"key": "cancelled",
-					"name": "Cancelled"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_STATUS_EXPIRED",
-					"key": "expired",
-					"name": "Expired"
-				}
-			],
-			"name": "Account Status"
-		},
-		{
 			"externalReferenceCode": "LT_ACCOUNT_FLAG_CODE",
 			"listTypeEntries": [
 			],
@@ -109,22 +21,6 @@
 			"listTypeEntries": [
 			],
 			"name": "Account Flag Value"
-		},
-		{
-			"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE_GENERAL",
-					"key": "general",
-					"name": "General"
-				},
-				{
-					"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE_SALES",
-					"key": "sales",
-					"name": "Sales"
-				}
-			],
-			"name": "Account Note Type"
 		},
 		{
 			"externalReferenceCode": "LT_ACCOUNT_NOTE_PRIORITY",
@@ -159,6 +55,110 @@
 			"name": "Account Note Status"
 		},
 		{
+			"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE_GENERAL",
+					"key": "general",
+					"name": "General"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_NOTE_TYPE_SALES",
+					"key": "sales",
+					"name": "Sales"
+				}
+			],
+			"name": "Account Note Type"
+		},
+		{
+			"externalReferenceCode": "LT_ACCOUNT_REGION",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_REGION_AMERICAS",
+					"key": "americas",
+					"name": "Americas"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_REGION_APAC",
+					"key": "aPAC",
+					"name": "APAC"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_REGION_EMEA",
+					"key": "eMEA",
+					"name": "EMEA"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_REGION_LATAM",
+					"key": "lATAM",
+					"name": "LATAM"
+				}
+			],
+			"name": "Account Region"
+		},
+		{
+			"externalReferenceCode": "LT_ACCOUNT_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_ACTIVE",
+					"key": "active",
+					"name": "Active"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_CANCELLED",
+					"key": "cancelled",
+					"name": "Cancelled"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_EXPIRED",
+					"key": "expired",
+					"name": "Expired"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_STATUS_SUSPENDED",
+					"key": "suspended",
+					"name": "Suspended"
+				}
+			],
+			"name": "Account Status"
+		},
+		{
+			"externalReferenceCode": "LT_ACCOUNT_TIER",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ACCOUNT_TIER_BRONZE",
+					"key": "bronze",
+					"name": "Bronze"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_TIER_COMMUNITY",
+					"key": "community",
+					"name": "Community"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_TIER_GOLD",
+					"key": "gold",
+					"name": "Gold"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_TIER_PLATINUM",
+					"key": "platinum",
+					"name": "Platinum"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_TIER_SILVER",
+					"key": "silver",
+					"name": "Silver"
+				},
+				{
+					"externalReferenceCode": "LT_ACCOUNT_TIER_TRIAL",
+					"key": "trial",
+					"name": "Trial"
+				}
+			],
+			"name": "Account Tier"
+		},
+		{
 			"externalReferenceCode": "LT_ENTITLEMENT_RULE_TYPE",
 			"listTypeEntries": [
 				{
@@ -191,73 +191,12 @@
 			"name": "Entitlement Status"
 		},
 		{
-			"externalReferenceCode": "LT_PRODUCT_FAMILY",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_DXP",
-					"key": "dXP",
-					"name": "DXP"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_PORTAL",
-					"key": "portal",
-					"name": "Portal"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_ANALYTICS",
-					"key": "analytics",
-					"name": "Analytics"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_COMMERCE",
-					"key": "commerce",
-					"name": "Commerce"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_AI_HUB",
-					"key": "aIHub",
-					"name": "AIHub"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_CMP",
-					"key": "cMP",
-					"name": "CMP"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_PARTNER",
-					"key": "partner",
-					"name": "Partner"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_SUPPORT",
-					"key": "support",
-					"name": "Support"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_TRAINING",
-					"key": "training",
-					"name": "Training"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_ENTERPRISE_SEARCH",
-					"key": "enterpriseSearch",
-					"name": "Enterprise Search"
-				},
-				{
-					"externalReferenceCode": "LT_PRODUCT_FAMILY_OTHER",
-					"key": "other",
-					"name": "Other"
-				}
-			],
-			"name": "Product Family"
-		},
-		{
 			"externalReferenceCode": "LT_ENVIRONMENT_TYPE",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_PRODUCTION",
-					"key": "production",
-					"name": "Production"
+					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_BACKUP",
+					"key": "backup",
+					"name": "Backup"
 				},
 				{
 					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_NON_PRODUCTION",
@@ -265,9 +204,9 @@
 					"name": "Non-Production"
 				},
 				{
-					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_BACKUP",
-					"key": "backup",
-					"name": "Backup"
+					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_PRODUCTION",
+					"key": "production",
+					"name": "Production"
 				}
 			],
 			"name": "Environment Type"
@@ -289,12 +228,73 @@
 			"name": "Payment Status"
 		},
 		{
+			"externalReferenceCode": "LT_PRODUCT_FAMILY",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_AI_HUB",
+					"key": "aIHub",
+					"name": "AIHub"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_ANALYTICS",
+					"key": "analytics",
+					"name": "Analytics"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_CMP",
+					"key": "cMP",
+					"name": "CMP"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_COMMERCE",
+					"key": "commerce",
+					"name": "Commerce"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_DXP",
+					"key": "dXP",
+					"name": "DXP"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_ENTERPRISE_SEARCH",
+					"key": "enterpriseSearch",
+					"name": "Enterprise Search"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_OTHER",
+					"key": "other",
+					"name": "Other"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_PARTNER",
+					"key": "partner",
+					"name": "Partner"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_PORTAL",
+					"key": "portal",
+					"name": "Portal"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_SUPPORT",
+					"key": "support",
+					"name": "Support"
+				},
+				{
+					"externalReferenceCode": "LT_PRODUCT_FAMILY_TRAINING",
+					"key": "training",
+					"name": "Training"
+				}
+			],
+			"name": "Product Family"
+		},
+		{
 			"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_SOURCE_CODE",
-					"key": "sourceCode",
-					"name": "Source Code"
+					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_LPKG",
+					"key": "lpkg",
+					"name": "Liferay Package (LPKG)"
 				},
 				{
 					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_PACKAGE",
@@ -302,9 +302,9 @@
 					"name": "Package (jar, war, zip)"
 				},
 				{
-					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_LPKG",
-					"key": "lpkg",
-					"name": "Liferay Package (LPKG)"
+					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_SOURCE_CODE",
+					"key": "sourceCode",
+					"name": "Source Code"
 				}
 			],
 			"name": "Publisher Asset Attachment Type"
@@ -329,9 +329,9 @@
 			"externalReferenceCode": "LT_REQUEST_STATUS",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "LT_REQUEST_STATUS_OPEN",
-					"key": "open",
-					"name": "Open"
+					"externalReferenceCode": "LT_REQUEST_STATUS_COMPLETED",
+					"key": "completed",
+					"name": "Completed"
 				},
 				{
 					"externalReferenceCode": "LT_REQUEST_STATUS_IN_PROGRESS",
@@ -339,9 +339,9 @@
 					"name": "In Progress"
 				},
 				{
-					"externalReferenceCode": "LT_REQUEST_STATUS_COMPLETED",
-					"key": "completed",
-					"name": "Completed"
+					"externalReferenceCode": "LT_REQUEST_STATUS_OPEN",
+					"key": "open",
+					"name": "Open"
 				},
 				{
 					"externalReferenceCode": "LT_REQUEST_STATUS_REJECTED",

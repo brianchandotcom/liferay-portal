@@ -456,7 +456,7 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
@@ -667,16 +667,16 @@
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_CONTACT_SALES",
+			"externalReferenceCode": "C_SALES_REQUEST",
 			"label": {
-				"en_US": "Contact Sales"
+				"en_US": "Sales Request"
 			},
-			"name": "ContactSales",
+			"name": "SalesRequest",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_CONTACT_SALES_ACCOUNT_NAME",
+					"externalReferenceCode": "C_SALES_REQUEST_ACCOUNT_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -694,7 +694,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "C_CONTACT_SALES_ADDITIONAL_APPS_REQUESTED",
+					"externalReferenceCode": "C_SALES_REQUEST_ADDITIONAL_APPS_REQUESTED",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -712,7 +712,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "C_CONTACT_SALES_COMMENTS",
+					"externalReferenceCode": "C_SALES_REQUEST_COMMENTS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -730,7 +730,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_CONTACT_SALES_EMAIL",
+					"externalReferenceCode": "C_SALES_REQUEST_EMAIL",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -748,7 +748,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_CONTACT_SALES_NAME",
+					"externalReferenceCode": "C_SALES_REQUEST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -764,17 +764,17 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Contact Sales"
+				"en_US": "Sales Requests"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/contactsales",
+			"restContextPath": "/o/c/salesrequests",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -1251,7 +1251,7 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
@@ -1481,7 +1481,7 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
@@ -3551,16 +3551,16 @@
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT",
+			"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST",
 			"label": {
-				"en_US": "Request Publisher Account"
+				"en_US": "Publisher Account Request"
 			},
-			"name": "RequestPublisherAccount",
+			"name": "PublisherAccountRequest",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_EMAIL_ADDRESS",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_EMAIL_ADDRESS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3578,7 +3578,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_EXTENSION",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_EXTENSION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3596,7 +3596,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_FIRST_NAME",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_FIRST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3614,7 +3614,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_INTL_CODE",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_INTL_CODE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3632,7 +3632,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_LAST_NAME",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_LAST_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3650,7 +3650,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_PHONE_NUMBER",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_PHONE_NUMBER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3668,7 +3668,7 @@
 				{
 					"DBType": "String",
 					"businessType": "MultiselectPicklist",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_PUBLISHER_TYPE",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_PUBLISHER_TYPE",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
@@ -3687,7 +3687,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_REQUEST_DESCRIPTION",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_REQUEST_DESCRIPTION",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -3706,7 +3706,7 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "open",
-					"externalReferenceCode": "C_REQUEST_PUBLISHER_ACCOUNT_REQUEST_STATUS",
+					"externalReferenceCode": "C_PUBLISHER_ACCOUNT_REQUEST_REQUEST_STATUS",
 					"indexed": true,
 					"indexedAsKeyword": true,
 					"indexedLanguageId": "",
@@ -3723,17 +3723,17 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [
 			],
 			"panelCategoryKey": "applications_menu.applications.content",
 			"pluralLabel": {
-				"en_US": "Request Publisher Accounts"
+				"en_US": "Publisher Account Requests"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/requestpublisheraccounts",
+			"restContextPath": "/o/c/publisheraccountrequests",
 			"scope": "company",
 			"status": {
 				"code": 0,
@@ -3830,7 +3830,7 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "C_LIFERAY_ONE_FOLDER",
+			"objectFolderExternalReferenceCode": "C_REQUESTS_FOLDER",
 			"objectRelationships": [
 			],
 			"objectValidationRules": [

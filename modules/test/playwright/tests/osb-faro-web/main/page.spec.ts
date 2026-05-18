@@ -447,7 +447,7 @@ test(
 
 			await addSegmentField({
 				criterionName: 'email',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 

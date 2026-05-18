@@ -90,8 +90,8 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 	}
 
 	private boolean _containsDigit(String s) {
-		for (char c : s.toCharArray()) {
-			if (Character.isDigit(c)) {
+		for (int i = 0; i < s.length(); i++) {
+			if (Character.isDigit(s.charAt(i))) {
 				return true;
 			}
 		}

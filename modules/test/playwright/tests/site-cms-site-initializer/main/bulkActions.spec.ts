@@ -65,6 +65,164 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test(
+	'Can delete over a Select All expanded selection from a multiple spaces view',
+	{tag: '@LPD-87393'},
+	async ({apiHelpers, assetsPage, page}) => {
+		for (let i = 0; i < 21; i++) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `title ${getRandomString()}`,
+				},
+				'cms/basic-web-contents',
+				'Default'
+			);
+		}
+
+		await assetsPage.gotoAll();
+
+		await assetsPage.selectAllItems(true);
+
+		await page
+			.getByTestId(/visualization-mode/)
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await expect(
+			page.getByText(
+				'You are about to delete the selected items from multiple spaces'
+			)
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page, 'Info:Delete action started for all assets.', {
+			type: 'info',
+		});
+
+		await waitForAlert(
+			page,
+			`Success:All items were successfully deleted.`,
+			{first: true}
+		);
+
+		await expect(page.getByText('No Assets Yet')).toBeVisible();
+	}
+);
+
+test(
+	'Can delete over a Select All expanded selection from a single space view with Recycle Bin disabled',
+	{tag: '@LPD-87393'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: false,
+			},
+			type: 'Space',
+		});
+
+		for (let i = 0; i < 21; i++) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `title ${getRandomString()}`,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		}
+
+		await assetsPage.gotoContents(spaceName);
+
+		await assetsPage.selectAllItems(true);
+
+		await page
+			.getByTestId(/visualization-mode/)
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await expect(
+			page.getByText('You are about to permanently delete all items')
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Delete'}).click();
+
+		await waitForAlert(page, 'Info:Delete action started for all assets.', {
+			type: 'info',
+		});
+
+		await waitForAlert(
+			page,
+			`Success:All items were successfully deleted.`,
+			{first: true}
+		);
+
+		await expect(page.getByText('No Content Yet')).toBeVisible();
+	}
+);
+
+test(
+	'Can delete over a Select All expanded selection from a single space view with Recycle Bin enabled',
+	{tag: '@LPD-87393'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		for (let i = 0; i < 21; i++) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `title ${getRandomString()}`,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		}
+
+		await assetsPage.gotoContents(spaceName);
+
+		await assetsPage.selectAllItems(true);
+
+		await page
+			.getByTestId(/visualization-mode/)
+			.getByLabel('Actions')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+		await waitForAlert(page, 'Info:Delete action started for all assets.', {
+			type: 'info',
+		});
+
+		await waitForAlert(
+			page,
+			`Success:All items were successfully deleted.`,
+			{first: true}
+		);
+
+		await expect(page.getByText('No Content Yet')).toBeVisible();
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {
@@ -124,7 +282,9 @@ test(
 		await page.getByRole('menuitem', {name: 'Delete'}).click();
 
 		await expect(
-			page.getByText('Some of the selected files')
+			page.getByText(
+				'You are about to delete the selected items from multiple spaces'
+			)
 		).toBeVisible();
 
 		await page.getByRole('button', {name: 'Delete'}).click();

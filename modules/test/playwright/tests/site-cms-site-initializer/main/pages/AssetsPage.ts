@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../../../apps/site/site-cms-site-initializer/src/main/resources/META-INF/resources/js/common/utils/constants';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
@@ -44,6 +46,8 @@ interface ItemCopyOrMoveArgs extends CopyOrMoveDestinationArgs {
 export class AssetsPage {
 	readonly page: Page;
 
+	readonly apiHelpers: ApiHelpers;
+
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly galleryNavigation: Locator;
 	readonly galleryPreview: Locator;
@@ -73,6 +77,8 @@ export class AssetsPage {
 
 	constructor(page: Page) {
 		this.page = page;
+
+		this.apiHelpers = new ApiHelpers(page);
 
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.galleryNavigation = page.locator('.fds-gallery-view__navigation');
@@ -119,14 +125,37 @@ export class AssetsPage {
 		await this.page.getByRole('heading', {name: 'All'}).waitFor();
 	}
 
-	async gotoContents() {
-		await this.page.goto(PORTLET_URLS.cmsContents);
-		await this.page.getByRole('heading', {name: 'Contents'}).waitFor();
+	async gotoContents(spaceName?: string) {
+		if (spaceName) {
+			const rootFolder =
+				await this.apiHelpers.objectFolder.getObjectEntryFolderByExternalReferenceCode(
+					{externalReferenceCode: 'L_CONTENTS', scopeKey: spaceName}
+				);
+
+			this.gotoFolder(rootFolder.id, rootFolder.title);
+		}
+		else {
+			await this.page.goto(PORTLET_URLS.cmsContents);
+			await this.page.getByRole('heading', {name: 'Contents'}).waitFor();
+		}
 	}
 
 	async gotoFiles() {
 		await this.page.goto(PORTLET_URLS.cmsFiles);
 		await this.page.getByRole('heading', {name: 'Files'}).waitFor();
+	}
+
+	async gotoFolder(folderId: string, folderTitle: string) {
+		const className =
+			await this.apiHelpers.jsonWebServicesClassName.fetchClassName(
+				OBJECT_ENTRY_FOLDER_CLASS_NAME
+			);
+
+		await this.page.goto(
+			`${PORTLET_URLS.cmsViewFolder}${className.classNameId}/${folderId}`
+		);
+
+		await this.page.getByTestId(`testId${folderTitle}`).waitFor();
 	}
 
 	async createContent(type: string) {
@@ -256,6 +285,23 @@ export class AssetsPage {
 
 			await card.getByRole('checkbox').check();
 		}
+	}
+
+	async selectAllItems(spanMultiplePages: boolean) {
+		await this.page.getByTitle('Select Items').click();
+
+		if (spanMultiplePages) {
+			const selectAllLink = this.page.getByRole('button', {
+				exact: true,
+				name: 'Select All',
+			});
+
+			await expect(selectAllLink).toBeVisible();
+
+			await selectAllLink.click();
+		}
+
+		await expect(this.page.getByText('All Selected')).toBeVisible();
 	}
 
 	async navigateByGalleryArrows(direction: 'Previous' | 'Next') {

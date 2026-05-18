@@ -254,7 +254,7 @@ test(
 			await page.getByRole('menuitem', {name: 'Delete'}).click();
 
 			await expect(
-				page.getByText('You are about to permanently delete 2 entries.')
+				page.getByText('You are about to permanently delete 2 items.')
 			).toBeVisible();
 
 			await checkAccessibility({
@@ -264,14 +264,106 @@ test(
 
 			await page.getByRole('button', {name: 'Delete'}).click();
 
-			await page.reload();
+			await waitForAlert(
+				page,
+				'Info:Delete action started for 2 assets.',
+				{
+					type: 'info',
+				}
+			);
+
+			await waitForAlert(
+				page,
+				`Success:2 assets were successfully deleted.`,
+				{first: true}
+			);
+
+			await expect(page.getByText('No Assets Yet')).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Can delete over a Select All expanded selection from Recycle Bin',
+	{tag: '@LPD-87393'},
+	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		for (let i = 0; i < 21; i++) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: `title ${getRandomString()}`,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		}
+
+		await test.step('Login as CMS Administrator', async () => {
+			const user = await addCMSAdministrator(apiHelpers);
+
+			await performUserSwitch(page, user.alternateName);
+		});
+
+		await test.step('Delete all the contents so they can go into the Recycle Bin', async () => {
+			await assetsPage.gotoContents(spaceName);
+
+			await assetsPage.selectAllItems(true);
+
+			await page
+				.getByTestId(/visualization-mode/)
+				.getByLabel('Actions')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			await expect(page.getByText('No Content Yet')).toBeVisible();
+		});
+
+		await test.step('Go to the Recycle Bin and delete the contents permanently', async () => {
+			await recycleBinPage.goto();
+
+			await assetsPage.selectAllItems(true);
+
+			await page
+				.getByTestId('visualization-mode-table')
+				.getByLabel('Actions')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
 
 			await expect(
-				page.getByRole('cell', {name: contentName1})
-			).toBeHidden();
-			await expect(
-				page.getByRole('cell', {name: contentName2})
-			).toBeHidden();
+				page.getByText('You are about to permanently delete all items.')
+			).toBeVisible();
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+
+			await waitForAlert(
+				page,
+				'Info:Delete action started for all assets.',
+				{
+					type: 'info',
+				}
+			);
+
+			await waitForAlert(
+				page,
+				`Success:All items were successfully deleted.`,
+				{first: true}
+			);
+
+			await expect(page.getByText('No Assets Yet')).toBeVisible();
 		});
 	}
 );

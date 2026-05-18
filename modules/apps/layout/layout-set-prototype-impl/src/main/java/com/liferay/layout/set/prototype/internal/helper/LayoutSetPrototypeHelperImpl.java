@@ -5,10 +5,13 @@
 
 package com.liferay.layout.set.prototype.internal.helper;
 
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
@@ -46,6 +49,42 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutSetPrototypeHelper.class)
 public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
+
+	@Override
+	public void executeLayoutSetPrototypeSync(
+			long layoutSetPrototypeId, long userId)
+		throws PortalException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		if (layoutSetPrototype == null) {
+			return;
+		}
+
+		for (LayoutSet layoutSet :
+				_layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
+					layoutSetPrototype.getUuid())) {
+
+			try {
+				executeLayoutSetSync(layoutSet);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to start site template sync for layout set " +
+						layoutSet.getLayoutSetId(),
+					exception);
+			}
+		}
+	}
+
+	@Override
+	public void executeLayoutSetSync(LayoutSet layoutSet) throws Exception {
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
+
+		_sites.mergeLayoutSetPrototypeLayouts(layoutSet.getGroup(), layoutSet);
+	}
 
 	@Override
 	public List<Layout> getDuplicatedFriendlyURLLayouts(Layout layout)
@@ -514,6 +553,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		_layoutLocalService.updateLayout(layout);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSetPrototypeHelperImpl.class);
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -534,5 +576,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private Sites _sites;
 
 }

@@ -254,6 +254,8 @@ public class ImportPreviewResourceTest
 			return 0L;
 		}
 
+		String handlerName = "PORTLET_DATA_" + portletId;
+
 		for (PreviewPortletDataHandlerSection previewPortletDataHandlerSection :
 				previewPortletDataHandlerSections) {
 
@@ -261,7 +263,7 @@ public class ImportPreviewResourceTest
 					previewPortletDataHandlerSection.
 						getPreviewPortletDataHandlers()) {
 
-				if (portletId.equals(previewPortletDataHandler.getName())) {
+				if (handlerName.equals(previewPortletDataHandler.getName())) {
 					return previewPortletDataHandler.getAdditionCount();
 				}
 			}

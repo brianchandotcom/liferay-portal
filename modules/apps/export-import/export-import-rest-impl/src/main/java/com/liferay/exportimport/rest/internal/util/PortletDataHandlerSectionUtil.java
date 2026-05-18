@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerChoice;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.rest.dto.v1_0.Choice;
 import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
@@ -195,7 +196,10 @@ public class PortletDataHandlerSectionUtil {
 
 						return portletTitle;
 					});
-				setName(portlet::getPortletId);
+				setName(
+					() ->
+						PortletDataHandlerKeys.PORTLET_DATA + "_" +
+							portlet.getPortletId());
 				setPreviewPortletDataHandlerControls(
 					() -> _toNestedControls(
 						locale, manifestSummary,
@@ -221,7 +225,10 @@ public class PortletDataHandlerSectionUtil {
 						setLabel(
 							() -> LanguageUtil.get(
 								locale, portletDataHandlerBoolean.getLabel()));
-						setName(portletDataHandlerBoolean::getName);
+						setName(
+							PortletDataHandlerControl.getNamespacedName(
+								portletDataHandlerBoolean.getNamespace(),
+								portletDataHandlerBoolean.getName()));
 						setPreviewPortletDataHandlerControls(
 							() -> _toNestedControls(
 								locale, manifestSummary,
@@ -260,7 +267,10 @@ public class PortletDataHandlerSectionUtil {
 					setLabel(
 						() -> LanguageUtil.get(
 							locale, portletDataHandlerBoolean.getLabel()));
-					setName(portletDataHandlerBoolean::getName);
+					setName(
+						PortletDataHandlerControl.getNamespacedName(
+							portletDataHandlerBoolean.getNamespace(),
+							portletDataHandlerBoolean.getName()));
 					setPreviewPortletDataHandlerControls(
 						() -> _toNestedControls(
 							locale, manifestSummary,
@@ -294,7 +304,10 @@ public class PortletDataHandlerSectionUtil {
 					setLabel(
 						() -> LanguageUtil.get(
 							locale, portletDataHandlerChoice.getLabel()));
-					setName(portletDataHandlerChoice::getName);
+					setName(
+						PortletDataHandlerControl.getNamespacedName(
+							portletDataHandlerChoice.getNamespace(),
+							portletDataHandlerChoice.getName()));
 					setType(() -> PreviewPortletDataHandlerControl.Type.CHOICE);
 				}
 			};

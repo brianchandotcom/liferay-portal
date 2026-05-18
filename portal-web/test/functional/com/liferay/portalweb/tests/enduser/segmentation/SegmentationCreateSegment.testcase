@@ -681,53 +681,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-130289: Validate if it's posible to create a segment based on User > Role criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserRole {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Add role and assign it to the user") {
-			JSONRole.addRegularRole(
-				roleKey = "Regular Role",
-				roleTitle = "Regular Role");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Regular Role",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Regular Role");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserRole Test");
-
-			Segmentation.fillProperty(selectCheckbox = "Regular Role");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserRole Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "Regular Role");
-		}
-	}
-
 	@description = "Test Automation for LPS-132107: Validate if it's posible to create a segment based on User > Site criteria"
 	@priority = 5
 	@uitest

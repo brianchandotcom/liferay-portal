@@ -96,7 +96,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 				<p>
 					<Text color='secondary' weight='normal'>
 						{Liferay.Language.get(
-							'current-stage-progression-for-this-account'
+							'shows-the-current-stage-progression-for-this-account'
 						)}
 					</Text>
 				</p>

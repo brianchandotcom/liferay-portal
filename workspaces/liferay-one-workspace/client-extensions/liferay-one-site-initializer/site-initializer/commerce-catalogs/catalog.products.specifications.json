@@ -1,7 +1,7 @@
 [
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "APP-API-REFERENCE-URL",
+		"cpDefinitionExternalReferenceCode": "APP_API_REFERENCE_URL",
 		"description": "URL for the API Documentation",
 		"facetable": false,
 		"key": "app-api-reference-url",
@@ -9,7 +9,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "APP-DOCUMENTATION-URL",
+		"cpDefinitionExternalReferenceCode": "APP_DOCUMENTATION_URL",
 		"description": "",
 		"facetable": false,
 		"key": "app-documentation-url",
@@ -17,7 +17,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "APP-ENTRY-UUID",
+		"cpDefinitionExternalReferenceCode": "APP_ENTRY_UUID",
 		"description": "",
 		"facetable": false,
 		"key": "app-entry-uuid",
@@ -25,7 +25,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "APP-INSTALLATION-GUIDE-URL",
+		"cpDefinitionExternalReferenceCode": "APP_INSTALLATION_GUIDE_URL",
 		"description": "",
 		"facetable": false,
 		"key": "app-installation-guide-url",
@@ -33,7 +33,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "APP-STOREFRONT-VIDEO-DESCRIPTION",
+		"cpDefinitionExternalReferenceCode": "APP_STOREFRONT_VIDEO_DESCRIPTION",
 		"description": "",
 		"facetable": false,
 		"key": "app-storefront-video-description",
@@ -41,7 +41,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "APP-STOREFRONT-VIDEO-URL",
+		"cpDefinitionExternalReferenceCode": "APP_STOREFRONT_VIDEO_URL",
 		"description": "",
 		"facetable": false,
 		"key": "app-storefront-video-url",
@@ -49,7 +49,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "APP-USAGE-TERMS-URL",
+		"cpDefinitionExternalReferenceCode": "APP_USAGE_TERMS_URL",
 		"description": "",
 		"facetable": false,
 		"key": "app-usage-terms-url",
@@ -57,7 +57,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "CURRENT-REQUIREMENTS",
+		"cpDefinitionExternalReferenceCode": "CURRENT_REQUIREMENTS",
 		"description": "Latest Liferay Version Supported",
 		"facetable": false,
 		"key": "current-requirements",
@@ -65,7 +65,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "DEVELOPER-NAME",
+		"cpDefinitionExternalReferenceCode": "DEVELOPER_NAME",
 		"description": "Developer Name",
 		"facetable": true,
 		"key": "developer-name",
@@ -73,7 +73,7 @@
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"cpDefinitionExternalReferenceCode": "LATEST-VERSION",
+		"cpDefinitionExternalReferenceCode": "LATEST_VERSION",
 		"description": "Latest version for the app or solution.",
 		"facetable": false,
 		"key": "latest-version",
@@ -81,7 +81,7 @@
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"cpDefinitionExternalReferenceCode": "LICENSE-TERM",
+		"cpDefinitionExternalReferenceCode": "LICENSE_TERM",
 		"description": "Length of the trial",
 		"facetable": false,
 		"key": "license-term",
@@ -89,7 +89,7 @@
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"cpDefinitionExternalReferenceCode": "LICENSE-TYPE",
+		"cpDefinitionExternalReferenceCode": "LICENSE_TYPE",
 		"description": "License Type",
 		"facetable": false,
 		"key": "license-type",
@@ -97,7 +97,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "LIFERAY-PRODUCTS-CAPABILITIES",
+		"cpDefinitionExternalReferenceCode": "LIFERAY_PRODUCTS_CAPABILITIES",
 		"description": "",
 		"facetable": true,
 		"key": "liferay-products-capabilities",
@@ -105,7 +105,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "LIFERAY-PRODUCTS-CATEGORIES",
+		"cpDefinitionExternalReferenceCode": "LIFERAY_PRODUCTS_CATEGORIES",
 		"description": "",
 		"facetable": true,
 		"key": "liferay-products-categories",
@@ -113,7 +113,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "LIFERAY-VERSION",
+		"cpDefinitionExternalReferenceCode": "LIFERAY_VERSION",
 		"description": "Compatible Liferay Release Version",
 		"facetable": true,
 		"key": "liferay-version",
@@ -121,7 +121,7 @@
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"cpDefinitionExternalReferenceCode": "LIFETIME-LICENSE",
+		"cpDefinitionExternalReferenceCode": "LIFETIME_LICENSE",
 		"description": "Lifetime license offered?",
 		"facetable": false,
 		"key": "lifetime-license",
@@ -129,7 +129,7 @@
 	},
 	{
 		"categoryKey": "resource-requirements",
-		"cpDefinitionExternalReferenceCode": "NUMBER-OF-CPUS",
+		"cpDefinitionExternalReferenceCode": "NUMBER_OF_CPUS",
 		"description": "Number of CPUs to Resource Requirements",
 		"facetable": true,
 		"key": "number-of-cpus",
@@ -137,7 +137,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "OUR-SELECTION",
+		"cpDefinitionExternalReferenceCode": "OUR_SELECTION",
 		"description": "",
 		"facetable": true,
 		"key": "our-selection",
@@ -145,7 +145,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "PAST-VERSIONS-WORK-WITH",
+		"cpDefinitionExternalReferenceCode": "PAST_VERSIONS_WORK_WITH",
 		"description": "Past Versions this product has worked with",
 		"facetable": false,
 		"key": "past-versions-work-with",
@@ -153,7 +153,7 @@
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"cpDefinitionExternalReferenceCode": "PRICE-MODEL",
+		"cpDefinitionExternalReferenceCode": "PRICE_MODEL",
 		"description": "Whether the app is Free, Paid or Bundled",
 		"facetable": true,
 		"key": "price-model",
@@ -161,7 +161,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "PRODUCT-DOWNLOADS",
+		"cpDefinitionExternalReferenceCode": "PRODUCT_DOWNLOADS",
 		"description": "Total number of downloads for this product",
 		"facetable": false,
 		"key": "product-downloads",
@@ -169,7 +169,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "PRODUCT-NOTES",
+		"cpDefinitionExternalReferenceCode": "PRODUCT_NOTES",
 		"description": "General notes about the app or solution.",
 		"facetable": false,
 		"key": "product-notes",
@@ -177,7 +177,7 @@
 	},
 	{
 		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "PUBLISHER-NAME",
+		"cpDefinitionExternalReferenceCode": "PUBLISHER_NAME",
 		"description": "Name of the primary app publisher",
 		"facetable": false,
 		"key": "publisher-name",
@@ -185,7 +185,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "PUBLISHER-WEB-SITE-URL",
+		"cpDefinitionExternalReferenceCode": "PUBLISHER_WEB_SITE_URL",
 		"description": "",
 		"facetable": false,
 		"key": "publisher-web-site-url",
@@ -193,7 +193,7 @@
 	},
 	{
 		"categoryKey": "resource-requirements",
-		"cpDefinitionExternalReferenceCode": "RAM-IN-GB",
+		"cpDefinitionExternalReferenceCode": "RAM_IN_GB",
 		"description": "RAM in GB to Resource Requirements",
 		"facetable": true,
 		"key": "ram-in-gb",
@@ -201,7 +201,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-COMPANY-DESCRIPTION",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_COMPANY_DESCRIPTION",
 		"description": "Solution company description",
 		"facetable": true,
 		"key": "solution-company-description",
@@ -209,7 +209,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-COMPANY-EMAIL",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_COMPANY_EMAIL",
 		"description": "Solution company email",
 		"facetable": true,
 		"key": "solution-company-email",
@@ -217,7 +217,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-COMPANY-PHONE",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_COMPANY_PHONE",
 		"description": "Solution company phone",
 		"facetable": true,
 		"key": "solution-company-phone",
@@ -225,7 +225,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-COMPANY-WEBSITE",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_COMPANY_WEBSITE",
 		"description": "Solution company website",
 		"facetable": true,
 		"key": "solution-company-website",
@@ -233,7 +233,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-CONTACT-EMAIL",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_CONTACT_EMAIL",
 		"description": "Solution contact email",
 		"facetable": true,
 		"key": "solution-contact-email",
@@ -241,7 +241,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-DETAILS-BLOCKS",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_DETAILS_BLOCKS",
 		"description": "Solution details blocks",
 		"facetable": true,
 		"key": "solution-details-blocks",
@@ -249,7 +249,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-HEADER-DESCRIPTION",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_HEADER_DESCRIPTION",
 		"description": "Solution header description",
 		"facetable": true,
 		"key": "solution-header-description",
@@ -257,7 +257,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-HEADER-TITLE",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_HEADER_TITLE",
 		"description": "Solution header title",
 		"facetable": true,
 		"key": "solution-header-title",
@@ -265,7 +265,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-HEADER-VIDEO-DESCRIPTION",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_HEADER_VIDEO_DESCRIPTION",
 		"description": "Solution header video description",
 		"facetable": true,
 		"key": "solution-header-video-description",
@@ -273,7 +273,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-HEADER-VIDEO-URL",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_HEADER_VIDEO_URL",
 		"description": "Solution header video url",
 		"facetable": true,
 		"key": "solution-header-video-url",
@@ -281,7 +281,7 @@
 	},
 	{
 		"categoryKey": "solution-metadata",
-		"cpDefinitionExternalReferenceCode": "SOLUTION-TYPE",
+		"cpDefinitionExternalReferenceCode": "SOLUTION_TYPE",
 		"description": "Solution header title",
 		"facetable": false,
 		"key": "solution-type",
@@ -289,7 +289,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "SOURCE-CODE-URL",
+		"cpDefinitionExternalReferenceCode": "SOURCE_CODE_URL",
 		"description": "URL of source code",
 		"facetable": false,
 		"key": "source-code-url",
@@ -297,7 +297,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "SUPPORT-EMAIL-ADDRESS",
+		"cpDefinitionExternalReferenceCode": "SUPPORT_EMAIL_ADDRESS",
 		"description": "",
 		"facetable": false,
 		"key": "support-email-address",
@@ -305,7 +305,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "SUPPORT-PHONE",
+		"cpDefinitionExternalReferenceCode": "SUPPORT_PHONE",
 		"description": "",
 		"facetable": false,
 		"key": "support-phone",
@@ -313,7 +313,7 @@
 	},
 	{
 		"categoryKey": "app-support-and-help",
-		"cpDefinitionExternalReferenceCode": "SUPPORT-URL",
+		"cpDefinitionExternalReferenceCode": "SUPPORT_URL",
 		"description": "",
 		"facetable": false,
 		"key": "support-url",

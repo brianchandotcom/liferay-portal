@@ -5,9 +5,11 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -16,6 +18,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,10 +33,14 @@ public class ViewAgentDefinitionsDisplayContext {
 
 	public ViewAgentDefinitionsDisplayContext(
 		GroupLocalService groupLocalService,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
+		Portal portal) {
 
 		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_portal = portal;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -82,7 +89,14 @@ public class ViewAgentDefinitionsDisplayContext {
 			new FDSActionDropdownItem(
 				href + "/update-active?active=true", "logout", "activate",
 				LanguageUtil.get(_httpServletRequest, "activate"), "patch",
-				"activate", "async"));
+				"activate", "async"),
+			new FDSActionDropdownItem(
+				DisplayContextUtil.getPermissionsURL(
+					"L_AI_HUB_AGENT_DEFINITION", _httpServletRequest,
+					_objectDefinitionLocalService, _portal),
+				"password-policies", "permissions",
+				LanguageUtil.get(_httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"));
 	}
 
 	private String _getAgentDefinitionURL() throws Exception {
@@ -97,6 +111,8 @@ public class ViewAgentDefinitionsDisplayContext {
 
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;
 
 }

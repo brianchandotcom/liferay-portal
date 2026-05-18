@@ -364,8 +364,21 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								dtoConverterContext,
 								"deleteAgentDefinitionByExternalReferenceCode",
 								workflowDefinition)
+						).put(
+							"permissions",
+							() -> {
+								Map<String, Map<String, String>> actions =
+									objectEntry.getActions();
+
+								if (actions == null) {
+									return null;
+								}
+
+								return actions.get("permissions");
+							}
 						).build();
 					});
+
 				setActive(
 					() -> GetterUtil.getBoolean(
 						objectEntry.getPropertyValue("active")));

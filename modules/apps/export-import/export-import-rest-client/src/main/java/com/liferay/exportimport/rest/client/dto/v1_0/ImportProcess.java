@@ -108,6 +108,25 @@ public class ImportProcess implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
+
 	public Status getStatus() {
 		return status;
 	}
@@ -128,27 +147,6 @@ public class ImportProcess implements Cloneable, Serializable {
 	}
 
 	protected Status status;
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
-
-		try {
-			title = titleUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String title;
 
 	@Override
 	public ImportProcess clone() throws CloneNotSupportedException {
@@ -182,4 +180,4 @@ public class ImportProcess implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:372057093
+// LIFERAY-REST-BUILDER-HASH:583552838

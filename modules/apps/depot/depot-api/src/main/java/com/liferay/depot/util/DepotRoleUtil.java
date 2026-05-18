@@ -3,18 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.depot.internal.util;
+package com.liferay.depot.util;
 
 import com.liferay.depot.constants.DepotRolesConstants;
-import com.liferay.depot.internal.instance.lifecycle.DepotRolesPortalInstanceLifecycleListener;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -22,8 +26,32 @@ import java.util.ResourceBundle;
 
 /**
  * @author Shuyang Zhou
+ * @author Stefano Motta
  */
 public class DepotRoleUtil {
+
+	public static List<Role> filter(DepotEntry depotEntry, List<Role> roles) {
+		if (depotEntry == null) {
+			return roles;
+		}
+
+		return ListUtil.filter(
+			roles,
+			role -> {
+				String subtype = role.getSubtype();
+
+				return Validator.isNull(subtype) ||
+					   Objects.equals(
+						   subtype,
+						   DepotRolesConstants.getSubtype(
+							   depotEntry.getType()));
+			});
+	}
+
+	public static List<Role> filter(long groupId, List<Role> roles) {
+		return filter(
+			DepotEntryLocalServiceUtil.fetchGroupDepotEntry(groupId), roles);
+	}
 
 	public static Map<Locale, String> getDescriptionMap(
 		long companyId, Language language, String name) {
@@ -71,7 +99,7 @@ public class DepotRoleUtil {
 		long companyId, Locale locale, String name) {
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, DepotRolesPortalInstanceLifecycleListener.class);
+			locale, DepotRoleUtil.class);
 
 		if (Objects.equals(
 				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR, name)) {
@@ -131,7 +159,7 @@ public class DepotRoleUtil {
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, DepotRolesPortalInstanceLifecycleListener.class);
+			locale, DepotRoleUtil.class);
 
 		return ResourceBundleUtil.getString(resourceBundle, title);
 	}

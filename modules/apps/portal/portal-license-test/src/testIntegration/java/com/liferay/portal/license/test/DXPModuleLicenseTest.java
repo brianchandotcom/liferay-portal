@@ -72,17 +72,17 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 	}
 
 	@Test
-	public void testEnterpriseLicense() throws Exception {
-		_runLicenseTest(() -> deployEnterprisePortalLicense(Time.HOUR), true);
+	public void testLicenseEnterprise() throws Exception {
+		_testLicense(() -> deployEnterprisePortalLicense(Time.HOUR), true);
 	}
 
 	@Test
-	public void testFreeTierLicense() throws Exception {
-		_runLicenseTest(() -> deployFreeTierPortalLicense(Time.HOUR), false);
+	public void testLicenseFreeTier() throws Exception {
+		_testLicense(() -> deployFreeTierPortalLicense(Time.HOUR), false);
 	}
 
 	@Test
-	public void testFreeTierLicenseManualDeploy() throws Exception {
+	public void testLicenseFreeTierWithManualDeploy() throws Exception {
 		assertLicensePropertiesNotExisted(getPortalProductId());
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -172,7 +172,7 @@ public class DXPModuleLicenseTest extends BaseLicenseTestCase {
 		return getProperty("enterprise.app.symbolic.name");
 	}
 
-	private void _runLicenseTest(
+	private void _testLicense(
 			UnsafeSupplier<File, Exception> deployPortalLicenseUnsafeSupplier,
 			boolean dxpModulesAllowed)
 		throws Exception {

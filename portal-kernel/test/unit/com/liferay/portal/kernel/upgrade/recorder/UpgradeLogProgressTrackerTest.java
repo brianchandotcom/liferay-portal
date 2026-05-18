@@ -58,9 +58,6 @@ public class UpgradeLogProgressTrackerTest {
 
 	@Before
 	public void setUp() {
-		_originalLog = ReflectionTestUtil.getFieldValue(
-			UpgradeLogProgressTracker.class, "_log");
-
 		_dbManager = Mockito.mock(DBManager.class);
 
 		Mockito.when(
@@ -70,14 +67,17 @@ public class UpgradeLogProgressTrackerTest {
 		);
 
 		DBManagerUtil.setDBManager(_dbManager);
+
+		_originalLog = ReflectionTestUtil.getFieldValue(
+			UpgradeLogProgressTracker.class, "_log");
 	}
 
 	@After
 	public void tearDown() {
+		DBManagerUtil.setDBManager(null);
+
 		ReflectionTestUtil.setFieldValue(
 			UpgradeLogProgressTracker.class, "_log", _originalLog);
-
-		DBManagerUtil.setDBManager(null);
 	}
 
 	@Test
@@ -156,7 +156,9 @@ public class UpgradeLogProgressTrackerTest {
 
 			wrappedPreparedStatement.setBinaryStream(
 				1, new ByteArrayInputStream(RandomTestUtil.randomBytes()));
+
 			wrappedPreparedStatement.clearParameters();
+
 			wrappedPreparedStatement.setInt(1, RandomTestUtil.randomInt());
 
 			Mockito.verify(

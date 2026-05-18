@@ -89,6 +89,21 @@ public class VirtualHostFilterTest {
 	}
 
 	@Test
+	public void testProcessFilterDoesNotStashGroupOnRequestForUnknownPath() {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			MockHttpServletRequest mockHttpServletRequest = _processFilter(
+				null, "/lpd82451-no-such-group");
+
+			Assert.assertNull(
+				mockHttpServletRequest.getAttribute(WebKeys.GROUP));
+		}
+	}
+
+	@Test
 	public void testProcessFilterForwardedURL() {
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -216,6 +231,46 @@ public class VirtualHostFilterTest {
 		}
 	}
 
+	@Test
+	public void testProcessFilterStashesGroupOnRequestWhenLayoutSetMatches()
+		throws Exception {
+
+		String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+		MockHttpServletRequest mockHttpServletRequest = _processFilter(
+			_publicLayoutSet, groupFriendlyURL + "/home");
+
+		Group stashedGroup = (Group)mockHttpServletRequest.getAttribute(
+			WebKeys.GROUP);
+
+		Assert.assertNotNull(stashedGroup);
+		Assert.assertEquals(
+			_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
+	}
+
+	@Test
+	public void testProcessFilterStashesGroupOnRequestWhenPathForwards()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
+					false)) {
+
+			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
+
+			MockHttpServletRequest mockHttpServletRequest = _processFilter(
+				null, groupFriendlyURL + "/home");
+
+			Group stashedGroup = (Group)mockHttpServletRequest.getAttribute(
+				WebKeys.GROUP);
+
+			Assert.assertNotNull(stashedGroup);
+			Assert.assertEquals(
+				_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
+		}
+	}
+
 	private String _getForwardedURL(LayoutSet layoutSet, String requestURI) {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layoutSet, requestURI);
@@ -308,6 +363,26 @@ public class VirtualHostFilterTest {
 		String requestURI) {
 
 		return _getMockHttpServletRequest(_publicLayoutSet, requestURI);
+	}
+
+	private MockHttpServletRequest _processFilter(
+		LayoutSet layoutSet, String requestURI) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layoutSet, requestURI);
+
+		_virtualHostFilter.init(new MockFilterConfig());
+
+		ReflectionTestUtil.invoke(
+			_virtualHostFilter, "processFilter",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				FilterChain.class
+			},
+			mockHttpServletRequest, new MockHttpServletResponse(),
+			new MockFilterChain());
+
+		return mockHttpServletRequest;
 	}
 
 	private void _testProcessFilterLastPath(

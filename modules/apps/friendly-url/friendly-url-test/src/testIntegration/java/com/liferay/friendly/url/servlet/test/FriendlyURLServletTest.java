@@ -477,6 +477,22 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
+	public void testGetRedirectReusesGroupFromRequestAttribute()
+		throws Throwable {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(WebKeys.GROUP, _group);
+		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
+
+		testGetRedirect(
+			mockHttpServletRequest,
+			"/lpd82451-no-such-group" + _layout.getFriendlyURL(),
+			_redirectConstructor1.newInstance(getURL(_layout)));
+	}
+
+	@Test
 	public void testGetRedirectWithExistentSite() throws Throwable {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

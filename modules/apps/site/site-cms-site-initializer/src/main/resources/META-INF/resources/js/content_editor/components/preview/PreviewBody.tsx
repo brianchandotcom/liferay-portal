@@ -24,6 +24,7 @@ export default function PreviewBody({
 		displayPageTemplates,
 		isDisplayPageTemplatesListEmpty,
 		previewURL,
+		setExternalURL,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
@@ -33,6 +34,7 @@ export default function PreviewBody({
 				<PreviewSelectors
 					{...selectorProps}
 					displayPageTemplates={displayPageTemplates}
+					onBlurExternalURLInput={setExternalURL}
 					previewURL={previewURL}
 					showPreviewInNewTabLink
 				/>

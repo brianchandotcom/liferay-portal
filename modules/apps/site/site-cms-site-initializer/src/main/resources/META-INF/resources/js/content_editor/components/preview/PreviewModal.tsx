@@ -31,6 +31,7 @@ export default function PreviewModal({
 		displayPageTemplates,
 		isDisplayPageTemplatesListEmpty,
 		previewURL,
+		setExternalURL,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
@@ -48,6 +49,7 @@ export default function PreviewModal({
 				<PreviewSelectors
 					{...selectorProps}
 					displayPageTemplates={displayPageTemplates}
+					onBlurExternalURLInput={setExternalURL}
 					previewURL={previewURL}
 					vertical
 				/>

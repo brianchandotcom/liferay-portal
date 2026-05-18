@@ -915,10 +915,7 @@ public class SitesImpl implements Sites {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			groupId, privateLayout);
 
-		if ((file == null) ||
-			isSkipImport(groupId, layoutSet, false, lastMergeVersion) ||
-			isSkipImport(groupId, layoutSet, true, lastMergeVersion)) {
-
+		if (file == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
@@ -1030,65 +1027,6 @@ public class SitesImpl implements Sites {
 						return true;
 					}
 				}
-			}
-		}
-
-		return false;
-	}
-
-	protected boolean isSkipImport(
-		long groupId, LayoutSet layoutSet, boolean completed,
-		long lastMergeVersion) {
-
-		BackgroundTask previousBackgroundTask =
-			_backgroundTaskManager.fetchFirstBackgroundTask(
-				groupId,
-				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_IMPORT_BACKGROUND_TASK_EXECUTOR,
-				completed,
-				BackgroundTaskCreateDateComparator.getInstance(false));
-
-		if (previousBackgroundTask == null) {
-			return false;
-		}
-
-		Map<String, Serializable> contextMap =
-			previousBackgroundTask.getTaskContextMap();
-
-		ExportImportConfiguration previousExportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				fetchExportImportConfiguration(
-					MapUtil.getLong(contextMap, "exportImportConfigurationId"));
-
-		if (previousExportImportConfiguration == null) {
-			return false;
-		}
-
-		Map<String, Serializable> settingsMap =
-			previousExportImportConfiguration.getSettingsMap();
-
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-
-		long previousLastMergeVersion = MapUtil.getLong(
-			parameterMap, "lastMergeVersion");
-
-		if (previousLastMergeVersion == lastMergeVersion) {
-			if (isAnyFailedLayoutModifiedSinceLastMerge(layoutSet)) {
-				return false;
-			}
-
-			UnicodeProperties settingsUnicodeProperties =
-				layoutSet.getSettingsProperties();
-
-			long lastResetTime = GetterUtil.getLong(
-				settingsUnicodeProperties.getProperty(LAST_RESET_TIME));
-
-			Date previousBackgroundTaskCreateDate =
-				previousBackgroundTask.getCreateDate();
-
-			if (previousBackgroundTaskCreateDate.getTime() > lastResetTime) {
-				return true;
 			}
 		}
 

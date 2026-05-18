@@ -503,46 +503,15 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	/**
-	 * Resets the modified timestamp on the layout, and then calls {@link
-	 * #_resetPrototype(LayoutSet)} to reset the modified timestamp on the
-	 * layout's site.
-	 *
-	 * <p>
-	 * After the timestamps are reset, the modified page template and site
-	 * template are merged into their linked layout and site when they are first
-	 * accessed.
-	 * </p>
+	 * Resets the modified timestamp on the layout so the linked page template is
+	 * merged into the layout when it is first accessed.
 	 *
 	 * @param layout the page having its timestamp reset
 	 */
 	private void _resetPrototype(Layout layout) throws PortalException {
 		layout.setModifiedDate(null);
 
-		layout = _layoutLocalService.updateLayout(layout);
-
-		_resetPrototype(layout.getLayoutSet());
-	}
-
-	/**
-	 * Resets the modified timestamp on the layout set.
-	 *
-	 * <p>
-	 * After the timestamp is reset, the modified site template is merged into
-	 * its linked layout set when it is first accessed.
-	 * </p>
-	 *
-	 * @param layoutSet the site having its timestamp reset
-	 */
-	private void _resetPrototype(LayoutSet layoutSet) throws PortalException {
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-
-		settingsUnicodeProperties.setProperty(
-			Sites.LAST_RESET_TIME, String.valueOf(System.currentTimeMillis()));
-
-		_layoutSetLocalService.updateLayoutSet(layoutSet);
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	@Reference

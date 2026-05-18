@@ -87,7 +87,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			return commercePaymentEntry;
 		}
 
-		User currentUser = _getUser(httpServletRequest, commercePaymentEntry);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -169,8 +169,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.cancel(
 				httpServletRequest, commercePaymentEntry);
 
-		User currentUser = _getUser(
-			httpServletRequest, cancelledCommercePaymentEntry);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -273,7 +272,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			return commercePaymentEntry;
 		}
 
-		User currentUser = _getUser(httpServletRequest, commercePaymentEntry);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -355,7 +354,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.refund(
 				httpServletRequest, commercePaymentEntry);
 
-		User currentUser = _getUser(httpServletRequest, commercePaymentEntry);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -445,8 +444,8 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 	}
 
 	private User _getUser(
-			HttpServletRequest httpServletRequest,
-			CommercePaymentEntry commercePaymentEntry)
+			CommercePaymentEntry commercePaymentEntry,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		User user = _portal.getUser(httpServletRequest);

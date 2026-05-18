@@ -23,6 +23,7 @@ export default function useIframeLoad(
 	isExternalURL: boolean
 ) {
 	const [iframeError, setIframeError] = useState<boolean>(false);
+	const [iframeKey, setIframeKey] = useState<number>(0);
 	const loadStartRef = useRef<number>(0);
 	const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -50,7 +51,7 @@ export default function useIframeLoad(
 		}, IFRAME_LOAD_TIMEOUT_MS);
 
 		return clearLoadTimeout;
-	}, [previewURL]);
+	}, [iframeKey, previewURL]);
 
 	const handleIframeLoad = () => {
 		clearLoadTimeout();
@@ -66,5 +67,9 @@ export default function useIframeLoad(
 		}
 	};
 
-	return {handleIframeLoad, iframeError};
+	const reloadIframe = () => {
+		setIframeKey((key) => key + 1);
+	};
+
+	return {handleIframeLoad, iframeError, iframeKey, reloadIframe};
 }

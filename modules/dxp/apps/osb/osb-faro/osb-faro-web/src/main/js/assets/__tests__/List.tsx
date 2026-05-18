@@ -11,136 +11,131 @@ import {Router} from 'react-router-dom';
 
 jest.unmock('react-dom');
 
-jest.mock('shared/hooks/useFrontendDataSet', () => ({
-	useFrontendDataSet: () => {
-		const FakeDataSet = ({
-			filters,
-			id,
-			itemsActions
-		}: {
-			filters?: any[];
-			id: string;
-			itemsActions?: Array<{onClick?: (item: any) => void}>;
-		}) => (
-			<div data-testid='fds-component' id={id}>
-				<div data-testid='fds-filters'>{JSON.stringify(filters)}</div>
+jest.mock('@liferay/frontend-data-set-web', () => ({
+	...jest.requireActual('@liferay/frontend-data-set-web'),
+	FrontendDataSet: ({
+		filters,
+		id,
+		itemsActions
+	}: {
+		filters?: any[];
+		id: string;
+		itemsActions?: Array<{onClick?: (item: any) => void}>;
+	}) => (
+		<div data-testid='fds-component' id={id}>
+			<div data-testid='fds-filters'>{JSON.stringify(filters)}</div>
 
-				<button
-					data-testid='trigger-info-panel'
-					onClick={() =>
-						itemsActions?.[0]?.onClick?.({
-							itemData: {
-								assetCategories: [],
-								assetTags: [],
-								assetTitle: 'Test Asset Title',
-								assetType: 'blog',
-								id: 'asset-id-1',
-								mimeType: 'blog'
-							}
-						})
-					}
-				>
-					{'Open Info Panel'}
-				</button>
+			<button
+				data-testid='trigger-info-panel'
+				onClick={() =>
+					itemsActions?.[0]?.onClick?.({
+						itemData: {
+							assetCategories: [],
+							assetTags: [],
+							assetTitle: 'Test Asset Title',
+							assetType: 'blog',
+							id: 'asset-id-1',
+							mimeType: 'blog'
+						}
+					})
+				}
+			>
+				{'Open Info Panel'}
+			</button>
 
-				<button
-					data-testid='trigger-info-panel-no-mime'
-					onClick={() =>
-						itemsActions?.[0]?.onClick?.({
-							itemData: {
-								assetCategories: [],
-								assetTags: [],
-								assetTitle: 'Asset Without Mime',
-								assetType: 'document',
-								id: 'asset-id-2'
-							}
-						})
-					}
-				>
-					{'Open Info Panel No Mime'}
-				</button>
+			<button
+				data-testid='trigger-info-panel-no-mime'
+				onClick={() =>
+					itemsActions?.[0]?.onClick?.({
+						itemData: {
+							assetCategories: [],
+							assetTags: [],
+							assetTitle: 'Asset Without Mime',
+							assetType: 'document',
+							id: 'asset-id-2'
+						}
+					})
+				}
+			>
+				{'Open Info Panel No Mime'}
+			</button>
 
-				<button
-					data-testid='trigger-info-panel-no-title'
-					onClick={() =>
-						itemsActions?.[0]?.onClick?.({
-							itemData: {
-								assetCategories: [],
-								assetTags: [],
-								assetType: 'folder',
-								id: 'fallback-id-3',
-								mimeType: 'folder'
-							}
-						})
-					}
-				>
-					{'Open Info Panel No Title'}
-				</button>
+			<button
+				data-testid='trigger-info-panel-no-title'
+				onClick={() =>
+					itemsActions?.[0]?.onClick?.({
+						itemData: {
+							assetCategories: [],
+							assetTags: [],
+							assetType: 'folder',
+							id: 'fallback-id-3',
+							mimeType: 'folder'
+						}
+					})
+				}
+			>
+				{'Open Info Panel No Title'}
+			</button>
 
-				<button
-					data-testid='trigger-info-panel-with-items'
-					onClick={() =>
-						itemsActions?.[0]?.onClick?.({
-							itemData: {
-								assetCategories: [
-									{
-										id: 'cat-1',
-										name: 'Category One',
-										vocabularyId: 'vocab-1'
-									},
-									{
-										id: 'cat-2',
-										name: 'Category Two',
-										vocabularyId: 'vocab-1'
-									}
-								],
-								assetTags: [{id: 'tag-1', name: 'Tag One'}],
-								assetTitle: 'Rich Asset',
-								assetType: 'webContent',
-								assetVocabularies: [
-									{id: 'vocab-1', name: 'Topic'}
-								],
-								id: 'asset-id-4',
-								mimeType: 'basic-web-content'
-							}
-						})
-					}
-				>
-					{'Open Info Panel With Items'}
-				</button>
+			<button
+				data-testid='trigger-info-panel-with-items'
+				onClick={() =>
+					itemsActions?.[0]?.onClick?.({
+						itemData: {
+							assetCategories: [
+								{
+									id: 'cat-1',
+									name: 'Category One',
+									vocabularyId: 'vocab-1'
+								},
+								{
+									id: 'cat-2',
+									name: 'Category Two',
+									vocabularyId: 'vocab-1'
+								}
+							],
+							assetTags: [{id: 'tag-1', name: 'Tag One'}],
+							assetTitle: 'Rich Asset',
+							assetType: 'webContent',
+							assetVocabularies: [{id: 'vocab-1', name: 'Topic'}],
+							id: 'asset-id-4',
+							mimeType: 'basic-web-content'
+						}
+					})
+				}
+			>
+				{'Open Info Panel With Items'}
+			</button>
 
-				<button
-					data-testid='trigger-info-panel-empty-vocab'
-					onClick={() =>
-						itemsActions?.[0]?.onClick?.({
-							itemData: {
-								assetCategories: [
-									{
-										id: 'cat-1',
-										name: 'Category One',
-										vocabularyId: 'vocab-1'
-									}
-								],
-								assetTags: [],
-								assetTitle: 'Asset With Empty Vocab',
-								assetType: 'blog',
-								assetVocabularies: [
-									{id: 'vocab-1', name: 'Topics'},
-									{id: 'vocab-2', name: 'Genres'}
-								],
-								id: 'asset-id-5',
-								mimeType: 'blog'
-							}
-						})
-					}
-				>
-					{'Open Info Panel Empty Vocab'}
-				</button>
-			</div>
-		);
-
-		return FakeDataSet;
-	}
+			<button
+				data-testid='trigger-info-panel-empty-vocab'
+				onClick={() =>
+					itemsActions?.[0]?.onClick?.({
+						itemData: {
+							assetCategories: [
+								{
+									id: 'cat-1',
+									name: 'Category One',
+									vocabularyId: 'vocab-1'
+								}
+							],
+							assetTags: [],
+							assetTitle: 'Asset With Empty Vocab',
+							assetType: 'blog',
+							assetVocabularies: [
+								{id: 'vocab-1', name: 'Topics'},
+								{id: 'vocab-2', name: 'Genres'}
+							],
+							id: 'asset-id-5',
+							mimeType: 'blog'
+						}
+					})
+				}
+			>
+				{'Open Info Panel Empty Vocab'}
+			</button>
+		</div>
+	)
 }));
 
 jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({

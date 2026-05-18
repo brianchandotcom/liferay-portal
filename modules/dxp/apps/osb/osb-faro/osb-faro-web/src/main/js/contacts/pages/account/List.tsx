@@ -118,7 +118,6 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 							apiURL={`/o/faro/contacts/${groupId}/account/search`}
 							channelId={channelId}
 							groupId={groupId}
-							loading={dataSourceLoading}
 						/>
 					</>
 				) : (

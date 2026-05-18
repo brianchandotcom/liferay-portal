@@ -1,14 +1,18 @@
 import AccountIndividuals from '../AccountIndividuals';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
-import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 
 jest.unmock('react-dom');
 
 let lastFDSProps: any;
 
-jest.mock('shared/hooks/useFrontendDataSet', () => ({
-	useFrontendDataSet: jest.fn()
+jest.mock('@liferay/frontend-data-set-web', () => ({
+	...jest.requireActual('@liferay/frontend-data-set-web'),
+	FrontendDataSet: (props: any) => {
+		lastFDSProps = props;
+
+		return <div data-testid='fds-component' id={props.id} />;
+	}
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -16,19 +20,10 @@ jest.mock('react-router-dom', () => ({
 	useParams: () => ({channelId: '456', groupId: '23', id: 'acc-1'})
 }));
 
-const mockedUseFrontendDataSet = useFrontendDataSet as jest.Mock;
-
-const FakeDataSet = (props: any) => {
-	lastFDSProps = props;
-
-	return <div data-testid='fds-component' id={props.id} />;
-};
-
 describe('AccountIndividuals', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 		lastFDSProps = undefined;
-		mockedUseFrontendDataSet.mockReturnValue(FakeDataSet);
 	});
 
 	afterEach(cleanup);
@@ -47,14 +42,6 @@ describe('AccountIndividuals', () => {
 				'Lists all individuals associated with this account.'
 			)
 		).toBeInTheDocument();
-	});
-
-	it('should render nothing when the FrontendDataSet bundle is not loaded', () => {
-		mockedUseFrontendDataSet.mockReturnValue(null);
-
-		const {container} = render(<AccountIndividuals />);
-
-		expect(container).toBeEmptyDOMElement();
 	});
 
 	it('should render the FrontendDataSet with the dataset id', () => {

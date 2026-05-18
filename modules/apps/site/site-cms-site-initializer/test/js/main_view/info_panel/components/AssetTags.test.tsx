@@ -11,9 +11,11 @@ import ApiHelper from '../../../../../src/main/resources/META-INF/resources/js/c
 import AssetTags from '../../../../../src/main/resources/META-INF/resources/js/main_view/info_panel/components/AssetTags';
 
 function MockItemSelector({
+	apiURL,
 	onChange,
 	primaryAction,
 }: {
+	apiURL?: string;
 	onChange: (value: string) => void;
 	primaryAction?: {
 		label: string;
@@ -21,7 +23,7 @@ function MockItemSelector({
 	};
 }) {
 	return (
-		<div data-testid="item-selector">
+		<div data-api-url={apiURL} data-testid="item-selector">
 			<input
 				data-testid="item-selector-input"
 				onChange={(event) => onChange(event.target.value)}
@@ -55,25 +57,27 @@ jest.mock('@liferay/frontend-js-item-selector-web', () => {
 	};
 });
 
-(global as any).Liferay = {
-	Language: {
-		get: jest.fn((key: string) => key),
-	},
-	ThemeDisplay: {
-		getPortalURL: () => 'https://www.liferay.com',
-	},
-};
-
-function renderComponent() {
+function renderComponent({
+	cmsGroupId = 456,
+	collapsable,
+	keywords = ['tag1'],
+	scopeId = 123,
+}: {
+	cmsGroupId?: number;
+	collapsable?: boolean;
+	keywords?: string[];
+	scopeId?: number;
+} = {}) {
 	return render(
 		<AssetTags
 			assetLibraryId={123}
-			cmsGroupId={456}
+			cmsGroupId={cmsGroupId}
+			collapsable={collapsable}
 			hasUpdatePermission={true}
 			objectEntry={
 				{
-					keywords: ['tag1'],
-					scopeId: 123,
+					keywords,
+					scopeId,
 				} as any
 			}
 			updateObjectEntry={jest.fn()}
@@ -82,6 +86,22 @@ function renderComponent() {
 }
 
 describe('AssetTags', () => {
+	beforeEach(() => {
+		(global as any).Liferay = {
+			Language: {
+				get: jest.fn((key: string) => key),
+			},
+			ThemeDisplay: {
+				getPortalURL: () => 'https://www.liferay.com',
+			},
+		};
+
+		(ApiHelper.get as jest.Mock).mockResolvedValue({
+			data: {actions: {}},
+			error: null,
+		});
+	});
+
 	afterEach(() => {
 		jest.resetAllMocks();
 	});
@@ -146,5 +166,56 @@ describe('AssetTags', () => {
 		fireEvent.change(input, {target: {value: 'tag1'}});
 
 		expect(screen.queryByTestId('primary-action')).not.toBeInTheDocument();
+	});
+
+	it('renders existing keywords as labels', () => {
+		renderComponent({keywords: ['keyword-a', 'keyword-b']});
+
+		expect(screen.getByText('keyword-a')).toBeInTheDocument();
+		expect(screen.getByText('keyword-b')).toBeInTheDocument();
+	});
+
+	it('renders the panel as collapsable by default', () => {
+		renderComponent();
+
+		const toggle = screen.getByRole('button', {name: 'tags'});
+
+		expect(toggle).toHaveAttribute('aria-expanded', 'true');
+	});
+
+	it('renders the panel as non-collapsable when collapsable is false', () => {
+		renderComponent({collapsable: false});
+
+		expect(
+			screen.queryByRole('button', {name: 'tags'})
+		).not.toBeInTheDocument();
+
+		expect(screen.getByText('tags')).toBeInTheDocument();
+	});
+
+	it('builds the tags apiURL against the scope site when the scope is positive', () => {
+		renderComponent({scopeId: 123});
+
+		const apiURL = screen
+			.getByTestId('item-selector')
+			.getAttribute('data-api-url');
+
+		expect(apiURL).toContain(
+			'/o/headless-admin-taxonomy/v1.0/sites/123/keywords'
+		);
+		expect(apiURL).not.toContain('groupIds in');
+	});
+
+	it('builds the tags apiURL against the cmsGroup site with a groupIds filter when the scope is negative', () => {
+		renderComponent({cmsGroupId: 456, scopeId: -1});
+
+		const apiURL = screen
+			.getByTestId('item-selector')
+			.getAttribute('data-api-url');
+
+		expect(apiURL).toContain(
+			'/o/headless-admin-taxonomy/v1.0/sites/456/keywords'
+		);
+		expect(apiURL).toContain("groupIds in ('-1')");
 	});
 });

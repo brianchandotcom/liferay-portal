@@ -17,8 +17,8 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
-import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncContextThreadLocal;
-import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncSessionManager;
+import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncContextThreadLocal;
+import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManager;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;

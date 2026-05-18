@@ -6,7 +6,7 @@
 package com.liferay.exportimport.rest.client.dto.v1_0;
 
 import com.liferay.exportimport.rest.client.function.UnsafeSupplier;
-import com.liferay.exportimport.rest.client.serdes.v1_0.PortletDataHandlerChoiceSerDes;
+import com.liferay.exportimport.rest.client.serdes.v1_0.PreviewPortletDataHandlerChoiceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,12 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class PortletDataHandlerChoice
-	extends PortletDataHandlerControl implements Cloneable, Serializable {
+public class PreviewPortletDataHandlerChoice
+	extends PreviewPortletDataHandlerControl
+	implements Cloneable, Serializable {
 
-	public static PortletDataHandlerChoice toDTO(String json) {
-		return PortletDataHandlerChoiceSerDes.toDTO(json);
+	public static PreviewPortletDataHandlerChoice toDTO(String json) {
+		return PreviewPortletDataHandlerChoiceSerDes.toDTO(json);
 	}
 
 	public Choice[] getChoices() {
@@ -69,8 +70,10 @@ public class PortletDataHandlerChoice
 	protected String defaultChoice;
 
 	@Override
-	public PortletDataHandlerChoice clone() throws CloneNotSupportedException {
-		return (PortletDataHandlerChoice)super.clone();
+	public PreviewPortletDataHandlerChoice clone()
+		throws CloneNotSupportedException {
+
+		return (PreviewPortletDataHandlerChoice)super.clone();
 	}
 
 	@Override
@@ -79,14 +82,15 @@ public class PortletDataHandlerChoice
 			return true;
 		}
 
-		if (!(object instanceof PortletDataHandlerChoice)) {
+		if (!(object instanceof PreviewPortletDataHandlerChoice)) {
 			return false;
 		}
 
-		PortletDataHandlerChoice portletDataHandlerChoice =
-			(PortletDataHandlerChoice)object;
+		PreviewPortletDataHandlerChoice previewPortletDataHandlerChoice =
+			(PreviewPortletDataHandlerChoice)object;
 
-		return Objects.equals(toString(), portletDataHandlerChoice.toString());
+		return Objects.equals(
+			toString(), previewPortletDataHandlerChoice.toString());
 	}
 
 	@Override
@@ -97,8 +101,8 @@ public class PortletDataHandlerChoice
 	}
 
 	public String toString() {
-		return PortletDataHandlerChoiceSerDes.toJSON(this);
+		return PreviewPortletDataHandlerChoiceSerDes.toJSON(this);
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:864044645
+// LIFERAY-REST-BUILDER-HASH:-904745517

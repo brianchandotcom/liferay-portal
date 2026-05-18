@@ -6,7 +6,6 @@
 package com.liferay.exportimport.rest.client.serdes.v1_0;
 
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandler;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerControl;
 import com.liferay.exportimport.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -47,40 +46,6 @@ public class PortletDataHandlerSerDes {
 
 		sb.append("{");
 
-		if (portletDataHandler.getAdditionCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"additionCount\": ");
-
-			sb.append(portletDataHandler.getAdditionCount());
-		}
-
-		if (portletDataHandler.getDeletionCount() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"deletionCount\": ");
-
-			sb.append(portletDataHandler.getDeletionCount());
-		}
-
-		if (portletDataHandler.getLabel() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"label\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(portletDataHandler.getLabel()));
-
-			sb.append("\"");
-		}
-
 		if (portletDataHandler.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -93,34 +58,6 @@ public class PortletDataHandlerSerDes {
 			sb.append(_escape(portletDataHandler.getName()));
 
 			sb.append("\"");
-		}
-
-		if (portletDataHandler.getPortletDataHandlerControls() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"portletDataHandlerControls\": ");
-
-			sb.append("[");
-
-			for (int i = 0;
-				 i < portletDataHandler.getPortletDataHandlerControls().length;
-				 i++) {
-
-				sb.append(
-					String.valueOf(
-						portletDataHandler.getPortletDataHandlerControls()[i]));
-
-				if ((i + 1) <
-						portletDataHandler.
-							getPortletDataHandlerControls().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		sb.append("}");
@@ -144,46 +81,11 @@ public class PortletDataHandlerSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (portletDataHandler.getAdditionCount() == null) {
-			map.put("additionCount", null);
-		}
-		else {
-			map.put(
-				"additionCount",
-				String.valueOf(portletDataHandler.getAdditionCount()));
-		}
-
-		if (portletDataHandler.getDeletionCount() == null) {
-			map.put("deletionCount", null);
-		}
-		else {
-			map.put(
-				"deletionCount",
-				String.valueOf(portletDataHandler.getDeletionCount()));
-		}
-
-		if (portletDataHandler.getLabel() == null) {
-			map.put("label", null);
-		}
-		else {
-			map.put("label", String.valueOf(portletDataHandler.getLabel()));
-		}
-
 		if (portletDataHandler.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put("name", String.valueOf(portletDataHandler.getName()));
-		}
-
-		if (portletDataHandler.getPortletDataHandlerControls() == null) {
-			map.put("portletDataHandlerControls", null);
-		}
-		else {
-			map.put(
-				"portletDataHandlerControls",
-				String.valueOf(
-					portletDataHandler.getPortletDataHandlerControls()));
 		}
 
 		return map;
@@ -204,21 +106,7 @@ public class PortletDataHandlerSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "additionCount")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "deletionCount")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "portletDataHandlerControls")) {
-
+			if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
 
@@ -230,50 +118,9 @@ public class PortletDataHandlerSerDes {
 			PortletDataHandler portletDataHandler, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "additionCount")) {
-				if (jsonParserFieldValue != null) {
-					portletDataHandler.setAdditionCount(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "deletionCount")) {
-				if (jsonParserFieldValue != null) {
-					portletDataHandler.setDeletionCount(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				if (jsonParserFieldValue != null) {
-					portletDataHandler.setLabel((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					portletDataHandler.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "portletDataHandlerControls")) {
-
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					PortletDataHandlerControl[]
-						portletDataHandlerControlsArray =
-							new PortletDataHandlerControl
-								[jsonParserFieldValues.length];
-
-					for (int i = 0; i < portletDataHandlerControlsArray.length;
-						 i++) {
-
-						portletDataHandlerControlsArray[i] =
-							PortletDataHandlerControlSerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
-					}
-
-					portletDataHandler.setPortletDataHandlerControls(
-						portletDataHandlerControlsArray);
 				}
 			}
 		}
@@ -357,4 +204,4 @@ public class PortletDataHandlerSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1799618007
+// LIFERAY-REST-BUILDER-HASH:483404301

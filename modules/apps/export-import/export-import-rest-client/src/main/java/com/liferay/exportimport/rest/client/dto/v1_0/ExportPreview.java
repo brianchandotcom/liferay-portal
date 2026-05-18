@@ -67,30 +67,34 @@ public class ExportPreview implements Cloneable, Serializable {
 
 	protected Long deletionCount;
 
-	public PortletDataHandlerSection[] getPortletDataHandlerSections() {
-		return portletDataHandlerSections;
+	public PreviewPortletDataHandlerSection[]
+		getPreviewPortletDataHandlerSections() {
+
+		return previewPortletDataHandlerSections;
 	}
 
-	public void setPortletDataHandlerSections(
-		PortletDataHandlerSection[] portletDataHandlerSections) {
+	public void setPreviewPortletDataHandlerSections(
+		PreviewPortletDataHandlerSection[] previewPortletDataHandlerSections) {
 
-		this.portletDataHandlerSections = portletDataHandlerSections;
+		this.previewPortletDataHandlerSections =
+			previewPortletDataHandlerSections;
 	}
 
-	public void setPortletDataHandlerSections(
-		UnsafeSupplier<PortletDataHandlerSection[], Exception>
-			portletDataHandlerSectionsUnsafeSupplier) {
+	public void setPreviewPortletDataHandlerSections(
+		UnsafeSupplier<PreviewPortletDataHandlerSection[], Exception>
+			previewPortletDataHandlerSectionsUnsafeSupplier) {
 
 		try {
-			portletDataHandlerSections =
-				portletDataHandlerSectionsUnsafeSupplier.get();
+			previewPortletDataHandlerSections =
+				previewPortletDataHandlerSectionsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected PortletDataHandlerSection[] portletDataHandlerSections;
+	protected PreviewPortletDataHandlerSection[]
+		previewPortletDataHandlerSections;
 
 	@Override
 	public ExportPreview clone() throws CloneNotSupportedException {
@@ -124,4 +128,4 @@ public class ExportPreview implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1495304073
+// LIFERAY-REST-BUILDER-HASH:1604828049

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.model.LayoutSet;
 
 import java.io.Serializable;
 
@@ -89,13 +88,7 @@ public interface Sites {
 	public boolean isLayoutModifiedSinceLastMerge(Layout layout)
 		throws PortalException;
 
-	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
-		throws PortalException;
-
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
-		throws Exception;
-
-	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception;
 
 	public void updateLayoutSetPrototypesLinks(

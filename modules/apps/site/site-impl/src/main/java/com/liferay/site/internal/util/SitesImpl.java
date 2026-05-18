@@ -7,11 +7,9 @@ package com.liferay.site.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -20,17 +18,10 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncContextThreadLocal;
-import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncSessionManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.change.tracking.CTTransactionException;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -73,7 +64,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -427,17 +417,6 @@ public class SitesImpl implements Sites {
 	 *         the layout set; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet) {
-		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
-			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public void mergeLayoutPrototypeLayout(Group group, Layout layout)
 		throws Exception {
 
@@ -471,16 +450,6 @@ public class SitesImpl implements Sites {
 		}
 
 		doMergeLayoutPrototypeLayout(group, layout);
-	}
-
-	@Override
-	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
-		throws Exception {
-
-		_mergeLayoutSetPrototypeLayouts(
-			group, layoutSet,
-			Validator.isNull(
-				LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId()));
 	}
 
 	@Override
@@ -879,147 +848,6 @@ public class SitesImpl implements Sites {
 			user.getUserId(), exportImportConfiguration, file);
 	}
 
-	protected boolean isLayoutSetPrototypeMergeBackgroundTaskExists(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
-		throws PortalException {
-
-		List<BackgroundTask> incompleteBackgroundTasks =
-			_backgroundTaskManager.getBackgroundTasks(
-				layoutSet.getGroupId(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				BackgroundTaskCreateDateComparator.getInstance(false));
-
-		for (BackgroundTask incompleteBackgroundTask :
-				incompleteBackgroundTasks) {
-
-			long exportImportConfigurationId = MapUtil.getLong(
-				incompleteBackgroundTask.getTaskContextMap(),
-				"exportImportConfigurationId");
-
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					fetchExportImportConfiguration(exportImportConfigurationId);
-
-			if (exportImportConfiguration != null) {
-				Map<String, Serializable> settingsMap =
-					exportImportConfiguration.getSettingsMap();
-
-				Map<String, String[]> parameterMap =
-					(Map<String, String[]>)settingsMap.get("parameterMap");
-
-				long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
-
-				if (layoutSetId == layoutSet.getLayoutSetId()) {
-					if (incompleteBackgroundTask.getStatus() !=
-							BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-
-						return true;
-					}
-
-					long lastMergeVersion = MapUtil.getLong(
-						parameterMap, "lastMergeVersion");
-
-					if (lastMergeVersion ==
-							layoutSetPrototype.getMvccVersion()) {
-
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
-	protected void mergeLayoutSetPrototypeLayoutsInBackground(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet,
-			boolean initialPropagation)
-		throws PortalException {
-
-		if (ExportImportThreadLocal.isExportInProcess() ||
-			ExportImportThreadLocal.isImportInProcess() ||
-			ExportImportThreadLocal.isStagingInProcess()) {
-
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		if (isLayoutSetPrototypeMergeBackgroundTaskExists(
-				layoutSetPrototype, layoutSet)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Layout set prototype merge is in progress for layout " +
-						"set " + layoutSet.getLayoutSetId());
-			}
-
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
-			initialPropagation);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
-			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
-		parameterMap.put(
-			"layoutSetId",
-			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
-		parameterMap.put(
-			"layoutSetPrototypeId",
-			new String[] {
-				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
-			});
-
-		String syncSessionId =
-			LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId();
-
-		if (Validator.isNotNull(syncSessionId)) {
-			parameterMap.put("syncSessionId", new String[] {syncSessionId});
-		}
-
-		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
-
-		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
-			layoutSetPrototype.getGroupId(), true);
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, layoutSetPrototype.getGroupId(), true,
-					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
-					parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration = null;
-
-		try {
-			exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add draft export-import configuration",
-				portalException);
-
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
-			user.getUserId(), layoutSet.getGroupId(),
-			exportImportConfiguration);
-	}
-
 	protected void updateLayoutSetPrototypeLink(
 			long groupId, boolean privateLayout, long layoutSetPrototypeId,
 			boolean layoutSetPrototypeLinkEnabled)
@@ -1118,49 +946,6 @@ public class SitesImpl implements Sites {
 		return owner;
 	}
 
-	private void _mergeLayoutSetPrototypeLayouts(
-			Group group, LayoutSet layoutSet, boolean initialPropagation)
-		throws Exception {
-
-		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
-
-		layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			layoutSet.getLayoutSetId());
-
-		if (!isLayoutSetMergeable(group, layoutSet)) {
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		mergeLayoutSetPrototypeLayoutsInBackground(
-			layoutSetPrototype, layoutSet, initialPropagation);
-	}
-
-	private void _recordSyncResultIfTracked(int backgroundTaskStatus) {
-		String syncSessionId =
-			LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId();
-
-		if (Validator.isNull(syncSessionId)) {
-			return;
-		}
-
-		_layoutSetPrototypeSyncSessionManager.recordBackgroundTaskStatus(
-			backgroundTaskStatus, syncSessionId);
-	}
-
 	private void _releaseLock(String className, long classPK, String owner) {
 		LockManagerUtil.unlock(
 			SitesImpl.class.getName(), String.valueOf(classPK), owner);
@@ -1231,9 +1016,6 @@ public class SitesImpl implements Sites {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
@@ -1267,10 +1049,6 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@Reference
-	private LayoutSetPrototypeSyncSessionManager
-		_layoutSetPrototypeSyncSessionManager;
 
 	@Reference
 	private LayoutSetService _layoutSetService;

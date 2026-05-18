@@ -96,28 +96,28 @@ const SearchableTableModalGraphql: React.FC<
 		<Modal className={className} size='lg'>
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body>
+			<Modal.Body className='p-0'>
 				<div className='text-secondary'>{instruction}</div>
-			</Modal.Body>
 
-			<CrossPageSelect
-				{...otherProps}
-				autoFocus
-				columns={columns}
-				delta={delta}
-				empty={empty}
-				items={items}
-				loading={loading}
-				onDeltaChange={onDeltaChange}
-				onOrderIOMapChange={onOrderIOMapChange}
-				onPageChange={onPageChange}
-				onQueryChange={onQueryChange}
-				orderIOMap={orderIOMap}
-				page={page}
-				pageDisplay={false}
-				query={query}
-				total={total}
-			/>
+				<CrossPageSelect
+					{...otherProps}
+					autoFocus
+					columns={columns}
+					delta={delta}
+					empty={empty}
+					items={items}
+					loading={loading}
+					onDeltaChange={onDeltaChange}
+					onOrderIOMapChange={onOrderIOMapChange}
+					onPageChange={onPageChange}
+					onQueryChange={onQueryChange}
+					orderIOMap={orderIOMap}
+					page={page}
+					pageDisplay={false}
+					query={query}
+					total={total}
+				/>
+			</Modal.Body>
 
 			<Modal.Footer>
 				<ClayButton

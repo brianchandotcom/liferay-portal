@@ -16,6 +16,13 @@
 				"en_US": "Liferay One"
 			},
 			"name": "LiferayOne"
+		},
+		{
+			"externalReferenceCode": "C_REQUESTS_FOLDER",
+			"label": {
+				"en_US": "Requests"
+			},
+			"name": "Requests"
 		}
 	]
 }

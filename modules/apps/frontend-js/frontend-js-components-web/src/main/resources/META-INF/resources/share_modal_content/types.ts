@@ -68,7 +68,7 @@ export interface ShareModalContentProps {
 	autocompleteURL: string;
 	canManageCollaborators?: boolean;
 	closeModal: () => void;
-	collaboratorBadge?: (props: CollaboratorBadgeProps) => ReactNode;
+	collaboratorBadgeText?: (props: CollaboratorBadgeProps) => string | null;
 	collaboratorStickerIcon?: (props: CollaboratorIconProps) => ReactNode;
 	collaboratorURL: string;
 	collaboratorsListTitle?: string;

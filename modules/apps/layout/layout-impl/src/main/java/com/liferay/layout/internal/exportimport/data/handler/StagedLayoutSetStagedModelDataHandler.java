@@ -298,14 +298,6 @@ public class StagedLayoutSetStagedModelDataHandler
 				continue;
 			}
 
-			LayoutSet layoutSet = layout.getLayoutSet();
-
-			String settings = layoutSet.getSettings();
-
-			if (settings.contains(Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS)) {
-				continue;
-			}
-
 			_layoutLocalService.deleteLayout(
 				layout, ServiceContextThreadLocal.getServiceContext());
 		}
@@ -896,66 +888,60 @@ public class StagedLayoutSetStagedModelDataHandler
 		UnicodeProperties settingsUnicodeProperties =
 			layoutSet.getSettingsProperties();
 
-		String mergeFailFriendlyURLLayouts =
-			settingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
+		boolean changed = false;
 
-		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
-			boolean changed = false;
+		LayoutSet stagedLayoutSet = importedLayoutSet.getLayoutSet();
 
-			LayoutSet stagedLayoutSet = importedLayoutSet.getLayoutSet();
+		UnicodeProperties importedSettingsUnicodeProperties =
+			stagedLayoutSet.getSettingsProperties();
 
-			UnicodeProperties importedSettingsUnicodeProperties =
-				stagedLayoutSet.getSettingsProperties();
+		Theme importedTheme = stagedLayoutSet.getTheme();
 
-			Theme importedTheme = stagedLayoutSet.getTheme();
+		Map<String, ThemeSetting> themeSettings =
+			importedTheme.getConfigurableSettings();
 
-			Map<String, ThemeSetting> themeSettings =
-				importedTheme.getConfigurableSettings();
+		Map<String, String> defaultsMap = new HashMap<>();
 
-			Map<String, String> defaultsMap = new HashMap<>();
+		for (Map.Entry<String, ThemeSetting> entry :
+				themeSettings.entrySet()) {
 
-			for (Map.Entry<String, ThemeSetting> entry :
-					themeSettings.entrySet()) {
+			ThemeSetting themeSetting = entry.getValue();
 
-				ThemeSetting themeSetting = entry.getValue();
+			defaultsMap.put(
+				ThemeSettingImpl.namespaceProperty(
+					"regular", entry.getKey()),
+				themeSetting.getValue());
+		}
 
-				defaultsMap.put(
-					ThemeSettingImpl.namespaceProperty(
-						"regular", entry.getKey()),
-					themeSetting.getValue());
-			}
+		defaultsMap.put(Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
+		defaultsMap.put("javascript", null);
 
-			defaultsMap.put(Sites.SHOW_SITE_NAME, Boolean.TRUE.toString());
-			defaultsMap.put("javascript", null);
+		for (Map.Entry<String, String> entry : defaultsMap.entrySet()) {
+			String propertyKey = entry.getKey();
+			String defaultValue = entry.getValue();
 
-			for (Map.Entry<String, String> entry : defaultsMap.entrySet()) {
-				String propertyKey = entry.getKey();
-				String defaultValue = entry.getValue();
+			String currentValue = settingsUnicodeProperties.getProperty(
+				propertyKey, defaultValue);
 
-				String currentValue = settingsUnicodeProperties.getProperty(
+			String importedValue =
+				importedSettingsUnicodeProperties.getProperty(
 					propertyKey, defaultValue);
 
-				String importedValue =
-					importedSettingsUnicodeProperties.getProperty(
-						propertyKey, defaultValue);
-
-				if (!Objects.equals(currentValue, importedValue)) {
-					if (Objects.equals(defaultValue, importedValue)) {
-						settingsUnicodeProperties.remove(propertyKey);
-					}
-					else {
-						settingsUnicodeProperties.setProperty(
-							propertyKey, importedValue);
-					}
-
-					changed = true;
+			if (!Objects.equals(currentValue, importedValue)) {
+				if (Objects.equals(defaultValue, importedValue)) {
+					settingsUnicodeProperties.remove(propertyKey);
 				}
-			}
+				else {
+					settingsUnicodeProperties.setProperty(
+						propertyKey, importedValue);
+				}
 
-			if (changed) {
-				_layoutSetLocalService.updateLayoutSet(layoutSet);
+				changed = true;
 			}
+		}
+
+		if (changed) {
+			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}
 	}
 

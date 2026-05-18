@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.io.File;
 import java.io.Serializable;
@@ -154,7 +153,7 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			TransactionInvokerUtil.invoke(
 				transactionConfig,
 				new LayoutImportCallable(
-					importExportImportConfiguration, cacheFile, layoutSet));
+					importExportImportConfiguration, cacheFile));
 
 			int count =
 				_exportImportReportEntryLocalService.
@@ -257,31 +256,21 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	@Reference
-	private Sites _sites;
-
-	@Reference
 	private UserLocalService _userLocalService;
 
 	private class LayoutImportCallable implements Callable<Void> {
 
 		public LayoutImportCallable(
-			ExportImportConfiguration exportImportConfiguration, File file,
-			LayoutSet layoutSet) {
+			ExportImportConfiguration exportImportConfiguration, File file) {
 
 			_exportImportConfiguration = exportImportConfiguration;
 			_file = file;
-			_layoutSet = layoutSet;
 		}
 
 		@Override
 		public Void call() throws PortalException {
 			try {
 				MergeLayoutPrototypesThreadLocal.setInProgress(true);
-
-				_sites.removeMergeFailFriendlyURLLayouts(_layoutSet);
-
-				_exportImportLocalService.importLayoutsDataDeletions(
-					_exportImportConfiguration, _file);
 
 				_exportImportLocalService.importLayouts(
 					_exportImportConfiguration, _file);
@@ -295,7 +284,6 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 		private final ExportImportConfiguration _exportImportConfiguration;
 		private final File _file;
-		private final LayoutSet _layoutSet;
 
 	}
 

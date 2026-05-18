@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -201,6 +202,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 		Boolean originalMarketplace = fragmentSet.getMarketplace();
 
+		fragmentSet.setDescription((String)null);
 		fragmentSet.setExternalReferenceCode(RandomTestUtil.randomString());
 		fragmentSet.setKey(RandomTestUtil.randomString());
 		fragmentSet.setMarketplace(!originalMarketplace);
@@ -209,6 +211,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			testGroup.getExternalReferenceCode(), originalExternalReferenceCode,
 			fragmentSet);
 
+		Assert.assertTrue(Validator.isNull(putFragmentSet.getDescription()));
 		Assert.assertEquals(
 			originalExternalReferenceCode,
 			putFragmentSet.getExternalReferenceCode());
@@ -239,23 +242,6 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				nullNameFragmentSet.getExternalReferenceCode(),
 				nullNameFragmentSet));
-
-		FragmentSet nullDescriptionFragmentSet =
-			testPutSiteFragmentSet_addFragmentSet();
-
-		nullDescriptionFragmentSet.setDescription((String)null);
-		nullDescriptionFragmentSet.setName(RandomTestUtil.randomString());
-
-		FragmentSet nullDescriptionPutFragmentSet =
-			fragmentSetResource.putSiteFragmentSet(
-				testGroup.getExternalReferenceCode(),
-				nullDescriptionFragmentSet.getExternalReferenceCode(),
-				nullDescriptionFragmentSet);
-
-		Assert.assertEquals("", nullDescriptionPutFragmentSet.getDescription());
-		Assert.assertEquals(
-			nullDescriptionFragmentSet.getName(),
-			nullDescriptionPutFragmentSet.getName());
 
 		_testPutSiteFragmentSetBatch();
 	}

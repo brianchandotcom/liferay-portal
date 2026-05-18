@@ -9600,66 +9600,35 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
 			String.valueOf(depotEntry.getGroupId()));
 
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
 		ObjectEntry objectEntry = _addObjectEntry(
 			_objectDefinition7,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			String.valueOf(depotEntry.getGroupId()), 1);
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry1 =
-			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
-
-		Assert.assertEquals(
-			adminUser.getUserId(), serviceBuilderObjectEntry1.getUserId());
-
-		ObjectEntryVersion objectEntryVersion1 =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), serviceBuilderObjectEntry1.getVersion());
-
-		Assert.assertEquals(
-			adminUser.getFullName(), objectEntryVersion1.getUserName());
-		Assert.assertEquals(
-			adminUser.getUserId(), objectEntryVersion1.getUserId());
+		_assertObjectEntryVersionUser(objectEntry.getId(), adminUser);
 
 		User user = UserTestUtil.addOmniadminUser();
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String principalName = PrincipalThreadLocal.getName();
+		PrincipalThreadLocal.setName(user.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-			PrincipalThreadLocal.setName(user.getUserId());
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_createDTOConverterContext(user), _objectDefinition7,
+			objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"textObjectFieldName", RandomTestUtil.randomString()
+					).build();
+				}
+			});
 
-			objectEntry = _defaultObjectEntryManager.updateObjectEntry(
-				_createDTOConverterContext(user), _objectDefinition7,
-				objectEntry.getId(),
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build();
-					}
-				});
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			PrincipalThreadLocal.setName(principalName);
-		}
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
-
-		Assert.assertEquals(
-			adminUser.getUserId(), serviceBuilderObjectEntry.getUserId());
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), serviceBuilderObjectEntry.getVersion());
-
-		Assert.assertEquals(
-			user.getFullName(), objectEntryVersion.getUserName());
-		Assert.assertEquals(user.getUserId(), objectEntryVersion.getUserId());
+		_assertObjectEntryVersionUser(objectEntry.getId(), user);
 	}
 
 	@Test
@@ -10829,6 +10798,24 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntryVersions,
 			objectEntryVersion -> Assert.assertEquals(
 				expectedStatus, objectEntryVersion.getStatus()));
+	}
+
+	private void _assertObjectEntryVersionUser(long objectEntryId, User user)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.getObjectEntry(objectEntryId);
+
+		Assert.assertEquals(
+			adminUser.getUserId(), serviceBuilderObjectEntry.getUserId());
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntryId, serviceBuilderObjectEntry.getVersion());
+
+		Assert.assertEquals(
+			user.getFullName(), objectEntryVersion.getUserName());
+		Assert.assertEquals(user.getUserId(), objectEntryVersion.getUserId());
 	}
 
 	private void _assertObjectEntryWithPicklistObjectField(
@@ -12847,66 +12834,33 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.addObjectEntryFolder(
-				RandomTestUtil.randomString(), groupId, adminUser.getUserId(),
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				groupId, adminUser.getUserId(),
 				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, null, RandomTestUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext());
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
 
 		ObjectEntry objectEntry = _addObjectEntry(
 			_objectDefinition7,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			String.valueOf(groupId), 1);
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntry.getId());
-
-		Assert.assertEquals(
-			adminUser.getUserId(), serviceBuilderObjectEntry.getUserId());
-
-		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), serviceBuilderObjectEntry.getVersion());
-
-		Assert.assertEquals(
-			adminUser.getFullName(), objectEntryVersion.getUserName());
-		Assert.assertEquals(
-			adminUser.getUserId(), objectEntryVersion.getUserId());
+		_assertObjectEntryVersionUser(objectEntry.getId(), adminUser);
 
 		User user = UserTestUtil.addOmniadminUser();
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String principalName = PrincipalThreadLocal.getName();
+		PrincipalThreadLocal.setName(user.getUserId());
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-			PrincipalThreadLocal.setName(user.getUserId());
+		objectEntry = _defaultObjectEntryManager.moveObjectEntry(
+			_createDTOConverterContext(user), objectEntry.getId(),
+			objectEntryFolder.getObjectEntryFolderId(), false);
 
-			objectEntry = _defaultObjectEntryManager.moveObjectEntry(
-				_createDTOConverterContext(user), objectEntry.getId(),
-				objectEntryFolder.getObjectEntryFolderId(), false);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			PrincipalThreadLocal.setName(principalName);
-		}
-
-		serviceBuilderObjectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntry.getId());
-
-		Assert.assertEquals(
-			adminUser.getUserId(), serviceBuilderObjectEntry.getUserId());
-
-		objectEntryVersion =
-			_objectEntryVersionLocalService.getObjectEntryVersion(
-				objectEntry.getId(), serviceBuilderObjectEntry.getVersion());
-
-		Assert.assertEquals(
-			user.getFullName(), objectEntryVersion.getUserName());
-		Assert.assertEquals(user.getUserId(), objectEntryVersion.getUserId());
+		_assertObjectEntryVersionUser(objectEntry.getId(), user);
 
 		NestedFieldsContext originalNestedFieldsContext =
 			NestedFieldsContextThreadLocal.getNestedFieldsContext();

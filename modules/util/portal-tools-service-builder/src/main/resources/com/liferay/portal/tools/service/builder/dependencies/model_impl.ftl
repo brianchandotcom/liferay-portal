@@ -1106,6 +1106,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#list cacheFields as cacheField>
 		<#assign
+			getterPrefix = serviceBuilder.getCacheFieldGetterPrefix(cacheField)
+			getterReturnType = serviceBuilder.getCacheFieldGetterReturnType(cacheField)
 			variableName = serviceBuilder.getVariableName(cacheField)
 			methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
 			typeGenericsName = serviceBuilder.getTypeGenericsName(cacheField.getType())
@@ -1113,13 +1115,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		/>
 
 		<#if !stringUtil.equals(methodName, "DefaultLanguageId")>
-			public ${typeGenericsName} get${methodName}() {
-				<#if cacheField.getType().isPrimitive()>
-					<#if stringUtil.equals(typeGenericsName, "boolean")>
-						return false;
-					<#else>
-						return 0;
-					</#if>
+			public ${getterReturnType} ${getterPrefix}${methodName}() {
+				<#if stringUtil.equals(getterReturnType, "boolean")>
+					return false;
+				<#elseif cacheField.getType().isPrimitive()>
+					return 0;
 				<#else>
 					return null;
 				</#if>
@@ -1689,9 +1689,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			${entity.name}ModelImpl sourceModelImpl = (${entity.name}ModelImpl)source;
 
 			<#list cacheFields as cacheField>
-				<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+				<#assign
+					getterPrefix = serviceBuilder.getCacheFieldGetterPrefix(cacheField)
+					methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
+				/>
 
-				set${methodName}(sourceModelImpl.get${methodName}());
+				set${methodName}(sourceModelImpl.${getterPrefix}${methodName}());
 			</#list>
 		}
 	</#if>

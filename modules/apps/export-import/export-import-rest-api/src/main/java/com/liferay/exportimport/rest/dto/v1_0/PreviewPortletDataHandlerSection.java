@@ -24,10 +24,6 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -39,17 +35,19 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ImportPreview")
+@GraphQLName("PreviewPortletDataHandlerSection")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ImportPreview")
-public class ImportPreview implements Serializable {
+@XmlRootElement(name = "PreviewPortletDataHandlerSection")
+public class PreviewPortletDataHandlerSection implements Serializable {
 
-	public static ImportPreview toDTO(String json) {
-		return ObjectMapperUtil.readValue(ImportPreview.class, json);
+	public static PreviewPortletDataHandlerSection toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			PreviewPortletDataHandlerSection.class, json);
 	}
 
-	public static ImportPreview unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ImportPreview.class, json);
+	public static PreviewPortletDataHandlerSection unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			PreviewPortletDataHandlerSection.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -94,47 +92,6 @@ public class ImportPreview implements Serializable {
 	private Supplier<Long> _additionCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getAuthor() {
-		if (_authorSupplier != null) {
-			author = _authorSupplier.get();
-
-			_authorSupplier = null;
-		}
-
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-
-		_authorSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setAuthor(
-		UnsafeSupplier<String, Exception> authorUnsafeSupplier) {
-
-		_authorSupplier = () -> {
-			try {
-				return authorUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String author;
-
-	@JsonIgnore
-	private Supplier<String> _authorSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public Long getDeletionCount() {
 		if (_deletionCountSupplier != null) {
 			deletionCount = _deletionCountSupplier.get();
@@ -176,29 +133,29 @@ public class ImportPreview implements Serializable {
 	private Supplier<Long> _deletionCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Date getExportDate() {
-		if (_exportDateSupplier != null) {
-			exportDate = _exportDateSupplier.get();
+	public String getLabel() {
+		if (_labelSupplier != null) {
+			label = _labelSupplier.get();
 
-			_exportDateSupplier = null;
+			_labelSupplier = null;
 		}
 
-		return exportDate;
+		return label;
 	}
 
-	public void setExportDate(Date exportDate) {
-		this.exportDate = exportDate;
+	public void setLabel(String label) {
+		this.label = label;
 
-		_exportDateSupplier = null;
+		_labelSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setExportDate(
-		UnsafeSupplier<Date, Exception> exportDateUnsafeSupplier) {
+	public void setLabel(
+		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
 
-		_exportDateSupplier = () -> {
+		_labelSupplier = () -> {
 			try {
-				return exportDateUnsafeSupplier.get();
+				return labelUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -211,35 +168,33 @@ public class ImportPreview implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Date exportDate;
+	protected String label;
 
 	@JsonIgnore
-	private Supplier<Date> _exportDateSupplier;
+	private Supplier<String> _labelSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getFileEntryId() {
-		if (_fileEntryIdSupplier != null) {
-			fileEntryId = _fileEntryIdSupplier.get();
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
 
-			_fileEntryIdSupplier = null;
+			_nameSupplier = null;
 		}
 
-		return fileEntryId;
+		return name;
 	}
 
-	public void setFileEntryId(Long fileEntryId) {
-		this.fileEntryId = fileEntryId;
+	public void setName(String name) {
+		this.name = name;
 
-		_fileEntryIdSupplier = null;
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFileEntryId(
-		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
-
-		_fileEntryIdSupplier = () -> {
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
 			try {
-				return fileEntryIdUnsafeSupplier.get();
+				return nameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -252,125 +207,40 @@ public class ImportPreview implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long fileEntryId;
+	protected String name;
 
 	@JsonIgnore
-	private Supplier<Long> _fileEntryIdSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public String getFileName() {
-		if (_fileNameSupplier != null) {
-			fileName = _fileNameSupplier.get();
-
-			_fileNameSupplier = null;
-		}
-
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-
-		_fileNameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFileName(
-		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
-
-		_fileNameSupplier = () -> {
-			try {
-				return fileNameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String fileName;
-
-	@JsonIgnore
-	private Supplier<String> _fileNameSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getFileSize() {
-		if (_fileSizeSupplier != null) {
-			fileSize = _fileSizeSupplier.get();
-
-			_fileSizeSupplier = null;
-		}
-
-		return fileSize;
-	}
-
-	public void setFileSize(Long fileSize) {
-		this.fileSize = fileSize;
-
-		_fileSizeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFileSize(
-		UnsafeSupplier<Long, Exception> fileSizeUnsafeSupplier) {
-
-		_fileSizeSupplier = () -> {
-			try {
-				return fileSizeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long fileSize;
-
-	@JsonIgnore
-	private Supplier<Long> _fileSizeSupplier;
+	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public PreviewPortletDataHandlerSection[]
-		getPreviewPortletDataHandlerSections() {
+	public PreviewPortletDataHandler[] getPreviewPortletDataHandlers() {
+		if (_previewPortletDataHandlersSupplier != null) {
+			previewPortletDataHandlers =
+				_previewPortletDataHandlersSupplier.get();
 
-		if (_previewPortletDataHandlerSectionsSupplier != null) {
-			previewPortletDataHandlerSections =
-				_previewPortletDataHandlerSectionsSupplier.get();
-
-			_previewPortletDataHandlerSectionsSupplier = null;
+			_previewPortletDataHandlersSupplier = null;
 		}
 
-		return previewPortletDataHandlerSections;
+		return previewPortletDataHandlers;
 	}
 
-	public void setPreviewPortletDataHandlerSections(
-		PreviewPortletDataHandlerSection[] previewPortletDataHandlerSections) {
+	public void setPreviewPortletDataHandlers(
+		PreviewPortletDataHandler[] previewPortletDataHandlers) {
 
-		this.previewPortletDataHandlerSections =
-			previewPortletDataHandlerSections;
+		this.previewPortletDataHandlers = previewPortletDataHandlers;
 
-		_previewPortletDataHandlerSectionsSupplier = null;
+		_previewPortletDataHandlersSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setPreviewPortletDataHandlerSections(
-		UnsafeSupplier<PreviewPortletDataHandlerSection[], Exception>
-			previewPortletDataHandlerSectionsUnsafeSupplier) {
+	public void setPreviewPortletDataHandlers(
+		UnsafeSupplier<PreviewPortletDataHandler[], Exception>
+			previewPortletDataHandlersUnsafeSupplier) {
 
-		_previewPortletDataHandlerSectionsSupplier = () -> {
+		_previewPortletDataHandlersSupplier = () -> {
 			try {
-				return previewPortletDataHandlerSectionsUnsafeSupplier.get();
+				return previewPortletDataHandlersUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -383,12 +253,11 @@ public class ImportPreview implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected PreviewPortletDataHandlerSection[]
-		previewPortletDataHandlerSections;
+	protected PreviewPortletDataHandler[] previewPortletDataHandlers;
 
 	@JsonIgnore
-	private Supplier<PreviewPortletDataHandlerSection[]>
-		_previewPortletDataHandlerSectionsSupplier;
+	private Supplier<PreviewPortletDataHandler[]>
+		_previewPortletDataHandlersSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -396,13 +265,15 @@ public class ImportPreview implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ImportPreview)) {
+		if (!(object instanceof PreviewPortletDataHandlerSection)) {
 			return false;
 		}
 
-		ImportPreview importPreview = (ImportPreview)object;
+		PreviewPortletDataHandlerSection previewPortletDataHandlerSection =
+			(PreviewPortletDataHandlerSection)object;
 
-		return Objects.equals(toString(), importPreview.toString());
+		return Objects.equals(
+			toString(), previewPortletDataHandlerSection.toString());
 	}
 
 	@Override
@@ -417,9 +288,6 @@ public class ImportPreview implements Serializable {
 
 		sb.append("{");
 
-		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
 		Long additionCount = getAdditionCount();
 
 		if (additionCount != null) {
@@ -430,22 +298,6 @@ public class ImportPreview implements Serializable {
 			sb.append("\"additionCount\": ");
 
 			sb.append(additionCount);
-		}
-
-		String author = getAuthor();
-
-		if (author != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"author\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(author));
-
-			sb.append("\"");
 		}
 
 		Long deletionCount = getDeletionCount();
@@ -460,78 +312,54 @@ public class ImportPreview implements Serializable {
 			sb.append(deletionCount);
 		}
 
-		Date exportDate = getExportDate();
+		String label = getLabel();
 
-		if (exportDate != null) {
+		if (label != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"exportDate\": ");
+			sb.append("\"label\": ");
 
 			sb.append("\"");
 
-			sb.append(liferayToJSONDateFormat.format(exportDate));
-
-			sb.append("\"");
-		}
-
-		Long fileEntryId = getFileEntryId();
-
-		if (fileEntryId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileEntryId\": ");
-
-			sb.append(fileEntryId);
-		}
-
-		String fileName = getFileName();
-
-		if (fileName != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(fileName));
+			sb.append(_escape(label));
 
 			sb.append("\"");
 		}
 
-		Long fileSize = getFileSize();
+		String name = getName();
 
-		if (fileSize != null) {
+		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fileSize\": ");
+			sb.append("\"name\": ");
 
-			sb.append(fileSize);
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
 		}
 
-		PreviewPortletDataHandlerSection[] previewPortletDataHandlerSections =
-			getPreviewPortletDataHandlerSections();
+		PreviewPortletDataHandler[] previewPortletDataHandlers =
+			getPreviewPortletDataHandlers();
 
-		if (previewPortletDataHandlerSections != null) {
+		if (previewPortletDataHandlers != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"previewPortletDataHandlerSections\": ");
+			sb.append("\"previewPortletDataHandlers\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < previewPortletDataHandlerSections.length; i++) {
-				sb.append(String.valueOf(previewPortletDataHandlerSections[i]));
+			for (int i = 0; i < previewPortletDataHandlers.length; i++) {
+				sb.append(String.valueOf(previewPortletDataHandlers[i]));
 
-				if ((i + 1) < previewPortletDataHandlerSections.length) {
+				if ((i + 1) < previewPortletDataHandlers.length) {
 					sb.append(", ");
 				}
 			}
@@ -546,7 +374,7 @@ public class ImportPreview implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.ImportPreview",
+		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandlerSection",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -640,4 +468,4 @@ public class ImportPreview implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:780029990
+// LIFERAY-REST-BUILDER-HASH:1095898237

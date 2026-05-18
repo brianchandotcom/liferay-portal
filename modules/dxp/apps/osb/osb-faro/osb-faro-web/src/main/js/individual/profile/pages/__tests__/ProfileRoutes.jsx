@@ -1,4 +1,5 @@
 import * as data from 'test/data';
+import DataSourcesProvider from 'shared/context/dataSources';
 import IndividualProfileRoutes from '../ProfileRoutes';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -32,9 +33,11 @@ describe('IndividualProfileRoutes', () => {
 		const {container} = render(
 			<Provider store={mockStore()}>
 				<ChannelContext.Provider value={mockChannelContext()}>
-					<BrowserRouter>
-						<IndividualProfileRoutes {...defaultProps} />
-					</BrowserRouter>
+					<DataSourcesProvider groupId={defaultProps.groupId}>
+						<BrowserRouter>
+							<IndividualProfileRoutes {...defaultProps} />
+						</BrowserRouter>
+					</DataSourcesProvider>
 				</ChannelContext.Provider>
 			</Provider>
 		);

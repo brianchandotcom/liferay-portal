@@ -1,3 +1,4 @@
+import DataSourcesProvider from 'shared/context/dataSources';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
@@ -33,7 +34,9 @@ describe('SegmentProfileRoutes', () => {
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<ChannelContext.Provider value={mockChannelContext()}>
-						<SegmentProfileRoutes />
+						<DataSourcesProvider groupId='23'>
+							<SegmentProfileRoutes />
+						</DataSourcesProvider>
 					</ChannelContext.Provider>
 				</BrowserRouter>
 			</Provider>

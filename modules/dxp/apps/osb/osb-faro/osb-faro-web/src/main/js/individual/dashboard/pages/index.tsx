@@ -11,7 +11,7 @@ import {getMatchedRoute, Routes} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 
 const Distribution = lazy(
 	() =>
@@ -72,7 +72,7 @@ const NAV_ITEMS = [
 ];
 
 const Dashboard: React.FC<React.HTMLAttributes<HTMLDivElement>> = () => {
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 	const {selectedChannel} = useChannelContext();
 	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;

@@ -11,7 +11,7 @@ import URLConstants from 'shared/util/url-constants';
 import {connect} from 'react-redux';
 import {Routes, toRoute} from 'shared/util/router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const OverviewCDPEmptyState = ({
@@ -101,7 +101,7 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 
 	const authorized = currentUser.isAdmin();
 
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
 		dataSourceFn: API.dataSource.search,

@@ -1,5 +1,5 @@
 import * as data from 'test/data';
-import * as useDataSource from 'shared/hooks/useDataSource';
+import * as useDataSources from 'shared/context/dataSources';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
@@ -18,7 +18,7 @@ jest.mock('react-router-dom', () => ({
 	})
 }));
 
-const mockUseDataSource = useDataSource;
+const mockUseDataSource = useDataSources;
 
 const defaultProps = {
 	currentUser: new User(data.mockUser()),
@@ -37,7 +37,7 @@ describe('Individuals Dashboard Distribution', () => {
 	afterEach(cleanup);
 
 	it('renders', () => {
-		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 		const {container} = render(<WrappedComponent />);
 
@@ -47,7 +47,7 @@ describe('Individuals Dashboard Distribution', () => {
 	});
 
 	it('renders with data source empty state', () => {
-		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockEmptyState);
 
 		const {getByText} = render(<WrappedComponent />);
 

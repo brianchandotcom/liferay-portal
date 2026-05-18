@@ -15,7 +15,7 @@ import {get} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
@@ -29,7 +29,7 @@ const ExperimentsListPage = () => {
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		initialOrderIOMap: createOrderIOMap(MODIFIED_DATE)
 	});
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 	const {selectedChannel} = useChannelContext();
 	const currentUser = useCurrentUser();
 	const {timeZoneId} = useTimeZone();

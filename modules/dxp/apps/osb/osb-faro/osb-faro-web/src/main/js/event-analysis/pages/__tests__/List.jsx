@@ -1,6 +1,6 @@
 import 'test/mock-modal';
 
-import * as useDataSource from 'shared/hooks/useDataSource';
+import * as useDataSources from 'shared/context/dataSources';
 import client from 'shared/apollo/client';
 import EventAnalysisList from '../List';
 import mockStore from 'test/mock-store';
@@ -71,7 +71,7 @@ const WrappedComponent = ({eventAnalyses}) => (
 		</ApolloProvider>
 	</Provider>
 );
-const mockUseDataSource = useDataSource;
+const mockUseDataSource = useDataSources;
 
 describe('Event Analysis List', () => {
 	beforeEach(() => {
@@ -79,7 +79,7 @@ describe('Event Analysis List', () => {
 	});
 
 	it('should render', async () => {
-		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 		const {container} = render(
 			<WrappedComponent eventAnalyses={eventAnalysis} />
@@ -146,7 +146,7 @@ describe('Event Analysis List', () => {
 
 describe('EventAnalysisList with no Data Source', () => {
 	it('should render EmptyState', () => {
-		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockEmptyState);
 
 		const {getByText} = render(
 			<WrappedComponent eventAnalyses={eventAnalysis} />
@@ -176,7 +176,7 @@ describe('Event Analysis List - Feature Limits', () => {
 			})
 		);
 
-		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 		const {getByText} = render(
 			<WrappedComponent eventAnalyses={eventAnalysis} />
@@ -198,7 +198,7 @@ describe('Event Analysis List - Feature Limits', () => {
 				]
 			})
 		);
-		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 		const {container, getByText} = render(
 			<WrappedComponent eventAnalyses={eventAnalysis} />
@@ -225,7 +225,7 @@ describe('Event Analysis List - Feature Limits', () => {
 			})
 		);
 
-		mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 		const {getByText} = render(
 			<WrappedComponent eventAnalyses={eventAnalysis} />

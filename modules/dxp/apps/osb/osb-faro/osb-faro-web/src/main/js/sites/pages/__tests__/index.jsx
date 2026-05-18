@@ -1,5 +1,5 @@
 import * as data from 'test/data';
-import * as useDataSource from 'shared/hooks/useDataSource';
+import * as useDataSources from 'shared/context/dataSources';
 import BasePage from 'shared/components/base-page';
 import client from 'shared/apollo/client';
 import mockStore from 'test/mock-store';
@@ -35,7 +35,7 @@ const MOCK_CONTEXT = {
 	}
 };
 
-const mockUseDataSource = useDataSource;
+const mockUseDataSource = useDataSources;
 
 const WrappedComponent = props => (
 	<ApolloProvider client={client}>
@@ -59,7 +59,7 @@ const WrappedComponent = props => (
 
 describe('Sites Dashboard Index', () => {
 	afterEach(cleanup);
-	mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+	mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 	beforeAll(() => {
 		delete window.location;
@@ -113,7 +113,7 @@ describe('sites with no Data Source', () => {
 		window.location = {
 			pathname: '/workspace/2000/123/sites'
 		};
-		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockEmptyState);
 
 		const {getByText} = render(<WrappedComponent />);
 

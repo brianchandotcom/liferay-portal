@@ -55,7 +55,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 @FeatureFlag("LPD-52006")
 @RunWith(Arquillian.class)
-public class SharingTicketNotificationTest {
+public class SharingEntryCollaborationEmailTest {
 
 	@ClassRule
 	@Rule
@@ -74,7 +74,9 @@ public class SharingTicketNotificationTest {
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testSendsEmailToTicketEmailAddressOnShare() throws Exception {
+	public void testAddSharingEntryWithInviteCollaboratorTicket()
+		throws Exception {
+
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket = _ticketLocalService.addTicket(

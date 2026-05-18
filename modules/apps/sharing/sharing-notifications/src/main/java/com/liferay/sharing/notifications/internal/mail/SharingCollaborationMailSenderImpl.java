@@ -14,6 +14,7 @@ import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.EmailAddressException;
@@ -91,9 +92,10 @@ public class SharingCollaborationMailSenderImpl
 		if (serviceContext.getRequest() == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Skipping sharing collaboration email; no HTTP request " +
-						"in service context for ticket " +
-							ticket.getTicketId());
+					StringBundler.concat(
+						"Sharing collaboration email will not be sent for ",
+						"ticket ", ticket.getTicketId(),
+						" because the service context has no HTTP request"));
 			}
 
 			return;
@@ -245,12 +247,13 @@ public class SharingCollaborationMailSenderImpl
 	private void _validateEmailAddress(String emailAddress) throws Exception {
 		if (Validator.isNull(emailAddress)) {
 			throw new EmailAddressException(
-				"Ticket TYPE_INVITE_COLLABORATOR must have an email address");
+				"Ticket of type \"invite collaborator\" must have an email " +
+					"address");
 		}
 
 		if (!Validator.isEmailAddress(emailAddress)) {
 			throw new EmailAddressException(
-				"Invalid email address: " + emailAddress);
+				"Invalid email address: \"" + emailAddress + "\"");
 		}
 	}
 

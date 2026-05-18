@@ -360,4 +360,4 @@ public interface CommerceTaxCategoryMappingLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-361685873
+// LIFERAY-SERVICE-BUILDER-HASH:-1729404107

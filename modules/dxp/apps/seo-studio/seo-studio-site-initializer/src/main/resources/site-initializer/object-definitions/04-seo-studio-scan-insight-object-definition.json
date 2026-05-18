@@ -42,7 +42,6 @@
 			"externalReferenceCode": "CLASSIFICATION",
 			"indexed": true,
 			"indexedAsKeyword": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Classification"
 			},
@@ -116,7 +115,6 @@
 			"externalReferenceCode": "INSIGHT_CATEGORY",
 			"indexed": true,
 			"indexedAsKeyword": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Insight Category"
 			},
@@ -158,7 +156,6 @@
 			"businessType": "Relationship",
 			"externalReferenceCode": "SEO_STUDIO_SCAN_TO_SEO_STUDIO_SCAN_INSIGHTS",
 			"indexed": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "SEO Studio Scan to SEO Studio Scan Insights"
 			},
@@ -206,7 +203,6 @@
 			"externalReferenceCode": "SEVERITY",
 			"indexed": true,
 			"indexedAsKeyword": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Severity"
 			},

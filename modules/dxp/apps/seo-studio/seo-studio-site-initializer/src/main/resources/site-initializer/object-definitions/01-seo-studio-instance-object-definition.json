@@ -17,7 +17,6 @@
 			"businessType": "Relationship",
 			"externalReferenceCode": "ACCOUNT_TO_SEO_STUDIO_INSTANCES",
 			"indexed": true,
-			"indexedLanguageId": "en_US",
 			"label": {
 				"en_US": "Account to SEO Studio Instances"
 			},

@@ -630,7 +630,7 @@ public class ExportImportLocalServiceImpl
 
 	@CTAware
 	@Override
-	public long mergeLayoutSetPrototypeInBackground(
+	public long syncLayoutSetPrototypeInBackground(
 			long userId, long groupId,
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
@@ -639,7 +639,7 @@ public class ExportImportLocalServiceImpl
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, groupId, exportImportConfiguration.getName(),
 				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
+					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR,
 				HashMapBuilder.<String, Serializable>put(
 					BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
 				).put(

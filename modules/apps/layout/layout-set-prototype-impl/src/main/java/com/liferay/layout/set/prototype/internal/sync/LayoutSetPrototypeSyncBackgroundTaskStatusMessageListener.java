@@ -40,7 +40,7 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 		if (!Objects.equals(
 				message.getString("taskExecutorClassName"),
 				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR)) {
+					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR)) {
 
 			return;
 		}

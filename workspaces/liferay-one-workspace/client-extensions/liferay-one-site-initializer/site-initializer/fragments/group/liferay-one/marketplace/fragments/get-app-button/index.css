@@ -2,15 +2,9 @@
 	max-width: 296px;
 }
 
-.modal-header {
-	border: none !important;
-	margin: 24px !important;
-	padding: 0 !important;
-}
-
-.modal-header h1 {
-	font-size: 30px !important;
-	font-weight: 700 !important;
+.main-button {
+  font-size: 18px;
+  height: 48px;
 }
 
 .modal-body {
@@ -38,13 +32,13 @@
 	width: 100% !important;
 }
 
-.btn-group {
-	display: flex !important;
-	justify-content: space-between !important;
-	width: 100% !important;
+.modal-header {
+	border: none !important;
+	margin: 24px !important;
+	padding: 0 !important;
 }
 
-.main-button {
-  font-size: 18px;
-  height: 48px;
+.modal-header h1 {
+	font-size: 30px !important;
+	font-weight: 700 !important;
 }

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import {sub, unescapeHTML} from 'frontend-js-web';
@@ -27,11 +28,11 @@ const Item = ({item, onClick}) => {
 				<span className="creation-menu-item-deprecated">
 					{unescapeHTML(item.label)}
 
-					<span className="badge badge-translucent badge-warning text-uppercase">
-						<span className="badge-item badge-item-expand">
-							{Liferay.Language.get('deprecated')}
-						</span>
-					</span>
+					<ClayBadge
+						displayType="warning"
+						label={Liferay.Language.get('deprecated')}
+						translucent
+					/>
 				</span>
 			) : (
 				unescapeHTML(item.label)

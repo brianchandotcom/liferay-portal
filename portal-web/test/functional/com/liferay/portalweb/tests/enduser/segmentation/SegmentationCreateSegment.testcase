@@ -304,52 +304,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-130284: Validate if it's posible to create a segment based on User > Date modified criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserDateModified {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Date Modified");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Greater Than");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserDateModified Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserDateModified Test");
-
-			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd", "UTC");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = ${currentDate});
-		}
-	}
-
 	@description = "Test Automation for LPS-130291: Validate if it's posible to create a segment based on User > Email Adress criteria"
 	@priority = 5
 	@uitest

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
@@ -158,8 +159,11 @@ public class KaleoNotificationLocalServiceImpl
 	public List<KaleoNotification> getKaleoNotifications(
 		String kaleoClassName, long kaleoClassPK, String executionType) {
 
-		return kaleoNotificationPersistence.findByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType);
+		return ListUtil.filter(
+			kaleoNotificationPersistence.findByKCN_KCPK(
+				kaleoClassName, kaleoClassPK),
+			kaleoNotification -> executionType.equals(
+				kaleoNotification.getExecutionType()));
 	}
 
 	@Reference

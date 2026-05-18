@@ -86,8 +86,5 @@ export interface ShareModalContentProps {
 	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
 	title: string;
-	transformSourceItems?: (
-		items: AutocompleteItem[],
-		query: string
-	) => AutocompleteItem[];
+	transformSourceItems?: (items: any[], query: string) => AutocompleteItem[];
 }

@@ -108,9 +108,31 @@ export default function CMSShareModalContent({
 			COLLABORATOR_TYPE.EXTERNAL_USER;
 
 	const transformSourceItems = (
-		items: AutocompleteItem[],
+		rawItems: any[],
 		query: string
 	): AutocompleteItem[] => {
+		const items: AutocompleteItem[] = rawItems.map((item) => {
+			if (item.entryClassName?.includes(COLLABORATOR_TYPE.USER_GROUP)) {
+				return {
+					type: COLLABORATOR_TYPE.USER_GROUP,
+					user: {
+						id: item.embedded.id.toString(),
+						name: item.embedded.name,
+					},
+				};
+			}
+
+			return {
+				type: COLLABORATOR_TYPE.USER,
+				user: {
+					emailAddress: item.embedded.emailAddress,
+					id: item.embedded.id.toString(),
+					image: item.embedded.image,
+					name: item.embedded.name,
+				},
+			};
+		});
+
 		const trimmedQuery = query.trim();
 
 		const offerExternalUserInvite =

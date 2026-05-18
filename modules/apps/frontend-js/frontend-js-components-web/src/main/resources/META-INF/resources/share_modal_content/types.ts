@@ -5,8 +5,6 @@
 
 import type {ReactNode} from 'react';
 
-import type {CollaboratorPayload} from './CollaboratorService';
-
 export const COLLABORATOR_TYPE = {
 	USER: 'User',
 	USER_GROUP: 'UserGroup',
@@ -70,16 +68,13 @@ export interface ShareModalContentProps {
 	closeModal: () => void;
 	collaboratorBadgeText?: (props: CollaboratorBadgeProps) => string | null;
 	collaboratorStickerIcon?: (props: CollaboratorIconProps) => ReactNode;
-	collaboratorURL: string;
 	collaboratorsListTitle?: string;
 	creator: ShareModalCreator;
-	filterCollaborators?: (collaborator: Collaborator) => boolean;
 	initialCollaborators: Collaborator[];
-	itemId: number;
-	mapCollaboratorToPayload?: (
-		collaborator: Collaborator
-	) => CollaboratorPayload;
 	onAutocompleteChange?: (item: AutocompleteItem | undefined) => void;
+	onCollaboratorsUpdate: (
+		collaborators: Collaborator[]
+	) => Promise<{error: string | null}>;
 	permissionOptions:
 		| PermissionOption[]
 		| ((collaborator: Collaborator) => PermissionOption[]);

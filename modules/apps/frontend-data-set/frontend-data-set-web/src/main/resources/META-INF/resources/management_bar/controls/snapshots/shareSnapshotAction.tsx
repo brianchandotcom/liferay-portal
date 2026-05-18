@@ -91,7 +91,6 @@ export default async function shareSnapshotAction({
 					autocompleteLabel={Liferay.Language.get('add-people')}
 					autocompleteURL={AUTOCOMPLETE_URL}
 					closeModal={closeModal}
-					collaboratorURL={COLLABORATOR_URL}
 					collaboratorsListTitle={Liferay.Language.get(
 						'who-can-see-this-view'
 					)}
@@ -101,7 +100,22 @@ export default async function shareSnapshotAction({
 						name: Liferay.ThemeDisplay.getUserName(),
 					}}
 					initialCollaborators={initialCollaborators}
-					itemId={itemId}
+					onCollaboratorsUpdate={(collaborators) =>
+						CollaboratorService.updateCollaborators(
+							COLLABORATOR_URL,
+							itemId,
+							collaborators.map(
+								({actionIds, share, type, user}) => ({
+									actionIds: actionIds
+										? actionIds.split(',')
+										: [],
+									id: user.id,
+									share,
+									type,
+								})
+							)
+						)
+					}
 					permissionOptions={PERMISSION_OPTIONS}
 					showAllowResharing={false}
 					showExpirationDate={false}

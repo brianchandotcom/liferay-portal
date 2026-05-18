@@ -17,10 +17,8 @@ import {sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import openToast from '../toast/openToast';
-import CollaboratorService from './CollaboratorService';
 import ExpirationDateSelector, {
 	formatDateForView,
-	formatDateToISO,
 } from './ExpirationDateSelector';
 import PermissionSelector from './PermissionSelector';
 import {
@@ -43,25 +41,7 @@ const _emptyTransformSourceItems = (
 	_query: string
 ): AutocompleteItem[] => [];
 
-const _passthroughFilterCollaborators = (_collaborator: Collaborator) => true;
-
 const noop = () => {};
-
-const _defaultMapCollaboratorToPayload = ({
-	actionIds,
-	dateExpired,
-	share,
-	type,
-	user,
-}: Collaborator) => ({
-	actionIds: actionIds ? actionIds.split(',') : [],
-	...(!!dateExpired && {
-		dateExpired: formatDateToISO(dateExpired),
-	}),
-	id: user.id,
-	share,
-	type,
-});
 
 function CollaboratorStickerIcon({type, user}: CollaboratorIconProps) {
 	if (type === COLLABORATOR_TYPE.USER_GROUP) {
@@ -331,14 +311,11 @@ export default function ShareModalContent({
 	closeModal,
 	collaboratorBadgeText = _defaultCollaboratorBadgeText,
 	collaboratorStickerIcon = _defaultCollaboratorStickerIcon,
-	collaboratorURL = '',
 	collaboratorsListTitle = Liferay.Language.get('who-has-access'),
 	creator,
-	filterCollaborators = _passthroughFilterCollaborators,
 	initialCollaborators = [],
-	itemId,
-	mapCollaboratorToPayload = _defaultMapCollaboratorToPayload,
 	onAutocompleteChange = noop,
+	onCollaboratorsUpdate,
 	permissionOptions,
 	showAllowResharing = true,
 	showExpirationDate = true,
@@ -348,9 +325,8 @@ export default function ShareModalContent({
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
 		useState(4);
-	const [collaborators, setCollaborators] = useState<Collaborator[]>(() =>
-		initialCollaborators.filter(filterCollaborators)
-	);
+	const [collaborators, setCollaborators] =
+		useState<Collaborator[]>(initialCollaborators);
 	const [loading, setLoading] = useState(false);
 
 	const {resource: users} = useResource({
@@ -428,13 +404,7 @@ export default function ShareModalContent({
 
 		setLoading(true);
 
-		const {error} = await CollaboratorService.updateCollaborators(
-			collaboratorURL,
-			itemId,
-			collaborators
-				.filter(filterCollaborators)
-				.map(mapCollaboratorToPayload)
-		);
+		const {error} = await onCollaboratorsUpdate(collaborators);
 
 		setLoading(false);
 

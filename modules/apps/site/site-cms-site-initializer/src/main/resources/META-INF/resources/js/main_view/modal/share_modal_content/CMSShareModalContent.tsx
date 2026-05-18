@@ -9,6 +9,7 @@ import {
 	AutocompleteItem,
 	Collaborator as GenericCollaborator,
 	CollaboratorPayload,
+	CollaboratorService,
 	PermissionOption,
 	ShareModalContent as GenericShareModalContent,
 	ShareModalUserAccount,
@@ -102,10 +103,11 @@ export default function CMSShareModalContent({
 }) {
 	const isFolder = entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 
-	const filterCollaborators = (collaborator: GenericCollaborator) =>
-		externalUserSharingEnabled ||
-		(collaborator.type as CollaboratorType) !==
-			COLLABORATOR_TYPE.EXTERNAL_USER;
+	const visibleCollaborators = initialCollaborators.filter(
+		({type}) =>
+			externalUserSharingEnabled ||
+			type !== COLLABORATOR_TYPE.EXTERNAL_USER
+	);
 
 	const transformSourceItems = (
 		rawItems: any[],
@@ -191,6 +193,20 @@ export default function CMSShareModalContent({
 
 		return payload;
 	};
+
+	const handleCollaboratorsUpdate = (collaborators: GenericCollaborator[]) =>
+		CollaboratorService.updateCollaborators(
+			collaboratorURL,
+			itemId,
+			collaborators
+				.filter(
+					({type}) =>
+						externalUserSharingEnabled ||
+						(type as CollaboratorType) !==
+							COLLABORATOR_TYPE.EXTERNAL_USER
+				)
+				.map(mapCollaboratorToPayload)
+		);
 
 	const autocompleteItem = ({
 		type,
@@ -318,14 +334,11 @@ export default function CMSShareModalContent({
 			closeModal={closeModal}
 			collaboratorBadgeText={collaboratorBadgeText}
 			collaboratorStickerIcon={collaboratorStickerIcon}
-			collaboratorURL={collaboratorURL}
 			creator={creator}
-			filterCollaborators={filterCollaborators}
 			initialCollaborators={
-				initialCollaborators as unknown as GenericCollaborator[]
+				visibleCollaborators as unknown as GenericCollaborator[]
 			}
-			itemId={itemId}
-			mapCollaboratorToPayload={mapCollaboratorToPayload}
+			onCollaboratorsUpdate={handleCollaboratorsUpdate}
 			permissionOptions={resolvePermissionOptions}
 			title={title}
 			transformSourceItems={transformSourceItems}

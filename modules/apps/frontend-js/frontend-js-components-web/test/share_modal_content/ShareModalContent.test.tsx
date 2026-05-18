@@ -32,6 +32,7 @@ jest.mock('frontend-js-web', () => ({
 }));
 
 const mockCloseModal = jest.fn();
+const mockOnCollaboratorsUpdate = jest.fn(() => Promise.resolve({error: null}));
 
 const DEFAULT_PERMISSION_OPTIONS: PermissionOption[] = [
 	{label: 'view-and-download', value: 'VIEW'},
@@ -50,7 +51,6 @@ const FOLDER_PERMISSION_OPTIONS: PermissionOption[] = [
 const DEFAULT_PROPS = {
 	autocompleteURL: '/search',
 	closeModal: mockCloseModal,
-	collaboratorURL: '/o/cms/basic-documents/{objectEntryId}/collaborators',
 	creator: {
 		contentType: 'UserAccount',
 		id: '1',
@@ -67,7 +67,7 @@ const DEFAULT_PROPS = {
 			},
 		},
 	],
-	itemId: 20,
+	onCollaboratorsUpdate: mockOnCollaboratorsUpdate,
 	permissionOptions: DEFAULT_PERMISSION_OPTIONS,
 	title: 'Test Document',
 };
@@ -270,15 +270,14 @@ describe('ShareModalContent', () => {
 			fireEvent.click(getByText('save'));
 		});
 
-		expect(global.fetch).toHaveBeenCalledWith(
-			'/o/cms/basic-documents/20/collaborators',
-			expect.objectContaining({
-				body: JSON.stringify([
-					{actionIds: ['VIEW'], id: '2', share: true, type: 'User'},
-				]),
-				method: 'POST',
-			})
-		);
+		expect(mockOnCollaboratorsUpdate).toHaveBeenCalledWith([
+			{
+				actionIds: 'VIEW',
+				share: true,
+				type: 'User',
+				user: {id: '2', name: 'Test2 Test2'},
+			},
+		]);
 
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
 	});

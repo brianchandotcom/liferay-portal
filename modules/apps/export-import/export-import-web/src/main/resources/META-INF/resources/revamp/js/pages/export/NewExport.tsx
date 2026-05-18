@@ -76,7 +76,7 @@ export function NewExport({
 		return <ClayAlert displayType="danger">{error}</ClayAlert>;
 	}
 
-	const sections = preview?.portletDataHandlerSections ?? [];
+	const sections = preview?.previewPortletDataHandlerSections ?? [];
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
 		if (filterValues.range === Range.All && initialPreviewRef.current) {

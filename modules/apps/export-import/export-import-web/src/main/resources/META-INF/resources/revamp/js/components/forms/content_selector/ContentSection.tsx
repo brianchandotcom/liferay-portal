@@ -9,8 +9,8 @@ import React from 'react';
 
 import '../../../../css/utilities.scss';
 import {
-	PortletDataHandlerBoolean,
-	PortletDataHandlerSection as PortletDataHandlerSectionType,
+	PreviewPortletDataHandlerBoolean,
+	PreviewPortletDataHandlerSection as PortletDataHandlerSectionType,
 } from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
@@ -38,9 +38,10 @@ export default function ContentSection({
 }: ContentSectionProps) {
 	const portletContextsValue = value || {};
 
-	const controls = section.portletDataHandlers.map<PortletDataHandlerBoolean>(
-		(handler) => ({...handler, type: 'Boolean'})
-	);
+	const controls =
+		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
+			(handler) => ({...handler, type: 'Boolean'})
+		);
 
 	const selected = controls.every((context) =>
 		isSelected(portletContextsValue[context.name], context)

@@ -6,7 +6,7 @@
 import {useField, useFormikContext} from 'formik';
 import React from 'react';
 
-import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
+import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
 import ContentSelector, {
 	ContentSelection,
 } from '../content_selector/ContentSelector';
@@ -14,7 +14,7 @@ import ContentSelector, {
 interface FormikFieldContentSelectorProps {
 	'aria-labelledby'?: string;
 	'name': string;
-	'sections': PortletDataHandlerSection[];
+	'sections': PreviewPortletDataHandlerSection[];
 }
 
 export function FormikFieldContentSelector({

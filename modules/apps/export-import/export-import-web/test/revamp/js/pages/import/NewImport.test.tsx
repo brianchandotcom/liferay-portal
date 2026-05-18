@@ -228,7 +228,8 @@ describe('NewImport', () => {
 			Promise.resolve({
 				data: {
 					...mockImportPreview,
-					portletDataHandlerSections: mockSectionsForFilterTest,
+					previewPortletDataHandlerSections:
+						mockSectionsForFilterTest,
 				},
 				error: null,
 			})

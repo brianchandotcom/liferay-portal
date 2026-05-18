@@ -13,7 +13,7 @@ import {
 	FormikFieldContentSelector,
 	FormikFieldDateFilter,
 } from '../../../components/forms/formik';
-import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
+import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
 
 const LABEL_ID = 'dataSelection-label';
 
@@ -28,7 +28,7 @@ export default function DataSelection({
 	itemsCount?: number;
 	loading?: boolean;
 	onApplyFilter: (filterValues: DateFilterValues) => void;
-	sections: PortletDataHandlerSection[];
+	sections: PreviewPortletDataHandlerSection[];
 }) {
 	return (
 		<>

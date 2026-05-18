@@ -7,7 +7,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {PortletDataHandlerControl} from '../../../types/portletDataHandler';
+import {PreviewPortletDataHandlerControl} from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
 	getInitialSelection,
@@ -19,7 +19,7 @@ import SectionTags from './SectionTags';
 
 interface PortletDataControlProps {
 	className?: string;
-	control: PortletDataHandlerControl;
+	control: PreviewPortletDataHandlerControl;
 	level?: number;
 	onChange: (value: HandlerSelection | undefined) => void;
 	showDeletions?: boolean;
@@ -82,25 +82,27 @@ export default function PortletDataControl({
 					)}
 				</div>
 
-				{control.portletDataHandlerControls?.map((nestedControl) =>
-					nestedControl.type === 'Choice' && !selected ? null : (
-						<PortletDataControl
-							className="mt-2"
-							control={nestedControl}
-							key={nestedControl.name}
-							level={level + 1}
-							onChange={(controlValue) =>
-								onChange(
-									updateSelection(
-										currentSelection,
-										nestedControl.name,
-										controlValue
+				{control.previewPortletDataHandlerControls?.map(
+					(nestedControl) =>
+						nestedControl.type === 'Choice' && !selected ? null : (
+							<PortletDataControl
+								className="mt-2"
+								control={nestedControl}
+								key={nestedControl.name}
+								level={level + 1}
+								onChange={(controlValue) =>
+									onChange(
+										updateSelection(
+											currentSelection,
+											nestedControl.name,
+											controlValue
+										)
 									)
-								)
-							}
-							value={currentSelection[nestedControl.name]}
-						/>
-					)
+								}
+								showDeletions={showDeletions}
+								value={currentSelection[nestedControl.name]}
+							/>
+						)
 				)}
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>

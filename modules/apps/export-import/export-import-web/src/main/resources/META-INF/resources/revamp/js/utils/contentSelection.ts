@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PortletDataHandlerControl} from '../types/portletDataHandler';
+import {PreviewPortletDataHandlerControl} from '../types/portletDataHandler';
 
 export type HandlerSelection =
 	| {
@@ -14,7 +14,7 @@ export type HandlerSelection =
 
 export function isSelected(
 	value: HandlerSelection | undefined,
-	entry: PortletDataHandlerControl
+	entry: PreviewPortletDataHandlerControl
 ): boolean {
 	if (!value) {
 		return false;
@@ -25,31 +25,31 @@ export function isSelected(
 	}
 
 	if (
-		!entry.portletDataHandlerControls?.length ||
+		!entry.previewPortletDataHandlerControls?.length ||
 		typeof value !== 'object'
 	) {
 		return true;
 	}
 
-	return entry.portletDataHandlerControls.every((control) =>
+	return entry.previewPortletDataHandlerControls.every((control) =>
 		isSelected(value[control.name], control)
 	);
 }
 
 export function getInitialSelection(
-	entry: PortletDataHandlerControl
+	entry: PreviewPortletDataHandlerControl
 ): HandlerSelection {
 	if (entry.type === 'Choice') {
 		return entry.choices[0].name;
 	}
 
-	if (!entry.portletDataHandlerControls?.length) {
+	if (!entry.previewPortletDataHandlerControls?.length) {
 		return true;
 	}
 
 	const selection: Record<string, HandlerSelection> = {};
 
-	entry.portletDataHandlerControls.forEach((control) => {
+	entry.previewPortletDataHandlerControls.forEach((control) => {
 		selection[control.name] = getInitialSelection(control);
 	});
 

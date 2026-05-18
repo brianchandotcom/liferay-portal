@@ -6,12 +6,12 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {PortletDataHandlerChoice} from '../../../types/portletDataHandler';
+import {PreviewPortletDataHandlerChoice} from '../../../types/portletDataHandler';
 import FieldSelectWithOption from '../FieldSelectWithOption';
 
 interface PortletDataControlChoiceProps {
 	className?: string;
-	control: PortletDataHandlerChoice;
+	control: PreviewPortletDataHandlerChoice;
 	onChange: (value: string) => void;
 	value: string;
 }

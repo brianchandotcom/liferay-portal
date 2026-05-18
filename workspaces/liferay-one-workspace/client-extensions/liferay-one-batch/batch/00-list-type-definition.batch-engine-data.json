@@ -271,6 +271,111 @@
 				}
 			],
 			"name": "Environment Type"
+		},
+		{
+			"externalReferenceCode": "LT_PAYMENT_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_PAYMENT_STATUS_PAID",
+					"key": "paid",
+					"name": "Paid"
+				},
+				{
+					"externalReferenceCode": "LT_PAYMENT_STATUS_UNPAID",
+					"key": "unpaid",
+					"name": "Unpaid"
+				}
+			],
+			"name": "Payment Status"
+		},
+		{
+			"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_SOURCE_CODE",
+					"key": "sourceCode",
+					"name": "Source Code"
+				},
+				{
+					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_PACKAGE",
+					"key": "package",
+					"name": "Package (jar, war, zip)"
+				},
+				{
+					"externalReferenceCode": "LT_PUBLISHER_ASSET_ATTACHMENT_TYPE_LPKG",
+					"key": "lpkg",
+					"name": "Liferay Package (LPKG)"
+				}
+			],
+			"name": "Publisher Asset Attachment Type"
+		},
+		{
+			"externalReferenceCode": "LT_PUBLISHER_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_PUBLISHER_TYPE_APP_PUBLISHER",
+					"key": "appPublisher",
+					"name": "App Publisher"
+				},
+				{
+					"externalReferenceCode": "LT_PUBLISHER_TYPE_SOLUTION_PUBLISHER",
+					"key": "solutionPublisher",
+					"name": "Solution Publisher"
+				}
+			],
+			"name": "Publisher Type"
+		},
+		{
+			"externalReferenceCode": "LT_REQUEST_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_REQUEST_STATUS_OPEN",
+					"key": "open",
+					"name": "Open"
+				},
+				{
+					"externalReferenceCode": "LT_REQUEST_STATUS_IN_PROGRESS",
+					"key": "inProgress",
+					"name": "In Progress"
+				},
+				{
+					"externalReferenceCode": "LT_REQUEST_STATUS_COMPLETED",
+					"key": "completed",
+					"name": "Completed"
+				},
+				{
+					"externalReferenceCode": "LT_REQUEST_STATUS_REJECTED",
+					"key": "rejected",
+					"name": "Rejected"
+				}
+			],
+			"name": "Request Status"
+		},
+		{
+			"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_APPROVED",
+					"key": "Approved",
+					"name": "Approved"
+				},
+				{
+					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_AUTO_APPROVED",
+					"key": "AutoApproved",
+					"name": "Auto Approved"
+				},
+				{
+					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_PENDING",
+					"key": "Pending",
+					"name": "Pending"
+				},
+				{
+					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_REJECTED",
+					"key": "Rejected",
+					"name": "Rejected"
+				}
+			],
+			"name": "Trial Extension Request Status"
 		}
 	]
 }

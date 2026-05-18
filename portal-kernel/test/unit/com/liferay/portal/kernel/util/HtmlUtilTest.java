@@ -90,8 +90,9 @@ public class HtmlUtilTest {
 				"data:text/html;base64," +
 					"PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg"));
 		Assert.assertEquals(
-			"http://localhost:8080",
-			HtmlUtil.escapeHREF("http://localhost:8080"));
+			"http://localhost:" + PortalUtil.getPortalServerPort(false),
+			HtmlUtil.escapeHREF(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 		Assert.assertEquals(
 			"javascript\t%3aalert(1)",
 			HtmlUtil.escapeHREF("javascript\t:alert(1)"));
@@ -160,12 +161,15 @@ public class HtmlUtilTest {
 			HtmlUtil.escapeJSLink(
 				"%00javascript://localhost:800/123%0aalert(document.domain)"));
 		Assert.assertEquals(
-			"http://localhost:8080",
-			HtmlUtil.escapeJSLink("http://localhost:8080"));
-		Assert.assertEquals(
-			"http://localhost:8080/test?scope='javascript:;'",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false),
 			HtmlUtil.escapeJSLink(
-				"http://localhost:8080/test?scope='javascript:;'"));
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
+		Assert.assertEquals(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/test?scope='javascript:;'",
+			HtmlUtil.escapeJSLink(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/test?scope='javascript:;'"));
 		Assert.assertEquals(
 			"javascript%3a//localhost:800/123%0aalert(document.domain)",
 			HtmlUtil.escapeJSLink(

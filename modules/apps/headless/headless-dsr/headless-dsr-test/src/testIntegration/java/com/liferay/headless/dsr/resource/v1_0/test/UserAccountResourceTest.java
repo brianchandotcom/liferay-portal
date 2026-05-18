@@ -122,7 +122,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {user.getUserId()}, groupId, role.getRoleId());
 
-		_userAccountViewerResource = UserAccountResource.builder(
+		_userAccountSiteMemberResource = UserAccountResource.builder(
 		).authentication(
 			user.getEmailAddress(), password
 		).endpoint(
@@ -143,13 +143,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			_objectEntry.getObjectEntryId(), postUserAccount.getId(),
 			new UserAccount() {
 				{
-					roleKey = "Site Administrator";
+					roleKey = RoleConstants.SITE_ADMINISTRATOR;
 				}
 			});
 
 		Assert.assertEquals(postUserAccount.getId(), patchUserAccount.getId());
 		Assert.assertEquals(
-			"Site Administrator", patchUserAccount.getRoleKey());
+			RoleConstants.SITE_ADMINISTRATOR, patchUserAccount.getRoleKey());
 	}
 
 	@Override
@@ -158,7 +158,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.testPostRoomUserAccount();
 
 		_testPostRoomUserAccount();
-		_testPostRoomUserAccountViewer();
+		_testPostRoomUserAccountSiteMember();
 	}
 
 	@Override
@@ -188,9 +188,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private long _getGroupId(ObjectEntry objectEntry) throws Exception {
-		long groupId = MapUtil.getLong(objectEntry.getValues(), "siteId");
-
-		Group group = _groupLocalService.getGroup(groupId);
+		Group group = _groupLocalService.getGroup(
+			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 
 		return group.getGroupId();
 	}
@@ -312,9 +311,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				}));
 	}
 
-	private void _testPostRoomUserAccountViewer() throws Exception {
+	private void _testPostRoomUserAccountSiteMember() throws Exception {
 		try {
-			_userAccountViewerResource.postRoomUserAccount(
+			_userAccountSiteMemberResource.postRoomUserAccount(
 				testGetRoomUserAccountsPage_getRoomId(), randomUserAccount());
 			Assert.fail();
 		}
@@ -357,7 +356,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Inject
 	private TicketLocalService _ticketLocalService;
 
-	private UserAccountResource _userAccountViewerResource;
+	private UserAccountResource _userAccountSiteMemberResource;
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

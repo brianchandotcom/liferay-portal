@@ -83,74 +83,6 @@ public class RenderPortletActionTest {
 	}
 
 	@Test
-	public void testRenderHeaders() throws Exception {
-		String html =
-			"<link rel=\"stylesheet\" href=\"" + RandomTestUtil.randomString() +
-				".css\">";
-
-		String portletId = _registerPortlet(
-			new MVCPortlet() {
-
-				@Override
-				public void renderHeaders(
-						HeaderRequest headerRequest,
-						HeaderResponse headerResponse)
-					throws IOException {
-
-					PrintWriter printWriter = headerResponse.getWriter();
-
-					printWriter.write(html);
-				}
-
-			});
-
-		RenderPortletAction renderPortletAction = new RenderPortletAction();
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
-
-				@Override
-				public RequestDispatcher getRequestDispatcher(String path) {
-					ServletContext servletContext = ServletContextPool.get(
-						StringPool.BLANK);
-
-					return servletContext.getRequestDispatcher(path);
-				}
-
-			};
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080");
-
-		Group group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.RENDER_PORTLET,
-			_portletLocalService.getPortletById(
-				TestPropsValues.getCompanyId(), portletId));
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout, group));
-
-		mockHttpServletRequest.setParameter(
-			"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));
-
-		renderPortletAction.execute(
-			null, mockHttpServletRequest, new MockHttpServletResponse());
-
-		OutputData outputData = (OutputData)mockHttpServletRequest.getAttribute(
-			WebKeys.OUTPUT_DATA);
-
-		Assert.assertEquals(
-			StringPool.NEW_LINE + html,
-			String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
-	}
-
-	@Test
 	public void testRender() throws Exception {
 		String portletId = _registerPortlet(
 			new MVCPortlet() {
@@ -242,20 +174,15 @@ public class RenderPortletActionTest {
 
 		String columnId = RandomTestUtil.randomString();
 
-		mockHttpServletRequest.setParameter(
-			"p_p_col_id", columnId);
+		mockHttpServletRequest.setParameter("p_p_col_id", columnId);
 
-		String columnPos = String.valueOf(
-			RandomTestUtil.randomInt());
+		String columnPos = String.valueOf(RandomTestUtil.randomInt());
 
-		mockHttpServletRequest.setParameter(
-			"p_p_col_pos", columnPos);
+		mockHttpServletRequest.setParameter("p_p_col_pos", columnPos);
 
-		String columnCount = String.valueOf(
-			RandomTestUtil.randomInt());
+		String columnCount = String.valueOf(RandomTestUtil.randomInt());
 
-		mockHttpServletRequest.setParameter(
-			"p_p_col_count", columnCount);
+		mockHttpServletRequest.setParameter("p_p_col_count", columnCount);
 
 		String renderPortletBoundary = String.valueOf(
 			RandomTestUtil.randomBoolean());
@@ -280,9 +207,8 @@ public class RenderPortletActionTest {
 			StringBundler.concat(
 				"\n<link rel=\"stylesheet\" href=\"",
 				Arrays.asList(
-					portletDecorate, null, renderPortletBoundary,
-					columnCount, columnId,
-					columnPos),
+					portletDecorate, null, renderPortletBoundary, columnCount,
+					columnId, columnPos),
 				".css\">"),
 			String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
 
@@ -293,9 +219,76 @@ public class RenderPortletActionTest {
 			content.contains(
 				String.valueOf(
 					Arrays.asList(
-						null, null, renderPortletBoundary,
-						columnCount, columnId,
-						columnPos))));
+						null, null, renderPortletBoundary, columnCount,
+						columnId, columnPos))));
+	}
+
+	@Test
+	public void testRenderHeaders() throws Exception {
+		String html =
+			"<link rel=\"stylesheet\" href=\"" + RandomTestUtil.randomString() +
+				".css\">";
+
+		String portletId = _registerPortlet(
+			new MVCPortlet() {
+
+				@Override
+				public void renderHeaders(
+						HeaderRequest headerRequest,
+						HeaderResponse headerResponse)
+					throws IOException {
+
+					PrintWriter printWriter = headerResponse.getWriter();
+
+					printWriter.write(html);
+				}
+
+			});
+
+		RenderPortletAction renderPortletAction = new RenderPortletAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
+
+				@Override
+				public RequestDispatcher getRequestDispatcher(String path) {
+					ServletContext servletContext = ServletContextPool.get(
+						StringPool.BLANK);
+
+					return servletContext.getRequestDispatcher(path);
+				}
+
+			};
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://localhost:8080");
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.RENDER_PORTLET,
+			_portletLocalService.getPortletById(
+				TestPropsValues.getCompanyId(), portletId));
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout, group));
+
+		mockHttpServletRequest.setParameter(
+			"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));
+
+		renderPortletAction.execute(
+			null, mockHttpServletRequest, new MockHttpServletResponse());
+
+		OutputData outputData = (OutputData)mockHttpServletRequest.getAttribute(
+			WebKeys.OUTPUT_DATA);
+
+		Assert.assertEquals(
+			StringPool.NEW_LINE + html,
+			String.valueOf(outputData.getMergedDataSB(WebKeys.PAGE_TOP)));
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout, Group group)

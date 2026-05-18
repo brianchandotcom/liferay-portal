@@ -352,8 +352,8 @@ public class CollaboratorUtil {
 
 		if (StringUtil.equals("Email", type)) {
 			throw new IllegalArgumentException(
-				"Use getCollaboratorByEmailAddress to retrieve a " +
-					"collaborator of type \"Email\"");
+				"Use getCollaboratorByEmailAddress to get a collaborator of " +
+					"type \"Email\"");
 		}
 
 		if (StringUtil.equals("User", type)) {
@@ -624,8 +624,8 @@ public class CollaboratorUtil {
 			throw new DuplicateSharingEntryException(
 				StringBundler.concat(
 					"A sharing entry already exists for ", emailAddress,
-					" with classNameId ", classNameId, " and classPK ",
-					classPK));
+					" with class name ID ", classNameId,
+					" and class primary key ", classPK));
 		}
 	}
 
@@ -636,7 +636,7 @@ public class CollaboratorUtil {
 				!StringUtil.equals("UserGroup", type)) {
 
 				throw new IllegalArgumentException(
-					"Collaborator type must be \"Email\", \"User\" or " +
+					"Collaborator type must be \"Email\", \"User\", or " +
 						"\"UserGroup\"");
 			}
 

@@ -1,0 +1,52 @@
+[
+	{
+		"description": {
+			"en_US": "Data about this app or solution."
+		},
+		"key": "product-metadata",
+		"priority": 1,
+		"title": {
+			"en_US": "Product Metadata"
+		}
+	},
+	{
+		"description": {
+			"en_US": "Pricing and licensing approach for this app or solution in the Marketplace."
+		},
+		"key": "pricing-licensing-terms",
+		"priority": 2,
+		"title": {
+			"en_US": "Pricing and Licensing Terms"
+		}
+	},
+	{
+		"description": {
+			"en_US": "Resource Requirements to Cloud Apps"
+		},
+		"key": "resource-requirements",
+		"priority": 3,
+		"title": {
+			"en_US": "Resource Requirements"
+		}
+	},
+	{
+		"description": {
+			"en_US": "Support and help references for this app or solution."
+		},
+		"key": "app-support-and-help",
+		"priority": 4,
+		"title": {
+			"en_US": "App Support and Help"
+		}
+	},
+	{
+		"description": {
+			"en_US": "Solution Metadata."
+		},
+		"key": "solution-metadata",
+		"priority": 5,
+		"title": {
+			"en_US": "Solution Metadata"
+		}
+	}
+]

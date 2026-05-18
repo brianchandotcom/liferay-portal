@@ -1,5 +1,5 @@
 {
-	"@generated": "10d0277da250ae87043c3c021ece735de2d96fb3",
+	"@generated": "d0532d6f5e364834d707de93e1aeae71061a0686",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,6 +25,9 @@
 			],
 			"frontend-js-web/legacy": [
 				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
+			],
+			"staging-taglib": [
+				"../../../../../../../staging/staging-taglib/src/main/resources/META-INF/resources/js/index.js"
 			]
 		},
 		"rootDir": "../../../../../../../..",
@@ -54,6 +57,9 @@
 		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../staging/staging-taglib/src/main/resources/META-INF/resources/tsconfig.json"
 		}
 	]
 }

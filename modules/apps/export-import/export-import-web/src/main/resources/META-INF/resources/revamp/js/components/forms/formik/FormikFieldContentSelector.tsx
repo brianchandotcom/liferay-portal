@@ -6,6 +6,7 @@
 import {useField, useFormikContext} from 'formik';
 import React from 'react';
 
+import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
 import ContentSelector, {
 	ContentSelection,
@@ -14,12 +15,14 @@ import ContentSelector, {
 interface FormikFieldContentSelectorProps {
 	'aria-labelledby'?: string;
 	'name': string;
+	'pageTreeModalConfiguration'?: PageTreeModalConfiguration;
 	'sections': PreviewPortletDataHandlerSection[];
 }
 
 export function FormikFieldContentSelector({
 	'aria-labelledby': ariaLabelledby,
 	name,
+	pageTreeModalConfiguration,
 	sections,
 }: FormikFieldContentSelectorProps) {
 	const [field, meta, helpers] = useField<ContentSelection | undefined>(name);
@@ -35,6 +38,7 @@ export function FormikFieldContentSelector({
 				helpers.setValue(newValue);
 				setFieldTouched(name, true, false);
 			}}
+			pageTreeModalConfiguration={pageTreeModalConfiguration}
 			sections={sections}
 			showDeletions={!!deletions}
 			value={field.value}

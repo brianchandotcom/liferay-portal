@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -17,6 +18,7 @@ import performLogin, {
 	userData,
 } from '../../../utils/performLogin';
 import {
+	connectToAnalyticsCloudWithNoSiteSynced,
 	disconnectFromAnalyticsCloud,
 	goToAnalyticsCloudInstanceSettings,
 } from '../../analytics-settings-web/main/utils/analytics-settings';
@@ -28,6 +30,7 @@ const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
+	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
@@ -114,5 +117,40 @@ test(
 				.getByLabel('Content Performance'),
 			trigger: page.getByText('Do not show me this again'),
 		});
+	}
+);
+
+test(
+	'Content Performance panel shows sync instructions when Analytics Cloud is connected but not synced',
+	{tag: '@LPS-108856'},
+	async ({apiHelpers, page, site}) => {
+		try {
+			await connectToAnalyticsCloudWithNoSiteSynced(page);
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText('Sync to Liferay Analytics Cloud'),
+				trigger: page
+					.locator('.control-menu-nav')
+					.getByLabel('Content Performance'),
+			});
+
+			await expect(
+				page.getByText('Do not show me this again')
+			).not.toBeVisible();
+		}
+		finally {
+			await goToAnalyticsCloudInstanceSettings(page);
+
+			await disconnectFromAnalyticsCloud(page);
+		}
 	}
 );

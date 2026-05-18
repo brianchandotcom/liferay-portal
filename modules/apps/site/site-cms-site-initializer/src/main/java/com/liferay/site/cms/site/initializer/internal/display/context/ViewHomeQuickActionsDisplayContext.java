@@ -67,7 +67,7 @@ public class ViewHomeQuickActionsDisplayContext {
 		).build();
 	}
 
-	public boolean hasAddEntryPermission() throws Exception {
+	public boolean hasQuickActions() throws Exception {
 		return ListUtil.isNotEmpty(_getQuickActions());
 	}
 

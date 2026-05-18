@@ -109,37 +109,37 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 		<Modal className={className} size='lg'>
 			<Modal.Header onClose={onClose} title={title} />
 
-			<Modal.Body>
+			<Modal.Body className='p-0'>
 				<div className='text-secondary'>{instruction}</div>
-			</Modal.Body>
 
-			<CrossPageSelect
-				autoFocusSearch
-				checkDisabled={checkDisabled}
-				columns={columns}
-				dataSourceFn={dataSourceFn}
-				delta={delta}
-				entityLabel={entityLabel}
-				error={error}
-				items={data?.items}
-				loading={loading}
-				noResultsIcon={noResultsIcon}
-				onDeltaChange={onDeltaChange}
-				onFilterByChange={onFilterByChange}
-				onOrderIOMapChange={onOrderIOMapChange}
-				onPageChange={onPageChange}
-				onQueryChange={onQueryChange}
-				orderByOptions={orderByOptions}
-				orderIOMap={orderIOMap}
-				page={page}
-				pageDisplay={false}
-				query={query}
-				rowIdentifier='id'
-				selectedItems={selectedItems.map(({id}) => id)}
-				selectedItemsIOMap={selectedItems}
-				showCheckbox
-				total={data?.total}
-			/>
+				<CrossPageSelect
+					autoFocusSearch
+					checkDisabled={checkDisabled}
+					columns={columns}
+					dataSourceFn={dataSourceFn}
+					delta={delta}
+					entityLabel={entityLabel}
+					error={error}
+					items={data?.items}
+					loading={loading}
+					noResultsIcon={noResultsIcon}
+					onDeltaChange={onDeltaChange}
+					onFilterByChange={onFilterByChange}
+					onOrderIOMapChange={onOrderIOMapChange}
+					onPageChange={onPageChange}
+					onQueryChange={onQueryChange}
+					orderByOptions={orderByOptions}
+					orderIOMap={orderIOMap}
+					page={page}
+					pageDisplay={false}
+					query={query}
+					rowIdentifier='id'
+					selectedItems={selectedItems.map(({id}) => id)}
+					selectedItemsIOMap={selectedItems}
+					showCheckbox
+					total={data?.total}
+				/>
+			</Modal.Body>
 
 			<Modal.Footer>
 				<ClayButton

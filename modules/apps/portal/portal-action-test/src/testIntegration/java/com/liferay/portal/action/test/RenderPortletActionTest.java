@@ -151,7 +151,7 @@ public class RenderPortletActionTest {
 	}
 
 	@Test
-	public void testRenderWithOptionalRenderParameters() throws Exception {
+	public void testRender() throws Exception {
 		String portletId = _registerPortlet(
 			new MVCPortlet() {
 
@@ -235,27 +235,34 @@ public class RenderPortletActionTest {
 			WebKeys.RENDER_PORTLET,
 			_portletLocalService.getPortletById(
 				TestPropsValues.getCompanyId(), portletId));
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout, group));
 
-		String portletDecorate = String.valueOf(RandomTestUtil.randomBoolean());
 		String renderPortletBoundary = String.valueOf(
 			RandomTestUtil.randomBoolean());
+
+		mockHttpServletRequest.setParameter(
+			"p_p_boundary", renderPortletBoundary);
+
 		String renderPortletColumnCount = String.valueOf(
 			RandomTestUtil.randomInt());
+
+		mockHttpServletRequest.setParameter(
+			"p_p_col_count", renderPortletColumnCount);
+
 		String renderPortletColumnId = RandomTestUtil.randomString();
+
+		mockHttpServletRequest.setParameter(
+			"p_p_col_id", renderPortletColumnId);
+
 		String renderPortletColumnPos = String.valueOf(
 			RandomTestUtil.randomInt());
 
 		mockHttpServletRequest.setParameter(
-			"p_p_boundary", renderPortletBoundary);
-		mockHttpServletRequest.setParameter(
-			"p_p_col_count", renderPortletColumnCount);
-		mockHttpServletRequest.setParameter(
-			"p_p_col_id", renderPortletColumnId);
-		mockHttpServletRequest.setParameter(
 			"p_p_col_pos", renderPortletColumnPos);
+
+		String portletDecorate = String.valueOf(RandomTestUtil.randomBoolean());
+
 		mockHttpServletRequest.setParameter("p_p_decorate", portletDecorate);
 		mockHttpServletRequest.setParameter(
 			"p_p_id", LayoutTestUtil.addPortletToLayout(layout, portletId));

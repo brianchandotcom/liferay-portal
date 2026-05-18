@@ -76,6 +76,9 @@ export interface ShareModalContentProps {
 	filterCollaborators?: (collaborator: Collaborator) => boolean;
 	initialCollaborators: Collaborator[];
 	itemId: number;
+	mapCollaboratorToPayload?: (
+		collaborator: Collaborator
+	) => CollaboratorPayload;
 	onAutocompleteChange?: (item: AutocompleteItem | undefined) => void;
 	permissionOptions:
 		| PermissionOption[]
@@ -87,7 +90,4 @@ export interface ShareModalContentProps {
 		items: AutocompleteItem[],
 		query: string
 	) => AutocompleteItem[];
-	transformSubmitPayload?: (
-		collaborator: Collaborator
-	) => CollaboratorPayload;
 }

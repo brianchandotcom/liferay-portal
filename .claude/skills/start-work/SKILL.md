@@ -47,7 +47,7 @@ Skip for **Bug**. For **Story** / **Task**, refetch the parent's subtasks until 
 
 ## Create a Git Branch
 
-Branch off the current HEAD, named after the **target** key. When the branch already exists, check it out instead. When `${PWD}` matches `*/liferay-portal-<name>`, the session is running inside a Liferay worktree that already has branch `<name>` checked out — skip this step and invoke the `worktree-setup` skill (action `new`) instead to provision the bundle, ports, and database.
+Branch off the current HEAD, named after the **target** key. When the branch already exists, check it out instead.
 
 ## Make a Plan
 

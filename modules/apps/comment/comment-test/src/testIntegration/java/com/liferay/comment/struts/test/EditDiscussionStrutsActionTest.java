@@ -34,10 +34,9 @@ public class EditDiscussionStrutsActionTest {
 
 	@Test
 	@TestInfo("LPD-89886")
-	public void testExecuteCheckCSRFToken() throws Exception {
+	public void testExecute() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
-
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -50,8 +49,8 @@ public class EditDiscussionStrutsActionTest {
 
 		String content = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertTrue(content.contains("\"exception\""));
 		Assert.assertTrue(content.contains("MustHaveSessionCSRFToken"));
+		Assert.assertTrue(content.contains("\"exception\""));
 	}
 
 	@Inject(filter = "path=/portal/comment/discussion/edit")

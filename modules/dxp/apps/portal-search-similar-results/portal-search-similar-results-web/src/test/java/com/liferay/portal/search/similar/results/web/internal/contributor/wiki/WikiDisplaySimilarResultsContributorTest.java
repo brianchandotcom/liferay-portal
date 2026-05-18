@@ -7,6 +7,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -50,11 +51,11 @@ public class WikiDisplaySimilarResultsContributorTest
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:8080/wiki-display?",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
 			"p_p_id=com_liferay_wiki_web_portlet_",
 			"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 			"_com_liferay_wiki_web_portlet_WikiDisplayPortlet_",
-			"INSTANCE_U7Z1QHX4C38N_redirect=http://localhost:8080",
+			"INSTANCE_U7Z1QHX4C38N_redirect=http://localhost:" + PortalUtil.getPortalServerPort(false) + "",
 			"/wiki-display?p_p_id=com_liferay_wiki_web_portlet_",
 			"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 			"nodeName=Main&_com_liferay_wiki_web_portlet_",
@@ -103,12 +104,12 @@ public class WikiDisplaySimilarResultsContributorTest
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:8080/wiki-display?",
+					"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
 					"p_p_id=com_liferay_wiki_web_portlet_",
 					"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 					"_com_liferay_wiki_web_portlet_WikiDisplayPortlet",
 					"_INSTANCE_U7Z1QHX4C38N_redirect",
-					"=http://localhost:8080/wiki-display?",
+					"=http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
 					"p_p_id=com_liferay_wiki_web_portlet_",
 					"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 					"nodeName=Main&_com_liferay_wiki_web_portlet",
@@ -128,12 +129,12 @@ public class WikiDisplaySimilarResultsContributorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/wiki-display?",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
 				"p_p_id=com_liferay_wiki_web_portlet_",
 				"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 				"_com_liferay_wiki_web_portlet_WikiDisplayPortlet",
 				"_INSTANCE_U7Z1QHX4C38N_redirect",
-				"=http://localhost:8080/wiki-display?",
+				"=http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
 				"p_p_id=com_liferay_wiki_web_portlet_",
 				"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
 				"nodeName=newMain&_com_liferay_wiki_web_portlet",

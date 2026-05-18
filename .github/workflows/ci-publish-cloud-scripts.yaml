@@ -29,18 +29,22 @@ jobs:
                     set -o nounset
                     set -o pipefail
 
-                    local url="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
+                    function main {
+                        local url="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
 
-                    echo "Searching for ${url}."
+                        echo "Searching for ${url}."
 
-                    if gcloud storage ls "${url}" > /dev/null 2>&1
-                    then
-                        echo "Deleting preview bootstrap scripts for PR #${PR_NUMBER}."
+                        if gcloud storage ls "${url}" > /dev/null 2>&1
+                        then
+                            echo "Deleting preview bootstrap scripts for PR #${PR_NUMBER}."
 
-                        gcloud storage rm "${url}"
-                    else
-                        echo "No preview bootstrap scripts were found for PR #${PR_NUMBER}."
-                    fi
+                            gcloud storage rm "${url}"
+                        else
+                            echo "No preview bootstrap scripts were found for PR #${PR_NUMBER}."
+                        fi
+                    }
+
+                    main "${@}"
         strategy:
             matrix:
                 provider:

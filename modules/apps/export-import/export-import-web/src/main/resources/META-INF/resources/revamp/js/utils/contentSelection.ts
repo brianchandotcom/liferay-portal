@@ -7,10 +7,13 @@ import {PreviewPortletDataHandlerControl} from '../types/portletDataHandler';
 
 export type HandlerSelection =
 	| {
-			[key: string]: HandlerSelection;
+			[key: string]: HandlerSelection | boolean | number[];
 	  }
 	| string
 	| true;
+
+export const LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY =
+	'PORTLET_DATA_com_liferay_layout_admin_web_portlet_LayoutSetLayoutsPortlet';
 
 export function isSelected(
 	value: HandlerSelection | undefined,
@@ -18,6 +21,10 @@ export function isSelected(
 ): boolean {
 	if (!value) {
 		return false;
+	}
+
+	if (entry.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY) {
+		return typeof value === 'object' && !('layoutIds' in value);
 	}
 
 	if (entry.type === 'Choice') {
@@ -32,13 +39,17 @@ export function isSelected(
 	}
 
 	return entry.previewPortletDataHandlerControls.every((control) =>
-		isSelected(value[control.name], control)
+		isSelected(value[control.name] as HandlerSelection, control)
 	);
 }
 
 export function getInitialSelection(
 	entry: PreviewPortletDataHandlerControl
 ): HandlerSelection {
+	if (entry.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY) {
+		return {privateLayout: false};
+	}
+
 	if (entry.type === 'Choice') {
 		return entry.choices[0].name;
 	}

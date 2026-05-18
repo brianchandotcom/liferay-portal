@@ -18,6 +18,12 @@ const renderComponent = () => {
 		<NewExport
 			backURL="/some/back/url"
 			exportPreviewAPIURL="/o/export-import/v1.0/export-preview"
+			exportProcessAPIURL="/o/export-import/v1.0/export-processes"
+			pageTreeModalConfiguration={{
+				liveGroupId: 20121,
+				pageSize: 20,
+				privateLayoutsEnabled: false,
+			}}
 		/>
 	);
 };

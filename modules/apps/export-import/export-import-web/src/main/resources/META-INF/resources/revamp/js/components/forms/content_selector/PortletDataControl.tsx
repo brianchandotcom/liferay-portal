@@ -7,13 +7,16 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
+import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {PreviewPortletDataHandlerControl} from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
+	LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY,
 	getInitialSelection,
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import LayoutSetControl from './LayoutSetControl';
 import PortletDataControlChoice from './PortletDataControlChoice';
 import SectionTags from './SectionTags';
 
@@ -22,6 +25,7 @@ interface PortletDataControlProps {
 	control: PreviewPortletDataHandlerControl;
 	level?: number;
 	onChange: (value: HandlerSelection | undefined) => void;
+	pageTreeModalConfiguration?: PageTreeModalConfiguration;
 	showDeletions?: boolean;
 	value: HandlerSelection | undefined;
 }
@@ -31,9 +35,25 @@ export default function PortletDataControl({
 	control,
 	level = 0,
 	onChange,
+	pageTreeModalConfiguration,
 	showDeletions,
 	value,
 }: PortletDataControlProps) {
+	if (
+		control.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY &&
+		pageTreeModalConfiguration
+	) {
+		return (
+			<LayoutSetControl
+				className={className}
+				label={control.label}
+				onChange={onChange}
+				pageTreeModalConfiguration={pageTreeModalConfiguration}
+				value={value}
+			/>
+		);
+	}
+
 	if (control.type === 'Choice') {
 		return (
 			<PortletDataControlChoice
@@ -99,8 +119,15 @@ export default function PortletDataControl({
 										)
 									)
 								}
+								pageTreeModalConfiguration={
+									pageTreeModalConfiguration
+								}
 								showDeletions={showDeletions}
-								value={currentSelection[nestedControl.name]}
+								value={
+									currentSelection[nestedControl.name] as
+										| HandlerSelection
+										| undefined
+								}
 							/>
 						)
 				)}

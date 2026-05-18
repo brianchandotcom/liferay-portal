@@ -10,7 +10,10 @@ import {
 	RequestPortletDataHandler,
 	RequestPortletDataHandlerControl,
 } from '../types/portletDataHandler';
-import {HandlerSelection} from './contentSelection';
+import {
+	HandlerSelection,
+	LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY,
+} from './contentSelection';
 
 export function toRequestPortletDataHandlers(
 	sections: PreviewPortletDataHandlerSection[],
@@ -33,6 +36,14 @@ export function toRequestPortletDataHandlers(
 			const handlerSelection = sectionSelection[handler.name];
 
 			if (!handlerSelection) {
+				continue;
+			}
+
+			if (handler.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY) {
+				requestPortletDataHandlers.push(
+					toLayoutSetRequestHandler(handler.name, handlerSelection)
+				);
+
 				continue;
 			}
 
@@ -100,4 +111,42 @@ function toRequestControls(
 	}
 
 	return result;
+}
+
+function toLayoutSetRequestHandler(
+	name: string,
+	selection: HandlerSelection
+): RequestPortletDataHandler {
+	if (typeof selection !== 'object') {
+		return {name};
+	}
+
+	const {layoutIds, privateLayout} = selection as {
+		layoutIds?: number[];
+		privateLayout?: boolean;
+	};
+
+	const requestPortletDataHandlerControls: RequestPortletDataHandlerControl[] =
+		[];
+
+	if (privateLayout !== undefined) {
+		requestPortletDataHandlerControls.push({
+			name: 'privateLayout',
+			value: String(privateLayout),
+		});
+	}
+
+	if (layoutIds?.length) {
+		requestPortletDataHandlerControls.push({
+			name: 'layoutIds',
+			values: layoutIds.map(String),
+		});
+	}
+
+	return {
+		name,
+		...(requestPortletDataHandlerControls.length && {
+			requestPortletDataHandlerControls,
+		}),
+	};
 }

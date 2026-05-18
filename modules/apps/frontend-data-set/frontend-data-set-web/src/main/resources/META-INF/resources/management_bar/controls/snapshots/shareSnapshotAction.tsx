@@ -4,6 +4,8 @@
  */
 
 import {
+	AutocompleteItem,
+	COLLABORATOR_TYPE,
 	Collaborator,
 	CollaboratorService,
 	PermissionOption,
@@ -28,6 +30,29 @@ const PERMISSION_OPTIONS: PermissionOption[] = [
 		value: 'VIEW',
 	},
 ];
+
+const _transformSourceItems = (items: any[]): AutocompleteItem[] =>
+	items.map((item) => {
+		if (item.entryClassName?.includes(COLLABORATOR_TYPE.USER_GROUP)) {
+			return {
+				type: COLLABORATOR_TYPE.USER_GROUP,
+				user: {
+					id: item.embedded.id.toString(),
+					name: item.embedded.name,
+				},
+			};
+		}
+
+		return {
+			type: COLLABORATOR_TYPE.USER,
+			user: {
+				emailAddress: item.embedded.emailAddress,
+				id: item.embedded.id.toString(),
+				image: item.embedded.image,
+				name: item.embedded.name,
+			},
+		};
+	});
 
 export default async function shareSnapshotAction({
 	itemId,
@@ -81,6 +106,7 @@ export default async function shareSnapshotAction({
 					showAllowResharing={false}
 					showExpirationDate={false}
 					title={title}
+					transformSourceItems={_transformSourceItems}
 				/>
 			),
 			size: 'md',

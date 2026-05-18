@@ -37,10 +37,10 @@ import {
 
 import './ShareModalContent.scss';
 
-const _identityTransformSourceItems = (
-	items: AutocompleteItem[],
+const _emptyTransformSourceItems = (
+	_items: any[],
 	_query: string
-) => items;
+): AutocompleteItem[] => [];
 
 const _passthroughFilterCollaborators = (_collaborator: Collaborator) => true;
 
@@ -342,7 +342,7 @@ export default function ShareModalContent({
 	showAllowResharing = true,
 	showExpirationDate = true,
 	title = '',
-	transformSourceItems = _identityTransformSourceItems,
+	transformSourceItems = _emptyTransformSourceItems,
 }: ShareModalContentProps) {
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
@@ -463,37 +463,10 @@ export default function ShareModalContent({
 	const _isCollaboratorsUpdated = () =>
 		JSON.stringify(collaborators) !== JSON.stringify(initialCollaborators);
 
-	const sourceItems = useMemo(() => {
-		const rawItems: AutocompleteItem[] = users?.items?.length
-			? users.items.map((item: any) => {
-					if (
-						item.entryClassName?.includes(
-							COLLABORATOR_TYPE.USER_GROUP
-						)
-					) {
-						return {
-							type: COLLABORATOR_TYPE.USER_GROUP,
-							user: {
-								id: item.embedded.id.toString(),
-								name: item.embedded.name,
-							},
-						};
-					}
-
-					return {
-						type: COLLABORATOR_TYPE.USER,
-						user: {
-							emailAddress: item.embedded.emailAddress,
-							id: item.embedded.id.toString(),
-							image: item.embedded.image,
-							name: item.embedded.name,
-						},
-					};
-				})
-			: [];
-
-		return transformSourceItems(rawItems, autocompleteValue);
-	}, [users, autocompleteValue, transformSourceItems]);
+	const sourceItems = useMemo(
+		() => transformSourceItems(users?.items ?? [], autocompleteValue),
+		[users, autocompleteValue, transformSourceItems]
+	);
 
 	return (
 		<div className="share-modal-content">
@@ -604,7 +577,9 @@ export default function ShareModalContent({
 										canManageCollaborators={
 											canManageCollaborators
 										}
-										collaboratorBadgeText={collaboratorBadgeText}
+										collaboratorBadgeText={
+											collaboratorBadgeText
+										}
 										collaboratorStickerIcon={
 											collaboratorStickerIcon
 										}

@@ -27,9 +27,7 @@ jest.mock('react-router-dom', () => ({
 const mockedUseRequest = useRequest as jest.Mock;
 
 const DEFAULT_STATUS = {
-	id: 'al-1',
-	name: 'Default Lifecycle',
-	stages: [
+	accountLifecycleStageStatuses: [
 		{
 			displayOrder: 0,
 			endDate: '2026-01-16T00:00:00.000Z',
@@ -63,7 +61,9 @@ const DEFAULT_STATUS = {
 			id: 'als-at-risk',
 			stageType: LifecycleStages.AT_RISK
 		}
-	]
+	],
+	id: 'al-1',
+	name: 'Default Lifecycle'
 };
 
 const useRequestImpl =
@@ -147,7 +147,9 @@ describe('LifecycleStatus', () => {
 
 			expect(screen.getByText('LIFECYCLE STATUS')).toBeInTheDocument();
 			expect(
-				screen.getByText('Current stage progression for this account.')
+				screen.getByText(
+					'Shows the current stage progression for this account.'
+				)
 			).toBeInTheDocument();
 		});
 
@@ -266,9 +268,7 @@ describe('LifecycleStatus', () => {
 				useRequestImpl({
 					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
 					statusData: {
-						id: 'al-1',
-						name: 'Default Lifecycle',
-						stages: [
+						accountLifecycleStageStatuses: [
 							{
 								displayOrder: 0,
 								id: 'als-aware',
@@ -280,7 +280,9 @@ describe('LifecycleStatus', () => {
 								stageType: LifecycleStages.AT_RISK,
 								startDate: '2026-02-01T00:00:00.000Z'
 							}
-						]
+						],
+						id: 'al-1',
+						name: 'Default Lifecycle'
 					}
 				})
 			);
@@ -302,15 +304,15 @@ describe('LifecycleStatus', () => {
 				useRequestImpl({
 					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
 					statusData: {
-						id: 'al-1',
-						name: 'Default Lifecycle',
-						stages: [
+						accountLifecycleStageStatuses: [
 							{
 								displayOrder: 0,
 								id: 'als-aware',
 								stageType: LifecycleStages.AWARE
 							}
-						]
+						],
+						id: 'al-1',
+						name: 'Default Lifecycle'
 					}
 				})
 			);
@@ -329,9 +331,7 @@ describe('LifecycleStatus', () => {
 				useRequestImpl({
 					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
 					statusData: {
-						id: 'al-1',
-						name: 'Default Lifecycle',
-						stages: [
+						accountLifecycleStageStatuses: [
 							{
 								displayOrder: 0,
 								endDate: '2026-03-01T00:00:00.000Z',
@@ -365,7 +365,9 @@ describe('LifecycleStatus', () => {
 								id: 'als-at-risk',
 								stageType: LifecycleStages.AT_RISK
 							}
-						]
+						],
+						id: 'al-1',
+						name: 'Default Lifecycle'
 					}
 				})
 			);
@@ -384,11 +386,9 @@ describe('LifecycleStatus', () => {
 			).toBeInTheDocument();
 		});
 
-		it('should render an empty body when no lifecycle matches the account', () => {
+		it('should render an empty body when no lifecycles are returned', () => {
 			mockedUseRequest.mockImplementation(
-				useRequestImpl({
-					lifecyclesData: [{accountId: 'other-account', id: 'al-1'}]
-				})
+				useRequestImpl({lifecyclesData: []})
 			);
 
 			const {container} = render(<LifecycleStatus />);
@@ -438,10 +438,10 @@ describe('LifecycleStatus', () => {
 			).toBeNull();
 		});
 
-		it('should not render the loading indicator when no lifecycle matches the account', () => {
+		it('should not render the loading indicator when no lifecycles are returned', () => {
 			mockedUseRequest.mockImplementation(
 				useRequestImpl({
-					lifecyclesData: [{accountId: 'other-account', id: 'al-1'}],
+					lifecyclesData: [],
 					statusLoading: true
 				})
 			);

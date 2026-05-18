@@ -9,28 +9,8 @@ const autoplay = configuration.autoplay;
 const lazy = configuration.lazy;
 const loop = configuration.loop;
 const muted = configuration.muted;
-const URLjs = configuration.URLjs;
 const URLcss = configuration.URLcss;
-
-function loadPlyr() {
-	if (typeof Plyr !== 'undefined') {
-		return initPlayer();
-	}
-
-	const link = document.createElement('link');
-
-	link.rel = 'stylesheet';
-	link.href = URLcss;
-
-	document.head.appendChild(link);
-
-	const script = document.createElement('script');
-
-	script.src = URLjs;
-	script.onload = initPlayer;
-
-	document.body.appendChild(script);
-}
+const URLjs = configuration.URLjs;
 
 function extractYouTubeId(url) {
 	const match = url.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
@@ -80,16 +60,40 @@ function initPlayer() {
 	});
 }
 
-if (!lazy) {
-	loadPlyr();
+function loadPlyr() {
+	if (typeof Plyr !== 'undefined') {
+		return initPlayer();
+	}
+
+	const link = document.createElement('link');
+
+	link.rel = 'stylesheet';
+	link.href = URLcss;
+
+	document.head.appendChild(link);
+
+	const script = document.createElement('script');
+
+	script.src = URLjs;
+	script.onload = initPlayer;
+
+	document.body.appendChild(script);
 }
 
-Liferay.on('plyr:play', ({details}) => {
-	const [props = {}] = details;
-
-	if (props.videoURL) {
-		configuration.videoURL = props.videoURL;
-
+function main() {
+	if (!lazy) {
 		loadPlyr();
 	}
-});
+
+	Liferay.on('plyr:play', ({details}) => {
+		const [props = {}] = details;
+
+		if (props.videoURL) {
+			configuration.videoURL = props.videoURL;
+
+			loadPlyr();
+		}
+	});
+}
+
+main();

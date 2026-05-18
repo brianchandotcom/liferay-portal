@@ -25,69 +25,6 @@ public class PortletDataHandler implements Cloneable, Serializable {
 		return PortletDataHandlerSerDes.toDTO(json);
 	}
 
-	public Long getAdditionCount() {
-		return additionCount;
-	}
-
-	public void setAdditionCount(Long additionCount) {
-		this.additionCount = additionCount;
-	}
-
-	public void setAdditionCount(
-		UnsafeSupplier<Long, Exception> additionCountUnsafeSupplier) {
-
-		try {
-			additionCount = additionCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long additionCount;
-
-	public Long getDeletionCount() {
-		return deletionCount;
-	}
-
-	public void setDeletionCount(Long deletionCount) {
-		this.deletionCount = deletionCount;
-	}
-
-	public void setDeletionCount(
-		UnsafeSupplier<Long, Exception> deletionCountUnsafeSupplier) {
-
-		try {
-			deletionCount = deletionCountUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long deletionCount;
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public void setLabel(
-		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
-
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String label;
-
 	public String getName() {
 		return name;
 	}
@@ -106,31 +43,6 @@ public class PortletDataHandler implements Cloneable, Serializable {
 	}
 
 	protected String name;
-
-	public PortletDataHandlerControl[] getPortletDataHandlerControls() {
-		return portletDataHandlerControls;
-	}
-
-	public void setPortletDataHandlerControls(
-		PortletDataHandlerControl[] portletDataHandlerControls) {
-
-		this.portletDataHandlerControls = portletDataHandlerControls;
-	}
-
-	public void setPortletDataHandlerControls(
-		UnsafeSupplier<PortletDataHandlerControl[], Exception>
-			portletDataHandlerControlsUnsafeSupplier) {
-
-		try {
-			portletDataHandlerControls =
-				portletDataHandlerControlsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected PortletDataHandlerControl[] portletDataHandlerControls;
 
 	@Override
 	public PortletDataHandler clone() throws CloneNotSupportedException {
@@ -164,4 +76,4 @@ public class PortletDataHandler implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-450792990
+// LIFERAY-REST-BUILDER-HASH:215346040

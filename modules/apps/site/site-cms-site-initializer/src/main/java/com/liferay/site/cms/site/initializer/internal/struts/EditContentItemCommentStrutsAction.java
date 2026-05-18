@@ -85,7 +85,7 @@ public class EditContentItemCommentStrutsAction implements StrutsAction {
 				httpServletResponse,
 				JSONUtil.toString(
 					CommentUtil.getCommentJSONObject(
-						comment, httpServletRequest)));
+						comment, _discussionPermission, httpServletRequest)));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -95,7 +95,8 @@ public class AddContentItemCommentStrutsAction implements StrutsAction {
 		ServletResponseUtil.write(
 			httpServletResponse,
 			JSONUtil.toString(
-				CommentUtil.getCommentJSONObject(comment, httpServletRequest)));
+				CommentUtil.getCommentJSONObject(
+					comment, _discussionPermission, httpServletRequest)));
 
 		return null;
 	}

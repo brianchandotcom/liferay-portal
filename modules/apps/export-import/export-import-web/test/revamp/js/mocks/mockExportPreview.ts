@@ -9,5 +9,5 @@ import {mockPortletDataHandlerSections} from './mockPortletDataHandlerSections';
 export const mockExportPreview: ExportPreview = {
 	additionCount: 42,
 	deletionCount: 5,
-	portletDataHandlerSections: mockPortletDataHandlerSections,
+	previewPortletDataHandlerSections: mockPortletDataHandlerSections,
 };

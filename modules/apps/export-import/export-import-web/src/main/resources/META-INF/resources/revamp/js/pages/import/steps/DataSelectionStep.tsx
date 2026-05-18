@@ -43,7 +43,7 @@ export default function DataSelectionStep({
 
 			<FormikFieldContentSelector
 				name="contentSelection"
-				sections={importPreview.portletDataHandlerSections}
+				sections={importPreview.previewPortletDataHandlerSections}
 			/>
 		</>
 	);

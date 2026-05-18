@@ -24,6 +24,7 @@ type PreviewSelectorsProps = {
 	isExternalURL: Boolean;
 	loadSites: () => Promise<Site[]>;
 	onBlurExternalURLInput: (value: string) => void;
+	onReloadExternalURLInput?: () => void;
 	previewURL: string | undefined;
 	selectChannel: (key: React.Key) => void;
 	selectedChannelKey: React.Key | undefined;
@@ -41,6 +42,7 @@ export default function PreviewSelectors({
 	isExternalURL,
 	loadSites,
 	onBlurExternalURLInput,
+	onReloadExternalURLInput,
 	previewURL,
 	selectChannel,
 	selectedChannelKey,
@@ -88,6 +90,7 @@ export default function PreviewSelectors({
 				{isExternalURL ? (
 					<ExternalURLInput
 						onBlur={onBlurExternalURLInput}
+						onReload={onReloadExternalURLInput}
 						value={externalURL}
 						vertical={vertical}
 					/>
@@ -144,12 +147,14 @@ export default function PreviewSelectors({
 
 type ExternalURLInputProps = {
 	onBlur: (url: string) => void;
+	onReload?: () => void;
 	value: string;
 	vertical: boolean;
 };
 
 function ExternalURLInput({
 	onBlur,
+	onReload,
 	value: initialValue,
 	vertical,
 }: ExternalURLInputProps) {
@@ -177,6 +182,7 @@ function ExternalURLInput({
 					<ClayInput.GroupInsetItem after tag="span">
 						<ClayButtonWithIcon
 							displayType="unstyled"
+							onClick={onReload}
 							symbol="reload"
 							title={Liferay.Language.get('refresh')}
 						/>

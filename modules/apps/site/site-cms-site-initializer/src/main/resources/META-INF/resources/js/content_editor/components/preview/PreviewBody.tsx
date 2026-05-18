@@ -4,7 +4,9 @@
  */
 
 import ClayAlert, {DisplayType} from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
+import ClayIcon from '@clayui/icon';
 import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import React from 'react';
 
@@ -30,10 +32,8 @@ export default function PreviewBody({
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
-	const {handleIframeLoad, iframeError} = useIframeLoad(
-		previewURL,
-		isExternalURL
-	);
+	const {handleIframeLoad, iframeError, iframeKey, reloadIframe} =
+		useIframeLoad(previewURL, isExternalURL);
 
 	const previewAlert = getPreviewAlert({
 		iframeError,
@@ -48,6 +48,7 @@ export default function PreviewBody({
 					displayPageTemplates={displayPageTemplates}
 					isExternalURL={isExternalURL}
 					onBlurExternalURLInput={setExternalURL}
+					onReloadExternalURLInput={reloadIframe}
 					previewURL={previewURL}
 					showPreviewInNewTabLink
 				/>
@@ -72,12 +73,17 @@ export default function PreviewBody({
 					title={previewAlert.title}
 				>
 					{previewAlert.message}
+
+					{previewAlert.Footer ? (
+						<previewAlert.Footer onClick={reloadIframe} />
+					) : null}
 				</ClayAlert>
 			) : (
 				<div className="align-items-center content-editor__preview__content d-flex position-relative">
 					{previewURL ? (
 						<iframe
 							className="border-0 d-block h-100 w-100"
+							key={iframeKey}
 							onLoad={(event) => {
 								handleIframeLoad();
 								preventIframeNavigation(event);
@@ -116,6 +122,15 @@ function getPreviewAlert({
 } | null {
 	if (iframeError) {
 		return {
+			Footer: ({onClick}: {onClick: () => void}) => (
+				<ClayAlert.Footer>
+					<ClayButton displayType="warning" onClick={onClick} small>
+						<ClayIcon className="c-mr-2" symbol="reload" />
+
+						{Liferay.Language.get('refresh')}
+					</ClayButton>
+				</ClayAlert.Footer>
+			),
 			displayType: 'warning',
 			message: Liferay.Language.get('we-could-not-load-the-preview'),
 			title: Liferay.Language.get('warning'),

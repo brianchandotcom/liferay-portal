@@ -8,6 +8,7 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import '../../../../css/utilities.scss';
+import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {
 	PreviewPortletDataHandlerBoolean,
 	PreviewPortletDataHandlerSection as PortletDataHandlerSectionType,
@@ -25,6 +26,7 @@ export type SectionSelection = Record<string, HandlerSelection>;
 
 interface ContentSectionProps {
 	onChange: (value: SectionSelection | undefined) => void;
+	pageTreeModalConfiguration?: PageTreeModalConfiguration;
 	section: PortletDataHandlerSectionType;
 	showDeletions?: boolean;
 	value: SectionSelection | undefined;
@@ -32,6 +34,7 @@ interface ContentSectionProps {
 
 export default function ContentSection({
 	onChange,
+	pageTreeModalConfiguration,
 	section,
 	showDeletions,
 	value,
@@ -106,6 +109,7 @@ export default function ContentSection({
 								)
 							)
 						}
+						pageTreeModalConfiguration={pageTreeModalConfiguration}
 						showDeletions={showDeletions}
 						value={portletContextsValue[context.name]}
 					/>

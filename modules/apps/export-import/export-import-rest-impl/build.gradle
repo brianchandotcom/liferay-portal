@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-report-api")
 	compileOnly project(":apps:export-import:export-import-rest-api")
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
+	compileOnly project(":apps:layout:layout-admin-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal-odata:portal-odata-api")

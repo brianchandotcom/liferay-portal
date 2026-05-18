@@ -37,6 +37,15 @@ portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());
 				"exportPreviewAPIURL", exportImportPreviewDisplayContext.getExportPreviewAPIURL()
 			).put(
 				"exportProcessAPIURL", exportImportPreviewDisplayContext.getExportProcessAPIURL()
+			).put(
+				"pageTreeModalConfiguration",
+				HashMapBuilder.<String, Object>put(
+					"liveGroupId", liveGroupId
+				).put(
+					"pageSize", PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN
+				).put(
+					"privateLayoutsEnabled", liveGroup.isPrivateLayoutsEnabled()
+				).build()
 			).build()
 		%>'
 	/>

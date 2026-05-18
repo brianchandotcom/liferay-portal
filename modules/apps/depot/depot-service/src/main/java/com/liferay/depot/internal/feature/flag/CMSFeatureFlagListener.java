@@ -6,7 +6,7 @@
 package com.liferay.depot.internal.feature.flag;
 
 import com.liferay.depot.constants.DepotRolesConstants;
-import com.liferay.depot.internal.util.DepotRoleUtil;
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;

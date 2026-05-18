@@ -201,9 +201,6 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			else if (fieldName.equals("dateModified")) {
 				fieldName = "modifiedDate";
 			}
-			else if (fieldName.equals("title")) {
-				fieldName = "name";
-			}
 
 			if (sort.isReverse()) {
 				dynamicQuery.addOrder(OrderFactoryUtil.desc(fieldName));
@@ -227,8 +224,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 				setDateCreated(backgroundTask::getCreateDate);
 				setDateModified(backgroundTask::getModifiedDate);
 				setId(backgroundTask::getBackgroundTaskId);
+				setName(backgroundTask::getName);
 				setStatus(() -> _toStatus(backgroundTask.getStatus()));
-				setTitle(backgroundTask::getName);
 			}
 		};
 	}

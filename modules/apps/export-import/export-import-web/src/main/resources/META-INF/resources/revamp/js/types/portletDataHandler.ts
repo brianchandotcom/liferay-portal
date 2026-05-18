@@ -43,3 +43,15 @@ export interface PreviewPortletDataHandlerSection {
 	name: string;
 	previewPortletDataHandlers: PreviewPortletDataHandler[];
 }
+
+export interface RequestPortletDataHandlerControl {
+	name: string;
+	requestPortletDataHandlerControls?: RequestPortletDataHandlerControl[];
+	value?: string;
+	values?: string[];
+}
+
+export interface RequestPortletDataHandler {
+	name: string;
+	requestPortletDataHandlerControls?: RequestPortletDataHandlerControl[];
+}

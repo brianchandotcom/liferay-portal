@@ -9,12 +9,13 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.rest.dto.v1_0.ImportPreview;
-import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandler;
+import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.internal.util.PortletDataHandlerSectionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
@@ -132,36 +133,35 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 
 		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
-		Map<String, List<PortletDataHandler>> portletDataHandlersMap =
-			new LinkedHashMap<>();
+		Map<String, List<PreviewPortletDataHandler>>
+			previewPortletDataHandlers = new LinkedHashMap<>();
 
 		for (Portlet portlet : manifestSummary.getDataPortlets()) {
 			PortletDataHandlerSectionUtil.addPortletDataHandlerSection(
 				contextCompany.getCompanyId(), locale, manifestSummary, portlet,
 				portlet.getPortletDataHandlerInstance(),
-				com.liferay.exportimport.kernel.lar.PortletDataHandler::
-					getImportPortletDataHandlerControls,
-				portletDataHandlersMap);
+				PortletDataHandler::getImportPortletDataHandlerControls,
+				previewPortletDataHandlers);
 		}
 
 		return new ImportPreview() {
 			{
 				setAdditionCount(
 					() -> PortletDataHandlerSectionUtil.getAdditionCount(
-						portletDataHandlersMap));
+						previewPortletDataHandlers));
 				setAuthor(fileEntry::getUserName);
 				setDeletionCount(
 					() -> PortletDataHandlerSectionUtil.getDeletionCount(
-						portletDataHandlersMap));
+						previewPortletDataHandlers));
 				setExportDate(manifestSummary::getExportDate);
 				setFileEntryId(fileEntry::getFileEntryId);
 				setFileName(fileEntry::getFileName);
 				setFileSize(fileEntry::getSize);
-				setPortletDataHandlerSections(
+				setPreviewPortletDataHandlerSections(
 					() ->
 						PortletDataHandlerSectionUtil.
 							toPortletDataHandlerSections(
-								locale, portletDataHandlersMap));
+								locale, previewPortletDataHandlers));
 			}
 		};
 	}

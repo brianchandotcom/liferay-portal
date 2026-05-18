@@ -3,33 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PortletDataHandlerSection} from '../../../../src/main/resources/META-INF/resources/revamp/js/types/portletDataHandler';
+import {PreviewPortletDataHandlerSection} from '../../../../src/main/resources/META-INF/resources/revamp/js/types/portletDataHandler';
 
-export const mockSectionsForFilterTest: PortletDataHandlerSection[] = [
+export const mockSectionsForFilterTest: PreviewPortletDataHandlerSection[] = [
 	{
 		additionCount: 5,
 		deletionCount: 0,
 		label: 'Additions Only',
 		name: 'additions-only',
-		portletDataHandlers: [],
+		previewPortletDataHandlers: [],
 	},
 	{
 		additionCount: 0,
 		deletionCount: 3,
 		label: 'Deletions Only',
 		name: 'deletions-only',
-		portletDataHandlers: [],
+		previewPortletDataHandlers: [],
 	},
 	{
 		additionCount: 2,
 		deletionCount: 4,
 		label: 'Both',
 		name: 'both',
-		portletDataHandlers: [],
+		previewPortletDataHandlers: [],
 	},
 	{
 		label: 'No Counts',
 		name: 'no-counts',
-		portletDataHandlers: [],
+		previewPortletDataHandlers: [],
 	},
 ];

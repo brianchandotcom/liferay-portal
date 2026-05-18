@@ -14,5 +14,5 @@ export const mockImportPreview: ImportPreview = {
 	fileEntryId: 1,
 	fileName: 'site.lar',
 	fileSize: 4096,
-	portletDataHandlerSections: mockPortletDataHandlerSections,
+	previewPortletDataHandlerSections: mockPortletDataHandlerSections,
 };

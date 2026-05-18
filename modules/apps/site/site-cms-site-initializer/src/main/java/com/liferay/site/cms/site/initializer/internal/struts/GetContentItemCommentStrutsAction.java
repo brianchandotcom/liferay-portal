@@ -80,7 +80,7 @@ public class GetContentItemCommentStrutsAction implements StrutsAction {
 
 		for (Comment rootComment : rootComments) {
 			JSONObject commentJSONObject = CommentUtil.getCommentJSONObject(
-				rootComment, httpServletRequest);
+				rootComment, _discussionPermission, httpServletRequest);
 
 			List<Comment> childComments = _commentManager.getChildComments(
 				rootComment.getCommentId(), WorkflowConstants.STATUS_APPROVED,
@@ -91,7 +91,8 @@ public class GetContentItemCommentStrutsAction implements StrutsAction {
 			for (Comment childComment : childComments) {
 				childCommentsJSONArray.put(
 					CommentUtil.getCommentJSONObject(
-						childComment, httpServletRequest));
+						childComment, _discussionPermission,
+						httpServletRequest));
 			}
 
 			commentJSONObject.put("children", childCommentsJSONArray);

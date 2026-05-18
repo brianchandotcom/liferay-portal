@@ -172,7 +172,8 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				for (Comment rootComment : rootComments) {
 					JSONObject commentJSONObject =
 						CommentUtil.getCommentJSONObject(
-							rootComment, httpServletRequest);
+							rootComment, _discussionPermission,
+							httpServletRequest);
 
 					List<Comment> childComments =
 						_commentManager.getChildComments(
@@ -186,7 +187,8 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 					for (Comment childComment : childComments) {
 						childCommentsJSONArray.put(
 							CommentUtil.getCommentJSONObject(
-								childComment, httpServletRequest));
+								childComment, _discussionPermission,
+								httpServletRequest));
 					}
 
 					commentJSONObject.put("children", childCommentsJSONArray);

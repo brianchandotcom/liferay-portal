@@ -484,22 +484,6 @@ public class SitesImpl implements Sites {
 	}
 
 	@Override
-	public void removeMergeFailFriendlyURLLayouts(LayoutSet layoutSet)
-		throws PortalException {
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		if (settingsUnicodeProperties.containsKey(
-				MERGE_FAIL_FRIENDLY_URL_LAYOUTS)) {
-
-			settingsUnicodeProperties.remove(MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
-
-			_layoutSetLocalService.updateLayoutSet(layoutSet);
-		}
-	}
-
-	@Override
 	public void updateLayoutSetPrototypesLinks(
 			Group group, long publicLayoutSetPrototypeId,
 			long privateLayoutSetPrototypeId,
@@ -877,8 +861,6 @@ public class SitesImpl implements Sites {
 
 			return;
 		}
-
-		removeMergeFailFriendlyURLLayouts(layoutSet);
 
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.

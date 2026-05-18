@@ -878,6 +878,24 @@ public class CustomFDSSerializer
 	@Reference
 	protected FDSFilterRegistry fdsFilterRegistry;
 
+	private JSONObject _getDateJSONObject(Object object) {
+		if (object == null) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(Date.from(Instant.parse(String.valueOf(object))));
+
+		return JSONUtil.put(
+			"day", calendar.get(Calendar.DATE)
+		).put(
+			"month", calendar.get(Calendar.MONTH) + 1
+		).put(
+			"year", calendar.get(Calendar.YEAR)
+		);
+	}
+
 	private Object _getListTypeEntryKey(
 		String entityFieldType, ListTypeEntry listTypeEntry) {
 
@@ -897,24 +915,6 @@ public class CustomFDSSerializer
 		}
 
 		return key;
-	}
-
-	private JSONObject _getDateJSONObject(Object object) {
-		if (object == null) {
-			return null;
-		}
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(Date.from(Instant.parse(String.valueOf(object))));
-
-		return JSONUtil.put(
-			"day", calendar.get(Calendar.DATE)
-		).put(
-			"month", calendar.get(Calendar.MONTH) + 1
-		).put(
-			"year", calendar.get(Calendar.YEAR)
-		);
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -1293,8 +1293,7 @@ public class CustomFDSSerializer
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
 					"value",
-					() -> _getListTypeEntryKey(
-						entityFieldType, listTypeEntry)
+					() -> _getListTypeEntryKey(entityFieldType, listTypeEntry)
 				))
 		).put(
 			"preloadedData",

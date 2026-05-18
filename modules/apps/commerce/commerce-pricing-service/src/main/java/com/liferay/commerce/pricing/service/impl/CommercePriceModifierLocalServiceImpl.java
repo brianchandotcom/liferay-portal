@@ -68,56 +68,15 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@Override
 	public CommercePriceModifier addCommercePriceModifier(
-			long groupId, String title, long commercePriceListId,
-			String modifierType, BigDecimal modifierAmount, double priority,
+			String externalReferenceCode, long groupId,
+			long commercePriceListId, String title, String target,
+			BigDecimal modifierAmount, String modifierType, double priority,
 			boolean active, int displayDateMonth, int displayDateDay,
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCommercePriceModifier(
-			groupId, title, CommercePriceModifierConstants.TARGET_CATALOG,
-			commercePriceListId, modifierType, modifierAmount, priority, active,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	@Override
-	public CommercePriceModifier addCommercePriceModifier(
-			long groupId, String title, String target, long commercePriceListId,
-			String modifierType, BigDecimal modifierAmount, double priority,
-			boolean active, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCommercePriceModifier(
-			null, groupId, title, target, commercePriceListId, modifierType,
-			modifierAmount, priority, active, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
-	}
-
-	@Override
-	public CommercePriceModifier addCommercePriceModifier(
-			String externalReferenceCode, long groupId, String title,
-			String target, long commercePriceListId, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce price modifier
@@ -185,15 +144,15 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@Override
 	public CommercePriceModifier addOrUpdateCommercePriceModifier(
-			String externalReferenceCode, long userId,
-			long commercePriceModifierId, long groupId, String title,
-			String target, long commercePriceListId, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String externalReferenceCode, long commercePriceModifierId,
+			long groupId, long commercePriceListId, String title, String target,
+			BigDecimal modifierAmount, String modifierType, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Update
@@ -202,9 +161,9 @@ public class CommercePriceModifierLocalServiceImpl
 			try {
 				return commercePriceModifierLocalService.
 					updateCommercePriceModifier(
-						commercePriceModifierId, groupId, title, target,
-						commercePriceListId, modifierType, modifierAmount,
-						priority, active, displayDateMonth, displayDateDay,
+						commercePriceModifierId, groupId, commercePriceListId,
+						title, target, modifierAmount, modifierType, priority,
+						active, displayDateMonth, displayDateDay,
 						displayDateYear, displayDateHour, displayDateMinute,
 						expirationDateMonth, expirationDateDay,
 						expirationDateYear, expirationDateHour,
@@ -228,21 +187,22 @@ public class CommercePriceModifierLocalServiceImpl
 			if (commercePriceModifier != null) {
 				return commercePriceModifierLocalService.
 					updateCommercePriceModifier(
-						commercePriceModifierId, groupId, title, target,
-						commercePriceListId, modifierType, modifierAmount,
-						priority, active, displayDateMonth, displayDateDay,
-						displayDateYear, displayDateHour, displayDateMinute,
-						expirationDateMonth, expirationDateDay,
-						expirationDateYear, expirationDateHour,
-						expirationDateMinute, neverExpire, serviceContext);
+						commercePriceModifier.getCommercePriceModifierId(),
+						groupId, commercePriceListId, title, target,
+						modifierAmount, modifierType, priority, active,
+						displayDateMonth, displayDateDay, displayDateYear,
+						displayDateHour, displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateHour, expirationDateMinute, neverExpire,
+						serviceContext);
 			}
 		}
 
 		// Add
 
 		return commercePriceModifierLocalService.addCommercePriceModifier(
-			externalReferenceCode, groupId, title, target, commercePriceListId,
-			modifierType, modifierAmount, priority, active, displayDateMonth,
+			externalReferenceCode, groupId, commercePriceListId, title, target,
+			modifierAmount, modifierType, priority, active, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
@@ -373,14 +333,15 @@ public class CommercePriceModifierLocalServiceImpl
 
 	@Override
 	public CommercePriceModifier updateCommercePriceModifier(
-			long commercePriceModifierId, long groupId, String title,
-			String target, long commercePriceListId, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			long commercePriceModifierId, long groupId,
+			long commercePriceListId, String title, String target,
+			BigDecimal modifierAmount, String modifierType, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());

@@ -21,3 +21,28 @@ app.artifacts-1.1.0=\
 app.change.log-1.1.0=LPD-60432 LPE-18298 LPD-50745 LPD-59090 LPD-58725 LPD-58797 LPD-59218 LPD-58704 LPD-58528 LPD-58530 LPD-58417 LPD-58424 LPD-58182 LPD-58073 LPD-58074 LPD-57960 LPD-57960 LPD-53178 LPD-56284 LPD-55449 LPD-54819 LPD-49846 LPD-48132 LPD-46636
 
 app.git.id-1.1.0=98796bf1c1637d6404a8ac36db57638446eb42fe
+
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.portal.search.opensearch2.api-1.1.2.jar,\
+	com.liferay.portal.search.opensearch2.impl-1.0.18.jar
+
+app.change.log-2.0.0=LPD-1490 LPD-30488 LPD-57042 LPD-57791 LPD-65357 LPD-65371 LPD-69314 LPD-76239 LPD-76358 LPD-76617 LPD-76985 LPD-77336 LPD-77544 LPD-78077 LPD-78273 LPD-78311 LPD-78663 LPD-78941 LPD-79074 LPD-79227 LPD-79302 LPD-79324 LPD-79486 LPD-79557 LPD-79652 LPD-80837 LPD-83309 LPD-83650 LPD-84672 LPD-84891 LPD-85988 LPD-87787 LPS-77699
+
+app.git.id-2.0.0=2be1b070b5c914271a549fd825738cc4a44d6e0b
+
+#
+# Liferay App Version 2.1.0
+#
+
+app.artifacts-2.1.0=\
+	com.liferay.portal.search.opensearch2.api-1.2.1.jar,\
+	com.liferay.portal.search.opensearch2.impl-1.0.20.jar
+
+app.change.log-2.1.0=LPD-87417
+
+app.git.id-2.1.0=22d8510f5a068eacc1c8e30b2a681f2b7229a224
+

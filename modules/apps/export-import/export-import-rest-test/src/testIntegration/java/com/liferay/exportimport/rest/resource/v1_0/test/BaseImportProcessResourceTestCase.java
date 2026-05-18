@@ -228,7 +228,7 @@ public abstract class BaseImportProcessResourceTestCase {
 
 		ImportProcess importProcess = randomImportProcess();
 
-		importProcess.setTitle(regex);
+		importProcess.setName(regex);
 
 		String json = ImportProcessSerDes.toJSON(importProcess);
 
@@ -236,7 +236,7 @@ public abstract class BaseImportProcessResourceTestCase {
 
 		importProcess = ImportProcessSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, importProcess.getTitle());
+		Assert.assertEquals(regex, importProcess.getName());
 	}
 
 	@Test
@@ -1513,16 +1513,16 @@ public abstract class BaseImportProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("status", additionalAssertFieldName)) {
-				if (importProcess.getStatus() == null) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (importProcess.getName() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("title", additionalAssertFieldName)) {
-				if (importProcess.getTitle() == null) {
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (importProcess.getStatus() == null) {
 					valid = false;
 				}
 
@@ -1693,10 +1693,9 @@ public abstract class BaseImportProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("status", additionalAssertFieldName)) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						importProcess1.getStatus(),
-						importProcess2.getStatus())) {
+						importProcess1.getName(), importProcess2.getName())) {
 
 					return false;
 				}
@@ -1704,9 +1703,10 @@ public abstract class BaseImportProcessResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("title", additionalAssertFieldName)) {
+			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						importProcess1.getTitle(), importProcess2.getTitle())) {
+						importProcess1.getStatus(),
+						importProcess2.getStatus())) {
 
 					return false;
 				}
@@ -1889,13 +1889,8 @@ public abstract class BaseImportProcessResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("status")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("title")) {
-			Object object = importProcess.getTitle();
+		if (entityFieldName.equals("name")) {
+			Object object = importProcess.getName();
 
 			String value = String.valueOf(object);
 
@@ -1938,6 +1933,11 @@ public abstract class BaseImportProcessResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("status")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -1990,7 +1990,7 @@ public abstract class BaseImportProcessResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
-				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -2241,4 +2241,4 @@ public abstract class BaseImportProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:858610598
+// LIFERAY-REST-BUILDER-HASH:62288014

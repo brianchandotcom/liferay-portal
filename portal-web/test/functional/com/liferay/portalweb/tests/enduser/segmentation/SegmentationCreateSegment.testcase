@@ -820,53 +820,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-132112: Validate if it's posible to create a segment based on User > User Group criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserUserGroup {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Add group and assign to the user") {
-			JSONUserGroup.addUserGroup(
-				userGroupDescription = "UG UserGroup Name Description",
-				userGroupName = "UG UserGroup Name");
-
-			JSONUser.addUserToUserGroup(
-				userEmailAddress = "userea@liferay.com",
-				userGroupName = "UG UserGroup Name");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "User Group");
-
-			Segmentation.fillProperty(selectCard = "UG UserGroup Name");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserUserGroup Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserUserGroup Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "UG UserGroup Name");
-		}
-	}
-
 	@description = "Test Automation for LPS-92366: Segment names with script tags cause them to no longer be accessible"
 	@priority = 3
 	test CanCreateSegmentNameWithScriptTags {

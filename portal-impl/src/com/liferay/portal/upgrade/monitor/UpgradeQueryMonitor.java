@@ -121,24 +121,25 @@ public final class UpgradeQueryMonitor {
 				}
 			}
 
+			if (!_log.isInfoEnabled()) {
+				return;
+			}
+
 			List<DB.QueryInfo> longRunningQueryInfos =
 				db.getLongRunningQueryInfos(connection);
 
 			for (DB.QueryInfo longRunningQueryInfo : longRunningQueryInfos) {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Long-running query \"",
-							longRunningQueryInfo.getQuery(), "\" with ID ",
-							longRunningQueryInfo.getId(),
-							_getSchemaClause(
-								defaultSchema,
-								longRunningQueryInfo.getSchema()),
-							" has been running for ",
-							TimeUnit.MILLISECONDS.toSeconds(
-								longRunningQueryInfo.getDuration()),
-							" seconds"));
-				}
+				_log.info(
+					StringBundler.concat(
+						"Long-running query \"",
+						longRunningQueryInfo.getQuery(), "\" with ID ",
+						longRunningQueryInfo.getId(),
+						_getSchemaClause(
+							defaultSchema, longRunningQueryInfo.getSchema()),
+						" has been running for ",
+						TimeUnit.MILLISECONDS.toSeconds(
+							longRunningQueryInfo.getDuration()),
+						" seconds"));
 			}
 		}
 		catch (Exception exception) {

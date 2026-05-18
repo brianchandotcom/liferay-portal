@@ -55,6 +55,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormRelationshipConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormRelationshipPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
@@ -360,13 +362,26 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo("LPD-85565")
+	@TestInfo({"LPD-83090", "LPD-85565"})
 	public void testPostSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
 		_testPostSitePageSpecificationPageExperiencePageElementWithCollectionDisplayPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithContainerPageElement();
-		_testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
+
+		_testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement(
+			objectDefinition);
+		_testPostSitePageSpecificationPageExperiencePageElementWithFormRelationshipPageElement(
+			objectDefinition);
+
 		_testPostSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithGridPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
@@ -374,13 +389,26 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	@Test
-	@TestInfo("LPD-85565")
+	@TestInfo({"LPD-83090", "LPD-85565"})
 	public void testPutSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithCollectionDisplayPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithContainerPageElement();
-		_testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
+
+		_testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement(
+			objectDefinition);
+		_testPutSitePageSpecificationPageExperiencePageElementWithFormRelationshipPageElement(
+			objectDefinition);
+
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
@@ -1393,6 +1421,47 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			pageElementExternalReferenceCode);
 	}
 
+	private PageElement _getFormRelationshipPageElement(
+			BackgroundImageValue backgroundImageValue,
+			FragmentInlineValue buttonLabelFragmentInlineValue,
+			String contentType, String[] cssClasses, Boolean indexed,
+			String name, String pageElementExternalReferenceCode,
+			String parentExternalReferenceCode, Boolean repeatable)
+		throws Exception {
+
+		FormRelationshipPageElementDefinition
+			formRelationshipPageElementDefinition =
+				new FormRelationshipPageElementDefinition();
+
+		formRelationshipPageElementDefinition.setBackgroundImageValue(
+			backgroundImageValue);
+		formRelationshipPageElementDefinition.setCssClasses(cssClasses);
+
+		if ((buttonLabelFragmentInlineValue != null) || (contentType != null)) {
+			FormRelationshipConfig formRelationshipConfig =
+				new FormRelationshipConfig();
+
+			formRelationshipConfig.setButtonLabelFragmentInlineValue(
+				buttonLabelFragmentInlineValue);
+			formRelationshipConfig.setContentType(contentType);
+
+			formRelationshipPageElementDefinition.setFormRelationshipConfig(
+				formRelationshipConfig);
+		}
+
+		formRelationshipPageElementDefinition.setFragmentViewports(
+			FragmentViewportTestUtil.getFragmentViewports());
+		formRelationshipPageElementDefinition.setIndexed(indexed);
+		formRelationshipPageElementDefinition.setName(name);
+		formRelationshipPageElementDefinition.setRepeatable(repeatable);
+		formRelationshipPageElementDefinition.setType(
+			PageElementDefinition.Type.FORM_RELATIONSHIP);
+
+		return _getPageElement(
+			formRelationshipPageElementDefinition,
+			pageElementExternalReferenceCode, parentExternalReferenceCode, 0);
+	}
+
 	private PageElement _getFormStepContainerPageElement(
 			BackgroundImageValue backgroundImageValue, int numberOfSteps,
 			String parentExternalReferenceCode)
@@ -2392,16 +2461,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				false, RandomTestUtil.randomString()));
 	}
 
-	private void _testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement()
+	private void
+			_testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement(
+				ObjectDefinition objectDefinition)
 		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-						"firstName")));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
@@ -2451,6 +2514,43 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				false, RandomTestUtil.randomInt(2, 10),
 				RandomTestUtil.randomString(),
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
+	}
+
+	private void
+			_testPostSitePageSpecificationPageExperiencePageElementWithFormRelationshipPageElement(
+				ObjectDefinition objectDefinition)
+		throws Exception {
+
+		String formContainerExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				null, objectDefinition.getClassName(), null, false,
+				"displayPage", FormContainerConfig.FormContainerType.SIMPLE,
+				false, 1, formContainerExternalReferenceCode, null));
+
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormRelationshipPageElement(
+				null, _getRandomFragmentInlineValue(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				true, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				formContainerExternalReferenceCode, true));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormRelationshipPageElement(
+				null, null, null, null, false, null,
+				RandomTestUtil.randomString(),
+				formContainerExternalReferenceCode, false));
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			"Form relationship can only be added inside of a form",
+			() -> _testPostSitePageSpecificationPageExperiencePageElement(
+				_getFormRelationshipPageElement(
+					null, null, null, null, false, null,
+					RandomTestUtil.randomString(), null, false)));
 	}
 
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithFragmentPageElement()
@@ -2903,19 +3003,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			externalReferenceCode);
 	}
 
-	private void _testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement()
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement(
+				ObjectDefinition objectDefinition)
 		throws Exception {
 
 		BackgroundImageValue backgroundImageValue =
 			ImageValueTestUtil.getDirectBackgroundImageValue(
 				null, RandomTestUtil.randomString());
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-						"firstName")));
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -3042,6 +3137,46 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_assertStyledLayoutStructureItemBackgroundImage(
 			missingItemExternalReferenceBackgroundImageValue, 0, null,
 			externalReferenceCode);
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementWithFormRelationshipPageElement(
+				ObjectDefinition objectDefinition)
+		throws Exception {
+
+		String formContainerExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				null, objectDefinition.getClassName(), null, false,
+				"displayPage", FormContainerConfig.FormContainerType.SIMPLE,
+				false, 1, formContainerExternalReferenceCode, null));
+
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
+		String formRelationshipExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormRelationshipPageElement(
+				backgroundImageValue, _getRandomFragmentInlineValue(),
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				true, RandomTestUtil.randomString(),
+				formRelationshipExternalReferenceCode,
+				formContainerExternalReferenceCode, true));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null,
+			formRelationshipExternalReferenceCode);
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormRelationshipPageElement(
+				null, null, null, null, false, null,
+				formRelationshipExternalReferenceCode,
+				formContainerExternalReferenceCode, false));
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElement()

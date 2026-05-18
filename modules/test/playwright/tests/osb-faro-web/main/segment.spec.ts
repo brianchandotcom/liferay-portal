@@ -2077,6 +2077,98 @@ test(
 );
 
 test(
+	'Delete a criterion from the batch segment editor',
+	{
+		tag: '@LRAC-8595',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		await setSegmentName({page, segmentName: getRandomString()});
+
+		// Add a job title criterion and a last name criterion
+
+		await addSegmentField({
+			criterionName: 'Job Title',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: 'engineer',
+			page,
+		});
+
+		await page.keyboard.press('Escape');
+
+		await addSegmentField({
+			criterionName: 'Last Name',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			index: 1,
+			operator: 'contains',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await editCriteriaAttributeValue({
+			attributeValue: 'Smith',
+			index: 1,
+			page,
+		});
+
+		await expect(page.locator('.criterion')).toHaveCount(2);
+
+		await page.keyboard.press('Escape');
+
+		await saveSegment(page);
+
+		// Delete the Job Title criterion via its dropdown menuitem Delete
+
+		await editSegment(page);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: page
+				.locator('.criterion')
+				.filter({hasText: 'Job Title'})
+				.first()
+				.getByLabel('Menu', {exact: true}),
+		});
+
+		// Only the Last Name criterion remains
+
+		await expect(page.locator('.criterion')).toHaveCount(1);
+		await expect(page.locator('.criterion')).toContainText('Last Name');
+
+		await saveSegment(page);
+
+		await viewSegmentCriteriaCard({
+			criteriaRowIndex: 0,
+			criteriaRowValue: 'Individual Last Name contains "Smith"',
+			page,
+		});
+	}
+);
+
+test(
 	'Batch segment preview reflects criteria changes in real time',
 	{
 		tag: '@LRAC-8475',
@@ -2356,7 +2448,7 @@ test(
 test(
 	'Save, edit, and delete a batch segment with a Viewed Blog Web Behavior criterion',
 	{
-		tag: '@LRAC-8588 @LRAC-8598',
+		tag: '@LRAC-8588 @LRAC-8597 @LRAC-8598',
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 
@@ -2476,6 +2568,70 @@ test(
 			.getByRole('dialog')
 			.getByRole('button', {name: 'Delete'})
 			.click();
+
+		await waitForAlert(page, 'Success:The segment has been deleted.', {
+			autoClose: false,
+		});
+
+		await expect(
+			page.getByText('There are no segments found.')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Delete a batch segment via the in-editor Delete Segment button',
+	{
+		tag: '@LRAC-11536',
+	},
+	async ({analyticsChannel: channel, page, project}) => {
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await createBatchSegment(page);
+
+		await setSegmentName({page, segmentName: getRandomString()});
+
+		await addSegmentField({
+			criterionName: 'Job Title',
+			criterionType: 'Individual Attributes',
+			page,
+		});
+
+		await selectOperator({
+			operator: 'is unknown',
+			operatorField: SegmentConditions.criteriaCondition,
+			page,
+		});
+
+		await saveSegment(page);
+
+		// Re-enter the editor from the segments list and delete the segment via the in-editor Delete Segment button
+
+		await navigateToACPageViaURL({
+			acPage: ACPage.segmentPage,
+			channelID: channel.id,
+			page,
+			projectID: project.groupId,
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: page.locator('.dropdown-action'),
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.getByRole('dialog')
+				.getByRole('button', {name: 'Delete'}),
+			trigger: page.getByRole('button', {name: 'Delete Segment'}),
+		});
 
 		await waitForAlert(page, 'Success:The segment has been deleted.', {
 			autoClose: false,

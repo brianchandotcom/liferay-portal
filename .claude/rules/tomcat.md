@@ -12,15 +12,18 @@ The HTTP port is the `port` attribute on the `<Connector>` element with `protoco
 
 ## Probe
 
-Tomcat is running when an HTTP request to `http://localhost:${PORT}` succeeds.
+Tomcat is **ready** when an HTTP request to `http://localhost:${PORT}` succeeds. A failed request does not mean Tomcat is stopped — it may still be starting. Distinguish the two by checking for the Tomcat JVM process:
+
+- Process present and HTTP failing → **starting**. Watch the bundle logs for progress. Booting against a fresh database adds several minutes before the HTTP port accepts requests.
+- Process absent → **stopped**.
 
 ## Start
 
-Run **Probe** first. When it succeeds, Tomcat is already running and there is nothing to do. Otherwise, run `startup.sh` from `<tomcat>/bin` and wait until **Probe** succeeds.
+When Tomcat is already starting, skip the launch and go straight to polling. Otherwise, run `<tomcat>/bin/catalina.sh jpda start`. Either way, poll until Tomcat is **ready** before continuing.
 
 ## Stop
 
-Run **Probe** first. When it fails, Tomcat is already stopped and there is nothing to do. Otherwise, run `shutdown.sh` from `<tomcat>/bin` and wait until **Probe** fails.
+When no Tomcat process is running, there is nothing to do. Otherwise, run `shutdown.sh` from `<tomcat>/bin` and wait until the process exits.
 
 ## Bounce
 

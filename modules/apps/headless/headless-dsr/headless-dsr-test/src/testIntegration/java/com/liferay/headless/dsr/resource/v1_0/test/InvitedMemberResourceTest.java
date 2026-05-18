@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
 import java.io.Serializable;
@@ -108,14 +110,24 @@ public class InvitedMemberResourceTest
 		_userLocalService.addGroupUser(groupId, user1.getUserId());
 
 		Role role = _roleLocalService.getRole(
-			_objectEntry.getCompanyId(), "DSR Seller");
+			_objectEntry.getCompanyId(), DSRRoleConstants.DSR_SELLER);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {user1.getUserId()}, groupId, role.getRoleId());
 
+		_invitedMemberDSRSellerResource = InvitedMemberResource.builder(
+		).authentication(
+			user1.getEmailAddress(), password
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
 		User user2 = UserTestUtil.getAdminUser(objectDefinition.getCompanyId());
 
-		_userAccountResource = UserAccountResource.builder(
+		_userAccountAdminResource = UserAccountResource.builder(
 		).authentication(
 			user2.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
@@ -131,18 +143,11 @@ public class InvitedMemberResourceTest
 			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
 
 		role = _roleLocalService.getRole(
-			_objectEntry.getCompanyId(), "DSR Contributor");
+			_objectEntry.getCompanyId(), DSRRoleConstants.DSR_CONTRIBUTOR);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {_user.getUserId()}, groupId, role.getRoleId());
 
-		_userAccountContributorResource = UserAccountResource.builder(
-		).authentication(
-			_user.getEmailAddress(), password
-		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
-		).build();
 		_invitedMemberDSRContributorResource = InvitedMemberResource.builder(
 		).authentication(
 			_user.getEmailAddress(), password
@@ -152,15 +157,12 @@ public class InvitedMemberResourceTest
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
-
-		_invitedMemberDSRSellerResource = InvitedMemberResource.builder(
+		_userAccountDSRContributorResource = UserAccountResource.builder(
 		).authentication(
-			user1.getEmailAddress(), password
+			_user.getEmailAddress(), password
 		).endpoint(
 			testCompany.getVirtualHostname(),
 			PortalUtil.getPortalServerPort(false), "http"
-		).locale(
-			LocaleUtil.getDefault()
 		).build();
 	}
 
@@ -202,7 +204,7 @@ public class InvitedMemberResourceTest
 			Long roomId, InvitedMember invitedMember)
 		throws Exception {
 
-		UserAccount userAccount = _userAccountResource.postRoomUserAccount(
+		UserAccount userAccount = _userAccountAdminResource.postRoomUserAccount(
 			_objectEntry.getObjectEntryId(),
 			new UserAccount() {
 				{
@@ -224,7 +226,7 @@ public class InvitedMemberResourceTest
 		InvitedMember invitedMember1 = randomInvitedMember();
 
 		UserAccount userAccount1 =
-			_userAccountContributorResource.postRoomUserAccount(
+			_userAccountDSRContributorResource.postRoomUserAccount(
 				_objectEntry.getObjectEntryId(),
 				new UserAccount() {
 					{
@@ -239,26 +241,28 @@ public class InvitedMemberResourceTest
 				_objectEntry.getObjectEntryId(), invitedMember1.getId(),
 				new InvitedMember() {
 					{
-						roleKey = "DSR Contributor";
+						roleKey = DSRRoleConstants.DSR_CONTRIBUTOR;
 					}
 				});
 
 		Assert.assertEquals(
 			invitedMember1.getId(), patchedInvitedMember.getId());
 		Assert.assertEquals(
-			"DSR Contributor", patchedInvitedMember.getRoleKey());
-		Assert.assertEquals(
 			Long.valueOf(_user.getUserId()), patchedInvitedMember.getOwnerId());
+		Assert.assertEquals(
+			DSRRoleConstants.DSR_CONTRIBUTOR,
+			patchedInvitedMember.getRoleKey());
 
 		InvitedMember invitedMember2 = randomInvitedMember();
 
-		UserAccount userAccount2 = _userAccountResource.postRoomUserAccount(
-			_objectEntry.getObjectEntryId(),
-			new UserAccount() {
-				{
-					setEmailAddress(invitedMember2::getEmailAddress);
-				}
-			});
+		UserAccount userAccount2 =
+			_userAccountAdminResource.postRoomUserAccount(
+				_objectEntry.getObjectEntryId(),
+				new UserAccount() {
+					{
+						setEmailAddress(invitedMember2::getEmailAddress);
+					}
+				});
 
 		invitedMember2.setId(userAccount2.getId());
 
@@ -267,7 +271,7 @@ public class InvitedMemberResourceTest
 				_objectEntry.getObjectEntryId(), invitedMember2.getId(),
 				new InvitedMember() {
 					{
-						roleKey = "DSR Contributor";
+						roleKey = DSRRoleConstants.DSR_CONTRIBUTOR;
 					}
 				});
 
@@ -284,15 +288,16 @@ public class InvitedMemberResourceTest
 				_objectEntry.getObjectEntryId(), invitedMember1.getId(),
 				new InvitedMember() {
 					{
-						roleKey = "Site Member";
+						roleKey = RoleConstants.SITE_MEMBER;
 					}
 				});
 
 		Assert.assertEquals(
 			invitedMember1.getId(), patchedInvitedMember.getId());
-		Assert.assertEquals("Site Member", patchedInvitedMember.getRoleKey());
 		Assert.assertEquals(
 			Long.valueOf(_user.getUserId()), patchedInvitedMember.getOwnerId());
+		Assert.assertEquals(
+			RoleConstants.SITE_MEMBER, patchedInvitedMember.getRoleKey());
 	}
 
 	@Inject
@@ -313,8 +318,8 @@ public class InvitedMemberResourceTest
 	private RoleLocalService _roleLocalService;
 
 	private User _user;
-	private UserAccountResource _userAccountContributorResource;
-	private UserAccountResource _userAccountResource;
+	private UserAccountResource _userAccountAdminResource;
+	private UserAccountResource _userAccountDSRContributorResource;
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

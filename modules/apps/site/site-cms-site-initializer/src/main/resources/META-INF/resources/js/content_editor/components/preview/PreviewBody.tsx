@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
+import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
 import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import React from 'react';
 
 import PreviewSelectors from './PreviewSelectors';
+import useIframeLoad from './useIframeLoad';
 import usePreviewState from './usePreviewState';
 
 export default function PreviewBody({
@@ -23,10 +24,21 @@ export default function PreviewBody({
 	const {
 		displayPageTemplates,
 		isDisplayPageTemplatesListEmpty,
+		isExternalURL,
 		previewURL,
 		setExternalURL,
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
+
+	const {handleIframeLoad, iframeError} = useIframeLoad(
+		previewURL,
+		isExternalURL
+	);
+
+	const previewAlert = getPreviewAlert({
+		iframeError,
+		isDisplayPageTemplatesListEmpty,
+	});
 
 	return (
 		<>
@@ -34,6 +46,7 @@ export default function PreviewBody({
 				<PreviewSelectors
 					{...selectorProps}
 					displayPageTemplates={displayPageTemplates}
+					isExternalURL={isExternalURL}
 					onBlurExternalURLInput={setExternalURL}
 					previewURL={previewURL}
 					showPreviewInNewTabLink
@@ -52,22 +65,23 @@ export default function PreviewBody({
 				</ClayAlert>
 			) : null}
 
-			{isDisplayPageTemplatesListEmpty ? (
+			{previewAlert ? (
 				<ClayAlert
 					className="m-3"
-					displayType="info"
-					title={Liferay.Language.get('info')}
+					displayType={previewAlert.displayType}
+					title={previewAlert.title}
 				>
-					{Liferay.Language.get(
-						'no-display-page-templates-are-available-for-preview-in-this-channel'
-					)}
+					{previewAlert.message}
 				</ClayAlert>
 			) : (
 				<div className="align-items-center content-editor__preview__content d-flex position-relative">
 					{previewURL ? (
 						<iframe
 							className="border-0 d-block h-100 w-100"
-							onLoad={preventIframeNavigation}
+							onLoad={(event) => {
+								handleIframeLoad();
+								preventIframeNavigation(event);
+							}}
 							src={previewURL}
 							title={Liferay.Language.get('preview')}
 						/>
@@ -86,4 +100,37 @@ export default function PreviewBody({
 			)}
 		</>
 	);
+}
+
+function getPreviewAlert({
+	iframeError,
+	isDisplayPageTemplatesListEmpty,
+}: {
+	iframeError: boolean;
+	isDisplayPageTemplatesListEmpty: boolean;
+}): {
+	Footer?: React.ComponentType<{onClick: () => void}>;
+	displayType: DisplayType;
+	message: string;
+	title: string;
+} | null {
+	if (iframeError) {
+		return {
+			displayType: 'warning',
+			message: Liferay.Language.get('we-could-not-load-the-preview'),
+			title: Liferay.Language.get('warning'),
+		};
+	}
+
+	if (isDisplayPageTemplatesListEmpty) {
+		return {
+			displayType: 'info',
+			message: Liferay.Language.get(
+				'no-display-page-templates-are-available-for-preview-in-this-channel'
+			),
+			title: Liferay.Language.get('info'),
+		};
+	}
+
+	return null;
 }

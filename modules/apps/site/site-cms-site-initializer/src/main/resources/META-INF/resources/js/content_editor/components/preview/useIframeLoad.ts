@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sessionStorage} from 'frontend-js-web';
 import {useLayoutEffect, useRef, useState} from 'react';
+
+import {PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY} from './sessionKeys';
 
 // An iframe embed can fail silently — no JS error fires. We infer failure
 // from `onLoad` timing:
@@ -25,6 +28,15 @@ export default function useIframeLoad(
 	const [iframeError, setIframeError] = useState<boolean>(false);
 	const [isIframeLoading, setIsIframeLoading] = useState<boolean>(false);
 	const [iframeKey, setIframeKey] = useState<number>(0);
+
+	const cachedURL = sessionStorage.getItem(
+		PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY,
+		sessionStorage.TYPES.NECESSARY
+	);
+
+	const cachedURLsRef = useRef<Set<string>>(
+		new Set(cachedURL ? [cachedURL] : [])
+	);
 	const loadStartRef = useRef<number>(0);
 	const loadTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -62,14 +74,21 @@ export default function useIframeLoad(
 	const handleIframeLoad = () => {
 		clearLoadTimeout();
 
-		if (!isExternalURL) {
-			return;
-		}
+		if (isExternalURL && previewURL) {
+			const loadTime = performance.now() - loadStartRef.current;
 
-		const loadTime = performance.now() - loadStartRef.current;
+			if (loadTime >= IFRAME_LOAD_BLOCKED_MS) {
+				cachedURLsRef.current.add(previewURL);
 
-		if (loadTime < IFRAME_LOAD_BLOCKED_MS) {
-			setIframeError(true);
+				sessionStorage.setItem(
+					PREVIEW_CACHED_EXTERNAL_URL_SESSION_KEY,
+					previewURL,
+					sessionStorage.TYPES.NECESSARY
+				);
+			}
+			else if (!cachedURLsRef.current.has(previewURL)) {
+				setIframeError(true);
+			}
 		}
 
 		setIsIframeLoading(false);

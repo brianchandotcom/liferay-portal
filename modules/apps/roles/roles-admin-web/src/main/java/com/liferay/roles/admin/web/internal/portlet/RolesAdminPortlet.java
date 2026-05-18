@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
+import com.liferay.portal.kernel.exception.RoleSubtypeException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -601,7 +602,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 				 SessionErrors.contains(
 					 renderRequest, RequiredRoleException.class.getName()) ||
 				 SessionErrors.contains(
-					 renderRequest, RoleNameException.class.getName())) {
+					 renderRequest, RoleNameException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest, RoleSubtypeException.class.getName())) {
 
 			if (mvcPath.equals("/copy_role.jsp")) {
 				include(mvcPath, renderRequest, renderResponse);
@@ -646,7 +649,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 			throwable instanceof RequiredRoleException ||
 			throwable instanceof RoleAssignmentException ||
 			throwable instanceof RoleNameException ||
-			throwable instanceof RolePermissionsException) {
+			throwable instanceof RolePermissionsException ||
+			throwable instanceof RoleSubtypeException) {
 
 			return true;
 		}

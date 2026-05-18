@@ -8,7 +8,7 @@
 						"siteKey": "One"
 					},
 					"fragmentConfig": {
-						"backgroundImageUrl": "/documents/d/one/hero-banner-background-png",
+						"backgroundImageUrl": "/documents/d/one/hero-banner-background-svg",
 						"illustrationImageUrl": "/documents/d/one/hero-banner-illustration-image-svg",
 						"primaryButtonUrl": {
 							"en_US": {
@@ -142,13 +142,10 @@
 				"definition": {
 					"indexed": true,
 					"layout": {
-						"paddingBottom": 4,
-						"paddingLeft": 4,
-						"paddingRight": 4,
 						"paddingTop": 4,
 						"widthType": "Fixed"
 					},
-					"name": "Nav Cards"
+					"name": "Service Cards"
 				},
 				"pageElements": [
 					{
@@ -158,529 +155,351 @@
 							"modulesPerRow": 4,
 							"numberOfColumns": 4,
 							"reverseOrder": false,
-							"verticalAlignment": "top"
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							]
 						},
 						"pageElements": [
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"cssClasses": [
-												"card",
-												"card-flat"
-											],
-											"fragmentLink": {
-												"href": {
-													"value_i18n": {
-														"en_US": "/web/one/my-account"
+											"fragment": {
+												"key": "liferay-one-service-card",
+												"siteKey": "One"
+											},
+											"fragmentConfig": {
+												"cardUrl": {
+													"en_US": {
+														"href": "/my-account"
+													},
+													"es_ES": {
+														"href": "/my-account"
+													},
+													"ja_JP": {
+														"href": "/my-account"
+													},
+													"pt_BR": {
+														"href": "/my-account"
+													}
+												},
+												"iconUrl": "/documents/d/one/service_card_account-svg"
+											},
+											"fragmentFields": [
+												{
+													"id": "heading",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Account",
+																"es_ES": "Cuenta",
+																"ja_JP": "アカウント",
+																"pt_BR": "Conta"
+															}
+														}
+													}
+												},
+												{
+													"id": "description",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Manage your Liferay account and subscription.",
+																"es_ES": "Gestiona tu cuenta y suscripción de Liferay.",
+																"ja_JP": "Liferayアカウントとサブスクリプションを管理します。",
+																"pt_BR": "Gerencie sua conta e assinatura Liferay."
+															}
+														}
 													}
 												}
-											},
-											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
-												"paddingBottom": "4",
-												"paddingLeft": "4",
-												"paddingRight": "4",
-												"paddingTop": "4"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
-											}
+											],
+											"indexed": true
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-account.png#]"
-																			}
-																		}
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"height": "56px",
-														"marginBottom": "3",
-														"width": "56px"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-heading"
-													},
-													"fragmentConfig": {
-														"headingLevel": "h3"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Account"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "2"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "<p>Manage your Liferay account, subscriptions, and open permissions easily and efficiently.</p>"
-																	}
-																}
-															}
-														}
-													],
-													"indexed": true
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Section"
+										"type": "Fragment"
 									}
 								],
 								"type": "Column"
 							},
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"cssClasses": [
-												"card",
-												"card-flat"
-											],
-											"fragmentLink": {
-												"href": {
-													"value_i18n": {
-														"en_US": "/web/one/support"
+											"fragment": {
+												"key": "liferay-one-service-card",
+												"siteKey": "One"
+											},
+											"fragmentConfig": {
+												"cardUrl": {
+													"en_US": {
+														"href": "https://liferay.atlassian.net/servicedesk/customer/portals"
+													},
+													"es_ES": {
+														"href": "https://liferay.atlassian.net/servicedesk/customer/portals"
+													},
+													"ja_JP": {
+														"href": "https://liferay.atlassian.net/servicedesk/customer/portals"
+													},
+													"pt_BR": {
+														"href": "https://liferay.atlassian.net/servicedesk/customer/portals"
+													}
+												},
+												"iconUrl": "/documents/d/one/service_card_support-svg"
+											},
+											"fragmentFields": [
+												{
+													"id": "heading",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Support",
+																"es_ES": "Soporte",
+																"ja_JP": "サポート",
+																"pt_BR": "Suporte"
+															}
+														}
+													}
+												},
+												{
+													"id": "description",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Get help with your Liferay products.",
+																"es_ES": "Obtén ayuda con tus productos de Liferay.",
+																"ja_JP": "Liferay製品のサポートを受けられます。",
+																"pt_BR": "Obtenha ajuda com seus produtos Liferay."
+															}
+														}
 													}
 												}
-											},
-											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
-												"paddingBottom": "4",
-												"paddingLeft": "4",
-												"paddingRight": "4",
-												"paddingTop": "4"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
-											}
+											],
+											"indexed": true
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-support.png#]"
-																			}
-																		}
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"height": "56px",
-														"marginBottom": "3",
-														"width": "56px"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-heading"
-													},
-													"fragmentConfig": {
-														"headingLevel": "h3"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Support"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "2"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "<p>Get help with tickets, access Liferay products, and find answers in our knowledge base.</p>"
-																	}
-																}
-															}
-														}
-													],
-													"indexed": true
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Section"
+										"type": "Fragment"
 									}
 								],
 								"type": "Column"
 							},
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"cssClasses": [
-												"card",
-												"card-flat"
-											],
-											"fragmentLink": {
-												"href": {
-													"value_i18n": {
-														"en_US": "https://learn.liferay.com"
+											"fragment": {
+												"key": "liferay-one-service-card",
+												"siteKey": "One"
+											},
+											"fragmentConfig": {
+												"cardUrl": {
+													"en_US": {
+														"href": "https://learn.liferay.com/"
+													},
+													"es_ES": {
+														"href": "https://learn.liferay.com/"
+													},
+													"ja_JP": {
+														"href": "https://learn.liferay.com/"
+													},
+													"pt_BR": {
+														"href": "https://learn.liferay.com/"
+													}
+												},
+												"iconUrl": "/documents/d/one/service_card_learn-svg"
+											},
+											"fragmentFields": [
+												{
+													"id": "heading",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Learn",
+																"es_ES": "Aprender",
+																"ja_JP": "学ぶ",
+																"pt_BR": "Aprender"
+															}
+														}
+													}
+												},
+												{
+													"id": "description",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Explore documentation and courses to master Liferay products.",
+																"es_ES": "Explora documentación y cursos para dominar los productos de Liferay.",
+																"ja_JP": "Liferay製品をマスターするためのドキュメントとコースをご覧ください。",
+																"pt_BR": "Explore documentação e cursos para dominar os produtos Liferay."
+															}
+														}
 													}
 												}
-											},
-											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
-												"paddingBottom": "4",
-												"paddingLeft": "4",
-												"paddingRight": "4",
-												"paddingTop": "4"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
-											}
+											],
+											"indexed": true
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-learn.png#]"
-																			}
-																		}
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"height": "56px",
-														"marginBottom": "3",
-														"width": "56px"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-heading"
-													},
-													"fragmentConfig": {
-														"headingLevel": "h3"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Learn"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "2"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "<p>Explore courses and learning paths to master Liferay DXP and other products.</p>"
-																	}
-																}
-															}
-														}
-													],
-													"indexed": true
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Section"
+										"type": "Fragment"
 									}
 								],
 								"type": "Column"
 							},
 							{
 								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
 									"size": 3
 								},
 								"pageElements": [
 									{
 										"definition": {
-											"cssClasses": [
-												"card",
-												"card-flat"
-											],
-											"fragmentLink": {
-												"href": {
-													"value_i18n": {
-														"en_US": "/web/one/marketplace"
+											"fragment": {
+												"key": "liferay-one-service-card",
+												"siteKey": "One"
+											},
+											"fragmentConfig": {
+												"cardUrl": {
+													"en_US": {
+														"href": "/marketplace"
+													},
+													"es_ES": {
+														"href": "/marketplace"
+													},
+													"ja_JP": {
+														"href": "/marketplace"
+													},
+													"pt_BR": {
+														"href": "/marketplace"
+													}
+												},
+												"iconUrl": "/documents/d/one/service_card_marketplace-svg"
+											},
+											"fragmentFields": [
+												{
+													"id": "heading",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Marketplace",
+																"es_ES": "Marketplace",
+																"ja_JP": "Marketplace",
+																"pt_BR": "Marketplace"
+															}
+														}
+													}
+												},
+												{
+													"id": "description",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Find latest apps, products and other resources to extend your Liferay platform.",
+																"es_ES": "Encuentra las últimas aplicaciones, productos y otros recursos para ampliar tu plataforma Liferay.",
+																"ja_JP": "Liferayプラットフォームを拡張するための最新のアプリ、製品、その他のリソースをご覧ください。",
+																"pt_BR": "Encontre os aplicativos, produtos e recursos mais recentes para estender sua plataforma Liferay."
+															}
+														}
 													}
 												}
-											},
-											"fragmentStyle": {
-												"backgroundColor": "colorBrandPrimaryLighten5",
-												"borderRadius": "borderRadiusLg",
-												"paddingBottom": "4",
-												"paddingLeft": "4",
-												"paddingRight": "4",
-												"paddingTop": "4"
-											},
-											"indexed": true,
-											"layout": {
-												"align": "Start",
-												"contentDisplay": "FlexColumn",
-												"paddingBottom": 2,
-												"paddingLeft": 2,
-												"paddingRight": 2,
-												"paddingTop": 2
-											}
+											],
+											"indexed": true
 										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-image"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "image-square",
-															"value": {
-																"fragmentImage": {
-																	"url": {
-																		"mapping": {
-																			"fieldKey": "FileEntry_previewImage",
-																			"itemReference": {
-																				"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																				"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/icon-marketplace.png#]"
-																			}
-																		}
-																	}
-																},
-																"fragmentLink": {
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"height": "56px",
-														"marginBottom": "3",
-														"width": "56px"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-heading"
-													},
-													"fragmentConfig": {
-														"headingLevel": "h3"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "Marketplace"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "2"
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"en_US": "<p>Find apps, themes, and other resources to extend and power your Liferay DXP platform.</p>"
-																	}
-																}
-															}
-														}
-													],
-													"indexed": true
-												},
-												"type": "Fragment"
-											}
-										],
-										"type": "Section"
+										"type": "Fragment"
 									}
 								],
 								"type": "Column"

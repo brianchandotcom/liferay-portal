@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.CollectionItemPageElementDefinit
 import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.DropZonePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FormContainerPageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FormRelationshipPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentDropZonePageElementDefinition;
@@ -27,6 +28,7 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
+import com.liferay.layout.util.structure.FormRelationshipStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
@@ -180,6 +182,15 @@ public class PageElementDTOConverter
 			return _formContainerPageElementDefinitionDTOConverter.toDTO(
 				dtoConverterContext,
 				(FormStyledLayoutStructureItem)layoutStructureItem);
+		}
+
+		if (Objects.equals(
+				layoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_FORM_RELATIONSHIP)) {
+
+			return _formRelationshipPageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
+				(FormRelationshipStyledLayoutStructureItem)layoutStructureItem);
 		}
 
 		if (Objects.equals(
@@ -353,6 +364,14 @@ public class PageElementDTOConverter
 	private DTOConverter
 		<FormStyledLayoutStructureItem, FormContainerPageElementDefinition>
 			_formContainerPageElementDefinitionDTOConverter;
+
+	@Reference(
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FormRelationshipPageElementDefinitionDTOConverter)"
+	)
+	private DTOConverter
+		<FormRelationshipStyledLayoutStructureItem,
+		 FormRelationshipPageElementDefinition>
+			_formRelationshipPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.FormStepContainerPageElementDefinitionDTOConverter)"

@@ -14,6 +14,7 @@ import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -150,7 +151,9 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 		FragmentSet invalidNameFragmentSet = randomFragmentSet();
 
-		invalidNameFragmentSet.setName("bad.name");
+		invalidNameFragmentSet.setName(
+			RandomTestUtil.randomString() + StringPool.PERIOD +
+				RandomTestUtil.randomString());
 
 		_assertProblemException(
 			"BAD_REQUEST", "name-is-invalid",

@@ -90,3 +90,20 @@ test(
 		}
 	}
 );
+
+test(
+	'Property menu search shows no rows for a non-existent name',
+	{tag: '@LRAC-9230'},
+	async ({page}) => {
+		await clickAndExpectToBeVisible({
+			target: page.getByPlaceholder('search'),
+			trigger: page.locator('button.channels-menu'),
+		});
+
+		await page.getByPlaceholder('search').fill('Non Existent Property');
+
+		await expect(
+			page.locator('.channels-menu-dropdown-body .sites-dropdown-item')
+		).toHaveCount(0);
+	}
+);

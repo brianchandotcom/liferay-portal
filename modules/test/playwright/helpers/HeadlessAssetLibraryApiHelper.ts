@@ -87,6 +87,17 @@ export class HeadlessAssetLibraryApiHelper {
 		);
 	}
 
+	async connectSite(
+		assetLibraryExternalReferenceCode: string,
+		connectedSiteExternalReferenceCode: string,
+		body: Record<string, any> = {searchable: true}
+	) {
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${assetLibraryExternalReferenceCode}/connected-sites/${connectedSiteExternalReferenceCode}`,
+			{data: body}
+		);
+	}
+
 	async putAssetLibraryUserAccount(
 		assetLibraryExternalReferenceCode: string,
 		userAccountExternalReferenceCode: string

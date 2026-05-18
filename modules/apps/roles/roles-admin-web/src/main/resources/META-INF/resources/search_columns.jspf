@@ -35,6 +35,13 @@ RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUti
 					displayType="<%= WorkflowConstants.getStatusStyle(role.getStatus()) %>"
 					label="<%= WorkflowConstants.getStatusLabel(role.getStatus()) %>"
 				/>
+
+				<c:if test="<%= Validator.isNotNull(role.getSubtype()) %>">
+					<clay:label
+						displayType="info"
+						label="<%= LanguageUtil.get(request, role.getSubtype()) %>"
+					/>
+				</c:if>
 			</div>
 		</liferay-ui:search-container-column-text>
 

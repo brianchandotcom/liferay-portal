@@ -6,7 +6,6 @@
 import {CollaboratorService} from 'frontend-js-components-web';
 
 import {openCMSModal} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal';
-import CMSShareModalContent from '../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/CMSShareModalContent';
 import shareAction from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/shareAction';
 
 jest.mock(
@@ -51,13 +50,11 @@ const baseItem = {
 };
 
 const getInitialCollaborators = () => {
-	const mockShareModalContent = CMSShareModalContent as unknown as jest.Mock;
-
 	const openCMSModalArgs = (openCMSModal as jest.Mock).mock.calls[0][0];
 
-	openCMSModalArgs.contentComponent({closeModal: jest.fn()});
+	const element = openCMSModalArgs.contentComponent({closeModal: jest.fn()});
 
-	return mockShareModalContent.mock.calls[0][0].initialCollaborators;
+	return element.props.initialCollaborators;
 };
 
 describe('shareAction', () => {

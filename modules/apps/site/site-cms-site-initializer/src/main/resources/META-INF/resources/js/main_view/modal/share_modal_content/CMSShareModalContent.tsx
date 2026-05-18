@@ -6,6 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {
+	AutocompleteItem,
 	Collaborator as GenericCollaborator,
 	CollaboratorPayload,
 	PermissionOption,
@@ -107,12 +108,9 @@ export default function CMSShareModalContent({
 			COLLABORATOR_TYPE.EXTERNAL_USER;
 
 	const transformSourceItems = (
-		items: Array<{
-			type: CollaboratorType;
-			user: ShareModalUserAccount | ShareModalUserGroup;
-		}>,
+		items: AutocompleteItem[],
 		query: string
-	) => {
+	): AutocompleteItem[] => {
 		const trimmedQuery = query.trim();
 
 		const offerExternalUserInvite =
@@ -135,13 +133,13 @@ export default function CMSShareModalContent({
 		return [
 			...items,
 			{
-				type: COLLABORATOR_TYPE.EXTERNAL_USER as unknown as CollaboratorType,
+				type: COLLABORATOR_TYPE.EXTERNAL_USER,
 				user: {
 					emailAddress: trimmedQuery,
 					id: trimmedQuery,
 					name: trimmedQuery,
 				},
-			},
+			} as unknown as AutocompleteItem,
 		];
 	};
 
@@ -324,18 +322,7 @@ export default function CMSShareModalContent({
 			itemId={itemId}
 			permissionOptions={resolvePermissionOptions}
 			title={title}
-			transformSourceItems={
-				transformSourceItems as unknown as (
-					items: Array<{
-						type: import('frontend-js-components-web').CollaboratorType;
-						user: ShareModalUserAccount | ShareModalUserGroup;
-					}>,
-					query: string
-				) => Array<{
-					type: import('frontend-js-components-web').CollaboratorType;
-					user: ShareModalUserAccount | ShareModalUserGroup;
-				}>
-			}
+			transformSourceItems={transformSourceItems}
 			transformSubmitPayload={transformSubmitPayload}
 		/>
 	);

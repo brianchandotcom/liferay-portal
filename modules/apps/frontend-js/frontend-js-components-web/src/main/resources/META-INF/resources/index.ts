@@ -52,28 +52,32 @@ export {
 	type UploadRequestCallback,
 } from './multiple_file_uploader/types';
 
-export {default as CollaboratorService} from './share_modal/CollaboratorService';
+export {default as CollaboratorService} from './share_modal_content/CollaboratorService';
 export type {
 	CollaboratorItem,
 	CollaboratorPayload,
-} from './share_modal/CollaboratorService';
+} from './share_modal_content/CollaboratorService';
 
 export {
 	default as ExpirationDateSelector,
 	formatDateForView,
 	formatDateToISO,
-} from './share_modal/ExpirationDateSelector';
-export {default as PermissionSelector} from './share_modal/PermissionSelector';
-export {default as ShareModalContent} from './share_modal/ShareModalContent';
-export {COLLABORATOR_TYPE} from './share_modal/types';
+} from './share_modal_content/ExpirationDateSelector';
+export {default as PermissionSelector} from './share_modal_content/PermissionSelector';
+export {default as ShareModalContent} from './share_modal_content/ShareModalContent';
+export {COLLABORATOR_TYPE} from './share_modal_content/types';
 export type {
+	AutocompleteItem,
 	Collaborator,
+	CollaboratorBadgeProps,
+	CollaboratorIconProps,
 	CollaboratorType,
 	PermissionOption,
+	ShareModalContentProps,
 	ShareModalCreator,
 	ShareModalUserAccount,
 	ShareModalUserGroup,
-} from './share_modal/types';
+} from './share_modal_content/types';
 export {default as openToast} from './toast/openToast';
 export type {OpenToastProps} from './toast/openToast';
 

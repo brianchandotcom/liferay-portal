@@ -593,8 +593,6 @@ export const ACTIVITY_KEY = 'activityKey';
 export const EVENT_KEY = 'eventId';
 
 export const ASSET_TYPE_APPLICATION_ID_MAP: Record<string, string> = {
-	'basic-document': 'Document',
-	'basic-web-content': 'WebContent',
 	blogs: 'Blog',
 	'documents-and-media': 'Document',
 	forms: 'Form',
@@ -610,7 +608,6 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 		'documents-and-media': 'documentDownloaded'
 	},
 	impression: {
-		'basic-web-content': 'webContentImpressionMade',
 		blogs: 'blogImpressionMade',
 		'web-content': 'webContentImpressionMade'
 	},
@@ -619,7 +616,6 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 	},
 	view: {
 		'basic-document': 'documentPreviewed',
-		'basic-web-content': 'webContentViewed',
 		blogs: 'blogViewed',
 		'documents-and-media': 'documentPreviewed',
 		forms: 'formViewed',
@@ -629,12 +625,9 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 
 export const ASSET_TYPE_COMPATIBLE_EVENTS_MAP: Record<string, string[]> = {
 	any: ['all', 'view', 'download', 'impression', 'submit', 'comment'],
-	'basic-document': ['all', 'view', 'download'],
-	'basic-web-content': ['all', 'view', 'impression'],
 	blogs: ['all', 'view', 'comment', 'impression'],
 	'documents-and-media': ['all', 'view', 'download'],
 	forms: ['all', 'view', 'submit'],
-	'knowledge-base': ['all'],
 	'web-content': ['all', 'view', 'impression']
 };
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -158,7 +159,7 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommandTest {
 							RandomTestUtil.randomString()
 						).put(
 							"liferayAnalyticsFaroBackendURL",
-							"http://localhost:8080"
+							"http://localhost:" + PortalUtil.getPortalServerPort(false) + ""
 						).build())) {
 
 			_mvcActionCommand.processAction(

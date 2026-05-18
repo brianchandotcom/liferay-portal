@@ -10,6 +10,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -49,9 +50,11 @@ public class BlogsSimilarResultsContributorTest
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:8080/blog-page/-/blogs/blog-1?",
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/blog-page/-/blogs/blog-1?",
 			"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
-			"http://localhost:8080/blog-page?",
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/blog-page?",
 			"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
 			"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view");
 
@@ -118,9 +121,11 @@ public class BlogsSimilarResultsContributorTest
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:8080/blog-page/-/blogs/blog-1?",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/blog-page/-/blogs/blog-1?",
 					"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
-					"http://localhost:8080/blog-page?",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/blog-page?",
 					"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
 					"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view"));
 
@@ -133,9 +138,11 @@ public class BlogsSimilarResultsContributorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/blog-page/-/blogs/blog-2?",
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/blog-page/-/blogs/blog-2?",
 				"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
-				"http://localhost:8080/blog-page?",
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/blog-page?",
 				"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
 				"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view"),
 			destinationBuilderImpl.build());
@@ -143,7 +150,8 @@ public class BlogsSimilarResultsContributorTest
 		_setUpDestinationHelper(1235L);
 
 		Mockito.doReturn(
-			"http://localhost:8080/errorPage"
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/errorPage"
 		).when(
 			destinationHelper
 		).getAssetViewURL();
@@ -152,7 +160,9 @@ public class BlogsSimilarResultsContributorTest
 			destinationBuilderImpl, destinationHelper);
 
 		Assert.assertEquals(
-			"http://localhost:8080/errorPage", destinationBuilderImpl.build());
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/errorPage",
+			destinationBuilderImpl.build());
 	}
 
 	private void _setUpDestinationHelper(long scopeGroupId) {

@@ -7,6 +7,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.url.p
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -46,7 +47,7 @@ public class ClassUUIDSimilarResultsContributorTest
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () ->
-			"http://localhost:8080?classUuid=uid&" +
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?classUuid=uid&" +
 				"className=AssetClassName&classPK=112233";
 
 		_classUUIDSimilarResultsContributor.detectRoute(
@@ -90,7 +91,7 @@ public class ClassUUIDSimilarResultsContributorTest
 		).getClassUuid();
 
 		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl("http://localhost:8080?classUuid=uid");
+			new DestinationBuilderImpl("http://localhost:" + PortalUtil.getPortalServerPort(false) + "?classUuid=uid");
 
 		setUpDestinationHelper(assetEntry);
 
@@ -100,7 +101,7 @@ public class ClassUUIDSimilarResultsContributorTest
 			destinationBuilderImpl, destinationHelper);
 
 		Assert.assertEquals(
-			"http://localhost:8080?classUuid=newUid",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?classUuid=newUid",
 			destinationBuilderImpl.build());
 	}
 

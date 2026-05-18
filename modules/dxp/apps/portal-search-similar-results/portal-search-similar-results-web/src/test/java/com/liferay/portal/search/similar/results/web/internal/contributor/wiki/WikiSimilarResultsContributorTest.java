@@ -7,6 +7,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.wiki;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -49,9 +50,9 @@ public class WikiSimilarResultsContributorTest
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:8080/wiki/-/wiki/Main/page+1?",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki/-/wiki/Main/page+1?",
 			"_com_liferay_wiki_web_portlet_WikiPortlet_redirect=",
-			"http://localhost:8080/wiki/-/wiki/Main/all_pages?",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki/-/wiki/Main/all_pages?",
 			"p_r_p_http://www.liferay.com/public-render-parameters",
 			"/wiki_nodeName=Main&p_r_p_http://www.liferay.com",
 			"/public-render-parameters/wiki_title=page+1");
@@ -98,9 +99,9 @@ public class WikiSimilarResultsContributorTest
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:8080/wiki/-/wiki/Main/page+1?",
+					"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki/-/wiki/Main/page+1?",
 					"_com_liferay_wiki_web_portlet_WikiPortlet_redirect=",
-					"http://localhost:8080/wiki/-/wiki/Main/all_pages?",
+					"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki/-/wiki/Main/all_pages?",
 					"p_r_p_http://www.liferay.com/public-render-parameters",
 					"/wiki_nodeName=Main&p_r_p_",
 					"http://www.liferay.com/public-render-parameters",
@@ -119,9 +120,9 @@ public class WikiSimilarResultsContributorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/wiki/-/wiki/newMain/page 2?",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki/-/wiki/newMain/page 2?",
 				"_com_liferay_wiki_web_portlet_WikiPortlet_redirect=",
-				"http://localhost:8080/wiki/-/wiki/newMain/all_pages?",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki/-/wiki/newMain/all_pages?",
 				"p_r_p_http://www.liferay.com/public-render-",
 				"parameters/wiki_nodeName=newMain&p_r_p_",
 				"http://www.liferay.com/public-render-",

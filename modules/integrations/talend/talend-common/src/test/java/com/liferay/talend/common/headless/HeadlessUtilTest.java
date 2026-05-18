@@ -5,6 +5,7 @@
 
 package com.liferay.talend.common.headless;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.talend.common.exception.MalformedURLException;
 
 import java.util.HashMap;
@@ -72,7 +73,7 @@ public class HeadlessUtilTest {
 	@Test
 	public void testValidateOpenAPISpecURL() {
 		HeadlessUtil.validateOpenAPISpecURL(
-			"http://localhost:8080/o/headless/v1.0/openapi.json");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/headless/v1.0/openapi.json");
 	}
 
 	@Test
@@ -80,7 +81,7 @@ public class HeadlessUtilTest {
 		_assertException(MalformedURLException.class, null);
 
 		_assertException(
-			MalformedURLException.class, "http://localhost:8080/o/test/wrong");
+			MalformedURLException.class, "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/test/wrong");
 	}
 
 	private void _assertException(Class<?> exceptionClass, String url) {

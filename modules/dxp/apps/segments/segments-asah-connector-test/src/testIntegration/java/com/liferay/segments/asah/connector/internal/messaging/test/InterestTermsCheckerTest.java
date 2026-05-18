@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -67,7 +68,7 @@ public class InterestTermsCheckerTest {
 							RandomTestUtil.randomString()
 						).put(
 							"liferayAnalyticsFaroBackendURL",
-							"http://localhost:8080"
+							"http://localhost:" + PortalUtil.getPortalServerPort(false) + ""
 						).build());
 			ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(

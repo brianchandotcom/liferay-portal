@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
@@ -73,7 +74,7 @@ public class UpdateServiceProviderConnectionMVCActionCommandTest
 		_name = RandomTestUtil.randomString();
 
 		return Map.of(
-			"currentURL", Collections.singletonList("http://localhost:8080"),
+			"currentURL", Collections.singletonList("http://localhost:" + PortalUtil.getPortalServerPort(false) + ""),
 			"name", Collections.singletonList(_name), "samlIdpSpConnectionId",
 			Collections.singletonList(
 				String.valueOf(samlIdpSpConnection.getSamlIdpSpConnectionId())),

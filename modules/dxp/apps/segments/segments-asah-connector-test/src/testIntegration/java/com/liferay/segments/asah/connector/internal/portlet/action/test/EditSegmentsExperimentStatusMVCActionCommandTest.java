@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -145,7 +146,7 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 							"liferayAnalyticsFaroBackendURL",
 							"http://localhost:8086"
 						).put(
-							"liferayAnalyticsURL", "http://localhost:8080/"
+							"liferayAnalyticsURL", "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/"
 						).build())) {
 
 			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(

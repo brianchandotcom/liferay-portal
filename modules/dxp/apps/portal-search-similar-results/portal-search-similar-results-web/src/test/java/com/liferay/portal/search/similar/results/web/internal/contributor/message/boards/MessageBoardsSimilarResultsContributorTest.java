@@ -9,6 +9,7 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -50,8 +51,8 @@ public class MessageBoardsSimilarResultsContributorTest
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () ->
-			"http://localhost:8080/message-board/-/message_boards/message" +
-				"/42790";
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/message-board/-/message_boards/message/42790";
 
 		_messageBoardsSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -136,7 +137,8 @@ public class MessageBoardsSimilarResultsContributorTest
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:8080/message-board/-/message_boards",
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/message-board/-/message_boards",
 					"/message/42790#_com_liferay_message_boards",
 					"_web_portlet_MBPortlet_message_42790"));
 
@@ -156,7 +158,8 @@ public class MessageBoardsSimilarResultsContributorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/category-board/-/category_boards",
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/category-board/-/category_boards",
 				"/category/42791#_com_liferay_category_boards_web_portlet_",
 				"MBPortlet_category_42791"),
 			destinationBuilderImpl.build());

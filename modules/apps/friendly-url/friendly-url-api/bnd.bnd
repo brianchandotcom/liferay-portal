@@ -4,6 +4,7 @@ Bundle-Version: 13.0.0
 Export-Package:\
 	com.liferay.friendly.url.configuration,\
 	com.liferay.friendly.url.configuration.manager,\
+	com.liferay.friendly.url.constants,\
 	com.liferay.friendly.url.exception,\
 	com.liferay.friendly.url.info.item.provider,\
 	com.liferay.friendly.url.info.item.updater,\

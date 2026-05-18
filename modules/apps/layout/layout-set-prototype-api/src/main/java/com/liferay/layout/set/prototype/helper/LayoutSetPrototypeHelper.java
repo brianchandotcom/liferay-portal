@@ -21,6 +21,12 @@ import java.util.List;
 @ProviderType
 public interface LayoutSetPrototypeHelper {
 
+	public void executeLayoutSetPrototypeSync(
+			long layoutSetPrototypeId, long userId)
+		throws PortalException;
+
+	public void executeLayoutSetSync(LayoutSet layoutSet) throws Exception;
+
 	public List<Layout> getDuplicatedFriendlyURLLayouts(Layout layout)
 		throws PortalException;
 

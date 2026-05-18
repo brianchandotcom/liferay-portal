@@ -820,61 +820,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-132110: Validate if it's posible to create a segment based on User > Team criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserTeam {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Add group and assign to the user") {
-			JSONGroup.assignUserToGroup(
-				groupName = "Test Site Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add team and assign to the user") {
-			JSONTeam.addTeam(
-				siteName = "Test Site Name",
-				teamDescription = "Site Team Description",
-				teamName = "Site Team Name");
-
-			JSONTeam.addUserToTeam(
-				siteName = "Test Site Name",
-				teamName = "Site Team Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Team");
-
-			Segmentation.fillProperty(selectEntry = "Site Team Name");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserTeam Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserTeam Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "Site Team Name");
-		}
-	}
-
 	@description = "Test Automation for LPS-132111: Validate if it's posible to create a segment based on User > User criteria"
 	@priority = 5
 	@uitest

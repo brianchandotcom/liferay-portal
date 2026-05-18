@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
@@ -247,8 +246,6 @@ public class ExportImportPerformanceTest {
 
 	@Test
 	public void testSiteTemplatePropagation() throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		for (long layoutId : _layoutIds) {
 			Layout layout = _layoutLocalService.getLayout(
 				_group.getGroupId(), false, layoutId);
@@ -290,8 +287,6 @@ public class ExportImportPerformanceTest {
 			true);
 
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
-			MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 			_sites.mergeLayoutSetPrototypeLayouts(
 				_group, _group.getPublicLayoutSet());
 		}

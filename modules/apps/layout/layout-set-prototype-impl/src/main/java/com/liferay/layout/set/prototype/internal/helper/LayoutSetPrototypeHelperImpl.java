@@ -15,7 +15,6 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManagerUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -132,17 +131,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	public void executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
 		throws Exception {
 >>>>>>> 2099a51f69c85 (LPD-87027 Syncronized the permissions only for the first sync (when the Site is created from the Site Template))
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
-		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
-			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
-				BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
 
 		Group group = layoutSet.getGroup();
 

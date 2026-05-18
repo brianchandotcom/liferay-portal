@@ -6,7 +6,6 @@
 package com.liferay.layout.set.prototype.internal.helper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -271,8 +270,6 @@ public class LayoutSetPrototypeHelperTest {
 	}
 
 	protected void setLinkEnabled() throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		_sites.updateLayoutSetPrototypesLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);

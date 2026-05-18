@@ -6,7 +6,6 @@
 package com.liferay.layout.set.prototype.internal.helper.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -120,8 +119,6 @@ public class LayoutSetPrototypeHelperPerformanceTest {
 	}
 
 	protected void setLinkEnabled(Group group) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		_sites.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);

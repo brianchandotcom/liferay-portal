@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
@@ -1178,8 +1177,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
-
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
 			group, 0, layoutSetPrototype.getLayoutSetPrototypeId(), true, true);

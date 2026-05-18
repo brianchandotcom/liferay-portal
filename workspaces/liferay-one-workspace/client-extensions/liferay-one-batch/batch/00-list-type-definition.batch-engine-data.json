@@ -356,22 +356,22 @@
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_APPROVED",
-					"key": "Approved",
+					"key": "approved",
 					"name": "Approved"
 				},
 				{
 					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_AUTO_APPROVED",
-					"key": "AutoApproved",
+					"key": "autoApproved",
 					"name": "Auto Approved"
 				},
 				{
 					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_PENDING",
-					"key": "Pending",
+					"key": "pending",
 					"name": "Pending"
 				},
 				{
 					"externalReferenceCode": "LT_TRIAL_EXTENSION_REQUEST_STATUS_REJECTED",
-					"key": "Rejected",
+					"key": "rejected",
 					"name": "Rejected"
 				}
 			],

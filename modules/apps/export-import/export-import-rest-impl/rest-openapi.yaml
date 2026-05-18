@@ -73,16 +73,16 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                name:
+                    description:
+                        The import process's name.
+                    readOnly: true
+                    type: string
                 status:
                     $ref: "#/components/schemas/Status"
                     description:
                         The import process's end status.
                     readOnly: true
-                title:
-                    description:
-                        The import process's title.
-                    readOnly: true
-                    type: string
             type: object
         Origin:
             properties:

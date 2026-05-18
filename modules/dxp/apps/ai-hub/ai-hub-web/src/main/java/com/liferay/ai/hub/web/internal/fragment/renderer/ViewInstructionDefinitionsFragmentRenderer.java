@@ -7,12 +7,10 @@ package com.liferay.ai.hub.web.internal.fragment.renderer;
 
 import com.liferay.ai.hub.web.internal.display.context.ViewInstructionDefinitionsDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,8 +57,7 @@ public class ViewInstructionDefinitionsFragmentRenderer
 	protected ViewInstructionDefinitionsDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewInstructionDefinitionsDisplayContext(
-			httpServletRequest, _objectDefinitionLocalService, _portal);
+		return new ViewInstructionDefinitionsDisplayContext(httpServletRequest);
 	}
 
 	@Override
@@ -73,11 +70,5 @@ public class ViewInstructionDefinitionsFragmentRenderer
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

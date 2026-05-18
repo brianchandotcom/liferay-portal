@@ -13,9 +13,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletQName;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import jakarta.portlet.ActionRequest;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Carolina Barbosa
@@ -31,6 +41,44 @@ public class DisplayContextUtil {
 		return StringBundler.concat(
 			company.getPortalURL(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 			"/web", group.getFriendlyURL());
+	}
+
+	public static String getPermissionsURL(
+			String externalReferenceCode, HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, themeDisplay.getCompanyId());
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+					"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setParameter(
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
+			ParamUtil.getString(
+				httpServletRequest, "currentUrl",
+				PortalUtil.getCurrentURL(httpServletRequest))
+		).setParameter(
+			"modelResource", objectDefinition.getClassName()
+		).setParameter(
+			"modelResourceDescription",
+			objectDefinition.getLabel(themeDisplay.getLocale())
+		).setParameter(
+			"resourcePrimKey", "{id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 	public static boolean isReadOnly(

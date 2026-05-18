@@ -37,6 +37,7 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -155,7 +156,9 @@ import jakarta.ws.rs.core.UriInfo;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -2614,18 +2617,13 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
-	private String _getBatchFileNameWithPath(String fileName, long groupId) {
-		return StringBundler.concat(
-			"group/", groupId, StringPool.FORWARD_SLASH, fileName);
-	}
-
 	private JSONArray _getClassExternalReferenceCodesJSONArray(
 			File file, long groupId)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry(
-				_getBatchFileNameWithPath(
+				ExportImportTestUtil.getBatchFileNameWithPath(
 					"deletion-system-events.xml", groupId));
 
 			if (zipEntry == null) {
@@ -2652,12 +2650,9 @@ public class BatchEnginePortletDataHandlerTest {
 			String fileNamePrefix, File file, long groupId)
 		throws Exception {
 
-		try (ZipFile zipFile = new ZipFile(file)) {
-			ZipEntry zipEntry = zipFile.getEntry(
-				_getBatchFileNameWithPath(fileNamePrefix + ".json", groupId));
-
-			return JSONFactoryUtil.createJSONArray(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
+		try (InputStream inputStream = new FileInputStream(file)) {
+			return ExportImportTestUtil.getExportedObjectEntriesJSONArray(
+				fileNamePrefix, inputStream, groupId);
 		}
 	}
 
@@ -2753,28 +2748,29 @@ public class BatchEnginePortletDataHandlerTest {
 			String fileNamePrefix, File file, long groupId)
 		throws Exception {
 
-		try (ZipFile zipFile = new ZipFile(file)) {
-			ZipEntry zipEntry = zipFile.getEntry(
-				_getBatchFileNameWithPath(
-					fileNamePrefix + "_deletions.json", groupId));
+		JSONArray exportedJSONArray;
 
-			if (zipEntry == null) {
-				throw new FileNotFoundException();
-			}
-
-			JSONArray jsonArray1 = JSONFactoryUtil.createJSONArray();
-
-			JSONArray jsonArray2 = JSONFactoryUtil.createJSONArray(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-			for (int i = 0; i < jsonArray2.length(); i++) {
-				JSONObject jsonObject = jsonArray2.getJSONObject(i);
-
-				jsonArray1.put(jsonObject.getString("externalReferenceCode"));
-			}
-
-			return jsonArray1;
+		try (InputStream inputStream = new FileInputStream(file)) {
+			exportedJSONArray =
+				ExportImportTestUtil.getExportedObjectEntriesJSONArray(
+					fileNamePrefix + "_deletions", inputStream, groupId);
 		}
+
+		if (exportedJSONArray == null) {
+			throw new FileNotFoundException();
+		}
+
+		JSONArray externalReferenceCodesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (int i = 0; i < exportedJSONArray.length(); i++) {
+			JSONObject jsonObject = exportedJSONArray.getJSONObject(i);
+
+			externalReferenceCodesJSONArray.put(
+				jsonObject.getString("externalReferenceCode"));
+		}
+
+		return externalReferenceCodesJSONArray;
 	}
 
 	private String _getFriendlyURL(FileEntry fileEntry) throws Exception {

@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.petra.executor;
 
 import com.liferay.petra.concurrent.NoticeableExecutorService;
-import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorConfig;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -39,7 +38,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -57,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class GraphWalkerPortalExecutor {
 
 	public void execute(PathElement pathElement, boolean waitForCompletion) {
-		if (PortalRunMode.isTestMode()) {
+		if (PortalRunMode.isTestMode() || waitForCompletion) {
 			_walk(pathElement);
 
 			return;
@@ -65,32 +63,19 @@ public class GraphWalkerPortalExecutor {
 
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
-		NoticeableFuture<?> noticeableFuture =
-			_noticeableExecutorService.submit(
-				new CompanyInheritableThreadLocalCallable<>(
-					() -> {
-						try (SafeCloseable safeCloseable =
-								CTCollectionThreadLocal.
-									setCTCollectionIdWithSafeCloseable(
-										ctCollectionId)) {
+		_noticeableExecutorService.submit(
+			new CompanyInheritableThreadLocalCallable<>(
+				() -> {
+					try (SafeCloseable safeCloseable =
+							CTCollectionThreadLocal.
+								setCTCollectionIdWithSafeCloseable(
+									ctCollectionId)) {
 
-							_walk(pathElement);
-						}
+						_walk(pathElement);
+					}
 
-						return null;
-					}));
-
-		if (waitForCompletion) {
-			try {
-				noticeableFuture.get();
-			}
-			catch (ExecutionException executionException) {
-				_log.error(executionException);
-			}
-			catch (InterruptedException interruptedException) {
-				_log.error(interruptedException);
-			}
-		}
+					return null;
+				}));
 	}
 
 	@Activate

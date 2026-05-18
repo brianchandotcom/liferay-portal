@@ -25,7 +25,7 @@ public interface LayoutSetPrototypeHelper {
 			long layoutSetPrototypeId, long userId)
 		throws PortalException;
 
-	public void executeLayoutSetSync(LayoutSet layoutSet)
+	public void executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
 		throws PortalException;
 
 	public List<Layout> getDuplicatedFriendlyURLLayouts(Layout layout)

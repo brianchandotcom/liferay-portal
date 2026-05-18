@@ -37,7 +37,7 @@ public class ShareTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_hasInvitePermission) {
+		if (_hasAssignMembersPermission) {
 			return super.doEndTag();
 		}
 
@@ -64,10 +64,10 @@ public class ShareTag extends IncludeTag {
 				return SKIP_BODY;
 			}
 
-			_hasInvitePermission = _hasInvitePermission(
+			_hasAssignMembersPermission = _hasAssignMembersPermission(
 				themeDisplay.getPermissionChecker(), objectEntry);
 
-			if (!_hasInvitePermission) {
+			if (!_hasAssignMembersPermission) {
 				return SKIP_BODY;
 			}
 		}
@@ -127,7 +127,7 @@ public class ShareTag extends IncludeTag {
 		super.cleanUp();
 
 		_groupId = 0;
-		_hasInvitePermission = false;
+		_hasAssignMembersPermission = false;
 		_roomId = 0;
 	}
 
@@ -142,7 +142,7 @@ public class ShareTag extends IncludeTag {
 			"liferay-site-dsr-site-initializer:share:roomId", _roomId);
 	}
 
-	private boolean _hasInvitePermission(
+	private boolean _hasAssignMembersPermission(
 			PermissionChecker permissionChecker, ObjectEntry objectEntry)
 		throws PortalException {
 
@@ -152,8 +152,7 @@ public class ShareTag extends IncludeTag {
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
-		if ((modelResourcePermission != null) &&
-			modelResourcePermission.contains(
+		if (modelResourcePermission.contains(
 				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
 
 			return true;
@@ -168,7 +167,7 @@ public class ShareTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(ShareTag.class);
 
 	private long _groupId;
-	private boolean _hasInvitePermission;
+	private boolean _hasAssignMembersPermission;
 	private long _roomId;
 
 }

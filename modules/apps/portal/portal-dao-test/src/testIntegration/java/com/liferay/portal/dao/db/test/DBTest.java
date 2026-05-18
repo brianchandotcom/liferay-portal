@@ -1265,8 +1265,8 @@ public class DBTest {
 			return "select sleep(2)";
 		}
 		else if (dbType == DBType.ORACLE) {
-			return "select count(*) from (select level from dual connect by " +
-				"level <= 100000000)";
+			return "select sum(dbms_random.value) from (select level from " +
+				"dual connect by level <= 200000)";
 		}
 		else if (dbType == DBType.POSTGRESQL) {
 			return "select pg_sleep(2)";

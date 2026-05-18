@@ -925,4 +925,3 @@ test(
 		await performUserSwitch(page, 'test');
 	}
 );
-

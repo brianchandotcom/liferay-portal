@@ -5,6 +5,7 @@
 
 package com.liferay.talend.runtime.writer;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.avro.JsonObjectIndexedRecordConverter;
 import com.liferay.talend.common.schema.SchemaUtils;
@@ -345,7 +346,7 @@ public class LiferayWriterTest extends BaseTestCase {
 	}
 
 	private static final String _OAS_URL =
-		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0" +
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/headless-commerce-admin-catalog/v1.0" +
 			"/openapi.json";
 
 }

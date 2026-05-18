@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -105,17 +106,17 @@ public class SamlSameSiteLaxCookiesFilterTest {
 
 	@Test
 	public void testACSSameSiteLaxCookiesSupport() throws Exception {
-		_execute(new URL("http://localhost:8080/c/portal/saml/acs"));
+		_execute(new URL("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/acs"));
 	}
 
 	@Test
 	public void testSLOSameSiteLaxCookies() throws Exception {
-		_execute(new URL("http://localhost:8080/c/portal/saml/slo"));
+		_execute(new URL("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/slo"));
 	}
 
 	@Test
 	public void testSSOSameSiteLaxCookies() throws Exception {
-		_execute(new URL("http://localhost:8080/c/portal/saml/sso"));
+		_execute(new URL("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/sso"));
 	}
 
 	protected static SamlProviderConfigurationHelper

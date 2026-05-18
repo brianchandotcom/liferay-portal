@@ -23,7 +23,7 @@ const FiltersDropdown = () => {
 		useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
-	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
+	const [activeFilterId, setActiveFilterId] = useState<string | null>(null);
 
 	const validFilters = useMemo(
 		() =>
@@ -39,6 +39,12 @@ const FiltersDropdown = () => {
 			}),
 		[globalFDSState.filters]
 	);
+
+	const activeFilter = activeFilterId
+		? (validFilters.find(
+				(filter) => filter.id === activeFilterId
+			) as unknown as IFilter) ?? null
+		: null;
 
 	const renderableGroupedFilters = useMemo(() => {
 		return groupedFilters
@@ -99,7 +105,7 @@ const FiltersDropdown = () => {
 							className="btn-filter-navigation"
 							displayType="unstyled"
 							onClick={() => {
-								setActiveFilter(null);
+								setActiveFilterId(null);
 							}}
 							size="sm"
 							symbol="angle-left"
@@ -134,7 +140,9 @@ const FiltersDropdown = () => {
 												<ClayDropDown.Item
 													key={filter.id}
 													onClick={() =>
-														setActiveFilter(filter)
+														setActiveFilterId(
+															filter.id
+														)
 													}
 												>
 													{filter.label}
@@ -146,7 +154,7 @@ const FiltersDropdown = () => {
 										<ClayDropDown.Item
 											key={filter.id}
 											onClick={() =>
-												setActiveFilter(filter)
+												setActiveFilterId(filter.id)
 											}
 										>
 											{filter.label}

@@ -180,6 +180,8 @@ public class ExportPreviewResourceTest
 	private long _getAdditionCount(
 		ExportPreview exportPreview, String portletId) {
 
+		String handlerName = "PORTLET_DATA_" + portletId;
+
 		for (PreviewPortletDataHandlerSection previewPortletDataHandlerSection :
 				exportPreview.getPreviewPortletDataHandlerSections()) {
 
@@ -187,7 +189,7 @@ public class ExportPreviewResourceTest
 					previewPortletDataHandlerSection.
 						getPreviewPortletDataHandlers()) {
 
-				if (portletId.equals(previewPortletDataHandler.getName())) {
+				if (handlerName.equals(previewPortletDataHandler.getName())) {
 					return previewPortletDataHandler.getAdditionCount();
 				}
 			}

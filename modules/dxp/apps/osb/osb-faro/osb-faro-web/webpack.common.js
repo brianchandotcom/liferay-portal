@@ -38,6 +38,8 @@ const config = {
 			callback();
 		},
 		{
+			'@liferay/frontend-data-set-web':
+				'/o/frontend-data-set-web/__liferay__/index.js',
 			react: 'react',
 			'react-dom': 'react-dom'
 		}

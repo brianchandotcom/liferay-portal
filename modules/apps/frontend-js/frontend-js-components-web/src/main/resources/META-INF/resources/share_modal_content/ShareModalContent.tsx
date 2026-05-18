@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBadge from '@clayui/badge';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown from '@clayui/drop-down';
@@ -187,11 +188,11 @@ function CollaboratorListItem({
 						</span>
 
 						{badgeText ? (
-							<span className="inline-item inline-item-after label label-inverse-light">
-								<span className="label-item label-item-expand text-nowrap">
-									{badgeText}
-								</span>
-							</span>
+							<ClayBadge
+								className="inline-item inline-item-after"
+								displayType="secondary"
+								label={badgeText}
+							/>
 						) : null}
 					</div>
 

@@ -114,15 +114,17 @@ public class MercanetServlet extends HttpServlet {
 						httpServletRequest.getSession());
 				}
 
-				CommerceOrder commerceOrder =
-					_commercePaymentHttpHelper.getCommerceOrder(
-						httpServletRequest);
-
 				User currentUser = _portal.getUser(httpServletRequest);
 
-				if ((currentUser == null) && (commerceOrder != null)) {
-					currentUser = _userLocalService.fetchUser(
-						commerceOrder.getUserId());
+				if (currentUser == null) {
+					CommerceOrder commerceOrder =
+						_commercePaymentHttpHelper.getCommerceOrder(
+							httpServletRequest);
+
+					if (commerceOrder != null) {
+						currentUser = _userLocalService.fetchUser(
+							commerceOrder.getUserId());
+					}
 				}
 
 				PermissionThreadLocal.setPermissionChecker(
@@ -145,8 +147,9 @@ public class MercanetServlet extends HttpServlet {
 
 					long commerceOrderId = GetterUtil.getLong(orderId);
 
-					commerceOrder = _commerceOrderLocalService.getCommerceOrder(
-						commerceOrderId);
+					CommerceOrder commerceOrder =
+						_commerceOrderLocalService.getCommerceOrder(
+							commerceOrderId);
 
 					if (!Objects.equals(
 							commerceOrder.getCommercePaymentMethodKey(),

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -30,8 +30,6 @@ import com.liferay.portal.util.PortalImpl;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.security.Key;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,9 +58,9 @@ public class StartPaymentAuthorizeNetServletTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_user = UserTestUtil.addUser();
+		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_company = CompanyLocalServiceUtil.getCompany(_group.getCompanyId());
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test
@@ -97,8 +95,6 @@ public class StartPaymentAuthorizeNetServletTest {
 				mockHttpServletRequest.setParameter(
 					"uuid", String.valueOf(commerceOrder.getUuid()));
 
-				Key key = _company.getKeyObj();
-
 				MockHttpServletResponse mockHttpServletResponse =
 					new MockHttpServletResponse();
 
@@ -112,7 +108,7 @@ public class StartPaymentAuthorizeNetServletTest {
 				mockHttpServletRequest.addParameter(
 					"guestToken",
 					_encryptor.encrypt(
-						key,
+						_company.getKeyObj(),
 						String.valueOf(commerceOrder.getCommerceOrderId())));
 
 				mockHttpServletResponse = new MockHttpServletResponse();
@@ -120,14 +116,18 @@ public class StartPaymentAuthorizeNetServletTest {
 				_servlet.service(
 					mockHttpServletRequest, mockHttpServletResponse);
 
-				String content = mockHttpServletResponse.getContentAsString();
+				String contentString =
+					mockHttpServletResponse.getContentAsString();
 
-				Assert.assertTrue(content.contains("formAuthorizeNet"));
+				Assert.assertTrue(contentString.contains("formAuthorizeNet"));
 			}
 		}
 	}
 
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private Encryptor _encryptor;

@@ -147,7 +147,7 @@ public class CommercePaymentServlet extends HttpServlet {
 
 					PermissionThreadLocal.setPermissionChecker(
 						PermissionCheckerFactoryUtil.create(
-							_getUser(httpServletRequest, commerceOrder)));
+							_getUser(commerceOrder, httpServletRequest)));
 
 					_commercePaymentEngine.updateOrderPaymentStatus(
 						_commerceOrderId,
@@ -210,7 +210,7 @@ public class CommercePaymentServlet extends HttpServlet {
 	}
 
 	private User _getUser(
-			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		User user = _portal.getUser(httpServletRequest);
@@ -293,7 +293,7 @@ public class CommercePaymentServlet extends HttpServlet {
 
 					PermissionThreadLocal.setPermissionChecker(
 						PermissionCheckerFactoryUtil.create(
-							_getUser(httpServletRequest, commerceOrder)));
+							_getUser(commerceOrder, httpServletRequest)));
 
 					_commercePaymentEngine.updateOrderPaymentStatus(
 						_commerceOrderId,

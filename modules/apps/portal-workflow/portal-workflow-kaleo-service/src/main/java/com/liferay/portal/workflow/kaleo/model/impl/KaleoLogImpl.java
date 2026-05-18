@@ -5,8 +5,33 @@
 
 package com.liferay.portal.workflow.kaleo.model.impl;
 
+import com.liferay.portal.kernel.search.IndexableAware;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
+
+import java.util.Objects;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class KaleoLogImpl extends KaleoLogBaseImpl {
+public class KaleoLogImpl extends KaleoLogBaseImpl implements IndexableAware {
+
+	@Override
+	public boolean shouldIndex() {
+		KaleoDefinition kaleoDefinition =
+			KaleoDefinitionLocalServiceUtil.fetchKaleoDefinition(
+				getKaleoDefinitionId());
+
+		if ((kaleoDefinition != null) &&
+			Objects.equals(
+				WorkflowDefinitionConstants.SCOPE_AI,
+				kaleoDefinition.getScope())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 }

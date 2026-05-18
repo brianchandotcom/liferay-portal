@@ -5,13 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -21,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,21 +38,13 @@ import java.util.Objects;
 public class ViewHomeQuickActionsDisplayContext {
 
 	public ViewHomeQuickActionsDisplayContext(
-		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
 		ObjectDefinitionService objectDefinitionService,
-		ObjectEntryFolderLocalService objectEntryFolderLocalService,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
 		SectionDisplayContextHelper sectionDisplayContextHelper,
 		ThemeDisplay themeDisplay) {
 
-		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_objectDefinitionService = objectDefinitionService;
-		_objectEntryFolderLocalService = objectEntryFolderLocalService;
-		_objectEntryFolderModelResourcePermission =
-			objectEntryFolderModelResourcePermission;
 		_sectionDisplayContextHelper = sectionDisplayContextHelper;
 		_themeDisplay = themeDisplay;
 	}
@@ -242,12 +230,8 @@ public class ViewHomeQuickActionsDisplayContext {
 		"L_FILES", "document-default"
 	).build();
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final ObjectDefinitionService _objectDefinitionService;
-	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
-	private final ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
 	private List<Map<String, Object>> _quickActions;
 	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
 	private final ThemeDisplay _themeDisplay;

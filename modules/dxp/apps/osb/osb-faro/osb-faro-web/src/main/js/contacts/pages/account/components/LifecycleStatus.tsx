@@ -41,22 +41,20 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		variables: {groupId}
 	});
 
-	const matchingLifecycle = lifecyclesData?.find(
-		item => item.accountId === accountId
-	);
+	const accountLifecycle = lifecyclesData?.[0];
 
 	const {data: statusData, loading: statusLoading} = useRequest({
 		dataSourceFn: API.accounts.fetchLifecycleStatus,
-		skipRequest: !matchingLifecycle?.id,
+		skipRequest: !accountLifecycle,
 		variables: {
 			accountId,
-			accountLifecycleId: matchingLifecycle?.id ?? '',
+			accountLifecycleId: accountLifecycle?.id ?? '',
 			groupId
 		}
 	});
 
 	const isLoading =
-		lifecyclesLoading || (Boolean(matchingLifecycle?.id) && statusLoading);
+		lifecyclesLoading || (Boolean(accountLifecycle?.id) && statusLoading);
 
 	if (isLoading) {
 		return (
@@ -69,7 +67,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 	}
 
 	const lifecycle: IAccountLifecycleStatus | undefined = statusData;
-	const stages = (lifecycle?.stages ?? [])
+	const stages = (lifecycle?.accountLifecycleStageStatuses ?? [])
 		.slice()
 		.sort((a, b) => a.displayOrder - b.displayOrder);
 
@@ -80,8 +78,9 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		stage => stage.stageType === LifecycleStages.AT_RISK
 	);
 
-	const activeIndex = progressionStages.findIndex(
-		stage => stage.startDate && !stage.endDate
+	const activeIndex = progressionStages.reduce(
+		(lastIndex, stage, i) => (stage.startDate ? i : lastIndex),
+		-1
 	);
 	const activeStage =
 		activeIndex >= 0 ? progressionStages[activeIndex] : undefined;
@@ -109,7 +108,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 								active={i === activeIndex}
 								expand={i + 1 !== progressionStages.length}
 								key={stage.id}
-								state={stage.endDate ? 'complete' : undefined}
+								state={i < activeIndex ? 'complete' : undefined}
 							>
 								<MultiStepNav.Title>
 									{getStageLabel(stage)}

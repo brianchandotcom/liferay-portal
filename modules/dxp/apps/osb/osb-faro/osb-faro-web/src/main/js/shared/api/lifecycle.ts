@@ -28,17 +28,17 @@ export interface IAccountLifecycle {
 export interface IAccountLifecycleStageStatus {
 	description?: string;
 	displayOrder: number;
-	endDate?: string;
+	endDate?: number | null;
 	id: string;
-	maxDuration?: number;
+	maxDuration?: number | null;
 	stageType: string;
-	startDate?: string;
+	startDate?: number | null;
 }
 
 export interface IAccountLifecycleStatus {
+	accountLifecycleStageStatuses?: IAccountLifecycleStageStatus[];
 	id: string;
 	name: string;
-	stages?: IAccountLifecycleStageStatus[];
 }
 
 interface IFetchOverviewMetrics {

@@ -88,9 +88,9 @@ public class DynamicQueryEntryTest {
 
 	@Test
 	public void testAddOrder() {
-		_assertAddOrder(
+		_testAddOrder(
 			OrderFactoryUtil.asc("amount"), "alpha", "beta", "gamma", "delta");
-		_assertAddOrder(
+		_testAddOrder(
 			OrderFactoryUtil.desc("amount"), "delta", "gamma", "beta", "alpha");
 	}
 
@@ -120,8 +120,7 @@ public class DynamicQueryEntryTest {
 
 			});
 
-		_assertDynamicQueryResult(
-			dynamicQuery, "delta", "gamma", "beta", "alpha");
+		_testDynamicQuery(dynamicQuery, "delta", "gamma", "beta", "alpha");
 	}
 
 	@Test
@@ -133,7 +132,7 @@ public class DynamicQueryEntryTest {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("parent.name", "alpha"));
 
-		_assertDynamicQueryResult(dynamicQuery, "alpha");
+		_testDynamicQuery(dynamicQuery, "alpha");
 
 		Property property = PropertyFactoryUtil.forName("parent.name");
 
@@ -142,7 +141,7 @@ public class DynamicQueryEntryTest {
 
 		dynamicQuery.add(property.eq("alpha"));
 
-		_assertDynamicQueryResult(dynamicQuery, "alpha");
+		_testDynamicQuery(dynamicQuery, "alpha");
 
 		dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			DynamicQueryEntry.class, "child", clazz.getClassLoader());
@@ -155,27 +154,27 @@ public class DynamicQueryEntryTest {
 
 		property = PropertyFactoryUtil.forName("name");
 
-		_assertCriterion(property.eq(dynamicQuery), "alpha");
+		_testCriterion(property.eq(dynamicQuery), "alpha");
 	}
 
 	@Test
 	public void testCompareProperty() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.eqProperty("createDate", "modifiedDate"),
 			"alpha", "gamma");
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.geProperty("modifiedDate", "createDate"),
 			"alpha", "beta", "gamma", "delta");
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.gtProperty("modifiedDate", "createDate"),
 			"beta", "delta");
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.leProperty("createDate", "modifiedDate"),
 			"alpha", "beta", "gamma", "delta");
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.ltProperty("createDate", "modifiedDate"),
 			"beta", "delta");
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.neProperty("createDate", "modifiedDate"),
 			"beta", "delta");
 	}
@@ -188,7 +187,7 @@ public class DynamicQueryEntryTest {
 		conjunction.add(RestrictionsFactoryUtil.le("amount", 300L));
 		conjunction.add(RestrictionsFactoryUtil.eq("status", 1));
 
-		_assertCriterion(conjunction, "alpha", "gamma");
+		_testCriterion(conjunction, "alpha", "gamma");
 	}
 
 	@Test
@@ -199,16 +198,16 @@ public class DynamicQueryEntryTest {
 		disjunction.add(RestrictionsFactoryUtil.eq("name", "alpha"));
 		disjunction.add(RestrictionsFactoryUtil.like("name", "g%"));
 
-		_assertCriterion(disjunction, "alpha", "beta", "gamma");
+		_testCriterion(disjunction, "alpha", "beta", "gamma");
 	}
 
 	@Test
 	public void testEq() {
-		_assertCriterion(RestrictionsFactoryUtil.eq("name", "alpha"), "alpha");
+		_testCriterion(RestrictionsFactoryUtil.eq("name", "alpha"), "alpha");
 
 		Property property = PropertyFactoryUtil.forName("name");
 
-		_assertCriterion(property.eq("alpha"), "alpha");
+		_testCriterion(property.eq("alpha"), "alpha");
 
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
@@ -217,11 +216,11 @@ public class DynamicQueryEntryTest {
 
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.eq(dynamicQuery), "alpha");
+		_testCriterion(property.eq(dynamicQuery), "alpha");
 
-		_assertCriterion(property.eqAll(dynamicQuery), "alpha");
+		_testCriterion(property.eqAll(dynamicQuery), "alpha");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.sqlRestriction(
 				"name = ?", "alpha", Type.STRING),
 			"alpha");
@@ -229,13 +228,13 @@ public class DynamicQueryEntryTest {
 
 	@Test
 	public void testGe() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.ge("amount", 200L), "beta", "gamma",
 			"delta");
 
 		Property property = PropertyFactoryUtil.forName("amount");
 
-		_assertCriterion(property.ge(200L), "beta", "gamma", "delta");
+		_testCriterion(property.ge(200L), "beta", "gamma", "delta");
 
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
@@ -243,26 +242,26 @@ public class DynamicQueryEntryTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.ge(dynamicQuery), "beta", "gamma", "delta");
+		_testCriterion(property.ge(dynamicQuery), "beta", "gamma", "delta");
 
 		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.geAll(dynamicQuery), "gamma", "delta");
-		_assertCriterion(
+		_testCriterion(property.geAll(dynamicQuery), "gamma", "delta");
+		_testCriterion(
 			property.geSome(dynamicQuery), "alpha", "beta", "gamma", "delta");
 	}
 
 	@Test
 	public void testGt() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.gt("amount", 200L), "gamma", "delta");
 
 		Property property = PropertyFactoryUtil.forName("amount");
 
-		_assertCriterion(property.gt(200L), "gamma", "delta");
+		_testCriterion(property.gt(200L), "gamma", "delta");
 
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
@@ -270,27 +269,26 @@ public class DynamicQueryEntryTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.gt(dynamicQuery), "gamma", "delta");
+		_testCriterion(property.gt(dynamicQuery), "gamma", "delta");
 
 		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.gtAll(dynamicQuery), "delta");
-		_assertCriterion(
-			property.gtSome(dynamicQuery), "beta", "gamma", "delta");
+		_testCriterion(property.gtAll(dynamicQuery), "delta");
+		_testCriterion(property.gtSome(dynamicQuery), "beta", "gamma", "delta");
 	}
 
 	@Test
 	public void testIn() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.in("status", new Integer[] {1, 3}), "alpha",
 			"gamma", "delta");
 
 		Property property = PropertyFactoryUtil.forName("status");
 
-		_assertCriterion(
+		_testCriterion(
 			property.in(Arrays.asList(1, 3)), "alpha", "gamma", "delta");
 
 		DynamicQuery dynamicQuery =
@@ -299,8 +297,8 @@ public class DynamicQueryEntryTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.ne("status", 2));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.in(dynamicQuery), "alpha", "gamma", "delta");
-		_assertCriterion(property.notIn(dynamicQuery), "beta");
+		_testCriterion(property.in(dynamicQuery), "alpha", "gamma", "delta");
+		_testCriterion(property.notIn(dynamicQuery), "beta");
 
 		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
 
@@ -309,7 +307,7 @@ public class DynamicQueryEntryTest {
 			ProjectionFactoryUtil.distinct(
 				ProjectionFactoryUtil.property("status")));
 
-		_assertCriterion(property.in(dynamicQuery), "alpha", "gamma");
+		_testCriterion(property.in(dynamicQuery), "alpha", "gamma");
 	}
 
 	@Test
@@ -342,18 +340,18 @@ public class DynamicQueryEntryTest {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.in("dynamicQueryEntryId", ids));
 
-			_assertDynamicQueryResult(dynamicQuery, "alpha");
+			_testDynamicQuery(dynamicQuery, "alpha");
 		}
 	}
 
 	@Test
 	public void testLe() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.le("amount", 200L), "alpha", "beta");
 
 		Property property = PropertyFactoryUtil.forName("amount");
 
-		_assertCriterion(property.le(200L), "alpha", "beta");
+		_testCriterion(property.le(200L), "alpha", "beta");
 
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
@@ -361,36 +359,34 @@ public class DynamicQueryEntryTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.le(dynamicQuery), "alpha", "beta");
+		_testCriterion(property.le(dynamicQuery), "alpha", "beta");
 
 		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 1));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.leAll(dynamicQuery), "alpha");
-		_assertCriterion(
-			property.leSome(dynamicQuery), "alpha", "beta", "gamma");
+		_testCriterion(property.leAll(dynamicQuery), "alpha");
+		_testCriterion(property.leSome(dynamicQuery), "alpha", "beta", "gamma");
 	}
 
 	@Test
 	public void testLike() throws Exception {
-		_assertCriterion(RestrictionsFactoryUtil.ilike("name", "A%"), "alpha");
+		_testCriterion(RestrictionsFactoryUtil.ilike("name", "A%"), "alpha");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.like("name", "%a"), "alpha", "beta",
 			"gamma", "delta");
 
 		Property property = PropertyFactoryUtil.forName("name");
 
-		_assertCriterion(
-			property.like("%a"), "alpha", "beta", "gamma", "delta");
+		_testCriterion(property.like("%a"), "alpha", "beta", "gamma", "delta");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.sqlRestriction("name like 'alph%'"),
 			"alpha");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.sqlRestriction("name not like 'alph%'"),
 			"beta", "gamma", "delta");
 
@@ -405,7 +401,7 @@ public class DynamicQueryEntryTest {
 				RestrictionsFactoryUtil.sqlRestriction(
 					"name like 'a=%%' ESCAPE '='"));
 
-			_assertDynamicQueryResult(dynamicQuery, "a%b");
+			_testDynamicQuery(dynamicQuery, "a%b");
 		}
 		finally {
 			_dynamicQueryEntryLocalService.deleteDynamicQueryEntry(
@@ -415,11 +411,11 @@ public class DynamicQueryEntryTest {
 
 	@Test
 	public void testLt() {
-		_assertCriterion(RestrictionsFactoryUtil.lt("amount", 200L), "alpha");
+		_testCriterion(RestrictionsFactoryUtil.lt("amount", 200L), "alpha");
 
 		Property property = PropertyFactoryUtil.forName("amount");
 
-		_assertCriterion(property.lt(200L), "alpha");
+		_testCriterion(property.lt(200L), "alpha");
 
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
@@ -427,36 +423,35 @@ public class DynamicQueryEntryTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("status", 2));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.lt(dynamicQuery), "alpha");
+		_testCriterion(property.lt(dynamicQuery), "alpha");
 
 		dynamicQuery = _dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.ge("amount", 300L));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.ltAll(dynamicQuery), "alpha", "beta");
-		_assertCriterion(
-			property.ltSome(dynamicQuery), "alpha", "beta", "gamma");
+		_testCriterion(property.ltAll(dynamicQuery), "alpha", "beta");
+		_testCriterion(property.ltSome(dynamicQuery), "alpha", "beta", "gamma");
 	}
 
 	@Test
 	public void testMix() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.and(
 				RestrictionsFactoryUtil.eq("status", 1),
 				RestrictionsFactoryUtil.ge("amount", 200L)),
 			"gamma");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.between("amount", 150L, 350L), "beta",
 			"gamma");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.not(
 				RestrictionsFactoryUtil.eq("name", "alpha")),
 			"beta", "gamma", "delta");
 
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.or(
 				RestrictionsFactoryUtil.eq("name", "alpha"),
 				RestrictionsFactoryUtil.eq("name", "delta")),
@@ -465,13 +460,13 @@ public class DynamicQueryEntryTest {
 
 	@Test
 	public void testNe() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.ne("name", "alpha"), "beta", "gamma",
 			"delta");
 
 		Property property = PropertyFactoryUtil.forName("name");
 
-		_assertCriterion(property.ne("alpha"), "beta", "gamma", "delta");
+		_testCriterion(property.ne("alpha"), "beta", "gamma", "delta");
 
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
@@ -479,7 +474,7 @@ public class DynamicQueryEntryTest {
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("name", "alpha"));
 		dynamicQuery.setProjection(property);
 
-		_assertCriterion(property.ne(dynamicQuery), "beta", "gamma", "delta");
+		_testCriterion(property.ne(dynamicQuery), "beta", "gamma", "delta");
 	}
 
 	@Test
@@ -494,7 +489,7 @@ public class DynamicQueryEntryTest {
 		disjunction.add(conjunction);
 		disjunction.add(RestrictionsFactoryUtil.eq("name", "delta"));
 
-		_assertCriterion(disjunction, "gamma", "delta");
+		_testCriterion(disjunction, "gamma", "delta");
 	}
 
 	@Test
@@ -509,7 +504,7 @@ public class DynamicQueryEntryTest {
 		conjunction.add(disjunction);
 		conjunction.add(RestrictionsFactoryUtil.eq("status", 1));
 
-		_assertCriterion(conjunction, "alpha", "gamma");
+		_testCriterion(conjunction, "alpha", "gamma");
 	}
 
 	@Test
@@ -519,21 +514,20 @@ public class DynamicQueryEntryTest {
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
 
-		_assertDynamicQueryResult(
-			dynamicQuery, "alpha", "beta", "gamma", "delta");
+		_testDynamicQuery(dynamicQuery, "alpha", "beta", "gamma", "delta");
 	}
 
 	@Test
 	public void testNull() {
-		_assertCriterion(
+		_testCriterion(
 			RestrictionsFactoryUtil.isNotNull("description"), "alpha", "gamma",
 			"delta");
-		_assertCriterion(RestrictionsFactoryUtil.isNull("description"), "beta");
+		_testCriterion(RestrictionsFactoryUtil.isNull("description"), "beta");
 
 		Property property = PropertyFactoryUtil.forName("description");
 
-		_assertCriterion(property.isNotNull(), "alpha", "gamma", "delta");
-		_assertCriterion(property.isNull(), "beta");
+		_testCriterion(property.isNotNull(), "alpha", "gamma", "delta");
+		_testCriterion(property.isNull(), "beta");
 	}
 
 	@Test
@@ -622,23 +616,22 @@ public class DynamicQueryEntryTest {
 				"name AS sqlName", new String[] {"sqlName"},
 				new Type[] {Type.STRING}));
 
-		_assertDynamicQueryResult(
-			dynamicQuery, "alpha", "beta", "gamma", "delta");
+		_testDynamicQuery(dynamicQuery, "alpha", "beta", "gamma", "delta");
 	}
 
 	@Test
 	public void testSetLimit() {
-		_assertSetLimit(-5, -3);
-		_assertSetLimit(2, 2);
-		_assertSetLimit(5, 2);
-		_assertSetLimit(0, 2, "alpha", "beta");
-		_assertSetLimit(1, 2, "beta");
-		_assertSetLimit(-5, 3, "alpha", "beta", "gamma");
-		_assertSetLimit(2, QueryUtil.ALL_POS, "gamma", "delta");
-		_assertSetLimit(
+		_testSetLimit(-5, -3);
+		_testSetLimit(2, 2);
+		_testSetLimit(5, 2);
+		_testSetLimit(0, 2, "alpha", "beta");
+		_testSetLimit(1, 2, "beta");
+		_testSetLimit(-5, 3, "alpha", "beta", "gamma");
+		_testSetLimit(2, QueryUtil.ALL_POS, "gamma", "delta");
+		_testSetLimit(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, "alpha", "beta", "gamma",
 			"delta");
-		_assertSetLimit(QueryUtil.ALL_POS, -50);
+		_testSetLimit(QueryUtil.ALL_POS, -50);
 	}
 
 	private static DynamicQueryEntry _addDynamicQueryEntry(
@@ -663,28 +656,26 @@ public class DynamicQueryEntryTest {
 			dynamicQueryEntry);
 	}
 
-	private void _assertAddOrder(Order order, String... expectedNames) {
+	private void _testAddOrder(Order order, String... expectedNames) {
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(order);
 
-		_assertDynamicQueryResult(dynamicQuery, expectedNames);
+		_testDynamicQuery(dynamicQuery, expectedNames);
 	}
 
-	private void _assertCriterion(
-		Criterion criterion, String... expectedNames) {
-
+	private void _testCriterion(Criterion criterion, String... expectedNames) {
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.add(criterion);
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
 
-		_assertDynamicQueryResult(dynamicQuery, expectedNames);
+		_testDynamicQuery(dynamicQuery, expectedNames);
 	}
 
-	private void _assertDynamicQueryResult(
+	private void _testDynamicQuery(
 		DynamicQuery dynamicQuery, String... expectedNames) {
 
 		List<?> results = _dynamicQueryEntryLocalService.dynamicQuery(
@@ -711,14 +702,14 @@ public class DynamicQueryEntryTest {
 		}
 	}
 
-	private void _assertSetLimit(int start, int end, String... expectedNames) {
+	private void _testSetLimit(int start, int end, String... expectedNames) {
 		DynamicQuery dynamicQuery =
 			_dynamicQueryEntryLocalService.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("dynamicQueryEntryId"));
 		dynamicQuery.setLimit(start, end);
 
-		_assertDynamicQueryResult(dynamicQuery, expectedNames);
+		_testDynamicQuery(dynamicQuery, expectedNames);
 	}
 
 	private static final List<DynamicQueryEntry> _dynamicQueryEntries =

@@ -21,7 +21,6 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -119,7 +118,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		ObjectEntry objectEntry = _getObjectEntryWithInviteCheck(roomId);
+		ObjectEntry objectEntry = _getObjectEntry(true, roomId);
 
 		Group group = _groupService.getGroup(
 			MapUtil.getLong(objectEntry.getValues(), "siteId"));
@@ -186,7 +185,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new ValidationException("Email Address is null");
 		}
 
-		ObjectEntry objectEntry = _getObjectEntryWithInviteCheck(roomId);
+		ObjectEntry objectEntry = _getObjectEntry(true, roomId);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -324,53 +323,42 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return ticket;
 	}
 
-	private void _checkInvitePermission(ObjectEntry objectEntry)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
-
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				objectDefinition.getClassName());
-
-		if ((modelResourcePermission != null) &&
-			modelResourcePermission.contains(
-				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
-
-			return;
-		}
-
-		GroupPermissionUtil.check(
-			permissionChecker,
-			MapUtil.getLong(objectEntry.getValues(), "siteId"),
-			ActionKeys.ASSIGN_MEMBERS);
-	}
-
 	private Group _getGroup(long roomId) throws Exception {
-		ObjectEntry objectEntry = _getObjectEntry(roomId);
+		ObjectEntry objectEntry = _getObjectEntry(false, roomId);
 
 		return _groupService.getGroup(
 			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 	}
 
-	private ObjectEntry _getObjectEntry(long roomId) throws Exception {
-		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
-
-		_objectEntryService.checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), roomId, ActionKeys.UPDATE);
-
-		return objectEntry;
-	}
-
-	private ObjectEntry _getObjectEntryWithInviteCheck(long roomId)
+	private ObjectEntry _getObjectEntry(boolean checkPermissions, long roomId)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
 
-		_checkInvitePermission(objectEntry);
+		if (checkPermissions) {
+			ObjectDefinition objectDefinition =
+				objectEntry.getObjectDefinition();
+
+			ModelResourcePermission<ObjectEntry> modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					objectDefinition.getClassName());
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (!modelResourcePermission.contains(
+					permissionChecker, objectEntry, ActionKeys.UPDATE)) {
+
+				GroupPermissionUtil.check(
+					permissionChecker,
+					MapUtil.getLong(objectEntry.getValues(), "siteId"),
+					ActionKeys.ASSIGN_MEMBERS);
+			}
+		}
+		else {
+			_objectEntryService.checkModelResourcePermission(
+				objectEntry.getObjectDefinitionId(), roomId, ActionKeys.UPDATE);
+		}
 
 		return objectEntry;
 	}

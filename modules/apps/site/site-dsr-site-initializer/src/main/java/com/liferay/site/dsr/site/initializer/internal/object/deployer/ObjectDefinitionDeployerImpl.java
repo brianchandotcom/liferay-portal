@@ -148,15 +148,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		Group group = layoutSetPrototype.getGroup();
 
-		Role contributorRole =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
-				companyId);
+		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
+			DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
+			companyId);
 
-		if (contributorRole == null) {
+		if (role == null) {
 			User user = _userLocalService.getGuestUser(companyId);
 
-			contributorRole = _roleLocalService.addRole(
+			role = _roleLocalService.addRole(
 				DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
 				user.getUserId(), null, 0, DSRRoleConstants.DSR_CONTRIBUTOR,
 				null, null, RoleConstants.TYPE_SITE, null, null);
@@ -166,9 +165,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			companyId, Group.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			contributorRole.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
+			role.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
 
-		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
+		role = _roleLocalService.fetchRoleByExternalReferenceCode(
 			DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE, companyId);
 
 		if (role == null) {

@@ -11,7 +11,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -125,11 +124,8 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 		return _toInvitedMember(ticket);
 	}
 
-	private void _checkInvitePermission(ObjectEntry objectEntry)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+	private ObjectEntry _getObjectEntry(long roomId) throws Exception {
+		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
 
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
@@ -137,23 +133,17 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
-		if ((modelResourcePermission != null) &&
-			modelResourcePermission.contains(
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!modelResourcePermission.contains(
 				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
 
-			return;
+			GroupPermissionUtil.check(
+				permissionChecker,
+				MapUtil.getLong(objectEntry.getValues(), "siteId"),
+				ActionKeys.ASSIGN_MEMBERS);
 		}
-
-		GroupPermissionUtil.check(
-			permissionChecker,
-			MapUtil.getLong(objectEntry.getValues(), "siteId"),
-			ActionKeys.ASSIGN_MEMBERS);
-	}
-
-	private ObjectEntry _getObjectEntry(long roomId) throws Exception {
-		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
-
-		_checkInvitePermission(objectEntry);
 
 		return objectEntry;
 	}
@@ -170,17 +160,16 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			throw new NoSuchModelException();
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
 		ModelResourcePermission<ObjectEntry> modelResourcePermission =
 			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
 				objectDefinition.getClassName());
 
-		if ((modelResourcePermission != null) &&
-			modelResourcePermission.contains(
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (modelResourcePermission.contains(
 				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
 
 			return ticket;
@@ -189,22 +178,23 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 		if (GroupPermissionUtil.contains(
 				permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
 
-			long result = 0;
+			long ownerId = 0;
+
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				ticket.getExtraInfo());
 
 			if ((jsonObject != null) && !jsonObject.isNull("ownerId")) {
-				result = jsonObject.getLong("ownerId");
+				ownerId = jsonObject.getLong("ownerId");
 			}
 
-			if (result == contextUser.getUserId()) {
+			if (ownerId == contextUser.getUserId()) {
 				return ticket;
 			}
 		}
 
 		throw new PrincipalException.MustHavePermission(
-			contextUser.getUserId(), Ticket.class.getName(), ticketId,
-			ActionKeys.UPDATE);
+			contextUser.getUserId(), ObjectEntry.class.getName(),
+			objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
 	}
 
 	private InvitedMember _toInvitedMember(Ticket ticket) throws Exception {

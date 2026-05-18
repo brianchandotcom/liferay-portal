@@ -116,7 +116,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				LayoutSetPrototypeSyncContextThreadLocal.setSyncSessionId(
 					syncSessionId);
 
-				executeLayoutSetSync(layoutSet);
+				executeLayoutSetSync(false, layoutSet);
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -135,8 +135,13 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void executeLayoutSetSync(LayoutSet layoutSet)
 		throws PortalException {
+=======
+	public void executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
+		throws Exception {
+>>>>>>> 2099a51f69c85 (LPD-87027 Syncronized the permissions only for the first sync (when the Site is created from the Site Template))
 
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
@@ -166,7 +171,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					layoutSet.getCompanyId());
 
 		_mergeLayoutSetPrototypeLayoutsInBackground(
-			layoutSet, layoutSetPrototype);
+			initialSync, layoutSet, layoutSetPrototype);
 	}
 
 	@Override
@@ -592,7 +597,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			));
 	}
 
-	private Map<String, String[]> _getLayoutSetPrototypesParameters() {
+	private Map<String, String[]> _getLayoutSetPrototypesParameters(
+		boolean initialSync) {
+
 		return LinkedHashMapBuilder.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
 			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
@@ -627,7 +634,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.FALSE.toString()}
+			new String[] {String.valueOf(initialSync)}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
@@ -761,7 +768,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	private void _mergeLayoutSetPrototypeLayoutsInBackground(
-			LayoutSet layoutSet, LayoutSetPrototype layoutSetPrototype)
+			boolean initialSync, LayoutSet layoutSet,
+			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException {
 
 		if (ExportImportThreadLocal.isExportInProcess() ||
@@ -787,8 +795,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		Map<String, String[]> parameterMap =
-			_getLayoutSetPrototypesParameters();
+		Map<String, String[]> parameterMap = _getLayoutSetPrototypesParameters(
+			initialSync);
 
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,

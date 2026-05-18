@@ -1078,16 +1078,15 @@ public class EditAssetListDisplayContext {
 
 		List<Long> classTypeIdsList = new ArrayList<>();
 
-		for (Map.Entry<String, String> entry : _unicodeProperties.entrySet()) {
-			if (!entry.getKey(
-				).startsWith(
-					"classTypeIds"
-				)) {
-
+		for (String entryKey : _unicodeProperties.keySet()) {
+			if (!entryKey.startsWith("classTypeIds")) {
 				continue;
 			}
 
-			for (String classTypeId : StringUtil.split(entry.getValue())) {
+			for (String classTypeId :
+					StringUtil.split(
+						_unicodeProperties.getProperty(entryKey))) {
+
 				classTypeIdsList.add(GetterUtil.getLong(classTypeId));
 			}
 		}

@@ -174,6 +174,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalInetSocketAddressEventListener;
@@ -1027,7 +1028,9 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Group fetchFriendlyURLGroup(long companyId, String path) {
+	public ObjectValuePair<Group, String> fetchFriendlyURLGroup(
+		long companyId, String path) {
+
 		if ((path == null) || path.equals(StringPool.SLASH)) {
 			return null;
 		}
@@ -1063,14 +1066,14 @@ public class PortalImpl implements Portal {
 			companyId, groupFriendlyURL);
 
 		if (group != null) {
-			return group;
+			return new ObjectValuePair<>(group, groupFriendlyURL);
 		}
 
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
 			companyId, groupFriendlyURL.substring(1));
 
 		if (user != null) {
-			return user.getGroup();
+			return new ObjectValuePair<>(user.getGroup(), groupFriendlyURL);
 		}
 
 		return null;

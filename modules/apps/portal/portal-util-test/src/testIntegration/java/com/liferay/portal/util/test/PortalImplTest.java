@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -79,11 +80,18 @@ public class PortalImplTest {
 			userGroup.getGroupId(),
 			StringPool.SLASH + RandomTestUtil.randomString());
 
-		Group group = _portal.fetchFriendlyURLGroup(
-			TestPropsValues.getCompanyId(),
-			StringPool.SLASH + _user.getScreenName());
+		ObjectValuePair<Group, String> friendlyURLGroup =
+			_portal.fetchFriendlyURLGroup(
+				TestPropsValues.getCompanyId(),
+				StringPool.SLASH + _user.getScreenName());
+
+		Group group = friendlyURLGroup.getKey();
 
 		Assert.assertEquals(userGroup.getGroupId(), group.getGroupId());
+
+		Assert.assertEquals(
+			StringPool.SLASH + _user.getScreenName(),
+			friendlyURLGroup.getValue());
 	}
 
 	@Test
@@ -92,11 +100,17 @@ public class PortalImplTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		Group group = _portal.fetchFriendlyURLGroup(
-			TestPropsValues.getCompanyId(),
-			_group.getFriendlyURL() + "/some-layout");
+		ObjectValuePair<Group, String> friendlyURLGroup =
+			_portal.fetchFriendlyURLGroup(
+				TestPropsValues.getCompanyId(),
+				_group.getFriendlyURL() + "/some-layout");
+
+		Group group = friendlyURLGroup.getKey();
 
 		Assert.assertEquals(_group.getGroupId(), group.getGroupId());
+
+		Assert.assertEquals(
+			_group.getFriendlyURL(), friendlyURLGroup.getValue());
 	}
 
 	@Test
@@ -105,10 +119,16 @@ public class PortalImplTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		Group group = _portal.fetchFriendlyURLGroup(
-			TestPropsValues.getCompanyId(), _group.getFriendlyURL());
+		ObjectValuePair<Group, String> friendlyURLGroup =
+			_portal.fetchFriendlyURLGroup(
+				TestPropsValues.getCompanyId(), _group.getFriendlyURL());
+
+		Group group = friendlyURLGroup.getKey();
 
 		Assert.assertEquals(_group.getGroupId(), group.getGroupId());
+
+		Assert.assertEquals(
+			_group.getFriendlyURL(), friendlyURLGroup.getValue());
 	}
 
 	@Test
@@ -118,13 +138,19 @@ public class PortalImplTest {
 		_group = GroupTestUtil.addGroup();
 		_otherGroup = GroupTestUtil.addGroup();
 
-		Group group = _portal.fetchFriendlyURLGroup(
-			TestPropsValues.getCompanyId(),
-			StringBundler.concat(
-				_group.getFriendlyURL(), "/documents/d",
-				_otherGroup.getFriendlyURL(), "/abc"));
+		ObjectValuePair<Group, String> friendlyURLGroup =
+			_portal.fetchFriendlyURLGroup(
+				TestPropsValues.getCompanyId(),
+				StringBundler.concat(
+					_group.getFriendlyURL(), "/documents/d",
+					_otherGroup.getFriendlyURL(), "/abc"));
+
+		Group group = friendlyURLGroup.getKey();
 
 		Assert.assertEquals(_otherGroup.getGroupId(), group.getGroupId());
+
+		Assert.assertEquals(
+			_otherGroup.getFriendlyURL(), friendlyURLGroup.getValue());
 	}
 
 	@Test

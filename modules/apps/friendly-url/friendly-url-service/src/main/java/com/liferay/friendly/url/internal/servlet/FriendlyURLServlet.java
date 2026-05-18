@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -83,7 +84,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.AsyncPortletServletRequest;
-import com.liferay.portlet.documentlibrary.constants.DLFriendlyURLConstants;
 import com.liferay.redirect.provider.RedirectProvider;
 import com.liferay.redirect.tracker.RedirectNotFoundTracker;
 import com.liferay.site.model.SiteFriendlyURL;
@@ -127,34 +127,20 @@ public class FriendlyURLServlet extends HttpServlet {
 			return new Redirect();
 		}
 
-		String groupFriendlyURL = path;
-
-		int pos = path.indexOf(CharPool.SLASH, 1);
-
-		if (pos != -1) {
-			String friendlyURL = path.substring(pos);
-
-			if (friendlyURL.startsWith(
-					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT)) {
-
-				String fileEntryFriendlyURL = friendlyURL.substring(
-					DLFriendlyURLConstants.PATH_PREFIX_DOCUMENT.length() - 1);
-
-				groupFriendlyURL = fileEntryFriendlyURL.substring(
-					0, fileEntryFriendlyURL.indexOf(CharPool.SLASH, 1));
-			}
-			else {
-				groupFriendlyURL = path.substring(0, pos);
-			}
-		}
-
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
-		Group group = (Group)httpServletRequest.getAttribute(WebKeys.GROUP);
+		ObjectValuePair<Group, String> friendlyURLGroup =
+			(ObjectValuePair<Group, String>)httpServletRequest.getAttribute(
+				WebKeys.FRIENDLY_URL_GROUP);
 
-		if (group == null) {
-			group = portal.fetchFriendlyURLGroup(companyId, path);
+		if (friendlyURLGroup == null) {
+			friendlyURLGroup = portal.fetchFriendlyURLGroup(companyId, path);
 		}
+
+		Group group =
+			(friendlyURLGroup == null) ? null : friendlyURLGroup.getKey();
+		String groupFriendlyURL =
+			(friendlyURLGroup == null) ? path : friendlyURLGroup.getValue();
 
 		if ((group == null) ||
 			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&
@@ -193,6 +179,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String layoutFriendlyURL = null;
 		Redirect redirectProviderRedirect = null;
+
+		int pos = path.indexOf(CharPool.SLASH, 1);
 
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			layoutFriendlyURL = path.substring(pos);

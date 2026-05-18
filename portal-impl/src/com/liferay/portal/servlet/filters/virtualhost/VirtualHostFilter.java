@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -260,12 +261,13 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		if (layoutSet == null) {
-			Group group = PortalUtil.fetchFriendlyURLGroup(
-				CompanyThreadLocal.getCompanyId(), friendlyURL);
+			ObjectValuePair<Group, String> friendlyURLGroup =
+				PortalUtil.fetchFriendlyURLGroup(
+					CompanyThreadLocal.getCompanyId(), friendlyURL);
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
-				(group != null)) {
+				(friendlyURLGroup != null)) {
 
 				StringBundler sb = new StringBundler(3);
 
@@ -280,7 +282,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 					_log.debug("Forward to " + sb.toString());
 				}
 
-				httpServletRequest.setAttribute(WebKeys.GROUP, group);
+				httpServletRequest.setAttribute(
+					WebKeys.FRIENDLY_URL_GROUP, friendlyURLGroup);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher(sb.toString());
@@ -347,16 +350,17 @@ public class VirtualHostFilter extends BasePortalFilter {
 					StringPool.BLANK);
 			}
 
-			Group group = PortalUtil.fetchFriendlyURLGroup(
-				companyId, friendlyURL);
+			ObjectValuePair<Group, String> friendlyURLGroup =
+				PortalUtil.fetchFriendlyURLGroup(companyId, friendlyURL);
 
-			if (group != null) {
-				httpServletRequest.setAttribute(WebKeys.GROUP, group);
+			if (friendlyURLGroup != null) {
+				httpServletRequest.setAttribute(
+					WebKeys.FRIENDLY_URL_GROUP, friendlyURLGroup);
 			}
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
-				!layoutSet.isPrivateLayout() && (group != null)) {
+				!layoutSet.isPrivateLayout() && (friendlyURLGroup != null)) {
 
 				sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 			}

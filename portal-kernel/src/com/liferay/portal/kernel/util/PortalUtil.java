@@ -260,7 +260,8 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Resolves the friendly URL group implied by the given path.
+	 * Resolves the friendly URL group implied by the given path together with
+	 * the path-typed group friendly URL prefix that drove the resolution.
 	 *
 	 * <p>
 	 * Splits the path on the first slash and uses the first segment as the
@@ -273,10 +274,13 @@ public class PortalUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  path the request path beginning with a slash
-	 * @return the matching group, or <code>null</code> if the path is just a
-	 *         slash or no group nor user matches
+	 * @return a pair of the matching group (key) and the path-typed group
+	 *         friendly URL prefix (value), or <code>null</code> if the path is
+	 *         just a slash or no group nor user matches
 	 */
-	public static Group fetchFriendlyURLGroup(long companyId, String path) {
+	public static ObjectValuePair<Group, String> fetchFriendlyURLGroup(
+		long companyId, String path) {
+
 		return _portal.fetchFriendlyURLGroup(companyId, path);
 	}
 

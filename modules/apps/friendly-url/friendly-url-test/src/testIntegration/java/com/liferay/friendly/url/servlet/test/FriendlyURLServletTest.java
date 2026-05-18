@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -483,7 +484,9 @@ public class FriendlyURLServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(WebKeys.GROUP, _group);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.FRIENDLY_URL_GROUP,
+			new ObjectValuePair<>(_group, _group.getFriendlyURL()));
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		testGetRedirect(

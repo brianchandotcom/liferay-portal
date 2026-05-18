@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -99,7 +100,8 @@ public class VirtualHostFilterTest {
 				null, "/lpd82451-no-such-group");
 
 			Assert.assertNull(
-				mockHttpServletRequest.getAttribute(WebKeys.GROUP));
+				mockHttpServletRequest.getAttribute(
+					WebKeys.FRIENDLY_URL_GROUP));
 		}
 	}
 
@@ -240,12 +242,19 @@ public class VirtualHostFilterTest {
 		MockHttpServletRequest mockHttpServletRequest = _processFilter(
 			_publicLayoutSet, groupFriendlyURL + "/home");
 
-		Group stashedGroup = (Group)mockHttpServletRequest.getAttribute(
-			WebKeys.GROUP);
+		ObjectValuePair<Group, String> stashedFriendlyURLGroup =
+			(ObjectValuePair<Group, String>)mockHttpServletRequest.getAttribute(
+				WebKeys.FRIENDLY_URL_GROUP);
 
-		Assert.assertNotNull(stashedGroup);
+		Assert.assertNotNull(stashedFriendlyURLGroup);
+
+		Group stashedGroup = stashedFriendlyURLGroup.getKey();
+
 		Assert.assertEquals(
 			_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
+
+		Assert.assertEquals(
+			groupFriendlyURL, stashedFriendlyURLGroup.getValue());
 	}
 
 	@Test
@@ -262,12 +271,20 @@ public class VirtualHostFilterTest {
 			MockHttpServletRequest mockHttpServletRequest = _processFilter(
 				null, groupFriendlyURL + "/home");
 
-			Group stashedGroup = (Group)mockHttpServletRequest.getAttribute(
-				WebKeys.GROUP);
+			ObjectValuePair<Group, String> stashedFriendlyURLGroup =
+				(ObjectValuePair<Group, String>)
+					mockHttpServletRequest.getAttribute(
+						WebKeys.FRIENDLY_URL_GROUP);
 
-			Assert.assertNotNull(stashedGroup);
+			Assert.assertNotNull(stashedFriendlyURLGroup);
+
+			Group stashedGroup = stashedFriendlyURLGroup.getKey();
+
 			Assert.assertEquals(
 				_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
+
+			Assert.assertEquals(
+				groupFriendlyURL, stashedFriendlyURLGroup.getValue());
 		}
 	}
 

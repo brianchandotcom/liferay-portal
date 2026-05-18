@@ -7,6 +7,7 @@ import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import React from 'react';
 
@@ -32,8 +33,13 @@ export default function PreviewBody({
 		...selectorProps
 	} = usePreviewState(getPreviewDataURL, languageId);
 
-	const {handleIframeLoad, iframeError, iframeKey, reloadIframe} =
-		useIframeLoad(previewURL, isExternalURL);
+	const {
+		handleIframeLoad,
+		iframeError,
+		iframeKey,
+		isIframeLoading,
+		reloadIframe,
+	} = useIframeLoad(previewURL, isExternalURL);
 
 	const previewAlert = getPreviewAlert({
 		iframeError,
@@ -81,16 +87,28 @@ export default function PreviewBody({
 			) : (
 				<div className="align-items-center content-editor__preview__content d-flex position-relative">
 					{previewURL ? (
-						<iframe
-							className="border-0 d-block h-100 w-100"
-							key={iframeKey}
-							onLoad={(event) => {
-								handleIframeLoad();
-								preventIframeNavigation(event);
-							}}
-							src={previewURL}
-							title={Liferay.Language.get('preview')}
-						/>
+						<>
+							<iframe
+								className="border-0 d-block h-100 w-100"
+								key={iframeKey}
+								onLoad={(event) => {
+									handleIframeLoad();
+									preventIframeNavigation(event);
+								}}
+								src={previewURL}
+								title={Liferay.Language.get('preview')}
+							/>
+
+							{isIframeLoading ? (
+								<div className="align-items-center bg-white d-flex h-100 position-absolute w-100">
+									<ClayLoadingIndicator
+										displayType="primary"
+										shape="squares"
+										size="lg"
+									/>
+								</div>
+							) : null}
+						</>
 					) : (
 						<ClayEmptyState
 							className="mt-0"

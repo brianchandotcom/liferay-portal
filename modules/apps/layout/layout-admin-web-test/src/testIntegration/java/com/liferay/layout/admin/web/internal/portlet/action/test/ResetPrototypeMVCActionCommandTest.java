@@ -6,7 +6,6 @@
 package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -91,8 +90,6 @@ public class ResetPrototypeMVCActionCommandTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_layoutSetPrototypeGroup.getGroupId());
 
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		_sites.updateLayoutSetPrototypesLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			true);
@@ -144,9 +141,6 @@ public class ResetPrototypeMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(
 				_getThemeDisplay(groupPublishedLayout)),
 			new MockActionResponse());
-
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		groupPublishedLayout = _layoutLocalService.getLayout(
 			groupPublishedLayout.getPlid());
@@ -212,8 +206,6 @@ public class ResetPrototypeMVCActionCommandTest {
 	}
 
 	private void _propagateChanges(Group group) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
 
@@ -224,8 +216,6 @@ public class ResetPrototypeMVCActionCommandTest {
 		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
 
 		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 

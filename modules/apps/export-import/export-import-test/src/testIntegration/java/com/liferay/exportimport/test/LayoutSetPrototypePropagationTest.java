@@ -7,7 +7,6 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -295,8 +294,6 @@ public class LayoutSetPrototypePropagationTest
 
 		Assert.assertEquals(
 			_initialPrototypeLayoutsCount, getGroupLayoutCount());
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		LayoutServiceUtil.getLayouts(
 			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -1074,8 +1071,6 @@ public class LayoutSetPrototypePropagationTest
 				testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(),
 				false, true);
 
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 			_sites.mergeLayoutSetPrototypeLayouts(
 				testGroup, testGroup.getPrivateLayoutSet());
 
@@ -1143,8 +1138,6 @@ public class LayoutSetPrototypePropagationTest
 			setLinkEnabled(
 				testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 				true, false);
-
-			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 			_sites.mergeLayoutSetPrototypeLayouts(
 				testGroup, testGroup.getPublicLayoutSet());
@@ -1376,8 +1369,6 @@ public class LayoutSetPrototypePropagationTest
 			boolean layoutSetLayoutLinkEnabled)
 		throws Exception {
 
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		_layoutSetPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup, true, globalGroupId, layoutPrototype,
 			layoutSetLayoutLinkEnabled);
@@ -1469,8 +1460,6 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	protected void propagateChanges(Group group) throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), false);
 
@@ -1481,8 +1470,6 @@ public class LayoutSetPrototypePropagationTest
 		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
 
 		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 
@@ -1549,8 +1536,6 @@ public class LayoutSetPrototypePropagationTest
 
 			LayoutLocalServiceUtil.updateLayout(_layout);
 		}
-
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
 			group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0,

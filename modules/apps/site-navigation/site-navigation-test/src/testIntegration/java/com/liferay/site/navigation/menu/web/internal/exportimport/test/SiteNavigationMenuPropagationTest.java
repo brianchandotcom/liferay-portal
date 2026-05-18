@@ -6,7 +6,6 @@
 package com.liferay.site.navigation.menu.web.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -71,8 +70,6 @@ public class SiteNavigationMenuPropagationTest {
 
 		_prototypeLayout = LayoutTestUtil.addTypePortletLayout(
 			layoutSetPrototypeGroup, true);
-
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
 			_group, _layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
@@ -233,10 +230,6 @@ public class SiteNavigationMenuPropagationTest {
 	}
 
 	private void _propagateLayout() throws Exception {
-		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		UnicodeProperties settingsUnicodeProperties =

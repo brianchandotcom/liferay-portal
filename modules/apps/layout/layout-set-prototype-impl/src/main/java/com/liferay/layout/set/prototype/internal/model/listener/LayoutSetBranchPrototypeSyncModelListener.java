@@ -5,7 +5,6 @@
 
 package com.liferay.layout.set.prototype.internal.model.listener;
 
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,8 +45,6 @@ public class LayoutSetBranchPrototypeSyncModelListener
 					if (layoutSet == null) {
 						return null;
 					}
-
-					MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 					_layoutSetPrototypeHelper.executeLayoutSetSync(
 						true, layoutSet);

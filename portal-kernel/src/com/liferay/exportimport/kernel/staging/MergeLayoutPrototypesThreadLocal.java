@@ -35,10 +35,6 @@ public class MergeLayoutPrototypesThreadLocal {
 		return methodKeys.contains(new MethodKey(methodName, arguments));
 	}
 
-	public static boolean isSkipMerge() {
-		return _skipMerge.get();
-	}
-
 	public static void setInProgress(boolean inProgress) {
 		_inProgress.set(inProgress);
 	}
@@ -53,10 +49,6 @@ public class MergeLayoutPrototypesThreadLocal {
 		setInProgress(false);
 	}
 
-	public static void setSkipMerge(boolean skipMerge) {
-		_skipMerge.set(skipMerge);
-	}
-
 	private static final ThreadLocal<Boolean> _inProgress =
 		new CentralizedThreadLocal<>(
 			MergeLayoutPrototypesThreadLocal.class + "._inProgress",
@@ -65,20 +57,19 @@ public class MergeLayoutPrototypesThreadLocal {
 		new CentralizedThreadLocal<>(
 			MergeLayoutPrototypesThreadLocal.class + "._mergeComplete",
 			HashSet::new);
-	private static final ThreadLocal<Boolean> _skipMerge =
-		new CentralizedThreadLocal<>(
-			MergeLayoutPrototypesThreadLocal.class + "._skipMerge",
-			() -> Boolean.FALSE);
 
 	private static class MethodKey {
 
-		public MethodKey(String methodName, Object[] arguments) {
-			_methodName = methodName;
-			_arguments = arguments;
-		}
-
 		@Override
 		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof MethodKey)) {
+				return false;
+			}
+
 			MethodKey methodKey = (MethodKey)object;
 
 			if (Objects.equals(_methodName, methodKey._methodName) &&
@@ -92,20 +83,14 @@ public class MergeLayoutPrototypesThreadLocal {
 
 		@Override
 		public int hashCode() {
-			int hashCode = _methodName.hashCode();
+			int hashCode = HashUtil.hash(0, _methodName);
 
-			if (_arguments != null) {
-				for (Object object : _arguments) {
-					if (object == null) {
-						hashCode = HashUtil.hash(hashCode, 0);
-					}
-					else {
-						hashCode = HashUtil.hash(hashCode, object.hashCode());
-					}
-				}
-			}
+			return HashUtil.hash(hashCode, Arrays.hashCode(_arguments));
+		}
 
-			return hashCode;
+		private MethodKey(String methodName, Object... arguments) {
+			_methodName = methodName;
+			_arguments = arguments;
 		}
 
 		private final Object[] _arguments;

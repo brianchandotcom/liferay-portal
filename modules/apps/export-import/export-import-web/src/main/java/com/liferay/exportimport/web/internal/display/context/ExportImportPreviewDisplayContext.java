@@ -75,9 +75,19 @@ public class ExportImportPreviewDisplayContext {
 			return _exportPreviewAPIURL;
 		}
 
-		_exportPreviewAPIURL = _getPreviewAPIURL("/export-preview");
+		_exportPreviewAPIURL = _getResourceAPIURL("/export-preview");
 
 		return _exportPreviewAPIURL;
+	}
+
+	public String getExportProcessAPIURL() {
+		if (_exportProcessAPIURL != null) {
+			return _exportProcessAPIURL;
+		}
+
+		_exportProcessAPIURL = _getResourceAPIURL("/export-processes");
+
+		return _exportProcessAPIURL;
 	}
 
 	public String getImportPreviewAPIURL() {
@@ -85,7 +95,7 @@ public class ExportImportPreviewDisplayContext {
 			return _importPreviewAPIURL;
 		}
 
-		_importPreviewAPIURL = _getPreviewAPIURL("/import-preview");
+		_importPreviewAPIURL = _getResourceAPIURL("/import-preview");
 
 		return _importPreviewAPIURL;
 	}
@@ -98,7 +108,7 @@ public class ExportImportPreviewDisplayContext {
 		return URLEncoder.encode(value, StandardCharsets.UTF_8);
 	}
 
-	private String _getPreviewAPIURL(String endpoint) {
+	private String _getResourceAPIURL(String endpoint) {
 		if (_stagingGroupHelper.isCompanyGroup(_group)) {
 			return _BASE_PATH + endpoint;
 		}
@@ -119,6 +129,7 @@ public class ExportImportPreviewDisplayContext {
 	private final String _backMVCRenderCommandName;
 	private String _backURL;
 	private String _exportPreviewAPIURL;
+	private String _exportProcessAPIURL;
 	private final Group _group;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;

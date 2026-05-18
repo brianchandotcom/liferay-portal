@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -376,6 +377,18 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								dtoConverterContext,
 								"deleteAgentDefinitionByExternalReferenceCode",
 								workflowDefinition)
+						).put(
+							"permissions",
+							() -> {
+								Map<String, Map<String, String>> actions =
+									objectEntry.getActions();
+
+								if (MapUtil.isEmpty(actions)) {
+									return null;
+								}
+
+								return actions.get("permissions");
+							}
 						).build();
 					});
 				setActive(

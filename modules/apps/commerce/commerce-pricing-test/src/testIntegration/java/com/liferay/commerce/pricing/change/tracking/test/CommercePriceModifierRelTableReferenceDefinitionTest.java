@@ -13,7 +13,7 @@ import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCas
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.pricing.constants.CommercePriceModifierConstants;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
-import com.liferay.commerce.pricing.test.util.CommercePriceModifierTestUtil;
+import com.liferay.commerce.test.util.pricing.CommercePriceModifierTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -53,8 +53,8 @@ public class CommercePriceModifierRelTableReferenceDefinitionTest
 		_commercePriceModifier =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				group.getGroupId(), commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE,
-				BigDecimal.valueOf(RandomTestUtil.randomDouble()), true);
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()),
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			group.getGroupId());

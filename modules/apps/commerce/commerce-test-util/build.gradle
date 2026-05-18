@@ -15,6 +15,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-payment-api")
 	compileOnly project(":apps:commerce:commerce-payment-test-util")
 	compileOnly project(":apps:commerce:commerce-price-list-api")
+	compileOnly project(":apps:commerce:commerce-pricing-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:commerce-product-test-util")
 	compileOnly project(":apps:commerce:commerce-shipping-engine-fixed-api")

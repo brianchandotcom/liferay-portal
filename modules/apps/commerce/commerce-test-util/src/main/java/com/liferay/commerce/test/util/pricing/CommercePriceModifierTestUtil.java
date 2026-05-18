@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.pricing.test.util;
+package com.liferay.commerce.test.util.pricing;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
@@ -11,6 +11,7 @@ import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
+import com.liferay.commerce.pricing.constants.CommercePriceModifierConstants;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.model.CommercePriceModifierRel;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil;
@@ -30,6 +31,7 @@ import java.util.Calendar;
 
 /**
  * @author Riccardo Alberti
+ * @author Crescenzo Rega
  */
 public class CommercePriceModifierTestUtil {
 
@@ -44,39 +46,24 @@ public class CommercePriceModifierTestUtil {
 			CommerceCurrencyTestUtil.addCommerceCurrency(
 				serviceContext.getCompanyId());
 
-		User user = UserLocalServiceUtil.getGuestUser(
-			serviceContext.getCompanyId());
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		return CommercePriceListLocalServiceUtil.addCommercePriceList(
-			null, user.getUserId(), groupId, 0, false,
-			commerceCurrency.getCode(), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR),
-			RandomTestUtil.randomString(), true, true, priority,
-			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
+		return addCommercePriceList(
+			groupId, commerceCurrency.getCommerceCurrencyId(), priority);
 	}
 
 	public static CommercePriceList addCommercePriceList(
-			long groupId, double priority, long commerceCurrencyId)
+			long groupId, long commerceCurrencyId, double priority)
 		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		User user = UserLocalServiceUtil.getGuestUser(
-			serviceContext.getCompanyId());
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyLocalServiceUtil.getCommerceCurrency(
 				commerceCurrencyId);
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		User user = UserLocalServiceUtil.getGuestUser(
+			serviceContext.getCompanyId());
+
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
@@ -94,41 +81,40 @@ public class CommercePriceModifierTestUtil {
 	}
 
 	public static CommercePriceModifier addCommercePriceModifier(
-			long groupId, long commercePriceListId, String type,
-			BigDecimal amount, boolean neverExpire)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		User user = UserLocalServiceUtil.getGuestUser(
-			serviceContext.getCompanyId());
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
-
-		return CommercePriceModifierLocalServiceUtil.addCommercePriceModifier(
-			groupId, RandomTestUtil.randomString(), commercePriceListId, type,
-			amount, 0.0, true, calendar.get(Calendar.MONTH),
-			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.MINUTE), neverExpire, serviceContext);
-	}
-
-	public static CommercePriceModifier addCommercePriceModifier(
-			long groupId, String target, long commercePriceListId, String type,
-			BigDecimal amount, boolean neverExpire)
+			long groupId, long commercePriceListId, BigDecimal amount,
+			String type, boolean neverExpire)
 		throws PortalException {
 
 		return addCommercePriceModifier(
-			groupId, RandomTestUtil.randomString(), target, commercePriceListId,
-			type, amount, neverExpire);
+			groupId, commercePriceListId,
+			CommercePriceModifierConstants.TARGET_CATALOG, amount, type,
+			neverExpire);
 	}
 
 	public static CommercePriceModifier addCommercePriceModifier(
-			long groupId, String title, String target, long commercePriceListId,
-			String type, BigDecimal amount, boolean neverExpire)
+			long groupId, long commercePriceListId, String target,
+			BigDecimal amount, String type, boolean neverExpire)
+		throws PortalException {
+
+		return addCommercePriceModifier(
+			groupId, commercePriceListId, RandomTestUtil.randomString(), target,
+			amount, type, neverExpire);
+	}
+
+	public static CommercePriceModifier addCommercePriceModifier(
+			long groupId, long commercePriceListId, String title, String target,
+			BigDecimal amount, String type, boolean neverExpire)
+		throws PortalException {
+
+		return addCommercePriceModifier(
+			groupId, commercePriceListId, title, target, amount, type, 0.0,
+			neverExpire);
+	}
+
+	public static CommercePriceModifier addCommercePriceModifier(
+			long groupId, long commercePriceListId, String title, String target,
+			BigDecimal amount, String type, double priority,
+			boolean neverExpire)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -139,14 +125,16 @@ public class CommercePriceModifierTestUtil {
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
 
-		return CommercePriceModifierLocalServiceUtil.addCommercePriceModifier(
-			groupId, title, target, commercePriceListId, type, amount, 0.0,
-			true, calendar.get(Calendar.MONTH),
-			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.MINUTE), neverExpire, serviceContext);
+		return CommercePriceModifierLocalServiceUtil.
+			addOrUpdateCommercePriceModifier(
+				null, 0L, groupId, commercePriceListId, title, target, amount,
+				type, priority, true, calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH),
+				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), neverExpire, serviceContext);
 	}
 
 	public static CommercePriceModifierRel addCommercePriceModifierRel(
@@ -161,7 +149,22 @@ public class CommercePriceModifierTestUtil {
 	}
 
 	public static CommercePriceModifier updateCommercePriceModifier(
-			long groupId, long commercePriceModifierId, String target)
+			long groupId, long commercePriceModifierId,
+			long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceModifier commercePriceModifier =
+			CommercePriceModifierLocalServiceUtil.getCommercePriceModifier(
+				commercePriceModifierId);
+
+		return updateCommercePriceModifier(
+			groupId, commercePriceModifierId, commercePriceListId,
+			commercePriceModifier.getTarget());
+	}
+
+	public static CommercePriceModifier updateCommercePriceModifier(
+			long groupId, long commercePriceModifierId,
+			long commercePriceListId, String target)
 		throws PortalException {
 
 		CommercePriceModifier commercePriceModifier =
@@ -178,11 +181,11 @@ public class CommercePriceModifierTestUtil {
 
 		return CommercePriceModifierLocalServiceUtil.
 			updateCommercePriceModifier(
-				commercePriceModifierId, commercePriceModifier.getGroupId(),
+				commercePriceModifier.getCommercePriceModifierId(),
+				commercePriceModifier.getGroupId(), commercePriceListId,
 				commercePriceModifier.getTitle(), target,
-				commercePriceModifier.getCommercePriceListId(),
-				commercePriceModifier.getModifierType(),
 				commercePriceModifier.getModifierAmount(),
+				commercePriceModifier.getModifierType(),
 				commercePriceModifier.getPriority(),
 				commercePriceModifier.isActive(), calendar.get(Calendar.MONTH),
 				calendar.get(Calendar.DAY_OF_MONTH),
@@ -191,6 +194,19 @@ public class CommercePriceModifierTestUtil {
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 				calendar.get(Calendar.MINUTE), true, serviceContext);
+	}
+
+	public static CommercePriceModifier updateCommercePriceModifier(
+			long groupId, long commercePriceModifierId, String target)
+		throws PortalException {
+
+		CommercePriceModifier commercePriceModifier =
+			CommercePriceModifierLocalServiceUtil.getCommercePriceModifier(
+				commercePriceModifierId);
+
+		return updateCommercePriceModifier(
+			groupId, commercePriceModifierId,
+			commercePriceModifier.getCommercePriceListId(), target);
 	}
 
 }

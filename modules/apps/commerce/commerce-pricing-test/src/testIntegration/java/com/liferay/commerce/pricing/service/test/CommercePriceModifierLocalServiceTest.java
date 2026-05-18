@@ -25,12 +25,12 @@ import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
 import com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
-import com.liferay.commerce.pricing.test.util.CommercePriceModifierTestUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.test.util.pricing.CommercePriceModifierTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -120,10 +120,9 @@ public class CommercePriceModifierLocalServiceTest {
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_CATEGORIES,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_CATEGORIES, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier1.getGroupId(),
@@ -183,10 +182,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommercePriceModifierTestUtil.addCommercePriceModifier(
 			commerceCatalog.getGroupId(),
-			CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
 			commercePriceList.getCommercePriceListId(),
-			CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, null,
-			true);
+			CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS, null,
+			CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, true);
 	}
 
 	@Test(expected = CommercePriceModifierTargetException.class)
@@ -215,9 +213,10 @@ public class CommercePriceModifierLocalServiceTest {
 		BigDecimal amount = BigDecimal.valueOf(RandomTestUtil.randomDouble());
 
 		CommercePriceModifierTestUtil.addCommercePriceModifier(
-			commerceCatalog.getGroupId(), RandomTestUtil.randomString(),
+			commerceCatalog.getGroupId(),
 			commercePriceList.getCommercePriceListId(),
-			CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount, true);
+			RandomTestUtil.randomString(), amount,
+			CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 	}
 
 	@Test(expected = CommercePriceModifierTypeException.class)
@@ -247,9 +246,9 @@ public class CommercePriceModifierLocalServiceTest {
 
 		CommercePriceModifierTestUtil.addCommercePriceModifier(
 			commerceCatalog.getGroupId(),
-			CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
 			commercePriceList.getCommercePriceListId(),
-			RandomTestUtil.randomString(), amount, true);
+			CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS, amount,
+			RandomTestUtil.randomString(), true);
 	}
 
 	@Test
@@ -279,9 +278,8 @@ public class CommercePriceModifierLocalServiceTest {
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				commerceCatalog.getGroupId(),
-				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				commercePriceList.getCommercePriceListId(), amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		List<CommercePriceModifier> commercePriceModifiers =
 			_commercePriceModifierLocalService.getCommercePriceModifiers(
@@ -325,10 +323,10 @@ public class CommercePriceModifierLocalServiceTest {
 		BigDecimal amount = BigDecimal.valueOf(RandomTestUtil.randomDouble());
 
 		CommercePriceModifierTestUtil.addCommercePriceModifier(
-			commerceCatalog.getGroupId(), null,
-			CommercePriceModifierConstants.TARGET_PRODUCTS,
-			commercePriceList.getCommercePriceListId(),
-			CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount, true);
+			commerceCatalog.getGroupId(),
+			commercePriceList.getCommercePriceListId(), null,
+			CommercePriceModifierConstants.TARGET_PRODUCTS, amount,
+			CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 	}
 
 	@Test
@@ -378,10 +376,9 @@ public class CommercePriceModifierLocalServiceTest {
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier1.getGroupId(),
@@ -467,10 +464,9 @@ public class CommercePriceModifierLocalServiceTest {
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCTS,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_PRODUCTS, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier1.getGroupId(),
@@ -541,10 +537,9 @@ public class CommercePriceModifierLocalServiceTest {
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCTS,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_PRODUCTS, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier1.getGroupId(),
@@ -612,10 +607,9 @@ public class CommercePriceModifierLocalServiceTest {
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
 				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCTS,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_PRODUCTS, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true);
 
 		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier1.getGroupId(),

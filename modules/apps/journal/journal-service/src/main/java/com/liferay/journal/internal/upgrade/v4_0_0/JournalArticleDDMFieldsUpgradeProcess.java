@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -24,9 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.StringReader;
 import java.io.StringWriter;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -64,46 +62,42 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		long classNameId = _classNameLocalService.getClassNameId(
+			JournalArticle.class);
+
 		_companyLocalService.forEachCompanyId(
-			companyId -> {
-				long classNameId = _classNameLocalService.getClassNameId(
-					JournalArticle.class);
+			companyId -> processConcurrently(
+				StringBundler.concat(
+					"select id_, groupId, content, DDMStructureKey from ",
+					"JournalArticle where companyId = ", companyId,
+					" and ctCollectionId = 0"),
+				resultSet -> new Object[] {
+					resultSet.getLong("id_"), resultSet.getLong("groupId"),
+					resultSet.getString("content"),
+					resultSet.getString("DDMStructureKey")
+				},
+				values -> {
+					long id = (Long)values[0];
+					long groupId = (Long)values[1];
+					String content = (String)values[2];
+					String ddmStructureKey = (String)values[3];
 
-				try (PreparedStatement preparedStatement1 =
-						connection.prepareStatement(
-							"select id_, groupId, content, DDMStructureKey " +
-								"from JournalArticle where companyId = ? and " +
-									"ctCollectionId = 0")) {
+					DDMStructure ddmStructure =
+						_ddmStructureLocalService.getStructure(
+							_portal.getSiteGroupId(groupId), classNameId,
+							ddmStructureKey, true);
 
-					preparedStatement1.setLong(1, companyId);
+					DDMFormValues ddmFormValues =
+						_fieldsToDDMFormValuesConverter.convert(
+							ddmStructure,
+							_journalConverter.getDDMFields(
+								ddmStructure, _convertFieldNames(content)));
 
-					try (ResultSet resultSet =
-							preparedStatement1.executeQuery()) {
-
-						while (resultSet.next()) {
-							DDMStructure ddmStructure =
-								_ddmStructureLocalService.getStructure(
-									_portal.getSiteGroupId(
-										resultSet.getLong("groupId")),
-									classNameId,
-									resultSet.getString("DDMStructureKey"),
-									true);
-
-							DDMFormValues ddmFormValues =
-								_fieldsToDDMFormValuesConverter.convert(
-									ddmStructure,
-									_journalConverter.getDDMFields(
-										ddmStructure,
-										_convertFieldNames(
-											resultSet.getString("content"))));
-
-							_ddmFieldLocalService.updateDDMFormValues(
-								ddmStructure.getStructureId(),
-								resultSet.getLong("id_"), ddmFormValues);
-						}
-					}
-				}
-			});
+					_ddmFieldLocalService.updateDDMFormValues(
+						ddmStructure.getStructureId(), id, ddmFormValues);
+				},
+				"Unable to upgrade JournalArticle DDM fields for company " +
+					companyId));
 	}
 
 	@Override

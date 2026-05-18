@@ -302,11 +302,7 @@ const IncidentContactCard = ({
 						{showCloudNativeCard && (
 							<div className="customer-portal-card-footer customer-portal-card-footer-style-ac">
 								<div className="customer-portal-card-footer-title">
-									<h1>
-										{i18n.translate(
-											'cloud-native-contacts'
-										)}
-									</h1>
+									<h1>{i18n.translate('paas-users')}</h1>
 								</div>
 
 								<div className="customer-portal-card-footer-description">
@@ -333,7 +329,7 @@ const IncidentContactCard = ({
 													)
 												}
 												title={i18n.translate(
-													'cloud-native-contacts'
+													'paas-users'
 												)}
 											/>
 										</div>

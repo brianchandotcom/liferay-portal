@@ -129,9 +129,9 @@ public class UpgradeQueryMonitorTest {
 			InfrastructureUtil.setDataSource(dataSource);
 
 			try {
-				_testPollWithNoLongRunningQueries(connection, db, logCapture);
-				_testPollWithOneLongRunningQuery(connection, db, logCapture);
-				_testPollWithMultipleLongRunningQueries(
+				_testPollLongRunningWithNoQueries(connection, db, logCapture);
+				_testPollLongRunningWithOneQuery(connection, db, logCapture);
+				_testPollLongRunningWithMultipleQueries(
 					connection, db, logCapture);
 			}
 			finally {
@@ -200,68 +200,7 @@ public class UpgradeQueryMonitorTest {
 		}
 	}
 
-	private void _testPollWithMultipleLockedQueries(
-			Connection connection, DB db, LogCapture logCapture)
-		throws Exception {
-
-		String id1 = RandomTestUtil.randomString();
-		String id2 = RandomTestUtil.randomString();
-		String id3 = RandomTestUtil.randomString();
-		String query1 = RandomTestUtil.randomString();
-		String query2 = RandomTestUtil.randomString();
-		String query3 = RandomTestUtil.randomString();
-		String schema1 = RandomTestUtil.randomString();
-		String schema2 = RandomTestUtil.randomString();
-		String schema3 = RandomTestUtil.randomString();
-
-		Mockito.when(
-			db.getLockedQueryInfos(connection)
-		).thenReturn(
-			Arrays.asList(
-				new DB.QueryInfo(
-					300000, id1, query1, schema1,
-					RandomTestUtil.randomString()),
-				new DB.QueryInfo(
-					600000, id2, query2, schema2,
-					RandomTestUtil.randomString()),
-				new DB.QueryInfo(
-					900000, id3, query3, schema3,
-					RandomTestUtil.randomString()))
-		);
-
-		ReflectionTestUtil.invoke(
-			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
-
-		LogEntry logEntry1 = logEntries.get(1);
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Locked query \"", query1, "\" with ID ", id1, " in schema \"",
-				schema1, "\" has been running for 300 seconds"),
-			logEntry1.getMessage());
-
-		LogEntry logEntry2 = logEntries.get(2);
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Locked query \"", query2, "\" with ID ", id2, " in schema \"",
-				schema2, "\" has been running for 600 seconds"),
-			logEntry2.getMessage());
-
-		LogEntry logEntry3 = logEntries.get(3);
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Locked query \"", query3, "\" with ID ", id3, " in schema \"",
-				schema3, "\" has been running for 900 seconds"),
-			logEntry3.getMessage());
-	}
-
-	private void _testPollWithMultipleLongRunningQueries(
+	private void _testPollLongRunningWithMultipleQueries(
 			Connection connection, DB db, LogCapture logCapture)
 		throws Exception {
 
@@ -328,25 +267,7 @@ public class UpgradeQueryMonitorTest {
 			logEntry3.getMessage());
 	}
 
-	private void _testPollWithNoLockedQueries(
-			Connection connection, DB db, LogCapture logCapture)
-		throws Exception {
-
-		Mockito.when(
-			db.getLockedQueryInfos(connection)
-		).thenReturn(
-			Collections.emptyList()
-		);
-
-		ReflectionTestUtil.invoke(
-			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		Assert.assertTrue(logEntries.isEmpty());
-	}
-
-	private void _testPollWithNoLongRunningQueries(
+	private void _testPollLongRunningWithNoQueries(
 			Connection connection, DB db, LogCapture logCapture)
 		throws Exception {
 
@@ -367,40 +288,7 @@ public class UpgradeQueryMonitorTest {
 			logEntries.toString(), sizeBeforePoll, logEntries.size());
 	}
 
-	private void _testPollWithOneLockedQuery(
-			Connection connection, DB db, LogCapture logCapture)
-		throws Exception {
-
-		String id = RandomTestUtil.randomString();
-		String query = RandomTestUtil.randomString();
-		String schema = RandomTestUtil.randomString();
-
-		Mockito.when(
-			db.getLockedQueryInfos(connection)
-		).thenReturn(
-			Collections.singletonList(
-				new DB.QueryInfo(
-					30000, id, query, schema, RandomTestUtil.randomString()))
-		);
-
-		ReflectionTestUtil.invoke(
-			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-		LogEntry logEntry = logEntries.get(0);
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Locked query \"", query, "\" with ID ", id, " in schema \"",
-				schema, "\" has been running for 30 seconds"),
-			logEntry.getMessage());
-		Assert.assertEquals("WARN", logEntry.getPriority());
-	}
-
-	private void _testPollWithOneLongRunningQuery(
+	private void _testPollLongRunningWithOneQuery(
 			Connection connection, DB db, LogCapture logCapture)
 		throws Exception {
 
@@ -434,6 +322,118 @@ public class UpgradeQueryMonitorTest {
 				" in schema \"", schema, "\" has been running for 630 seconds"),
 			logEntry.getMessage());
 		Assert.assertEquals("INFO", logEntry.getPriority());
+	}
+
+	private void _testPollWithMultipleLockedQueries(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		String id1 = RandomTestUtil.randomString();
+		String id2 = RandomTestUtil.randomString();
+		String id3 = RandomTestUtil.randomString();
+		String query1 = RandomTestUtil.randomString();
+		String query2 = RandomTestUtil.randomString();
+		String query3 = RandomTestUtil.randomString();
+		String schema1 = RandomTestUtil.randomString();
+		String schema2 = RandomTestUtil.randomString();
+		String schema3 = RandomTestUtil.randomString();
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenReturn(
+			Arrays.asList(
+				new DB.QueryInfo(
+					300000, id1, query1, schema1,
+					RandomTestUtil.randomString()),
+				new DB.QueryInfo(
+					600000, id2, query2, schema2,
+					RandomTestUtil.randomString()),
+				new DB.QueryInfo(
+					900000, id3, query3, schema3,
+					RandomTestUtil.randomString()))
+		);
+
+		ReflectionTestUtil.invoke(
+			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
+
+		LogEntry logEntry1 = logEntries.get(1);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query1, "\" with ID ", id1, " in schema \"",
+				schema1, "\" has been running for 300 seconds"),
+			logEntry1.getMessage());
+
+		LogEntry logEntry2 = logEntries.get(2);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query2, "\" with ID ", id2, " in schema \"",
+				schema2, "\" has been running for 600 seconds"),
+			logEntry2.getMessage());
+
+		LogEntry logEntry3 = logEntries.get(3);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query3, "\" with ID ", id3, " in schema \"",
+				schema3, "\" has been running for 900 seconds"),
+			logEntry3.getMessage());
+	}
+
+	private void _testPollWithNoLockedQueries(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenReturn(
+			Collections.emptyList()
+		);
+
+		ReflectionTestUtil.invoke(
+			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertTrue(logEntries.isEmpty());
+	}
+
+	private void _testPollWithOneLockedQuery(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		String id = RandomTestUtil.randomString();
+		String query = RandomTestUtil.randomString();
+		String schema = RandomTestUtil.randomString();
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenReturn(
+			Collections.singletonList(
+				new DB.QueryInfo(
+					30000, id, query, schema, RandomTestUtil.randomString()))
+		);
+
+		ReflectionTestUtil.invoke(
+			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query, "\" with ID ", id, " in schema \"",
+				schema, "\" has been running for 30 seconds"),
+			logEntry.getMessage());
+		Assert.assertEquals("WARN", logEntry.getPriority());
 	}
 
 	private void _testPollWithSQLException(

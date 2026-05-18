@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.redirect.model.RedirectEntry;
-import com.liferay.redirect.service.RedirectEntryLocalService;
+import com.liferay.redirect.service.RedirectEntryService;
 import com.liferay.redirect.web.internal.constants.RedirectPortletKeys;
 import com.liferay.redirect.web.internal.display.context.RedirectEntryInfoPanelDisplayContext;
 
@@ -46,7 +46,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 				ParamUtil.getLongValues(resourceRequest, "rowIds")) {
 
 			redirectEntries.add(
-				_redirectEntryLocalService.fetchRedirectEntry(redirectEntryId));
+				_redirectEntryService.fetchRedirectEntry(redirectEntryId));
 		}
 
 		resourceRequest.setAttribute(
@@ -62,6 +62,6 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 	private Portal _portal;
 
 	@Reference
-	private RedirectEntryLocalService _redirectEntryLocalService;
+	private RedirectEntryService _redirectEntryService;
 
 }

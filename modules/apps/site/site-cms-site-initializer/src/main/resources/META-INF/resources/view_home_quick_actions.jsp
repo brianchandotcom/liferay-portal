@@ -11,7 +11,7 @@
 ViewHomeQuickActionsDisplayContext viewHomeQuickActionsDisplayContext = (ViewHomeQuickActionsDisplayContext)request.getAttribute(ViewHomeQuickActionsDisplayContext.class.getName());
 %>
 
-<c:if test="<%= viewHomeQuickActionsDisplayContext.hasAddEntryPermission() %>">
+<c:if test="<%= viewHomeQuickActionsDisplayContext.hasQuickActions() %>">
 	<div class="cms-section">
 		<react:component
 			module="{QuickActions} from site-cms-site-initializer"

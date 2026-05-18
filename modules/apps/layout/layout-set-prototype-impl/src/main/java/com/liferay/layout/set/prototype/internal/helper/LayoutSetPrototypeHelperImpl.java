@@ -124,13 +124,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void executeLayoutSetSync(LayoutSet layoutSet)
-		throws PortalException {
-=======
 	public void executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
-		throws Exception {
->>>>>>> 2099a51f69c85 (LPD-87027 Syncronized the permissions only for the first sync (when the Site is created from the Site Template))
+		throws PortalException {
 
 		Group group = layoutSet.getGroup();
 
@@ -150,7 +145,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		_mergeLayoutSetPrototypeLayoutsInBackground(
+		_syncLayoutSetPrototypeLayoutsInBackground(
 			initialSync, layoutSet, layoutSetPrototype);
 	}
 
@@ -694,14 +689,14 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return true;
 	}
 
-	private boolean _isLayoutSetPrototypeMergeBackgroundTaskExists(
+	private boolean _isLayoutSetPrototypeSyncBackgroundTaskExists(
 		LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet) {
 
 		List<BackgroundTask> incompleteBackgroundTasks =
 			_backgroundTaskManager.getBackgroundTasks(
 				layoutSet.getGroupId(),
 				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_MERGE_BACKGROUND_TASK_EXECUTOR,
+					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR,
 				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				BackgroundTaskCreateDateComparator.getInstance(false));
 
@@ -747,7 +742,19 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return false;
 	}
 
-	private void _mergeLayoutSetPrototypeLayoutsInBackground(
+	/**
+	 * Resets the modified timestamp on the layout so the linked page template is
+	 * merged into the layout when it is first accessed.
+	 *
+	 * @param layout the page having its timestamp reset
+	 */
+	private void _resetPrototype(Layout layout) throws PortalException {
+		layout.setModifiedDate(null);
+
+		_layoutLocalService.updateLayout(layout);
+	}
+
+	private void _syncLayoutSetPrototypeLayoutsInBackground(
 			boolean initialSync, LayoutSet layoutSet,
 			LayoutSetPrototype layoutSetPrototype)
 		throws PortalException {
@@ -762,7 +769,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		if (_isLayoutSetPrototypeMergeBackgroundTaskExists(
+		if (_isLayoutSetPrototypeSyncBackgroundTaskExists(
 				layoutSetPrototype, layoutSet)) {
 
 			if (_log.isDebugEnabled()) {
@@ -826,21 +833,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
 			user.getUserId(), layoutSet.getGroupId(),
 			exportImportConfiguration);
-	}
-
-	/**
-	 * Resets the modified timestamp on the layout so the linked page template is
-	 * merged into the layout when it is first accessed.
-	 *
-	 * @param layout the page having its timestamp reset
-	 */
-	private void _resetPrototype(Layout layout) throws PortalException {
-		layout.setModifiedDate(null);
-
-		_layoutLocalService.updateLayout(layout);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

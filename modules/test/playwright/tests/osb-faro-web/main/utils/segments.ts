@@ -42,10 +42,8 @@ export async function addSegmentField({
 }) {
 	await clickAndExpectToBeVisible({
 		autoClick: true,
-		target: page.getByRole('menuitem', {name: criterionType}),
-		trigger: page
-			.locator('.criteria-sidebar-root .sidebar-header')
-			.getByRole('button'),
+		target: page.getByRole('option', {name: criterionType}),
+		trigger: page.getByRole('combobox'),
 	});
 
 	await dragAndDropCriteriaItem({

@@ -140,7 +140,7 @@ test(
 		await test.step('Add email criteria and fill in', async () => {
 			await addSegmentField({
 				criterionName: 'Email Address',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 
@@ -826,7 +826,7 @@ test.skip(
 
 			await addSegmentField({
 				criterionName: 'email',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 
@@ -838,7 +838,7 @@ test.skip(
 
 			await addSegmentField({
 				criterionName: 'email',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 
@@ -992,7 +992,7 @@ test.skip(
 			await test.step('Add email criteria and fill in', async () => {
 				await addSegmentField({
 					criterionName: 'email',
-					criterionType: 'Individual Attributes',
+					criterionType: 'Individual',
 					page,
 				});
 
@@ -1011,7 +1011,7 @@ test.skip(
 			await test.step('Add jobTitle criteria and fill in', async () => {
 				await addSegmentField({
 					criterionName: 'jobTitle',
-					criterionType: 'Individual Attributes',
+					criterionType: 'Individual',
 					page,
 				});
 
@@ -1032,7 +1032,7 @@ test.skip(
 			await test.step('Add the familyName criteria as a nested criteria of the jobTitle and fill in', async () => {
 				await addNestedSegmentField({
 					criterionName: 'familyName',
-					criterionType: 'Individual Attributes',
+					criterionType: 'Individual',
 					nestedSegmentField: 'jobTitle',
 					page,
 				});
@@ -1493,7 +1493,7 @@ test.skip(
 
 			await addSegmentField({
 				criterionName: 'User Group',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 
@@ -1576,7 +1576,7 @@ test('Segment criteria card lists every criterion when the segment has many', as
 
 	await addSegmentField({
 		criterionName: 'Date of Birth',
-		criterionType: 'Individual Attributes',
+		criterionType: 'Individual',
 		page,
 	});
 
@@ -1775,7 +1775,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Email Address',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -1844,7 +1844,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Email Address',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual ',
 			page,
 		});
 
@@ -1949,7 +1949,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'First Name',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2008,7 +2008,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Job Title',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2097,7 +2097,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Job Title',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2116,7 +2116,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Last Name',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual ',
 			page,
 		});
 
@@ -2214,7 +2214,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Email Address',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2247,7 +2247,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'First Name',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2323,7 +2323,7 @@ test(
 
 			await addSegmentField({
 				criterionName: 'Email Address',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 
@@ -2383,7 +2383,7 @@ test(
 
 			await addSegmentField({
 				criterionName: 'Email Address',
-				criterionType: 'Individual Attributes',
+				criterionType: 'Individual',
 				page,
 			});
 
@@ -2598,7 +2598,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'Job Title',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2681,7 +2681,7 @@ test(
 
 		await addSegmentField({
 			criterionName: 'First Name',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 
@@ -2776,7 +2776,7 @@ test.skip(
 
 		await addSegmentField({
 			criterionName: 'First Name',
-			criterionType: 'Individual Attributes',
+			criterionType: 'Individual',
 			page,
 		});
 

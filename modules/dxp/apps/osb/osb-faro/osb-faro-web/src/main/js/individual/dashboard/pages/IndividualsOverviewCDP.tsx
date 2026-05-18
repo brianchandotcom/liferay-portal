@@ -21,7 +21,7 @@ import {sub} from 'shared/util/lang';
 import {toRounded, toThousands} from 'shared/util/numbers';
 import {TrendClassification} from 'segment/types';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/client';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -211,7 +211,7 @@ const IndividualsOverviewCDP = () => {
 
 	const currentUser = useCurrentUser();
 
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const authorized = currentUser.isAdmin();
 

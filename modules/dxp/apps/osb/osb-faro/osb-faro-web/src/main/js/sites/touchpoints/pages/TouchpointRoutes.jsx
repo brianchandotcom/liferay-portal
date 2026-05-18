@@ -20,7 +20,7 @@ import {PropTypes} from 'prop-types';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
 import {Switch, useHistory} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const KnownIndividuals = lazy(() =>
@@ -56,7 +56,7 @@ const NAV_ITEMS = [
 ];
 
 function TouchpointRoutes({className, router}) {
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 	const rangeSelectors = useQueryRangeSelectors();
 	const {
 		channelId,

@@ -12,7 +12,7 @@ import {FeatureName, useLimitReached} from 'shared/hooks/useLimitReached';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -24,7 +24,7 @@ const List = () => {
 	}>();
 	const currentUser = useCurrentUser();
 
-	const {empty, error, loading} = useDataSource();
+	const {empty, error, loading} = useDataSources();
 
 	const {
 		data: usageData,

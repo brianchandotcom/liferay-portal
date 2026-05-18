@@ -13,7 +13,7 @@ import {compose, withIndividual} from 'shared/hoc';
 import {CSVType} from 'shared/components/download-report/utils';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const AssociatedSegments = lazy(
@@ -90,7 +90,7 @@ export const IndividualProfileRoutesCDP = ({
 	id,
 	individual
 }: IIndividualProfileRoutesCDPProps) => {
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const {selectedChannel} = useContext(ChannelContext);
 

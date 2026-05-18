@@ -14,7 +14,7 @@ import {Router} from 'shared/types';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {User} from 'shared/util/records';
 
 const BlogsList = lazy(
@@ -69,7 +69,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 		channelId: string;
 		groupId: string;
 	}>();
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 	const {selectedChannel} = useChannelContext();
 	const currentUser = useCurrentUser();
 

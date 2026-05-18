@@ -1,23 +1,17 @@
 import * as API from 'shared/api';
 import * as data from 'test/data';
 import React from 'react';
-import {BrowserRouter} from 'react-router-dom';
 import {
 	cleanup,
 	render,
 	waitForElementToBeRemoved
 } from '@testing-library/react';
-import {useDataSource} from '../useDataSource';
+import {DataSourcesProvider, useDataSources} from '../dataSources';
 
 jest.unmock('react-dom');
 
-const WrapperComponent = props => (
-	<BrowserRouter>
-		<MockComponent {...props} />
-	</BrowserRouter>
-);
-const MockComponent = queryParams => {
-	const {empty, error, items, loading} = useDataSource(queryParams);
+const ChildComponent = () => {
+	const {empty, error, items, loading} = useDataSources();
 
 	return (
 		<>
@@ -25,7 +19,7 @@ const MockComponent = queryParams => {
 
 			{error && <p>{'error'}</p>}
 
-			{items && (
+			{items.length > 0 && (
 				<div id='items'>
 					{items.map((_, index) => (
 						<p key={index}>{'item'}</p>
@@ -38,14 +32,22 @@ const MockComponent = queryParams => {
 	);
 };
 
-describe('useDataSource', () => {
+const renderWithProvider = (groupId = '1') =>
+	render(
+		<DataSourcesProvider groupId={groupId}>
+			<ChildComponent />
+		</DataSourcesProvider>
+	);
+
+describe('DataSourcesProvider', () => {
 	afterEach(cleanup);
 
 	it('should render empty', async () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.resolve(data.mockSearch([], 0))
 		);
-		const {getByText} = render(<WrapperComponent />);
+
+		const {getByText} = renderWithProvider();
 
 		await waitForElementToBeRemoved(() => getByText('loading'));
 
@@ -56,7 +58,8 @@ describe('useDataSource', () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.reject({IS_CANCELLATION_ERROR: ''})
 		);
-		const {getByText} = render(<WrapperComponent />);
+
+		const {getByText} = renderWithProvider();
 
 		await waitForElementToBeRemoved(() => getByText('loading'));
 
@@ -67,7 +70,8 @@ describe('useDataSource', () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.resolve(data.mockSearch(data.mockLiferayDataSource, 1))
 		);
-		const {getByText} = render(<WrapperComponent />);
+
+		const {getByText} = renderWithProvider();
 
 		expect(getByText('loading')).toBeInTheDocument();
 	});
@@ -76,7 +80,8 @@ describe('useDataSource', () => {
 		API.dataSource.search.mockReturnValueOnce(
 			Promise.resolve(data.mockSearch(data.mockLiferayDataSource, 1))
 		);
-		const {container, getByText} = render(<WrapperComponent />);
+
+		const {container, getByText} = renderWithProvider();
 
 		await waitForElementToBeRemoved(() => getByText('loading'));
 
@@ -86,25 +91,39 @@ describe('useDataSource', () => {
 		expect(getByText('item')).toBeInTheDocument();
 	});
 
-	it('should render success when queryPagination true', async () => {
-		API.dataSource.search.mockReturnValueOnce(
-			Promise.resolve(data.mockSearch(data.mockLiferayDataSource, 1))
+	it('should skip the request when groupId is missing', () => {
+		API.dataSource.search.mockClear();
+
+		renderWithProvider('0');
+
+		expect(API.dataSource.search).not.toHaveBeenCalled();
+	});
+
+	it('should skip the request when skip is true', () => {
+		API.dataSource.search.mockClear();
+
+		render(
+			<DataSourcesProvider groupId='1' skip>
+				<ChildComponent />
+			</DataSourcesProvider>
 		);
-		const {container, getByText} = render(
-			<WrapperComponent
-				queryParams={{
-					delta: 1,
-					page: 1,
-					query: ''
-				}}
-			/>
+
+		expect(API.dataSource.search).not.toHaveBeenCalled();
+	});
+});
+
+describe('useDataSources', () => {
+	afterEach(cleanup);
+
+	it('should throw when used outside of a DataSourcesProvider', () => {
+		const consoleError = jest
+			.spyOn(console, 'error')
+			.mockImplementation(() => {});
+
+		expect(() => render(<ChildComponent />)).toThrow(
+			'useDataSources must be used within a DataSourcesProvider'
 		);
 
-		await waitForElementToBeRemoved(() => getByText('loading'));
-
-		const itemsSelector = container.querySelector('#items');
-
-		expect(itemsSelector.children).toHaveLength(1);
-		expect(getByText('item')).toBeInTheDocument();
+		consoleError.mockRestore();
 	});
 });

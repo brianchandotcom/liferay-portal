@@ -241,7 +241,7 @@ const TimelinePanelBodyContentDetails: FC<{
 				<span className='item-count'>{itemCount}</span>
 
 				<span
-					className='device-icon'
+					className='device-icon mr-2'
 					data-tooltip
 					data-tooltip-align='bottom'
 					title={`${deviceIconTitle}\n${browserName}`}

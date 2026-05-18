@@ -121,6 +121,20 @@ describe('CMS Asset Type Info Panel', () => {
 
 		expect(screen.getByText('location')).toBeInTheDocument();
 
+		expect(screen.getByText('author')).toBeInTheDocument();
+
+		expect(
+			screen.getByText(CONTENT_OBJECT_ENTRY.embedded.creator.name)
+		).toBeInTheDocument();
+
+		expect(screen.getByText('created')).toBeInTheDocument();
+
+		expect(screen.getByText('modified')).toBeInTheDocument();
+
+		expect(screen.getByText('never-expire')).toBeInTheDocument();
+
+		expect(screen.getByText('never-review')).toBeInTheDocument();
+
 		const breadcrumb = screen.getByLabelText('Breadcrumb');
 
 		expect(
@@ -210,6 +224,20 @@ describe('CMS Asset Type Info Panel', () => {
 
 		expect(screen.getByText('location')).toBeInTheDocument();
 
+		expect(screen.getByText('author')).toBeInTheDocument();
+
+		expect(
+			screen.getByText(DOCUMENT_OBJECT_ENTRY.embedded.creator.name)
+		).toBeInTheDocument();
+
+		expect(screen.getByText('created')).toBeInTheDocument();
+
+		expect(screen.getByText('modified')).toBeInTheDocument();
+
+		expect(screen.getByText('never-expire')).toBeInTheDocument();
+
+		expect(screen.getByText('never-review')).toBeInTheDocument();
+
 		const breadcrumb = screen.getByLabelText('Breadcrumb');
 
 		expect(
@@ -266,6 +294,16 @@ describe('CMS Asset Type Info Panel', () => {
 		).toBeInTheDocument();
 
 		expect(screen.getByText('location')).toBeInTheDocument();
+
+		expect(screen.getByText('author')).toBeInTheDocument();
+
+		expect(
+			screen.getByText(FOLDER_OBJECT_ENTRY.embedded.creator.name)
+		).toBeInTheDocument();
+
+		expect(screen.getByText('created')).toBeInTheDocument();
+
+		expect(screen.getByText('modified')).toBeInTheDocument();
 
 		const breadcrumb = screen.getByLabelText('Breadcrumb');
 

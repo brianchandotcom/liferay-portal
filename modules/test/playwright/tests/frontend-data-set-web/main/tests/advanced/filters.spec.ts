@@ -647,3 +647,60 @@ test(
 		});
 	}
 );
+
+test(
+	'Selection filter state resets after removing filter chip',
+	{
+		tag: ['@LPD-90770'],
+	},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Remove the preloaded Color filter chip', async () => {
+			await page.getByRole('button', {name: 'Remove Filter'}).click();
+
+			await page
+				.getByText('This is a description for sample 1.')
+				.waitFor();
+		});
+
+		await test.step('Open filter dropdown and navigate to Color', async () => {
+			await fdsSamplePage.managementToolbar.filterButton.click();
+
+			await fdsSamplePage.filterMenu
+				.getByRole('menuitem', {name: 'Color'})
+				.click();
+		});
+
+		await test.step('Select only "Red" and add filter', async () => {
+			await fdsSamplePage.filterDropdownMenu
+				.getByRole('checkbox', {name: 'Red'})
+				.check();
+
+			await fdsSamplePage.filterShowResultsOrAddButton.click();
+
+			await page
+				.getByText('This is a description for sample')
+				.first()
+				.waitFor();
+		});
+
+		await test.step('Remove the Color: Red filter chip', async () => {
+			await page.getByRole('button', {name: 'Remove Filter'}).click();
+
+			await page
+				.getByText('This is a description for sample 1.')
+				.waitFor();
+		});
+
+		await test.step('Reopen filter dropdown — Color panel shows directly', async () => {
+			await fdsSamplePage.managementToolbar.filterButton.click();
+		});
+
+		await test.step('Assert Red is no longer checked', async () => {
+			await expect(
+				fdsSamplePage.filterDropdownMenu.getByRole('checkbox', {
+					name: 'Red',
+				})
+			).not.toBeChecked();
+		});
+	}
+);

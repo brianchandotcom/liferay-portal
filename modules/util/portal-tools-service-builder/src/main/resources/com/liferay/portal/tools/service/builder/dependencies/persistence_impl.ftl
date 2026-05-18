@@ -470,9 +470,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entity.name}ModelImpl cached${entity.name}ModelImpl = (${entity.name}ModelImpl)cached${entity.name};
 
 						<#list cacheFields as cacheField>
-							<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+							<#assign
+								getterPrefix = serviceBuilder.getCacheFieldGetterPrefix(cacheField)
+								methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
+							/>
 
-							${entity.variableName}ModelImpl.set${methodName}(cached${entity.name}ModelImpl.get${methodName}());
+							${entity.variableName}ModelImpl.set${methodName}(cached${entity.name}ModelImpl.${getterPrefix}${methodName}());
 						</#list>
 					}
 				<#else>

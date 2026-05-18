@@ -15,7 +15,7 @@ module.exports = merge(common.config, {
 			'**': process.env.FARO_URL || 'http://0.0.0.0:8080'
 		}
 	},
-	devtool: 'inline-source-map',
+	devtool: 'eval-source-map',
 	mode: 'development',
 	module: {
 		rules: [

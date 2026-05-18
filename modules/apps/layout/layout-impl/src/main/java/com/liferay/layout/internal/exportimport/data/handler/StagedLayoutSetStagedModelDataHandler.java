@@ -236,16 +236,6 @@ public class StagedLayoutSetStagedModelDataHandler
 		_updateLayoutSetSettingsProperties(
 			portletDataContext, importedStagedLayoutSet);
 
-		// Last merge time
-
-		LayoutSet importedLayoutSet = importedStagedLayoutSet.getLayoutSet();
-
-		Group group = importedLayoutSet.getGroup();
-
-		if (!group.isLayoutSetPrototype()) {
-			_updateLastMergeTime(portletDataContext, modifiedLayouts);
-		}
-
 		Element stagedLayoutSetElement =
 			portletDataContext.getImportDataStagedModelElement(stagedLayoutSet);
 
@@ -749,70 +739,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		return ModelAdapterUtil.adapt(
 			layoutSet, LayoutSet.class, StagedLayoutSet.class);
-	}
-
-	private void _updateLastMergeTime(
-			PortletDataContext portletDataContext, Set<Layout> modifiedLayouts)
-		throws Exception {
-
-		String layoutsImportMode = MapUtil.getString(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
-
-		if (!layoutsImportMode.equals(
-				PortletDataHandlerKeys.
-					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
-
-			return;
-		}
-
-		// Last merge time is updated only if there aren not any modified
-		// layouts
-
-		Map<Long, Layout> layouts =
-			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class + ".layout");
-
-		long lastMergeTime = System.currentTimeMillis();
-
-		for (Layout layout : layouts.values()) {
-			layout = _layoutLocalService.getLayout(layout.getPlid());
-
-			if (modifiedLayouts.contains(layout)) {
-				continue;
-			}
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				layout.getTypeSettingsProperties();
-
-			typeSettingsUnicodeProperties.setProperty(
-				Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
-
-			_layoutLocalService.updateLayout(layout);
-		}
-
-		// The layout set may be stale because LayoutUtil#update(layout)
-		// triggers LayoutSetPrototypeLayoutModelListener and that may have
-		// updated this layout set
-
-		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			portletDataContext.getGroupId(),
-			portletDataContext.isPrivateLayout());
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.setProperty(
-			Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
-
-		long lastMergeVersion = MapUtil.getLong(
-			portletDataContext.getParameterMap(), "lastMergeVersion");
-
-		settingsUnicodeProperties.setProperty(
-			Sites.LAST_MERGE_VERSION, String.valueOf(lastMergeVersion));
-
-		_layoutSetLocalService.updateLayoutSet(layoutSet);
 	}
 
 	private void _updateLayoutPriorities(

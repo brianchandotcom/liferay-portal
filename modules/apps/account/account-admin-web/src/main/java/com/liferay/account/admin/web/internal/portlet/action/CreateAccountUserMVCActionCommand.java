@@ -224,10 +224,10 @@ public class CreateAccountUserMVCActionCommand
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"No sharing entry found for ticket ",
-						ticket.getTicketId(),
-						"; collaborator access will not be granted to user ",
-						user.getUserId()));
+						"Collaborator access will not be granted to user ",
+						user.getUserId(),
+						" because no sharing entry was found for ticket ",
+						ticket.getTicketId()));
 			}
 
 			return;

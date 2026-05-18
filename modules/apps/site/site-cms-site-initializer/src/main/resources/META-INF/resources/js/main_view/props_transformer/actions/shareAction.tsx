@@ -4,6 +4,7 @@
  */
 
 import {CollaboratorService, openToast} from 'frontend-js-components-web';
+import React from 'react';
 
 import {COLLABORATOR_TYPE} from '../../../common/utils/constants';
 import {openCMSModal} from '../../../common/utils/openCMSModal';
@@ -91,19 +92,20 @@ export default async function shareAction({
 
 		openCMSModal({
 			className: 'share-modal',
-			contentComponent: ({closeModal}: {closeModal: () => void}) =>
-				CMSShareModalContent({
-					autocompleteURL,
-					canManageCollaborators,
-					closeModal,
-					collaboratorURL,
-					creator: {...creator, id: creator.id.toString()},
-					entryClassName,
-					externalUserSharingEnabled,
-					initialCollaborators,
-					itemId,
-					title,
-				}),
+			contentComponent: ({closeModal}: {closeModal: () => void}) => (
+				<CMSShareModalContent
+					autocompleteURL={autocompleteURL}
+					canManageCollaborators={canManageCollaborators}
+					closeModal={closeModal}
+					collaboratorURL={collaboratorURL}
+					creator={{...creator, id: creator.id.toString()}}
+					entryClassName={entryClassName}
+					externalUserSharingEnabled={externalUserSharingEnabled}
+					initialCollaborators={initialCollaborators}
+					itemId={itemId}
+					title={title}
+				/>
+			),
 			size: 'md',
 		});
 	}

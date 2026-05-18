@@ -11,6 +11,7 @@ import {
 	openModal,
 	openToast,
 } from 'frontend-js-components-web';
+import React from 'react';
 
 const AUTOCOMPLETE_URL =
 	'/o/search/v1.0/search?emptySearch=true' +
@@ -57,30 +58,31 @@ export default async function shareSnapshotAction({
 		);
 
 		openModal({
-			contentComponent: ({closeModal}: {closeModal: () => void}) =>
-				ShareModalContent({
-					autocompleteHelpText: Liferay.Language.get(
+			contentComponent: ({closeModal}: {closeModal: () => void}) => (
+				<ShareModalContent
+					autocompleteHelpText={Liferay.Language.get(
 						'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it'
-					),
-					autocompleteLabel: Liferay.Language.get('add-people'),
-					autocompleteURL: AUTOCOMPLETE_URL,
-					closeModal,
-					collaboratorURL: COLLABORATOR_URL,
-					collaboratorsListTitle: Liferay.Language.get(
+					)}
+					autocompleteLabel={Liferay.Language.get('add-people')}
+					autocompleteURL={AUTOCOMPLETE_URL}
+					closeModal={closeModal}
+					collaboratorURL={COLLABORATOR_URL}
+					collaboratorsListTitle={Liferay.Language.get(
 						'who-can-see-this-view'
-					),
-					creator: {
+					)}
+					creator={{
 						contentType: 'UserAccount',
 						id: Liferay.ThemeDisplay.getUserId(),
 						name: Liferay.ThemeDisplay.getUserName(),
-					},
-					initialCollaborators,
-					itemId,
-					permissionOptions: PERMISSION_OPTIONS,
-					showAllowResharing: false,
-					showExpirationDate: false,
-					title,
-				}),
+					}}
+					initialCollaborators={initialCollaborators}
+					itemId={itemId}
+					permissionOptions={PERMISSION_OPTIONS}
+					showAllowResharing={false}
+					showExpirationDate={false}
+					title={title}
+				/>
+			),
 			size: 'md',
 		});
 	}

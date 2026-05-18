@@ -10,8 +10,8 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import ShareModalContent from '../../src/main/resources/META-INF/resources/share_modal/ShareModalContent';
-import {PermissionOption} from '../../src/main/resources/META-INF/resources/share_modal/types';
+import ShareModalContent from '../../src/main/resources/META-INF/resources/share_modal_content/ShareModalContent';
+import {PermissionOption} from '../../src/main/resources/META-INF/resources/share_modal_content/types';
 
 jest.useFakeTimers();
 

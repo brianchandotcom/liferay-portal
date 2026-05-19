@@ -9,235 +9,10 @@
 	},
 	{
 		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountFlag$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscription$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionGroup$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AccountSubscriptionTerm$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AdminDXPCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AdminLiferayExperienceCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AnalyticsCloudDataCenterLocation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:AnalyticsCloudWorkspace$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:BannedEmailDomain$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:CallbackRequest$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:DXPCDataCenterRegion$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:DXPCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:IncidentReportContactAnalyticsCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:KoroneikiAccount$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:LiferayExperienceCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:ReplacementActivationKeyRequest$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:SupportTicketEscalation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TeamMembersInvitation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"DELETE",
-			"UPDATE",
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "[$OBJECT_DEFINITION_CLASS_NAME:TicketAttachment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:AccountSubscriptionGroup$]",
-		"roleName": "Provisioning Administrator",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:AnalyticsCloudWorkspace$]",
-		"roleName": "Provisioning Administrator",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:DXPCloudEnvironment$]",
-		"roleName": "Provisioning Administrator",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ACCESS_IN_CONTROL_PANEL"
-		],
-		"resourceName": "[$OBJECT_DEFINITION_PORTLET_ID:LiferayExperienceCloudEnvironment$]",
-		"roleName": "Provisioning Administrator",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
 			"MANAGE_USERS",
 			"VIEW_ACCOUNT_ROLES"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.account.model.AccountEntry",
 		"roleName": "Partner Manager",
 		"scope": "3"
@@ -257,6 +32,7 @@
 			"ADD_VOCABULARY",
 			"PERMISSIONS"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.asset.categories",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -282,6 +58,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -293,6 +70,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.asset.kernel.model.AssetVocabulary",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -303,6 +81,7 @@
 			"PERMISSIONS",
 			"SUBSCRIBE"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.asset.tags",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -312,6 +91,7 @@
 			"VIEW_COMMERCE_ORDERS",
 			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
 		"roleName": "Liferay Staff",
 		"scope": "1"
@@ -321,6 +101,7 @@
 			"VIEW_COMMERCE_ORDERS",
 			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
 		"roleName": "Partner Manager",
 		"scope": "3"
@@ -330,6 +111,7 @@
 			"VIEW_COMMERCE_ORDERS",
 			"VIEW_OPEN_COMMERCE_ORDERS"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.commerce.order",
 		"roleName": "Partner Member",
 		"scope": "3"
@@ -356,6 +138,7 @@
 		"actionIds": [
 			"VIEW_SITE_ADMINISTRATION"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.depot.model.DepotEntry",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -373,6 +156,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.document.library",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -389,6 +173,7 @@
 			"UPDATE_DISCUSSION",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntry",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -400,6 +185,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryMetadata-com.liferay.dynamic.data.mapping.model.DDMStructure",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -411,6 +197,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileEntryType",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -422,6 +209,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFileShortcut",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -438,6 +226,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.document.library.kernel.model.DLFolder",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -474,6 +263,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.journal",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -516,6 +306,7 @@
 			"UPDATE_DISCUSSION",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.journal.model.JournalArticle",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -527,6 +318,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.journal.model.JournalFeed",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -570,6 +362,7 @@
 			"UPDATE",
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.journal.model.JournalFolder",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -606,176 +399,6 @@
 	},
 	{
 		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountFlag$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountSubscription$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountSubscriptionGroup$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AccountSubscriptionTerm$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AdminDXPCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AdminLiferayExperienceCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AnalyticsCloudDataCenterLocation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:AnalyticsCloudWorkspace$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:BannedEmailDomain$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CallbackRequest$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DXPCDataCenterRegion$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:DXPCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:IncidentReportContactAnalyticsCloud$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:KoroneikiAccount$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:LiferayExperienceCloudEnvironment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ReplacementActivationKeyRequest$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:SupportTicketEscalation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TeamMembersInvitation$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"ADD_OBJECT_ENTRY"
-		],
-		"primKey": "0",
-		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:TicketAttachment$]",
-		"roleName": "Provisioning Member",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
 			"VIEW_SITE_ADMINISTRATION"
 		],
 		"primKey": "0",
@@ -799,6 +422,7 @@
 		"actionIds": [
 			"VIEW_SITE_ADMINISTRATION"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.Group",
 		"roleName": "Site Content Reviewer",
 		"scope": "3"
@@ -816,6 +440,7 @@
 		"actionIds": [
 			"VIEW"
 		],
+		"primKey": "0",
 		"resourceName": "com.liferay.portal.kernel.model.User",
 		"roleName": "Provisioning Member",
 		"scope": "1"

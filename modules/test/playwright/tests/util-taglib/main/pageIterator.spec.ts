@@ -5,11 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
@@ -18,6 +17,7 @@ import getPageDefinition from '../../layout-content-page-editor-web/main/utils/g
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 const test = mergeTests(
+	assetPublisherPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
@@ -28,7 +28,7 @@ const test = mergeTests(
 
 test(
 	'Check various accessibility in pagination',
-	{tag: ['@LPD-38101', '@LPD-38653', '@LPD-38653']},
+	{tag: ['@LPD-38101', '@LPD-38653']},
 	async ({page, samplePage}) => {
 		await test.step('Select Search Paginator tab', async () => {
 			await samplePage.selectTab(TabName.SEARCH_PAGINATOR);
@@ -73,7 +73,7 @@ test(
 );
 
 test(
-	'Intermediate pages button and dropdown accesibility issues',
+	'Intermediate pages button and dropdown accessibility issues',
 	{tag: '@LPD-42610'},
 	async ({page, samplePage}) => {
 		await test.step('Select Search Paginator tab', async () => {
@@ -81,7 +81,7 @@ test(
 		});
 
 		await test.step('Check intermediate pages button has a tooltip', async () => {
-			const intermediatePagesButton = await page.getByRole('button', {
+			const intermediatePagesButton = page.getByRole('button', {
 				name: 'Intermediate Pages Use TAB to',
 			});
 
@@ -89,7 +89,7 @@ test(
 		});
 
 		await test.step('Check intermediate pages dropdown items has a role', async () => {
-			const intermediatePagesDropdown = await page.locator(
+			const intermediatePagesDropdown = page.locator(
 				'ul.pagination div.dropdown-menu'
 			);
 
@@ -105,83 +105,51 @@ test(
 test(
 	'Dropdown menu adjusts to screen size',
 	{tag: '@LPD-50471'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
+	async ({apiHelpers, assetPublisherPage, page, pageEditorPage, site}) => {
 		const widgetId = getRandomString();
 
-		const widgetDefinition = getWidgetDefinition({
-			id: widgetId,
-			widgetName:
-				'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
-		});
-
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([widgetDefinition]),
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: widgetId,
+					widgetName:
+						'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+				}),
+			]),
 			siteId: site.id,
 			title: getRandomString(),
 		});
 
-		await test.step('Configure asset publisher to display pagination', async () => {
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-			await pageEditorPage.goToWidgetConfiguration(widgetId);
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
 
-			const configurationIframe = page.frameLocator(
-				'iframe[title="Configuration"]'
-			);
+		await assetPublisherPage.openAssetSelectionTab();
 
-			const assetSelectionTab = configurationIframe.getByRole('tab', {
-				name: 'Asset Selection',
-			});
-			await assetSelectionTab.waitFor({state: 'visible'});
-			await assetSelectionTab.click();
+		await assetPublisherPage.selectCollectionProvider('Recent Content');
 
-			await clickAndExpectToBeVisible({
-				autoClick: true,
+		await assetPublisherPage.openDisplaySettingsTab();
 
-				target: configurationIframe
-					.frameLocator('iframe[title="Select Collection"]')
-					.getByRole('link', {name: 'Collection Providers'}),
-				timeout: 2000,
-				trigger: configurationIframe.getByRole('button', {
-					exact: true,
-					name: 'Select Collection',
-				}),
-			});
-
-			await clickAndExpectToBeHidden({
-				target: configurationIframe.locator('.modal-dialog'),
-				timeout: 2000,
-				trigger: configurationIframe
-					.frameLocator('iframe[title="Select Collection"]')
-					.getByRole('button', {name: 'Select Recent Content'}),
-			});
-
-			await configurationIframe
-				.getByRole('tab', {name: 'Display Settings'})
-				.click();
-
-			const itemDisplayInput = configurationIframe.getByLabel(
+		const itemDisplayInput =
+			assetPublisherPage.configurationIframe.getByLabel(
 				'Number of Items to Display'
 			);
 
-			await itemDisplayInput.waitFor({state: 'visible'});
+		await itemDisplayInput.waitFor({state: 'visible'});
 
-			await itemDisplayInput.click();
+		await itemDisplayInput.click();
 
-			await itemDisplayInput.fill('1');
+		await itemDisplayInput.fill('1');
 
-			await configurationIframe
-				.getByLabel('Pagination Type')
-				.selectOption('Regular');
+		await assetPublisherPage.configurationIframe
+			.getByLabel('Pagination Type')
+			.selectOption('Regular');
 
-			await configurationIframe
-				.getByRole('button', {name: 'Save'})
-				.click();
+		await assetPublisherPage.saveConfiguration();
 
-			await page.press('body', 'Escape');
+		await assetPublisherPage.closeConfiguration();
 
-			await page.getByLabel('Publish', {exact: true}).click();
-		});
+		await page.getByLabel('Publish', {exact: true}).click();
 
 		await test.step('Create web content articles and test dropdown', async () => {
 			await page.goto(
@@ -210,7 +178,7 @@ test(
 
 			await page.setViewportSize({height: 600, width: 200});
 
-			const dropdownButton = await page.locator(
+			const dropdownButton = page.locator(
 				'[title="Show Intermediate Pages"]'
 			);
 

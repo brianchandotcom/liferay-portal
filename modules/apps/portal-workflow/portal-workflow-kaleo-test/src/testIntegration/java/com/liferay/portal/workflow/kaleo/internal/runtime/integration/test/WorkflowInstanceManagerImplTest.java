@@ -68,8 +68,8 @@ public class WorkflowInstanceManagerImplTest
 		BlogsEntry blogsEntry = null;
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.workflow.kaleo.runtime.internal.petra." +
-					"executor.GraphWalkerPortalExecutor",
+				"com.liferay.portal.workflow.kaleo.runtime.internal." +
+					"DefaultKaleoSignaler",
 				LoggerTestUtil.ERROR)) {
 
 			blogsEntry = BlogsEntryLocalServiceUtil.addEntry(

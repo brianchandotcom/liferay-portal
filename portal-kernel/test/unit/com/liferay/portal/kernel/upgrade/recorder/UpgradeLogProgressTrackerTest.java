@@ -132,44 +132,10 @@ public class UpgradeLogProgressTrackerTest {
 
 			UpgradeLogProgressTracker.start();
 
-			PreparedStatement[] preparedStatements = _mockPreparedStatements(
-				_SELECT_SQL);
-
-			PreparedStatement countPreparedStatement = preparedStatements[0];
-			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
 			long driftedCount = _TOTAL_ROW_COUNT / 2;
 
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT, driftedCount
-			);
-
-			ResultSet resultSet = _mockResultSet();
-
-			Mockito.when(
-				wrappedPreparedStatement.executeQuery()
-			).thenReturn(
-				resultSet
-			);
-
-			ResultSet wrappedResultSet =
-				wrappedPreparedStatement.executeQuery();
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT, driftedCount);
 
 			_resetLogTime(wrappedResultSet);
 
@@ -179,26 +145,7 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			long correctedTotal = driftedCount + 2;
-
-			long percentage = (2 * 100L) / correctedTotal;
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed 2 of ",
-					correctedTotal, " rows. (", percentage, "%)")
-			);
-
-			Map<String, Long> lastKnownTotalCounts =
-				UpgradeLogProgressTracker.getLastKnownTotalCounts();
-
-			Assert.assertEquals(
-				Long.valueOf(correctedTotal),
-				lastKnownTotalCounts.get(progressId));
+			_assertProgress(log, 2, driftedCount + 2, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -218,63 +165,14 @@ public class UpgradeLogProgressTrackerTest {
 
 			UpgradeLogProgressTracker.start();
 
-			PreparedStatement[] preparedStatements = _mockPreparedStatements(
-				_SELECT_SQL);
-
-			PreparedStatement countPreparedStatement = preparedStatements[0];
-			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT
-			);
-
-			ResultSet resultSet = _mockResultSet();
-
-			Mockito.when(
-				wrappedPreparedStatement.executeQuery()
-			).thenReturn(
-				resultSet
-			);
-
-			ResultSet wrappedResultSet =
-				wrappedPreparedStatement.executeQuery();
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT);
 
 			_resetLogTime(wrappedResultSet);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed 1 of ",
-					_TOTAL_ROW_COUNT + 1, " rows. (0%)")
-			);
-
-			Map<String, Long> lastKnownTotalCounts =
-				UpgradeLogProgressTracker.getLastKnownTotalCounts();
-
-			Assert.assertEquals(
-				Long.valueOf(_TOTAL_ROW_COUNT + 1),
-				lastKnownTotalCounts.get(progressId));
+			_assertProgress(log, 1, _TOTAL_ROW_COUNT + 1, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -296,42 +194,8 @@ public class UpgradeLogProgressTrackerTest {
 
 			UpgradeLogProgressTracker.start();
 
-			PreparedStatement[] preparedStatements = _mockPreparedStatements(
-				_SELECT_SQL);
-
-			PreparedStatement countPreparedStatement = preparedStatements[0];
-			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT
-			);
-
-			ResultSet resultSet = _mockResultSet();
-
-			Mockito.when(
-				wrappedPreparedStatement.executeQuery()
-			).thenReturn(
-				resultSet
-			);
-
-			ResultSet wrappedResultSet =
-				wrappedPreparedStatement.executeQuery();
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT, _TOTAL_ROW_COUNT);
 
 			_resetLogTime(wrappedResultSet);
 
@@ -341,24 +205,7 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			long percentage = (2 * 100L) / _TOTAL_ROW_COUNT;
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed 2 of ",
-					_TOTAL_ROW_COUNT, " rows. (", percentage, "%)")
-			);
-
-			Map<String, Long> lastKnownTotalCounts =
-				UpgradeLogProgressTracker.getLastKnownTotalCounts();
-
-			Assert.assertEquals(
-				Long.valueOf(_TOTAL_ROW_COUNT),
-				lastKnownTotalCounts.get(progressId));
+			_assertProgress(log, 2, _TOTAL_ROW_COUNT, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -465,26 +312,17 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 
 			wrappedResultSet.close();
 			wrappedResultSet.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 
 			Mockito.verify(
 				log, Mockito.times(1)
 			).info(
-				progressId + " is finished."
+				_getProgressId(wrappedResultSet) + " is finished."
 			);
 		}
 		finally {
@@ -861,32 +699,21 @@ public class UpgradeLogProgressTrackerTest {
 			Assert.assertTrue(wrappedInnerResultSet.next());
 			Assert.assertTrue(wrappedOuterResultSet.next());
 
-			String innerProgressId = _getProgressId(wrappedInnerResultSet);
-			String outerProgressId = _getProgressId(wrappedOuterResultSet);
+			Assert.assertNotEquals(
+				_getProgressId(wrappedInnerResultSet),
+				_getProgressId(wrappedOuterResultSet));
 
-			Assert.assertNotEquals(innerProgressId, outerProgressId);
-
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(innerProgressId));
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(outerProgressId));
+			_assertLastKnownProgress(1, wrappedInnerResultSet);
+			_assertLastKnownProgress(1, wrappedOuterResultSet);
 
 			wrappedInnerResultSet.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(innerProgressId));
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(outerProgressId));
+			_assertLastKnownProgress(1, wrappedInnerResultSet);
+			_assertLastKnownProgress(1, wrappedOuterResultSet);
 
 			wrappedOuterResultSet.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(outerProgressId));
+			_assertLastKnownProgress(1, wrappedOuterResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1013,20 +840,13 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed ",
-					_TOTAL_ROW_COUNT + 1, " rows.")
-			);
+			_assertProgress(log, _TOTAL_ROW_COUNT + 1, wrappedResultSet);
 
 			Map<String, Long> lastKnownTotalCounts =
 				UpgradeLogProgressTracker.getLastKnownTotalCounts();
 
-			Assert.assertNull(lastKnownTotalCounts.get(progressId));
+			Assert.assertNull(
+				lastKnownTotalCounts.get(_getProgressId(wrappedResultSet)));
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1097,21 +917,8 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 1 rows."
-			);
-
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertProgress(log, 1, wrappedResultSet);
+			_assertLastKnownProgress(1, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1144,19 +951,8 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 1 rows."
-			);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 2 rows."
-			);
+			_assertProgress(log, 1, wrappedResultSet);
+			_assertProgress(log, 2, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1203,13 +999,7 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				progressId + " is still executing. Processed 1 rows."
-			);
+			_assertProgress(log, 1, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1317,22 +1107,13 @@ public class UpgradeLogProgressTrackerTest {
 
 			Assert.assertTrue(wrappedResultSet.next());
 
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Long expectedRowCount = 1L;
-
-			Map<String, Long> lastKnownProgresses =
-				UpgradeLogProgressTracker.getLastKnownProgresses();
-
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 
 			Statement wrappedStatement = wrappedResultSet.getStatement();
 
 			wrappedStatement.close();
 
-			Assert.assertEquals(
-				expectedRowCount, lastKnownProgresses.get(progressId));
+			_assertLastKnownProgress(1, wrappedResultSet);
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();
@@ -1658,6 +1439,95 @@ public class UpgradeLogProgressTrackerTest {
 		finally {
 			UpgradeLogProgressTracker.stop();
 		}
+	}
+
+	private void _assertLastKnownProgress(
+		long expectedRowCount, ResultSet wrappedResultSet) {
+
+		Map<String, Long> lastKnownProgresses =
+			UpgradeLogProgressTracker.getLastKnownProgresses();
+
+		Assert.assertEquals(
+			Long.valueOf(expectedRowCount),
+			lastKnownProgresses.get(_getProgressId(wrappedResultSet)));
+	}
+
+	private void _assertProgress(
+		Log log, long rowCount, long totalCount, ResultSet wrappedResultSet) {
+
+		long percentage = (rowCount * 100L) / totalCount;
+
+		String progressId = _getProgressId(wrappedResultSet);
+
+		Mockito.verify(
+			log
+		).info(
+			StringBundler.concat(
+				progressId, " is still executing. Processed ", rowCount, " of ",
+				totalCount, " rows. (", percentage, "%)")
+		);
+
+		Map<String, Long> lastKnownTotalCounts =
+			UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+		Assert.assertEquals(
+			Long.valueOf(totalCount), lastKnownTotalCounts.get(progressId));
+	}
+
+	private void _assertProgress(
+		Log log, long rowCount, ResultSet wrappedResultSet) {
+
+		Mockito.verify(
+			log
+		).info(
+			StringBundler.concat(
+				_getProgressId(wrappedResultSet),
+				" is still executing. Processed ", rowCount, " rows.")
+		);
+	}
+
+	private ResultSet _executeQueryWithCount(long... counts) throws Exception {
+		PreparedStatement[] preparedStatements = _mockPreparedStatements(
+			_SELECT_SQL);
+
+		PreparedStatement countPreparedStatement = preparedStatements[0];
+		PreparedStatement wrappedPreparedStatement = preparedStatements[1];
+
+		ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+		Mockito.when(
+			countPreparedStatement.executeQuery()
+		).thenReturn(
+			countResultSet
+		);
+
+		Mockito.when(
+			countResultSet.next()
+		).thenReturn(
+			true
+		);
+
+		Long[] additionalCounts = new Long[counts.length - 1];
+
+		for (int i = 0; i < additionalCounts.length; i++) {
+			additionalCounts[i] = counts[i + 1];
+		}
+
+		Mockito.when(
+			countResultSet.getLong(1)
+		).thenReturn(
+			counts[0], additionalCounts
+		);
+
+		ResultSet resultSet = _mockResultSet();
+
+		Mockito.when(
+			wrappedPreparedStatement.executeQuery()
+		).thenReturn(
+			resultSet
+		);
+
+		return wrappedPreparedStatement.executeQuery();
 	}
 
 	private Log _getLog() {

@@ -36,7 +36,6 @@ export function ResizingLeft() {
 
 				<ResizeHandle
 					aria-controls={id}
-					aria-label="Resize region"
 					maxWidth={MAX_WIDTH}
 					minWidth={MIN_WIDTH}
 					onWidthChange={setWidth}

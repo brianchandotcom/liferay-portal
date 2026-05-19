@@ -24,6 +24,50 @@ public class IndexUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testMergeToJSONObjectWithDynamicTemplates() {
+		JSONObject jsonObject = _createMappingsJSONObject(
+			JSONUtil.putAll(
+				_createDynamicTemplateJSONObject("template_a", "text"),
+				_createDynamicTemplateJSONObject("template_b", "text")));
+
+		JSONObject mergeJSONObject = _createMappingsJSONObject(
+			JSONUtil.putAll(
+				_createDynamicTemplateJSONObject("template_b", "keyword"),
+				_createDynamicTemplateJSONObject("template_c", "text")));
+
+		IndexUtil.mergeToJSONObject(jsonObject, mergeJSONObject);
+
+		JSONObject mappingsJSONObject = jsonObject.getJSONObject("mappings");
+
+		JSONArray dynamicTemplatesJSONArray = mappingsJSONObject.getJSONArray(
+			"dynamic_templates");
+
+		Assert.assertEquals(3, dynamicTemplatesJSONArray.length());
+
+		JSONObject firstTemplateJSONObject =
+			dynamicTemplatesJSONArray.getJSONObject(0);
+
+		Assert.assertTrue(firstTemplateJSONObject.has("template_a"));
+
+		JSONObject secondTemplateJSONObject =
+			dynamicTemplatesJSONArray.getJSONObject(1);
+
+		JSONObject overriddenTemplateJSONObject =
+			secondTemplateJSONObject.getJSONObject("template_b");
+
+		JSONObject overriddenMappingJSONObject =
+			overriddenTemplateJSONObject.getJSONObject("mapping");
+
+		Assert.assertEquals(
+			"keyword", overriddenMappingJSONObject.getString("type"));
+
+		JSONObject thirdTemplateJSONObject =
+			dynamicTemplatesJSONArray.getJSONObject(2);
+
+		Assert.assertTrue(thirdTemplateJSONObject.has("template_c"));
+	}
+
+	@Test
 	public void testMergeToJSONObjectWithStemmerOverrideRules() {
 		JSONObject jsonObject = _createDutchOverrideSettingsJSONObject(
 			JSONUtil.putAll("old=>old"));
@@ -69,6 +113,26 @@ public class IndexUtilTest {
 						).put(
 							"type", "stemmer_override"
 						)))));
+	}
+
+	private JSONObject _createDynamicTemplateJSONObject(
+		String name, String type) {
+
+		return JSONUtil.put(
+			name,
+			JSONUtil.put(
+				"mapping", JSONUtil.put("type", type)
+			).put(
+				"match_mapping_type", "string"
+			));
+	}
+
+	private JSONObject _createMappingsJSONObject(
+		JSONArray dynamicTemplatesJSONArray) {
+
+		return JSONUtil.put(
+			"mappings",
+			JSONUtil.put("dynamic_templates", dynamicTemplatesJSONArray));
 	}
 
 }

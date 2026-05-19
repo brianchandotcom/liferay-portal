@@ -6856,6 +6856,7 @@ public class LayoutPersistenceImpl
 		ctMergeColumnNames.add("themeId");
 		ctMergeColumnNames.add("colorSchemeId");
 		ctMergeColumnNames.add("styleBookEntryERC");
+		ctMergeColumnNames.add("styleBookEntryScopeERC");
 		ctMergeColumnNames.add("css");
 		ctMergeColumnNames.add("priority");
 		ctMergeColumnNames.add("faviconFileEntryERC");
@@ -6919,8 +6920,8 @@ public class LayoutPersistenceImpl
 			_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 			LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"layout.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
-				true, Layout::getUuid));
+				"layout.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+				Layout::getUuid));
 
 		_uniquePersistenceFinderByUUID_G_P = new UniquePersistenceFinder<>(
 			this,
@@ -6935,8 +6936,8 @@ public class LayoutPersistenceImpl
 				Layout::isPrivateLayout),
 			_SQL_SELECT_LAYOUT_WHERE, "",
 			new FinderColumn<>(
-				"layout.", "uuid", "uuid_", FinderColumn.Type.STRING, "=", true,
-				true, Layout::getUuid),
+				"layout.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+				Layout::getUuid),
 			new FinderColumn<>(
 				"layout.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Layout::getGroupId),
@@ -6966,8 +6967,8 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"layout.", "uuid", "uuid_", FinderColumn.Type.STRING, "=",
-					true, true, Layout::getUuid),
+					"layout.", "uuid", FinderColumn.Type.STRING, "=", true,
+					true, Layout::getUuid),
 				new FinderColumn<>(
 					"layout.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getCompanyId));
@@ -7165,8 +7166,8 @@ public class LayoutPersistenceImpl
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
 				new FinderColumn<>(
-					"layout.", "type", "type_", FinderColumn.Type.STRING, "=",
-					true, true, Layout::getType));
+					"layout.", "type", FinderColumn.Type.STRING, "=", true,
+					true, Layout::getType));
 
 		_collectionPersistenceFinderByG_MLPTEERC =
 			new FilterCollectionPersistenceFinder<>(
@@ -7198,7 +7199,7 @@ public class LayoutPersistenceImpl
 					true, Layout::getGroupId),
 				new FinderColumn<>(
 					"layout.", "masterLayoutPageTemplateEntryERC",
-					"masterLPTEERC", FinderColumn.Type.STRING, "=", true, true,
+					FinderColumn.Type.STRING, "=", true, true,
 					Layout::getMasterLayoutPageTemplateEntryERC));
 
 		_collectionPersistenceFinderByP_I = new CollectionPersistenceFinder<>(
@@ -7288,12 +7289,12 @@ public class LayoutPersistenceImpl
 				"layout.system = [$FALSE$]",
 				new FinderColumn<>(
 					"layout.", "portletLayoutPageTemplateEntryERC",
-					"portletLPTEERC", FinderColumn.Type.STRING, "=", true, true,
+					FinderColumn.Type.STRING, "=", true, true,
 					Layout::getPortletLayoutPageTemplateEntryERC),
 				new FinderColumn<>(
 					"layout.", "portletLayoutPageTemplateEntryScopeERC",
-					"portletLPTESERC", FinderColumn.Type.STRING, "=", true,
-					true, Layout::getPortletLayoutPageTemplateEntryScopeERC));
+					FinderColumn.Type.STRING, "=", true, true,
+					Layout::getPortletLayoutPageTemplateEntryScopeERC));
 
 		_uniquePersistenceFinderByG_P_L = new UniquePersistenceFinder<>(
 			this,
@@ -7388,8 +7389,8 @@ public class LayoutPersistenceImpl
 					"layout.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
 					true, true, Layout::isPrivateLayout),
 				new ArrayableFinderColumn<>(
-					"layout.", "type", "type_", FinderColumn.Type.STRING, "=",
-					false, true, true, Layout::getType));
+					"layout.", "type", FinderColumn.Type.STRING, "=", false,
+					true, true, Layout::getType));
 
 		_collectionPersistenceFinderByG_P_S =
 			new FilterCollectionPersistenceFinder<>(
@@ -7427,8 +7428,8 @@ public class LayoutPersistenceImpl
 					"layout.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
 					true, true, Layout::isPrivateLayout),
 				new FinderColumn<>(
-					"layout.", "system", "system_", FinderColumn.Type.BOOLEAN,
-					"=", true, true, Layout::isSystem));
+					"layout.", "system", FinderColumn.Type.BOOLEAN, "=", true,
+					true, Layout::isSystem));
 
 		_uniquePersistenceFinderByG_P_F = new UniquePersistenceFinder<>(
 			this,
@@ -7759,4 +7760,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1126612148
+// LIFERAY-SERVICE-BUILDER-HASH:-29354521

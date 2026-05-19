@@ -43,7 +43,9 @@ public class UIDSimilarResultsContributorTest
 	public void testDetectRoute() {
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
-		RouteHelper routeHelper = () -> "http://localhost:" + PortalUtil.getPortalServerPort(false) + "?uid=theUid";
+		RouteHelper routeHelper = () ->
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"?uid=theUid";
 
 		_uidSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -73,7 +75,9 @@ public class UIDSimilarResultsContributorTest
 	@Test
 	public void testWriteDestination() {
 		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl("http://localhost:" + PortalUtil.getPortalServerPort(false) + "?uid=theUid");
+			new DestinationBuilderImpl(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"?uid=theUid");
 
 		Mockito.doReturn(
 			"newUid"
@@ -87,7 +91,9 @@ public class UIDSimilarResultsContributorTest
 			destinationBuilderImpl, destinationHelper);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?uid=newUid", destinationBuilderImpl.build());
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"?uid=newUid",
+			destinationBuilderImpl.build());
 	}
 
 	private UIDSimilarResultsContributor _uidSimilarResultsContributor;

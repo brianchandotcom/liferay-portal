@@ -58,7 +58,10 @@ public class AssertionConsumerServiceActionTest {
 			"/common/referer_js.jsp",
 			assertionConsumerServiceAction.execute(
 				new MockHttpServletRequest(
-					"GET", "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/acs"),
+					"GET",
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/c/portal/saml/acs"),
 				new MockHttpServletResponse()));
 
 		Mockito.verify(

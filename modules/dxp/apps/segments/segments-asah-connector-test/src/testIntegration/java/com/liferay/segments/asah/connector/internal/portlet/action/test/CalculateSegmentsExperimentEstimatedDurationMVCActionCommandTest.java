@@ -159,7 +159,8 @@ public class CalculateSegmentsExperimentEstimatedDurationMVCActionCommandTest {
 							RandomTestUtil.randomString()
 						).put(
 							"liferayAnalyticsFaroBackendURL",
-							"http://localhost:" + PortalUtil.getPortalServerPort(false) + ""
+							"http://localhost:" +
+								PortalUtil.getPortalServerPort(false)
 						).build())) {
 
 			_mvcActionCommand.processAction(

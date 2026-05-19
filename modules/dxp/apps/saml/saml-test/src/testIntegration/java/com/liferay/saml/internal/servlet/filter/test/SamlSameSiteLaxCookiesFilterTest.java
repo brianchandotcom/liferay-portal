@@ -106,17 +106,26 @@ public class SamlSameSiteLaxCookiesFilterTest {
 
 	@Test
 	public void testACSSameSiteLaxCookiesSupport() throws Exception {
-		_execute(new URL("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/acs"));
+		_execute(
+			new URL(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c/portal/saml/acs"));
 	}
 
 	@Test
 	public void testSLOSameSiteLaxCookies() throws Exception {
-		_execute(new URL("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/slo"));
+		_execute(
+			new URL(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c/portal/saml/slo"));
 	}
 
 	@Test
 	public void testSSOSameSiteLaxCookies() throws Exception {
-		_execute(new URL("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/sso"));
+		_execute(
+			new URL(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c/portal/saml/sso"));
 	}
 
 	protected static SamlProviderConfigurationHelper

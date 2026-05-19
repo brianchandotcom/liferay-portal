@@ -250,7 +250,7 @@ spec:
                                     value: provisioning-database-user
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}inputs.parameters.data-inactive}}"
-                        depends: restore-cloudsql-backup && restore-dl-bucket
+                        depends: reset-postgres-password && restore-dl-bucket
                         name: provision-database-user
                         template: apply-wait-infrastructure
                     -   arguments:
@@ -269,11 +269,18 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
                                 -   name: restore-instance
                                     value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
-                                -   name: root-password-secret-name
-                                    value: "{{ "{{" }}inputs.parameters.root-password-secret-name}}"
                         depends: get-inactive-cloudsql-instance
                         name: restore-cloudsql-backup
                         template: restore-cloudsql-backup
+                    -   arguments:
+                            parameters:
+                                -   name: restore-instance
+                                    value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
+                                -   name: root-password-secret-name
+                                    value: "{{ "{{" }}inputs.parameters.root-password-secret-name}}"
+                        depends: restore-cloudsql-backup
+                        name: reset-postgres-password
+                        template: reset-postgres-password
                     -   arguments:
                             parameters:
                                 -   name: dl-bucket-inactive
@@ -319,14 +326,39 @@ spec:
                                     value: "{{ "{{" }}inputs.parameters.liferay-workload-name}}"
                         name: kubectl-rollout-status
                         template: kubectl-rollout-status
-        -   inputs:
+        -   container:
+                args:
+                    -   sql
+                    -   backups
+                    -   restore
+                    -   "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
+                    -   --project={{ .Values.global.gcp.projectId }}
+                    -   --quiet
+                    -   --restore-instance
+                    -   "{{ "{{" }}inputs.parameters.restore-instance}}"
+                command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
+                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
                 parameters:
                     -   name: database-snapshot-uuid
                     -   name: restore-instance
-                    -   name: root-password-secret-name
             name: restore-cloudsql-backup
-            script:
-                command: [bash]
+        -   container:
+                args:
+                    -   sql
+                    -   users
+                    -   set-password
+                    -   postgres
+                    -   --instance={{ "{{" }}inputs.parameters.restore-instance}}
+                    -   --password=$(PGPASSWORD)
+                    -   --project={{ .Values.global.gcp.projectId }}
+                    -   --quiet
+                command: [gcloud]
                 env:
                     -   name: CLOUDSDK_CONFIG
                         value: /tmp/gcloud
@@ -338,8 +370,11 @@ spec:
                 image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
-                source: |-
-                    {{- tpl (.Files.Get "scripts/restore-cloudsql-backup.sh") . | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: restore-instance
+                    -   name: root-password-secret-name
+            name: reset-postgres-password
         -   container:
                 args:
                     -   transfer

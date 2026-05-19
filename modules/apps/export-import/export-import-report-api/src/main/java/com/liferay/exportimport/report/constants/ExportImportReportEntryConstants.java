@@ -24,4 +24,16 @@ public class ExportImportReportEntryConstants {
 
 	public static final int TYPE_ERROR = 1;
 
+	public static String getTypeLabel(int type) {
+		if (type == TYPE_EMPTY) {
+			return "empty";
+		}
+
+		if (type == TYPE_ERROR) {
+			return "error";
+		}
+
+		return null;
+	}
+
 }

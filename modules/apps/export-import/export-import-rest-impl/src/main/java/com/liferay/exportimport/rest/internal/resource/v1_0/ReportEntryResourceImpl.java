@@ -145,19 +145,6 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 		return null;
 	}
 
-	private String _getTypeLabel(int type) {
-		if (type == ExportImportReportEntryConstants.TYPE_EMPTY) {
-			return _language.get(
-				contextAcceptLanguage.getPreferredLocale(), "empty");
-		}
-		else if (type == ExportImportReportEntryConstants.TYPE_ERROR) {
-			return _language.get(
-				contextAcceptLanguage.getPreferredLocale(), "error");
-		}
-
-		return null;
-	}
-
 	private Origin _toOrigin(int origin) {
 		return new Origin() {
 			{
@@ -230,7 +217,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 				setLabel(
 					() -> _language.get(
 						contextAcceptLanguage.getPreferredLocale(),
-						_getTypeLabel(type)));
+						ExportImportReportEntryConstants.getTypeLabel(type)));
 			}
 		};
 	}

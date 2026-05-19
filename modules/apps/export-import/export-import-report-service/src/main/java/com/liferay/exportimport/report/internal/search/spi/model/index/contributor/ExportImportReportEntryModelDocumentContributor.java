@@ -5,15 +5,17 @@
 
 package com.liferay.exportimport.report.internal.search.spi.model.index.contributor;
 
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,12 +34,20 @@ public class ExportImportReportEntryModelDocumentContributor
 	public void contribute(
 		Document document, ExportImportReportEntry exportImportReportEntry) {
 
+		document.setSortableTextFields(
+			ArrayUtil.append(
+				PropsUtil.getArray(PropsKeys.INDEX_SORTABLE_TEXT_FIELDS),
+				new String[] {"classExternalReferenceCode"}));
+
 		document.addKeyword(
 			Field.COMPANY_ID, exportImportReportEntry.getCompanyId());
 		document.addDate(
 			Field.CREATE_DATE, exportImportReportEntry.getCreateDate());
 		document.addDate(
 			Field.MODIFIED_DATE, exportImportReportEntry.getModifiedDate());
+		document.addKeyword(
+			"classExternalReferenceCode",
+			exportImportReportEntry.getClassExternalReferenceCode(), true);
 		document.addText(
 			"errorMessage", exportImportReportEntry.getErrorMessage());
 		document.addText(
@@ -46,29 +56,29 @@ public class ExportImportReportEntryModelDocumentContributor
 			"exportImportConfigurationId_long",
 			exportImportReportEntry.getExportImportConfigurationId());
 		document.addLocalizedText(
-			"modelName", _getModelNameMap(exportImportReportEntry), true);
+			"modelName",
+			_localization.getLocalizationMap(
+				_language.getAvailableLocales(), LocaleUtil.getDefault(),
+				exportImportReportEntry.getModelNameLanguageKey()),
+			true);
 		document.addNumber(
 			"origin_integer", exportImportReportEntry.getOrigin());
 		document.addNumber("status", exportImportReportEntry.getStatus());
 		document.addNumber("type_integer", exportImportReportEntry.getType());
-	}
 
-	private Map<Locale, String> _getModelNameMap(
-		ExportImportReportEntry exportImportReportEntry) {
-
-		Map<Locale, String> map = new HashMap<>();
-
-		for (Locale locale : _language.getAvailableLocales()) {
-			map.put(
-				locale,
-				_language.get(
-					locale, exportImportReportEntry.getModelNameLanguageKey()));
-		}
-
-		return map;
+		document.addLocalizedText(
+			"type_label",
+			_localization.getLocalizationMap(
+				_language.getAvailableLocales(), LocaleUtil.getDefault(),
+				ExportImportReportEntryConstants.getTypeLabel(
+					exportImportReportEntry.getType())),
+			true);
 	}
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 }

@@ -300,14 +300,14 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				if (ParamUtil.getBoolean(_httpServletRequest, "emptyLayout")) {
 					return layoutTypeController.isInstanceable() &&
 						   !layoutTypeController.isPrimaryType() &&
-						   (widgetPageFFEnabled || !deprecatedType) &&
+						   (!deprecatedType || widgetPageFFEnabled) &&
 						   !type.equals(LayoutConstants.TYPE_URL) &&
 						   !type.equals(LayoutConstants.TYPE_EMBEDDED);
 				}
 
 				return layoutTypeController.isInstanceable() &&
 					   !layoutTypeController.isPrimaryType() &&
-					   (widgetPageFFEnabled || !deprecatedType);
+					   (!deprecatedType || widgetPageFFEnabled);
 			});
 
 		return _types;

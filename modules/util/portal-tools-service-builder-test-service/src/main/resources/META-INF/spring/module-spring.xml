@@ -35,6 +35,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.DSLQueryStatusEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.DSLQueryStatusEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DSLQueryStatusEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DSLQueryStatusEntryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DSLQueryStatusEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.DSLQueryStatusEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.DynamicQueryEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.DynamicQueryEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DynamicQueryEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DynamicQueryEntryModelArgumentsResolver" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.DynamicQueryEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.DynamicQueryEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryModelArgumentsResolver" id="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryModelArgumentsResolver" />

@@ -64,10 +64,17 @@ spec:
                                             set -o errexit
                                             until pg_isready --host 127.0.0.1 --port {{ $databasePort }} --username postgres; do sleep 2; done
                                             psql --host 127.0.0.1 --set ON_ERROR_STOP=1 --username postgres --dbname {{ $databaseName }} <<EOF
-                                            GRANT ALL PRIVILEGES ON DATABASE "{{ $databaseName }}" TO "{{ $databaseIamUser }}";
-                                            GRANT ALL ON ALL TABLES IN SCHEMA public TO "{{ $databaseIamUser }}";
-                                            GRANT cloudsqlsuperuser TO "{{ $databaseIamUser }}";
-                                            GRANT "{{ $databaseIamUser }}" to postgres;
+                                            DO \$\$
+                                            BEGIN
+                                                IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'liferay_shared_owner') THEN
+                                                    CREATE ROLE liferay_shared_owner NOLOGIN;
+                                                END IF;
+                                            END \$\$;
+                                            GRANT liferay_shared_owner TO postgres;
+                                            ALTER DATABASE "{{ $databaseName }}" OWNER TO liferay_shared_owner;
+                                            GRANT CONNECT, TEMPORARY ON DATABASE "{{ $databaseName }}" TO "{{ $databaseIamUser }}";
+                                            GRANT liferay_shared_owner TO "{{ $databaseIamUser }}";
+                                            ALTER ROLE "{{ $databaseIamUser }}" SET ROLE liferay_shared_owner;
                                             EOF
                                             timeout=$(($(date +%s) + 600))
                                             until PGCONNECT_TIMEOUT=10 PGPASSWORD=iam psql --host 127.0.0.1 --port {{ $databasePort }} --username "{{ $databaseIamUser }}" --dbname {{ $databaseName }} --command "SELECT 1" >/dev/null 2>&1

@@ -6,7 +6,6 @@
 package com.liferay.osb.faro.web.internal.model.display.contacts;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.osb.faro.engine.client.model.AssetSummaryTag;
 import com.liferay.osb.faro.engine.client.model.Metric;

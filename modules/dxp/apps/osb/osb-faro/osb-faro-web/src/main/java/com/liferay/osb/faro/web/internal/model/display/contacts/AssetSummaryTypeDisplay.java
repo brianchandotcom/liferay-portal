@@ -5,8 +5,6 @@
 
 package com.liferay.osb.faro.web.internal.model.display.contacts;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.liferay.osb.faro.engine.client.model.AssetSummaryType;
 
 /**
@@ -19,9 +17,7 @@ public class AssetSummaryTypeDisplay {
 		_name = assetSummaryType.getName();
 	}
 
-	@JsonProperty("id")
 	private final String _id;
-
 	private final String _name;
 
 }

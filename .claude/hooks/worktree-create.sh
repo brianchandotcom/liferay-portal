@@ -311,6 +311,17 @@ function _set_gradle_paths {
 		"${file}"
 }
 
+function _set_playwright_port {
+	local file="${WORKTREE_DIR}/modules/test/playwright/.env.local"
+	local http_port=$((8080 + OFFSET))
+
+	mkdir -p "$(dirname "${file}")"
+
+	_atomic_write "${file}" <<EOF
+PORTAL_URL=http://localhost:${http_port}
+EOF
+}
+
 function _set_port_offset {
 	local offset_file="${BUNDLES_DIR}/.worktree-port-offset"
 
@@ -374,17 +385,6 @@ function _set_property {
 	fi
 
 	echo "${key}=${value}" >> "${file}"
-}
-
-function _set_playwright_port {
-	local file="${WORKTREE_DIR}/modules/test/playwright/.env.local"
-	local http_port=$((8080 + OFFSET))
-
-	mkdir -p "$(dirname "${file}")"
-
-	_atomic_write "${file}" <<EOF
-PORTAL_URL=http://localhost:${http_port}
-EOF
 }
 
 function _set_test_integration_port {

@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {editCustomElementPageTest} from '../../client-extension-web/main/fixtures/editCustomElementPageTest';
 import {WaitAction} from '../../client-extension-web/main/pages/EditClientExtensionsPage';
@@ -32,7 +33,7 @@ test('LPD-39537 - Check that the name field of custom elements does not allow st
 	await editCustomElementPage.nameInput.fill(NAME);
 	await editCustomElementPage.htmlElementNameInput.fill('test-element');
 	await editCustomElementPage.javaScriptURLInput.fill(
-		'http://localhost:8080'
+		liferayConfig.environment.baseUrl
 	);
 
 	await editCustomElementPage.publish(WaitAction.SUCCESS);

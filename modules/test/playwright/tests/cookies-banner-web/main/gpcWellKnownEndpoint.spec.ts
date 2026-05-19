@@ -10,6 +10,7 @@ import {consentManagerConfigurationPageTest} from '../../../fixtures/consentMana
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../../liferay.config';
 import {SiteSettingsPage} from '../../../pages/users-admin-web/site-admin-web/SiteSettingsPage';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -66,7 +67,7 @@ test(
 		await waitForAlert(page);
 
 		const context = await browser.newContext({
-			baseURL: `http://${virtualHostName}:8080`,
+			baseURL: `http://${virtualHostName}:${liferayConfig.environment.port}`,
 			storageState: undefined,
 		});
 

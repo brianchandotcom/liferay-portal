@@ -349,6 +349,7 @@ export function SidePanel({
 
 						{isResizable && (
 							<ResizeHandle
+								aria-controls={sidePanelRef.current?.id!}
 								maxWidth={sidePanelObservedMaxWidth}
 								minWidth={PANEL_WIDTH_MIN}
 								onWidthChange={setResizeWidth}

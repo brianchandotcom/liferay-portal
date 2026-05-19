@@ -18,6 +18,7 @@ import {
 } from 'frontend-js-components-web';
 
 interface ObjectRelationshipInheritanceCheckbox {
+	disabled?: boolean;
 	learnResources: ILearnResourceContext;
 	onChange: (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -26,6 +27,7 @@ interface ObjectRelationshipInheritanceCheckbox {
 }
 
 export function ObjectRelationshipInheritanceCheckbox({
+	disabled,
 	learnResources,
 	onChange,
 	values,
@@ -37,6 +39,7 @@ export function ObjectRelationshipInheritanceCheckbox({
 			<div className="form-group lfr__object-relationship-inheritance-container">
 				<ClayCheckbox
 					checked={!!values.edge}
+					disabled={disabled}
 					label={Liferay.Language.get('enable-inheritance')}
 					onChange={onChange}
 				/>

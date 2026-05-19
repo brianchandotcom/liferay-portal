@@ -23,6 +23,7 @@ interface EditObjectRelationshipContentProps {
 	containerWrapper: ElementType;
 	errors: FormError<ObjectRelationship>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
+	inheritanceCheckboxDisabled?: boolean;
 	learnResources: ILearnResourceContext;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationshipDeletionTypes: LabelValueObject[];
@@ -44,6 +45,7 @@ export function EditObjectRelationshipContent({
 	containerWrapper: ContainerWrapper,
 	errors,
 	handleChange,
+	inheritanceCheckboxDisabled,
 	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectRelationshipDeletionTypes,
@@ -91,6 +93,7 @@ export function EditObjectRelationshipContent({
 					baseResourceURL={baseResourceURL}
 					errors={errors}
 					handleChange={handleChange}
+					inheritanceCheckboxDisabled={inheritanceCheckboxDisabled}
 					learnResources={learnResources}
 					objectDefinitionExternalReferenceCode1={
 						objectDefinitionExternalReferenceCode

@@ -35,13 +35,11 @@ public class EditDiscussionStrutsActionTest {
 	@Test
 	@TestInfo("LPD-89886")
 	public void testExecute() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		_editDiscussionStrutsAction.execute(
-			mockHttpServletRequest, mockHttpServletResponse);
+			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		Assert.assertEquals(
 			ContentTypes.APPLICATION_JSON,

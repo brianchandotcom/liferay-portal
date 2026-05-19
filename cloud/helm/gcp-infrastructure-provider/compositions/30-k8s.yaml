@@ -61,14 +61,24 @@ spec:
                         containers:
                             -   args:
                                     -   |
-                                            set -e
-                                            until pg_isready -h 127.0.0.1 -p {{ $databasePort }} -U postgres; do sleep 2; done
-                                            psql -h 127.0.0.1 -v "ON_ERROR_STOP=1" -U postgres -d {{ $databaseName }} <<EOF
+                                            set -o errexit
+                                            until pg_isready --host 127.0.0.1 --port {{ $databasePort }} --username postgres; do sleep 2; done
+                                            psql --host 127.0.0.1 --set ON_ERROR_STOP=1 --username postgres --dbname {{ $databaseName }} <<EOF
                                             GRANT ALL PRIVILEGES ON DATABASE "{{ $databaseName }}" TO "{{ $databaseIamUser }}";
                                             GRANT ALL ON ALL TABLES IN SCHEMA public TO "{{ $databaseIamUser }}";
                                             GRANT cloudsqlsuperuser TO "{{ $databaseIamUser }}";
                                             GRANT "{{ $databaseIamUser }}" to postgres;
                                             EOF
+                                            timeout=$(($(date +%s) + 600))
+                                            until PGCONNECT_TIMEOUT=10 PGPASSWORD=iam psql --host 127.0.0.1 --port {{ $databasePort }} --username "{{ $databaseIamUser }}" --dbname {{ $databaseName }} --command "SELECT 1" >/dev/null 2>&1
+                                            do
+                                                if [ $(date +%s) -ge $timeout ]
+                                                then
+                                                    echo "{{ $databaseIamUser }} could not be authenticated." >&2
+                                                    exit 1
+                                                fi
+                                                sleep 2
+                                            done
                                 command:
                                     -   /bin/sh
                                     -   -c

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -69,7 +70,8 @@ public class DDMDataProviderTestUtil {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"url",
-				"http://localhost:8080/api/jsonws/country/get-countries"));
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/api/jsonws/country/get-countries"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"username", "test@liferay.com"));

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -201,7 +202,7 @@ public class DLOpenerGoogleDriveManagerTest {
 			_dlOpenerGoogleDriveManager, "getAuthorizationURL",
 			new Class<?>[] {long.class, String.class, String.class},
 			_company.getCompanyId(), RandomTestUtil.randomString(),
-			"http://localhost:8080");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 	}
 
 	@Test
@@ -210,7 +211,8 @@ public class DLOpenerGoogleDriveManagerTest {
 
 		_test(
 			() -> {
-				String redirectUri = "http://localhost:8080";
+				String redirectUri =
+					"http://localhost:" + PortalUtil.getPortalServerPort(false);
 				String state = RandomTestUtil.randomString();
 
 				Assert.assertEquals(

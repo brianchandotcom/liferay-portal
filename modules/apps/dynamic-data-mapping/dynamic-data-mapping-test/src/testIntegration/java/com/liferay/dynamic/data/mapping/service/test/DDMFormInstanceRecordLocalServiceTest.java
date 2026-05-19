@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
@@ -160,7 +161,8 @@ public class DDMFormInstanceRecordLocalServiceTest
 			ddmFormInstance.getName(), workflowContext.get("entryTitleXML"));
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/path-friendly-url-public/forms/shared/-",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/path-friendly-url-public/forms/shared/-",
 				"/form/", ddmFormInstance.getFormInstanceId(), "?_",
 				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM,
 				"_formInstanceRecordId=",
@@ -339,14 +341,17 @@ public class DDMFormInstanceRecordLocalServiceTest
 			JavaConstants.JAKARTA_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 		httpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080/currentURL");
+			WebKeys.CURRENT_URL,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/currentURL");
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setPathFriendlyURLPublic("/path-friendly-url-public");
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());

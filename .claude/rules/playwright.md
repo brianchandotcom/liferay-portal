@@ -1,6 +1,8 @@
 ---
+
 paths:
     - 'modules/test/playwright/**'
+
 ---
 
 # Playwright Tests
@@ -60,8 +62,8 @@ Before writing flow logic in a spec, check if the relevant Page class already ex
 
 If it does not:
 
--   **Reusable action** (likely useful in other tests) → add a method to the Page class.
--   **One-off, specific to this test** → inline it in the spec.
+- **Reusable action** (likely useful in other tests) → add a method to the Page class.
+- **One-off, specific to this test** → inline it in the spec.
 
 Page classes own the locators (as public readonly properties), a `goto(...)` that navigates and waits for readiness, and high-level actions that wrap several low-level steps.
 
@@ -73,8 +75,8 @@ Avoid UI navigation. Use `page.goto(url)` (or a Page method that wraps it) to la
 
 Leaving the system as you found it is mandatory.
 
--   Anything created through `apiHelpers` is automatically cleaned by the `dataApiHelpersTest` fixture (it tracks creates and deletes them at the end of the test).
--   Anything created manually — directly via UI, raw API call, or any path outside `apiHelpers` — must be deleted explicitly at the end of the test.
+- Anything created through `apiHelpers` is automatically cleaned by the `dataApiHelpersTest` fixture (it tracks creates and deletes them at the end of the test).
+- Anything created manually — directly via UI, raw API call, or any path outside `apiHelpers` — must be deleted explicitly at the end of the test.
 
 ### Isolated Fixtures
 
@@ -100,11 +102,11 @@ Liferay's JS often loads slower than Playwright fires actions. A naked `click()`
 
 Use these utilities from `modules/test/playwright/utils`:
 
--   `clickAndExpectToBeHidden({trigger, target})` — clicks `trigger`, retries until `target` becomes hidden.
--   `clickAndExpectToBeVisible({trigger, target})` — clicks `trigger`, retries until `target` becomes visible.
--   `hoverAndExpectToBeVisible(...)` — hover-triggered visibility with retry.
--   `waitForAlert(page, message)` — waits for a Liferay alert.
--   `waitForPageToBeLoaded`, `waitForSPAToBeLoaded` — wait for full JS readiness.
+- `clickAndExpectToBeHidden({trigger, target})` — clicks `trigger`, retries until `target` becomes hidden.
+- `clickAndExpectToBeVisible({trigger, target})` — clicks `trigger`, retries until `target` becomes visible.
+- `hoverAndExpectToBeVisible(...)` — hover-triggered visibility with retry.
+- `waitForAlert(page, message)` — waits for a Liferay alert.
+- `waitForPageToBeLoaded`, `waitForSPAToBeLoaded` — wait for full JS readiness.
 
 For arbitrary retry, wrap a block in `expect(async () => { ... }).toPass()` (built into Playwright, not custom). Use it when no canned helper fits. Always pass an explicit `timeout` to every action and assertion inside the block — otherwise each call uses Playwright's 30s default and the retry never kicks in.
 
@@ -112,9 +114,9 @@ For arbitrary retry, wrap a block in `expect(async () => { ... }).toPass()` (bui
 
 Keep locators simple and readable. Prefer, in order:
 
--   `getByLabel('Exact label')`
--   `getByRole('button', {name: 'Publish'})`
--   `getByText('Exact text', {exact: true})`
+- `getByLabel('Exact label')`
+- `getByRole('button', {name: 'Publish'})`
+- `getByText('Exact text', {exact: true})`
 
 A single-class `page.locator('.treeview-link', {hasText: 'Text'})` is also fine when the above do not fit — short, stable, easy to read.
 

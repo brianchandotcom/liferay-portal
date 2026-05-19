@@ -4,9 +4,14 @@
  */
 
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {ROLE_TYPES} from '~/utils/constants/roleTypes';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 import RolesDropdown from './components/RolesDropdown';
+
+const roleTypesByKey = Object.fromEntries(
+	Object.values(ROLE_TYPES).map((roleType) => [roleType.key, roleType])
+);
 
 const RolesColumn = ({
 	accountRoles,
@@ -19,7 +24,11 @@ const RolesColumn = ({
 }) => {
 	const roleProductNames = currentRoleBriefName
 		.map((roleBriefName) => {
-			return i18n.translate(getKebabCase(roleBriefName));
+			const roleType = roleTypesByKey[roleBriefName];
+
+			return roleType
+				? roleType.name
+				: i18n.translate(getKebabCase(roleBriefName));
 		})
 		.join(', ');
 

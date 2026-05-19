@@ -9157,7 +9157,11 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPatchObjectEntryWithFriendlyURL() throws Exception {
+	public void testPatchObjectEntryWithFriendlyURLCustomizationEnabled()
+		throws Exception {
+
+		// With friendly URL
+
 		_objectDefinition1.setEnableFriendlyURLCustomization(true);
 
 		_objectDefinition1 =
@@ -9183,6 +9187,34 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(
 			"test-url", jsonObject.getString("friendlyUrlPath"));
+
+		// Without friendly URL
+
+		String friendlyURL = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+		String objectFieldValue = RandomTestUtil.randomString();
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, objectFieldValue
+			).put(
+				"friendlyUrlPath_i18n",
+				HashMapBuilder.put(
+					"en_US", friendlyURL
+				).build()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, objectFieldValue
+			).toString(),
+			_objectDefinition1.getRESTContextPath() + StringPool.SLASH +
+				jsonObject.getString("id"),
+			Http.Method.PATCH);
+
+		Assert.assertEquals(
+			friendlyURL, jsonObject.getString("friendlyUrlPath"));
 	}
 
 	@Test

@@ -48,6 +48,7 @@ import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.commerce.test.util.CommerceTaxTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
+import com.liferay.commerce.test.util.pricing.CommercePriceModifierTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -59,7 +60,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -67,8 +67,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import java.util.Calendar;
 
 import org.frutilla.FrutillaRule;
 
@@ -662,12 +660,14 @@ public class CommerceGrossPricingTest {
 
 		double modifierAmount = -10;
 
-		CommercePriceModifier commercePriceModifier = _addCommercePriceModifier(
-			commercePriceList1.getGroupId(),
-			CommercePriceModifierConstants.TARGET_PRODUCTS,
-			commercePriceList1.getCommercePriceListId(),
-			CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT,
-			BigDecimal.valueOf(modifierAmount), true);
+		CommercePriceModifier commercePriceModifier =
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				commercePriceList1.getGroupId(), _user,
+				commercePriceList1.getCommercePriceListId(),
+				CommercePriceModifierConstants.TARGET_PRODUCTS,
+				BigDecimal.valueOf(modifierAmount),
+				CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT, true,
+				_serviceContext);
 
 		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),
@@ -787,12 +787,13 @@ public class CommerceGrossPricingTest {
 			basePriceList.getCommercePriceListId(), price1);
 
 		CommercePriceModifier commercePriceModifier1 =
-			_addCommercePriceModifier(
-				commercePriceList1.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				commercePriceList1.getGroupId(), _user,
 				commercePriceList1.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
-				BigDecimal.valueOf(-10), true);
+				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
+				BigDecimal.valueOf(-10),
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, true,
+				_serviceContext);
 
 		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
 			commercePriceModifier1.getCommercePriceModifierId(),
@@ -801,12 +802,13 @@ public class CommerceGrossPricingTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		CommercePriceModifier commercePriceModifier2 =
-			_addCommercePriceModifier(
-				commercePriceList1.getGroupId(),
-				CommercePriceModifierConstants.TARGET_CATEGORIES,
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				commercePriceList1.getGroupId(), _user,
 				commercePriceList1.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE,
-				BigDecimal.valueOf(19), true);
+				CommercePriceModifierConstants.TARGET_CATEGORIES,
+				BigDecimal.valueOf(19),
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true,
+				_serviceContext);
 
 		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
 			commercePriceModifier2.getCommercePriceModifierId(),
@@ -908,12 +910,14 @@ public class CommerceGrossPricingTest {
 
 		double modifierAmount = -10;
 
-		CommercePriceModifier commercePriceModifier = _addCommercePriceModifier(
-			commercePriceList1.getGroupId(),
-			CommercePriceModifierConstants.TARGET_PRODUCTS,
-			commercePriceList1.getCommercePriceListId(),
-			CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT,
-			BigDecimal.valueOf(modifierAmount), true);
+		CommercePriceModifier commercePriceModifier =
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				commercePriceList1.getGroupId(), _user,
+				commercePriceList1.getCommercePriceListId(),
+				CommercePriceModifierConstants.TARGET_PRODUCTS,
+				BigDecimal.valueOf(modifierAmount),
+				CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT, true,
+				_serviceContext);
 
 		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),
@@ -1005,12 +1009,14 @@ public class CommerceGrossPricingTest {
 
 		double modifierAmount = 40;
 
-		CommercePriceModifier commercePriceModifier = _addCommercePriceModifier(
-			commercePriceList.getGroupId(),
-			CommercePriceModifierConstants.TARGET_PRODUCTS,
-			commercePriceList.getCommercePriceListId(),
-			CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE,
-			BigDecimal.valueOf(modifierAmount), true);
+		CommercePriceModifier commercePriceModifier =
+			CommercePriceModifierTestUtil.addCommercePriceModifier(
+				commercePriceList.getGroupId(), _user,
+				commercePriceList.getCommercePriceListId(),
+				CommercePriceModifierConstants.TARGET_PRODUCTS,
+				BigDecimal.valueOf(modifierAmount),
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true,
+				_serviceContext);
 
 		_commercePriceModifierRelLocalService.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),
@@ -1847,27 +1853,6 @@ public class CommerceGrossPricingTest {
 
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
-
-	private CommercePriceModifier _addCommercePriceModifier(
-			long groupId, String target, long commercePriceListId, String type,
-			BigDecimal amount, boolean neverExpire)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			_user.getTimeZone());
-
-		return _commercePriceModifierLocalService.addCommercePriceModifier(
-			groupId, RandomTestUtil.randomString(), target, commercePriceListId,
-			type, amount, 0.0, true, calendar.get(Calendar.MONTH),
-			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
-			calendar.get(Calendar.MINUTE), neverExpire, serviceContext);
-	}
 
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;

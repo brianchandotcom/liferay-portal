@@ -23,12 +23,14 @@ import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.modifier.CommercePriceModifierHelper;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService;
 import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
-import com.liferay.commerce.pricing.test.util.CommercePriceModifierTestUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.commerce.test.util.pricing.CommercePriceModifierRelTestUtil;
+import com.liferay.commerce.test.util.pricing.CommercePriceModifierTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -107,8 +109,9 @@ public class CommercePriceModifierTest {
 				_serviceContext);
 
 		CommercePriceList commercePriceList =
-			CommercePriceModifierTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), 0.0);
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), _user, _commerceCurrency, 0.0,
+				_serviceContext);
 
 		CPInstance cpInstance1 = CPTestUtil.addCPInstance(
 			commerceCatalog.getGroupId());
@@ -151,17 +154,16 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS,
+				commerceCatalog.getGroupId(), _user,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT,
-				amount, true);
+				CommercePriceModifierConstants.TARGET_PRODUCT_GROUPS, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_FIXED_AMOUNT, true,
+				_serviceContext);
 
-		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
-			commercePriceModifier.getGroupId(),
+		CommercePriceModifierRelTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),
 			CommercePricingClass.class.getName(),
-			commercePricingClass.getCommercePricingClassId());
+			commercePricingClass.getCommercePricingClassId(), _serviceContext);
 
 		CommerceMoney priceCommerceMoney1 =
 			commercePriceEntry1.getPriceCommerceMoney(
@@ -225,9 +227,9 @@ public class CommercePriceModifierTest {
 				_serviceContext);
 
 		CommercePriceList commercePriceList =
-			CommercePriceModifierTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), 0.0,
-				_commerceCurrency.getCommerceCurrencyId());
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), _user, _commerceCurrency,
+				_commerceCurrency.getCommerceCurrencyId(), _serviceContext);
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_user.getGroupId());
@@ -265,29 +267,29 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier1 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_CATEGORIES,
+				commerceCatalog.getGroupId(), _user,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
-				amount1, true);
+				CommercePriceModifierConstants.TARGET_CATEGORIES, amount1,
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, true,
+				_serviceContext);
 
-		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
-			commercePriceModifier1.getGroupId(),
+		CommercePriceModifierRelTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier1.getCommercePriceModifierId(),
-			AssetCategory.class.getName(), assetCategory.getCategoryId());
+			AssetCategory.class.getName(), assetCategory.getCategoryId(),
+			_serviceContext);
 
 		CommercePriceModifier commercePriceModifier2 =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_CATEGORIES,
+				commerceCatalog.getGroupId(), _user,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE,
-				amount2, true);
+				CommercePriceModifierConstants.TARGET_CATEGORIES, amount2,
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, true,
+				_serviceContext);
 
-		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
-			commercePriceModifier2.getGroupId(),
+		CommercePriceModifierRelTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier2.getCommercePriceModifierId(),
-			AssetCategory.class.getName(), assetCategory.getCategoryId());
+			AssetCategory.class.getName(), assetCategory.getCategoryId(),
+			_serviceContext);
 
 		CommerceMoney priceCommerceMoney1 =
 			commercePriceEntry1.getPriceCommerceMoney(
@@ -353,8 +355,9 @@ public class CommercePriceModifierTest {
 				_serviceContext);
 
 		CommercePriceList commercePriceList =
-			CommercePriceModifierTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), 0.0);
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), _user, _commerceCurrency, 0.0,
+				_serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(
 			commerceCatalog.getGroupId());
@@ -375,16 +378,16 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_CATALOG,
+				commerceCatalog.getGroupId(), _user,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_CATALOG, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_PERCENTAGE, true,
+				_serviceContext);
 
-		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
-			commercePriceModifier.getGroupId(),
+		CommercePriceModifierRelTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+			_serviceContext);
 
 		BigDecimal finalPrice =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
@@ -433,8 +436,9 @@ public class CommercePriceModifierTest {
 				_serviceContext);
 
 		CommercePriceList commercePriceList =
-			CommercePriceModifierTestUtil.addCommercePriceList(
-				commerceCatalog.getGroupId(), 0.0);
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), _user, _commerceCurrency, 0.0,
+				_serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(
 			commerceCatalog.getGroupId());
@@ -451,16 +455,16 @@ public class CommercePriceModifierTest {
 
 		CommercePriceModifier commercePriceModifier =
 			CommercePriceModifierTestUtil.addCommercePriceModifier(
-				commerceCatalog.getGroupId(),
-				CommercePriceModifierConstants.TARGET_PRODUCTS,
+				commerceCatalog.getGroupId(), _user,
 				commercePriceList.getCommercePriceListId(),
-				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, amount,
-				true);
+				CommercePriceModifierConstants.TARGET_PRODUCTS, amount,
+				CommercePriceModifierConstants.MODIFIER_TYPE_REPLACE, true,
+				_serviceContext);
 
-		CommercePriceModifierTestUtil.addCommercePriceModifierRel(
-			commercePriceModifier.getGroupId(),
+		CommercePriceModifierRelTestUtil.addCommercePriceModifierRel(
 			commercePriceModifier.getCommercePriceModifierId(),
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+			_serviceContext);
 
 		BigDecimal finalPrice =
 			_commercePriceModifierHelper.applyCommercePriceModifier(

@@ -44,7 +44,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Mario Gomes
  */
-public class ViewContentRetrieversDisplayContextTest {
+public class ViewAgentDefinitionsDisplayContextTest {
 
 	@ClassRule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
@@ -59,44 +59,50 @@ public class ViewContentRetrieversDisplayContextTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpGroupLocalService();
+		_setUpHttpServletRequest();
 		_setUpLanguageUtil();
-		_setUpMockHttpServletRequest();
 		_setUpObjectDefinition();
 		_setUpPortalUtil();
 	}
 
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
-		ViewContentRetrieversDisplayContext
-			viewContentRetrieversDisplayContext =
-				new ViewContentRetrieversDisplayContext(
-					_groupLocalService, _mockHttpServletRequest);
+		ViewAgentDefinitionsDisplayContext viewAgentDefinitionsDisplayContext =
+			new ViewAgentDefinitionsDisplayContext(
+				_groupLocalService, _httpServletRequest);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			viewContentRetrieversDisplayContext.getFDSActionDropdownItems();
+			viewAgentDefinitionsDisplayContext.getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 4,
+			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
+
+		String href =
+			"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code" +
+				"/{externalReferenceCode}";
 
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			StringBundler.concat(
-				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL, "/content-retriever",
-				"?externalReferenceCode=%7BexternalReferenceCode%7D"),
+				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL,
+				"/agent?externalReferenceCode=%7BexternalReferenceCode%7D",
+				"&workflowDefinitionName=%7BworkflowDefinitionName%7D"),
 			"view", "view", "view", "get", null);
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1),
-			"/o/ai-hub/content-retrievers/by-external-reference-code" +
-				"/{externalReferenceCode}/object-actions/crawler",
-			"reload", "put", "sync-now", "put", "async");
+			fdsActionDropdownItems.get(1), href + "/copy", "copy", "copy",
+			"duplicate", "post", "async");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2),
-			"/o/ai-hub/v1.0/content-retrievers/by-external-reference-code" +
-				"/{externalReferenceCode}",
-			"trash", "delete", "delete", "delete", "async");
+			fdsActionDropdownItems.get(2), href, "trash", "delete", "delete",
+			"delete", "async");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(3), _PERMISSIONS_URL,
+			fdsActionDropdownItems.get(3), href + "/update-active?active=false",
+			"block", "deactivate", "deactivate", "patch", "async");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(4), href + "/update-active?active=true",
+			"logout", "activate", "activate", "patch", "async");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(5), _PERMISSIONS_URL,
 			"password-policies", "permissions", "permissions", "get",
 			"modal-permissions");
 	}
@@ -104,8 +110,6 @@ public class ViewContentRetrieversDisplayContextTest {
 	private void _assertFDSActionDropdownItem(
 		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
 		String id, String label, String method, String target) {
-
-		Assert.assertNotNull(fdsActionDropdownItem);
 
 		Map<String, String> data =
 			(Map<String, String>)fdsActionDropdownItem.get("data");
@@ -135,20 +139,7 @@ public class ViewContentRetrieversDisplayContextTest {
 		);
 	}
 
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(Mockito.mock(Language.class));
-
-		Mockito.when(
-			LanguageUtil.get(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString())
-		).thenAnswer(
-			invocation -> invocation.getArgument(1)
-		);
-	}
-
-	private void _setUpMockHttpServletRequest() throws Exception {
+	private void _setUpHttpServletRequest() throws Exception {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Company company = Mockito.mock(Company.class);
@@ -171,8 +162,20 @@ public class ViewContentRetrieversDisplayContextTest {
 			_COMPANY_ID
 		);
 
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+	}
+
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(Mockito.mock(Language.class));
+
+		Mockito.when(
+			LanguageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1)
+		);
 	}
 
 	private void _setUpObjectDefinition() {
@@ -195,7 +198,7 @@ public class ViewContentRetrieversDisplayContextTest {
 			() ->
 				ObjectDefinitionLocalServiceUtil.
 					getObjectDefinitionByExternalReferenceCode(
-						"L_AI_HUB_CONTENT_RETRIEVER", _COMPANY_ID)
+						"L_AI_HUB_AGENT_DEFINITION", _COMPANY_ID)
 		).thenReturn(
 			objectDefinition
 		);
@@ -213,7 +216,7 @@ public class ViewContentRetrieversDisplayContextTest {
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getControlPanelPortletURL(
-				_mockHttpServletRequest,
+				_httpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
 					"PortletConfigurationPortlet",
 				ActionRequest.RENDER_PHASE)
@@ -249,7 +252,7 @@ public class ViewContentRetrieversDisplayContextTest {
 
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
-	private final MockHttpServletRequest _mockHttpServletRequest =
+	private final HttpServletRequest _httpServletRequest =
 		new MockHttpServletRequest();
 
 }

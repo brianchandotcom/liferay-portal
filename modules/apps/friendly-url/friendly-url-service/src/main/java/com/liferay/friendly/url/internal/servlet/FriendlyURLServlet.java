@@ -138,11 +138,13 @@ public class FriendlyURLServlet extends HttpServlet {
 				companyId, path);
 		}
 
-		Group group = (friendlyURLGroupObjectValuePair == null) ? null :
-			friendlyURLGroupObjectValuePair.getValue();
-		String groupFriendlyURL =
-			(friendlyURLGroupObjectValuePair == null) ? path :
-				friendlyURLGroupObjectValuePair.getKey();
+		Group group = null;
+		String groupFriendlyURL = path;
+
+		if (friendlyURLGroupObjectValuePair != null) {
+			group = friendlyURLGroupObjectValuePair.getValue();
+			groupFriendlyURL = friendlyURLGroupObjectValuePair.getKey();
+		}
 
 		if ((group == null) ||
 			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&

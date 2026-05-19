@@ -251,10 +251,9 @@ public class VirtualHostFilterTest {
 
 		Assert.assertNotNull(friendlyURLGroupObjectValuePair);
 
-		Group stashedGroup = friendlyURLGroupObjectValuePair.getValue();
+		Group group = friendlyURLGroupObjectValuePair.getValue();
 
-		Assert.assertEquals(
-			_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
+		Assert.assertEquals(_publicLayoutSet.getGroupId(), group.getGroupId());
 
 		Assert.assertEquals(
 			groupFriendlyURL, friendlyURLGroupObjectValuePair.getKey());
@@ -283,10 +282,10 @@ public class VirtualHostFilterTest {
 
 			Assert.assertNotNull(friendlyURLGroupObjectValuePair);
 
-			Group stashedGroup = friendlyURLGroupObjectValuePair.getValue();
+			Group group = friendlyURLGroupObjectValuePair.getValue();
 
 			Assert.assertEquals(
-				_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
+				_publicLayoutSet.getGroupId(), group.getGroupId());
 
 			Assert.assertEquals(
 				groupFriendlyURL, friendlyURLGroupObjectValuePair.getKey());

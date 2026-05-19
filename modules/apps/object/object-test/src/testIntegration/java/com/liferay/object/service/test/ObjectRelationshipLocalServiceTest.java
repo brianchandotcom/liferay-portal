@@ -88,10 +88,13 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+
+import java.io.Serializable;
 
 import java.sql.Connection;
 
@@ -120,7 +123,11 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Brian Wing Shun Chan
  */
-@FeatureFlag("LPD-34594")
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-34594"), @FeatureFlag(value = "LPD-69877")
+	}
+)
 @RunWith(Arquillian.class)
 public class ObjectRelationshipLocalServiceTest {
 
@@ -1096,6 +1103,99 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			systemObjectRelationship);
+	}
+
+	@Test
+	public void testUpdateObjectRelationshipWithAllowStandaloneObjectEntry()
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.emptyList());
+		ObjectDefinition parentObjectDefinitionB =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.emptyList());
+		ObjectDefinition childObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.emptyList());
+
+		ObjectRelationship objectRelationshipA = TreeTestUtil.bind(
+			parentObjectDefinitionA.getObjectDefinitionId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+		ObjectRelationship objectRelationshipB = TreeTestUtil.bind(
+			parentObjectDefinitionB.getObjectDefinitionId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+			StringPool.FALSE);
+
+		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			parentObjectDefinitionA.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectField parentObjectField = _objectFieldLocalService.getObjectField(
+			objectRelationshipA.getObjectFieldId2());
+
+		_objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				parentObjectField.getName(),
+				parentObjectEntry.getObjectEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		// Disabling the edge with entries bound to it
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			StringBundler.concat(
+				"This object requires all entries to have a parent. To ",
+				"disable inheritance, you must first delete linked entries or ",
+				"enable standalone entries for this object."),
+			() -> TreeTestUtil.unbind(
+				objectRelationshipA, _objectRelationshipLocalService));
+
+		// Disabling the edge without entries bound to it
+
+		TreeTestUtil.unbind(
+			objectRelationshipB, _objectRelationshipLocalService);
+
+		Assert.assertNotNull(
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				childObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY));
+
+		// Disabling the last remaining edge
+
+		TreeTestUtil.unbind(
+			objectRelationshipA, _objectRelationshipLocalService);
+
+		Assert.assertNull(
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				childObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				parentObjectDefinitionA.getName(),
+				parentObjectDefinitionB.getName(),
+				childObjectDefinition.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	private static ObjectDefinition _addSystemObjectDefinition(

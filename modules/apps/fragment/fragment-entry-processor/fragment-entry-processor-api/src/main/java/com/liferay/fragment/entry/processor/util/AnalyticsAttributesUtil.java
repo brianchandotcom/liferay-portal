@@ -175,13 +175,27 @@ public class AnalyticsAttributesUtil {
 		if (ListUtil.isNotEmpty(assetCategories)) {
 			JSONArray jsonArray = JSONUtil.toJSONArray(
 				assetCategories,
-				assetCategory -> JSONUtil.put(
-					"id", assetCategory.getCategoryId()
-				).put(
-					"name", assetCategory.getTitle(locale)
-				).put(
-					"vocabularyId", assetCategory.getVocabularyId()
-				),
+				assetCategory -> {
+					AssetVocabulary assetVocabulary =
+						AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+							assetCategory.getVocabularyId());
+
+					String vocabularyName = null;
+
+					if (assetVocabulary != null) {
+						vocabularyName = assetVocabulary.getTitle(locale);
+					}
+
+					return JSONUtil.put(
+						"id", assetCategory.getCategoryId()
+					).put(
+						"name", assetCategory.getTitle(locale)
+					).put(
+						"vocabularyId", assetCategory.getVocabularyId()
+					).put(
+						"vocabularyName", vocabularyName
+					);
+				},
 				_log);
 
 			return jsonArray.toString();

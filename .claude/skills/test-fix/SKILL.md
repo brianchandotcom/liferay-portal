@@ -13,7 +13,7 @@ Resolve a single test failure end-to-end.
 
 ## Preconditions
 
-- The Liferay portal is running (required for `Java Integration`, `Playwright`, and `Poshi`). Start it if it is not.
+- Tomcat is running (required for `Java Integration`, `Playwright`, and `Poshi`). Start it if it is not.
 
 ## Input
 

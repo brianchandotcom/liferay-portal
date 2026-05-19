@@ -11,6 +11,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
@@ -361,6 +362,37 @@ public class LayoutStructureRulesHelperTest {
 			).put(
 				"show", ListUtil.fromCollection(displayedItemIds)
 			).build());
+	}
+
+	@Test
+	public void testWithTextInfoFieldType() throws Exception {
+		InfoField<TextInfoFieldType> infoField = InfoField.builder(
+			"Test"
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"title"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "title")
+		).build();
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).infoFieldValue(
+			new InfoFieldValue<>(infoField, "Hello World")
+		).build();
+
+		String fieldName = infoField.getUniqueId();
+
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "equal", "Hello World");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "not-equal", "Goodbye");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "contains", "World");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "does-not-contain", "Goodbye");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "is-not-empty", "");
 	}
 
 	private void _addFormTypeCondition(

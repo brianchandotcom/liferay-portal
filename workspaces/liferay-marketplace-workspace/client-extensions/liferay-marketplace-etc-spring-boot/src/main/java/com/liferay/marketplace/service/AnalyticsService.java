@@ -114,7 +114,7 @@ public class AnalyticsService extends BaseService {
 			_log.error(
 				StringBundler.concat(
 					"Unable to provision Analytics Cloud project: ", jsonObject,
-					" \n",
+					"\n",
 					webClientResponseException.getResponseBodyAsString()));
 
 			throw webClientResponseException;

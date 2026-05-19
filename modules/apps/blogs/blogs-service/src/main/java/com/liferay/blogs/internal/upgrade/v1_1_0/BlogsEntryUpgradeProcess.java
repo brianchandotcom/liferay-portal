@@ -6,6 +6,7 @@
 package com.liferay.blogs.internal.upgrade.v1_1_0;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -50,7 +51,10 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 
 				FriendlyURLEntry existingFriendlyURLEntry =
 					_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-						groupId, classNameId, urlTitle);
+						groupId, classNameId,
+						FriendlyURLEntryConstants.
+							FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+						urlTitle);
 
 				if (existingFriendlyURLEntry != null) {
 					urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(

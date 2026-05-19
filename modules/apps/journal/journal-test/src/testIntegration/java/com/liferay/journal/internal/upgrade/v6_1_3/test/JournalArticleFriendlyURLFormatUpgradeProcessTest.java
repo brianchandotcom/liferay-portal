@@ -6,6 +6,7 @@
 package com.liferay.journal.internal.upgrade.v6_1_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.test.util.BaseFriendlyURLFormatUpgradeProcessTestCase;
 import com.liferay.journal.model.JournalArticle;
@@ -138,7 +139,10 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-				group.getGroupId(), _classNameId, languageId, urlTitle);
+				group.getGroupId(), _classNameId,
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				languageId, urlTitle);
 
 		Assert.assertEquals(
 			urlTitle, friendlyURLEntryLocalization.getUrlTitle());

@@ -11,6 +11,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -340,7 +341,10 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 		FriendlyURLEntry oldFriendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				dlFileEntry.getGroupId(),
-				_portal.getClassNameId(FileEntry.class), "oldurltitle");
+				_portal.getClassNameId(FileEntry.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				"oldurltitle");
 
 		Assert.assertNotNull(oldFriendlyURLEntry);
 
@@ -414,7 +418,10 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 		FriendlyURLEntry restoredFriendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				dlFileEntry.getGroupId(),
-				_portal.getClassNameId(FileEntry.class), "urltitle");
+				_portal.getClassNameId(FileEntry.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				"urltitle");
 
 		Assert.assertNotNull(restoredFriendlyURLEntry);
 

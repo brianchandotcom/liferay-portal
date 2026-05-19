@@ -12,32 +12,37 @@ export type Position = 'left' | 'right';
 type Props = {
 
 	/**
+	 * ID of the element being resized.
+	 */
+	'aria-controls': string;
+
+	/**
 	 * The maximum width allowed.
 	 */
-	maxWidth: number;
+	'maxWidth': number;
 
 	/**
 	 * The minimum width allowed.
 	 */
-	minWidth: number;
+	'minWidth': number;
 
 	/**
 	 * Callback called every time the width changes (controlled).
 	 */
-	onWidthChange: (width: number) => void;
+	'onWidthChange': (width: number) => void;
 
 	/**
 	 * The side of the screen where the resized element is located.
 	 */
-	position: Position;
+	'position': Position;
 
 	/**
 	 * Property to set the current width (controlled).
 	 */
-	width?: number;
+	'width'?: number;
 } & Omit<
 	React.HTMLAttributes<HTMLDivElement>,
-	'onKeyDown' | 'onKeyUp' | 'onPointerDown'
+	'aria-controls' | 'onKeyDown' | 'onKeyUp' | 'onPointerDown'
 >;
 
 const MAIN_MOUSE_BUTTON = 0;
@@ -45,6 +50,7 @@ const MAIN_MOUSE_BUTTON = 0;
 let keyDownCounter = 0;
 
 export function ResizeHandle({
+	'aria-controls': ariaControls,
 	maxWidth,
 	minWidth,
 	onWidthChange,
@@ -87,6 +93,7 @@ export function ResizeHandle({
 					document.dir === 'rtl' ? positionLeft : !positionLeft,
 			})}
 			{...otherProps}
+			aria-controls={ariaControls}
 			onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
 				const delta = keyDownCounter > 7 ? 10 : 1;
 

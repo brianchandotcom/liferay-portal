@@ -9,7 +9,7 @@ _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 
 function main {
-	if [[ "${#}" -eq 0 ]]
+	if [ "${#}" -eq 0 ]
 	then
 		echo "Usage: ${0##*/} <chart-dir> [<chart-dir> ...]" >&2
 
@@ -37,9 +37,7 @@ function _bump_chart_yaml_version {
 
 	tmp_file=$(mktemp)
 
-	sed "s/^version: .*/version: ${new_version}/" "${helm_chart_yaml}" > "${tmp_file}"
-
-	mv "${tmp_file}" "${helm_chart_yaml}"
+	sed "s/^version: .*/version: ${new_version}/" "${helm_chart_yaml}" > "${tmp_file}" && mv "${tmp_file}" "${helm_chart_yaml}"
 
 	echo "${new_version}"
 }
@@ -53,7 +51,7 @@ function _check_chart_yaml {
 
 	git_blame_sha=$(_git_blame_sha "^version: .*$" "${helm_chart_yaml}")
 
-	if [[ -z "${git_blame_sha}" ]] || ! git rev-parse --quiet --verify "${git_blame_sha}^{commit}" > /dev/null
+	if [ -z "${git_blame_sha}" ] || ! git rev-parse --quiet --verify "${git_blame_sha}^{commit}" > /dev/null
 	then
 		echo "Skipping ${helm_chart_yaml}: unable to resolve blame boundary commit." >&2
 
@@ -125,9 +123,7 @@ function _update_chart_dependency_version {
 
 		tmp_file=$(mktemp)
 
-		sed "/name: ${chart_name}$/,/version: / s/version: .*/version: ${new_version}/" "${chart_yaml_file}" > "${tmp_file}"
-
-		mv "${tmp_file}" "${chart_yaml_file}"
+		sed "/name: ${chart_name}$/,/version: / s/version: .*/version: ${new_version}/" "${chart_yaml_file}" > "${tmp_file}" && mv "${tmp_file}" "${chart_yaml_file}"
 	done
 }
 
@@ -157,7 +153,4 @@ function _git_blame_sha {
 	echo "${target_sha#^}"
 }
 
-if [[ -z "${_NO_MAIN:-}" ]]
-then
-	main ${1+"$@"}
-fi
+main ${1+"$@"}

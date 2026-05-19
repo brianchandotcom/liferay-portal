@@ -11,6 +11,7 @@ spec:
             -   name: liferay-backup-namespace
                 value: "{{ "{{" }}workflow.namespace}}"
     entrypoint: main
+    onExit: reset-restore-phase
     podGC:
         {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}
     serviceAccountName: backup-restore-service-account
@@ -250,6 +251,14 @@ spec:
                         name: roll-back-restart
                         template: roll-back-restart
             name: main
+        -   name: reset-restore-phase
+            script:
+                command: [sh]
+                image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+                source: |-
+                    {{- tpl (.Files.Get "scripts/reset-restore-phase.sh") . | nindent 20 }}
         -   inputs:
                 parameters:
                     -   name: liferay-workload-name

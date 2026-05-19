@@ -9,6 +9,8 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
+import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
+import QATable from '../../../../../components/QATable';
 import {OrderCustomFields} from '../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
@@ -17,8 +19,6 @@ import analyticsOAuth2 from '../../../../../services/oauth/Analytics';
 import {copyToClipboard} from '../../../../../utils/browser';
 import {safeJSONParse} from '../../../../../utils/util';
 
-import { DetailedCard } from '../../../../../components/DetailedCard/DetailedCard';
-import QATable from '../../../../../components/QATable';
 import './DSRWorkspace.scss';
 
 type OutletContext = NonNullable<
@@ -42,7 +42,7 @@ const DSRWorkspace = () => {
 	);
 
 	return (
-		<div className="dsr-workspace d-flex gap-4 mt-5">
+		<div className="d-flex dsr-workspace gap-4 mt-5">
 			<div className="dsr-workspace-card">
 				<div className="dsr-workspace-card-header">
 					<h3 className="dsr-workspace-card-title m-0">

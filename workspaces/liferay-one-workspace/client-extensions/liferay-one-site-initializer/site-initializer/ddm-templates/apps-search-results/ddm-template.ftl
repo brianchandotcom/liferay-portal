@@ -32,7 +32,7 @@
 					/>
 
 					<a class="card d-flex flex-column overflow-hidden text-dark text-decoration-none" href="${cpContentHelper.getFriendlyURL(entry, themeDisplay)}">
-						<div class="card-image-wrapper align-items-center d-flex justify-content-center w-100">
+						<div class="align-items-center card-image-wrapper d-flex justify-content-center w-100">
 							<img alt="${entry.getName()}" class="card-product-image" draggable="false" loading="lazy" src="${productImage}" />
 						</div>
 

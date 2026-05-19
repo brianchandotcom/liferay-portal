@@ -11,15 +11,15 @@
 		"skuContributor": true,
 		"values": [
 			{
-				"externalReferenceCode": "LO_OPTION_BASE_LICENSE_USAGE_STANDARD",
-				"key": "standard",
-				"name": "Standard",
-				"priority": 0
-			},
-			{
 				"externalReferenceCode": "LO_OPTION_BASE_LICENSE_USAGE_DEVELOPER",
 				"key": "developer",
 				"name": "Developer",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "LO_OPTION_BASE_LICENSE_USAGE_STANDARD",
+				"key": "standard",
+				"name": "Standard",
 				"priority": 1
 			}
 		]
@@ -59,15 +59,15 @@
 		"skuContributor": true,
 		"values": [
 			{
-				"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE_STANDARD",
-				"key": "standard",
-				"name": "Standard",
-				"priority": 0
-			},
-			{
 				"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE_DEVELOPER",
 				"key": "developer",
 				"name": "Developer",
+				"priority": 0
+			},
+			{
+				"externalReferenceCode": "LO_OPTION_DXP_LICENSE_USAGE_STANDARD",
+				"key": "standard",
+				"name": "Standard",
 				"priority": 1
 			},
 			{

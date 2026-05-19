@@ -90,10 +90,10 @@
 
 .card-description {
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 3;
 	color: var(--secondary);
 	display: -webkit-box;
 	font-size: 0.875rem;
+	-webkit-line-clamp: 3;
 	line-height: 1.5;
 	overflow: hidden;
 }

@@ -30,6 +30,8 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 
 		_testrayAttachmentURLs.add(testrayAttachmentURL);
+
+		clearTestrayAttachmentURLCaches();
 	}
 
 	@Override

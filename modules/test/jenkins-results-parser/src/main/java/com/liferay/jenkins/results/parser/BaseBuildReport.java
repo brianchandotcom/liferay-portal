@@ -301,6 +301,12 @@ public abstract class BaseBuildReport implements BuildReport {
 		}
 	}
 
+	protected void clearTestrayAttachmentURLCaches() {
+		_testrayAttachmentURLs = null;
+
+		_testrayAttachmentURLsBySuffix.clear();
+	}
+
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"(?<jobURL>https?://(?<masterHostname>test-\\d+-\\d+(-aws)?)" +
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+))" +

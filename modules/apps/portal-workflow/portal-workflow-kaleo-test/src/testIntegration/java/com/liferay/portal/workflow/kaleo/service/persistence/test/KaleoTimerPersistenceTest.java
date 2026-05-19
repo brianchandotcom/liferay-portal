@@ -222,6 +222,15 @@ public class KaleoTimerPersistenceTest {
 	}
 
 	@Test
+	public void testCountByKCN_KDVI() throws Exception {
+		_persistence.countByKCN_KDVI("", RandomTestUtil.nextLong());
+
+		_persistence.countByKCN_KDVI("null", 0L);
+
+		_persistence.countByKCN_KDVI((String)null, 0L);
+	}
+
+	@Test
 	public void testCountByKCN_KCPK_Blocking() throws Exception {
 		_persistence.countByKCN_KCPK_Blocking(
 			"", RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
@@ -529,4 +538,4 @@ public class KaleoTimerPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-187941226
+// LIFERAY-SERVICE-BUILDER-HASH:-134570361

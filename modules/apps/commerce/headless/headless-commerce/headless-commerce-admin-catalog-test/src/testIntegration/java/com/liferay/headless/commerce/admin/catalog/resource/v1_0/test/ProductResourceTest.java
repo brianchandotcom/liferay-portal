@@ -11,7 +11,6 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -42,7 +41,6 @@ import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -57,7 +55,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -65,7 +62,6 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -378,84 +374,6 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 		Assert.assertNotNull(
 			productResource.getProduct(postProduct.getProductId()));
-	}
-
-	@Ignore
-	@Test
-	public void testPatchProductProductVersioning() throws Exception {
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						testCompany.getCompanyId(),
-						CProductVersionConfiguration.class.getName(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"enabled", true
-						).build())) {
-
-			CommerceCatalog commerceCatalog =
-				CPTestUtil.getSystemCommerceCatalog(testCompany.getCompanyId());
-
-			CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
-				commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, null,
-				null, true, true, WorkflowConstants.STATUS_APPROVED);
-
-			_cpDefinitionsList.add(cpDefinition1);
-
-			Assert.assertEquals(
-				1,
-				_cpDefinitionLocalService.getCProductCPDefinitions(
-					cpDefinition1.getCProductId(),
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS
-				).size());
-
-			Product product1 = productResource.getProduct(
-				cpDefinition1.getCProductId());
-
-			product1.setName(Collections.singletonMap("en_US", "New Name"));
-			product1.setProductStatus(WorkflowConstants.STATUS_DRAFT);
-
-			productResource.patchProduct(
-				cpDefinition1.getCProductId(), product1);
-
-			Assert.assertEquals(
-				1,
-				_cpDefinitionLocalService.getCProductCPDefinitions(
-					cpDefinition1.getCProductId(),
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS
-				).size());
-
-			List<CPDefinition> draftDefinitions =
-				_cpDefinitionLocalService.getCProductCPDefinitions(
-					cpDefinition1.getCProductId(),
-					WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
-
-			Assert.assertEquals(
-				draftDefinitions.toString(), 1, draftDefinitions.size());
-
-			CPDefinition cpDefinition2 = draftDefinitions.get(0);
-
-			_cpDefinitionsList.add(cpDefinition2);
-
-			Assert.assertEquals(
-				1,
-				_cpDefinitionLocalService.getCProductCPDefinitions(
-					cpDefinition1.getCProductId(),
-					WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS
-				).size());
-
-			CPDefinition cpDefinition3 =
-				_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-					cpDefinition1.getCProductId(),
-					WorkflowConstants.STATUS_DRAFT);
-
-			Assert.assertEquals(
-				cpDefinition2.getCPDefinitionId(),
-				cpDefinition3.getCPDefinitionId());
-		}
 	}
 
 	@Override
@@ -1174,9 +1092,6 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@DeleteAfterTestRun
-	private List<CPDefinition> _cpDefinitionsList = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private CPOptionCategory _cpOptionCategory;

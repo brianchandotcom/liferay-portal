@@ -42,6 +42,7 @@ export default function ContentSection({
 }: ContentSectionProps) {
 	const [expanded, setExpanded] = useState(false);
 	const bodyId = useId();
+	const checkboxId = useId();
 
 	const portletContextsValue = value || {};
 
@@ -75,27 +76,28 @@ export default function ContentSection({
 	};
 
 	return (
-		<div
-			className="cursor-pointer mt-0 sheet"
-			onClick={() => setExpanded((prev) => !prev)}
-		>
-			<ClayLayout.ContentRow>
+		<ClayLayout.Sheet className="mt-0">
+			<ClayLayout.ContentRow className="align-items-center">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
-					<div onClick={(event) => event.stopPropagation()}>
-						<ClayCheckbox
-							checked={selected}
-							indeterminate={
-								!!Object.keys(portletContextsValue).length &&
-								!selected
-							}
-							onChange={handleSelectAll}
-						/>
-					</div>
+					<ClayCheckbox
+						checked={selected}
+						id={checkboxId}
+						indeterminate={
+							!!Object.keys(portletContextsValue).length &&
+							!selected
+						}
+						onChange={handleSelectAll}
+					/>
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<div className="align-items-center d-flex font-weight-bold h3 mb-0">
-						{section.label}
+					<span className="align-items-center d-inline-flex">
+						<label
+							className="cursor-pointer font-weight-bold h3 mb-0"
+							htmlFor={checkboxId}
+						>
+							{section.label}
+						</label>
 
 						<SectionTags
 							additionCount={section.additionCount}
@@ -105,13 +107,7 @@ export default function ContentSection({
 									: undefined
 							}
 						/>
-					</div>
-
-					{summary && (
-						<small className="d-block mt-2 text-secondary">
-							{summary}
-						</small>
-					)}
+					</span>
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand={false}>
@@ -121,20 +117,20 @@ export default function ContentSection({
 						aria-label={section.label}
 						className="text-secondary"
 						displayType="unstyled"
-						onClick={(event) => {
-							event.stopPropagation();
-							setExpanded((prev) => !prev);
-						}}
+						onClick={() => setExpanded((prev) => !prev)}
 						symbol={expanded ? 'angle-down' : 'angle-right'}
 					/>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
+			<small className="d-block pl-4 text-secondary">
+				{summary || <>&nbsp;</>}
+			</small>
+
 			{expanded && (
 				<div
 					className="content-section-controls mt-2 overflow-auto pl-2"
 					id={bodyId}
-					onClick={(event) => event.stopPropagation()}
 				>
 					{controls.map((context) => (
 						<PortletDataControl
@@ -158,6 +154,6 @@ export default function ContentSection({
 					))}
 				</div>
 			)}
-		</div>
+		</ClayLayout.Sheet>
 	);
 }

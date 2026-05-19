@@ -14,6 +14,9 @@ import {mockPortletDataHandlerSections} from '../../../mocks/mockPortletDataHand
 
 const designSection = mockPortletDataHandlerSections[0];
 
+const [firstHandler, secondHandler, thirdHandler] =
+	designSection.portletDataHandlers;
+
 const renderContentSection = (value?: SectionSelection) => {
 	const user = userEvent.setup();
 	const onChange = jest.fn();
@@ -30,33 +33,23 @@ const renderContentSection = (value?: SectionSelection) => {
 };
 
 describe('ContentSection', () => {
-	it('renders the section header collapsed by default', () => {
+	it('hides the handlers by default', () => {
 		renderContentSection();
 
-		const toggle = screen.getByRole('button', {name: designSection.label});
-
-		expect(toggle).toHaveAttribute('aria-expanded', 'false');
-
-		designSection.portletDataHandlers.forEach((handler) => {
-			expect(screen.queryByText(handler.label)).not.toBeInTheDocument();
-		});
+		expect(screen.queryByText(firstHandler.label)).not.toBeInTheDocument();
 	});
 
-	it('expands the section body when the header is clicked', async () => {
+	it('shows the handlers when the section toggle is clicked', async () => {
 		const {user} = renderContentSection();
 
-		const toggle = screen.getByRole('button', {name: designSection.label});
+		await user.click(
+			screen.getByRole('button', {name: designSection.label})
+		);
 
-		await user.click(toggle);
-
-		expect(toggle).toHaveAttribute('aria-expanded', 'true');
-
-		designSection.portletDataHandlers.forEach((handler) => {
-			expect(screen.getByText(handler.label)).toBeInTheDocument();
-		});
+		expect(screen.getByText(firstHandler.label)).toBeInTheDocument();
 	});
 
-	it('collapses the section body again on a second click', async () => {
+	it('hides the handlers again when the toggle is clicked twice', async () => {
 		const {user} = renderContentSection();
 
 		const toggle = screen.getByRole('button', {name: designSection.label});
@@ -64,72 +57,39 @@ describe('ContentSection', () => {
 		await user.click(toggle);
 		await user.click(toggle);
 
-		expect(toggle).toHaveAttribute('aria-expanded', 'false');
-
-		designSection.portletDataHandlers.forEach((handler) => {
-			expect(screen.queryByText(handler.label)).not.toBeInTheDocument();
-		});
+		expect(screen.queryByText(firstHandler.label)).not.toBeInTheDocument();
 	});
 
-	it('renders the selected handler labels as a comma-separated summary under the title', () => {
-		const [first, , third] = designSection.portletDataHandlers;
-
+	it('summarizes the selected handlers under the title', () => {
 		renderContentSection({
-			[first.name]: true,
-			[third.name]: true,
+			[firstHandler.name]: true,
+			[thirdHandler.name]: true,
 		});
 
 		expect(
-			screen.getByText(`${first.label}, ${third.label}`)
+			screen.getByText(`${firstHandler.label}, ${thirdHandler.label}`)
 		).toBeInTheDocument();
 	});
 
-	it('expands the section when the card is clicked while collapsed', async () => {
+	it('stays open when a handler in the body is clicked', async () => {
 		const {user} = renderContentSection();
-
-		const toggle = screen.getByRole('button', {name: designSection.label});
-
-		await user.click(screen.getByText(designSection.label));
-
-		expect(toggle).toHaveAttribute('aria-expanded', 'true');
-	});
-
-	it('collapses the section when the card is clicked while expanded', async () => {
-		const {user} = renderContentSection();
-
-		const toggle = screen.getByRole('button', {name: designSection.label});
-
-		await user.click(toggle);
-
-		expect(toggle).toHaveAttribute('aria-expanded', 'true');
-
-		await user.click(screen.getByText(designSection.label));
-
-		expect(toggle).toHaveAttribute('aria-expanded', 'false');
-	});
-
-	it('does not collapse the section when a handler in the body is clicked', async () => {
-		const {user} = renderContentSection();
-
-		const toggle = screen.getByRole('button', {name: designSection.label});
-
-		await user.click(toggle);
 
 		await user.click(
-			screen.getByText(designSection.portletDataHandlers[0].label)
+			screen.getByRole('button', {name: designSection.label})
 		);
 
-		expect(toggle).toHaveAttribute('aria-expanded', 'true');
+		await user.click(screen.getByText(firstHandler.label));
+
+		expect(screen.getByText(secondHandler.label)).toBeInTheDocument();
 	});
 
-	it('toggling Select All does not change the expanded state', async () => {
+	it('stays closed when the section checkbox is clicked', async () => {
 		const {user} = renderContentSection();
 
-		const toggle = screen.getByRole('button', {name: designSection.label});
-		const selectAll = screen.getAllByRole('checkbox')[0];
+		await user.click(
+			screen.getByRole('checkbox', {name: designSection.label})
+		);
 
-		await user.click(selectAll);
-
-		expect(toggle).toHaveAttribute('aria-expanded', 'false');
+		expect(screen.queryByText(firstHandler.label)).not.toBeInTheDocument();
 	});
 });

@@ -31,29 +31,27 @@ export function OptionRow({
 				bordered && 'border p-3 rounded'
 			)}
 		>
-			<ClayLayout.ContentRow padded>
-				<ClayLayout.ContentCol expand={false}>
-					<div className="pt-1">{input}</div>
+			<ClayLayout.ContentRow className="align-items-center">
+				<ClayLayout.ContentCol className="pr-2" expand={false}>
+					{input}
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<ClayLayout.ContentSection>
-						<div
-							className="font-weight-semi-bold mb-0 text-dark"
-							id={labelId}
-						>
-							{label}
-						</div>
+					<div
+						className="font-weight-semi-bold mb-0 text-dark"
+						id={labelId}
+					>
+						{label}
+					</div>
 
-						{description && (
-							<div
-								className="small text-secondary"
-								id={descriptionId}
-							>
-								{description}
-							</div>
-						)}
-					</ClayLayout.ContentSection>
+					{description && (
+						<div
+							className="small text-secondary"
+							id={descriptionId}
+						>
+							{description}
+						</div>
+					)}
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 		</label>

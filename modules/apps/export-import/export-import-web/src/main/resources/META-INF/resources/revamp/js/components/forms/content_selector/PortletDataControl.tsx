@@ -43,6 +43,7 @@ export default function PortletDataControl({
 }: PortletDataControlProps) {
 	const [expanded, setExpanded] = useState(false);
 	const bodyId = useId();
+	const checkboxId = useId();
 
 	if (
 		control.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY &&
@@ -62,7 +63,7 @@ export default function PortletDataControl({
 	if (control.type === 'Choice') {
 		return (
 			<PortletDataControlChoice
-				className="pl-2"
+				className="mt-3"
 				control={control}
 				onChange={onChange}
 				value={typeof value === 'string' ? value : ''}
@@ -83,37 +84,36 @@ export default function PortletDataControl({
 		.map((nested) => nested.label)
 		.join(', ');
 
+	const collapsible = expandable && level === 0;
+
 	return (
-		<div
-			className={`${level === 0 ? 'p-3' : ''}${expandable ? ' cursor-pointer' : ''}`}
-			onClick={
-				expandable ? () => setExpanded((prev) => !prev) : undefined
-			}
-		>
-			<ClayLayout.ContentRow>
+		<div className={level === 0 ? 'p-3' : ''}>
+			<ClayLayout.ContentRow className="align-items-center">
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
-					<div onClick={(event) => event.stopPropagation()}>
-						<ClayCheckbox
-							checked={selected}
-							indeterminate={!!value && !selected}
-							onChange={() =>
-								onChange(
-									selected
-										? undefined
-										: getInitialSelection(control)
-								)
-							}
-						/>
-					</div>
+					<ClayCheckbox
+						checked={selected}
+						id={checkboxId}
+						indeterminate={!!value && !selected}
+						onChange={() =>
+							onChange(
+								selected
+									? undefined
+									: getInitialSelection(control)
+							)
+						}
+					/>
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<div className="align-items-center d-flex">
-						<span
-							className={`small ${level === 0 ? 'font-weight-semi-bold' : ''}`}
+					<span className="align-items-center d-inline-flex">
+						<label
+							className={`cursor-pointer mb-0 ${
+								level === 0 ? 'font-weight-bold' : 'small'
+							}`}
+							htmlFor={checkboxId}
 						>
 							{control.label}
-						</span>
+						</label>
 
 						{control.type === 'Boolean' && (
 							<SectionTags
@@ -125,25 +125,16 @@ export default function PortletDataControl({
 								}
 							/>
 						)}
-					</div>
-
-					{expandable && childrenSummary && (
-						<small className="d-block mt-2 text-secondary">
-							{childrenSummary}
-						</small>
-					)}
+					</span>
 				</ClayLayout.ContentCol>
 
-				{expandable && (
+				{collapsible && (
 					<ClayLayout.ContentCol expand={false}>
 						<ClayButton
 							aria-controls={bodyId}
 							aria-expanded={expanded}
 							displayType="link"
-							onClick={(event) => {
-								event.stopPropagation();
-								setExpanded((prev) => !prev);
-							}}
+							onClick={() => setExpanded((prev) => !prev)}
 							small
 						>
 							{expanded
@@ -159,12 +150,16 @@ export default function PortletDataControl({
 				)}
 			</ClayLayout.ContentRow>
 
-			{expandable && expanded && (
+			{collapsible && (
+				<small className="d-block pl-4 text-secondary">
+					{childrenSummary || <>&nbsp;</>}
+				</small>
+			)}
+
+			{expandable && (!collapsible || expanded) && (
 				<div
-					className="c-gap-1 d-flex flex-column mt-2"
+					className={`c-gap-1 d-flex flex-column pl-4${collapsible ? ' mt-2' : ''}`}
 					id={bodyId}
-					onClick={(event) => event.stopPropagation()}
-					style={{paddingLeft: '44px'}}
 				>
 					{nestedControls.map((nestedControl) => (
 						<PortletDataControl

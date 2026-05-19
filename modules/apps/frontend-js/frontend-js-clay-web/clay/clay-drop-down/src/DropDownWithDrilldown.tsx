@@ -24,6 +24,7 @@ import type {AlignPoints} from '@clayui/shared';
 
 import type {Item} from './Items';
 import type {IProps as SearchProps} from './Search';
+import type {DropDownHTMLAttributes} from './types';
 
 type Messages = {
 	back: string;
@@ -189,7 +190,7 @@ export type Props = {
 	 * Flag indicating if the caret icon should be displayed on the right side.
 	 */
 	triggerIcon?: string | null;
-} & Omit<React.HTMLAttributes<HTMLDivElement | HTMLLIElement>, 'children'>;
+} & DropDownHTMLAttributes;
 
 type History = {
 	id: string;

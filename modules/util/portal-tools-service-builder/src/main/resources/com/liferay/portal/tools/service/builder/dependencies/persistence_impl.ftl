@@ -1103,7 +1103,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			else {
 				<#if entity.versionedEntity??>
 					throw new IllegalArgumentException("${entity.name} is read only, create a new version instead");
-				<#elseif entity.hasLazyBlobEntityColumn()>
+				<#elseif entity.hasLazyBlobEntityColumn() && !serviceBuilder.isVersionGTE_7_4_0()>
 
 					<#-- Workaround for HHH-2680 -->
 

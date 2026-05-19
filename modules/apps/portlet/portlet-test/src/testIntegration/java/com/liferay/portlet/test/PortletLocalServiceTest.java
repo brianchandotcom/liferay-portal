@@ -9,10 +9,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -45,6 +48,32 @@ public class PortletLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testFetchPortletById() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		String portletName = RandomTestUtil.randomString();
+
+		ServiceRegistration<Portlet> serviceRegistration =
+			bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"com.liferay.portlet.instanceable", "true"
+				).put(
+					"jakarta.portlet.name", portletName
+				).build());
+
+		try {
+			_assertFetchPortletById(portletName, null);
+			_assertFetchPortletById(portletName, RandomTestUtil.randomString());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
 
 	@Test
 	public void testGetCustomAttributesDisplaysWithCustomAttributesDisplayDisabled()
@@ -133,6 +162,35 @@ public class PortletLocalServiceTest {
 				serviceRegistration.unregister();
 			}
 		}
+	}
+
+	private void _assertFetchPortletById(String portletName, String instanceId)
+		throws Exception {
+
+		String portletId = PortletIdCodec.encode(portletName, instanceId);
+
+		long companyId = TestPropsValues.getCompanyId();
+
+		com.liferay.portal.kernel.model.Portlet portlet =
+			_portletLocalService.fetchPortletById(companyId, portletId);
+
+		Assert.assertEquals(instanceId, portlet.getInstanceId());
+		Assert.assertEquals(portletId, portlet.getPortletId());
+		Assert.assertEquals(portletName, portlet.getPortletName());
+		Assert.assertTrue(portlet.isInstanceable());
+		Assert.assertFalse(portlet.isStatic());
+		Assert.assertFalse(portlet.isStaticStart());
+
+		portlet.setStatic(true);
+		portlet.setStaticStart(true);
+
+		Assert.assertTrue(portlet.isStatic());
+		Assert.assertTrue(portlet.isStaticStart());
+
+		portlet = _portletLocalService.fetchPortletById(companyId, portletId);
+
+		Assert.assertFalse(portlet.isStatic());
+		Assert.assertFalse(portlet.isStaticStart());
 	}
 
 	@Inject

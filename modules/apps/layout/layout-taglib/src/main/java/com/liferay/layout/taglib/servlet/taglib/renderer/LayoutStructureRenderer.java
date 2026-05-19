@@ -1156,11 +1156,11 @@ public class LayoutStructureRenderer {
 									_themeDisplay.getPathMain(), "/portal",
 									"/render_form_relationship_layout_",
 									"structure_item"),
+								"doAsGroupId", groupId, "p_l_id",
+								_themeDisplay.getPlid(),
 								"formRelationshipLayoutStructureItemId",
 								formRelationshipStyledLayoutStructureItem.
 									getItemId(),
-								"doAsGroupId", groupId, "p_l_id",
-								_themeDisplay.getPlid(),
 								"parentItemExternalReferenceCode",
 								parentItemExternalReferenceCode,
 								"segmentsExperienceId",

@@ -113,6 +113,44 @@ describe('translateConditionsToScript', () => {
 		});
 	});
 
+	describe('text field conditions', () => {
+		it('emits isEmpty for is-empty', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('title', 'is-empty', '')],
+					'all'
+				)
+			).toBe('isEmpty(title)');
+		});
+
+		it('wraps isEmpty in NOT for is-not-empty', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('title', 'is-not-empty', '')],
+					'all'
+				)
+			).toBe('NOT(isEmpty(title))');
+		});
+
+		it('emits contains for contains', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('title', 'contains', 'foo')],
+					'all'
+				)
+			).toBe('contains(title, "foo")');
+		});
+
+		it('wraps contains in NOT for does-not-contain', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('title', 'does-not-contain', 'foo')],
+					'all'
+				)
+			).toBe('NOT(contains(title, "foo"))');
+		});
+	});
+
 	describe('numeric field conditions', () => {
 		const fieldTypes = {budget: 'number'};
 

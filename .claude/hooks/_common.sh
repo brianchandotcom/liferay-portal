@@ -8,12 +8,15 @@ function _atomic_write {
 	local file="${1}"
 
 	cat > "${file}.tmp"
+
 	mv "${file}.tmp" "${file}"
 }
 
 function _derive_db_name {
 	local dir_name="${1}"
+
 	local suffix="${dir_name#liferay-portal}"
+
 	suffix="${suffix#-}"
 
 	if [[ -z ${suffix} ]]
@@ -42,6 +45,7 @@ function _drop_database {
 	command -v mysql >/dev/null 2>&1 || return 0
 
 	local db_name
+
 	db_name="$(_derive_db_name "$(basename "${worktree_path}")")"
 
 	[[ ${db_name} != lportal ]] || return 0
@@ -67,8 +71,10 @@ function _drop_database {
 
 function _find_app_server_parent_dir {
 	local project_dir="${1}"
-	local user_props="${project_dir}/app.server.${USER}.properties"
+
 	local default_props="${project_dir}/app.server.properties"
+	local user_props="${project_dir}/app.server.${USER}.properties"
+
 	local raw=""
 
 	if [[ -f ${user_props} ]]
@@ -90,6 +96,7 @@ function _find_app_server_parent_dir {
 
 function _find_tomcat_dir {
 	local bundles_dir="${1}"
+
 	local candidate latest=""
 
 	for candidate in "${bundles_dir}"/tomcat-*

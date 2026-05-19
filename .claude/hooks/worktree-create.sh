@@ -10,6 +10,7 @@ source _common.sh
 
 function _all_ports_free_for_offset {
 	local offset="${1}"
+
 	local base
 
 	for base in 8080 8005 8009 8443 8000 11311 9201 9301 4000 32763 42763
@@ -22,6 +23,7 @@ function _all_ports_free_for_offset {
 
 function _bundle_exists {
 	local bundles_dir="${1}"
+
 	local tomcat_glob="${bundles_dir}"/tomcat-*
 
 	for candidate in ${tomcat_glob}
@@ -34,6 +36,7 @@ function _bundle_exists {
 
 function _collect_claimed_offsets {
 	local repo_dir
+
 	repo_dir="$(git -C "${WORKTREE_DIR}" rev-parse --show-toplevel)"
 
 	local line worktree_path bundles offset_file
@@ -60,10 +63,12 @@ function _create_worktree {
 	local input cwd name
 
 	input="$(cat)"
+
 	cwd="$(jq --exit-status --raw-output ".cwd" <<< "${input}")" || _die "The cwd field is missing from the hook input ${input}."
 	name="$(jq --exit-status --raw-output ".name" <<< "${input}")" || _die "The name field is missing from the hook input ${input}."
 
 	local target_path
+
 	target_path="$(dirname "$(git -C "${cwd}" rev-parse --show-toplevel)")/liferay-portal-${name}"
 
 	if ! git -C "${cwd}" worktree list --porcelain | grep --fixed-strings --line-regexp --quiet "worktree ${target_path}"
@@ -81,6 +86,7 @@ function _create_worktree {
 
 function _resolve_main_worktree_dir {
 	local repo_dir
+
 	repo_dir="$(git -C "${WORKTREE_DIR}" rev-parse --show-toplevel)"
 
 	git -C "${repo_dir}" worktree list --porcelain | grep --extended-regexp "^worktree .*/liferay-portal\$" | head --lines=1 | sed "s/^worktree //"
@@ -115,6 +121,7 @@ function _reuse_worktree {
 		[[ -n ${MAIN_WORKTREE_DIR} && ${MAIN_WORKTREE_DIR} != "${WORKTREE_DIR}" ]] || _die "Unable to locate the main worktree to copy the bundle from."
 
 		local main_bundles
+
 		main_bundles="$(_find_app_server_parent_dir "${MAIN_WORKTREE_DIR}")" || _die "Unable to resolve app.server.parent.dir for ${MAIN_WORKTREE_DIR}."
 
 		[[ -d ${main_bundles} ]] || _die "Main bundle directory ${main_bundles} does not exist."
@@ -162,9 +169,10 @@ function _set_bundle_path {
 
 function _set_data_guard_port {
 	local file="${BUNDLES_DIR}/osgi/configs/com.liferay.data.guard.connector.DataGuardConnector.config"
-	local target=$((42763 + OFFSET))
 
 	mkdir --parents "$(dirname "${file}")"
+
+	local target=$((42763 + OFFSET))
 
 	_atomic_write "${file}" <<EOF
 port="${target}"
@@ -173,10 +181,13 @@ EOF
 
 function _set_database {
 	local db_name
+
 	db_name="$(_derive_db_name "$(basename "${WORKTREE_DIR}")")"
 
 	local file="${BUNDLES_DIR}/portal-ext.properties"
+
 	local existing_user existing_password
+
 	existing_user="$(_get_property "${file}" "jdbc\.default\.username" root)"
 	existing_password="$(_get_property "${file}" "jdbc\.default\.password")"
 
@@ -201,6 +212,7 @@ function _set_database {
 
 function _set_debug_port {
 	local file
+
 	file="$(_find_tomcat_dir "${BUNDLES_DIR}")/bin/setenv.sh"
 
 	local target=$((8000 + OFFSET))
@@ -214,9 +226,10 @@ function _set_debug_port {
 
 function _set_elasticsearch_ports {
 	local configs_dir="${BUNDLES_DIR}/osgi/configs"
-	local es_version=elasticsearch8
 
 	mkdir --parents "${configs_dir}"
+
+	local es_version=elasticsearch8
 
 	if [[ -f ${configs_dir}/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config ]]
 	then
@@ -265,6 +278,7 @@ function _set_gogo_shell_port {
 	local target=$((11311 + OFFSET))
 
 	local developer_file
+
 	developer_file="$(_find_tomcat_dir "${BUNDLES_DIR}")/webapps/ROOT/WEB-INF/classes/portal-developer.properties"
 
 	[[ -f ${developer_file} ]] || _die "${developer_file} is missing."
@@ -279,11 +293,13 @@ function _set_gradle_paths {
 	[[ -f ${file} ]] || return 0
 
 	local main_worktree
+
 	main_worktree="$(_resolve_main_worktree_dir)"
 
 	[[ -n ${main_worktree} && ${main_worktree} != "${WORKTREE_DIR}" ]] || return 0
 
 	local main_bundles_literal
+
 	main_bundles_literal="$(_get_property "${file}" "liferay\.home")"
 
 	[[ -n ${main_bundles_literal} ]] || _die "Unable to read liferay.home from ${file}."
@@ -306,6 +322,7 @@ function _set_port_offset {
 	fi
 
 	local claimed_offsets
+
 	claimed_offsets=" $(_collect_claimed_offsets | tr "\n" " ") "
 
 	local offset
@@ -361,9 +378,10 @@ function _set_property {
 
 function _set_test_integration_port {
 	local file="${WORKTREE_DIR}/.gradle/init.d/worktree-ports.gradle"
-	local http_port=$((8080 + OFFSET))
 
 	mkdir --parents "$(dirname "${file}")"
+
+	local http_port=$((8080 + OFFSET))
 
 	_atomic_write "${file}" <<EOF
 allprojects {
@@ -380,6 +398,7 @@ EOF
 
 function _set_tomcat_ports {
 	local file
+
 	file="$(_find_tomcat_dir "${BUNDLES_DIR}")/conf/server.xml"
 
 	local target_http=$((8080 + OFFSET))
@@ -399,7 +418,8 @@ function _set_tomcat_ports {
 
 function _set_worktree_paths {
 	local file="${1}"
-	local main_worktree main_bundles main_tomcat
+
+	local main_bundles main_tomcat main_worktree
 
 	main_worktree="$(_resolve_main_worktree_dir)"
 

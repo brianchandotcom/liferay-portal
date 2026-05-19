@@ -81,7 +81,7 @@ const HighPriorityContactsInput = ({
 						? i18n.translate('contacts')
 						: i18n.translate(
 								inputName ===
-									HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative
+									HIGH_PRIORITY_CONTACT_CATEGORIES.paasUser
 									? 'paas-user'
 									: `${getKebabCase(inputName)}-contact`
 							)
@@ -92,7 +92,7 @@ const HighPriorityContactsInput = ({
 				onItemsChange={setItems}
 				placeholder={i18n.translate('enter-name-or-email-address')}
 				required={
-					inputName !== HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative
+					inputName !== HIGH_PRIORITY_CONTACT_CATEGORIES.paasUser
 				}
 				sourceItems={sourceItems}
 				type="email"

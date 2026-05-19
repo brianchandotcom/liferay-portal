@@ -5,8 +5,8 @@
 		"type": 2
 	},
 	{
-		"externalReferenceCode": "ROLE_CLOUD_NATIVE_CONTACT",
-		"name": "Cloud Native Contact",
+		"externalReferenceCode": "ROLE_PAAS_USER",
+		"name": "PaaS User",
 		"type": 6
 	},
 	{

@@ -16,11 +16,13 @@ import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -50,12 +53,15 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ScopeUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -164,6 +170,48 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-90753")
+	public void testGetInfoFieldSetAssetVocabularyGroupRel() throws Exception {
+		DepotEntry depotEntry1 = _addDepotEntry(DepotConstants.TYPE_SPACE);
+		DepotEntry depotEntry2 = _addDepotEntry(DepotConstants.TYPE_SPACE);
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			depotEntry1.getDepotEntryId(), _group.getGroupId());
+
+		Group cmsGroup = CMSTestUtil.getOrAddGroup(
+			AssetEntryInfoItemFieldSetProviderTest.class);
+
+		long classNameId = _portal.getClassNameId(
+			JournalArticle.class.getName());
+		long classTypeId = RandomTestUtil.randomLong();
+
+		AssetVocabulary assetVocabulary1 = AssetTestUtil.addVocabulary(
+			cmsGroup.getGroupId(), classNameId, classTypeId, false);
+
+		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+			assetVocabulary1.getVocabularyId(),
+			new long[] {depotEntry1.getGroupId()});
+
+		AssetVocabulary assetVocabulary2 = AssetTestUtil.addVocabulary(
+			cmsGroup.getGroupId(), classNameId, classTypeId, false);
+
+		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+			assetVocabulary2.getVocabularyId(),
+			new long[] {depotEntry2.getGroupId()});
+
+		InfoFieldSet infoFieldSet =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				JournalArticle.class.getName(), classTypeId,
+				_group.getGroupId());
+
+		Assert.assertNotNull(
+			infoFieldSet.getInfoFieldSetEntry(assetVocabulary1.getName()));
+		Assert.assertNull(
+			infoFieldSet.getInfoFieldSetEntry(assetVocabulary2.getName()));
+	}
+
 	@Test
 	public void testGetInfoFieldSetDepotAssetVocabulary() throws Exception {
 		AssetVocabulary assetVocabulary =
@@ -226,7 +274,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	public void testGetInfoFieldSetJournalArticleClassPublicEmptyAssetVocabulary()
 		throws Exception {
 
-		long classNameId = PortalUtil.getClassNameId(
+		long classNameId = _portal.getClassNameId(
 			"com.liferay.journal.model.JournalArticle");
 
 		Group group = GroupLocalServiceUtil.getCompanyGroup(
@@ -384,7 +432,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			groupId, 0, PortalUtil.getClassNameId(JournalArticle.class),
+			groupId, 0, _portal.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
@@ -408,6 +456,21 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			null, null, visibilityTypePublic, new ServiceContext());
+	}
+
+	private DepotEntry _addDepotEntry(int type) throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			type, ServiceContextTestUtil.getServiceContext());
+
+		_depotEntries.add(depotEntry);
+
+		return depotEntry;
 	}
 
 	private void _assertInfoFieldValues(
@@ -538,13 +601,23 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
+	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
+	private final List<DepotEntry> _depotEntries = new ArrayList<>();
+
+	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
@@ -557,5 +630,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

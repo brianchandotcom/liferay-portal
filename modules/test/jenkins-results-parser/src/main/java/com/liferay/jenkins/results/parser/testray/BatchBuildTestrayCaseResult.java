@@ -224,18 +224,8 @@ public class BatchBuildTestrayCaseResult
 
 			for (String teamComponentName : teamComponentNames.split(",")) {
 				if (teamComponentName.equals(componentName)) {
-					teamName = teamName.replace("-", " ");
-
-					StringBuilder sb = new StringBuilder(teamName);
-
-					for (int i = 0; i < sb.length(); i++) {
-						if ((i == 0) || (sb.charAt(i - 1) == ' ')) {
-							sb.setCharAt(
-								i, Character.toUpperCase(sb.charAt(i)));
-						}
-					}
-
-					return sb.toString();
+					return _uppercaseFirstLetterOfEachWord(
+						teamName.replace("-", " "));
 				}
 			}
 		}
@@ -775,6 +765,18 @@ public class BatchBuildTestrayCaseResult
 	private TestrayAttachment _getWarningsTestrayAttachment() {
 		return getTestrayAttachment(
 			getBuildReport(), "Warnings", getAxisName() + "/warnings.html.gz");
+	}
+
+	private String _uppercaseFirstLetterOfEachWord(String string) {
+		StringBuilder sb = new StringBuilder(string);
+
+		for (int i = 0; i < sb.length(); i++) {
+			if ((i == 0) || (sb.charAt(i - 1) == ' ')) {
+				sb.setCharAt(i, Character.toUpperCase(sb.charAt(i)));
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static final Pattern _dockerLogsURLPattern = Pattern.compile(

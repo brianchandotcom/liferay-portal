@@ -35,7 +35,7 @@ test.afterEach(async ({systemSettingsPage}) => {
 });
 
 test(
-	'Activation notice is visible on Consent Manager, Cookie Banner, and Cookie Panel pages',
+	'Activation warning is visible on Consent Manager, Cookie Banner, and Cookie Panel pages',
 	{tag: '@LPD-87281'},
 	async ({page, systemSettingsPage}) => {
 		const noticeText =

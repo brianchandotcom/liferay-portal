@@ -18,13 +18,13 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 <fieldset>
 	<legend class="sr-only"><liferay-ui:message key="consent-manager-configuration" /></legend>
 
-	<div class="alert <%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "alert-success" : "alert-warning" %> d-flex align-items-center justify-content-between">
+	<div class="alert <%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "alert-success" : "alert-warning" %> d-flex align-items-center justify-content-between">
 		<span>
-			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "this-experience-is-live-and-visible-to-site-visitors" : "this-experience-is-in-draft-mode-and-not-visible-to-site-visitors" %>' />
+			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "this-experience-is-live-and-visible-to-site-visitors" : "this-experience-is-in-draft-mode-and-not-visible-to-site-visitors" %>' />
 		</span>
 
-		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />toggleActiveButton" type="button">
-			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "deactivate" : "activate" %>' />
+		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />toggleActiveButton" type="button">
+			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "deactivate" : "activate" %>' />
 		</button>
 	</div>
 
@@ -145,7 +145,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 		</div>
 	</div>
 
-	<aui:input name="active" type="hidden" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() %>" />
+	<aui:input name="active" type="hidden" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() %>" />
 
 	<aui:input name="modifiedDate" type="hidden" />
 
@@ -357,7 +357,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			forcedReconsentButton.addEventListener('click', function (event) {
 				Liferay.Util.openConfirmModal({
 					message:
-						'<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "you-are-about-to-force-reconsent" : "you-are-about-to-change-the-consent-renewal-period-when-active" %>' />',
+						'<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.isCookiesPreferenceHandlingActive() ? "you-are-about-to-force-reconsent" : "you-are-about-to-change-the-consent-renewal-period-when-active" %>' />',
 					onConfirm: function (isConfirmed) {
 						if (isConfirmed) {
 							Liferay.Util.fetch('<%= forceReconsentURL %>', {
@@ -373,7 +373,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 											new Date().getTime();
 									}
 
-									form.dataset.skipActiveWarning = 'true';
+									form.dataset.skipActivationWarn = 'true';
 
 									form.requestSubmit();
 								}
@@ -406,7 +406,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 					activeInput.value = isCurrentlyActive ? 'false' : 'true';
 
-					form.dataset.skipActiveWarning = 'true';
+					form.dataset.skipActivationWarn = 'true';
 
 					form.requestSubmit();
 				};
@@ -449,7 +449,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				return;
 			}
 
-			if (form.dataset.skipActiveWarning === 'true') {
+			if (form.dataset.skipActivationWarn === 'true') {
 				return;
 			}
 
@@ -491,7 +491,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 								method: 'POST',
 							}).then((response) => {
 								if (response.ok) {
-									form.dataset.skipActiveWarning = 'true';
+									form.dataset.skipActivationWarn = 'true';
 
 									form.requestSubmit();
 								}

@@ -82,7 +82,7 @@ public class CookiesConfigurationProviderImplTest {
 
 		try (ScopedFactoryConfiguration scopedFactoryConfiguration =
 				new ScopedFactoryConfiguration(
-					_companyDictionary(companyId, true))) {
+					_createCompanyDictionary(companyId, true))) {
 
 			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
@@ -105,7 +105,7 @@ public class CookiesConfigurationProviderImplTest {
 					).build());
 			ScopedFactoryConfiguration scopedFactoryConfiguration =
 				new ScopedFactoryConfiguration(
-					_companyDictionary(companyId, false))) {
+					_createCompanyDictionary(companyId, false))) {
 
 			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, false);
@@ -125,10 +125,10 @@ public class CookiesConfigurationProviderImplTest {
 
 		try (ScopedFactoryConfiguration companyScopedFactoryConfiguration =
 				new ScopedFactoryConfiguration(
-					_companyDictionary(companyId, false));
+					_createCompanyDictionary(companyId, false));
 			ScopedFactoryConfiguration groupScopedFactoryConfiguration =
 				new ScopedFactoryConfiguration(
-					_groupDictionary(companyId, groupId, true))) {
+					_createGroupDictionary(companyId, groupId, true))) {
 
 			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
@@ -147,7 +147,7 @@ public class CookiesConfigurationProviderImplTest {
 
 		try (ScopedFactoryConfiguration scopedFactoryConfiguration =
 				new ScopedFactoryConfiguration(
-					_companyDictionary(companyId, true))) {
+					_createCompanyDictionary(companyId, true))) {
 
 			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, true);
@@ -163,7 +163,7 @@ public class CookiesConfigurationProviderImplTest {
 
 		try (ScopedFactoryConfiguration scopedFactoryConfiguration =
 				new ScopedFactoryConfiguration(
-					_groupDictionary(companyId, groupId, true))) {
+					_createGroupDictionary(companyId, groupId, true))) {
 
 			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
@@ -199,7 +199,7 @@ public class CookiesConfigurationProviderImplTest {
 				scope, scopePK));
 	}
 
-	private Dictionary<String, Object> _companyDictionary(
+	private Dictionary<String, Object> _createCompanyDictionary(
 		long companyId, boolean active) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
@@ -211,7 +211,7 @@ public class CookiesConfigurationProviderImplTest {
 		).build();
 	}
 
-	private Dictionary<String, Object> _groupDictionary(
+	private Dictionary<String, Object> _createGroupDictionary(
 		long companyId, long groupId, boolean active) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(

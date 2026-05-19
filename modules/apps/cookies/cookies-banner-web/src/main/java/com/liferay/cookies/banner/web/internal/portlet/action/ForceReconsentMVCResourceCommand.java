@@ -50,17 +50,22 @@ public class ForceReconsentMVCResourceCommand extends BaseMVCResourceCommand {
 			PermissionThreadLocal.getPermissionChecker();
 
 		String scopeName = ParamUtil.getString(
-			resourceRequest, "scope", "SYSTEM");
+			resourceRequest, "scope",
+			ExtendedObjectClassDefinition.Scope.SYSTEM.getValue());
 
 		ExtendedObjectClassDefinition.Scope scope =
 			ExtendedObjectClassDefinition.Scope.SYSTEM;
 		long scopePK = 0L;
 
-		if (scopeName.equals("COMPANY") && permissionChecker.isCompanyAdmin()) {
+		if (scopeName.equals(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getValue()) &&
+			permissionChecker.isCompanyAdmin()) {
+
 			scope = ExtendedObjectClassDefinition.Scope.COMPANY;
 			scopePK = themeDisplay.getCompanyId();
 		}
-		else if (scopeName.equals("GROUP") &&
+		else if (scopeName.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.getValue()) &&
 				 permissionChecker.isGroupAdmin(
 					 themeDisplay.getScopeGroupId())) {
 

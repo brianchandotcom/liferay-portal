@@ -22,11 +22,6 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 		_scopePK = scopePK;
 	}
 
-	public boolean getCookiesPreferenceHandlingActive() {
-		return _cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
-			_scope, _scopePK);
-	}
-
 	public int getCookiesPreferenceHandlingConsentRenewalPeriod() {
 		return _cookiesConfigurationProvider.
 			getCookiesPreferenceHandlingConsentRenewalPeriod(_scope, _scopePK);
@@ -84,6 +79,11 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 	public boolean getCookiesPreferenceHandlingStoreConsent() {
 		return _cookiesConfigurationProvider.
 			isCookiesPreferenceHandlingStoreConsent(_scope, _scopePK);
+	}
+
+	public boolean isCookiesPreferenceHandlingActive() {
+		return _cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+			_scope, _scopePK);
 	}
 
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;

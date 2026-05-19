@@ -5,6 +5,7 @@
 
 package com.liferay.layout.set.prototype.web.internal.notifications;
 
+import com.liferay.layout.set.prototype.constants.LayoutSetPrototypeConstants;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,17 +49,24 @@ public class LayoutSetPrototypeSyncUserNotificationHandler
 		String siteTemplateName = HtmlUtil.escape(
 			jsonObject.getString("siteTemplateName"));
 
-		String key;
+		String key = "";
 
-		if (Objects.equals(result, "successful")) {
-			key = "sync-of-x-site-template-finished-successfully";
-		}
-		else if (Objects.equals(result, "completed_with_errors")) {
+		if (Objects.equals(
+				result,
+				LayoutSetPrototypeConstants.STATUS_COMPLETED_WITH_ERRORS)) {
+
 			key = "sync-of-x-site-template-finished-with-errors";
 		}
-		else {
+		else if (Objects.equals(
+					result, LayoutSetPrototypeConstants.STATUS_FAILED)) {
+
 			key =
 				"sync-of-x-site-template-failed-and-the-process-did-not-finish";
+		}
+		else if (Objects.equals(
+					result, LayoutSetPrototypeConstants.STATUS_SUCCESSFUL)) {
+
+			key = "sync-of-x-site-template-finished-successfully";
 		}
 
 		return _language.format(

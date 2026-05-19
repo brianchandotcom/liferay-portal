@@ -135,7 +135,7 @@ type OrderItem = {
 type OrderType = {
 	externalReferenceCode: string;
 	id: number;
-	name: {[key: string]: string};
+	name: { [key: string]: string };
 };
 
 type PaymentMethodSelector = 'order' | 'pay' | 'trial' | 'free';
@@ -152,7 +152,7 @@ type PlacedOrder = {
 	accountId: number;
 	author: string;
 	createDate: string;
-	customFields: {[key: string]: string};
+	customFields: { [key: string]: string };
 	id: number;
 	orderStatusInfo: {
 		code: number;
@@ -161,6 +161,7 @@ type PlacedOrder = {
 	};
 	orderType: String;
 	orderTypeExternalReferenceCode: string;
+	paymentMethod: string;
 	paymentStatus: number;
 	placedOrderBillingAddress: any;
 	placedOrderBillingAddressId: number;

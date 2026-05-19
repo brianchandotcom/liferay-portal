@@ -60,7 +60,7 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 				urlTitle = _getUniqueUrlTitle(classPK, groupId, urlTitle);
 
 				_friendlyURLEntryLocalService.addFriendlyURLEntry(
-					groupId, BlogsEntry.class, classPK, urlTitle,
+					groupId, classNameId, classPK, urlTitle,
 					new ServiceContext());
 			}
 		}

@@ -1298,7 +1298,8 @@ public class CPDefinitionLocalServiceImpl
 				cpDefinition.getCompanyId());
 
 			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				group.getGroupId(), CProduct.class,
+				group.getGroupId(),
+				_classNameLocalService.getClassNameId(CProduct.class),
 				cpDefinition.getCProductId());
 
 			_cProductLocalService.deleteCProduct(cpDefinition.getCProductId());

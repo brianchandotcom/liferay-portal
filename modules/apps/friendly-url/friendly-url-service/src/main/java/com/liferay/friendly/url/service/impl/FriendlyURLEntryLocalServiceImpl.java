@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -67,17 +66,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FriendlyURLEntryLocalServiceImpl
 	extends FriendlyURLEntryLocalServiceBaseImpl {
-
-	@Override
-	public FriendlyURLEntry addFriendlyURLEntry(
-			long groupId, Class<?> clazz, long classPK, String urlTitle,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFriendlyURLEntry(
-			groupId, _classNameLocalService.getClassNameId(clazz), classPK,
-			urlTitle, serviceContext);
-	}
 
 	@Override
 	public FriendlyURLEntry addFriendlyURLEntry(
@@ -268,14 +256,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public void deleteFriendlyURLEntry(
-		long groupId, Class<?> clazz, long classPK) {
-
-		deleteFriendlyURLEntry(
-			groupId, _classNameLocalService.getClassNameId(clazz), classPK);
-	}
-
-	@Override
-	public void deleteFriendlyURLEntry(
 		long groupId, long classNameId, long classPK) {
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
@@ -341,14 +321,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 			_deleteFriendlyURLEntry(friendlyURLEntry);
 		}
-	}
-
-	@Override
-	public FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, Class<?> clazz, String urlTitle) {
-
-		return fetchFriendlyURLEntry(
-			groupId, _classNameLocalService.getClassNameId(clazz), urlTitle);
 	}
 
 	@Override
@@ -449,15 +421,6 @@ public class FriendlyURLEntryLocalServiceImpl
 		return friendlyURLEntryLocalizationPersistence.findByG_C_C_L(
 			groupId, classNameId, classPK, languageId, start, end,
 			orderByComparator);
-	}
-
-	@Override
-	public FriendlyURLEntry getMainFriendlyURLEntry(
-			Class<?> clazz, long classPK)
-		throws PortalException {
-
-		return getMainFriendlyURLEntry(
-			_classNameLocalService.getClassNameId(clazz), classPK);
 	}
 
 	@Override
@@ -1035,9 +998,6 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

@@ -262,6 +262,27 @@ public class CommercePriceListTestUtil {
 	}
 
 	public static CommercePriceList addCommercePriceList(
+			long groupId, User user, CommerceCurrency commerceCurrency,
+			double priority, ServiceContext serviceContext)
+		throws Exception {
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		return CommercePriceListLocalServiceUtil.addCommercePriceList(
+			null, user.getUserId(), groupId, 0, false,
+			commerceCurrency.getCode(), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR),
+			RandomTestUtil.randomString(), true, true, priority,
+			CommercePriceListConstants.TYPE_PRICE_LIST, serviceContext);
+	}
+
+	public static CommercePriceList addCommercePriceList(
 			String externalReferenceCode, long groupId, String currency,
 			boolean netPrice, long parentCommercePriceListId, String name,
 			Double priority, Boolean neverExpire, Date displayDate,

@@ -482,10 +482,10 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 							priceModifier.getExternalReferenceCode(),
 							GetterUtil.getLong(priceModifier.getId()),
 							commercePriceList.getGroupId(),
-							priceModifier.getTitle(), priceModifier.getTarget(),
 							commercePriceList.getCommercePriceListId(),
-							priceModifier.getModifierType(),
+							priceModifier.getTitle(), priceModifier.getTarget(),
 							priceModifier.getModifierAmount(),
+							priceModifier.getModifierType(),
 							GetterUtil.get(priceList.getPriority(), 0D),
 							GetterUtil.getBoolean(
 								priceModifier.getActive(), true),

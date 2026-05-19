@@ -6,11 +6,7 @@
 package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -30,7 +26,6 @@ import jakarta.portlet.RenderResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,23 +78,6 @@ public class SelectBasicTemplatesVerticalCard implements VerticalCard {
 	@Override
 	public String getImageSrc() {
 		return _layoutPageTemplateEntry.getImagePreviewURL(_themeDisplay);
-	}
-
-	@Override
-	public List<LabelItem> getLabels() {
-		if (_layoutPageTemplateEntry.getType() !=
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) {
-
-			return null;
-		}
-
-		return LabelItemListBuilder.add(
-			labelItem -> {
-				labelItem.setDisplayType("warning");
-				labelItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "deprecated"));
-			}
-		).build();
 	}
 
 	@Override

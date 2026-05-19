@@ -9,6 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,6 +30,7 @@ import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -60,6 +64,75 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 					oAuthClientASLocalMetadata.
 						getOAuthClientASLocalMetadataId());
 		}
+	}
+
+	@Test
+	public void testDoGetIncludesRFC8414Fields() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String issuer =
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
+		String tokenEndpoint = issuer + "/o/oauth2/token";
+
+		_oAuthClientASLocalMetadataLocalService.addOAuthClientASLocalMetadata(
+			null, TestPropsValues.getUserId(), issuer, issuer, issuer, true,
+			issuer, new String[] {"authorization_code", "client_credentials"},
+			new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
+			issuer);
+
+		Http.Options options = new Http.Options();
+
+		options.setFollowRedirects(false);
+		options.setLocation(
+			StringBundler.concat(
+				Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
+				":8080/o/.well-known/oauth-authorization-server/"));
+
+		String responseJSON = HttpUtil.URLtoString(options);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK,
+			options.getResponse().getResponseCode());
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			responseJSON);
+
+		Assert.assertEquals(
+			tokenEndpoint.substring(
+				0, tokenEndpoint.length() - "/token".length()) + "/introspect",
+			responseJSONObject.getString("introspection_endpoint"));
+
+		JSONArray codeChallengeMethodsJSONArray =
+			responseJSONObject.getJSONArray("code_challenge_methods_supported");
+
+		Assert.assertEquals(1, codeChallengeMethodsJSONArray.length());
+		Assert.assertEquals("S256", codeChallengeMethodsJSONArray.getString(0));
+
+		JSONArray responseTypesJSONArray = responseJSONObject.getJSONArray(
+			"response_types_supported");
+
+		Assert.assertEquals(1, responseTypesJSONArray.length());
+		Assert.assertEquals("code", responseTypesJSONArray.getString(0));
+
+		JSONArray tokenEndpointAuthMethodsJSONArray =
+			responseJSONObject.getJSONArray(
+				"token_endpoint_auth_methods_supported");
+
+		Assert.assertEquals(3, tokenEndpointAuthMethodsJSONArray.length());
+
+		List<String> tokenEndpointAuthMethods = new ArrayList<>();
+
+		for (int i = 0; i < tokenEndpointAuthMethodsJSONArray.length(); i++) {
+			tokenEndpointAuthMethods.add(
+				tokenEndpointAuthMethodsJSONArray.getString(i));
+		}
+
+		Assert.assertTrue(
+			tokenEndpointAuthMethods.contains("client_secret_basic"));
+		Assert.assertTrue(
+			tokenEndpointAuthMethods.contains("client_secret_post"));
+		Assert.assertTrue(tokenEndpointAuthMethods.contains("none"));
 	}
 
 	@Test

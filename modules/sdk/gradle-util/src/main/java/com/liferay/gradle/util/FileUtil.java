@@ -157,12 +157,10 @@ public class FileUtil {
 		if (!mirrorsCacheArtifactFile.exists()) {
 			mirrorsCacheArtifactDir.mkdirs();
 
-			String mirrorsUrl = _getMirrorsUrl(project, url);
-
 			if (tryLocalNetwork) {
 				try {
 					_get(
-						project, mirrorsUrl,
+						project, _getMirrorsUrl(project, url),
 						_getProperty(project, "mirrors.username"),
 						_getProperty(project, "mirrors.password"),
 						mirrorsCacheArtifactFile, ignoreErrors);

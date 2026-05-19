@@ -554,6 +554,29 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpgradeWithNonexistentJournalArticle() throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_addSiteNavigationMenuItem(
+				JournalArticle.class.getName(),
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classPK", RandomTestUtil.randomLong()
+				).put(
+					"externalReferenceCode", RandomTestUtil.randomString()
+				).put(
+					"type", JournalArticle.class.getName()
+				).buildString());
+
+		_runUpgrade();
+
+		_assertNavigationMenuItemFromSameGroup(
+			siteNavigationMenuItem.getSiteNavigationMenuItemId());
+	}
+
+	@Test
 	public void testUpgradeWithSiteScopedObjectEntry() throws Exception {
 		ObjectDefinition siteScopedObjectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(

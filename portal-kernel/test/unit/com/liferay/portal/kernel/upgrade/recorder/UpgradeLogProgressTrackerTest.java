@@ -118,6 +118,254 @@ public class UpgradeLogProgressTrackerTest {
 	}
 
 	@Test
+	public void testCaptureProgressCorrectsTotalWhenCountDrops()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			PreparedStatement[] preparedStatements = _mockPreparedStatements(
+				_SELECT_SQL);
+
+			PreparedStatement countPreparedStatement = preparedStatements[0];
+			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
+
+			ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+			Mockito.when(
+				countPreparedStatement.executeQuery()
+			).thenReturn(
+				countResultSet
+			);
+
+			Mockito.when(
+				countResultSet.next()
+			).thenReturn(
+				true
+			);
+
+			long driftedCount = _TOTAL_ROW_COUNT / 2;
+
+			Mockito.when(
+				countResultSet.getLong(1)
+			).thenReturn(
+				_TOTAL_ROW_COUNT, driftedCount
+			);
+
+			ResultSet resultSet = _mockResultSet();
+
+			Mockito.when(
+				wrappedPreparedStatement.executeQuery()
+			).thenReturn(
+				resultSet
+			);
+
+			ResultSet wrappedResultSet =
+				wrappedPreparedStatement.executeQuery();
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			String progressId = _getProgressId(wrappedResultSet);
+
+			long correctedTotal = driftedCount + 2;
+
+			long percentage = (2 * 100L) / correctedTotal;
+
+			Mockito.verify(
+				log
+			).info(
+				StringBundler.concat(
+					progressId, " is still executing. Processed 2 of ",
+					correctedTotal, " rows. (", percentage, "%)")
+			);
+
+			Map<String, Long> lastKnownTotalCounts =
+				UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+			Assert.assertEquals(
+				Long.valueOf(correctedTotal),
+				lastKnownTotalCounts.get(progressId));
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
+	public void testCaptureProgressLogsTentativeTotal() throws Exception {
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			PreparedStatement[] preparedStatements = _mockPreparedStatements(
+				_SELECT_SQL);
+
+			PreparedStatement countPreparedStatement = preparedStatements[0];
+			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
+
+			ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+			Mockito.when(
+				countPreparedStatement.executeQuery()
+			).thenReturn(
+				countResultSet
+			);
+
+			Mockito.when(
+				countResultSet.next()
+			).thenReturn(
+				true
+			);
+
+			Mockito.when(
+				countResultSet.getLong(1)
+			).thenReturn(
+				_TOTAL_ROW_COUNT
+			);
+
+			ResultSet resultSet = _mockResultSet();
+
+			Mockito.when(
+				wrappedPreparedStatement.executeQuery()
+			).thenReturn(
+				resultSet
+			);
+
+			ResultSet wrappedResultSet =
+				wrappedPreparedStatement.executeQuery();
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			String progressId = _getProgressId(wrappedResultSet);
+
+			Mockito.verify(
+				log
+			).info(
+				StringBundler.concat(
+					progressId, " is still executing. Processed 1 of ",
+					_TOTAL_ROW_COUNT + 1, " rows. (0%)")
+			);
+
+			Map<String, Long> lastKnownTotalCounts =
+				UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+			Assert.assertEquals(
+				Long.valueOf(_TOTAL_ROW_COUNT + 1),
+				lastKnownTotalCounts.get(progressId));
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
+	public void testCaptureProgressLogsTotalWhenCountIsStable()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			UpgradeLogProgressTracker.start();
+
+			PreparedStatement[] preparedStatements = _mockPreparedStatements(
+				_SELECT_SQL);
+
+			PreparedStatement countPreparedStatement = preparedStatements[0];
+			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
+
+			ResultSet countResultSet = Mockito.mock(ResultSet.class);
+
+			Mockito.when(
+				countPreparedStatement.executeQuery()
+			).thenReturn(
+				countResultSet
+			);
+
+			Mockito.when(
+				countResultSet.next()
+			).thenReturn(
+				true
+			);
+
+			Mockito.when(
+				countResultSet.getLong(1)
+			).thenReturn(
+				_TOTAL_ROW_COUNT
+			);
+
+			ResultSet resultSet = _mockResultSet();
+
+			Mockito.when(
+				wrappedPreparedStatement.executeQuery()
+			).thenReturn(
+				resultSet
+			);
+
+			ResultSet wrappedResultSet =
+				wrappedPreparedStatement.executeQuery();
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			String progressId = _getProgressId(wrappedResultSet);
+
+			long percentage = (2 * 100L) / _TOTAL_ROW_COUNT;
+
+			Mockito.verify(
+				log
+			).info(
+				StringBundler.concat(
+					progressId, " is still executing. Processed 2 of ",
+					_TOTAL_ROW_COUNT, " rows. (", percentage, "%)")
+			);
+
+			Map<String, Long> lastKnownTotalCounts =
+				UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
+			Assert.assertEquals(
+				Long.valueOf(_TOTAL_ROW_COUNT),
+				lastKnownTotalCounts.get(progressId));
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
 	public void testClearParametersResetsUnsafeFlag() throws Exception {
 		try (SafeCloseable enabledSafeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -736,28 +984,7 @@ public class UpgradeLogProgressTrackerTest {
 			PreparedStatement[] preparedStatements = _mockPreparedStatements(
 				_SELECT_SQL);
 
-			PreparedStatement countPreparedStatement = preparedStatements[0];
 			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT
-			);
 
 			ResultSet resultSet = _mockResultSet();
 
@@ -772,9 +999,17 @@ public class UpgradeLogProgressTrackerTest {
 
 			_resetLogTime(wrappedResultSet);
 
+			Object invocationHandler = ProxyUtil.getInvocationHandler(
+				wrappedResultSet);
+
 			ReflectionTestUtil.setFieldValue(
-				ProxyUtil.getInvocationHandler(wrappedResultSet), "_rowCount",
-				_TOTAL_ROW_COUNT);
+				invocationHandler, "_firstCount", _TOTAL_ROW_COUNT);
+			ReflectionTestUtil.setFieldValue(
+				invocationHandler, "_rowCount", _TOTAL_ROW_COUNT);
+			ReflectionTestUtil.setFieldValue(
+				invocationHandler, "_totalRowCount", _TOTAL_ROW_COUNT);
+			ReflectionTestUtil.setFieldValue(
+				invocationHandler, "_totalRowCountComputed", true);
 
 			Assert.assertTrue(wrappedResultSet.next());
 
@@ -922,82 +1157,6 @@ public class UpgradeLogProgressTrackerTest {
 			).info(
 				progressId + " is still executing. Processed 2 rows."
 			);
-		}
-		finally {
-			UpgradeLogProgressTracker.stop();
-		}
-	}
-
-	@Test
-	public void testNextLogsWithTotalAndPercentage() throws Exception {
-		try (SafeCloseable enabledSafeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"UPGRADE_LOG_PROGRESS_ENABLED", true);
-			SafeCloseable intervalSafeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
-
-			Log log = _getLog();
-
-			UpgradeLogProgressTracker.start();
-
-			PreparedStatement[] preparedStatements = _mockPreparedStatements(
-				_SELECT_SQL);
-
-			PreparedStatement countPreparedStatement = preparedStatements[0];
-			PreparedStatement wrappedPreparedStatement = preparedStatements[1];
-
-			ResultSet countResultSet = Mockito.mock(ResultSet.class);
-
-			Mockito.when(
-				countPreparedStatement.executeQuery()
-			).thenReturn(
-				countResultSet
-			);
-
-			Mockito.when(
-				countResultSet.next()
-			).thenReturn(
-				true
-			);
-
-			Mockito.when(
-				countResultSet.getLong(1)
-			).thenReturn(
-				_TOTAL_ROW_COUNT
-			);
-
-			ResultSet resultSet = _mockResultSet();
-
-			Mockito.when(
-				wrappedPreparedStatement.executeQuery()
-			).thenReturn(
-				resultSet
-			);
-
-			ResultSet wrappedResultSet =
-				wrappedPreparedStatement.executeQuery();
-
-			_resetLogTime(wrappedResultSet);
-
-			Assert.assertTrue(wrappedResultSet.next());
-
-			String progressId = _getProgressId(wrappedResultSet);
-
-			Mockito.verify(
-				log
-			).info(
-				StringBundler.concat(
-					progressId, " is still executing. Processed 1 of ",
-					_TOTAL_ROW_COUNT, " rows. (0%)")
-			);
-
-			Map<String, Long> lastKnownTotalCounts =
-				UpgradeLogProgressTracker.getLastKnownTotalCounts();
-
-			Assert.assertEquals(
-				Long.valueOf(_TOTAL_ROW_COUNT),
-				lastKnownTotalCounts.get(progressId));
 		}
 		finally {
 			UpgradeLogProgressTracker.stop();

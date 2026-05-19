@@ -204,7 +204,7 @@ public class IndexUtil {
 		return jsonArray3;
 	}
 
-	public static void mergeToJsonObject(
+	public static void mergeToJSONObject(
 		JSONObject jsonObject, JSONObject mergeJSONObject) {
 
 		if ((jsonObject == null) || (mergeJSONObject == null)) {
@@ -222,7 +222,7 @@ public class IndexUtil {
 			if ((object1 instanceof JSONObject) &&
 				(object2 instanceof JSONObject)) {
 
-				mergeToJsonObject((JSONObject)object1, (JSONObject)object2);
+				mergeToJSONObject((JSONObject)object1, (JSONObject)object2);
 			}
 			else if (key.equals("dynamic_templates") &&
 					 (object1 instanceof JSONArray) &&

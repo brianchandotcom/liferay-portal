@@ -35,7 +35,7 @@ public class IndexUtilTest {
 				_createDynamicTemplateJSONObject("template_b", "keyword"),
 				_createDynamicTemplateJSONObject("template_c", "text")));
 
-		IndexUtil.mergeToJsonObject(jsonObject, mergeJSONObject);
+		IndexUtil.mergeToJSONObject(jsonObject, mergeJSONObject);
 
 		JSONObject mappingsJSONObject = jsonObject.getJSONObject("mappings");
 
@@ -77,7 +77,7 @@ public class IndexUtilTest {
 				"fiets=>fiets", "bromfiets=>bromfiets", "ei=>eier",
 				"kind=>kinder"));
 
-		IndexUtil.mergeToJsonObject(jsonObject, mergeJSONObject);
+		IndexUtil.mergeToJSONObject(jsonObject, mergeJSONObject);
 
 		JSONObject indexJSONObject = jsonObject.getJSONObject("index");
 

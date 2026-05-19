@@ -1,5 +1,36 @@
 [
 	{
+		"externalReferenceCode": "LO_PRIMARY_NAV",
+		"menuItems": [
+			{
+				"friendlyURL": "/my-account",
+				"name": "My Account",
+				"privateLayout": true,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/support",
+				"name": "Support",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/marketplace",
+				"name": "Marketplace",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/admin",
+				"name": "Admin",
+				"type": "layout"
+			}
+		],
+		"name": "Primary Navigation",
+		"name_i18n": {
+			"en_US": "Primary Navigation"
+		},
+		"title": "Primary Navigation"
+	},
+	{
 		"externalReferenceCode": "LO_MARKETPLACE_NAV",
 		"menuItems": [
 			{

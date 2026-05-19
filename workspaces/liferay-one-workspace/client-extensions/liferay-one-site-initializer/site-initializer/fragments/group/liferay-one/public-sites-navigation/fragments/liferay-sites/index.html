@@ -1,0 +1,21 @@
+<div class="liferay-sites">
+	<button class="d-flex dropdown-trigger p-2" tabindex="6">
+		<span class="align-self-center liferay-sites-icon ml-1 opacity-50">
+			[@clay["icon"] symbol="sites"/]
+		</span>
+
+		<div class="d-flex font-weight-semi-bold position-relative">
+			<div class="liferay-sites-text text-nowrap">
+				${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
+			</div>
+
+			<span class="caret-bottom-icon ml-1">
+				[@clay["icon"] symbol="caret-bottom"/]
+			</span>
+		</div>
+	</button>
+
+	<div class="d-flex dropdown-menu-container flex-column py-2">
+		<lfr-drop-zone></lfr-drop-zone>
+	</div>
+</div>

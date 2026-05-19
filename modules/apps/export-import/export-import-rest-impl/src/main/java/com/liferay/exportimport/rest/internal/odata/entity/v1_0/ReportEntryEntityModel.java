@@ -13,6 +13,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
@@ -34,8 +35,23 @@ public class ReportEntryEntityModel implements EntityModel {
 					new IntegerEntityField("code", locale -> Field.STATUS))),
 			new ComplexEntityField(
 				"type",
-				Collections.singletonList(
-					new IntegerEntityField("code", locale -> "type_integer"))),
+				Arrays.asList(
+					new IntegerEntityField(
+						"code",
+						locale -> Field.getSortableFieldName("type_integer")),
+					new StringEntityField(
+						"label",
+						locale -> Field.getSortableFieldName(
+							Field.getLocalizedName(locale, "type_label")),
+						locale -> {
+							String sortableFieldName =
+								Field.getSortableFieldName(
+									Field.getLocalizedName(
+										locale, "type_label"));
+
+							return sortableFieldName.concat(
+								".keyword_lowercase");
+						}))),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -45,7 +61,21 @@ public class ReportEntryEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("id", locale -> Field.ENTRY_CLASS_PK),
-			new StringEntityField("modelName", locale -> "modelName"));
+			new StringEntityField(
+				"classExternalReferenceCode",
+				locale -> Field.getSortableFieldName(
+					"classExternalReferenceCode"),
+				locale -> "classExternalReferenceCode"),
+			new StringEntityField(
+				"modelName",
+				locale -> Field.getSortableFieldName(
+					Field.getLocalizedName(locale, "modelName")),
+				locale -> {
+					String sortableFieldName = Field.getSortableFieldName(
+						Field.getLocalizedName(locale, "modelName"));
+
+					return sortableFieldName.concat(".keyword_lowercase");
+				}));
 	}
 
 	@Override

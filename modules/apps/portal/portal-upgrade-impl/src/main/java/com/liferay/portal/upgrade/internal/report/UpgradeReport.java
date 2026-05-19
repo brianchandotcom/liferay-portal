@@ -277,16 +277,16 @@ public class UpgradeReport {
 
 				if (releaseManager == null) {
 					if (upgradeRecorder.isPreupgradeVerifyFailure()) {
-						return "No changes have been made to the system";
+						return "no changes have been made to the system";
 					}
 
-					return "Upgrade failed to complete";
+					return "upgrade failed to complete";
 				}
 
 				String statusMessage = releaseManager.getStatusMessage(false);
 
 				if (statusMessage.isEmpty()) {
-					return "There are no pending upgrades";
+					return "there are no pending upgrades";
 				}
 
 				return statusMessage;
@@ -298,7 +298,7 @@ public class UpgradeReport {
 			LinkedHashMapBuilder.put(
 				"initial.build.number",
 				(_initialBuildNumber != 0) ?
-					String.valueOf(_initialBuildNumber) : "Unable to determine"
+					String.valueOf(_initialBuildNumber) : "unable to determine"
 			).put(
 				"initial.schema.version",
 				() -> {
@@ -312,7 +312,7 @@ public class UpgradeReport {
 						return initialSchemaVersion;
 					}
 
-					return "Unable to determine";
+					return "unable to determine";
 				}
 			).put(
 				"final.build.number",
@@ -323,7 +323,7 @@ public class UpgradeReport {
 						return String.valueOf(buildNumber);
 					}
 
-					return "Unable to determine";
+					return "unable to determine";
 				}
 			).put(
 				"final.schema.version",
@@ -336,7 +336,7 @@ public class UpgradeReport {
 						return schemaVersion;
 					}
 
-					return "Unable to determine";
+					return "unable to determine";
 				}
 			).put(
 				"expected.build.number",
@@ -347,7 +347,7 @@ public class UpgradeReport {
 						return String.valueOf(buildNumber);
 					}
 
-					return "Unable to determine";
+					return "unable to determine";
 				}
 			).put(
 				"expected.schema.version",
@@ -359,7 +359,7 @@ public class UpgradeReport {
 						return schemaVersion;
 					}
 
-					return "Unable to determine";
+					return "unable to determine";
 				}
 			).build()
 		).put(
@@ -383,17 +383,17 @@ public class UpgradeReport {
 					if (PropsValues.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT ==
 							0) {
 
-						return "Disabled";
+						return "disabled";
 					}
 
 					if (!StringUtil.endsWith(
 							PropsValues.DL_STORE_IMPL, "FileSystemStore")) {
 
-						return "Check externally";
+						return "check externally";
 					}
 
 					if (_rootDir == null) {
-						return "Unable to determine. Document library " +
+						return "unable to determine. Document library " +
 							"\"rootDir\" was not set";
 					}
 
@@ -407,7 +407,7 @@ public class UpgradeReport {
 										_rootDir);
 						}
 
-						return "Unable to determine";
+						return "unable to determine";
 					}
 
 					FutureTask<Long> dlSizeFutureTask = new FutureTask<>(
@@ -453,7 +453,7 @@ public class UpgradeReport {
 							exception);
 					}
 
-					return "Unable to determine";
+					return "unable to determine";
 				}
 			).build()
 		).put(

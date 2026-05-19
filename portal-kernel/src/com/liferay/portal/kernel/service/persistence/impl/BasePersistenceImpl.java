@@ -696,6 +696,14 @@ public class BasePersistenceImpl
 	}
 
 	@Override
+	public void reassociateIfAbsent(T model) {
+		Session session = getCurrentSession();
+
+		session.reassociateIfAbsent(
+			_modelImplClass, model.getPrimaryKeyObj(), model);
+	}
+
+	@Override
 	public void registerListener(ModelListener<T> modelListener) {
 		ModelListenerRegistrationUtil.register(modelListener);
 	}

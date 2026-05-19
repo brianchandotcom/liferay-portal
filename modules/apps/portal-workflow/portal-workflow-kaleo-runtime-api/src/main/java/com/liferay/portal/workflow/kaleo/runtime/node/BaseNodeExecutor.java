@@ -36,13 +36,10 @@ public abstract class BaseNodeExecutor implements NodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		kaleoInstanceToken.setCurrentKaleoNodeId(
-			currentKaleoNode.getKaleoNodeId());
-		kaleoInstanceToken.setCurrentKaleoNodeName(currentKaleoNode.getName());
-
 		executionContext.setKaleoInstanceToken(
 			KaleoInstanceTokenLocalServiceUtil.updateKaleoInstanceToken(
-				kaleoInstanceToken));
+				kaleoInstanceToken.getKaleoInstanceTokenId(),
+				currentKaleoNode.getKaleoNodeId(), currentKaleoNode.getName()));
 
 		boolean performExecute = doEnter(currentKaleoNode, executionContext);
 

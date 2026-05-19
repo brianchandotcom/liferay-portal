@@ -74,9 +74,6 @@ const contentMediaTypeVideo = z.object({
 });
 
 const dsrLicenseKeyBaseSchema = {
-	acceptEulaAgreement: z.boolean().refine((value) => value, {
-		message: 'You must agree with the Liferay End User Agreement',
-	}),
 	acceptTermsAndConditions: z.boolean().refine((value) => value, {
 		message: 'You must agree with the terms and conditions',
 	}),

@@ -1,0 +1,34 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "placeholder",
+					"localizable": true,
+					"name": "placeholder",
+					"type": "text"
+				},
+				{
+					"defaultValue": true,
+					"label": "show-prefix",
+					"name": "showPrefix",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				},
+				{
+					"defaultValue": true,
+					"label": "show-country-flag",
+					"name": "showCountryFlag",
+					"type": "checkbox",
+					"typeOptions": {
+						"displayType": "toggle"
+					}
+				}
+			]
+		}
+	]
+}

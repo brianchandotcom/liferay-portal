@@ -207,6 +207,16 @@ public class FragmentSerDes {
 			sb.append(fragment.getReadOnly());
 		}
 
+		if (fragment.getThumbnailURLReference() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"thumbnailURLReference\": ");
+
+			sb.append(fragment.getThumbnailURLReference());
+		}
+
 		if (fragment.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -332,6 +342,15 @@ public class FragmentSerDes {
 			map.put("readOnly", String.valueOf(fragment.getReadOnly()));
 		}
 
+		if (fragment.getThumbnailURLReference() == null) {
+			map.put("thumbnailURLReference", null);
+		}
+		else {
+			map.put(
+				"thumbnailURLReference",
+				String.valueOf(fragment.getThumbnailURLReference()));
+		}
+
 		if (fragment.getType() == null) {
 			map.put("type", null);
 		}
@@ -392,6 +411,11 @@ public class FragmentSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "readOnly")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "thumbnailURLReference")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -484,6 +508,15 @@ public class FragmentSerDes {
 					fragment.setReadOnly((Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "thumbnailURLReference")) {
+
+				if (jsonParserFieldValue != null) {
+					fragment.setThumbnailURLReference(
+						ThumbnailURLReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					fragment.setType(
@@ -571,4 +604,4 @@ public class FragmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:704343568
+// LIFERAY-REST-BUILDER-HASH:-2134189697

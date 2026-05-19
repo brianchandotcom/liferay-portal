@@ -9,16 +9,20 @@ import com.liferay.layout.set.prototype.constants.LayoutSetPrototypeConstants;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,7 +45,8 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	}
 
 	public static void openSession(
-		int expectedCount, String siteTemplateName, long userId) {
+		int expectedCount, Map<Locale, String> layoutSetPrototypeNameMap,
+		long userId) {
 
 		if (expectedCount < 0) {
 			return;
@@ -52,7 +57,7 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 		_syncSessionId.set(syncSessionId);
 
 		SyncSession syncSession = new SyncSession(
-			expectedCount, siteTemplateName, userId);
+			expectedCount, layoutSetPrototypeNameMap, userId);
 
 		if (expectedCount == 0) {
 			_postNotification(syncSession, syncSessionId);
@@ -92,10 +97,23 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 			Set<Integer> backgroundTaskStatuses =
 				syncSession._backgroundTaskStatuses;
 
+			JSONObject layoutSetPrototypeNameMapJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			for (Map.Entry<Locale, String> entry :
+					syncSession._layoutSetPrototypeNameMap.entrySet()) {
+
+				layoutSetPrototypeNameMapJSONObject.put(
+					LocaleUtil.toLanguageId(entry.getKey()), entry.getValue());
+			}
+
 			NotificationEvent notificationEvent = new NotificationEvent(
 				System.currentTimeMillis(),
 				LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
 				JSONUtil.put(
+					"layoutSetPrototypeNameMap",
+					layoutSetPrototypeNameMapJSONObject
+				).put(
 					"result",
 					() -> {
 						if (backgroundTaskStatuses.contains(
@@ -115,8 +133,6 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 
 						return LayoutSetPrototypeConstants.STATUS_SUCCESSFUL;
 					}
-				).put(
-					"siteTemplateName", syncSession._siteTemplateName
 				));
 
 			notificationEvent.setDeliveryType(
@@ -166,9 +182,10 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	private static class SyncSession {
 
 		private SyncSession(
-			int expectedCount, String siteTemplateName, long userId) {
+			int expectedCount, Map<Locale, String> layoutSetPrototypeNameMap,
+			long userId) {
 
-			_siteTemplateName = siteTemplateName;
+			_layoutSetPrototypeNameMap = layoutSetPrototypeNameMap;
 			_userId = userId;
 
 			_remaining = new AtomicInteger(expectedCount);
@@ -176,8 +193,8 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 
 		private final Set<Integer> _backgroundTaskStatuses =
 			ConcurrentHashMap.newKeySet();
+		private final Map<Locale, String> _layoutSetPrototypeNameMap;
 		private final AtomicInteger _remaining;
-		private final String _siteTemplateName;
 		private final long _userId;
 
 	}

@@ -73,11 +73,20 @@ function _run_helm {
 
 	if [ "${#}" -eq 0 ]
 	then
+		local charts_list
+		charts_list="$(_list_helm_charts)"
+
+		if [ -z "${charts_list}" ]
+		then
+			_log_error "No charts found in CI workflow matrix."
+			exit 1
+		fi
+
 		local chart
 		while IFS= read -r chart
 		do
 			charts+=("${chart}")
-		done < <(_list_helm_charts)
+		done <<< "${charts_list}"
 	else
 		charts=("${@}")
 	fi
@@ -112,11 +121,20 @@ function _run_terraform {
 
 	if [ "${#}" -eq 0 ]
 	then
+		local stacks_list
+		stacks_list="$(_list_terraform_stacks)"
+
+		if [ -z "${stacks_list}" ]
+		then
+			_log_error "No terraform stacks found in CI workflow matrix."
+			exit 1
+		fi
+
 		local stack
 		while IFS= read -r stack
 		do
 			stacks+=("${stack}")
-		done < <(_list_terraform_stacks)
+		done <<< "${stacks_list}"
 	else
 		stacks=("${@}")
 	fi

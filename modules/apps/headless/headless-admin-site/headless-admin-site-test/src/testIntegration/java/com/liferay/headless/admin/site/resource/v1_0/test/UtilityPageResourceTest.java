@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -752,6 +753,23 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			randomUtilityPage);
 
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		PollTestUtil.pollUntilNotNull(
+			() -> {
+				UtilityPage getUtilityPage =
+					utilityPageResource.getSiteUtilityPage(
+						testGroup.getExternalReferenceCode(),
+						postUtilityPage.getExternalReferenceCode());
+
+				ThumbnailURLReference thumbnailURLReference =
+					getUtilityPage.getThumbnailURLReference();
+
+				if (thumbnailURLReference == null) {
+					return null;
+				}
+
+				return thumbnailURLReference.getUrl();
+			});
 
 		Page<UtilityPage> page = utilityPageResource.getSiteUtilityPagesPage(
 			testGroup.getExternalReferenceCode(), null, null, null, null, null);

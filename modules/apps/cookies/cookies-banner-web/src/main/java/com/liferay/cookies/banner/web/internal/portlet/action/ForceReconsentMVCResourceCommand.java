@@ -46,35 +46,28 @@ public class ForceReconsentMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String scopeName = ParamUtil.getString(
-			resourceRequest, "scope", "SYSTEM");
-
-		ExtendedObjectClassDefinition.Scope scope;
-		long scopePK;
-
-		if (scopeName.equals("COMPANY")) {
-			scope = ExtendedObjectClassDefinition.Scope.COMPANY;
-			scopePK = themeDisplay.getCompanyId();
-		}
-		else if (scopeName.equals("GROUP")) {
-			scope = ExtendedObjectClassDefinition.Scope.GROUP;
-			scopePK = themeDisplay.getScopeGroupId();
-		}
-		else {
-			scope = ExtendedObjectClassDefinition.Scope.SYSTEM;
-			scopePK = 0L;
-		}
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (((scope == ExtendedObjectClassDefinition.Scope.SYSTEM) &&
-			 !permissionChecker.isOmniadmin()) ||
-			((scope == ExtendedObjectClassDefinition.Scope.COMPANY) &&
-			 !permissionChecker.isCompanyAdmin()) ||
-			((scope == ExtendedObjectClassDefinition.Scope.GROUP) &&
-			 !permissionChecker.isGroupAdmin(scopePK))) {
+		String scopeName = ParamUtil.getString(
+			resourceRequest, "scope", "SYSTEM");
 
+		ExtendedObjectClassDefinition.Scope scope =
+			ExtendedObjectClassDefinition.Scope.SYSTEM;
+		long scopePK = 0L;
+
+		if (scopeName.equals("COMPANY") && permissionChecker.isCompanyAdmin()) {
+			scope = ExtendedObjectClassDefinition.Scope.COMPANY;
+			scopePK = themeDisplay.getCompanyId();
+		}
+		else if (scopeName.equals("GROUP") &&
+				 permissionChecker.isGroupAdmin(
+					 themeDisplay.getScopeGroupId())) {
+
+			scope = ExtendedObjectClassDefinition.Scope.GROUP;
+			scopePK = themeDisplay.getScopeGroupId();
+		}
+		else if (!permissionChecker.isOmniadmin()) {
 			resourceResponse.setProperty(
 				ResourceResponse.HTTP_STATUS_CODE,
 				String.valueOf(HttpServletResponse.SC_FORBIDDEN));

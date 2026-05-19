@@ -31,7 +31,7 @@ spec:
         {{- end }}
     {{- end }}
 {{- end }}
-{{- if $dbReady }}
+{{- if and $dbReady (not (and (eq $restorePhase "provisioning") (eq $dataPlane $targetActiveDataPlane))) }}
 {{- $instanceConnectionName := printf "%s:%s:%s-db-instance-%s" $env.projectId $region $xr.metadata.name $dataPlane }}
 {{- $jobName := printf "%s-db-grant-%s" $xr.metadata.name $dataPlane }}
 ---

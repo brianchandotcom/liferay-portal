@@ -140,6 +140,28 @@ test.describe('Manage custom layouts through object layout tab', () => {
 		).toBeVisible();
 	});
 
+	test('can add a layout', async ({apiHelpers, objectLayoutsPage, page}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: objectLayoutName})
+		).toBeVisible();
+	});
+
 	test('can add a tab of type Fields', async ({
 		apiHelpers,
 		objectLayoutsPage,

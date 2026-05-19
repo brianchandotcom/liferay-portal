@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_APP_CATEGORY_E_COMMERCE",
+	"name": "e-commerce",
+	"name_i18n": {
+		"en_US": "e-Commerce"
+	},
+	"viewableBy": "Anyone"
+}

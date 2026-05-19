@@ -194,14 +194,16 @@ public class LayoutStructureRulesHelperImpl
 			return false;
 		}
 
-		String fieldString = StringUtil.toLowerCase(fieldValue.toString());
+		String fieldValueString = StringUtil.toLowerCase(fieldValue.toString());
 		String valueString = StringUtil.toLowerCase(value.toString());
 
-		if (Validator.isNull(fieldString) || Validator.isNull(valueString)) {
+		if (Validator.isNull(fieldValueString) ||
+			Validator.isNull(valueString)) {
+
 			return false;
 		}
 
-		return fieldString.contains(valueString);
+		return fieldValueString.contains(valueString);
 	}
 
 	private boolean _evaluateLayoutStructureRule(

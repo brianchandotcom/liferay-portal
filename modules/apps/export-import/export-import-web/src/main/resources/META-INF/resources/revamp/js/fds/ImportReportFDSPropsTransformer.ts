@@ -3,13 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {
+	EConfigInURLBehavior,
+	IInternalRenderer,
+} from '@liferay/frontend-data-set-web';
 
 import ImportReportStatusRenderer from './cell_renderers/ImportReportStatusRenderer';
 
 export default function ImportReportFDSPropsTransformer({...otherProps}) {
 	return {
 		...otherProps,
+		configInURLBehavior: EConfigInURLBehavior.OFF,
 		customRenderers: {
 			tableCell: [
 				{
